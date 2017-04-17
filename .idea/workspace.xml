@@ -1,8 +1,569 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40fa26f6-6421-4d0a-82a4-1f58afcfbe29" name="Default" comment="">
+    <list default="true" id="40fa26f6-6421-4d0a-82a4-1f58afcfbe29" name="Default" comment="CC vserion 1.0&#10;">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/fonts/FontAwesome.otf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/fonts/fontawesome-webfont.eot" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/fonts/fontawesome-webfont.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/fonts/fontawesome-webfont.woff" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/fonts/fontawesome-webfont.woff2" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/fonts/glyphicons-halflings-regular.eot" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/fonts/glyphicons-halflings-regular.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/fonts/glyphicons-halflings-regular.woff" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/fonts/glyphicons-halflings-regular.woff2" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/patterns/header-profile-skin-1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/patterns/header-profile-skin-3.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/patterns/header-profile.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/patterns/shattered.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/blueimp/img/error.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/blueimp/img/loading.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/blueimp/img/play-pause.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/blueimp/img/video-play.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/chosen/chosen-sprite.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/chosen/chosen-sprite@2x.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/colorpicker/img/bootstrap-colorpicker/alpha-horizontal.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/colorpicker/img/bootstrap-colorpicker/alpha.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/colorpicker/img/bootstrap-colorpicker/hue-horizontal.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/colorpicker/img/bootstrap-colorpicker/hue.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/colorpicker/img/bootstrap-colorpicker/saturation.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/footable/fonts/footable.eot" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/footable/fonts/footable.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/footable/fonts/footable.woff" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/iCheck/green.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/iCheck/green@2x.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/images/sort_asc.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/images/sort_desc.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/images/sprite-skin-flat.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/images/spritemap.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/images/spritemap@2x.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/jQueryUI/images/ui-bg_flat_0_aaaaaa_40x100.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/jQueryUI/images/ui-bg_flat_75_ffffff_40x100.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/jQueryUI/images/ui-icons_222222_256x240.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/jQueryUI/images/ui-icons_454545_256x240.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/jQueryUI/images/ui-icons_888888_256x240.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/jsTree/32px.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/jsTree/throbber.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/a1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/a2.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/a3.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/a4.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/a5.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/a6.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/a7.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/a8.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/a9.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/bg.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/browser.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/browser.psd" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/iconfont-logo.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/icons.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/index.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/index_4.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/loading-upload.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/locked.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/login-background.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/p1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/p2.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/p3.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/p_big1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/p_big2.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/p_big3.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/pay.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/profile.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/profile_big.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/profile_small.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/progress.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/qr_code.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/sprite-skin-flat.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/success.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/user.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/webuploader.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/img/wenku_logo.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/laydate/skins/default/icon.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/layim/loading.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/fancybox/blank.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/fancybox/fancybox_loading.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/fancybox/fancybox_loading@2x.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/fancybox/fancybox_overlay.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/fancybox/fancybox_sprite.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/fancybox/fancybox_sprite@2x.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/gritter/images/gritter-light.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/gritter/images/gritter.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/gritter/images/ie-spacer.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/laydate/skins/default/icon.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/layim/loading.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/skin/default/icon-ext.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/skin/default/icon.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/skin/default/icon_ext.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/skin/default/loading-0.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/skin/default/loading-1.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/skin/default/loading-2.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/skin/default/textbg.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/skin/default/xubox_ico0.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/skin/default/xubox_loading0.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/skin/default/xubox_loading1.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/skin/default/xubox_loading2.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/skin/default/xubox_loading3.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/skin/default/xubox_title0.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/skin/moon/default.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/webuploader/Uploader.swf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/skin/default/icon-ext.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/skin/default/icon.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/skin/default/icon_ext.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/skin/default/loading-0.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/skin/default/loading-1.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/skin/default/loading-2.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/skin/default/textbg.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/skin/default/xubox_ico0.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/skin/default/xubox_loading0.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/skin/default/xubox_loading1.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/skin/default/xubox_loading2.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/skin/default/xubox_loading3.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/skin/default/xubox_title0.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/skin/moon/default.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/php.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/BootstrapTableAsset.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/FormAsset.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/GlobalAsset.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/JqueryAsset.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/PublicAsset.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/controllers/GController.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/controllers/PController.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/models/CActiveRecord.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/home/models/LoginForm.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/home/models/RegisterForm.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/home/views/default/welcome.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/home/views/login/find-password-complete.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/home/views/login/find-password-one.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/home/views/login/find-password-three.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/home/views/login/find-password-two.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/home/views/register/code.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/home/views/register/complete.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/home/views/register/email-code.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/layouts/child-frame.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/layouts/form.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/layouts/global.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/layouts/iframe.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/layouts/list.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/layouts/public.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/layouts/right.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/fonts/fontawesome-webfont.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/fonts/glyphicons-halflings-regular.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/animate.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/bootstrap.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/demo/webuploader-demo.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/font-awesome.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/font-awesome.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/blueimp/css/blueimp-gallery-indicator.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/blueimp/css/blueimp-gallery-video.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/blueimp/css/blueimp-gallery.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/blueimp/css/blueimp-gallery.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/blueimp/css/demo.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/blueimp/img/error.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/blueimp/img/play-pause.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/blueimp/img/video-play.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/bootstrap-table/bootstrap-table.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/chosen/chosen.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/clockpicker/clockpicker.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/codemirror/ambiance.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/codemirror/codemirror.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/colorpicker/css/bootstrap-colorpicker.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/cropper/cropper.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/dataTables/dataTables.bootstrap.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/datapicker/datepicker3.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/dropzone/basic.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/dropzone/dropzone.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/duallistbox/bootstrap-duallistbox.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/footable/fonts/footable.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/footable/footable.core.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/fullcalendar/fullcalendar.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/fullcalendar/fullcalendar.print.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/iCheck/custom.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/ionRangeSlider/ion.rangeSlider.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/ionRangeSlider/ion.rangeSlider.skinFlat.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/jQueryUI/jquery-ui-1.10.4.custom.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/jasny/jasny-bootstrap.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/jqgrid/ui.jqgrid.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/jsTree/style.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/markdown/bootstrap-markdown.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/morris/morris-0.4.3.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/multiselect/bootstrap-multiselect.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/nouslider/jquery.nouislider.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/plyr/plyr.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/plyr/sprite.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/simditor/simditor.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/steps/jquery.steps.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/summernote/summernote-bs3.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/summernote/summernote.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/sweetalert/sweetalert.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/switchery/switchery.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/toastr/toastr.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/treeview/bootstrap-treeview.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/plugins/webuploader/webuploader.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/global/style.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/bootstrap.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/extend/layer.ext.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/jquery.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/laydate/laydate.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/laydate/need/laydate.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/laydate/skins/default/laydate.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/layer.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/layer.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/layim/data/chatlog.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/layim/data/friend.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/layim/data/group.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/layim/data/groups.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/layim/layim.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/layim/layim.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/beautifyhtml/beautifyhtml.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/blueimp/jquery.blueimp-gallery.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/bootstrap-table/bootstrap-table-mobile.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/bootstrap-table/bootstrap-table.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/chartJs/Chart.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/chosen/chosen.jquery.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/clockpicker/clockpicker.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/codemirror.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/apl/apl.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/apl/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/asterisk/asterisk.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/asterisk/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/clike/clike.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/clike/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/clike/scala.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/clojure/clojure.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/clojure/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/cobol/cobol.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/cobol/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/coffeescript/coffeescript.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/coffeescript/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/commonlisp/commonlisp.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/commonlisp/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/css/css.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/css/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/css/less.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/css/less_test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/css/scss.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/css/scss_test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/css/test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/cypher/cypher.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/cypher/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/d/d.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/d/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/dart/dart.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/dart/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/diff/diff.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/diff/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/django/django.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/django/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/dockerfile/dockerfile.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/dockerfile/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/dtd/dtd.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/dtd/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/dylan/dylan.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/dylan/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/ebnf/ebnf.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/ebnf/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/ecl/ecl.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/ecl/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/eiffel/eiffel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/eiffel/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/erlang/erlang.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/erlang/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/fortran/fortran.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/fortran/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/gas/gas.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/gas/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/gfm/gfm.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/gfm/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/gfm/test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/gherkin/gherkin.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/gherkin/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/go/go.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/go/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/groovy/groovy.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/groovy/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/haml/haml.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/haml/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/haml/test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/haskell/haskell.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/haskell/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/haxe/haxe.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/haxe/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/htmlembedded/htmlembedded.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/htmlembedded/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/htmlmixed/htmlmixed.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/htmlmixed/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/http/http.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/http/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/idl/idl.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/idl/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/jade/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/jade/jade.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/javascript/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/javascript/javascript.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/javascript/json-ld.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/javascript/test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/javascript/typescript.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/jinja2/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/jinja2/jinja2.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/julia/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/julia/julia.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/kotlin/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/kotlin/kotlin.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/livescript/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/livescript/livescript.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/lua/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/lua/lua.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/markdown/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/markdown/markdown.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/markdown/test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/meta.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/mirc/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/mirc/mirc.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/mllike/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/mllike/mllike.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/modelica/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/modelica/modelica.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/nginx/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/nginx/nginx.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/ntriples/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/ntriples/ntriples.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/octave/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/octave/octave.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/pascal/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/pascal/pascal.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/pegjs/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/pegjs/pegjs.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/perl/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/perl/perl.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/php/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/php/php.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/php/test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/pig/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/pig/pig.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/properties/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/properties/properties.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/puppet/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/puppet/puppet.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/python/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/python/python.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/q/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/q/q.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/r/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/r/r.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/rpm/changes/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/rpm/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/rpm/rpm.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/rst/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/rst/rst.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/ruby/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/ruby/ruby.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/ruby/test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/rust/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/rust/rust.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/sass/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/sass/sass.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/scheme/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/scheme/scheme.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/shell/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/shell/shell.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/shell/test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/sieve/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/sieve/sieve.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/slim/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/slim/slim.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/slim/test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/smalltalk/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/smalltalk/smalltalk.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/smarty/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/smarty/smarty.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/smartymixed/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/smartymixed/smartymixed.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/solr/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/solr/solr.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/soy/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/soy/soy.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/sparql/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/sparql/sparql.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/spreadsheet/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/spreadsheet/spreadsheet.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/sql/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/sql/sql.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/stex/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/stex/stex.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/stex/test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/tcl/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/tcl/tcl.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/textile/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/textile/test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/textile/textile.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/tiddlywiki/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/tiddlywiki/tiddlywiki.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/tiddlywiki/tiddlywiki.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/tiki/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/tiki/tiki.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/tiki/tiki.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/toml/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/toml/toml.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/tornado/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/tornado/tornado.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/turtle/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/turtle/turtle.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/vb/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/vb/vb.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/vbscript/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/vbscript/vbscript.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/velocity/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/velocity/velocity.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/verilog/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/verilog/test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/verilog/verilog.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/xml/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/xml/test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/xml/xml.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/xquery/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/xquery/test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/xquery/xquery.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/yaml/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/yaml/yaml.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/z80/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/codemirror/mode/z80/z80.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/colorpicker/bootstrap-colorpicker.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/cropper/cropper.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/dataTables/dataTables.bootstrap.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/dataTables/jquery.dataTables.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/datapicker/bootstrap-datepicker.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/diff_match_patch/diff_match_patch.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/dropzone/dropzone.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/duallistbox/jquery.bootstrap-duallistbox.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/easypiechart/jquery.easypiechart.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/echarts/echarts-all.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/fancybox/jquery.fancybox.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/fancybox/jquery.fancybox.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/flot/curvedLines.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/flot/jquery.flot.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/flot/jquery.flot.pie.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/flot/jquery.flot.resize.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/flot/jquery.flot.spline.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/flot/jquery.flot.symbol.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/flot/jquery.flot.tooltip.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/footable/footable.all.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/fullcalendar/fullcalendar.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/fullcalendar/moment.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/gritter/jquery.gritter.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/gritter/jquery.gritter.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/iCheck/icheck.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/ionRangeSlider/ion.rangeSlider.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/ionRangeSlider/jasny/jasny-bootstrap.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/jasny/jasny-bootstrap.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/jeditable/jquery.jeditable.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/jqgrid/i18n/grid.locale-cn.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/jqgrid/jquery.jqGrid.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/jquery-ui/jquery-ui.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/jsKnob/jquery.knob.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/jsTree/jstree.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/jsTree/jstree.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/jvectormap/jquery-jvectormap-world-mill-en.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/extend/layer.ext.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/laydate/laydate.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/laydate/need/laydate.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/laydate/skins/default/laydate.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/layer.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/layim/data/chatlog.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/layim/data/friend.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/layim/data/group.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/layim/data/groups.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/layim/layim.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/layim/layim.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/skin/layer.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/skin/layer.ext.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/layer/skin/moon/style.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/markdown/bootstrap-markdown.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/markdown/bootstrap-markdown.zh.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/markdown/markdown.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/markdown/to-markdown.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/metisMenu/jquery.metisMenu.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/morris/morris.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/morris/raphael-2.1.0.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/multiselect/bootstrap-multiselect.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/nestable/jquery.nestable.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/nouslider/jquery.nouislider.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/pace/pace.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/peity/jquery.peity.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/plyr/plyr.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/preetyTextDiff/jquery.pretty-text-diff.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/prettyfile/bootstrap-prettyfile.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/rickshaw/rickshaw.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/rickshaw/vendor/d3.v3.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/simditor/hotkeys.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/simditor/hotkeys.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/simditor/jquery.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/simditor/module.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/simditor/module.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/simditor/simditor.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/simditor/simditor.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/simditor/uploader.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/simditor/uploader.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/slimscroll/jquery.slimscroll.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/sparkline/jquery.sparkline.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/staps/jquery.steps.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/suggest/bootstrap-suggest.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/suggest/data.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/summernote/summernote-zh-CN.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/summernote/summernote.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/sweetalert/sweetalert.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/switchery/switchery.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/toastr/toastr.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/treeview/bootstrap-treeview.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/validate/additional-methods.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/validate/jquery.validate.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/validate/messages_zh.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/webuploader/README.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/webuploader/webuploader.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/webuploader/webuploader.custom.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/webuploader/webuploader.custom.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/webuploader/webuploader.fis.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/webuploader/webuploader.flashonly.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/webuploader/webuploader.flashonly.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/webuploader/webuploader.html5only.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/webuploader/webuploader.html5only.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/webuploader/webuploader.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/webuploader/webuploader.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/webuploader/webuploader.noimage.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/webuploader/webuploader.noimage.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/webuploader/webuploader.nolog.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/webuploader/webuploader.nolog.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/webuploader/webuploader.withoutimage.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/plugins/webuploader/webuploader.withoutimage.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/skin/default/layer.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/skin/layer.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/skin/layer.ext.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/global/skin/moon/style.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/home/contabs.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/home/content.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/home/home.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/home/hplus.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/home/welcome.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/public/jquery.metisMenu.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/public/jquery.slimscroll.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/public/pace.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/user/company.add.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/user/company.edit.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/user/company.list.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/media/yisell_sound_2014040216575424653_88366.mp3" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modules/home/models/user/User.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modules/home/models/user/UserQuery.php" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/cc.iml" afterPath="$PROJECT_DIR$/.idea/cc.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/web.php" afterPath="$PROJECT_DIR$/config/web.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/User.php" afterPath="$PROJECT_DIR$/models/User.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/home/controllers/DefaultController.php" afterPath="$PROJECT_DIR$/modules/home/controllers/DefaultController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/home/views/default/index.php" afterPath="$PROJECT_DIR$/modules/home/views/default/index.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -18,6 +579,115 @@
   <component name="FavoritesManager">
     <favorites_list name="cc" />
   </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="DefaultController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/home/controllers/DefaultController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="17" column="52" lean-forward="false" selection-start-line="17" selection-start-column="52" selection-end-line="17" selection-end-column="52" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/modules/home/views/default/index.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LoginForm.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/home/models/LoginForm.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="31" column="45" lean-forward="false" selection-start-line="31" selection-start-column="45" selection-end-line="31" selection-end-column="45" />
+              <folding>
+                <element signature="e#43#51#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="public.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/layouts/public.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="42" column="87" lean-forward="false" selection-start-line="42" selection-start-column="87" selection-end-line="42" selection-end-column="87" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="find-password-one.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/home/views/login/find-password-one.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" column="22" lean-forward="false" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
+              <folding>
+                <element signature="e#59#88#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/controllers/GController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="405">
+              <caret line="27" column="46" lean-forward="false" selection-start-line="27" selection-start-column="46" selection-end-line="27" selection-end-column="46" />
+              <folding>
+                <element signature="e#35#43#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="find-password-three.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/home/views/login/find-password-three.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="34" column="77" lean-forward="false" selection-start-line="34" selection-start-column="77" selection-end-line="34" selection-end-column="77" />
+              <folding>
+                <element signature="e#62#91#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LoginController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/home/controllers/LoginController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="36" column="52" lean-forward="false" selection-start-line="36" selection-start-column="8" selection-end-line="36" selection-end-column="52" />
+              <folding>
+                <element signature="e#48#89#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="find-password-complete.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/home/views/login/find-password-complete.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="12" column="38" lean-forward="false" selection-start-line="12" selection-start-column="38" selection-end-line="12" selection-end-column="38" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>login_per</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
     <option name="UPDATE_TYPE" value="REBASE" />
     <option name="PUSH_AUTO_UPDATE" value="true" />
@@ -26,6 +696,40 @@
     <option name="FORCE_PUSH_ALLOWED" value="true" />
     <option name="PUSH_TAGS">
       <GitPushTagMode />
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/models/CActiveRecord.php" />
+        <option value="$PROJECT_DIR$/models/User.php" />
+        <option value="$PROJECT_DIR$/modules/home/models/user/User.php" />
+        <option value="$PROJECT_DIR$/modules/home/models/UserQuery.php" />
+        <option value="$PROJECT_DIR$/views/layouts/global.php" />
+        <option value="$PROJECT_DIR$/modules/home/views/register/complete.php" />
+        <option value="$PROJECT_DIR$/modules/home/models/LoginLogs.php" />
+        <option value="$PROJECT_DIR$/views/layouts/right.php" />
+        <option value="$PROJECT_DIR$/modules/home/controllers/ProfileController.php" />
+        <option value="$PROJECT_DIR$/modules/home/models/UserIdentity.php" />
+        <option value="$PROJECT_DIR$/modules/home/models/User.php" />
+        <option value="$PROJECT_DIR$/modules/home/views/register/index.php" />
+        <option value="$PROJECT_DIR$/modules/home/views/register/email-code.php" />
+        <option value="$PROJECT_DIR$/modules/home/models/RegisterForm.php" />
+        <option value="$PROJECT_DIR$/config/web.php" />
+        <option value="$PROJECT_DIR$/modules/home/views/login/index.php" />
+        <option value="$PROJECT_DIR$/modules/home/controllers/RegisterController.php" />
+        <option value="$PROJECT_DIR$/modules/home/models/LoginForm.php" />
+        <option value="$PROJECT_DIR$/modules/home/views/login/find-password-one.php" />
+        <option value="$PROJECT_DIR$/modules/home/views/register/code.php" />
+        <option value="$PROJECT_DIR$/modules/home/views/login/find-password-two.php" />
+        <option value="$PROJECT_DIR$/modules/home/views/login/find-password-three.php" />
+        <option value="$PROJECT_DIR$/modules/home/views/login/find-password-complete.php" />
+        <option value="$PROJECT_DIR$/modules/home/controllers/LoginController.php" />
+        <option value="$PROJECT_DIR$/modules/home/controllers/DefaultController.php" />
+        <option value="$PROJECT_DIR$/views/layouts/public.php" />
+        <option value="$PROJECT_DIR$/controllers/GController.php" />
+        <option value="$PROJECT_DIR$/modules/home/views/default/index.php" />
+      </list>
     </option>
   </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
@@ -60,7 +764,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -73,15 +776,228 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cc" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="site" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cc" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layouts" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cc" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="home" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cc" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="home" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cc" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="home" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="default" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cc" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="home" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cc" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="home" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cc" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cc" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cc" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cc" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="settings.github" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="FullScreen" value="true" />
     <property name="js.eslint.eslintPackage" value="" />
+    <property name="FullScreen" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/modules/home/views/default" />
+      <recent name="$PROJECT_DIR$/modules/home/views/login" />
+      <recent name="$PROJECT_DIR$/modules/home/views/register" />
+      <recent name="$PROJECT_DIR$/modules/home/models" />
+      <recent name="$PROJECT_DIR$/web" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration default="true" type="JavaScriptTestRunnerProtractor" factoryName="Protractor">
@@ -152,7 +1068,12 @@
       <option name="presentableId" value="Default" />
       <updated>1491814839748</updated>
       <workItem from="1491814841196" duration="575000" />
-      <workItem from="1491815686173" duration="297000" />
+      <workItem from="1491815686173" duration="2158000" />
+      <workItem from="1491817999314" duration="87000" />
+      <workItem from="1491825947551" duration="21649000" />
+      <workItem from="1491969789567" duration="6926000" />
+      <workItem from="1492065962169" duration="10904000" />
+      <workItem from="1492228454581" duration="30336000" />
     </task>
     <task id="LOCAL-00001" summary="CC vserion 1.0&#10;">
       <created>1491815978059</created>
@@ -161,17 +1082,24 @@
       <option name="project" value="LOCAL" />
       <updated>1491815978059</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="CC vserion 1.0&#10;">
+      <created>1491815993031</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1491815993031</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="872000" />
+    <option name="totallyTimeSpent" value="72635000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25250357" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25035766" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -201,7 +1129,459 @@
     <option name="LAST_COMMIT_MESSAGE" value="CC vserion 1.0&#10;" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/modules/home/views/login/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/controllers/ProfileController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="38" column="40" lean-forward="false" selection-start-line="38" selection-start-column="40" selection-end-line="38" selection-end-column="40" />
+          <folding>
+            <element signature="e#48#56#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/controllers/LoginController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="13" column="27" lean-forward="true" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
+          <folding>
+            <element signature="e#48#89#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/models/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="37" column="0" lean-forward="true" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+          <folding>
+            <element signature="e#43#51#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/db.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/controllers/DefaultController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="38" lean-forward="false" selection-start-line="17" selection-start-column="38" selection-end-line="17" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/controllers/RegisterController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/models/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1245">
+          <caret line="84" column="39" lean-forward="false" selection-start-line="84" selection-start-column="39" selection-end-line="84" selection-end-column="39" />
+          <folding>
+            <element signature="e#43#51#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/models/RegisterForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="690">
+          <caret line="46" column="10" lean-forward="false" selection-start-line="46" selection-start-column="10" selection-end-line="46" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/views/register/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="36" column="35" lean-forward="false" selection-start-line="36" selection-start-column="35" selection-end-line="36" selection-end-column="35" />
+          <folding>
+            <element signature="e#134#163#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/views/register/code.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="36" column="44" lean-forward="false" selection-start-line="36" selection-start-column="36" selection-end-line="36" selection-end-column="44" />
+          <folding>
+            <element signature="e#59#88#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/layouts/global.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+          <folding>
+            <element signature="e#37#58#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#29#49#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#29#49#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/robots.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/params.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/admin/Module.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/models/user/User.php" />
+    <entry file="file://$PROJECT_DIR$/modules/home/models/UserQuery.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/views/profile/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/layouts/right.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="2" lean-forward="true" selection-start-line="5" selection-start-column="2" selection-end-line="5" selection-end-column="2" />
+          <folding>
+            <element signature="e#7#28#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/yiisoft/yii2/web/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="240" column="33" lean-forward="false" selection-start-line="240" selection-start-column="19" selection-end-line="240" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/layouts/main.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="24" column="27" lean-forward="true" selection-start-line="24" selection-start-column="27" selection-end-line="24" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/db.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="30" lean-forward="false" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/CActiveRecord.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="4" lean-forward="false" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
+          <folding>
+            <element signature="e#30#38#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/models/UserIdentity.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="50" column="39" lean-forward="true" selection-start-line="50" selection-start-column="39" selection-end-line="50" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/models/LoginLogs.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="553">
+          <caret line="63" column="25" lean-forward="false" selection-start-line="63" selection-start-column="25" selection-end-line="63" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/controllers/ProfileController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="29" column="11" lean-forward="false" selection-start-line="29" selection-start-column="11" selection-end-line="29" selection-end-column="11" />
+          <folding>
+            <element signature="e#48#56#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/LoginForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="945">
+          <caret line="64" column="21" lean-forward="true" selection-start-line="64" selection-start-column="21" selection-end-line="64" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/SiteController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="22" column="7" lean-forward="false" selection-start-line="18" selection-start-column="8" selection-end-line="36" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/views/register/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding>
+            <element signature="e#134#163#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="4" lean-forward="false" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
+          <folding>
+            <element signature="e#29#49#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/models/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="33" lean-forward="false" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="33" />
+          <folding>
+            <element signature="e#43#51#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/web.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="41" column="59" lean-forward="false" selection-start-line="41" selection-start-column="59" selection-end-line="41" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/views/register/complete.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="20" column="54" lean-forward="false" selection-start-line="20" selection-start-column="54" selection-end-line="20" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/layouts/global.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="27" lean-forward="false" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
+          <folding>
+            <element signature="e#37#58#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/views/login/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="30" column="115" lean-forward="false" selection-start-line="30" selection-start-column="115" selection-end-line="30" selection-end-column="115" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/views/register/email-code.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="3" column="4" lean-forward="false" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
+          <folding>
+            <element signature="e#59#88#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/models/RegisterForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="26" column="54" lean-forward="false" selection-start-line="26" selection-start-column="54" selection-end-line="26" selection-end-column="54" />
+          <folding>
+            <element signature="e#43#51#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/views/register/code.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="36" column="70" lean-forward="false" selection-start-line="36" selection-start-column="12" selection-end-line="36" selection-end-column="70" />
+          <folding>
+            <element signature="e#59#88#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/views/login/find-password-three.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="34" column="77" lean-forward="false" selection-start-line="34" selection-start-column="77" selection-end-line="34" selection-end-column="77" />
+          <folding>
+            <element signature="e#62#91#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/views/login/find-password-one.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="22" lean-forward="false" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
+          <folding>
+            <element signature="e#59#88#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/views/login/find-password-two.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="14" lean-forward="true" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
+          <folding>
+            <element signature="e#59#88#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/views/login/find-password-complete.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="38" lean-forward="false" selection-start-line="12" selection-start-column="38" selection-end-line="12" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/controllers/RegisterController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="49" column="50" lean-forward="false" selection-start-line="49" selection-start-column="50" selection-end-line="49" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/models/LoginForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="31" column="45" lean-forward="false" selection-start-line="31" selection-start-column="45" selection-end-line="31" selection-end-column="45" />
+          <folding>
+            <element signature="e#43#51#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/controllers/LoginController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="36" column="52" lean-forward="false" selection-start-line="36" selection-start-column="8" selection-end-line="36" selection-end-column="52" />
+          <folding>
+            <element signature="e#48#89#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/controllers/DefaultController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="52" lean-forward="false" selection-start-line="17" selection-start-column="52" selection-end-line="17" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/layouts/public.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="42" column="87" lean-forward="false" selection-start-line="42" selection-start-column="87" selection-end-line="42" selection-end-column="87" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/GController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="46" lean-forward="false" selection-start-line="27" selection-start-column="46" selection-end-line="27" selection-end-column="46" />
+          <folding>
+            <element signature="e#35#43#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/home/views/default/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
   </component>
 </project>

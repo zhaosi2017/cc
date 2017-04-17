@@ -11,13 +11,13 @@ $config = [
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'nHqhOusoOzvBjm8w4MFLtrckaET-TCpK',
+            'cookieValidationKey' => 'nHqhOUsoOzvBjm8w4MFLTrcKaET-TCpK',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'app\modules\home\models\User',
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
@@ -28,8 +28,21 @@ $config = [
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-            'useFileTransport' => true,
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.gmail.com',
+                'username' => 'officeaction2017@gmail.com',
+                'password' => 'Officeaction123',
+                'port' => '25',
+                'encryption' => 'tls',
+            ],
+            'messageConfig'=>[
+                'charset'=>'UTF-8',
+                'from'=>['officeaction2017@gmail.com'=>'验证码']
+            ],
         ],
+
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -48,7 +61,7 @@ $config = [
             ],
         ],
 
-        /*'assetManager' => [
+        'assetManager' => [
             'bundles' => [
                 'yii\bootstrap\BootstrapAsset' => [
                     'sourcePath' => null, //通常都要重置为null，
@@ -62,11 +75,12 @@ $config = [
                     ]
                 ],
             ],
-        ],*/
+        ],
     ],
     'params' => $params,
     'modules' => [
         'home' => 'app\modules\home\Module',
+        'admin' => 'app\modules\admin\Module',
     ],
 ];
 
