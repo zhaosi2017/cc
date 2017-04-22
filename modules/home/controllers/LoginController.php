@@ -45,7 +45,7 @@ class LoginController extends GController
             }else{
                 if($model->preLogin()){
                     $model->login();
-                    return $this->redirect(['/home/default/index']);
+                    return $this->redirect(['/home/default/welcome']);
                 }
             }
         }

@@ -30,7 +30,7 @@ $module = $this->context->module->id;
                                 </span>
                             </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                <li><a class="J_menuItem" href="<?= Url::to(['/user/default/password']) ?>">修改密码</a></li>
+                                <li><a class="J_menuItem" href="<?= Url::to(['/home/user/password']) ?>">修改密码</a></li>
                                 <li class="divider"></li>
                                 <li><a data-method="post" href="<?= Url::to(['/home/login/logout']) ?>">安全退出</a></li>
                             </ul>
@@ -43,7 +43,7 @@ $module = $this->context->module->id;
                         <a class="J_menuItem" href="<?= Url::to(['/home/default/welcome']) ?>"><i class="fa fa-home"></i> <span class="nav-label">主页</span></a>
                     </li>
                     <li>
-                        <a class="J_menuItem" href="<?= Url::to(['/home/account/index']) ?>"><span class="nav-label">账户中心</span></a>
+                        <a class="J_menuItem" href="<?= Url::to(['/home/user/index']) ?>"><span class="nav-label">账户中心</span></a>
                     </li>
                     <li>
                         <a class="J_menuItem" href="<?= Url::to(['/home/call/index']) ?>"><span class="nav-label">个人通话</span></a>
@@ -59,7 +59,7 @@ $module = $this->context->module->id;
                 <div class="pull-right m-r-md">
                     <span><?= $identity->account; ?></span>
                     <span>|</span>
-                    <a href="<?= Url::to(['/user/default/password']) ?>">修改密码</a>
+                    <a href="<?= Url::to(['/home/user/password']) ?>">修改密码</a>
                     <span>|</span>
                     <a data-method="post" href="<?= Url::to(['/home/login/logout']) ?>">退出</a>
                 </div>

@@ -76,9 +76,11 @@ class User extends CActiveRecord implements IdentityInterface
     {
         return [
             ['account', 'unique'],
-            [['account', 'nickname', 'urgent_contact_person_one', 'urgent_contact_person_two'], 'string'],
+            [['account', 'urgent_contact_person_one', 'urgent_contact_person_two'], 'string'],
             [['un_call_number', 'un_call_by_same_number', 'long_time', 'urgent_contact_number_two', 'reg_time', 'role_id'], 'integer'],
             [['auth_key', 'phone_number', 'urgent_contact_number_one', 'telegram_number', 'potato_number'], 'string', 'max' => 64],
+            ['phone_number', 'number'],
+            ['nickname','string','length'=>[2,6], 'message'=>'昵称请设置2～6个汉字']
         ];
     }
 
@@ -91,15 +93,15 @@ class User extends CActiveRecord implements IdentityInterface
             'id' => 'ID',
             'auth_key' => 'Auth Key',
             'account' => 'Account',
-            'nickname' => 'Nickname',
-            'un_call_number' => 'Un Call Number',
+            'nickname' => '昵称',
+            'un_call_number' => '被叫号码',
             'un_call_by_same_number' => 'Un Call By Same Number',
             'long_time' => 'Long Time',
-            'phone_number' => 'Phone Number',
-            'urgent_contact_number_one' => 'Urgent Contact Number one',
-            'urgent_contact_number_two' => 'Urgent Contact Number Two',
-            'urgent_contact_person_one' => 'Urgent Contact Person One',
-            'urgent_contact_person_two' => 'Urgent Contact Person Two',
+            'phone_number' => '绑定电话',
+            'urgent_contact_number_one' => '紧急联系电话一',
+            'urgent_contact_number_two' => '紧急联系电话二',
+            'urgent_contact_person_one' => '紧急联系人一',
+            'urgent_contact_person_two' => '紧急联系人二',
             'telegram_number' => 'Telegram Number',
             'potato_number' => 'Potato Number',
             'reg_time' => 'Reg Time',
