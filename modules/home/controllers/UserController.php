@@ -156,13 +156,16 @@ class UserController extends GController
         if(Yii::$app->request->isAjax){
             $number = Yii::$app->request->post('number');
             if($number){
+                $captcha = $this->createAction('captcha');
+                $verifyCode = $captcha->getVerifyCode(true);
+
                 $url = 'https://rest.nexmo.com/sms/json?' . http_build_query(
                     [
                         'api_key' =>  Yii::$app->params['nexmo_api_key'],
                         'api_secret' => Yii::$app->params['nexmo_api_secret'],
                         'to' => $number,
                         'from' => Yii::$app->params['nexmo_account_number'],
-                        'text' => '2345'
+                        'text' => $verifyCode
                     ]
                 );
 
