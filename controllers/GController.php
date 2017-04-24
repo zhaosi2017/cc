@@ -21,7 +21,6 @@ class GController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-//                'only' => ['*'],
                 'rules' => [
                     [
                         'actions' => ['delete'],

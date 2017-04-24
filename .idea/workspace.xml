@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40fa26f6-6421-4d0a-82a4-1f58afcfbe29" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/home/views/default/deny.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/web.php" afterPath="$PROJECT_DIR$/config/web.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/GController.php" afterPath="$PROJECT_DIR$/controllers/GController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/home/controllers/DefaultController.php" afterPath="$PROJECT_DIR$/modules/home/controllers/DefaultController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/home/controllers/UserController.php" afterPath="$PROJECT_DIR$/modules/home/controllers/UserController.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -92,8 +88,8 @@
       <file leaf-file-name="GController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controllers/GController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="268">
-              <caret line="49" column="0" lean-forward="true" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+            <state relative-caret-position="255">
+              <caret line="41" column="35" lean-forward="true" selection-start-line="41" selection-start-column="35" selection-end-line="41" selection-end-column="35" />
               <folding>
                 <element signature="e#35#43#0#PHP" expanded="true" />
               </folding>
@@ -509,7 +505,7 @@
       <workItem from="1492228454581" duration="30526000" />
       <workItem from="1492575018372" duration="15772000" />
       <workItem from="1492674910250" duration="10769000" />
-      <workItem from="1492834513354" duration="13007000" />
+      <workItem from="1492834513354" duration="13207000" />
     </task>
     <task id="LOCAL-00001" summary="CC vserion 1.0&#10;">
       <created>1491815978059</created>
@@ -553,11 +549,18 @@
       <option name="project" value="LOCAL" />
       <updated>1492938618033</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="CC 2017-4-24">
+      <created>1493019150455</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1493019150455</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="112373000" />
+    <option name="totallyTimeSpent" value="112573000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -593,7 +596,8 @@
     <MESSAGE value="CC 2017-4-11" />
     <MESSAGE value="CC 2017-4-22" />
     <MESSAGE value="CC 2017-4-23" />
-    <option name="LAST_COMMIT_MESSAGE" value="CC 2017-4-23" />
+    <MESSAGE value="CC 2017-4-24" />
+    <option name="LAST_COMMIT_MESSAGE" value="CC 2017-4-24" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1003,8 +1007,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/controllers/GController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
-          <caret line="49" column="0" lean-forward="true" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+        <state relative-caret-position="255">
+          <caret line="41" column="35" lean-forward="true" selection-start-line="41" selection-start-column="35" selection-end-line="41" selection-end-column="35" />
           <folding>
             <element signature="e#35#43#0#PHP" expanded="true" />
           </folding>
