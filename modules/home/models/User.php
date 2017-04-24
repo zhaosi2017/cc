@@ -17,6 +17,7 @@ use yii\web\IdentityInterface;
  * @property integer $un_call_number
  * @property integer $un_call_by_same_number
  * @property integer $long_time
+ * @property integer $country_code
  * @property string $phone_number
  * @property string $urgent_contact_number_one
  * @property integer $urgent_contact_number_two
@@ -24,6 +25,8 @@ use yii\web\IdentityInterface;
  * @property string $urgent_contact_person_two
  * @property string $telegram_number
  * @property string $potato_number
+ * @property integer $telegram_country_code
+ * @property integer $potato_country_code
  * @property integer $reg_time
  * @property integer $role_id
  */
@@ -97,6 +100,7 @@ class User extends CActiveRecord implements IdentityInterface
             'un_call_number' => '被叫号码',
             'un_call_by_same_number' => 'Un Call By Same Number',
             'long_time' => 'Long Time',
+            'country_code' => '国码',
             'phone_number' => '绑定电话',
             'urgent_contact_number_one' => '紧急联系电话一',
             'urgent_contact_number_two' => '紧急联系电话二',
@@ -104,6 +108,8 @@ class User extends CActiveRecord implements IdentityInterface
             'urgent_contact_person_two' => '紧急联系人二',
             'telegram_number' => 'Telegram Number',
             'potato_number' => 'Potato Number',
+            'telegram_country_code' => 'telegram country code',
+            'potato_country_code' => 'Potato country code',
             'reg_time' => 'Reg Time',
             'role_id' => 'Role ID',
         ];

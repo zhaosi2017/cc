@@ -29,13 +29,17 @@ $this->title = '修改绑定电话';
             </div>
         </div>
         <div class="col-sm-10">
-            <div class="form-group">
+            <!--<div class="form-group">
                 +
                 <input title="" id="country-code" class="form-control" size="5" type="text">
                 <div class="help-block"></div>
-            </div>
+            </div>-->
+            <?php echo $form->field($model, 'country_code', [
+                'template' => "{label}\n<div>&nbsp;+{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
+            ])->textInput(['size' => 5,'placeholder'=>'国码'])->label(false) ?>
+
             <?php echo $form->field($model, 'phone_number')->textInput(['placeholder' => '您的手机号码'])->label(false) ?>
-            <div class="help-block">&nbsp;&nbsp;&nbsp;*请输入您的国码，然后输入您的手机号码</div>
+<!--            <div class="help-block">&nbsp;&nbsp;&nbsp;*请输入您的国码，然后输入您的手机号码</div>-->
         </div>
 
         <div class="col-sm-2 text-right">

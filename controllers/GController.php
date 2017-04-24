@@ -56,7 +56,7 @@ class GController extends Controller
         $this->layout = '@app/views/layouts/right';
 
         Yii::$app->controller->id != 'register'
-        && Yii::$app->controller->id!='login'
+        && Yii::$app->controller->id != 'login'
         && Yii::$app->user->isGuest
         && $this->redirect(['/home/login/index']);
 
