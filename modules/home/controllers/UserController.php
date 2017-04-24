@@ -7,7 +7,6 @@ use Yii;
 use app\modules\home\models\User;
 use app\controllers\GController;
 use yii\web\NotFoundHttpException;
-//use yii\filters\VerbFilter;
 
 /**
  * UserController implements the CRUD actions for User model.

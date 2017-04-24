@@ -3,6 +3,7 @@
 namespace app\modules\home\controllers;
 
 use app\controllers\GController;
+//use yii\helpers\Url;
 
 /**
  * Default controller for the `home` module
@@ -21,6 +22,12 @@ class DefaultController extends GController
 
     public function actionWelcome()
     {
-        return $this->render('index');
+        return $this->render('welcome');
+    }
+
+    public function actionDeny()
+    {
+        $this->layout = '@app/views/layouts/global';
+        return $this->render('deny');
     }
 }

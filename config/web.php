@@ -21,7 +21,7 @@ $config = [
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
-            'errorAction' => 'site/error',
+            'errorAction' => '/home/default/deny',
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
@@ -80,7 +80,6 @@ $config = [
     'params' => $params,
     'modules' => [
         'home' => 'app\modules\home\Module',
-        'admin' => 'app\modules\admin\Module',
     ],
 ];
 

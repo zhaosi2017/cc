@@ -3,7 +3,6 @@
 namespace app\controllers;
 
 use Yii;
-use yii\helpers\Url;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -22,20 +21,23 @@ class GController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+//                'only' => ['*'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['delete'],
+                        'allow' => false,
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index','captcha','code'],
+                        'roles' => ['?'],
+                    ],
+                    [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+
                 ],
-                'denyCallback' => function () { //have two params $rule , $action
-                    if(Yii::$app->user->isGuest){
-                        return $this->redirect(Url::to(['/home/login/index']));
-                    }
-                    return $this->redirect(Url::to(['/home/default/welcome']));
-                },
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -53,6 +55,11 @@ class GController extends Controller
     public function beforeAction($action)
     {
         $this->layout = '@app/views/layouts/right';
+
+        Yii::$app->controller->id != 'register'
+        && Yii::$app->controller->id!='login'
+        && Yii::$app->user->isGuest
+        && $this->redirect(['/home/login/index']);
 
         return parent::beforeAction($action);
 
