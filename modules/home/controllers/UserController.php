@@ -74,6 +74,11 @@ class UserController extends GController
         return $this->render('set-phone-number',['model'=>$model]);
     }
 
+    public function actionBindPotato()
+    {
+
+    }
+
     /**
      * Displays a single User model.
      * @param integer $id
@@ -187,5 +192,6 @@ class UserController extends GController
         }
         return false;
     }
+
 
 }
