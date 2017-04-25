@@ -4,7 +4,6 @@ namespace app\modules\home\controllers;
 
 use app\modules\home\models\ContactForm;
 use app\modules\home\models\PasswordForm;
-use app\modules\home\models\PhoneNumberForm;
 use Yii;
 use app\modules\home\models\User;
 use app\controllers\GController;
@@ -77,7 +76,40 @@ class UserController extends GController
 
     public function actionBindPotato()
     {
+        $id = Yii::$app->user->id;
+        $model = (new ContactForm())->findModel($id);
+        $user_model = $this->findModel($id);
+        if($model->load(Yii::$app->request->post()) && $model->validate(['potato_country_code','potato_number','code'])){
+            $user_model->potato_country_code = $model->potato_country_code;
+            $user_model->potato_number = $model->potato_number;
+            if($user_model->update()){
+                Yii::$app->getSession()->setFlash('success', '操作成功');
+                return $this->redirect(['index']);
+            }else{
+                Yii::$app->getSession()->setFlash('error', '操作失败');
+                return $this->redirect('bind-potato',['model'=>$model]);
+            }
+        }
+        return $this->render('bind-potato',['model'=>$model]);
+    }
 
+    public function actionBindTelegram()
+    {
+        $id = Yii::$app->user->id;
+        $model = (new ContactForm())->findModel($id);
+        $user_model = $this->findModel($id);
+        if($model->load(Yii::$app->request->post()) && $model->validate(['telegram_country_code','telegram_number','code'])){
+            $user_model->telegram_country_code = $model->telegram_country_code;
+            $user_model->telegram_number = $model->telegram_number;
+            if($user_model->update()){
+                Yii::$app->getSession()->setFlash('success', '操作成功');
+                return $this->redirect(['index']);
+            }else{
+                Yii::$app->getSession()->setFlash('error', '操作失败');
+                return $this->redirect('bind-telegram',['model'=>$model]);
+            }
+        }
+        return $this->render('bind-telegram',['model'=>$model]);
     }
 
     /**
