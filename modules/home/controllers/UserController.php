@@ -3,6 +3,7 @@
 namespace app\modules\home\controllers;
 
 use app\modules\home\models\PasswordForm;
+use app\modules\home\models\PhoneNumberForm;
 use Yii;
 use app\modules\home\models\User;
 use app\controllers\GController;
@@ -56,11 +57,26 @@ class UserController extends GController
 
     public function actionSetPhoneNumber()
     {
-        $model = $this->findModel(Yii::$app->user->id);
-        if($model->load(Yii::$app->request->post()) && $model->update()){
-            return $this->redirect(['index']);
+        $id = Yii::$app->user->id;
+        $model = (new PhoneNumberForm())->findModel($id);
+        $user_model = $this->findModel($id);
+        if($model->load(Yii::$app->request->post()) && $model->validate(['code'])){
+            $user_model->country_code = $model->country_code;
+            $user_model->phone_number = $model->phone_number;
+            if($user_model->update()){
+                Yii::$app->getSession()->setFlash('success', '操作成功');
+                return $this->redirect(['index']);
+            }else{
+                Yii::$app->getSession()->setFlash('error', '操作失败');
+                return $this->redirect('set-phone-number',['model'=>$model]);
+            }
         }
         return $this->render('set-phone-number',['model'=>$model]);
+    }
+
+    public function actionBindPotato()
+    {
+
     }
 
     /**
@@ -176,5 +192,6 @@ class UserController extends GController
         }
         return false;
     }
+
 
 }

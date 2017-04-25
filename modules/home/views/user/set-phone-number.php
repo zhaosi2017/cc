@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
+use yii\captcha\Captcha;
 
 $this->title = '修改绑定电话';
 
@@ -14,7 +15,7 @@ $this->title = '修改绑定电话';
 <div class="user-form">
 
     <?php $form = ActiveForm::begin([
-        'id' => 'set-nickname-form',
+        'id' => 'set-phone-number-form',
         'options'=>['class'=>'m-t text-left'],
         'fieldConfig' => [
             'template' => "{label}\n<div class=\"col-sm-10\">{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
@@ -48,20 +49,31 @@ $this->title = '修改绑定电话';
             </div>
         </div>
         <div class="col-sm-10">
-            <div class="form-group">
+            <!--<div class="form-group">
                 &nbsp;&nbsp;
                 <input title="" class="form-control" size="18" type="text" placeholder="填写验证码">
                 <div class="help-block"></div>
-            </div>
+            </div>-->
+
+            <?php echo $form->field($model, 'code', [
+                'template' => "{label}\n<div class='m-l-sm'>{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
+            ])->widget(Captcha::className(),[
+                'captchaAction'=>'/home/register/captcha',
+                'template' => '<div class="row"><div class="col-lg-2">{image}</div><div class="col-lg-10">{input}</div></div>',
+            ])
+                ->textInput(['size' => 18,'placeholder'=>'请输入验证码'])
+                ->label(false)
+            ?>
+
             <div class="form-group">
                 <input type="button" id="count-down" class="form-control" onclick="
-                    var duration = 5;
+                    var duration = 59;
                     $('#count-down').attr('disabled','disabled');
                     var url = '<?php echo Url::to(['/home/user/send-short-message']); ?>';
                     var data = {
                         };
 
-                    data.number = '+' + $('#country-code').val() + $('#user-phone_number').val();
+                    data.number = '+' + $('#phonenumberform-country_code').val() + $('#phonenumberform-phone_number').val();
                     $.post(url, data).done(function(r) {
                         console.log(r);
                     });
@@ -84,7 +96,7 @@ $this->title = '修改绑定电话';
 
     <div class="form-group m-b-lg">
         <div class="col-sm-6 col-sm-offset-2">
-            <?= Html::submitButton('绑定', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            <?= Html::submitButton('绑定', ['class' => 'btn btn-primary']) ?>
         </div>
     </div>
 
