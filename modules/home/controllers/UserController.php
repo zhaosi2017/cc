@@ -193,5 +193,15 @@ class UserController extends GController
         return false;
     }
 
+    /**
+     * Add urgent Contact person.
+     *
+     * @return User the loaded model
+     */
+    public function actionAddUrgentContactPerson()
+    {
+        $model = $this->findModel(Yii::$app->user->id);
+        return $this->render('AddUrgentContactPerson', ['model' => $model]);
+    }
 
 }
