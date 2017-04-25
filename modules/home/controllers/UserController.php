@@ -2,6 +2,7 @@
 
 namespace app\modules\home\controllers;
 
+use app\modules\home\models\ContactForm;
 use app\modules\home\models\PasswordForm;
 use app\modules\home\models\PhoneNumberForm;
 use Yii;
@@ -58,9 +59,9 @@ class UserController extends GController
     public function actionSetPhoneNumber()
     {
         $id = Yii::$app->user->id;
-        $model = (new PhoneNumberForm())->findModel($id);
+        $model = (new ContactForm())->findModel($id);
         $user_model = $this->findModel($id);
-        if($model->load(Yii::$app->request->post()) && $model->validate(['code'])){
+        if($model->load(Yii::$app->request->post()) && $model->validate(['country_code','phone_number','code'])){
             $user_model->country_code = $model->country_code;
             $user_model->phone_number = $model->phone_number;
             if($user_model->update()){

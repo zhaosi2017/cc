@@ -9,11 +9,19 @@ use yii\base\Model;
  * @property User|null $user This property is read-only.
  *
  */
-class PhoneNumberForm extends Model
+class ContactForm extends Model
 {
     public $country_code;
 
+    public $potato_country_code;
+
+    public $telegram_country_code;
+
     public $phone_number;
+
+    public $potato_number;
+
+    public $telegram_number;
 
     public $code;
 
@@ -25,8 +33,8 @@ class PhoneNumberForm extends Model
     {
         return [
             // username and password are both required
-            [['country_code'], 'integer'],
-            [['phone_number'], 'string'],
+            [['country_code','potato_country_code','telegram_country_code'], 'integer'],
+            [['phone_number','potato_number','telegram_number'], 'string'],
             ['code', 'captcha', 'message'=>'验证码输入不正确', 'captchaAction'=>'/home/user/captcha'],
         ];
     }
@@ -45,7 +53,11 @@ class PhoneNumberForm extends Model
     {
         $user = User::findOne($id);
         $this->country_code = $user->country_code;
+        $this->potato_country_code = $user->potato_country_code;
+        $this->telegram_country_code = $user->telegram_country_code;
         $this->phone_number = $user->phone_number;
+        $this->potato_number = $user->potato_number;
+        $this->telegram_number = $user->telegram_number;
         return $this;
     }
 }
