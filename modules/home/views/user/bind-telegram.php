@@ -37,7 +37,7 @@ $this->title = '修改绑定telegram';
             </div>-->
             <?php echo $form->field($model, 'telegram_country_code', [
                 'template' => "{label}\n<div>&nbsp;+{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
-            ])->textInput(['size' => 5,'placeholder'=>'国码'])->label(false) ?>
+            ])->textInput(['size' => 5,'placeholder'=>'国码','value'=>''])->label(false) ?>
 
             <?php echo $form->field($model, 'telegram_number')->textInput(['placeholder' => '您的telegram号码'])->label(false) ?>
 <!--            <div class="help-block">&nbsp;&nbsp;&nbsp;*请输入您的国码，然后输入您的手机号码</div>-->

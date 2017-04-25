@@ -17,6 +17,10 @@ class ContactForm extends Model
 
     public $telegram_country_code;
 
+    public $urgent_contact_one_country_code;
+
+    public $urgent_contact_two_country_code;
+
     public $phone_number;
 
     public $potato_number;
@@ -33,7 +37,8 @@ class ContactForm extends Model
     {
         return [
             // username and password are both required
-            [['country_code','potato_country_code','telegram_country_code'], 'integer'],
+            [['country_code','potato_country_code','telegram_country_code','urgent_contact_one_country_code', 'urgent_contact_two_country_code'], 'integer'],
+            [['country_code','potato_country_code','telegram_country_code','urgent_contact_one_country_code', 'urgent_contact_two_country_code'], 'default', 'value'=>''],
             [['phone_number','potato_number','telegram_number'], 'string'],
             ['code', 'captcha', 'message'=>'验证码输入不正确', 'captchaAction'=>'/home/user/captcha'],
         ];

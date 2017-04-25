@@ -8,7 +8,7 @@ use yii\captcha\Captcha;
 $this->title = '修改绑定potato';
 
 /* @var $this yii\web\View */
-/* @var $model app\modules\home\models\User */
+/* @var $model app\modules\home\models\ContactForm */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -37,7 +37,7 @@ $this->title = '修改绑定potato';
             </div>-->
             <?php echo $form->field($model, 'potato_country_code', [
                 'template' => "{label}\n<div>&nbsp;+{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
-            ])->textInput(['size' => 5,'placeholder'=>'国码'])->label(false) ?>
+            ])->textInput(['size' => 5,'placeholder'=>'国码','value'=>''])->label(false) ?>
 
             <?php echo $form->field($model, 'potato_number')->textInput(['placeholder' => '您的potato号码'])->label(false) ?>
 <!--            <div class="help-block">&nbsp;&nbsp;&nbsp;*请输入您的国码，然后输入您的手机号码</div>-->
