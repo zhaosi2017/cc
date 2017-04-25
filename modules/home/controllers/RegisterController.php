@@ -47,7 +47,6 @@ class RegisterController extends GController
                 }else{
                     return $this->render('code',['model'=>$model]);
                 }
-                #return $this->render('code',['model'=>$model]);
             }else{
                 return $this->render('index',['model'=>$model]);
             }
