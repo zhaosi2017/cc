@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use yii\captcha\Captcha;
 
-$this->title = '修改绑定电话';
+$this->title = '修改绑定telegram';
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\home\models\User */
@@ -35,11 +35,11 @@ $this->title = '修改绑定电话';
                 <input title="" id="country-code" class="form-control" size="5" type="text">
                 <div class="help-block"></div>
             </div>-->
-            <?php echo $form->field($model, 'country_code', [
+            <?php echo $form->field($model, 'telegram_country_code', [
                 'template' => "{label}\n<div>&nbsp;+{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
             ])->textInput(['size' => 5,'placeholder'=>'国码'])->label(false) ?>
 
-            <?php echo $form->field($model, 'phone_number')->textInput(['placeholder' => '您的手机号码'])->label(false) ?>
+            <?php echo $form->field($model, 'telegram_number')->textInput(['placeholder' => '您的telegram号码'])->label(false) ?>
 <!--            <div class="help-block">&nbsp;&nbsp;&nbsp;*请输入您的国码，然后输入您的手机号码</div>-->
         </div>
 
@@ -70,10 +70,9 @@ $this->title = '修改绑定电话';
                     var duration = 59;
                     $('#count-down').attr('disabled','disabled');
                     var url = '<?php echo Url::to(['/home/user/send-short-message']); ?>';
-                    var data = {
-                        };
+                    var data = {};
 
-                    data.number = '+' + $('#contactform-country_code').val() + $('#contactform-phone_number').val();
+                    data.number = '+' + $('#contactform-telegram_country_code').val() + $('#contactform-telegram_number').val();
                     $.post(url, data).done(function(r) {
                         console.log(r);
                     });
