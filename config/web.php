@@ -80,6 +80,7 @@ $config = [
     'params' => $params,
     'modules' => [
         'home' => 'app\modules\home\Module',
+        'admin' => 'app\modules\admin\Module',
     ],
 ];
 

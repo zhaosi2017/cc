@@ -3,7 +3,6 @@
 namespace app\modules\home\controllers;
 
 use app\controllers\GController;
-//use yii\helpers\Url;
 
 /**
  * Default controller for the `home` module

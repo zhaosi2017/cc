@@ -68,7 +68,6 @@ class LoginForm extends Model
     {
         if (!$this->hasErrors()) {
             $identity = $this->getIdentity();
-
             if (!Yii::$app->getSecurity()->validatePassword($this->password, $identity->password)) {
                 $this->addError($attribute, '密码错误。');
             }
