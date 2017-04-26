@@ -74,6 +74,35 @@ class UserController extends GController
         return $this->render('set-phone-number',['model'=>$model]);
     }
 
+    public function actionDeleteNumber($id)
+    {
+        $model = $this->findModel($id);
+        if(Yii::$app->request->isPost){
+            $get = Yii::$app->request->get();
+            switch ($get['type']){
+                case 'phone_number':
+                    $model->phone_number = '';
+                    $model->country_code = null;
+                    break;
+                case 'potato_number':
+                    $model->potato_number = '';
+                    $model->potato_country_code = null;
+                    break;
+                case 'telegram_number':
+                    $model->telegram_number = '';
+                    $model->potato_country_code = null;
+                    break;
+            }
+            if($model->update()){
+                Yii::$app->getSession()->setFlash('success', '操作成功');
+            }else{
+                Yii::$app->getSession()->setFlash('error', '操作失败');
+            }
+            $this->redirect(['index']);
+        }
+        return false;
+    }
+
     public function actionBindPotato()
     {
         $id = Yii::$app->user->id;

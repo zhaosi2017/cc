@@ -19,8 +19,17 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="text-left">
                         <p class="m-t-lg">管理个人昵称、联系电话</p>
                         <p class="m-t-lg">账号：<?php echo $model->account; ?></p>
-                        <p class="m-t-lg">昵称：<?php echo $model->nickname; ?><a href="<?php echo Url::to(['/home/user/set-nickname']) ?>" class="btn btn-primary btn-sm pull-right">去设置</a></p>
-                        <p class="m-t-lg">联系电话：<?php echo $model->phone_number ? '+' . $model->country_code . $model->phone_number : '无'; ?><a href="<?php echo Url::to(['/home/user/set-phone-number']) ?>" class="btn btn-primary btn-sm pull-right">去绑定</a></p>
+                        <p class="m-t-lg">昵称：<?php echo $model->nickname; ?><a href="<?php echo Url::to(['/home/user/set-nickname']) ?>" class="btn btn-primary btn-sm pull-right"><?php echo $model->nickname ? '修改' : '去设置'?></a></p>
+                        <div class="m-t-lg">联系电话：<?php echo $model->phone_number ? '+' . $model->country_code . $model->phone_number : '无'; ?>
+                            <?php if(!$model->phone_number){ ?>
+                                <a href="<?php echo Url::to(['/home/user/set-phone-number']) ?>" class="btn btn-primary btn-sm pull-right">去绑定</a>
+                            <?php }else{ ?>
+                                <div class="pull-right btn-group">
+                                    <a href="<?php echo Url::to(['/home/user/set-phone-number']) ?>" class="btn btn-primary btn-sm">修改</a>
+                                    <a href="<?php echo Url::to(['/home/user/delete-number','id'=>$model->id, 'type'=>'phone_number']) ?>" data-method="post" data-confirm="你确定要删除吗?" class="btn btn-danger btn-sm">删除</a>
+                                </div>
+                            <?php } ?>
+                        </div>
                         <a class="btn btn-primary full-width m-t-lg" href="<?php echo Url::to(['/home/user/password'])?>">修改密码</a>
                     </div>
                 </div>
@@ -33,14 +42,27 @@ $this->params['breadcrumbs'][] = $this->title;
                         <h4 class="m-b-lg">账号绑定</h4>
                         <div class="text-left">
                             <p class="m-t-lg">绑定telegram或potato，正式启用离线呼叫提醒功能，让人可以找到您，同时也能让您找到别人！</p>
-                            <p class="m-t-lg">Potato：<?php echo $model->potato_number ? $model->potato_country_code . $model->potato_number : '无'; ?>
+                            <div class="m-t-lg">Potato：<?php echo $model->potato_number ? $model->potato_country_code . $model->potato_number : '无'; ?>
+                                <?php if(!$model->potato_number){ ?>
                                 <a href="<?php echo Url::to(['/home/user/bind-potato']) ?>" class="btn btn-primary btn-sm pull-right">立即绑定</a>
-                            </p>
-                            <p class="m-t-lg">Telegram：<?php echo $model->telegram_number ? $model->telegram_country_code . $model->telegram_number : '无'; ?>
+                                <?php }else{ ?>
+                                    <div class="pull-right btn-group">
+                                        <a href="<?php echo Url::to(['/home/user/bind-potato']) ?>" class="btn btn-primary btn-sm">修改</a>
+                                        <a href="<?php echo Url::to(['/home/user/delete-number','id'=>$model->id, 'type'=>'potato_number']) ?>" data-method="post" data-confirm="你确定要删除吗?" class="btn btn-danger btn-sm">删除</a>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                            <div class="m-t-lg">Telegram：<?php echo $model->telegram_number ? $model->telegram_country_code . $model->telegram_number : '无'; ?>
+                                <?php if(!$model->telegram_number){ ?>
                                 <a href="<?php echo Url::to(['/home/user/bind-telegram']) ?>" class="btn btn-primary btn-sm pull-right">立即绑定</a>
-                            </p>
+                                <?php }else{ ?>
+                                    <div class="pull-right btn-group">
+                                        <a href="<?php echo Url::to(['/home/user/bind-telegram']) ?>" class="btn btn-primary btn-sm">修改</a>
+                                        <a href="<?php echo Url::to(['/home/user/delete-number','id'=>$model->id, 'type'=>'telegram_number']) ?>" data-method="post" data-confirm="你确定要删除吗?" class="btn btn-danger btn-sm">删除</a>
+                                    </div>
+                                <?php } ?>
+                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>
