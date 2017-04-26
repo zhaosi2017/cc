@@ -100,6 +100,7 @@ class ContactForm extends Model
             'urgent_contact_number_two' => '紧急联系人二号码',
             'urgent_contact_person_one' => '紧急联系人一',
             'urgent_contact_person_two' => '紧急联系人二',
+
         ];
     }
 
