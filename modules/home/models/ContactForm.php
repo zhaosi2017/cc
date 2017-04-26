@@ -48,6 +48,7 @@ class ContactForm extends Model
             [['country_code','potato_country_code','telegram_country_code','urgent_contact_one_country_code', 'urgent_contact_two_country_code'], 'integer'],
             [['country_code','potato_country_code','telegram_country_code','urgent_contact_one_country_code', 'urgent_contact_two_country_code'], 'default', 'value'=>''],
             [['phone_number','potato_number','telegram_number','urgent_contact_person_one','urgent_contact_person_two'], 'string'],
+            [['user-urgent_contact_person_one'], 'string'],
             ['code', 'captcha', 'message'=>'验证码输入不正确', 'captchaAction'=>'/home/user/captcha'],
         ];
     }
