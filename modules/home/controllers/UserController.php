@@ -234,9 +234,9 @@ class UserController extends GController
     public function actionAddUrgentContactPerson()
     {
         $model = $this->findModel(Yii::$app->user->id);
-        if ($model->load(Yii::$app->request->post())){
+        $contactForm = new ContactForm();
+        if ($model->load(Yii::$app->request->post()) && $contactForm->validate(['urgent_contact_person_one', 'urgent_contact_one_country_code', 'urgent_contact_number_one', 'urgent_contact_person_two', 'urgent_contact_two_country_code', 'urgent_contact_number_two'])){
         } else {
-            $contactForm = new ContactForm();
             // 判断用户添加几位紧急联系人, 当两位联系人没有满, 才能继续添加联系人.
             if (empty($model->urgent_contact_person_one)) {
                 return $this->render('add-urgent-contact-person-one', ['model' => $contactForm]);
