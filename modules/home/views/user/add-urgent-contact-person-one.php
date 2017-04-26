@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use yii\captcha\Captcha;
 
-$this->title = '修改绑定potato';
+$this->title = '添加紧急联系人一';
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\home\models\ContactForm */
@@ -41,11 +41,11 @@ $this->title = '修改绑定potato';
                     <div class="help-block"></div>
                 </div>
             </div>
-            <?php echo $form->field($model, 'potato_country_code', [
+            <?php echo $form->field($model, 'urgent_contact_one_country_code', [
                 'template' => "{label}\n<div class='col-sm-4'>{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
             ])->textInput(['size' => 5,'placeholder'=>'国码','value'=>''])->label(false) ?>
 
-            <?php echo $form->field($model, 'potato_number')->textInput(['placeholder' => '您的potato号码','size'=>'21'])->label(false) ?>
+            <?php echo $form->field($model, 'urgent_contact_number_one')->textInput(['placeholder' => '紧急联系人号码','size'=>'21'])->label(false) ?>
         </div>
 
     </div>

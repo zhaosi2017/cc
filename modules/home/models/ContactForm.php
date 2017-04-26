@@ -44,25 +44,8 @@ class ContactForm extends Model
     public function rules()
     {
         return [
-            [
-                [
-                    'phone_number',
-                    'potato_number',
-                    'telegram_number',
-                    'urgent_contact_number_one',
-                    'urgent_contact_number_two',
-                    'country_code',
-                    'potato_country_code',
-                    'telegram_country_code',
-                    'urgent_contact_one_country_code',
-                    'urgent_contact_two_country_code',
-                    'urgent_contact_person_one',
-                    'urgent_contact_person_two',
-                ],
-                'required'
-            ],
-
-            [['country_code','potato_country_code','telegram_country_code','urgent_contact_one_country_code', 'urgent_contact_two_country_code'], 'number'],
+            // username and password are both required
+            [['country_code','potato_country_code','telegram_country_code','urgent_contact_one_country_code', 'urgent_contact_two_country_code'], 'integer'],
             [['country_code','potato_country_code','telegram_country_code','urgent_contact_one_country_code', 'urgent_contact_two_country_code'], 'default', 'value'=>''],
             [['phone_number','potato_number','telegram_number','urgent_contact_person_one','urgent_contact_person_two'], 'string'],
             [['user-urgent_contact_person_one'], 'string'],
@@ -82,13 +65,6 @@ class ContactForm extends Model
             'telegram_country_code' => '国码',
             'urgent_contact_one_country_code' => '国码',
             'urgent_contact_two_country_code' => '国码',
-            'phone_number' => '绑定电话',
-            'potato_number' => 'potato号码',
-            'telegram_number' => 'telegram号码',
-            'urgent_contact_number_one' => '紧急联系人一号码',
-            'urgent_contact_number_two' => '紧急联系人二号码',
-            'urgent_contact_person_one' => '紧急联系人一',
-            'urgent_contact_person_two' => '紧急联系人二',
         ];
     }
 
