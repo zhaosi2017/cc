@@ -92,6 +92,10 @@ class ContactForm extends Model
             'telegram_country_code' => '国码',
             'urgent_contact_one_country_code' => '国码',
             'urgent_contact_two_country_code' => '国码',
+            'urgent_contact_number_one' => '紧急联系人电话',
+            'urgent_contact_number_two' => '紧急联系人电话',
+            'urgent_contact_person_one' => '紧急联系人呢称',
+            'urgent_contact_person_two' => '紧急联系人昵称',
         ];
     }
 

@@ -229,24 +229,79 @@ class UserController extends GController
     /**
      * Add urgent Contact person.
      *
-     * @return User the loaded model
+     * @return User the loaded model.
      */
     public function actionAddUrgentContactPerson()
     {
+        // $contactForm = new ContactForm();
         $model = $this->findModel(Yii::$app->user->id);
-        $contactForm = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $contactForm->validate(['urgent_contact_person_one', 'urgent_contact_one_country_code', 'urgent_contact_number_one', 'urgent_contact_person_two', 'urgent_contact_two_country_code', 'urgent_contact_number_two'])){
-        } else {
-            // 判断用户添加几位紧急联系人, 当两位联系人没有满, 才能继续添加联系人.
-            if (empty($model->urgent_contact_person_one)) {
+        $request = Yii::$app->request->get();
+        $contactForm = $model;
+        $firstPersonNoExists = empty($model->urgent_contact_person_one) ? true : false;
+        $secondPersonNoExists = empty($model->urgent_contact_person_two) ? true : false;
+        $modifyOne = isset($request['modify']) && ($request['modify'] == '1') ? true : false;
+        $modifyTwo = isset($request['modify']) && ($request['modify'] == '2') ? true : false;
+        if ($model->load(Yii::$app->request->post())) {
+            if (($modifyOne || $firstPersonNoExists) && !$contactForm->validate(['urgent_contact_person_one', 'urgent_contact_one_country_code', 'urgent_contact_number_one'])) {
                 return $this->render('add-urgent-contact-person-one', ['model' => $contactForm]);
-            } elseif (empty($model->urgent_contact_person_two)) {
+            }
+
+            if (($modifyTwo || $secondPersonNoExists) && !$contactForm->validate(['urgent_contact_person_two', 'urgent_contact_two_country_code', 'urgent_contact_number_two'])) {
                 return $this->render('add-urgent-contact-person-two', ['model' => $contactForm]);
+            }
+
+            $updateRes = $model->update();
+            if (!$updateRes && $firstPersonNoExists) {
+                return $this->render('add-urgent-contact-person-one', ['model' => $contactForm]);
+            }
+            if (!$updateRes && $secondPersonNoExists) {
+                return $this->render('add-urgent-contact-person-two', ['model' => $contactForm]);
+            }
+
+            return $this->redirect(['index']);
+        } else {
+            // 修改紧急联系人.
+            if (isset($request['modify'])) {
+                if ($modifyOne) {
+                    return $this->render('add-urgent-contact-person-one', ['model' => $model]);
+                } elseif ($modifyTwo) {
+                    return $this->render('add-urgent-contact-person-two', ['model' => $model]);
+                }
             } else {
-                Yii::$app->getSession()->setFlash('error', '只能添加两位紧急联系人!');
-                return $this->redirect(['index']);
+                // 判断用户添加几位紧急联系人, 当两位联系人没有满, 才能继续添加联系人.
+                if ($firstPersonNoExists) {
+                    return $this->render('add-urgent-contact-person-one', ['model' => $model]);
+                } elseif ($secondPersonNoExists) {
+                    return $this->render('add-urgent-contact-person-two', ['model' => $model]);
+                } else {
+                    Yii::$app->getSession()->setFlash('error', '只能添加两位紧急联系人!');
+                    return $this->redirect(['index']);
+                }
             }
         }
+    }
+
+    /**
+     * 删除紧急联系人.
+     *
+     * @return User the loaded model.
+     */
+    public function actionDeleteUrgentContactPerson()
+    {
+        $request = Yii::$app->request->get();
+        $model = $this->findModel(Yii::$app->user->id);
+        if ($request['type'] == '1') {
+            $model->urgent_contact_person_one = '';
+            $model->urgent_contact_one_country_code = 0;
+            $model->urgent_contact_number_one = 0;
+        } elseif ($request['type'] == '2') {
+            $model->urgent_contact_person_two = '';
+            $model->urgent_contact_two_country_code = 0;
+            $model->urgent_contact_number_two = 0;
+        }
+
+        $model->update();
+        return $this->redirect(['index']);
     }
 
 }
