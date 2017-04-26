@@ -233,29 +233,27 @@ class UserController extends GController
      */
     public function actionAddUrgentContactPerson()
     {
-        // $contactForm = new ContactForm();
         $model = $this->findModel(Yii::$app->user->id);
         $request = Yii::$app->request->get();
-        $contactForm = $model;
         $firstPersonNoExists = empty($model->urgent_contact_person_one) ? true : false;
         $secondPersonNoExists = empty($model->urgent_contact_person_two) ? true : false;
         $modifyOne = isset($request['modify']) && ($request['modify'] == '1') ? true : false;
         $modifyTwo = isset($request['modify']) && ($request['modify'] == '2') ? true : false;
         if ($model->load(Yii::$app->request->post())) {
-            if (($modifyOne || $firstPersonNoExists) && !$contactForm->validate(['urgent_contact_person_one', 'urgent_contact_one_country_code', 'urgent_contact_number_one'])) {
-                return $this->render('add-urgent-contact-person-one', ['model' => $contactForm]);
+            if (($modifyOne || $firstPersonNoExists) && !$model->validate(['urgent_contact_person_one', 'urgent_contact_one_country_code', 'urgent_contact_number_one'])) {
+                return $this->render('add-urgent-contact-person-one', ['model' => $model]);
             }
 
-            if (($modifyTwo || $secondPersonNoExists) && !$contactForm->validate(['urgent_contact_person_two', 'urgent_contact_two_country_code', 'urgent_contact_number_two'])) {
-                return $this->render('add-urgent-contact-person-two', ['model' => $contactForm]);
+            if (($modifyTwo || $secondPersonNoExists) && !$model->validate(['urgent_contact_person_two', 'urgent_contact_two_country_code', 'urgent_contact_number_two'])) {
+                return $this->render('add-urgent-contact-person-two', ['model' => $model]);
             }
 
             $updateRes = $model->update();
             if (!$updateRes && $firstPersonNoExists) {
-                return $this->render('add-urgent-contact-person-one', ['model' => $contactForm]);
+                return $this->render('add-urgent-contact-person-one', ['model' => $model]);
             }
             if (!$updateRes && $secondPersonNoExists) {
-                return $this->render('add-urgent-contact-person-two', ['model' => $contactForm]);
+                return $this->render('add-urgent-contact-person-two', ['model' => $model]);
             }
 
             return $this->redirect(['index']);

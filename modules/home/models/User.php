@@ -94,7 +94,7 @@ class User extends CActiveRecord implements IdentityInterface
                 'urgent_contact_one_country_code',
                 'urgent_contact_two_country_code',
             ], 'integer'],
-            [['phone_number','urgent_contact_number_one','urgent_contact_number_two', 'telegram_number', 'potato_number'],'number'],
+            [['phone_number','urgent_contact_number_one','urgent_contact_number_two', 'telegram_number', 'potato_number'], 'number', 'max' => 99999999999],
             [['auth_key'], 'string', 'max' => 64],
             ['nickname','string','length'=>[2,6], 'message'=>'昵称请设置2～6个汉字']
         ];
