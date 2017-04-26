@@ -109,14 +109,12 @@ class ContactForm extends Model
         $this->country_code = $user->country_code;
         $this->potato_country_code = $user->potato_country_code;
         $this->telegram_country_code = $user->telegram_country_code;
-
         $this->urgent_contact_one_country_code = $user->urgent_contact_one_country_code;
         $this->urgent_contact_two_country_code = $user->urgent_contact_two_country_code;
         $this->urgent_contact_number_one = $user->urgent_contact_number_one;
         $this->urgent_contact_number_two = $user->urgent_contact_number_two;
         $this->urgent_contact_person_one = $user->urgent_contact_person_one;
         $this->urgent_contact_person_two = $user->urgent_contact_person_two;
-
         $this->phone_number = $user->phone_number;
         $this->potato_number = $user->potato_number;
         $this->telegram_number = $user->telegram_number;
