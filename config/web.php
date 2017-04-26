@@ -79,8 +79,13 @@ $config = [
     ],
     'params' => $params,
     'modules' => [
-        'home' => 'app\modules\home\Module',
-        'admin' => 'app\modules\admin\Module',
+        'home' => [
+            'class' => 'app\modules\home\Module'
+        ],
+        'admin' => [
+            'class' => 'app\modules\admin\Module'
+        ],
+//        'redactor' => 'yii\redactor\RedactorModule',
     ],
 ];
 

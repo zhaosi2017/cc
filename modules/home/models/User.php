@@ -167,7 +167,6 @@ class User extends CActiveRecord implements IdentityInterface
         $this->urgent_contact_person_two && $this->urgent_contact_person_two = Yii::$app->security->decryptByKey(base64_decode($this->urgent_contact_person_two), Yii::$app->params['inputKey']);
     }
 
-
     /**
      * @return string 当前用户的（cookie）认证密钥
      */
