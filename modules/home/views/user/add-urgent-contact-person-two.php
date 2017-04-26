@@ -24,7 +24,7 @@ $this->title = '添加紧急联系人二';
     ]); ?>
 
 
-    <?php echo $form->field($model, 'urgent_contact_person_two')->textInput(['placeholder' => '紧急联系人昵称', 'value'=>''])->label('紧急联系人') ?>
+    <?php echo $form->field($model, 'urgent_contact_person_two')->textInput(['placeholder' => '紧急联系人昵称',])->label('紧急联系人') ?>
 
     <div class="row form-inline">
 
@@ -43,7 +43,7 @@ $this->title = '添加紧急联系人二';
             </div>
             <?php echo $form->field($model, 'urgent_contact_two_country_code', [
                 'template' => "{label}\n<div class='col-sm-4'>{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
-            ])->textInput(['size' => 5,'placeholder'=>'国码','value'=>''])->label(false) ?>
+            ])->textInput(['size' => 5,'placeholder'=>'国码',])->label(false) ?>
 
             <?php echo $form->field($model, 'urgent_contact_number_two')->textInput(['placeholder' => '紧急联系人号码', 'size'=>'21'])->label(false) ?>
         </div>
