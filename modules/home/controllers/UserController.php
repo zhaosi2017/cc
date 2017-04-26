@@ -68,7 +68,7 @@ class UserController extends GController
                 return $this->redirect(['index']);
             }else{
                 Yii::$app->getSession()->setFlash('error', '操作失败');
-                return $this->redirect('set-phone-number',['model'=>$model]);
+                return $this->redirect('set-phone-number');
             }
         }
         return $this->render('set-phone-number',['model'=>$model]);
@@ -87,7 +87,7 @@ class UserController extends GController
                 return $this->redirect(['index']);
             }else{
                 Yii::$app->getSession()->setFlash('error', '操作失败');
-                return $this->redirect('bind-potato',['model'=>$model]);
+                return $this->redirect('bind-potato');
             }
         }
         return $this->render('bind-potato',['model'=>$model]);
