@@ -2,7 +2,8 @@
 
 namespace app\modules\admin\models;
 
-use Yii;
+//use Yii;
+use app\models\CActiveRecord;
 
 /**
  * This is the model class for table "role".
@@ -15,7 +16,7 @@ use Yii;
  * @property integer $create_at
  * @property integer $update_at
  */
-class Role extends \app\models\CActiveRecord
+class Role extends CActiveRecord
 {
     /**
      * @inheritdoc
@@ -31,7 +32,8 @@ class Role extends \app\models\CActiveRecord
     public function rules()
     {
         return [
-            [['name', 'remark'], 'string'],
+            [['name'],'required'],
+            [['name','remark'], 'string', 'length' => [2, 8]],
             [['create_id', 'update_id', 'create_at', 'update_at'], 'integer'],
         ];
     }
@@ -43,8 +45,8 @@ class Role extends \app\models\CActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'remark' => 'Remark',
+            'name' => '角色名',
+            'remark' => '备注',
             'create_id' => 'Create ID',
             'update_id' => 'Update ID',
             'create_at' => 'Create At',

@@ -12,20 +12,12 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'name')->textInput() ?>
 
-    <?= $form->field($model, 'remark')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'create_id')->textInput() ?>
-
-    <?= $form->field($model, 'update_id')->textInput() ?>
-
-    <?= $form->field($model, 'create_at')->textInput() ?>
-
-    <?= $form->field($model, 'update_at')->textInput() ?>
+    <?= $form->field($model, 'remark')->textInput() ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? '创建角色' : '修改角色', ['class'=>'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
