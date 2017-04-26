@@ -17,6 +17,14 @@ class ContactForm extends Model
 
     public $telegram_country_code;
 
+    public $urgent_contact_person_one;
+
+    public $urgent_contact_person_two;
+
+    public $urgent_contact_number_one;
+
+    public $urgent_contact_number_two;
+
     public $urgent_contact_one_country_code;
 
     public $urgent_contact_two_country_code;
@@ -39,7 +47,7 @@ class ContactForm extends Model
             // username and password are both required
             [['country_code','potato_country_code','telegram_country_code','urgent_contact_one_country_code', 'urgent_contact_two_country_code'], 'integer'],
             [['country_code','potato_country_code','telegram_country_code','urgent_contact_one_country_code', 'urgent_contact_two_country_code'], 'default', 'value'=>''],
-            [['phone_number','potato_number','telegram_number'], 'string'],
+            [['phone_number','potato_number','telegram_number','urgent_contact_person_one','urgent_contact_person_two'], 'string'],
             ['code', 'captcha', 'message'=>'验证码输入不正确', 'captchaAction'=>'/home/user/captcha'],
         ];
     }
@@ -50,7 +58,12 @@ class ContactForm extends Model
     public function attributeLabels()
     {
         return [
-            'code' => '验证码'
+            'code' => '验证码',
+            'country_code' => '国码',
+            'potato_country_code' => '国码',
+            'telegram_country_code' => '国码',
+            'urgent_contact_one_country_code' => '国码',
+            'urgent_contact_two_country_code' => '国码',
         ];
     }
 
@@ -60,6 +73,14 @@ class ContactForm extends Model
         $this->country_code = $user->country_code;
         $this->potato_country_code = $user->potato_country_code;
         $this->telegram_country_code = $user->telegram_country_code;
+
+        $this->urgent_contact_one_country_code = $user->urgent_contact_one_country_code;
+        $this->urgent_contact_two_country_code = $user->urgent_contact_two_country_code;
+        $this->urgent_contact_number_one = $user->urgent_contact_number_one;
+        $this->urgent_contact_number_two = $user->urgent_contact_number_two;
+        $this->urgent_contact_person_one = $user->urgent_contact_person_one;
+        $this->urgent_contact_person_two = $user->urgent_contact_person_two;
+
         $this->phone_number = $user->phone_number;
         $this->potato_number = $user->potato_number;
         $this->telegram_number = $user->telegram_number;

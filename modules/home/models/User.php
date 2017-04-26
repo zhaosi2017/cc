@@ -20,6 +20,8 @@ use yii\web\IdentityInterface;
  * @property integer $country_code
  * @property string $phone_number
  * @property string $urgent_contact_number_one
+ * @property integer $urgent_contact_one_country_code
+ * @property integer $urgent_contact_two_country_code
  * @property integer $urgent_contact_number_two
  * @property string $urgent_contact_person_one
  * @property string $urgent_contact_person_two
@@ -85,15 +87,16 @@ class User extends CActiveRecord implements IdentityInterface
                 'un_call_number',
                 'un_call_by_same_number',
                 'long_time',
-                'urgent_contact_number_two',
                 'reg_time',
                 'role_id',
                 'country_code',
                 'telegram_country_code',
                 'potato_country_code',
+                'urgent_contact_one_country_code',
+                'urgent_contact_two_country_code',
             ], 'integer'],
 
-            [['auth_key', 'phone_number', 'urgent_contact_number_one', 'telegram_number', 'potato_number'], 'string', 'max' => 64],
+            [['auth_key', 'phone_number','urgent_contact_number_one','urgent_contact_number_two', 'telegram_number', 'potato_number'], 'string', 'max' => 64],
             ['phone_number', 'number'],
             ['nickname','string','length'=>[2,6], 'message'=>'昵称请设置2～6个汉字']
         ];
