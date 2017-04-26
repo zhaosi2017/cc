@@ -292,12 +292,12 @@ class UserController extends GController
         $model = $this->findModel(Yii::$app->user->id);
         if ($request['type'] == '1') {
             $model->urgent_contact_person_one = '';
-            $model->urgent_contact_one_country_code = 0;
-            $model->urgent_contact_number_one = 0;
+            $model->urgent_contact_one_country_code = '';
+            $model->urgent_contact_number_one = '';
         } elseif ($request['type'] == '2') {
             $model->urgent_contact_person_two = '';
-            $model->urgent_contact_two_country_code = 0;
-            $model->urgent_contact_number_two = 0;
+            $model->urgent_contact_two_country_code = '';
+            $model->urgent_contact_number_two = '';
         }
 
         $model->update();
