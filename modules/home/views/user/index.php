@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <h4 class="m-b-lg">账号绑定</h4>
                         <div class="text-left">
                             <p class="m-t-lg">绑定telegram或potato，正式启用离线呼叫提醒功能，让人可以找到您，同时也能让您找到别人！</p>
-                            <div class="m-t-lg">Potato：<?php echo $model->potato_number ? $model->potato_country_code . $model->potato_number : '无'; ?>
+                            <div class="m-t-lg">Potato：<?php echo $model->potato_number ? '+' . $model->potato_country_code . $model->potato_number : '无'; ?>
                                 <?php if(!$model->potato_number){ ?>
                                 <a href="<?php echo Url::to(['/home/user/bind-potato']) ?>" class="btn btn-primary btn-sm pull-right">立即绑定</a>
                                 <?php }else{ ?>
@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     </div>
                                 <?php } ?>
                             </div>
-                            <div class="m-t-lg">Telegram：<?php echo $model->telegram_number ? $model->telegram_country_code . $model->telegram_number : '无'; ?>
+                            <div class="m-t-lg">Telegram：<?php echo $model->telegram_number ? '+' . $model->telegram_country_code . $model->telegram_number : '无'; ?>
                                 <?php if(!$model->telegram_number){ ?>
                                 <a href="<?php echo Url::to(['/home/user/bind-telegram']) ?>" class="btn btn-primary btn-sm pull-right">立即绑定</a>
                                 <?php }else{ ?>
