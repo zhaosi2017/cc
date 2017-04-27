@@ -7,32 +7,64 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\modules\admin\models\RoleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Roles';
+$this->title = '角色';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="role-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Create Role', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-<?php Pjax::begin(); ?>    <?= GridView::widget([
+<?php Pjax::begin(); ?>
+    <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+//        'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
+            ['class' => 'yii\grid\SerialColumn','header' => '序号'],
             'name:ntext',
             'remark:ntext',
-            'create_id',
-            'update_id',
-            // 'create_at',
-            // 'update_at',
+            [
+                'class' => 'yii\grid\DataColumn', //由于是默认类型，可以省略
+                'header' => '最后修改人／时间',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    $account = $data['updater']['account'] ? $data['updater']['account'] : '系统';
+                    return $account .'<br>'. date('Y-m-d H:i:s',$data->update_at);
+                },
+            ],
+            [
+                'class' => 'yii\grid\DataColumn', //由于是默认类型，可以省略
+                'header' => '创建人／时间',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    $account = $data['creator']['account'] ? $data['creator']['account'] : '系统';
+                    return $account.'<br>'.date('Y-m-d H:i:s',$data->create_at);
+                },
+            ],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'header' => '操作',
+                'template' => '{update} {auth} {delete}',
+                'buttons' => [
+                    'update' => function($url){
+                        return Html::a('编辑',$url);
+                    },
+                    'auth' => function($url){
+                        return Html::a('权限配置',$url);
+                    },
+                    'delete' => function($url){
+                        return Html::a('删除',$url,[
+                            'style' => 'color:red',
+                            'data-method' => 'post',
+                            'data' => ['confirm' => '你确定要删除吗?']
+                        ]);
+                    },
+                ],
+            ],
         ],
     ]); ?>
-<?php Pjax::end(); ?></div>
+<?php Pjax::end(); ?>
+    <p class="text-right">
+        <?= Html::a('新增角色', ['create'], ['class' => 'btn btn-sm btn-primary']) ?>
+    </p>
+</div>

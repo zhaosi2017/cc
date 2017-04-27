@@ -3,11 +3,13 @@
 namespace app\modules\admin\models;
 
 use Yii;
+use app\models\CActiveRecord;
 
 /**
  * This is the model class for table "manager".
  *
  * @property integer $id
+ * @property string $auth_key
  * @property string $account
  * @property string $nickname
  * @property integer $role_id
@@ -19,7 +21,7 @@ use Yii;
  * @property integer $create_at
  * @property integer $update_at
  */
-class Manager extends \app\models\CActiveRecord
+class Manager extends CActiveRecord
 {
     /**
      * @inheritdoc
@@ -35,7 +37,7 @@ class Manager extends \app\models\CActiveRecord
     public function rules()
     {
         return [
-            [['account', 'nickname', 'remark'], 'string'],
+            [['account', 'nickname', 'remark', 'auth_key'], 'string'],
             [['role_id', 'status', 'create_id', 'update_id', 'create_at', 'update_at'], 'integer'],
             [['login_ip'], 'string', 'max' => 64],
         ];
@@ -48,17 +50,32 @@ class Manager extends \app\models\CActiveRecord
     {
         return [
             'id' => 'ID',
-            'account' => 'Account',
-            'nickname' => 'Nickname',
-            'role_id' => 'Role ID',
+            'account' => '管理员账号',
+            'nickname' => '管理员昵称',
+            'role_id' => '管理员角色',
             'status' => 'Status',
-            'remark' => 'Remark',
+            'remark' => '备注',
             'login_ip' => 'Login Ip',
             'create_id' => 'Create ID',
             'update_id' => 'Update ID',
             'create_at' => 'Create At',
             'update_at' => 'Update At',
         ];
+    }
+
+    public function beforeSave($insert)
+    {
+        $uid = Yii::$app->user->id;
+        if($this->isNewRecord){
+            $this->create_at = $_SERVER['REQUEST_TIME'];
+            $this->update_at = $_SERVER['REQUEST_TIME'];
+            $this->create_id = $uid;
+            $this->auth_key  = Yii::$app->security->generateRandomString();
+        }else{
+            $this->update_at = $_SERVER['REQUEST_TIME'];
+            $this->update_id = $uid;
+        }
+        return true;
     }
 
     /**

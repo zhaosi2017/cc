@@ -2,7 +2,7 @@
 
 namespace app\modules\admin\models;
 
-//use Yii;
+use Yii;
 use app\models\CActiveRecord;
 
 /**
@@ -32,6 +32,7 @@ class Role extends CActiveRecord
     public function rules()
     {
         return [
+            [['name'],'unique'],
             [['name'],'required'],
             [['name','remark'], 'string', 'length' => [2, 8]],
             [['create_id', 'update_id', 'create_at', 'update_at'], 'integer'],
@@ -46,7 +47,7 @@ class Role extends CActiveRecord
         return [
             'id' => 'ID',
             'name' => '角色名',
-            'remark' => '备注',
+            'remark' => '角色备注',
             'create_id' => 'Create ID',
             'update_id' => 'Update ID',
             'create_at' => 'Create At',
@@ -61,5 +62,38 @@ class Role extends CActiveRecord
     public static function find()
     {
         return new RoleQuery(get_called_class());
+    }
+
+    public function beforeSave($insert)
+    {
+        $uid = Yii::$app->user->id ? Yii::$app->user->id : 0;
+        if($this->isNewRecord){
+            $this->create_id = $uid;
+            $this->update_id = $uid;
+            $this->create_at = $_SERVER['REQUEST_TIME'];
+            $this->update_at = $_SERVER['REQUEST_TIME'];
+        }else{
+            $this->update_id = $uid;
+            $this->update_at = $_SERVER['REQUEST_TIME'];
+        }
+        return true;
+    }
+
+    /**
+     * 获取创建人
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCreator()
+    {
+        return $this->hasOne(Manager::className(), ['id' => 'create_id'])->alias('creator');
+    }
+
+    /**
+     * 获取最后修改人
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUpdater()
+    {
+        return $this->hasOne(Manager::className(), ['id' => 'update_id'])->alias('updater');
     }
 }

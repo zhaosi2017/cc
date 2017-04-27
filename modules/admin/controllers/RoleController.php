@@ -66,7 +66,13 @@ class RoleController extends PController
         $model = new Role();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            //创建角色
+            $auth = Yii::$app->authManager;
+            //添加角色[角色编号对应这类角色]
+            $role = $auth->createRole($model->id);
+            $role->description = '角色编号-' . $model->id;
+            $auth->add($role) && $model->sendSuccess();
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -85,7 +91,7 @@ class RoleController extends PController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['id']);
         } else {
             return $this->render('update', [
                 'model' => $model,

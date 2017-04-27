@@ -10,14 +10,28 @@ use yii\widgets\ActiveForm;
 
 <div class="role-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'options'=>['class'=>'form-horizontal m-t'],
+        'fieldConfig' => [
+            'template' => "{label}\n<div class=\"col-sm-8\">{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
+            'labelOptions' => ['class' => 'col-sm-2 control-label'],
+        ],
+    ]); ?>
 
     <?= $form->field($model, 'name')->textInput() ?>
 
     <?= $form->field($model, 'remark')->textInput() ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? '创建角色' : '修改角色', ['class'=>'btn btn-primary']) ?>
+        <div class="col-sm-6 col-sm-offset-2">
+            <?= Html::submitButton($model->isNewRecord ? '创建角色' : '保存修改', ['class'=>'btn btn-primary']) ?>
+
+            <?php
+                if(!$model->isNewRecord){
+                    echo Html::a('权限配置','auth',['class'=>'btn btn-primary']);
+                }
+            ?>
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>

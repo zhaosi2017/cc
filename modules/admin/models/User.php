@@ -2,7 +2,7 @@
 
 namespace app\modules\admin\models;
 
-use Yii;
+use app\models\CActiveRecord;
 
 /**
  * This is the model class for table "user".
@@ -30,7 +30,7 @@ use Yii;
  * @property integer $reg_time
  * @property integer $role_id
  */
-class User extends \app\models\CActiveRecord
+class User extends CActiveRecord
 {
     /**
      * @inheritdoc
