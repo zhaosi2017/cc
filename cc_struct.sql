@@ -32,15 +32,6 @@ CREATE TABLE `auth_assignment` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `auth_assignment`
---
-
-LOCK TABLES `auth_assignment` WRITE;
-/*!40000 ALTER TABLE `auth_assignment` DISABLE KEYS */;
-/*!40000 ALTER TABLE `auth_assignment` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `auth_item`
 --
 
@@ -63,16 +54,6 @@ CREATE TABLE `auth_item` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `auth_item`
---
-
-LOCK TABLES `auth_item` WRITE;
-/*!40000 ALTER TABLE `auth_item` DISABLE KEYS */;
-INSERT INTO `auth_item` VALUES ('1',1,'角色编号-1',NULL,NULL,1493278121,1493278121);
-/*!40000 ALTER TABLE `auth_item` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `auth_item_child`
 --
 
@@ -90,15 +71,6 @@ CREATE TABLE `auth_item_child` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `auth_item_child`
---
-
-LOCK TABLES `auth_item_child` WRITE;
-/*!40000 ALTER TABLE `auth_item_child` DISABLE KEYS */;
-/*!40000 ALTER TABLE `auth_item_child` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `auth_rule`
 --
 
@@ -113,15 +85,6 @@ CREATE TABLE `auth_rule` (
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `auth_rule`
---
-
-LOCK TABLES `auth_rule` WRITE;
-/*!40000 ALTER TABLE `auth_rule` DISABLE KEYS */;
-/*!40000 ALTER TABLE `auth_rule` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `call_record`
@@ -144,15 +107,6 @@ CREATE TABLE `call_record` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `call_record`
---
-
-LOCK TABLES `call_record` WRITE;
-/*!40000 ALTER TABLE `call_record` DISABLE KEYS */;
-/*!40000 ALTER TABLE `call_record` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `login_logs`
 --
 
@@ -170,16 +124,6 @@ CREATE TABLE `login_logs` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=116 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `login_logs`
---
-
-LOCK TABLES `login_logs` WRITE;
-/*!40000 ALTER TABLE `login_logs` DISABLE KEYS */;
-INSERT INTO `login_logs` VALUES (77,0,4,'2017-04-13 14:35:17','::1','2017-04-13 14:35:17',0),(78,0,4,'2017-04-13 14:41:09','::1','2017-04-13 14:41:09',0),(79,1,2,'2017-04-13 14:41:14','::1','2017-04-13 14:41:15',0),(80,1,2,'2017-04-13 14:46:38','::1','2017-04-13 14:46:39',0),(81,1,2,'2017-04-15 11:04:26','::1','2017-04-15 11:04:27',0),(82,0,4,'2017-04-17 11:33:47','::1','2017-04-17 11:33:47',0),(83,0,4,'2017-04-17 11:34:59','::1','2017-04-17 11:34:59',0),(84,0,4,'2017-04-17 13:11:18','::1','2017-04-17 13:11:18',0),(85,0,4,'2017-04-17 13:32:28','::1','2017-04-17 13:32:28',0),(86,0,4,'2017-04-17 13:34:09','::1','2017-04-17 13:34:09',0),(87,0,4,'2017-04-19 11:09:37','::1','2017-04-19 11:09:37',0),(88,1,2,'2017-04-20 14:53:42','::1','2017-04-20 14:53:42',0),(89,1,2,'2017-04-20 14:53:56','::1','2017-04-20 14:53:57',0),(90,1,2,'2017-04-20 14:54:13','::1','2017-04-20 14:54:14',0),(91,1,2,'2017-04-20 14:54:44','::1','2017-04-20 14:54:45',0),(92,1,2,'2017-04-20 14:57:07','::1','2017-04-20 14:57:07',0),(93,1,2,'2017-04-23 15:35:52','::1','2017-04-23 15:35:53',0),(94,1,2,'2017-04-23 15:36:01','::1','2017-04-23 15:36:01',0),(95,1,2,'2017-04-23 15:36:57','::1','2017-04-23 15:36:57',0),(96,1,2,'2017-04-23 15:37:04','::1','2017-04-23 15:37:05',0),(97,1,2,'2017-04-23 15:37:14','::1','2017-04-23 15:37:15',0),(98,1,2,'2017-04-26 14:32:16','::1','2017-04-26 14:32:16',0),(99,1,2,'2017-04-26 14:32:26','::1','2017-04-26 14:32:27',0),(100,1,2,'2017-04-26 14:32:42','::1','2017-04-26 14:32:43',0),(101,1,2,'2017-04-26 14:32:58','::1','2017-04-26 14:32:59',0),(102,1,2,'2017-04-26 14:33:16','::1','2017-04-26 14:33:17',0),(103,1,2,'2017-04-26 14:34:41','::1','2017-04-26 14:34:42',0),(104,1,2,'2017-04-26 14:36:36','::1','2017-04-26 14:36:36',0),(105,1,2,'2017-04-26 14:36:42','::1','2017-04-26 14:36:43',0),(106,1,2,'2017-04-26 14:38:18','::1','2017-04-26 14:38:18',0),(107,1,2,'2017-04-26 14:38:26','::1','2017-04-26 14:38:27',0),(108,1,2,'2017-04-27 16:06:35','::1','2017-04-27 16:06:36',0),(109,1,2,'2017-04-27 16:15:35','::1','2017-04-27 16:15:35',0),(110,1,2,'2017-04-27 16:15:54','::1','2017-04-27 16:15:55',0),(111,1,2,'2017-04-27 16:21:42','::1','2017-04-27 16:21:42',0),(112,1,2,'2017-04-27 16:27:36','::1','2017-04-27 16:27:37',0),(113,1,2,'2017-04-27 16:27:36','::1','2017-04-27 16:27:37',0),(114,1,2,'2017-04-27 16:39:39','::1','2017-04-27 16:39:40',0),(115,1,2,'2017-04-27 16:40:03','::1','2017-04-27 16:40:04',0);
-/*!40000 ALTER TABLE `login_logs` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `manager`
@@ -206,15 +150,6 @@ CREATE TABLE `manager` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `manager`
---
-
-LOCK TABLES `manager` WRITE;
-/*!40000 ALTER TABLE `manager` DISABLE KEYS */;
-/*!40000 ALTER TABLE `manager` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `role`
 --
 
@@ -232,16 +167,6 @@ CREATE TABLE `role` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `role`
---
-
-LOCK TABLES `role` WRITE;
-/*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES (1,'admin','所有权限',0,0,1493278121,1493278121);
-/*!40000 ALTER TABLE `role` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `user`
@@ -276,16 +201,6 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user`
---
-
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'IR9Cf5uW-my7T4p08G15QPlZ-SNCuxkw','$2y$13$eA9jlQeu3hMTcZCyfiIB6OdHO5/hHuW86unYQ76n7prIQijpOpKOW','CpqqKFEa3gCx1rDLfucLYjYwYjZiNTRiNDMxYmY2ZWM0NGIwMTc1ZTZhZTRlZGI1OGMzMzlhZmY0MWEyNDBiN2YxOTIzYTdkMmMwNDZkN2ORJPrhTN9rAbVjR6rjWr/11mQoH294+UAHOmZ/wNSVVKLR9ScQnsR/JwYLwFjv5Pg=',NULL,0,0,0,NULL,'','',NULL,0,NULL,NULL,NULL,'',NULL,'',NULL,1493287004,0);
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -296,4 +211,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-27 17:03:58
+-- Dump completed on 2017-04-27 17:06:31

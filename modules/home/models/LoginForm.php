@@ -71,7 +71,6 @@ class LoginForm extends Model
             if (!Yii::$app->getSecurity()->validatePassword($this->password, $identity->password)) {
                 $this->addError($attribute, '密码错误。');
             }
-
         }
     }
 
@@ -81,7 +80,7 @@ class LoginForm extends Model
      */
     public function login()
     {
-        return Yii::$app->user->login($this->getIdentity(), 0);
+        return Yii::$app->user->login($this->getIdentity());
     }
 
     public function forbidden()
