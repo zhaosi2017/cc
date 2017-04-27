@@ -5,7 +5,7 @@ namespace app\modules\home\models;
 use Yii;
 
 /**
- * This is the model class for table "call_record".
+ * This is the model class for table "call_record"..
  *
  * @property integer $id
  * @property integer $active_call_uid
