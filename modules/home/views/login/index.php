@@ -25,10 +25,10 @@ $this->title = '登录';
 
         <?= $form->field($model, 'username')->textInput([
             'autofocus' => true,
-            'placeholder'=>'账号(仅支持邮箱：如xxx@gmail.com)',
+            'placeholder'=>'邮箱账号',
         ])->label(false) ?>
 
-        <?= $form->field($model, 'password')->passwordInput(['placeholder'=>'密码(至少8个字符,由大小写字母数字组合)'])->label(false) ?>
+        <?= $form->field($model, 'password')->passwordInput(['placeholder'=>'密码'])->label(false) ?>
 
         <?= Html::submitButton('登 录', ['class' => 'btn btn-primary block full-width m-b']) ?>
 

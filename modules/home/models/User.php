@@ -147,11 +147,22 @@ class User extends CActiveRecord implements IdentityInterface
                 $this->password && $this->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
                 $this->nickname && $this->nickname = base64_encode(Yii::$app->security->encryptByKey($this->nickname, Yii::$app->params['inputKey']));
             }else{
-                $this->password && $this->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
-                $this->account = base64_encode(Yii::$app->security->encryptByKey($this->account, Yii::$app->params['inputKey']));
-                $this->nickname && $this->nickname = base64_encode(Yii::$app->security->encryptByKey($this->nickname, Yii::$app->params['inputKey']));
-                $this->urgent_contact_person_one && $this->urgent_contact_person_one = base64_encode(Yii::$app->security->encryptByKey($this->urgent_contact_person_one, Yii::$app->params['inputKey']));
-                $this->urgent_contact_person_two && $this->urgent_contact_person_two = base64_encode(Yii::$app->security->encryptByKey($this->urgent_contact_person_two, Yii::$app->params['inputKey']));
+                $post = Yii::$app->request->post();
+                if(array_key_exists('password', $post)){
+                    $this->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
+                }
+                if(array_key_exists('account', $post)){
+                    $this->account = base64_encode(Yii::$app->security->encryptByKey($this->account, Yii::$app->params['inputKey']));
+                }
+                if(array_key_exists('nickname', $post)){
+                    $this->nickname = base64_encode(Yii::$app->security->encryptByKey($this->nickname, Yii::$app->params['inputKey']));
+                }
+                if(array_key_exists('urgent_contact_person_one', $post)){
+                    $this->urgent_contact_person_one = base64_encode(Yii::$app->security->encryptByKey($this->urgent_contact_person_one, Yii::$app->params['inputKey']));
+                }
+                if(array_key_exists('urgent_contact_person_two', $post)){
+                    $this->urgent_contact_person_two = base64_encode(Yii::$app->security->encryptByKey($this->urgent_contact_person_two, Yii::$app->params['inputKey']));
+                }
             }
             return true;
         }
