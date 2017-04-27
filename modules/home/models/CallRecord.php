@@ -44,13 +44,13 @@ class CallRecord extends \app\models\CActiveRecord
     {
         return [
             'id' => 'ID',
-            'active_call_uid' => 'Active Call Uid',
-            'unactive_call_uid' => 'Unactive Call Uid',
-            'call_by_same_times' => 'Call By Same Times',
-            'type' => 'Type',
-            'contact_number' => 'Contact Number',
-            'status' => 'Status',
-            'call_time' => 'Call Time',
+            'active_call_uid' => '主叫账号',
+            'unactive_call_uid' => '被叫账号',
+            'call_by_same_times' => '被同一人呼叫次数',
+            'type' => '呼叫类型',
+            'contact_number' => '联系人电话号码',
+            'status' => '呼叫状态',
+            'call_time' => '呼叫时间',
         ];
     }
 
