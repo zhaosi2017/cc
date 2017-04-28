@@ -84,6 +84,7 @@ class ContactForm extends Model
             ], 'default', 'value'=>''],
             [['urgent_contact_person_one','urgent_contact_person_two'], 'string'],
             ['code', 'captcha', 'message'=>'验证码输入不正确', 'captchaAction'=>'/home/user/captcha'],
+            ['nickname','string','length'=>[2, 6], 'message'=>'昵称请设置2～6个汉字']
         ];
 
     }

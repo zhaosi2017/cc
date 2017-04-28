@@ -80,6 +80,11 @@ class RoleController extends PController
         }
     }
 
+    public function actionAuth()
+    {
+        return $this->render('auth');
+    }
+
     /**
      * Updates an existing Role model.
      * If update is successful, the browser will be redirected to the 'view' page.

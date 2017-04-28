@@ -80,7 +80,7 @@ class User extends CActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['account', 'urgent_contact_person_one', 'urgent_contact_person_two'], 'string'],
+            [['account', 'nickname', 'urgent_contact_person_one', 'urgent_contact_person_two'], 'string'],
 
             [[
                 'un_call_number',
@@ -97,7 +97,6 @@ class User extends CActiveRecord implements IdentityInterface
 
             [['phone_number','urgent_contact_number_one','urgent_contact_number_two', 'telegram_number', 'potato_number'], 'number', 'max' => 99999999999],
             [['auth_key','password'], 'string', 'max' => 64],
-            ['nickname','string','length'=>[2, 6], 'message'=>'昵称请设置2～6个汉字']
         ];
     }
 
