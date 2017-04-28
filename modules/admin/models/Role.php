@@ -11,6 +11,7 @@ use app\models\CActiveRecord;
  * @property integer $id
  * @property string $name
  * @property string $remark
+ * @property integer $status
  * @property integer $create_id
  * @property integer $update_id
  * @property integer $create_at
@@ -35,7 +36,7 @@ class Role extends CActiveRecord
             [['name'],'unique'],
             [['name'],'required'],
             [['name','remark'], 'string', 'length' => [2, 8]],
-            [['create_id', 'update_id', 'create_at', 'update_at'], 'integer'],
+            [['status','create_id', 'update_id', 'create_at', 'update_at'], 'integer'],
         ];
     }
 
@@ -48,6 +49,7 @@ class Role extends CActiveRecord
             'id' => 'ID',
             'name' => '角色名',
             'remark' => '角色备注',
+            'status' => '状态',
             'create_id' => 'Create ID',
             'update_id' => 'Update ID',
             'create_at' => 'Create At',

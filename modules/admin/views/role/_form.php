@@ -28,7 +28,7 @@ use yii\widgets\ActiveForm;
 
             <?php
                 if(!$model->isNewRecord){
-                    echo Html::a('权限配置','auth',['class'=>'btn btn-primary']);
+                    echo Html::a('权限配置',\yii\helpers\Url::to(['/admin/role/auth','id'=>$model->id]),['class'=>'btn btn-primary']);
                 }
             ?>
         </div>

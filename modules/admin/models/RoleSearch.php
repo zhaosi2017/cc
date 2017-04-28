@@ -5,13 +5,16 @@ namespace app\modules\admin\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\modules\admin\models\Role;
 
 /**
  * RoleSearch represents the model behind the search form about `app\modules\admin\models\Role`.
  */
 class RoleSearch extends Role
 {
+    public $search_type;
+
+    public $search_keywords;
+
     /**
      * @inheritdoc
      */
@@ -19,7 +22,7 @@ class RoleSearch extends Role
     {
         return [
             [['id', 'create_id', 'update_id', 'create_at', 'update_at'], 'integer'],
-            [['name', 'remark'], 'safe'],
+            [['name', 'remark', 'search_type', 'search_keywords'], 'safe'],
         ];
     }
 
@@ -43,10 +46,19 @@ class RoleSearch extends Role
     {
         $query = Role::find();
 
+        $query->andWhere(['status'=>Yii::$app->requestedAction->id == 'index' ? 0 : 1]);
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            /*'pagination' => [
+                'pageSize' => 15,
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'create_at' => SORT_DESC,
+                ]
+            ],*/
         ]);
 
         $this->load($params);
@@ -66,9 +78,9 @@ class RoleSearch extends Role
             'update_at' => $this->update_at,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'remark', $this->remark]);
+        $this->search_type ==1 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like', 'role.name', $this->search_keywords]);
 
         return $dataProvider;
     }
+
 }

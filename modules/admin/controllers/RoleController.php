@@ -44,6 +44,17 @@ class RoleController extends PController
         ]);
     }
 
+    public function actionTrash()
+    {
+        $searchModel = new RoleSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('trash', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
     /**
      * Displays a single Role model.
      * @param integer $id
@@ -80,9 +91,42 @@ class RoleController extends PController
         }
     }
 
-    public function actionAuth()
+    public function actionAuth($id)
     {
-        return $this->render('auth');
+        $model = $this->findModel($id);
+        if ($model->load(Yii::$app->request->post())) {
+            $posts = Yii::$app->request->post();
+            if(!empty($posts['Auth'])){
+
+                //创建许可，给角色分配许可，并创建它们的层次关系
+                $auth = Yii::$app->authManager;
+                $role = $auth->createRole($model->id);
+
+                //如果获取不到角色就添加角色
+                $role->description = '角色编号:' . $model->id;
+                $auth->getRole($model->id) || $auth->add($role) ;
+
+                //重新分配许可
+                empty($auth->getChildren($model->id)) || $auth->removeChildren($role);
+
+                foreach ($posts['Auth'] as $permission){
+                    //添加权限
+                    $permissionData = $auth->createPermission($permission);
+                    $permissionData->description = 'permission: '.$permission;
+
+                    //如果能获取到许可就不再添加许可
+                    $auth->getPermission($permission) || $auth->add($permissionData);
+
+                    $auth->addChild($role, $permissionData);
+                }
+            }
+            $model->sendSuccess('权限设置成功');
+            return $this->redirect(['auth', 'id' => $model->id]);
+        } else {
+            return $this->render('auth', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -112,8 +156,17 @@ class RoleController extends PController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $model->status = 1;
+        $model->update() && $model->sendSuccess();
+        return $this->redirect(['index']);
+    }
 
+    public function actionRecover($id)
+    {
+        $model = $this->findModel($id);
+        $model->status = 0;
+        $model->update() && $model->sendSuccess();
         return $this->redirect(['index']);
     }
 

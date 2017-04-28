@@ -5,7 +5,6 @@ namespace app\modules\admin\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\modules\admin\models\User;
 
 /**
  * UserSearch represents the model behind the search form about `app\modules\admin\models\User`.
@@ -42,7 +41,7 @@ class UserSearch extends User
     public function search($params)
     {
         $query = User::find();
-
+        $query->andWhere(['status'=>Yii::$app->requestedAction->id == 'index' ? 0 : 1]);
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([

@@ -44,6 +44,17 @@ class ManagerController extends PController
         ]);
     }
 
+    public function actionTrash()
+    {
+        $searchModel = new ManagerSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('trash', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
     /**
      * Displays a single Manager model.
      * @param integer $id
@@ -66,7 +77,8 @@ class ManagerController extends PController
         $model = new Manager();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $model->sendSuccess();
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -85,7 +97,7 @@ class ManagerController extends PController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -101,8 +113,15 @@ class ManagerController extends PController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $model->updateAttributes(['status'=>1]) ? $model->sendSuccess() : $model->sendError();
+        return $this->redirect(['index']);
+    }
 
+    public function actionRecover($id)
+    {
+        $model = $this->findModel($id);
+        $model->updateAttributes(['status'=>0]) ? $model->sendSuccess() : $model->sendError();
         return $this->redirect(['index']);
     }
 
