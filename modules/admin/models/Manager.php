@@ -69,6 +69,14 @@ class Manager extends CActiveRecord
         ];
     }
 
+    public function getStatuses(){
+        return [
+            0 => '正常',
+            1 => '作废',
+            2 => '冻结',
+        ];
+    }
+
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {

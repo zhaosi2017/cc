@@ -24,11 +24,22 @@ $actionId = Yii::$app->requestedAction->id;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn','header' => '序号'],
 
-            'id',
             'account:ntext',
             'nickname:ntext',
-            'role_id',
-            'status',
+            [
+                'header' =>'角色',
+                'value' => function($data){
+                    return $data['role']['name'];
+                },
+            ],
+
+            [
+                'header' =>'状态',
+                'value' => function($data){
+                    return $data['statuses'][$data->status];
+                },
+            ],
+
             [
                 'class' => 'yii\grid\DataColumn', //由于是默认类型，可以省略
                 'header' => '最后修改人／时间',

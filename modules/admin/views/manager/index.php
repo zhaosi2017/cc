@@ -17,7 +17,7 @@ $actionId = Yii::$app->requestedAction->id;
         <?= Html::a('管理员列表', ['index'], ['class' => $actionId=='trash' ? 'btn btn-outline btn-default' : 'btn btn-primary']) ?>
         <?= Html::a('垃圾筒', ['trash'], ['class' => $actionId=='index' ? 'btn btn-outline btn-default' : 'btn btn-primary']) ?>
     </p>
-
+    <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
 <?php Pjax::begin(); ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -35,15 +35,7 @@ $actionId = Yii::$app->requestedAction->id;
             [
                 'header' =>'状态',
                 'value' => function($data){
-                    switch ($data->status){
-                        case 0:
-                            return '正常';
-                        case 1:
-                            return '禁用';
-                        case 2:
-                            return '冻结';
-                    }
-                    return false;
+                    return $data['statuses'][$data->status];
                 },
             ],
 

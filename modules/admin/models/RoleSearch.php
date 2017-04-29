@@ -46,8 +46,10 @@ class RoleSearch extends Role
     {
         $query = Role::find();
 
-        $query->andWhere(['status'=>Yii::$app->requestedAction->id == 'index' ? 0 : 1]);
+        $query->andWhere(['role.status'=>Yii::$app->requestedAction->id == 'index' ? 0 : 1]);
         // add conditions that should always apply here
+
+        $query->joinWith('creator')->joinWith('updater');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -79,8 +81,25 @@ class RoleSearch extends Role
         ]);
 
         $this->search_type ==1 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like', 'role.name', $this->search_keywords]);
+        $this->search_type ==2 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like', 'role.remark', $this->search_keywords]);
+        $this->search_type ==3 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['in', 'creator.id', $this->searchIds($this->search_keywords)]);
+        $this->search_type ==4 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['in', 'updater.id', $this->searchIds($this->search_keywords)]);
 
         return $dataProvider;
+    }
+
+    public function searchIds($searchWords)
+    {
+        $ids = [0];
+        $query = Manager::find()->select(['account','id'])->all();
+        foreach ($query as $row)
+        {
+            $pos = strpos($row['account'],$searchWords);
+            if(is_int($pos)){
+                $ids[] = $row['id'];
+            }
+        }
+        return $ids;
     }
 
 }

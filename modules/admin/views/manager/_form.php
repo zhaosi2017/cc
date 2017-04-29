@@ -26,6 +26,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'role_id')->dropDownList($model['roles'],['prompt'=>'请选择']) ?>
 
+    <?= $form->field($model, 'role_id')->dropDownList($model['roles'],['prompt'=>'请选择']) ?>
+
     <div class="form-group">
         <div class="col-sm-6 col-sm-offset-2">
             <?= Html::submitButton($model->isNewRecord ? '创建' : '保存', ['class'=>'btn btn-primary']) ?>
