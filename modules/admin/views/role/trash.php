@@ -16,7 +16,7 @@ $actionId = Yii::$app->requestedAction->id;
         <?= Html::a('角色列表', ['index'], ['class' => $actionId=='trash' ? 'btn btn-outline btn-default' : 'btn btn-primary']) ?>
         <?= Html::a('垃圾筒', ['trash'], ['class' => $actionId=='index' ? 'btn btn-outline btn-default' : 'btn btn-primary']) ?>
     </p>
-    <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
 <?php Pjax::begin(); ?>
     <?= GridView::widget([
@@ -48,19 +48,12 @@ $actionId = Yii::$app->requestedAction->id;
             [
                 'class' => 'yii\grid\ActionColumn',
                 'header' => '操作',
-                'template' => '{update} {auth} {delete}',
+                'template' => '{recover}',
                 'buttons' => [
-                    'update' => function($url){
-                        return Html::a('编辑',$url);
-                    },
-                    'auth' => function($url){
-                        return Html::a('权限配置',$url);
-                    },
-                    'delete' => function($url){
-                        return Html::a('删除',$url,[
-                            'style' => 'color:red',
+                    'recover' => function($url){
+                        return Html::a('恢复',$url,[
                             'data-method' => 'post',
-                            'data' => ['confirm' => '你确定要删除吗?']
+                            'data' => ['confirm' => '你确定要恢复吗?']
                         ]);
                     },
                 ],

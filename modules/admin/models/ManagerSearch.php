@@ -5,13 +5,16 @@ namespace app\modules\admin\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\modules\admin\models\Manager;
 
 /**
  * ManagerSearch represents the model behind the search form about `app\modules\admin\models\Manager`.
  */
 class ManagerSearch extends Manager
 {
+    public $search_type;
+
+    public $search_keywords;
+
     /**
      * @inheritdoc
      */
@@ -19,7 +22,7 @@ class ManagerSearch extends Manager
     {
         return [
             [['id', 'role_id', 'status', 'create_id', 'update_id', 'create_at', 'update_at'], 'integer'],
-            [['account', 'nickname', 'remark', 'login_ip'], 'safe'],
+            [['account', 'nickname', 'remark', 'login_ip', 'search_type', 'search_keywords'], 'safe'],
         ];
     }
 
@@ -42,8 +45,10 @@ class ManagerSearch extends Manager
     public function search($params)
     {
         $query = Manager::find();
-
+        $query->andWhere(['status'=>Yii::$app->requestedAction->id == 'index' ? 0 : 1]);
         // add conditions that should always apply here
+
+//        $query->joinWith('creator')->joinWith('updater');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -68,11 +73,25 @@ class ManagerSearch extends Manager
             'update_at' => $this->update_at,
         ]);
 
-        $query->andFilterWhere(['like', 'account', $this->account])
-            ->andFilterWhere(['like', 'nickname', $this->nickname])
-            ->andFilterWhere(['like', 'remark', $this->remark])
-            ->andFilterWhere(['like', 'login_ip', $this->login_ip]);
+        $this->search_type ==1 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['in', 'manager.id', $this->searchIds($this->search_keywords,'account')]);
+        $this->search_type ==2 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['in', 'manager.id', $this->searchIds($this->search_keywords,'nickname')]);
+        $this->search_type ==3 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like', 'manager.login_ip', $this->search_keywords]);
 
         return $dataProvider;
     }
+
+    public function searchIds($searchWords, $field='name')
+    {
+        $ids = [0];
+        $query = $this::find()->select([$field,'id'])->all();
+        foreach ($query as $row)
+        {
+            $pos = strpos($row[$field],$searchWords);
+            if(is_int($pos)){
+                $ids[] = $row['id'];
+            }
+        }
+        return $ids;
+    }
+
 }

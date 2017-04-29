@@ -10,30 +10,28 @@ use yii\widgets\ActiveForm;
 
 <div class="manager-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'options'=>['class'=>'form-horizontal m-t'],
+        'fieldConfig' => [
+            'template' => "{label}\n<div class=\"col-sm-8\">{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
+            'labelOptions' => ['class' => 'col-sm-2 control-label'],
+        ],
+    ]); ?>
 
-    <?= $form->field($model, 'account')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'account')->textInput() ?>
 
-    <?= $form->field($model, 'nickname')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'password')->passwordInput() ?>
 
-    <?= $form->field($model, 'role_id')->textInput() ?>
+    <?= $form->field($model, 'nickname')->textInput() ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+    <?= $form->field($model, 'role_id')->dropDownList($model['roles'],['prompt'=>'请选择']) ?>
 
-    <?= $form->field($model, 'remark')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'login_ip')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'create_id')->textInput() ?>
-
-    <?= $form->field($model, 'update_id')->textInput() ?>
-
-    <?= $form->field($model, 'create_at')->textInput() ?>
-
-    <?= $form->field($model, 'update_at')->textInput() ?>
+    <?= $form->field($model, 'role_id')->dropDownList($model['roles'],['prompt'=>'请选择']) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <div class="col-sm-6 col-sm-offset-2">
+            <?= Html::submitButton($model->isNewRecord ? '创建' : '保存', ['class'=>'btn btn-primary']) ?>
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>

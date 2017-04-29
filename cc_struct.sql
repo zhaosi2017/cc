@@ -135,6 +135,7 @@ DROP TABLE IF EXISTS `manager`;
 CREATE TABLE `manager` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `auth_key` varchar(64) DEFAULT NULL,
+  `password` varchar(64) NOT NULL DEFAULT '',
   `account` text,
   `nickname` text,
   `role_id` int(10) unsigned NOT NULL DEFAULT '0',
@@ -160,6 +161,7 @@ CREATE TABLE `role` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` text,
   `remark` text,
+  `status` int(10) unsigned NOT NULL DEFAULT '0',
   `create_id` int(10) unsigned NOT NULL DEFAULT '0',
   `update_id` int(10) unsigned NOT NULL DEFAULT '0',
   `create_at` int(11) DEFAULT '0',
