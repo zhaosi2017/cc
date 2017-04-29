@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\home\models\CallRecordSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -24,6 +25,9 @@ $actionId = Yii::$app->requestedAction->id;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         // 'filterModel' => $searchModel,
+        'rowOptions' => function($model) {
+            return ['id' => 'tr_'.$model->id, 'class' => '_tr'];
+        },
         'pager'=>[
             'firstPageLabel'=>"首页",
             'prevPageLabel'=>'上一页',
@@ -32,7 +36,11 @@ $actionId = Yii::$app->requestedAction->id;
             'maxButtonCount' => 9,
         ],
         'columns' => [
-            ['class' => 'yii\grid\CheckboxColumn'],
+            [
+                'class' => 'yii\grid\CheckboxColumn',
+                // 'footer' =>'<a href="javascript:;" class="_delete_all" data-url="'.Url::to(['/user/delete-all']).'"></a>',
+                // 'footerOptions' => ['colspan' => 13],
+            ],
             'id',
             'active_account',
             'active_nickname',

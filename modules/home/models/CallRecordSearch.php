@@ -60,7 +60,7 @@ class CallRecordSearch extends CallRecord
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination'=>[
-                'pagesize'=> 10,
+                'pagesize'=> 2,
             ],
         ]);
 
@@ -83,7 +83,7 @@ class CallRecordSearch extends CallRecord
             'call_time' => $this->call_time,
         ]);
 
-        if($this->call_time_start <= $this->call_time_end){
+        if((!empty($this->call_time_start) && !empty($this->call_time_end)) && ($this->call_time_start <= $this->call_time_end)){
             $this->call_time_start = strtotime($this->call_time_start);
             $this->call_time_end = strtotime($this->call_time_end);
             $query->andFilterWhere(['between','call_time', $this->call_time_start, $this->call_time_end]);
