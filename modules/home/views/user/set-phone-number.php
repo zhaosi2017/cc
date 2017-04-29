@@ -70,8 +70,7 @@ $this->title = '修改绑定电话';
                     var duration = 59;
                     $('#count-down').attr('disabled','disabled');
                     var url = '<?php echo Url::to(['/home/user/send-short-message']); ?>';
-                    var data = {
-                        };
+                    var data = {};
 
                     data.number = '+' + $('#phonenumberform-country_code').val() + $('#phonenumberform-phone_number').val();
                     $.post(url, data).done(function(r) {

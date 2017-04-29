@@ -31,7 +31,6 @@ GlobalAsset::register($this);
 </head>
 
 <body class="fixed-sidebar full-height-layout gray-bg pace-done" style="overflow:hidden">
-<audio class="hide" id="notice-ysp" src="<?= Yii::$app->homeUrl.'/media/yisell_sound_2014040216575424653_88366.mp3' ?>" preload="auto"></audio>
 <?php $this->beginBody() ?>
     <?= isset($content) ? $content : ''  ?>
 </body>
