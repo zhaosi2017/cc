@@ -12,14 +12,19 @@ use app\modules\home\models\CallRecord;
  */
 class CallRecordSearch extends CallRecord
 {
+    public $search_type;
+    public $search_keywords;
+    public $call_time_start;
+    public $call_time_end;
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'active_call_uid', 'unactive_call_uid', 'call_by_same_times', 'type', 'status', 'call_time'], 'integer'],
-            [['contact_number'], 'safe'],
+            [['id', 'active_call_uid', 'unactive_call_uid', 'call_by_same_times', 'type', 'status'], 'integer'],
+            [['contact_number', 'search_type', 'search_keywords', 'active_account', 'call_time_start', 'call_time_end'], 'safe'],
         ];
     }
 
@@ -41,12 +46,22 @@ class CallRecordSearch extends CallRecord
      */
     public function search($params)
     {
-        $query = CallRecord::find();
+        $recordStatus = '1';
+        if (Yii::$app->requestedAction->id == 'blacklist') {
+            $recordStatus = '2';
+        }
+        if (Yii::$app->requestedAction->id == 'trash') {
+            $recordStatus = '3';
+        }
+        $query = CallRecord::find()->where(['call_record.record_status' => $recordStatus]);
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination'=>[
+                'pagesize'=> 10,
+            ],
         ]);
 
         $this->load($params);
@@ -68,7 +83,18 @@ class CallRecordSearch extends CallRecord
             'call_time' => $this->call_time,
         ]);
 
-        $query->andFilterWhere(['like', 'contact_number', $this->contact_number]);
+        if($this->call_time_start <= $this->call_time_end){
+            $this->call_time_start = strtotime($this->call_time_start);
+            $this->call_time_end = strtotime($this->call_time_end);
+            $query->andFilterWhere(['between','call_time', $this->call_time_start, $this->call_time_end]);
+        }
+        $this->search_type ==1 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like', 'active_account', $this->search_keywords]);
+        $this->search_type ==2 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like', 'active_nickname', $this->search_keywords]);
+        $this->search_type ==3 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like', 'contact_number', $this->search_keywords]);
+        $this->search_type ==4 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like', 'unactive_account', $this->search_keywords]);
+        $this->search_type ==5 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like', 'unactive_nickname', $this->search_keywords]);
+        $this->search_type ==6 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like', 'unactive_contact_number', $this->search_keywords]);
+        $this->search_type ==7 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['in', 'type', $this->search_keywords]);
 
         return $dataProvider;
     }

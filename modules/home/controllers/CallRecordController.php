@@ -121,4 +121,43 @@ class CallRecordController extends GController
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    /**
+     * 呼叫记录黑名单.
+     *
+     * @return \yii\web\Response
+     */
+    public function actionBlacklist()
+    {
+        $searchModel = new CallRecordSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render(
+            'index',
+            [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]
+        );
+    }
+
+    /**
+     * 黑名单.
+     *
+     * @return \yii\web\Response
+     */
+    public function actionTrash()
+    {
+        $searchModel = new CallRecordSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render(
+            'index',
+            [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]
+        );
+    }
+
 }

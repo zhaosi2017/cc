@@ -7,33 +7,52 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\modules\home\models\CallRecordSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Call Records';
+$this->title = '呼叫记录';
 $this->params['breadcrumbs'][] = $this->title;
+$actionId = Yii::$app->requestedAction->id;
 ?>
 <div class="call-record-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('Create Call Record', ['create'], ['class' => 'btn btn-success']) ?>
+    <p class="btn-group hidden-xs">
+        <?= Html::a('呼叫记录', ['index'], ['class' => $actionId=='index' ? 'btn btn-primary' : 'btn btn-outline btn-default']) ?>
+        <?= Html::a('黑名单', ['blacklist'], ['class' => $actionId=='blacklist' ? 'btn btn-primary' : 'btn btn-outline btn-default']) ?>
+        <?= Html::a('垃圾筒', ['trash'], ['class' => $actionId=='trash' ? 'btn btn-primary' : 'btn btn-outline btn-default']) ?>
     </p>
-<?php Pjax::begin(); ?>    <?= GridView::widget([
+    <div class="help-block m-t"></div>
+    <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
+    <div class="help-block m-t"></div>
+<?php Pjax::begin(); ?>
+    <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'active_call_uid',
-            'unactive_call_uid',
-            'call_by_same_times:datetime',
-            'type',
-            // 'contact_number',
-            // 'status',
-            // 'call_time:datetime',
-
-            ['class' => 'yii\grid\ActionColumn'],
+        // 'filterModel' => $searchModel,
+        'pager'=>[
+            'firstPageLabel'=>"首页",
+            'prevPageLabel'=>'上一页',
+            'nextPageLabel'=>'下一页',
+            'lastPageLabel'=>'末页',
+            'maxButtonCount' => 9,
         ],
-    ]); ?>
-<?php Pjax::end(); ?></div>
+        'columns' => [
+            ['class' => 'yii\grid\CheckboxColumn'],
+            'id',
+            'active_account',
+            'active_nickname',
+            'contact_number',
+            'unactive_account',
+            'unactive_nickname',
+            'call_by_same_times',
+            'type',
+            'unactive_contact_number',
+            'status',
+            [
+                'attribute' => 'call_time',
+                'format'=>['date', 'php:Y-m-d H:i:s'],
+            ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view}&nbsp;&nbsp;&nbsp;&nbsp;{delete}',
+            ],
+        ],
+    ]);
+    ?>
+<?php Pjax::end(); ?>
+</div>
