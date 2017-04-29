@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\redactor\widgets\Redactor;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\admin\models\Manager */
@@ -26,7 +27,26 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'role_id')->dropDownList($model['roles'],['prompt'=>'请选择']) ?>
 
-    <?= $form->field($model, 'role_id')->dropDownList($model['roles'],['prompt'=>'请选择']) ?>
+    <?php if(!$model->isNewRecord){ ?>
+    <?= $form->field($model, 'status')->radioList([0 => '正常', 2 => '冻结']) ?>
+
+    <?= $form->field($model, 'remark')->widget(Redactor::className(),[
+        'clientOptions' => [
+            'lang' => 'zh_cn',
+            'imageUpload' => false,
+            'fileUpload' => false,
+            'plugins' => [
+                'clips',
+                'fontcolor'
+            ],
+            'placeholder'=> $model->status==0 ? '*' : '冻结原因',
+            'maxlength'=>500
+        ]
+    ])->label('原因') ?>
+
+    <?= $form->field($model, 'login_ip')->textInput(['value'=>Yii::$app->request->userIP,'readonly'=>true]) ?>
+
+    <?php } ?>
 
     <div class="form-group">
         <div class="col-sm-6 col-sm-offset-2">

@@ -88,7 +88,8 @@ $config = [
         'admin' => [
             'class' => 'app\modules\admin\Module'
         ],
-//        'redactor' => 'yii\redactor\RedactorModule',
+
+        'redactor' => 'yii\redactor\RedactorModule',
     ],
 ];
 

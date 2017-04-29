@@ -45,7 +45,16 @@ class ManagerSearch extends Manager
     public function search($params)
     {
         $query = Manager::find();
-        $query->andWhere(['status'=>Yii::$app->requestedAction->id == 'index' ? 0 : 1]);
+
+        $action_id = Yii::$app->requestedAction->id;
+
+        if($action_id == 'index'){
+            $query->andWhere(['!=','status',1]);
+        }
+        if($action_id == 'trash'){
+            $query->andWhere(['status' => 1]);
+        }
+
         // add conditions that should always apply here
 
 //        $query->joinWith('creator')->joinWith('updater');

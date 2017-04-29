@@ -18,6 +18,7 @@ class ComposerStaticInitb5206e6aa33c5e29c80d8653607e539b
         'y' => 
         array (
             'yii\\swiftmailer\\' => 16,
+            'yii\\redactor\\' => 13,
             'yii\\gii\\' => 8,
             'yii\\faker\\' => 10,
             'yii\\debug\\' => 10,
@@ -28,6 +29,11 @@ class ComposerStaticInitb5206e6aa33c5e29c80d8653607e539b
         'p' => 
         array (
             'phpDocumentor\\Reflection\\' => 25,
+        ),
+        'k' => 
+        array (
+            'kartik\\select2\\' => 15,
+            'kartik\\base\\' => 12,
         ),
         'c' => 
         array (
@@ -80,6 +86,10 @@ class ComposerStaticInitb5206e6aa33c5e29c80d8653607e539b
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2-swiftmailer',
         ),
+        'yii\\redactor\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yiidoc/yii2-redactor',
+        ),
         'yii\\gii\\' => 
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2-gii',
@@ -109,6 +119,14 @@ class ComposerStaticInitb5206e6aa33c5e29c80d8653607e539b
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+        ),
+        'kartik\\select2\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-widget-select2',
+        ),
+        'kartik\\base\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-krajee-base',
         ),
         'cebe\\markdown\\' => 
         array (

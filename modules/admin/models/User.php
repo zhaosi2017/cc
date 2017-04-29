@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\models;
 
+use Yii;
 use app\models\CActiveRecord;
 
 /**
@@ -91,4 +92,14 @@ class User extends CActiveRecord
     {
         return new UserQuery(get_called_class());
     }
+
+    public function afterFind()
+    {
+        parent::afterFind();
+        $this->account = Yii::$app->security->decryptByKey(base64_decode($this->account), Yii::$app->params['inputKey']);
+        $this->nickname && $this->nickname = Yii::$app->security->decryptByKey(base64_decode($this->nickname), Yii::$app->params['inputKey']);
+        $this->urgent_contact_person_one && $this->urgent_contact_person_one = Yii::$app->security->decryptByKey(base64_decode($this->urgent_contact_person_one), Yii::$app->params['inputKey']);
+        $this->urgent_contact_person_two && $this->urgent_contact_person_two = Yii::$app->security->decryptByKey(base64_decode($this->urgent_contact_person_two), Yii::$app->params['inputKey']);
+    }
+
 }
