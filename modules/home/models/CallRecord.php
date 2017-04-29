@@ -52,8 +52,8 @@ class CallRecord extends \app\models\CActiveRecord
     {
         return [
             'id' => 'ID',
-            'active_call_uid' => '主叫账号',
-            'unactive_call_uid' => '被叫账号',
+            'active_call_uid' => '主叫账号id',
+            'unactive_call_uid' => '被叫账号id',
             'call_by_same_times' => '被同一人呼叫次数',
             'type' => '电话类型',
             'contact_number' => '主叫电话',
