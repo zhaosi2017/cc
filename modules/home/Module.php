@@ -18,6 +18,7 @@ class Module extends \yii\base\Module
     public function init()
     {
         parent::init();
+        \Yii::$app->user->identityClass = 'app\models\User2';
         // custom initialization code goes here
     }
 }
