@@ -122,7 +122,7 @@ CREATE TABLE `login_logs` (
   `unlock_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `unlock_uid` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=116 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=121 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -147,7 +147,7 @@ CREATE TABLE `manager` (
   `create_at` int(11) DEFAULT '0',
   `update_at` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,11 +161,11 @@ CREATE TABLE `role` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` text,
   `remark` text,
-  `status` int(10) unsigned NOT NULL DEFAULT '0',
   `create_id` int(10) unsigned NOT NULL DEFAULT '0',
   `update_id` int(10) unsigned NOT NULL DEFAULT '0',
   `create_at` int(11) DEFAULT '0',
   `update_at` int(11) DEFAULT '0',
+  `status` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -217,4 +217,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-27 17:06:31
+-- Dump completed on 2017-05-02 10:23:07
