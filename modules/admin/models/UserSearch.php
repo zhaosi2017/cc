@@ -11,6 +11,14 @@ use yii\data\ActiveDataProvider;
  */
 class UserSearch extends User
 {
+    public $start_date;
+
+    public $end_date;
+
+    public $search_type;
+
+    public $search_keywords;
+
     /**
      * @inheritdoc
      */
@@ -18,7 +26,7 @@ class UserSearch extends User
     {
         return [
             [['id', 'un_call_number', 'un_call_by_same_number', 'long_time', 'country_code', 'urgent_contact_one_country_code', 'urgent_contact_number_two', 'urgent_contact_two_country_code', 'telegram_country_code', 'potato_country_code', 'reg_time', 'role_id'], 'integer'],
-            [['auth_key', 'password', 'account', 'nickname', 'phone_number', 'urgent_contact_number_one', 'urgent_contact_person_one', 'urgent_contact_person_two', 'telegram_number', 'potato_number'], 'safe'],
+            [['auth_key', 'password', 'account', 'nickname', 'phone_number', 'urgent_contact_number_one', 'urgent_contact_person_one', 'urgent_contact_person_two', 'telegram_number', 'potato_number', 'search_type', 'search_keywords'], 'safe'],
         ];
     }
 
@@ -41,7 +49,7 @@ class UserSearch extends User
     public function search($params)
     {
         $query = User::find();
-        $query->andWhere(['status'=>Yii::$app->requestedAction->id == 'index' ? 0 : 1]);
+//        $query->andWhere(['status'=>Yii::$app->requestedAction->id == 'index' ? 0 : 1]);
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -72,17 +80,32 @@ class UserSearch extends User
             'role_id' => $this->role_id,
         ]);
 
-        $query->andFilterWhere(['like', 'auth_key', $this->auth_key])
-            ->andFilterWhere(['like', 'password', $this->password])
-            ->andFilterWhere(['like', 'account', $this->account])
-            ->andFilterWhere(['like', 'nickname', $this->nickname])
-            ->andFilterWhere(['like', 'phone_number', $this->phone_number])
-            ->andFilterWhere(['like', 'urgent_contact_number_one', $this->urgent_contact_number_one])
-            ->andFilterWhere(['like', 'urgent_contact_person_one', $this->urgent_contact_person_one])
-            ->andFilterWhere(['like', 'urgent_contact_person_two', $this->urgent_contact_person_two])
-            ->andFilterWhere(['like', 'telegram_number', $this->telegram_number])
-            ->andFilterWhere(['like', 'potato_number', $this->potato_number]);
+        if($this->start_date <= $this->end_date){
+            $query->andFilterWhere(['between','user.reg_time', strtotime($this->start_date), strtotime($this->end_date)]);
+        }
+
+        $this->search_type == 1 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like','user.potato', $this->search_keywords]);
+        $this->search_type == 2 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like','user.telegram', $this->search_keywords]);
+        $this->search_type == 3 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['in', 'user.id', $this->searchIds($this->search_keywords)]);
+        $this->search_type == 4 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['in', 'user.id', $this->searchIds($this->search_keywords, 'nickname')]);
+        $this->search_type == 5 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like','user.phone_number', $this->search_keywords]);
+//        $this->search_type == 6 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like','user.phone_number', $this->search_keywords]);
+//        $this->search_type == 7 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like','user.phone_number', $this->search_keywords]);
 
         return $dataProvider;
+    }
+
+    public function searchIds($searchWords, $field='account')
+    {
+        $ids = [0];
+        $query = $this::find()->select([$field,'id'])->all();
+        foreach ($query as $row)
+        {
+            $pos = strpos($row[$field],$searchWords);
+            if(is_int($pos)){
+                $ids[] = $row['id'];
+            }
+        }
+        return $ids;
     }
 }

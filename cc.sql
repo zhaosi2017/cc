@@ -131,22 +131,16 @@ DROP TABLE IF EXISTS `call_record`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `call_record` (
- `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
- `active_call_uid` int(10) unsigned NOT NULL DEFAULT '0',
- `unactive_call_uid` int(10) unsigned NOT NULL DEFAULT '0',
- `active_account` varchar(100) NOT NULL COMMENT '主叫账号',
- `unactive_account` varchar(100) NOT NULL COMMENT '被叫账号',
- `active_nickname` varchar(50) NOT NULL DEFAULT '*' COMMENT '主叫昵称',
- `unactive_nickname` varchar(50) NOT NULL DEFAULT '*' COMMENT '被叫昵称',
- `call_by_same_times` int(10) unsigned NOT NULL DEFAULT '0',
- `type` int(10) unsigned NOT NULL DEFAULT '0',
- `contact_number` varchar(64) NOT NULL DEFAULT '',
- `unactive_contact_number` char(15) NOT NULL COMMENT '被叫电话',
- `status` int(10) unsigned NOT NULL DEFAULT '0',
- `record_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '记录状态(1:正常, 2:黑名单, 3:垃圾桶)',
- `call_time` int(11) NOT NULL DEFAULT '0',
- PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `active_call_uid` int(10) unsigned NOT NULL DEFAULT '0',
+  `unactive_call_uid` int(10) unsigned NOT NULL DEFAULT '0',
+  `call_by_same_times` int(10) unsigned NOT NULL DEFAULT '0',
+  `type` int(10) unsigned NOT NULL DEFAULT '0',
+  `contact_number` varchar(64) NOT NULL DEFAULT '',
+  `status` int(10) unsigned NOT NULL DEFAULT '0',
+  `call_time` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -174,7 +168,7 @@ CREATE TABLE `login_logs` (
   `unlock_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `unlock_uid` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=116 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=121 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -183,7 +177,7 @@ CREATE TABLE `login_logs` (
 
 LOCK TABLES `login_logs` WRITE;
 /*!40000 ALTER TABLE `login_logs` DISABLE KEYS */;
-INSERT INTO `login_logs` VALUES (77,0,4,'2017-04-13 14:35:17','::1','2017-04-13 14:35:17',0),(78,0,4,'2017-04-13 14:41:09','::1','2017-04-13 14:41:09',0),(79,1,2,'2017-04-13 14:41:14','::1','2017-04-13 14:41:15',0),(80,1,2,'2017-04-13 14:46:38','::1','2017-04-13 14:46:39',0),(81,1,2,'2017-04-15 11:04:26','::1','2017-04-15 11:04:27',0),(82,0,4,'2017-04-17 11:33:47','::1','2017-04-17 11:33:47',0),(83,0,4,'2017-04-17 11:34:59','::1','2017-04-17 11:34:59',0),(84,0,4,'2017-04-17 13:11:18','::1','2017-04-17 13:11:18',0),(85,0,4,'2017-04-17 13:32:28','::1','2017-04-17 13:32:28',0),(86,0,4,'2017-04-17 13:34:09','::1','2017-04-17 13:34:09',0),(87,0,4,'2017-04-19 11:09:37','::1','2017-04-19 11:09:37',0),(88,1,2,'2017-04-20 14:53:42','::1','2017-04-20 14:53:42',0),(89,1,2,'2017-04-20 14:53:56','::1','2017-04-20 14:53:57',0),(90,1,2,'2017-04-20 14:54:13','::1','2017-04-20 14:54:14',0),(91,1,2,'2017-04-20 14:54:44','::1','2017-04-20 14:54:45',0),(92,1,2,'2017-04-20 14:57:07','::1','2017-04-20 14:57:07',0),(93,1,2,'2017-04-23 15:35:52','::1','2017-04-23 15:35:53',0),(94,1,2,'2017-04-23 15:36:01','::1','2017-04-23 15:36:01',0),(95,1,2,'2017-04-23 15:36:57','::1','2017-04-23 15:36:57',0),(96,1,2,'2017-04-23 15:37:04','::1','2017-04-23 15:37:05',0),(97,1,2,'2017-04-23 15:37:14','::1','2017-04-23 15:37:15',0),(98,1,2,'2017-04-26 14:32:16','::1','2017-04-26 14:32:16',0),(99,1,2,'2017-04-26 14:32:26','::1','2017-04-26 14:32:27',0),(100,1,2,'2017-04-26 14:32:42','::1','2017-04-26 14:32:43',0),(101,1,2,'2017-04-26 14:32:58','::1','2017-04-26 14:32:59',0),(102,1,2,'2017-04-26 14:33:16','::1','2017-04-26 14:33:17',0),(103,1,2,'2017-04-26 14:34:41','::1','2017-04-26 14:34:42',0),(104,1,2,'2017-04-26 14:36:36','::1','2017-04-26 14:36:36',0),(105,1,2,'2017-04-26 14:36:42','::1','2017-04-26 14:36:43',0),(106,1,2,'2017-04-26 14:38:18','::1','2017-04-26 14:38:18',0),(107,1,2,'2017-04-26 14:38:26','::1','2017-04-26 14:38:27',0),(108,1,2,'2017-04-27 16:06:35','::1','2017-04-27 16:06:36',0),(109,1,2,'2017-04-27 16:15:35','::1','2017-04-27 16:15:35',0),(110,1,2,'2017-04-27 16:15:54','::1','2017-04-27 16:15:55',0),(111,1,2,'2017-04-27 16:21:42','::1','2017-04-27 16:21:42',0),(112,1,2,'2017-04-27 16:27:36','::1','2017-04-27 16:27:37',0),(113,1,2,'2017-04-27 16:27:36','::1','2017-04-27 16:27:37',0),(114,1,2,'2017-04-27 16:39:39','::1','2017-04-27 16:39:40',0),(115,1,2,'2017-04-27 16:40:03','::1','2017-04-27 16:40:04',0);
+INSERT INTO `login_logs` VALUES (77,0,4,'2017-04-13 14:35:17','::1','2017-04-13 14:35:17',0),(78,0,4,'2017-04-13 14:41:09','::1','2017-04-13 14:41:09',0),(79,1,2,'2017-04-13 14:41:14','::1','2017-04-13 14:41:15',0),(80,1,2,'2017-04-13 14:46:38','::1','2017-04-13 14:46:39',0),(81,1,2,'2017-04-15 11:04:26','::1','2017-04-15 11:04:27',0),(82,0,4,'2017-04-17 11:33:47','::1','2017-04-17 11:33:47',0),(83,0,4,'2017-04-17 11:34:59','::1','2017-04-17 11:34:59',0),(84,0,4,'2017-04-17 13:11:18','::1','2017-04-17 13:11:18',0),(85,0,4,'2017-04-17 13:32:28','::1','2017-04-17 13:32:28',0),(86,0,4,'2017-04-17 13:34:09','::1','2017-04-17 13:34:09',0),(87,0,4,'2017-04-19 11:09:37','::1','2017-04-19 11:09:37',0),(88,1,2,'2017-04-20 14:53:42','::1','2017-04-20 14:53:42',0),(89,1,2,'2017-04-20 14:53:56','::1','2017-04-20 14:53:57',0),(90,1,2,'2017-04-20 14:54:13','::1','2017-04-20 14:54:14',0),(91,1,2,'2017-04-20 14:54:44','::1','2017-04-20 14:54:45',0),(92,1,2,'2017-04-20 14:57:07','::1','2017-04-20 14:57:07',0),(93,1,2,'2017-04-23 15:35:52','::1','2017-04-23 15:35:53',0),(94,1,2,'2017-04-23 15:36:01','::1','2017-04-23 15:36:01',0),(95,1,2,'2017-04-23 15:36:57','::1','2017-04-23 15:36:57',0),(96,1,2,'2017-04-23 15:37:04','::1','2017-04-23 15:37:05',0),(97,1,2,'2017-04-23 15:37:14','::1','2017-04-23 15:37:15',0),(98,1,2,'2017-04-26 14:32:16','::1','2017-04-26 14:32:16',0),(99,1,2,'2017-04-26 14:32:26','::1','2017-04-26 14:32:27',0),(100,1,2,'2017-04-26 14:32:42','::1','2017-04-26 14:32:43',0),(101,1,2,'2017-04-26 14:32:58','::1','2017-04-26 14:32:59',0),(102,1,2,'2017-04-26 14:33:16','::1','2017-04-26 14:33:17',0),(103,1,2,'2017-04-26 14:34:41','::1','2017-04-26 14:34:42',0),(104,1,2,'2017-04-26 14:36:36','::1','2017-04-26 14:36:36',0),(105,1,2,'2017-04-26 14:36:42','::1','2017-04-26 14:36:43',0),(106,1,2,'2017-04-26 14:38:18','::1','2017-04-26 14:38:18',0),(107,1,2,'2017-04-26 14:38:26','::1','2017-04-26 14:38:27',0),(108,1,2,'2017-04-27 16:06:35','::1','2017-04-27 16:06:36',0),(109,1,2,'2017-04-27 16:15:35','::1','2017-04-27 16:15:35',0),(110,1,2,'2017-04-27 16:15:54','::1','2017-04-27 16:15:55',0),(111,1,2,'2017-04-27 16:21:42','::1','2017-04-27 16:21:42',0),(112,1,2,'2017-04-27 16:27:36','::1','2017-04-27 16:27:37',0),(113,1,2,'2017-04-27 16:27:36','::1','2017-04-27 16:27:37',0),(114,1,2,'2017-04-27 16:39:39','::1','2017-04-27 16:39:40',0),(115,1,2,'2017-04-27 16:40:03','::1','2017-04-27 16:40:04',0),(116,1,2,'2017-04-27 18:25:07','::1','2017-04-27 18:25:07',0),(117,0,4,'2017-04-27 19:28:06','::1','2017-04-27 19:28:06',0),(118,0,4,'2017-05-02 10:09:31','::1','2017-05-02 10:09:31',0),(119,0,4,'2017-05-02 10:09:57','::1','2017-05-02 10:09:57',0),(120,0,4,'2017-05-02 10:10:30','::1','2017-05-02 10:10:30',0);
 /*!40000 ALTER TABLE `login_logs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -209,7 +203,7 @@ CREATE TABLE `manager` (
   `create_at` int(11) DEFAULT '0',
   `update_at` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -218,6 +212,7 @@ CREATE TABLE `manager` (
 
 LOCK TABLES `manager` WRITE;
 /*!40000 ALTER TABLE `manager` DISABLE KEYS */;
+INSERT INTO `manager` VALUES (1,'AMZjmw2EYZ5iErCkEckk-cb5EpzgcWpn','$2y$13$pBMsYZZlSGx.9ItxeLYZ5OtRlATior/rZ5w6YlBwHbK5SBLRXtOCy','DtzwhVl+h7wgkY/PdBsPTjQ5YmI1MWQ5OTVkODUyMWNkYzRhMDQ3MTk4ZTNkOTRiZGIyYmJmOTM4OWU5YzhjNGRiM2UxMjUzMjNjOTIyMWEWesoquN9scy3zqMOgXG6MwLBRtp92N5KPsu3AdCGI4w==','pN4O6RlngvXXEW2M0Sj3LzRkMjMzNjlhYmIzMWJlYmZmNGJjMTViYWQwZTM4ZjA0YjkxMDEzY2E3MGMwNGEzZDE2OTFlYzc3Mzc3OGM0ZWFIOADnocvuvyaZnL4x89XgaKfSHouTnEI7LwmGJok19A==',1,2,'','::1',0,0,1493371032,1493457208);
 /*!40000 ALTER TABLE `manager` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -232,11 +227,11 @@ CREATE TABLE `role` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` text,
   `remark` text,
-  `status` int(10) unsigned NOT NULL DEFAULT '0',
   `create_id` int(10) unsigned NOT NULL DEFAULT '0',
   `update_id` int(10) unsigned NOT NULL DEFAULT '0',
   `create_at` int(11) DEFAULT '0',
   `update_at` int(11) DEFAULT '0',
+  `status` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -247,7 +242,7 @@ CREATE TABLE `role` (
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES (1,'admin','所有权限',0,0,1493278121,1493278121);
+INSERT INTO `role` VALUES (1,'admin','所有权限',0,0,1493278121,1493367502,0);
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -265,9 +260,6 @@ CREATE TABLE `user` (
   `account` text,
   `nickname` text,
   `status` int(10) unsigned NOT NULL DEFAULT '0',
-  `calling_times` int(10) unsigned NOT NULL DEFAULT '0',
-  `called_times` int(10) unsigned NOT NULL DEFAULT '0',
-  `limit_times` int(10) unsigned NOT NULL DEFAULT '0',
   `un_call_number` int(10) unsigned NOT NULL DEFAULT '0',
   `un_call_by_same_number` int(10) unsigned NOT NULL DEFAULT '0',
   `long_time` int(10) unsigned NOT NULL DEFAULT '0',
@@ -285,6 +277,7 @@ CREATE TABLE `user` (
   `potato_country_code` int(10) unsigned DEFAULT NULL,
   `reg_time` int(10) unsigned NOT NULL DEFAULT '0',
   `role_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `reg_ip` varchar(64) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -295,7 +288,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'IR9Cf5uW-my7T4p08G15QPlZ-SNCuxkw','$2y$13$eA9jlQeu3hMTcZCyfiIB6OdHO5/hHuW86unYQ76n7prIQijpOpKOW','CpqqKFEa3gCx1rDLfucLYjYwYjZiNTRiNDMxYmY2ZWM0NGIwMTc1ZTZhZTRlZGI1OGMzMzlhZmY0MWEyNDBiN2YxOTIzYTdkMmMwNDZkN2ORJPrhTN9rAbVjR6rjWr/11mQoH294+UAHOmZ/wNSVVKLR9ScQnsR/JwYLwFjv5Pg=',NULL,0,0,0,NULL,'','',NULL,0,NULL,NULL,NULL,'',NULL,'',NULL,1493287004,0);
+INSERT INTO `user` VALUES (1,'IR9Cf5uW-my7T4p08G15QPlZ-SNCuxkw','$2y$13$we3lzX8VIddrEy16nQV58.6BF9PtGZ/Suxq4jdXVcA1r8ZsFOtSW2','TLJk8Kp8nLy9BAuR0R4kMjUyODQ1ZGFjYTcwYmE1YzMzNjNjOGM5MzAyZTFlMDE5NmQwOTRmMGQzMDhkZjQ0YWMxNDlkOTRmYTA1ZGU4Y2OfH7cO9wt9g7mzc7UHDdkIAbnreLCRYBbGHaI55kaHlkh1GGIshq6wB0EDQSPf8m4=','zMsI4kdXSlise47eTwTXoTBhYWMyYjdiMWE0YWIxYTE0MTU3MWU4NmQxNGNlMjNkODI0NjVmMTNlMjk2OTg5ZGE2Y2IyNjQ0MDQ1NDk3ZjQOsgxy3yQqPWJURRLnTl2ZVcNyoo8mdWYMKOmM8zXu0w==',0,0,0,0,NULL,'','223123123',855,0,NULL,'aEKIt9fuweA3Rj1nBWLWRTljYWYyYjk2NDhiYjM4NWNmZTY0ZTQ4OGI4ZTcxOGFkMGI2ODZlNzA5NTViZWVlZDBlNmIzY2ExMDFjZDIzNTbGoPKts60lQG9kDHBLkI5tO2WH6Ki+/RFG5XShEocbCA==','0HTYKYFBoKmrSO3KBkcvCTUxZWUwNGQyYmVkODA1YjBlYzgyZTcwN2QyNDA5YmIzNDFmYTRiZjEzMDlhOWUwYjg4YmRhYzRiMTE2MDBlNjl9adMJJW7E1z3CDsOm7c6S1+5d2RzM6B3bhtaGB6ZBFA==','',NULL,'',NULL,1493287004,0,'');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -308,4 +301,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-27 17:03:58
+-- Dump completed on 2017-05-02 13:43:20

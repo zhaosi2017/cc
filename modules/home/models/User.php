@@ -30,6 +30,7 @@ use yii\web\IdentityInterface;
  * @property integer $telegram_country_code
  * @property integer $potato_country_code
  * @property integer $reg_time
+ * @property string $reg_ip
  * @property integer $role_id
  */
 class User extends CActiveRecord implements IdentityInterface
@@ -80,7 +81,7 @@ class User extends CActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['account', 'nickname', 'urgent_contact_person_one', 'urgent_contact_person_two'], 'string'],
+            [['account', 'nickname', 'urgent_contact_person_one', 'urgent_contact_person_two', 'reg_ip'], 'string'],
 
             [[
                 'un_call_number',
@@ -124,6 +125,7 @@ class User extends CActiveRecord implements IdentityInterface
             'telegram_country_code' => 'telegram country code',
             'potato_country_code' => 'Potato country code',
             'reg_time' => 'Reg Time',
+            'reg_ip' => 'Reg IP',
             'role_id' => 'Role ID',
         ];
     }
@@ -141,6 +143,7 @@ class User extends CActiveRecord implements IdentityInterface
     {
         if (parent::beforeSave($insert)) {
             if ($this->isNewRecord) {
+                $this->reg_ip = Yii::$app->request->userIP;
                 $this->reg_time = $_SERVER['REQUEST_TIME'];
                 $this->auth_key = Yii::$app->security->generateRandomString();
                 $this->account  = base64_encode(Yii::$app->security->encryptByKey($this->account, Yii::$app->params['inputKey']));

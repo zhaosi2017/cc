@@ -27,6 +27,7 @@ use app\models\CActiveRecord;
  * @property string $telegram_number
  * @property integer $telegram_country_code
  * @property string $potato_number
+ * @property string $reg_ip
  * @property integer $potato_country_code
  * @property integer $reg_time
  * @property integer $role_id
@@ -48,7 +49,7 @@ class User extends CActiveRecord
     public function rules()
     {
         return [
-            [['account', 'nickname', 'urgent_contact_person_one', 'urgent_contact_person_two'], 'string'],
+            [['account', 'nickname', 'urgent_contact_person_one', 'urgent_contact_person_two','reg_ip'], 'string'],
             [['un_call_number', 'un_call_by_same_number', 'long_time', 'country_code', 'urgent_contact_one_country_code', 'urgent_contact_number_two', 'urgent_contact_two_country_code', 'telegram_country_code', 'potato_country_code', 'reg_time', 'role_id'], 'integer'],
             [['auth_key', 'password', 'phone_number', 'urgent_contact_number_one', 'telegram_number', 'potato_number'], 'string', 'max' => 64],
             [[ 'status'], 'number'],
@@ -64,24 +65,25 @@ class User extends CActiveRecord
             'id' => 'ID',
             'auth_key' => 'Auth Key',
             'password' => 'Password',
-            'account' => 'Account',
-            'nickname' => 'Nickname',
+            'account' => '账号',
+            'nickname' => '昵称',
             'un_call_number' => '被叫总次数',
             'un_call_by_same_number' => '被同一人呼叫次数',
             'long_time' => '时间设置',
             'country_code' => 'Country Code',
-            'phone_number' => 'Phone Number',
+            'phone_number' => '联系电话',
             'urgent_contact_number_one' => 'Urgent Contact Number One',
             'urgent_contact_one_country_code' => 'Urgent Contact One Country Code',
             'urgent_contact_number_two' => 'Urgent Contact Number Two',
             'urgent_contact_two_country_code' => 'Urgent Contact Two Country Code',
             'urgent_contact_person_one' => 'Urgent Contact Person One',
             'urgent_contact_person_two' => 'Urgent Contact Person Two',
-            'telegram_number' => 'Telegram Number',
+            'telegram_number' => 'Telegram',
             'telegram_country_code' => 'Telegram Country Code',
-            'potato_number' => 'Potato Number',
+            'potato_number' => 'Potato',
             'potato_country_code' => 'Potato Country Code',
             'reg_time' => 'Reg Time',
+            'reg_ip' => 'Reg IP',
             'role_id' => 'Role ID',
             'status' => '状态',
         ];

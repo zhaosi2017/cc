@@ -139,8 +139,9 @@ class RoleController extends PController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['id']);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->save() ? $model->sendSuccess() : $model->sendSuccess();
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
