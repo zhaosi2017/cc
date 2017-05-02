@@ -93,6 +93,14 @@ class UserController extends PController
         }
     }
 
+    public function harassment($id)
+    {
+        $model = $this->findModel($id);
+        return $this->render('harassment', [
+            'model' => $model,
+        ]);
+    }
+
     /**
      * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

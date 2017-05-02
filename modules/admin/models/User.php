@@ -30,6 +30,7 @@ use app\models\CActiveRecord;
  * @property integer $potato_country_code
  * @property integer $reg_time
  * @property integer $role_id
+ * @property integer $status
  */
 class User extends CActiveRecord
 {
@@ -50,6 +51,7 @@ class User extends CActiveRecord
             [['account', 'nickname', 'urgent_contact_person_one', 'urgent_contact_person_two'], 'string'],
             [['un_call_number', 'un_call_by_same_number', 'long_time', 'country_code', 'urgent_contact_one_country_code', 'urgent_contact_number_two', 'urgent_contact_two_country_code', 'telegram_country_code', 'potato_country_code', 'reg_time', 'role_id'], 'integer'],
             [['auth_key', 'password', 'phone_number', 'urgent_contact_number_one', 'telegram_number', 'potato_number'], 'string', 'max' => 64],
+            [[ 'status'], 'number'],
         ];
     }
 
@@ -64,9 +66,9 @@ class User extends CActiveRecord
             'password' => 'Password',
             'account' => 'Account',
             'nickname' => 'Nickname',
-            'un_call_number' => 'Un Call Number',
-            'un_call_by_same_number' => 'Un Call By Same Number',
-            'long_time' => 'Long Time',
+            'un_call_number' => '被叫总次数',
+            'un_call_by_same_number' => '被同一人呼叫次数',
+            'long_time' => '时间设置',
             'country_code' => 'Country Code',
             'phone_number' => 'Phone Number',
             'urgent_contact_number_one' => 'Urgent Contact Number One',
@@ -81,6 +83,7 @@ class User extends CActiveRecord
             'potato_country_code' => 'Potato Country Code',
             'reg_time' => 'Reg Time',
             'role_id' => 'Role ID',
+            'status' => '状态',
         ];
     }
 

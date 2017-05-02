@@ -184,9 +184,6 @@ CREATE TABLE `user` (
   `account` text,
   `nickname` text,
   `status` int(10) unsigned NOT NULL DEFAULT '0',
-  `calling_times` int(10) unsigned NOT NULL DEFAULT '0',
-  `called_times` int(10) unsigned NOT NULL DEFAULT '0',
-  `limit_times` int(10) unsigned NOT NULL DEFAULT '0',
   `un_call_number` int(10) unsigned NOT NULL DEFAULT '0',
   `un_call_by_same_number` int(10) unsigned NOT NULL DEFAULT '0',
   `long_time` int(10) unsigned NOT NULL DEFAULT '0',
@@ -217,4 +214,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-02 10:23:07
+-- Dump completed on 2017-05-02 11:34:01

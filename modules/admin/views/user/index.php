@@ -22,32 +22,21 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            ['class' => 'yii\grid\SerialColumn', ],
 
-            'id',
-            'auth_key',
-            'password',
             'account:ntext',
             'nickname:ntext',
-            // 'un_call_number',
-            // 'un_call_by_same_number',
-            // 'long_time:datetime',
-            // 'country_code',
-            // 'phone_number',
-            // 'urgent_contact_number_one',
-            // 'urgent_contact_one_country_code',
-            // 'urgent_contact_number_two',
-            // 'urgent_contact_two_country_code',
-            // 'urgent_contact_person_one:ntext',
-            // 'urgent_contact_person_two:ntext',
-            // 'telegram_number',
-            // 'telegram_country_code',
-            // 'potato_number',
-            // 'potato_country_code',
-            // 'reg_time:datetime',
-            // 'role_id',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'header' => '操作',
+                'template' => '{harassment}',
+                'buttons' => [
+                    'harassment' => function($url){
+                        return Html::a('防骚扰',$url);
+                    },
+                ],
+            ],
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>
