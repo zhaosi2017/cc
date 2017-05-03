@@ -214,7 +214,7 @@ class Manager extends CActiveRecord implements IdentityInterface
 
 
         if($user){
-            $user->account = $account;
+            // $user->account = $account;
             return new static($user);
         }
 

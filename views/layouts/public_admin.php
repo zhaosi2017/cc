@@ -56,6 +56,9 @@ $module = $this->context->module->id;
                             <li><a class="J_menuItem" href="<?= Url::to(['/admin/manager/index']) ?>">管理员列表</a>
                         </ul>
                     </li>
+                    <li>
+                        <a class="J_menuItem" href="<?= Url::to(['/admin/call-record/index']) ?>"><span class="nav-label">呼叫记录</span></a>
+                    </li>
 
                 </ul>
             </div>
