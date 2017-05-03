@@ -13,11 +13,6 @@ $this->params['breadcrumbs'][] = $this->title;
 $actionId = Yii::$app->requestedAction->id;
 ?>
 <div class="call-record-index">
-    <p class="btn-group hidden-xs">
-        <?= Html::a('呼叫记录', ['index'], ['class' => $actionId=='index' ? 'btn btn-primary' : 'btn btn-outline btn-default']) ?>
-        <?= Html::a('黑名单', ['blacklist'], ['class' => $actionId=='blacklist' ? 'btn btn-primary' : 'btn btn-outline btn-default']) ?>
-        <?= Html::a('垃圾筒', ['trash'], ['class' => $actionId=='trash' ? 'btn btn-primary' : 'btn btn-outline btn-default']) ?>
-    </p>
     <div class="help-block m-t"></div>
     <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
     <div class="help-block m-t"></div>
@@ -47,7 +42,6 @@ $actionId = Yii::$app->requestedAction->id;
             'contact_number',
             'unactive_account',
             'unactive_nickname',
-            'call_by_same_times',
             'type',
             'unactive_contact_number',
             'status',
