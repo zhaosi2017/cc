@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\controllers;
 
+use app\modules\admin\models\PasswordForm;
 use Yii;
 use app\modules\admin\models\Manager;
 use app\modules\admin\models\ManagerSearch;
@@ -27,6 +28,15 @@ class ManagerController extends PController
                 ],
             ],
         ];
+    }
+
+    public function actionPassword()
+    {
+        $model = new PasswordForm();
+        if($model->load(Yii::$app->request->post()) && $model->updateSave()){
+            Yii::$app->getSession()->setFlash('success', '密码修改成功');
+        }
+        return $this->render('password',['model' => $model]);
     }
 
     /**

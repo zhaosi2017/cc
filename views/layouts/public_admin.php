@@ -70,7 +70,7 @@ $module = $this->context->module->id;
                 <div class="pull-right m-r-md">
                     <span><?= isset($identity->account) ? $identity->account : ''; ?></span>
                     <span>|</span>
-                    <a href="<?= Url::to(['/admin/user/password']) ?>">修改密码</a>
+                    <a href="<?= Url::to(['/admin/manager/password']) ?>">修改密码</a>
                     <span>|</span>
                     <a data-method="post" href="<?= Url::to(['/admin/login/logout']) ?>">退出</a>
                 </div>
