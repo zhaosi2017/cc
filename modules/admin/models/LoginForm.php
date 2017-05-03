@@ -16,6 +16,8 @@ class LoginForm extends Model
 
     public $username;
     public $password;
+    public $rememberMe = true;
+    private $identity = null;
 
 
     /**
@@ -26,7 +28,6 @@ class LoginForm extends Model
         return [
             // username and password are both required
             [['username', 'password'], 'required'],
-            ['username', 'email'],
             ['username', 'validateAccount'],
             ['password', 'validatePassword'],
 //            ['code', 'captcha', 'message'=>'验证码输入不正确，请重新输入！3次输入错误，账号将被锁定1年！', 'captchaAction'=>'/login/default/captcha'],
@@ -48,7 +49,7 @@ class LoginForm extends Model
     public function validateAccount($attribute)
     {
         if (!$this->hasErrors()) {
-            $identity = $this->getIdentity();
+            $identity = $this->getUser();
             if(!$identity){
                 $this->addError($attribute, '用户名不存在。');
             }
@@ -64,7 +65,7 @@ class LoginForm extends Model
     public function validatePassword($attribute)
     {
         if (!$this->hasErrors()) {
-            $identity = $this->getIdentity();
+            $identity = $this->getUser();
 
             if (!Yii::$app->getSecurity()->validatePassword($this->password, $identity->password)) {
                 $this->addError($attribute, '密码错误。');
@@ -79,21 +80,26 @@ class LoginForm extends Model
      */
     public function login()
     {
-        return Yii::$app->user->login($this->getIdentity(), 0);
-    }
-
-
-    public function getIdentity()
-    {
-        /*if($this->identity === false){
-            $accounts = User::find()->select(['id','account'])->indexBy('account')->column();
-            foreach ($accounts as $account => $id){
-                $this->username == Yii::$app->security->decryptByKey(base64_decode($account),Yii::$app->params['inputKey'])
-                && $this->identity = User::findOne($id);
-            }
+        // 数据格式是否验证通过.
+        if ($this->validate()) {
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 *30 : 0);
+        } else {
+            return false;
         }
-        return $this->identity;*/
     }
 
+    /**
+     * 获取用户数据.
+     *
+     * @return null
+     */
+    protected function getUser()
+    {
+        if ($this->identity === null) {
+            $this->identity = Manager::findByUsername($this->username);
+        }
+
+        return $this->identity;
+    }
 
 }
