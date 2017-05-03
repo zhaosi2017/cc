@@ -3,6 +3,7 @@
 namespace app\modules\admin\controllers;
 
 use app\modules\admin\models\LoginForm;
+use yii\helpers\Url;
 use yii\web\Controller;
 use Yii;
 
@@ -19,20 +20,23 @@ class LoginController extends Controller
     {
         $this->layout = '@app/views/layouts/global';
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post())) {
-            //$forbidden = $model->forbidden();
-            $forbidden = false;
-            if($forbidden){
-//                return $this->render('locked',$forbidden);
-            }else{
-                /*if($model->preLogin()){
-                    $model->login();
-                    return $this->redirect(['/home/default/welcome']);
-                }*/
-            }
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
         }
-
-        return $this->render('index',['model' => $model]);
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            // 登陆成功.
+            $this->redirect(['/admin/default/index']);
+        } else {
+            return $this->render('index',['model' => $model]);
+        }
     }
+
+    public function actionLogout()
+    {
+        Yii::$app->user->logout();
+
+        return $this->redirect(Url::to(['/admin/login/index']));
+    }
+
 }
