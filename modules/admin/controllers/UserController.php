@@ -93,9 +93,13 @@ class UserController extends PController
         }
     }
 
-    public function harassment($id)
+    public function actionHarassment($id)
     {
         $model = $this->findModel($id);
+        if($model->load(Yii::$app->request->post())){
+            $model->save() ? $model->sendSuccess() : $model->sendError();
+            return $this->redirect(['index']);
+        }
         return $this->render('harassment', [
             'model' => $model,
         ]);

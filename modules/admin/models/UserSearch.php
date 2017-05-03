@@ -2,7 +2,7 @@
 
 namespace app\modules\admin\models;
 
-use Yii;
+//use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -49,6 +49,7 @@ class UserSearch extends User
     public function search($params)
     {
         $query = User::find();
+
 //        $query->andWhere(['status'=>Yii::$app->requestedAction->id == 'index' ? 0 : 1]);
         // add conditions that should always apply here
 
@@ -80,7 +81,7 @@ class UserSearch extends User
             'role_id' => $this->role_id,
         ]);
 
-        if($this->start_date <= $this->end_date){
+        if($this->start_date && $this->end_date && $this->start_date <= $this->end_date){
             $query->andFilterWhere(['between','user.reg_time', strtotime($this->start_date), strtotime($this->end_date)]);
         }
 

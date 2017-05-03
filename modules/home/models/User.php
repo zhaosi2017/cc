@@ -32,6 +32,7 @@ use yii\web\IdentityInterface;
  * @property integer $reg_time
  * @property string $reg_ip
  * @property integer $role_id
+ * @property integer $status
  */
 class User extends CActiveRecord implements IdentityInterface
 {
@@ -88,6 +89,7 @@ class User extends CActiveRecord implements IdentityInterface
                 'un_call_by_same_number',
                 'long_time',
                 'reg_time',
+                'status',
                 'role_id',
                 'country_code',
                 'telegram_country_code',

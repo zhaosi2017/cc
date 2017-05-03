@@ -39,13 +39,29 @@ class Manager extends CActiveRecord
     {
         return [
             [['account','nickname', 'role_id','password'], 'required'],
-            ['account', 'match', 'pattern' => '/^(?=.*?[0-9])(?=.*?[A-Z])(?=.*?[a-z])[0-9A-Za-z!-)]{8,}$/','message'=>'账号至少包含8个字符，至少包括以下2种字符：大写字母、小写字母、数字、符号'],
-            ['password', 'match', 'pattern' => '/^(?=.*?[0-9])(?=.*?[A-Z])(?=.*?[a-z])[0-9A-Za-z!-)]{8,}$/','message'=>'密码至少包含8个字符，至少包括以下2种字符：大写字母、小写字母、数字、符号'],
-            [['nickname'],'string','length'=>[2,6],'message'=>'昵称至少输入2～6个汉字'],
+            ['account', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/','message'=>'账号至少包含8个字符，至少包括以下2种字符：大写字母、小写字母、数字、符号'],
+            ['password', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/','message'=>'密码至少包含8个字符，至少包括以下2种字符：大写字母、小写字母、数字、符号'],
+            [['nickname'],'string','length'=>[2,20],'message'=>'昵称至少输入2个汉字'],
             [['account', 'nickname', 'remark', 'auth_key','password'], 'string'],
             [['role_id', 'status', 'create_id', 'update_id', 'create_at', 'update_at'], 'integer'],
             [['login_ip'], 'string', 'max' => 64],
+            ['account','validateExist'],
         ];
+    }
+
+    public function validateExist($attribute)
+    {
+        $rows = Manager::find()->select(['account'])->indexBy('id')->column();
+
+        $accounts = [];
+        foreach ($rows as $i => $v)
+        {
+            $accounts[] = Yii::$app->security->decryptByKey(base64_decode($v), Yii::$app->params['inputKey']);
+        }
+
+        if(in_array($this->account, $accounts)){
+            $this->addError($attribute, '管理员账号已存在');
+        }
     }
 
     /**

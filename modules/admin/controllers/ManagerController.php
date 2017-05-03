@@ -77,6 +77,13 @@ class ManagerController extends PController
         $model = new Manager();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            //权限逻辑
+            $auth = Yii::$app->authManager;
+            //获取角色
+            $role = $auth->getRole($model->role_id);
+            //给用户分配角色
+            $auth->assign($role, $model->id);
+
             $model->sendSuccess();
             return $this->redirect(['index']);
         } else {
