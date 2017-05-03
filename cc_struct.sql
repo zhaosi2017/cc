@@ -94,16 +94,22 @@ DROP TABLE IF EXISTS `call_record`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `call_record` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `active_call_uid` int(10) unsigned NOT NULL DEFAULT '0',
-  `unactive_call_uid` int(10) unsigned NOT NULL DEFAULT '0',
-  `call_by_same_times` int(10) unsigned NOT NULL DEFAULT '0',
-  `type` int(10) unsigned NOT NULL DEFAULT '0',
-  `contact_number` varchar(64) NOT NULL DEFAULT '',
-  `status` int(10) unsigned NOT NULL DEFAULT '0',
-  `call_time` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+ `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+ `active_call_uid` int(10) unsigned NOT NULL DEFAULT '0',
+ `unactive_call_uid` int(10) unsigned NOT NULL DEFAULT '0',
+ `active_account` varchar(100) NOT NULL COMMENT '主叫账号',
+ `unactive_account` varchar(100) NOT NULL COMMENT '被叫账号',
+ `active_nickname` varchar(50) NOT NULL DEFAULT '*' COMMENT '主叫昵称',
+ `unactive_nickname` varchar(50) NOT NULL DEFAULT '*' COMMENT '被叫昵称',
+ `call_by_same_times` int(10) unsigned NOT NULL DEFAULT '0',
+ `type` int(10) unsigned NOT NULL DEFAULT '0',
+ `contact_number` varchar(64) NOT NULL DEFAULT '',
+ `unactive_contact_number` char(15) NOT NULL COMMENT '被叫电话',
+ `status` int(10) unsigned NOT NULL DEFAULT '0',
+ `record_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '记录状态(1:正常, 2:黑名单, 3:垃圾桶)',
+ `call_time` int(11) NOT NULL DEFAULT '0',
+ PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
