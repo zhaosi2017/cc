@@ -4,6 +4,7 @@ namespace app\modules\admin\models;
 
 use Yii;
 use app\models\CActiveRecord;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "manager".
@@ -22,8 +23,26 @@ use app\models\CActiveRecord;
  * @property integer $create_at
  * @property integer $update_at
  */
-class Manager extends CActiveRecord
+class Manager extends CActiveRecord implements IdentityInterface
 {
+
+    private static $users = [
+        '100' => [
+            'id' => '100',
+            'username' => 'admin',
+            'password' => 'admin',
+            'authKey' => 'test100key',
+            'accessToken' => '100-token',
+        ],
+        '101' => [
+            'id' => '101',
+            'username' => 'demo',
+            'password' => 'demo',
+            'authKey' => 'test101key',
+            'accessToken' => '101-token',
+        ],
+    ];
+
     /**
      * @inheritdoc
      */
@@ -91,6 +110,38 @@ class Manager extends CActiveRecord
             1 => '作废',
             2 => '冻结',
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function findIdentity($id)
+    {
+        return static::findOne($id);
+    }
+
+    /**
+     * 根据 token 查询身份。
+     *
+     * @param string $token 被查询的 token
+     * @return IdentityInterface 通过 token 得到的身份对象
+     */
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        return static::findOne(['access_token' => $token]);
+    }
+
+    /**
+     * @return int|string 当前用户ID
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public static function getUsername($account)
+    {
+        return Yii::$app->security->decryptByKey(base64_decode($account),Yii::$app->params['inputKey']);
     }
 
     public function beforeSave($insert)
@@ -162,4 +213,52 @@ class Manager extends CActiveRecord
     {
         return $this->hasOne(Role::className(), ['id'=>'role_id']);
     }
+
+    /**
+     * Finds user by username
+     *
+     * @param string $username
+     * @return static|null
+     */
+    public static function findByUsername($username)
+    {
+        $account = self::getUsername($username);
+        $user = Manager::find()
+            ->where(['account' => $account])
+            ->asArray()
+            ->one();
+
+
+        if($user){
+            // $user->account = $account;
+            return new static($user);
+        }
+
+        return null;
+
+        foreach (self::$users as $user) {
+            if (strcasecmp($user['username'], $username) === 0) {
+                return new static($user);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @return string 当前用户的（cookie）认证密钥
+     */
+    public function getAuthKey()
+    {
+        return $this->auth_key;
+    }
+
+    /**
+     * @param string $authKey
+     * @return boolean if auth key is valid for current user
+     */
+    public function validateAuthKey($authKey)
+    {
+        return $this->getAuthKey() === $authKey;
+    }
+
 }

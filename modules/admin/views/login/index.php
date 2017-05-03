@@ -1,12 +1,40 @@
-<div class="admin-default-index">
-    <h1><?= $this->context->action->uniqueId ?></h1>
-    <p>
-        This is the view content for action "<?= $this->context->action->id ?>".
-        The action belongs to the controller "<?= get_class($this->context) ?>"
-        in the "<?= $this->context->module->id ?>" module.
-    </p>
-    <p>
-        You may customize this page by editing the following file:<br>
-        <code><?= __FILE__ ?></code>
-    </p>
+<?php
+/* @var $this yii\web\View */
+/* @var $form yii\bootstrap\ActiveForm */
+/* @var $model app\modules\home\models\LoginForm */
+
+use yii\bootstrap\ActiveForm;
+use yii\helpers\Html;
+
+$this->title = '登录';
+?>
+<div class="middle-box text-center loginscreen  animated fadeInDown">
+    <div>
+        <div>
+            <h1 class="logo-name">&nbsp;</h1>
+        </div>
+        <h3>登录</h3>
+
+        <?php $form = ActiveForm::begin([
+            'id' => 'register-form',
+            'options'=>['class'=>'m-t text-left'],
+            'fieldConfig' => [
+                'template' => "{label}\n<div>{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
+            ],
+        ]); ?>
+
+        <?= $form->field($model, 'username')->textInput([
+            'autofocus' => true,
+            'placeholder'=>'邮箱账号',
+        ])->label(false) ?>
+
+        <?= $form->field($model, 'password')->passwordInput(['placeholder'=>'密码'])->label(false) ?>
+
+        <?= Html::submitButton('登 录', ['class' => 'btn btn-primary block full-width m-b']) ?>
+
+        <?php ActiveForm::end(); ?>
+        <p class="text-muted text-center">
+            <a href="<?php echo \yii\helpers\Url::to(['/home/login/find-password-one']) ?>"><small>忘记密码了？</small></a> | <a href="<?php echo \yii\helpers\Url::to(['/home/register/index']) ?>">注册一个新账号</a>
+        </p>
+    </div>
 </div>
