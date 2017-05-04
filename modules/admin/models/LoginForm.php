@@ -17,7 +17,7 @@ class LoginForm extends Model
     public $username;
     public $password;
     public $rememberMe = true;
-    private $identity = null;
+    private $_user = null;
 
 
     /**
@@ -67,7 +67,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $identity = $this->getUser();
 
-            if (!Yii::$app->getSecurity()->validatePassword($this->password, $identity->password)) {
+            if ($identity && !Yii::$app->getSecurity()->validatePassword($this->password, $identity->password)) {
                 $this->addError($attribute, '密码错误。');
             }
 
@@ -95,11 +95,11 @@ class LoginForm extends Model
      */
     protected function getUser()
     {
-        if ($this->identity === null) {
-            $this->identity = Manager::findByUsername($this->username);
+        if ($this->_user === null) {
+            $this->_user = Manager::findByUsername($this->username);
         }
 
-        return $this->identity;
+        return $this->_user;
     }
 
 }

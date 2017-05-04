@@ -230,17 +230,10 @@ class Manager extends CActiveRecord implements IdentityInterface
 
 
         if($user){
-            // $user->account = $account;
+            $user['account'] = $username;
             return new static($user);
         }
 
-        return null;
-
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
-        }
         return null;
     }
 
