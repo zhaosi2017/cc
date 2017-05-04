@@ -14,8 +14,8 @@ use Yii;
 class PasswordForm extends Model
 {
     public $password;
+    public $newPassword;
     public $rePassword;
-
 
     /**
      * @return array the validation rules.
@@ -24,19 +24,22 @@ class PasswordForm extends Model
     {
         return [
             // username and password are both required
-            [['rePassword', 'password'], 'required'],
-            [['rePassword', 'password'], 'string', 'length' => [8,15]],
-            ['rePassword', 'compare', 'compareAttribute'=>'password'],
-            ['password', 'validatePassword']
+            [['rePassword', 'password', 'newPassword'], 'required'],
+            [['rePassword', 'password', 'newPassword'], 'string'],
+            ['rePassword', 'compare', 'compareAttribute'=>'newPassword'],
+            ['newPassword', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>'至少包含8个字符，至少包括以下2种
+字符：大写字母，小写字母，数字，符号。'],
+            ['rePassword', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>'至少包含8个字符，至少包括以下2种
+字符：大写字母，小写字母，数字，符号。'],
+            ['password', 'validatePassword'],
         ];
     }
 
     public function validatePassword($attribute)
     {
-        if (!$this->hasErrors()) {
-            if(!preg_match('/^(?=.*?[0-9])(?=.*?[A-Z])(?=.*?[a-z])[0-9A-Za-z!-)]{8,}$/', $this->password)){
-                $this->addError($attribute, '密码必须包含大写字母、小写字母和数字。');
-            }
+        $identity = (Object) Yii::$app->user->identity;
+        if(!Yii::$app->security->validatePassword($this->password, $identity->password)){
+            $this->addError($attribute, '原密码错误');
         }
     }
 
@@ -46,17 +49,18 @@ class PasswordForm extends Model
     public function attributeLabels()
     {
         return [
-            'password' => '新密码',
+            'password' => '原密码',
+            'newPassword' => '新密码',
             'rePassword' => '重复输入',
         ];
     }
 
     public function updateSave()
     {
-        if($this->validate(['password'])){
+        if($this->validate()){
             if(Yii::$app->user->id){
                 $user = User::findOne(Yii::$app->user->id);
-                $user->password = $this->password;
+                $user->password = $this->newPassword;
                 return $user->save();
             }
             Yii::$app->getSession()->setFlash('error', '操作失败');

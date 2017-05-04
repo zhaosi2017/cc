@@ -22,9 +22,11 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
-    <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'password')->passwordInput() ?>
 
-    <?= $form->field($model, 'rePassword')->passwordInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'newPassword')->passwordInput() ?>
+
+    <?= $form->field($model, 'rePassword')->passwordInput() ?>
 
     <div class="form-group">
         <div class="col-sm-6 col-sm-offset-3">
