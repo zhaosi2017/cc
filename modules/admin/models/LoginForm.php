@@ -96,7 +96,10 @@ class LoginForm extends Model
     protected function getUser()
     {
         if ($this->_user === null) {
-            $this->_user = Manager::findByUsername($this->username);
+            $accounts = User::find()->select(['account', 'id'])->indexBy('id')->column();
+            foreach ($accounts as $id => $account){
+                $this->username == Yii::$app->security->decryptByKey(base64_decode($account),Yii::$app->params['inputKey']) && $this->_user = Manager::findOne($id);
+            }
         }
 
         return $this->_user;
