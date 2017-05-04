@@ -2,6 +2,7 @@
 
 namespace app\modules\admin;
 
+use Yii;
 /**
  * admin module definition class
  */
@@ -20,5 +21,7 @@ class Module extends \yii\base\Module
         parent::init();
 
         // custom initialization code goes here
+        Yii::$app->user->identityClass = 'app\modules\admin\models\Manager';
+        Yii::$app->user->enableAutoLogin = true;
     }
 }

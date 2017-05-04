@@ -4,13 +4,13 @@ namespace app\modules\admin\controllers;
 
 use app\modules\admin\models\LoginForm;
 use yii\helpers\Url;
-use yii\web\Controller;
+use app\controllers\PController;
 use Yii;
 
 /**
  * Default controller for the `admin` module
  */
-class LoginController extends Controller
+class LoginController extends PController
 {
     /**
      * Renders the index view for the module
