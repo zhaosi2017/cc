@@ -2,10 +2,12 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\helpers\Url;
-use yii\captcha\Captcha;
 
-$this->title = '添加紧急联系人二';
+if ($isModify) {
+    $this->title = '修改紧急联系人二';
+} else {
+    $this->title = '添加紧急联系人二';
+}
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\home\models\ContactForm */
@@ -52,7 +54,7 @@ $this->title = '添加紧急联系人二';
 
     <div class="form-group m-b-lg">
         <div class="col-sm-6 col-sm-offset-2">
-            <?= Html::submitButton('绑定', ['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton($isModify ? '修改　' :'绑定', ['class' => 'btn btn-primary']) ?>
         </div>
     </div>
 
