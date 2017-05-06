@@ -55,10 +55,9 @@ class PController extends Controller
     {
         $this->layout = '@app/views/layouts/right_admin';
 
-        /*Yii::$app->controller->id != 'register'
-        && Yii::$app->controller->id != 'login'
+        Yii::$app->controller->id != 'login'
         && Yii::$app->user->isGuest
-        && $this->redirect(['/admin/login/index']);*/
+        && $this->redirect(['/admin/login/index']);
 
         return parent::beforeAction($action);
 
