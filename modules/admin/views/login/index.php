@@ -34,7 +34,7 @@ $this->title = '登录';
 
         <?php ActiveForm::end(); ?>
         <p class="text-muted text-center">
-            <a href="<?php echo \yii\helpers\Url::to(['/home/login/find-password-one']) ?>"><small>忘记密码了？</small></a> | <a href="<?php echo \yii\helpers\Url::to(['/home/register/index']) ?>">注册一个新账号</a>
+            <a><small>若忘记密码请直接联系管理员</small></a>
         </p>
     </div>
 </div>
