@@ -2,18 +2,17 @@
 
 namespace app\modules\admin\controllers;
 
-use app\modules\admin\models\PasswordForm;
 use Yii;
-use app\modules\admin\models\Manager;
-use app\modules\admin\models\ManagerSearch;
+use app\modules\admin\models\CallRecord;
+use app\modules\admin\models\CallRecordSearch;
 use app\controllers\PController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ManagerController implements the CRUD actions for Manager model.
+ * CallRecordController implements the CRUD actions for CallRecord model.
  */
-class ManagerController extends PController
+class CallRecordController extends PController
 {
     /**
      * @inheritdoc
@@ -30,22 +29,13 @@ class ManagerController extends PController
         ];
     }
 
-    public function actionPassword()
-    {
-        $model = new PasswordForm();
-        if($model->load(Yii::$app->request->post()) && $model->updateSave()){
-            Yii::$app->getSession()->setFlash('success', '密码修改成功');
-        }
-        return $this->render('password',['model' => $model]);
-    }
-
     /**
-     * Lists all Manager models.
+     * Lists all CallRecord models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ManagerSearch();
+        $searchModel = new CallRecordSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -54,19 +44,8 @@ class ManagerController extends PController
         ]);
     }
 
-    public function actionTrash()
-    {
-        $searchModel = new ManagerSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('trash', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
     /**
-     * Displays a single Manager model.
+     * Displays a single CallRecord model.
      * @param integer $id
      * @return mixed
      */
@@ -78,24 +57,16 @@ class ManagerController extends PController
     }
 
     /**
-     * Creates a new Manager model.
+     * Creates a new CallRecord model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Manager();
+        $model = new CallRecord();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //权限逻辑
-            $auth = Yii::$app->authManager;
-            //获取角色
-            $role = $auth->getRole($model->role_id);
-            //给用户分配角色
-            $auth->assign($role, $model->id);
-
-            $model->sendSuccess();
-            return $this->redirect(['index']);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -104,7 +75,7 @@ class ManagerController extends PController
     }
 
     /**
-     * Updates an existing Manager model.
+     * Updates an existing CallRecord model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -113,9 +84,8 @@ class ManagerController extends PController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post())) {
-            $model->save() ? $model->sendSuccess() : $model->sendError();
-            return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -124,38 +94,70 @@ class ManagerController extends PController
     }
 
     /**
-     * Deletes an existing Manager model.
+     * Deletes an existing CallRecord model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */
     public function actionDelete($id)
     {
-        $model = $this->findModel($id);
-        $model->updateAttributes(['status'=>1]) ? $model->sendSuccess() : $model->sendError();
-        return $this->redirect(['index']);
-    }
+        $this->findModel($id)->delete();
 
-    public function actionRecover($id)
-    {
-        $model = $this->findModel($id);
-        $model->updateAttributes(['status'=>0]) ? $model->sendSuccess() : $model->sendError();
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Manager model based on its primary key value.
+     * Finds the CallRecord model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Manager the loaded model
+     * @return CallRecord the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Manager::findOne($id)) !== null) {
+        if (($model = CallRecord::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    /**
+     * 呼叫记录黑名单.
+     *
+     * @return \yii\web\Response
+     */
+    public function actionBlacklist()
+    {
+        $searchModel = new CallRecordSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render(
+            'index',
+            [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]
+        );
+    }
+
+    /**
+     * 黑名单.
+     *
+     * @return \yii\web\Response
+     */
+    public function actionTrash()
+    {
+        $searchModel = new CallRecordSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render(
+            'index',
+            [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]
+        );
+    }
+
 }

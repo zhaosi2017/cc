@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\home\models;
+namespace app\modules\admin\models;
 
 use Yii;
 use yii\base\Model;
@@ -47,10 +47,16 @@ class CallRecordSearch extends CallRecord
     public function search($params)
     {
         $recordStatus = '1';
-        $uid = Yii::$app->user->id;
-        $query = CallRecord::find()->where(['record_status' => $recordStatus, 'active_call_uid' => $uid])->orWhere(['record_status' => $recordStatus, 'unactive_call_uid' => $uid]);
+        if (Yii::$app->requestedAction->id == 'blacklist') {
+            $recordStatus = '2';
+        }
+        if (Yii::$app->requestedAction->id == 'trash') {
+            $recordStatus = '3';
+        }
+        $query = CallRecord::find()->where(['call_record.record_status' => $recordStatus]);
 
         // add conditions that should always apply here
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination'=>[

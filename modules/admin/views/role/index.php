@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\modules\admin\models\RoleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '角色';
+$this->title = '管理员角色';
 $this->params['breadcrumbs'][] = $this->title;
 $actionId = Yii::$app->requestedAction->id;
 ?>

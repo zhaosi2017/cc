@@ -4,6 +4,7 @@ namespace app\modules\admin\models;
 
 use Yii;
 use app\models\CActiveRecord;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "manager".
@@ -22,8 +23,9 @@ use app\models\CActiveRecord;
  * @property integer $create_at
  * @property integer $update_at
  */
-class Manager extends CActiveRecord
+class Manager extends CActiveRecord implements IdentityInterface
 {
+
     /**
      * @inheritdoc
      */
@@ -39,13 +41,29 @@ class Manager extends CActiveRecord
     {
         return [
             [['account','nickname', 'role_id','password'], 'required'],
-            ['account', 'match', 'pattern' => '/^(?=.*?[0-9])(?=.*?[A-Z])(?=.*?[a-z])[0-9A-Za-z!-)]{8,}$/','message'=>'账号至少包含8个字符，至少包括以下2种字符：大写字母、小写字母、数字、符号'],
-            ['password', 'match', 'pattern' => '/^(?=.*?[0-9])(?=.*?[A-Z])(?=.*?[a-z])[0-9A-Za-z!-)]{8,}$/','message'=>'密码至少包含8个字符，至少包括以下2种字符：大写字母、小写字母、数字、符号'],
-            [['nickname'],'string','length'=>[2,6],'message'=>'昵称至少输入2～6个汉字'],
+            ['account', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/','message'=>'账号至少包含8个字符，至少包括以下2种字符：大写字母、小写字母、数字、符号'],
+            ['password', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/','message'=>'密码至少包含8个字符，至少包括以下2种字符：大写字母、小写字母、数字、符号'],
+            [['nickname'],'string','length'=>[2,20],'message'=>'昵称至少输入2个汉字'],
             [['account', 'nickname', 'remark', 'auth_key','password'], 'string'],
             [['role_id', 'status', 'create_id', 'update_id', 'create_at', 'update_at'], 'integer'],
             [['login_ip'], 'string', 'max' => 64],
+            ['account','validateExist'],
         ];
+    }
+
+    public function validateExist($attribute)
+    {
+        $rows = Manager::find()->select(['account'])->indexBy('id')->column();
+
+        $accounts = [];
+        foreach ($rows as $i => $v)
+        {
+            $accounts[] = Yii::$app->security->decryptByKey(base64_decode($v), Yii::$app->params['inputKey']);
+        }
+
+        if(in_array($this->account, $accounts)){
+            $this->addError($attribute, '管理员账号已存在');
+        }
     }
 
     /**
@@ -75,6 +93,33 @@ class Manager extends CActiveRecord
             1 => '作废',
             2 => '冻结',
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function findIdentity($id)
+    {
+        return static::findOne($id);
+    }
+
+    /**
+     * 根据 token 查询身份。
+     *
+     * @param string $token 被查询的 token
+     * @return IdentityInterface 通过 token 得到的身份对象
+     */
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        return static::findOne(['access_token' => $token]);
+    }
+
+    /**
+     * @return int|string 当前用户ID
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     public function beforeSave($insert)
@@ -146,4 +191,22 @@ class Manager extends CActiveRecord
     {
         return $this->hasOne(Role::className(), ['id'=>'role_id']);
     }
+
+    /**
+     * @return string 当前用户的（cookie）认证密钥
+     */
+    public function getAuthKey()
+    {
+        return $this->auth_key;
+    }
+
+    /**
+     * @param string $authKey
+     * @return boolean if auth key is valid for current user
+     */
+    public function validateAuthKey($authKey)
+    {
+        return $this->getAuthKey() === $authKey;
+    }
+
 }

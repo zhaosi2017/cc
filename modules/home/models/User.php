@@ -28,9 +28,13 @@ use yii\web\IdentityInterface;
  * @property string $telegram_number
  * @property string $potato_number
  * @property integer $telegram_country_code
+ * @property integer $telegram_user_id
+ * @property integer $potato_user_id
  * @property integer $potato_country_code
  * @property integer $reg_time
+ * @property string $reg_ip
  * @property integer $role_id
+ * @property integer $status
  */
 class User extends CActiveRecord implements IdentityInterface
 {
@@ -80,17 +84,20 @@ class User extends CActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['account', 'nickname', 'urgent_contact_person_one', 'urgent_contact_person_two'], 'string'],
+            [['account', 'nickname', 'urgent_contact_person_one', 'urgent_contact_person_two', 'reg_ip'], 'string'],
 
             [[
                 'un_call_number',
                 'un_call_by_same_number',
                 'long_time',
                 'reg_time',
+                'status',
                 'role_id',
                 'country_code',
                 'telegram_country_code',
+                'telegram_user_id',
                 'potato_country_code',
+                'potato_user_id',
                 'urgent_contact_one_country_code',
                 'urgent_contact_two_country_code',
             ], 'integer'],
@@ -110,9 +117,9 @@ class User extends CActiveRecord implements IdentityInterface
             'auth_key' => 'Auth Key',
             'account' => 'Account',
             'nickname' => '昵称',
-            'un_call_number' => '被叫号码',
-            'un_call_by_same_number' => 'Un Call By Same Number',
-            'long_time' => 'Long Time',
+            'un_call_number' => '被叫总次数',
+            'un_call_by_same_number' => '被同一人呼叫次数',
+            'long_time' => '时间设置',
             'country_code' => '国码',
             'phone_number' => '绑定电话',
             'urgent_contact_number_one' => '紧急联系电话一',
@@ -124,6 +131,7 @@ class User extends CActiveRecord implements IdentityInterface
             'telegram_country_code' => 'telegram country code',
             'potato_country_code' => 'Potato country code',
             'reg_time' => 'Reg Time',
+            'reg_ip' => 'Reg IP',
             'role_id' => 'Role ID',
         ];
     }
@@ -141,6 +149,7 @@ class User extends CActiveRecord implements IdentityInterface
     {
         if (parent::beforeSave($insert)) {
             if ($this->isNewRecord) {
+                $this->reg_ip = Yii::$app->request->userIP;
                 $this->reg_time = $_SERVER['REQUEST_TIME'];
                 $this->auth_key = Yii::$app->security->generateRandomString();
                 $this->account  = base64_encode(Yii::$app->security->encryptByKey($this->account, Yii::$app->params['inputKey']));

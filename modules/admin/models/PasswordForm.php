@@ -1,14 +1,12 @@
 <?php
 
-namespace app\modules\home\models;
+namespace app\modules\admin\models;
 
 use yii\base\Model;
 use Yii;
 
 /**
  * LoginForm is the model behind the login form.
- *
- * @property User|null $user This property is read-only.
  *
  */
 class PasswordForm extends Model
@@ -38,7 +36,7 @@ class PasswordForm extends Model
     public function validatePassword($attribute)
     {
         $identity = (Object) Yii::$app->user->identity;
-        if(!Yii::$app->security->validatePassword($this->password, $identity->password)){
+        if(!Yii::$app->getSecurity()->validatePassword($this->password, $identity->password)){
             $this->addError($attribute, '原密码错误');
         }
     }
@@ -59,7 +57,7 @@ class PasswordForm extends Model
     {
         if($this->validate()){
             if(Yii::$app->user->id){
-                $user = User::findOne(Yii::$app->user->id);
+                $user = Manager::findOne(Yii::$app->user->id);
                 $user->password = $this->newPassword;
                 return $user->save();
             }
