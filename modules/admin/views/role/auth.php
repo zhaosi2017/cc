@@ -85,7 +85,7 @@ $data = [
 
     <div class="table-responsive">
         <form action="" method="post" id="w0">
-            <input type="hidden" name="Posts[id]" value="<?= $model->id ?>">
+            <input type="hidden" name="Role[id]" value="<?= $model->id ?>">
             <input type="hidden" name="_csrf" id="_csrf" value="<?= Yii::$app->request->csrfToken ?>">
 
             <?php foreach ($data as $k=>$v){ ?>

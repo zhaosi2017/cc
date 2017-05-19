@@ -94,16 +94,22 @@ DROP TABLE IF EXISTS `call_record`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `call_record` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `active_call_uid` int(10) unsigned NOT NULL DEFAULT '0',
-  `unactive_call_uid` int(10) unsigned NOT NULL DEFAULT '0',
-  `call_by_same_times` int(10) unsigned NOT NULL DEFAULT '0',
-  `type` int(10) unsigned NOT NULL DEFAULT '0',
-  `contact_number` varchar(64) NOT NULL DEFAULT '',
-  `status` int(10) unsigned NOT NULL DEFAULT '0',
-  `call_time` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+ `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+ `active_call_uid` int(10) unsigned NOT NULL DEFAULT '0',
+ `unactive_call_uid` int(10) unsigned NOT NULL DEFAULT '0',
+ `active_account` varchar(100) NOT NULL COMMENT '主叫账号',
+ `unactive_account` varchar(100) NOT NULL COMMENT '被叫账号',
+ `active_nickname` varchar(50) NOT NULL DEFAULT '*' COMMENT '主叫昵称',
+ `unactive_nickname` varchar(50) NOT NULL DEFAULT '*' COMMENT '被叫昵称',
+ `call_by_same_times` int(10) unsigned NOT NULL DEFAULT '0',
+ `type` int(10) unsigned NOT NULL DEFAULT '0',
+ `contact_number` varchar(64) NOT NULL DEFAULT '',
+ `unactive_contact_number` char(15) NOT NULL COMMENT '被叫电话',
+ `status` int(10) unsigned NOT NULL DEFAULT '0',
+ `record_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '记录状态(1:正常, 2:黑名单, 3:垃圾桶)',
+ `call_time` int(11) NOT NULL DEFAULT '0',
+ PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,7 +128,7 @@ CREATE TABLE `login_logs` (
   `unlock_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `unlock_uid` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=116 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=121 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -147,7 +153,7 @@ CREATE TABLE `manager` (
   `create_at` int(11) DEFAULT '0',
   `update_at` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,11 +167,11 @@ CREATE TABLE `role` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` text,
   `remark` text,
-  `status` int(10) unsigned NOT NULL DEFAULT '0',
   `create_id` int(10) unsigned NOT NULL DEFAULT '0',
   `update_id` int(10) unsigned NOT NULL DEFAULT '0',
   `create_at` int(11) DEFAULT '0',
   `update_at` int(11) DEFAULT '0',
+  `status` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -184,9 +190,6 @@ CREATE TABLE `user` (
   `account` text,
   `nickname` text,
   `status` int(10) unsigned NOT NULL DEFAULT '0',
-  `calling_times` int(10) unsigned NOT NULL DEFAULT '0',
-  `called_times` int(10) unsigned NOT NULL DEFAULT '0',
-  `limit_times` int(10) unsigned NOT NULL DEFAULT '0',
   `un_call_number` int(10) unsigned NOT NULL DEFAULT '0',
   `un_call_by_same_number` int(10) unsigned NOT NULL DEFAULT '0',
   `long_time` int(10) unsigned NOT NULL DEFAULT '0',
@@ -199,11 +202,14 @@ CREATE TABLE `user` (
   `urgent_contact_person_one` text,
   `urgent_contact_person_two` text,
   `telegram_number` varchar(64) NOT NULL DEFAULT '',
+  `telegram_user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `telegram_country_code` int(10) unsigned DEFAULT NULL,
   `potato_number` varchar(64) NOT NULL DEFAULT '',
+  `potato_user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `potato_country_code` int(10) unsigned DEFAULT NULL,
   `reg_time` int(10) unsigned NOT NULL DEFAULT '0',
   `role_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `reg_ip` varchar(64) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -217,4 +223,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-27 17:06:31
+-- Dump completed on 2017-05-02 13:42:56

@@ -93,6 +93,18 @@ class UserController extends PController
         }
     }
 
+    public function actionHarassment($id)
+    {
+        $model = $this->findModel($id);
+        if($model->load(Yii::$app->request->post())){
+            $model->save() ? $model->sendSuccess() : $model->sendError();
+            return $this->redirect(['index']);
+        }
+        return $this->render('harassment', [
+            'model' => $model,
+        ]);
+    }
+
     /**
      * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

@@ -287,19 +287,21 @@ class UserController extends GController
 
             return $this->redirect(['index']);
         } else {
+            $isModify = false;
             // 修改紧急联系人.
             if (isset($request['modify'])) {
+                $isModify = true;
                 if ($modifyOne) {
-                    return $this->render('add-urgent-contact-person-one', ['model' => $model]);
+                    return $this->render('add-urgent-contact-person-one', ['model' => $model, 'isModify' => $isModify]);
                 } elseif ($modifyTwo) {
-                    return $this->render('add-urgent-contact-person-two', ['model' => $model]);
+                    return $this->render('add-urgent-contact-person-two', ['model' => $model, 'isModify' => $isModify]);
                 }
             } else {
                 // 判断用户添加几位紧急联系人, 当两位联系人没有满, 才能继续添加联系人.
                 if ($firstPersonNoExists) {
-                    return $this->render('add-urgent-contact-person-one', ['model' => $model]);
+                    return $this->render('add-urgent-contact-person-one', ['model' => $model, 'isModify' => $isModify]);
                 } elseif ($secondPersonNoExists) {
-                    return $this->render('add-urgent-contact-person-two', ['model' => $model]);
+                    return $this->render('add-urgent-contact-person-two', ['model' => $model, 'isModify' => $isModify]);
                 } else {
                     Yii::$app->getSession()->setFlash('error', '只能添加两位紧急联系人!');
                     return $this->redirect(['index']);
