@@ -81,7 +81,7 @@ $config = [
         ],
     ],
     'params' => $params,
-//    'defaultRoute'=>'home',
+    'defaultRoute'=>'home',
     'modules' => [
         'home' => [
             'class' => 'app\modules\home\Module'
