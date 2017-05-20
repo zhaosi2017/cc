@@ -122,11 +122,6 @@ class Manager extends CActiveRecord implements IdentityInterface
         return $this->id;
     }
 
-    public static function getUsername($account)
-    {
-        return Yii::$app->security->decryptByKey(base64_decode($account),Yii::$app->params['inputKey']);
-    }
-
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
@@ -195,29 +190,6 @@ class Manager extends CActiveRecord implements IdentityInterface
     public function getRole()
     {
         return $this->hasOne(Role::className(), ['id'=>'role_id']);
-    }
-
-    /**
-     * Finds user by username
-     *
-     * @param string $username
-     * @return static|null
-     */
-    public static function findByUsername($username)
-    {
-        $account = self::getUsername($username);
-        $user = Manager::find()
-            ->where(['account' => $account])
-            ->asArray()
-            ->one();
-
-
-        if($user){
-            $user['account'] = $username;
-            return new static($user);
-        }
-
-        return null;
     }
 
     /**
