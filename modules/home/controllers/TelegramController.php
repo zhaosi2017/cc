@@ -19,6 +19,7 @@ class TelegramController extends GController
     {
 
         return [
+            /*
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
@@ -36,6 +37,7 @@ class TelegramController extends GController
                     'index' => ['post'],
                 ],
             ],
+            */
         ];
     }
 
