@@ -36,8 +36,7 @@ class RegisterController extends GController
             if($model->validate(['username','password','rePassword'])){
 
                 //发送验证码到邮箱 todo 使用swoole 异步发提高性能
-
-                $captcha = $this->createAction('captcha');
+		$captcha = $this->createAction('captcha');
                 $verifyCode = $captcha->getVerifyCode(true);
                 $message = Yii::$app->mailer->compose();
                 $email = $model->username;
