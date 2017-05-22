@@ -5,6 +5,8 @@ namespace app\modules\home\controllers;
 use app\modules\home\models\Telegram;
 use Yii;
 use app\controllers\GController;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -19,7 +21,6 @@ class TelegramController extends GController
     {
 
         return [
-            /*
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
@@ -29,7 +30,15 @@ class TelegramController extends GController
                         'actions' => ['index'],
                         'roles' => ['?'],
                     ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index'],
+                        'roles' => ['@'],
+                    ],
                 ],
+                'denyCallback' => function($rule, $action) {
+                    echo 'You are not allowed to access this page!';
+                }
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -37,7 +46,6 @@ class TelegramController extends GController
                     'index' => ['post'],
                 ],
             ],
-            */
         ];
     }
 
