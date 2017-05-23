@@ -78,7 +78,8 @@ class TelegramController extends GController
                         ]
                 ];
                 $telegram->sendData = json_encode($telegram->sendData, true);
-                $telegram->sendTelegramData();
+                $result = $telegram->sendTelegramData();
+                echo $result;
             } elseif (isset($postData['callback_query'])) {
                 // 点击菜单回调操作.
                 $action = $postData['callback_query']['data'];
