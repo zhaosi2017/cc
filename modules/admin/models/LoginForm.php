@@ -82,10 +82,47 @@ class LoginForm extends Model
     {
         // 数据格式是否验证通过.
         if ($this->validate()) {
+            $this->writeLoginLog(1);
             return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 *30 : 0);
         } else {
             return false;
         }
+    }
+
+    //写入登录日志
+    public function afterValidate()
+    {
+        $errors = $this->getErrors();
+
+        /*if(isset($errors['username'])){
+            if(!$this->writeLoginLog(4)){
+                parent::afterValidate();
+            }
+        }*/
+
+        if(isset($errors['password'])){
+            if(!$this->writeLoginLog(2)){
+                parent::afterValidate();
+            }
+        }
+
+        /*if(isset($errors['code'])){
+            if(!$this->writeLoginLog(3)){
+                parent::afterValidate();
+            }
+        }*/
+
+        parent::afterValidate();
+    }
+
+    public function writeLoginLog($status)
+    {
+        $loginLog = new ManagerLoginLogs();
+        $loginLog->login_ip = Yii::$app->request->getUserIP();
+        $loginLog->status = $status;
+        $loginLog->login_time = date('Y-m-d H:i:s',$_SERVER['REQUEST_TIME']);
+        $loginLog->uid = $this->_user ? $this->_user->id : 0;
+        return $loginLog->save();
     }
 
     /**

@@ -54,6 +54,7 @@ $module = $this->context->module->id;
                         <ul class="nav nav-second-level">
                             <li><a class="J_menuItem" href="<?= Url::to(['/admin/role/index']) ?>">管理员角色</a>
                             <li><a class="J_menuItem" href="<?= Url::to(['/admin/manager/index']) ?>">管理员列表</a>
+                            <li><a class="J_menuItem" href="<?= Url::to(['/admin/login-logs/index']) ?>">登录日志</a>
                         </ul>
                     </li>
                     <li>

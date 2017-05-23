@@ -8,27 +8,12 @@ use app\modules\admin\models\Manager;
 use app\modules\admin\models\ManagerSearch;
 use app\controllers\PController;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * ManagerController implements the CRUD actions for Manager model.
  */
 class ManagerController extends PController
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
 
     public function actionPassword()
     {
