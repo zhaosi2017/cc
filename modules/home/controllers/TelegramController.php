@@ -61,36 +61,37 @@ class TelegramController extends GController
             $postData = @file_get_contents('php://input');
             $postData = json_decode($postData, true);
             $telegram = new Telegram();
-            $message = isset($postData['message']) ? $postData['message'] : $message;
+            $message = isset($postData['message']) ? $postData['message'] : array();
 
             if (!empty($message) && isset($message['contact'])) {
                 // 分享了名片.
-                $telegram->telegram_contact_uid = $message['contact']['user_id'];
-                $telegram->telegram_contact_phone = $message['contact']['phone_number'];
-                $telegram->telegram_uid = $message['from']['id'];
+                $telegram->telegramContactUid = $message['contact']['user_id'];
+                $telegram->telegramContactPhone = $message['contact']['phone_number'];
+                $telegram->telegramUid = $message['from']['id'];
+                $telegram->setInlineKeyboard();
                 // 发送操作菜单.
-                $telegram ->send_data = [
-                        'chat_id' => $telegram->telegram_from_id,
-                        'text' => $telegram->telegram_text,
+                $telegram->sendData = [
+                        'chat_id' => $telegram->telegramUid,
+                        'text' => $telegram->telegramText,
                         'reply_markup' => [
-                            'inline_keyboard' => $telegram->setInlineKeyboard(),
+                            'inline_keyboard' => $telegram->inlineKeyboard,
                         ]
                 ];
-                $telegram->send_data = json_encode($telegram->send_data, true);
-                $telegram->sendData();
+                $telegram->sendData = json_encode($telegram->sendData, true);
+                $telegram->sendTelegramData();
             } elseif (isset($postData['callback_query'])) {
                 // 点击菜单回调操作.
                 $action = $postData['callback_query']['data'];
                 $action = explode('-', $action);
                 $action = $action[0];
                 switch ($action) {
-                    case $telegram->query_callback_data_pre:
+                    case $telegram->queryCallbackDataPre:
                         echo $telegram->queryTelegramData();
                         break;
-                    case $telegram->call_callback_data_pre;
+                    case $telegram->callCallbackDataPre;
                         $telegram->callTelegramPerson();
                         break;
-                    case $telegram->bind_callback_data_pre:
+                    case $telegram->bindCallbackDataPre:
                         echo $telegram->getCode();
                         break;
                     default :
