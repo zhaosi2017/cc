@@ -61,12 +61,13 @@ class TelegramController extends GController
             $postData = @file_get_contents('php://input');
             $postData = json_decode($postData, true);
             $telegram = new Telegram();
+            $message = isset($postData['message']) ? $postData['message'] : $message;
 
-            if (isset($postData['contact'])) {
+            if (!empty($message) && isset($message['contact'])) {
                 // 分享了名片.
-                $telegram->telegram_contact_uid = $postData['contact']['user_id'];
-                $telegram->telegram_contact_phone = $postData['contact']['phone_number'];
-                $telegram->telegram_uid = $postData['from']['id'];
+                $telegram->telegram_contact_uid = $message['contact']['user_id'];
+                $telegram->telegram_contact_phone = $message['contact']['phone_number'];
+                $telegram->telegram_uid = $message['from']['id'];
                 // 发送操作菜单.
                 $telegram ->send_data = [
                         'chat_id' => $telegram->telegram_from_id,
