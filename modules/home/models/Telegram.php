@@ -11,7 +11,7 @@ class Telegram extends Model
     private $queryText = "查询";
     private $telegramText = '操作菜单';
     private $callText = "呼叫";
-    private $bindText = '分享自己名片';
+    private $bindText = '绑定账号';
     private $webhook;
     private $code;
     private $telegramUid;
