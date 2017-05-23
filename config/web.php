@@ -22,6 +22,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\modules\home\models\User',
             'enableAutoLogin' => true,
+            'loginUrl' => '/home/login/index',
         ],
         'errorHandler' => [
             'errorAction' => '/home/default/deny',
@@ -81,6 +82,7 @@ $config = [
         ],
     ],
     'params' => $params,
+    'defaultRoute'=>'home',
     'modules' => [
         'home' => [
             'class' => 'app\modules\home\Module'

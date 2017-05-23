@@ -13,6 +13,7 @@ use yii\filters\VerbFilter;
  */
 class TelegramController extends GController
 {
+    public $enableCsrfValidation = false;
 
     /**
      * @inheritdoc
@@ -26,7 +27,6 @@ class TelegramController extends GController
                 'rules' => [
                     [
                         'allow' => true,
-                        // 'controllers' => ['/home/login'],
                         'actions' => ['index'],
                         'roles' => ['?'],
                     ],
@@ -57,8 +57,8 @@ class TelegramController extends GController
     public function actionIndex()
     {
         try{
-            // $postData = @file_get_contents('php://input');
-            $postData = Yii::$app->request->bodyParams;
+            // $postData = Yii::$app->request->bodyParams;
+            $postData = @file_get_contents('php://input');
             $postData = json_decode($postData, true);
             $telegram = new Telegram();
 
