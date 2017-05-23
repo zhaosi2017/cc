@@ -190,15 +190,24 @@ class Telegram extends Model
             $this->setBindMenu();
             $this->setQueryMenu();
             $this->setCallMenu();
-            $this->inlineKeyboard = [
-                [
-                    $this->bindMenu,
-                ],
-                [
-                    $this->queryMenu,
-                    $this->callMenu,
-                ]
-            ];
+            if ($this->telegramContactUid == $this->telegramUid) {
+                $this->inlineKeyboard = [
+                    [
+                        $this->bindMenu,
+                    ],
+                    [
+                        $this->queryMenu,
+                        $this->callMenu,
+                    ]
+                ];
+            } else {
+                $this->inlineKeyboard = [
+                    [
+                        $this->queryMenu,
+                        $this->callMenu,
+                    ]
+                ];
+            }
         }
     }
 
