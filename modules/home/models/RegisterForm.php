@@ -38,7 +38,8 @@ class RegisterForm extends Model
                 'message' => '账号已占用'
             ],*/
 
-            ['password', 'match', 'pattern' => '/(?-i)(?=^.{8,}$)((?!.*\s)(?=.*[A-Z])(?=.*[a-z]))(?=(1)(?=.*\d)|.*[^A-Za-z0-9])^.*$/', 'message'=>'密码必须包含大写字母、小写字母和数字。'],
+            ['password', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>'密码至少包含8个字符，至少包括以下2种字符：
+ 大写字母、小写字母、数字、符号'],
             ['code', 'captcha', 'message'=>'验证码输入不正确', 'captchaAction'=>'/home/register/captcha'],
         ];
     }

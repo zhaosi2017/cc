@@ -33,7 +33,7 @@ class LoginLogs extends CActiveRecord
         return [
             [['uid'], 'required'],
             [['uid', 'status', 'unlock_uid'], 'integer'],
-            [['login_time', 'unlock_time'], 'safe'],
+            [['login_time'], 'safe'],
             [['login_ip'], 'string', 'max' => 15],
         ];
     }
@@ -49,9 +49,16 @@ class LoginLogs extends CActiveRecord
             'status' => 'Status',
             'login_time' => 'Login Time',
             'login_ip' => 'Login Ip',
-            'unlock_time' => 'Unlock Time',
-            'unlock_uid' => 'Unlock Uid',
         ];
+    }
+
+    /**
+     * @inheritdoc
+     * @return LoginLogsQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new LoginLogsQuery(get_called_class());
     }
 
     public function getStatuses()
@@ -69,4 +76,9 @@ class LoginLogs extends CActiveRecord
     {
         return $this->hasOne(User::className(),['id'=>'uid']);
     }
+
+    /*public function getOperator()
+    {
+        return $this->hasOne(User::className(),['id'=>'unlock_uid']);
+    }*/
 }

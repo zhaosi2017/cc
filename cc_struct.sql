@@ -109,7 +109,7 @@ CREATE TABLE `call_record` (
  `record_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '记录状态(1:正常, 2:黑名单, 3:垃圾桶)',
  `call_time` int(11) NOT NULL DEFAULT '0',
  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -202,8 +202,10 @@ CREATE TABLE `user` (
   `urgent_contact_person_one` text,
   `urgent_contact_person_two` text,
   `telegram_number` varchar(64) NOT NULL DEFAULT '',
+  `telegram_user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `telegram_country_code` int(10) unsigned DEFAULT NULL,
   `potato_number` varchar(64) NOT NULL DEFAULT '',
+  `potato_user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `potato_country_code` int(10) unsigned DEFAULT NULL,
   `reg_time` int(10) unsigned NOT NULL DEFAULT '0',
   `role_id` int(10) unsigned NOT NULL DEFAULT '0',

@@ -28,6 +28,8 @@ use yii\web\IdentityInterface;
  * @property string $telegram_number
  * @property string $potato_number
  * @property integer $telegram_country_code
+ * @property integer $telegram_user_id
+ * @property integer $potato_user_id
  * @property integer $potato_country_code
  * @property integer $reg_time
  * @property string $reg_ip
@@ -93,7 +95,9 @@ class User extends CActiveRecord implements IdentityInterface
                 'role_id',
                 'country_code',
                 'telegram_country_code',
+                'telegram_user_id',
                 'potato_country_code',
+                'potato_user_id',
                 'urgent_contact_one_country_code',
                 'urgent_contact_two_country_code',
             ], 'integer'],

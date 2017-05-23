@@ -9,7 +9,7 @@ use yii\filters\VerbFilter;
 
 class PController extends Controller
 {
-    public $layout = '@app/views/layouts/global';
+    public $layout = '@app/views/layouts/right_admin';
 
     /**
      * @inheritdoc
@@ -51,18 +51,17 @@ class PController extends Controller
      * @param \yii\base\Action $action
      * @return bool
      */
-    public function beforeAction($action)
+    /*public function beforeAction($action)
     {
         $this->layout = '@app/views/layouts/right_admin';
 
-        /*Yii::$app->controller->id != 'register'
-        && Yii::$app->controller->id != 'login'
+        Yii::$app->controller->id != 'login'
         && Yii::$app->user->isGuest
-        && $this->redirect(['/admin/login/index']);*/
+        && $this->redirect(['/admin/login/index']);
 
         return parent::beforeAction($action);
 
-    }
+    }*/
 
     /**
      * @param array $response

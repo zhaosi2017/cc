@@ -26,7 +26,7 @@ class LoginController extends PController
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             // 登陆成功.
-            $this->redirect(['/admin/default/index']);
+            return $this->redirect(['/admin/default/index']);
         } else {
             return $this->render('index',['model' => $model]);
         }

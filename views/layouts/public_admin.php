@@ -54,6 +54,7 @@ $module = $this->context->module->id;
                         <ul class="nav nav-second-level">
                             <li><a class="J_menuItem" href="<?= Url::to(['/admin/role/index']) ?>">管理员角色</a>
                             <li><a class="J_menuItem" href="<?= Url::to(['/admin/manager/index']) ?>">管理员列表</a>
+                            <li><a class="J_menuItem" href="<?= Url::to(['/admin/login-logs/index']) ?>">登录日志</a>
                         </ul>
                     </li>
                     <li>
@@ -70,7 +71,7 @@ $module = $this->context->module->id;
                 <div class="pull-right m-r-md">
                     <span><?= isset($identity->account) ? $identity->account : ''; ?></span>
                     <span>|</span>
-                    <a href="<?= Url::to(['/admin/user/password']) ?>">修改密码</a>
+                    <a href="<?= Url::to(['/admin/manager/password']) ?>">修改密码</a>
                     <span>|</span>
                     <a data-method="post" href="<?= Url::to(['/admin/login/logout']) ?>">退出</a>
                 </div>

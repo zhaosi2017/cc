@@ -2,31 +2,26 @@
 
 namespace app\modules\admin\controllers;
 
+use app\modules\admin\models\PasswordForm;
 use Yii;
 use app\modules\admin\models\Manager;
 use app\modules\admin\models\ManagerSearch;
 use app\controllers\PController;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * ManagerController implements the CRUD actions for Manager model.
  */
 class ManagerController extends PController
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
+
+    public function actionPassword()
     {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
+        $model = new PasswordForm();
+        if($model->load(Yii::$app->request->post()) && $model->updateSave()){
+            Yii::$app->getSession()->setFlash('success', '密码修改成功');
+        }
+        return $this->render('password',['model' => $model]);
     }
 
     /**

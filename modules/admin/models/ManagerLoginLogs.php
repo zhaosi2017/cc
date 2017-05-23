@@ -6,24 +6,22 @@ namespace app\modules\admin\models;
 use app\models\CActiveRecord;
 
 /**
- * This is the model class for table "login_logs".
+ * This is the model class for table "manager_login_logs".
  *
  * @property integer $id
  * @property integer $uid
  * @property integer $status
  * @property string $login_time
  * @property string $login_ip
- * @property string $unlock_time
- * @property integer $unlock_uid
  */
-class LoginLogs extends CActiveRecord
+class ManagerLoginLogs extends CActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'login_logs';
+        return 'manager_login_logs';
     }
 
     /**
@@ -33,7 +31,7 @@ class LoginLogs extends CActiveRecord
     {
         return [
             [['uid'], 'required'],
-            [['uid', 'status', 'unlock_uid'], 'integer'],
+            [['uid', 'status'], 'integer'],
             [['login_time'], 'safe'],
             [['login_ip'], 'string', 'max' => 15],
         ];
@@ -47,39 +45,35 @@ class LoginLogs extends CActiveRecord
         return [
             'id' => 'ID',
             'uid' => 'Uid',
-            'status' => 'Status',
-            'login_time' => 'Login Time',
+            'status' => '登录状态',
+            'login_time' => '登录时间',
             'login_ip' => 'Login Ip',
         ];
-    }
-
-    /**
-     * @inheritdoc
-     * @return LoginLogsQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new LoginLogsQuery(get_called_class());
     }
 
     public function getStatuses()
     {
         return [
-            0 => '登录成功',
-            1 => '已解锁',
+            1 => '登录成功',
+//            1 => '已解锁',
             2 => '密码错误',
-            3 => '验证错误',
-            4 => 'IP锁定中',
+//            3 => '验证错误',
+//            4 => 'IP锁定中',
         ];
     }
 
-    /*public function getUser()
+    /**
+     * @inheritdoc
+     * @return ManagerLoginLogsQuery the active query used by this AR class.
+     */
+    public static function find()
     {
-        return $this->hasOne(User::className(),['id'=>'uid']);
+        return new ManagerLoginLogsQuery(get_called_class());
     }
 
-    public function getOperator()
+    public function getManager()
     {
-        return $this->hasOne(User::className(),['id'=>'unlock_uid']);
-    }*/
+        return $this->hasOne(Manager::className(),['id' => 'uid']);
+    }
+
 }
