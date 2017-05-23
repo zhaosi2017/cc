@@ -27,7 +27,7 @@ class Telegram extends Model
     private $queryMenu;
     private $callMenu;
     private $bindMenu;
-    private $inlineKeyboard = [];
+    private $inlineKeyboard;
     private $sendData;
     private $errorCode = [
         'invalid_operation' => 401,
@@ -180,7 +180,7 @@ class Telegram extends Model
         if ($res) {
             $this->setQueryMenu();
             $this->setCallMenu();
-            $this->inlineKeyboard[] = [
+            $this->inlineKeyboard = [
                 [
                     $this->queryMenu,
                     $this->callMenu,
@@ -190,8 +190,10 @@ class Telegram extends Model
             $this->setBindMenu();
             $this->setQueryMenu();
             $this->setCallMenu();
-            $this->inlineKeyboard[] = [
-                $this->bindMenu,
+            $this->inlineKeyboard = [
+                [
+                    $this->bindMenu,
+                ],
                 [
                     $this->queryMenu,
                     $this->callMenu,
@@ -395,6 +397,7 @@ class Telegram extends Model
      */
     public function sendTelegramData()
     {
+        $this->setWebhook();
         $curl = curl_init();
         curl_setopt_array(
             $curl,
