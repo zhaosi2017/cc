@@ -9,32 +9,33 @@ class Telegram extends Model
 {
 
     private $queryText = "查询";
+    private $telegramText = '操作菜单';
     private $callText = "呼叫";
     private $bindText = '分享自己名片';
     private $webhook;
     private $code;
-    private $telegram_uid;
-    private $telegram_contact_uid;
-    private $telegram_contact_phone;
-    private $query_callback_data_pre = 'cc_query';
-    private $call_callback_data_pre = 'cc_call';
-    private $bind_callback_data_pre = 'cc_bind';
-    private $query_callback_data;
-    private $call_callback_data;
-    private $bind_callback_data;
+    private $telegramUid;
+    private $telegramContactUid;
+    private $telegramContactPhone;
+    private $queryCallbackDataPre = 'cc_query';
+    private $callCallbackDataPre = 'cc_call';
+    private $bindCallbackDataPre = 'cc_bind';
+    private $queryCallbackData;
+    private $callCallbackData;
+    private $bindCallbackData;
 
-    private $query_menu;
-    private $call_menu;
-    private $bind_menu;
-    private $inline_keyboard = [];
-    private $send_data;
-    private $error_code = [
+    private $queryMenu;
+    private $callMenu;
+    private $bindMenu;
+    private $inlineKeyboard = [];
+    private $sendData;
+    private $errorCode = [
         'invalid_operation' => 401,
         'not_yourself' => 402,
         'exist' => 403,
         'noexist' => 404,
     ];
-    private $error_message = [
+    private $errorMessage = [
         'invalid_operation' => '无效的操作',
         'not_yourself' => '不是自己的名片',
         'exist' => '已经绑定过',
@@ -58,24 +59,48 @@ class Telegram extends Model
     }
 
     /**
+     * @param $value
+     */
+    public function setTelegramUid($value)
+    {
+        $this->telegramUid = $value;
+    }
+
+    /**
+     * @param $value
+     */
+    public function setTelegramContactUid($value)
+    {
+        $this->telegramContactUid = $value;
+    }
+
+    /**
+     * @param $value
+     */
+    public function setTelegramContactPhone($value)
+    {
+        $this->telegramContactPhone = $value;
+    }
+
+    /**
      * 设置验证码.
      */
     public function setCode()
     {
         // 查询是否绑定自己的账号.
-        if ($this->telegram_uid != $this->telegram_contact_uid) {
-            return 'error_code :'.$this->error_code['not_yourself'];
+        if ($this->telegramUid != $this->telegramContactUid) {
+            return 'error_code :'.$this->errorCode['not_yourself'];
         }
 
         // 查询是否绑定.
-        $res = User::findOne(['telegram_uid' => $this->telegram_uid]);
+        $res = User::findOne(['telegram_uid' => $this->telegramUid]);
         if ($res) {
-            return 'error_code :'.$this->error_code['exist'];
+            return 'error_code :'.$this->errorCode['exist'];
         } else {
             $dealData = [
                 Yii::$app->params['telegram_pre'],
-                $this->telegram_contact_uid,
-                $this->telegram_contact_phone,
+                $this->telegramContactUid,
+                $this->telegramContactPhone,
             ];
 
             $dealData = implode('-', $dealData);
@@ -88,9 +113,10 @@ class Telegram extends Model
      */
     public function setQueryMenu()
     {
-        $this->query_menu = array(
+        $this->setQueryCallbackData();
+        $this->queryMenu = array(
             'text' => $this->queryText,
-            'callback_data' => $this->query_callback_data,
+            'callback_data' => $this->queryCallbackData,
         );
     }
 
@@ -99,9 +125,10 @@ class Telegram extends Model
      */
     public function setCallMenu()
     {
-        $this->call_menu = array(
+        $this->setCallCallbackData();
+        $this->callMenu = array(
             'text' => $this->callText,
-            'callback_data' => $this->call_callback_data,
+            'callback_data' => $this->callCallbackData,
         );
     }
 
@@ -110,9 +137,10 @@ class Telegram extends Model
      */
     public function setBindMenu()
     {
-        $this->bind_menu = array(
+        $this->setBindCallbackData();
+        $this->bindMenu = array(
             'text' => $this->bindText,
-            'callback_data' => $this->bind_callback_data,
+            'callback_data' => $this->bindCallbackData,
         );
     }
 
@@ -121,7 +149,7 @@ class Telegram extends Model
      */
     public function setQueryCallbackData()
     {
-        $this->query_callback_data = implode('-', array($this->query_callback_data_pre, $this->telegram_contact_uid, $this->telegram_contact_phone));
+        $this->queryCallbackData = implode('-', array($this->queryCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone));
     }
 
     /**
@@ -129,7 +157,7 @@ class Telegram extends Model
      */
     public function setCallCallbackData()
     {
-        $this->call_callback_data = implode('-', array($this->call_callback_data_pre, $this->telegram_contact_uid, $this->telegram_contact_phone));
+        $this->callCallbackData = implode('-', array($this->callCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone));
     }
 
     /**
@@ -137,7 +165,7 @@ class Telegram extends Model
      */
     public function setBindCallbackData()
     {
-        $this->call_callback_data = implode('-', array($this->bind_callback_data_pre, $this->telegram_contact_uid, $this->telegram_contact_phone));
+        $this->bindCallbackData = implode('-', array($this->bindCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone));
     }
 
     /**
@@ -148,23 +176,76 @@ class Telegram extends Model
     public function setInlineKeyboard()
     {
         // 查询是否绑定.
-        $res = User::findOne(['telegram_uid' => $this->telegram_uid]);
+        $res = User::findOne(['telegram_user_id' => $this->telegramUid]);
         if ($res) {
-            $this->inline_keyboard[] = [
+            $this->setQueryMenu();
+            $this->setCallMenu();
+            $this->inlineKeyboard[] = [
                 [
-                    $this->query_menu,
-                    $this->call_menu,
+                    $this->queryMenu,
+                    $this->callMenu,
                 ]
             ];
         } else {
-            $this->inline_keyboard[] = [
-                $this->bind_menu,
+            $this->setBindMenu();
+            $this->setQueryMenu();
+            $this->setCallMenu();
+            $this->inlineKeyboard[] = [
+                $this->bindMenu,
                 [
-                    $this->query_menu,
-                    $this->call_menu,
+                    $this->queryMenu,
+                    $this->callMenu,
                 ]
             ];
         }
+    }
+
+    /**
+     * @param $value
+     */
+    public function setSendData($value)
+    {
+        $this->sendData = $value;
+    }
+
+    /**
+     * @return mixeds
+     */
+    public function getTelegramText()
+    {
+        return $this->telegramText;
+    }
+
+    /**
+     * @return string
+     */
+    public function getQueryText()
+    {
+        return $this->queryText;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCallText()
+    {
+        return $this->callText;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBindText()
+    {
+        return $this->bindText;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTelegramUid()
+    {
+        return $this->telegramUid;
     }
 
     /**
@@ -188,7 +269,7 @@ class Telegram extends Model
      */
     public function getQueryMenu()
     {
-        return $this->query_menu;
+        return $this->queryMenu;
     }
 
     /**
@@ -196,7 +277,7 @@ class Telegram extends Model
      */
     public function getCallMenu()
     {
-        return $this->call_menu;
+        return $this->callMenu;
     }
 
     /**
@@ -204,7 +285,7 @@ class Telegram extends Model
      */
     public function getBindMenu()
     {
-        return $this->bind_menu;
+        return $this->bindMenu;
     }
 
     /**
@@ -212,7 +293,7 @@ class Telegram extends Model
      */
     public function getQueryCallbackData()
     {
-        return $this->query_callback_data;
+        return $this->queryCallbackData;
     }
 
     /**
@@ -220,7 +301,7 @@ class Telegram extends Model
      */
     public function getCallCallbackData()
     {
-        return $this->call_callback_data;
+        return $this->callCallbackData;
     }
 
     /**
@@ -228,7 +309,39 @@ class Telegram extends Model
      */
     public function getBindCallbackData()
     {
-        return $this->bind_callback_data;
+        return $this->bindCallbackData;
+    }
+
+    /**
+     * @return string
+     */
+    public function getQueryCallbackDataPre()
+    {
+        return $this->queryCallbackDataPre;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCallCallbackDataPre()
+    {
+        return $this->callCallbackDataPre;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBindCallbackDataPre()
+    {
+        return $this->bindCallbackDataPre;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSendData()
+    {
+        return $this->sendData;
     }
 
     /**
@@ -236,7 +349,7 @@ class Telegram extends Model
      */
     public function getErrorCode()
     {
-        return $this->error_code;
+        return $this->errorCode;
     }
 
     /**
@@ -244,7 +357,7 @@ class Telegram extends Model
      */
     public function getErrorMessage()
     {
-        return $this->error_message;
+        return $this->errorMessage;
     }
 
     /**
@@ -254,7 +367,7 @@ class Telegram extends Model
      */
     public function getInlineKeyboard()
     {
-        return $this->inline_keyboard;
+        return $this->inlineKeyboard;
     }
 
     /**
@@ -263,8 +376,8 @@ class Telegram extends Model
     public function queryTelegramData()
     {
         // 查询是否绑定.
-        $res = User::findOne(['telegram_uid' => $this->telegram_uid]);
-        return $res ? $this->error_message['exist'] : $this->error_message['noexist'];
+        $res = User::findOne(['telegram_user_id' => $this->telegramUid]);
+        return $res ? $this->errorMessage['exist'] : $this->errorMessage['noexist'];
     }
 
     /**
@@ -280,7 +393,7 @@ class Telegram extends Model
      *
      * @return json.
      */
-    public function sendData()
+    public function sendTelegramData()
     {
         $curl = curl_init();
         curl_setopt_array(
@@ -293,7 +406,7 @@ class Telegram extends Model
                 CURLOPT_TIMEOUT => 30,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_POSTFIELDS => $this->send_data,
+                CURLOPT_POSTFIELDS => $this->sendData,
                 CURLOPT_HTTPHEADER => array(
                     "cache-control: no-cache",
                     "content-type: application/json",
