@@ -97,7 +97,7 @@ class TelegramController extends GController
                         echo $telegram->getCode();
                         break;
                     default :
-                        echo 'error_code :'.$telegram->error_code['invalid_operation'];
+                        echo 'error_code :'.$telegram->errorCode['invalid_operation'];
                         break;
                 }
             }
