@@ -399,6 +399,11 @@ class Telegram extends Model
      */
     public function sendBindCode()
     {
+        $this->sendData = [
+            'chat_id' => $this->telegramUid,
+            'text' => $this->startText,
+        ];
+        $this->sendTelegramData();
         $this->setCode();
         $this->sendData = [
             'chat_id' => $this->telegramUid,
