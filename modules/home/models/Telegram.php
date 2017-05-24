@@ -12,6 +12,7 @@ class Telegram extends Model
     private $telegramText = '操作菜单';
     private $callText = "呼叫";
     private $bindText = '绑定账号';
+    private $startText = '开始操作, 请稍后!';
     private $webhook;
     private $code;
     private $telegramUid;
@@ -30,16 +31,20 @@ class Telegram extends Model
     private $inlineKeyboard;
     private $sendData;
     private $errorCode = [
+        'success' => 200,
         'invalid_operation' => 401,
         'not_yourself' => 402,
         'exist' => 403,
         'noexist' => 404,
+        'emptyuid' => 405,
     ];
     private $errorMessage = [
+        'success' => '成功',
         'invalid_operation' => '无效的操作',
         'not_yourself' => '不是自己的名片',
         'exist' => '已经绑定过',
         'noexist' => '没有查询到此人',
+        'emptyuid' => '发送人不能为空',
     ];
 
     /**
@@ -93,7 +98,7 @@ class Telegram extends Model
         }
 
         // 查询是否绑定.
-        $res = User::findOne(['telegram_uid' => $this->telegramUid]);
+        $res = User::findOne(['telegram_user_id' => $this->telegramUid]);
         if ($res) {
             return 'error_code :'.$this->errorCode['exist'];
         } else {
@@ -382,13 +387,31 @@ class Telegram extends Model
     }
 
     /**
+     * @return string
+     */
+    public function getStartText()
+    {
+        return $this->startText;
+    }
+
+    /**
      * 查询telegram账号.
      */
     public function queryTelegramData()
     {
+        $this->sendData = [
+            'chat_id' => $this->telegramUid,
+            'text' => $this->startText,
+        ];
+        $this->sendTelegramData();
         // 查询是否绑定.
         $res = User::findOne(['telegram_user_id' => $this->telegramUid]);
-        return $res ? $this->errorMessage['exist'] : $this->errorMessage['noexist'];
+        $this->sendData = [
+            'chat_id' => $this->telegramUid,
+            'text' => $res ? $this->errorMessage['exist'] : $this->errorMessage['noexist'],
+        ];
+        $this->sendTelegramData();
+        return $this->errorCode['success'];
     }
 
     /**
@@ -406,6 +429,12 @@ class Telegram extends Model
      */
     public function sendTelegramData()
     {
+        if (empty($this->telegramUid)) {
+            return "error #:".$this->errorCode['emptyuid'];
+        }
+        if (is_array($this->sendData)) {
+            $this->sendData = json_encode($this->sendData, true);
+        }
         $this->setWebhook();
         $curl = curl_init();
         curl_setopt_array(

@@ -62,12 +62,12 @@ class TelegramController extends GController
             $postData = json_decode($postData, true);
             $telegram = new Telegram();
             $message = isset($postData['message']) ? $postData['message'] : array();
+            $telegram->telegramUid = isset($message['from']['id']) ? $message['from']['id'] : (isset($postData['callback_query']) ? $postData['callback_query']['from']['id'] : null);
 
             if (!empty($message) && isset($message['contact'])) {
                 // 分享了名片.
                 $telegram->telegramContactUid = $message['contact']['user_id'];
                 $telegram->telegramContactPhone = $message['contact']['phone_number'];
-                $telegram->telegramUid = $message['from']['id'];
                 $telegram->setInlineKeyboard();
                 // 发送操作菜单.
                 $telegram->sendData = [
@@ -87,12 +87,14 @@ class TelegramController extends GController
                 $action = $action[0];
                 switch ($action) {
                     case $telegram->queryCallbackDataPre:
-                        echo $telegram->queryTelegramData();
+                        $result = $telegram->queryTelegramData();
+                        echo $result;
                         break;
                     case $telegram->callCallbackDataPre;
                         $telegram->callTelegramPerson();
                         break;
                     case $telegram->bindCallbackDataPre:
+                        $telegram->setCode();
                         echo $telegram->getCode();
                         break;
                     default :
