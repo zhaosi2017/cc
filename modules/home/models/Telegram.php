@@ -24,6 +24,7 @@ class Telegram extends Model
     private $queryCallbackData;
     private $callCallbackData;
     private $bindCallbackData;
+    private $callbackQuery;
 
     private $queryMenu;
     private $callMenu;
@@ -225,6 +226,14 @@ class Telegram extends Model
     }
 
     /**
+     * @param $value
+     */
+    public function setCallbackQuery($value)
+    {
+        $this->callbackQuery = $value;
+    }
+
+    /**
      * @return mixeds
      */
     public function getTelegramText()
@@ -361,6 +370,14 @@ class Telegram extends Model
     }
 
     /**
+     * @return mixed
+     */
+    public function getCallbackQuery()
+    {
+        return $this->callbackQuery;
+    }
+
+    /**
      * 获取错误码.
      */
     public function getErrorCode()
@@ -404,6 +421,10 @@ class Telegram extends Model
             'text' => $this->startText,
         ];
         $this->sendTelegramData();
+
+        $callbackQuery = explode('-', $this->callbackQuery);
+        $this->telegramContactUid = $callbackQuery[1];
+        $this->telegramContactPhone = $callbackQuery[2];
         $this->setCode();
         $this->sendData = [
             'chat_id' => $this->telegramUid,
