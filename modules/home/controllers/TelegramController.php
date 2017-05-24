@@ -77,7 +77,6 @@ class TelegramController extends GController
                             'inline_keyboard' => $telegram->inlineKeyboard,
                         ]
                 ];
-                $telegram->sendData = json_encode($telegram->sendData, true);
                 $result = $telegram->sendTelegramData();
                 echo $result;
             } elseif (isset($postData['callback_query'])) {
