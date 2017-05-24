@@ -81,8 +81,8 @@ class TelegramController extends GController
                 echo $result;
             } elseif (isset($postData['callback_query'])) {
                 // 点击菜单回调操作.
-                $action = $postData['callback_query']['data'];
-                $action = explode('-', $action);
+                $telegram->callbackQuery = $postData['callback_query']['data'];
+                $action = explode('-', $telegram->callbackQuery);
                 $action = $action[0];
                 switch ($action) {
                     case $telegram->queryCallbackDataPre:
@@ -93,7 +93,8 @@ class TelegramController extends GController
                         $telegram->callTelegramPerson();
                         break;
                     case $telegram->bindCallbackDataPre:
-                        $telegram->sendBindCode();
+                        $result = $telegram->sendBindCode();
+                        return $result;
                         break;
                     default :
                         echo 'error_code :'.$telegram->errorCode['invalid_operation'];
