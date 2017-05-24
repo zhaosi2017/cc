@@ -82,6 +82,8 @@ class TelegramController extends GController
             } elseif (isset($postData['callback_query'])) {
                 // 点击菜单回调操作.
                 $telegram->callbackQuery = $postData['callback_query']['data'];
+                $telegram->telegramContactFirstName = $postData['callback_query']['message']['chat']['first_name'];
+                $telegram->telegramContactLastName = $postData['callback_query']['message']['chat']['last_name'];
                 $action = explode('-', $telegram->callbackQuery);
                 $action = $action[0];
                 switch ($action) {
