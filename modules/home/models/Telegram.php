@@ -14,10 +14,19 @@ class Telegram extends Model
     private $bindText = '绑定账号';
     private $startText = '开始操作, 请稍后!';
     private $webhook;
+    private $nexmoUrl = "https://api.nexmo.com/tts/json";
+    private $apiKey = '85704df7';
+    private $apiSecret = '755026fdd40f34c2';
+    private $language = 'zh-cn';
+    private $repeat = 3;
+    private $voice = 'male';
+
     private $code;
     private $telegramUid;
     private $telegramContactUid;
     private $telegramContactPhone;
+    private $telegramContactFirstName;
+    private $telegramContactLastName;
     private $queryCallbackDataPre = 'cc_query';
     private $callCallbackDataPre = 'cc_call';
     private $bindCallbackDataPre = 'cc_bind';
@@ -86,6 +95,26 @@ class Telegram extends Model
     public function setTelegramContactPhone($value)
     {
         $this->telegramContactPhone = $value;
+    }
+
+    /**
+     * 设置名.
+     *
+     * @param string $value 名.
+     */
+    public function setTelegramContactFirstName($value)
+    {
+        $this->telegramContactFirstName = $value;
+    }
+
+    /**
+     * 设置姓.
+     *
+     * @param string $value 名.
+     */
+    public function setTelegramContactLastName($value)
+    {
+        $this->telegramContactLastName = $value;
     }
 
     /**
@@ -274,11 +303,79 @@ class Telegram extends Model
     }
 
     /**
+     * @return mixed
+     */
+    public function getTelegramContactFirstName()
+    {
+        return $this->telegramContactFirstName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTelegramContactLastName()
+    {
+        return $this->telegramContactLastName;
+    }
+
+    /**
      * 获取webhook.
      */
     public function getWebhook()
     {
         return $this->webhook;
+    }
+
+    /**
+     * @return nexmo.
+     */
+    public function getNexmoUrl()
+    {
+        return $this->nexmoUrl;
+    }
+
+    /**
+     * 获取apikey.
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * 获取apiSecret.
+     */
+    public function getApiSecret()
+    {
+        return $this->apiSecret;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * 获取语音重复次数.
+     *
+     * @return int
+     */
+    public function getRepeat()
+    {
+        return $this->repeat;
+    }
+
+    /**
+     * 获取声音性别.
+     *
+     * @return string
+     */
+    public function getVoice()
+    {
+        return $this->voice;
     }
 
     /**
@@ -459,7 +556,119 @@ class Telegram extends Model
      */
     public function callTelegramPerson()
     {
+        $this->sendData = [
+            'chat_id' => $this->telegramUid,
+            'text' => $this->startText,
+        ];
+        $this->sendTelegramData();
+        $user = User::findOne(['telegram_user_id' => $this->telegramUid]);
+        if ($user) {
+            if (empty($user->phone_number) || empty($user->country_code)) {
+                $this->sendData = [
+                    'chat_id' => $this->telegramUid,
+                    'text' => $user->nickname.'的联系方式设置有问题, 呼叫失败!',
+                ];
+                $this->sendTelegramData();
+                return $this->errorCode['success'];
+            }
 
+            $this->sendData = [
+                'chat_id' => $this->telegramUid,
+                'text' => '正在呼叫: '.$user->nickname.'请稍后!',
+            ];
+            $this->sendTelegramData();
+
+            // 呼叫本人.
+            $nexmoData = [
+                "api_key" => $this->apiKey,
+                'api_secret' => $this->apiSecret,
+                'lg' => $this->language,
+                'repeat' => $this->repeat,
+                'voice' => $this->voice,
+                'to'    => $user->country_code.$user->phone_number,
+                'text' => $this->telegramContactLastName.$this->telegramContactFirstName.'在telegram上找你!',
+            ];
+            $res = $this->callPerson($user->nickname, $nexmoData);
+            if ($res) {
+                return $this->errorCode['success'];
+            }
+
+            if (empty($user->urgent_contact_number_one) && empty($user->urgent_contact_number_two)) {
+                $this->sendData = [
+                    'chat_id' => $this->telegramUid,
+                    'text' => '抱歉: '.$user->nickname.'没有设置紧急联系人, 本次呼叫失败，请稍后再试, 或尝试其他方式联系'.$user->nickname.'!',
+                ];
+                $this->sendTelegramData();
+                return $this->errorCode['success'];
+            }
+
+            if (!empty($user->urgent_contact_number_one)) {
+                $this->sendData = [
+                    'chat_id' => $this->telegramUid,
+                    'text' => '尝试呼叫: '.$user->nickname.'紧急联系人'.$user->urgent_contact_person_one.'请稍后!',
+                ];
+                $this->sendTelegramData();
+                // 尝试呼叫紧急联系人一.
+                $res = $this->callPerson($user->urgent_contact_person_one, $nexmoData);
+                if ($res) {
+                    return $this->errorCode['success'];
+                }
+            }
+
+            if (!empty($user->urgent_contact_number_two)) {
+                $this->sendData = [
+                    'chat_id' => $this->telegramUid,
+                    'text' => '尝试呼叫: '.$user->nickname.'紧急联系人'.$user->urgent_contact_person_two.'请稍后!',
+                ];
+                $this->sendTelegramData();
+                // 尝试呼叫紧急联系人一.
+                $res = $this->callPerson($user->urgent_contact_person_two, $nexmoData);
+                if ($res) {
+                    return $this->errorCode['success'];
+                }
+            }
+
+            $this->sendData = [
+                'chat_id' => $this->telegramUid,
+                'text' => '抱歉本次呼叫: '.$user->nickname.'失败，请稍后再试, 或尝试其他方式联系'.$user->nickname.'!',
+            ];
+            $this->sendTelegramData();
+            return $this->errorCode['success'];
+        } else {
+            $this->sendData = [
+                'chat_id' => $this->telegramUid,
+                'text' => $this->errorMessage['noexist'],
+            ];
+            $this->sendTelegramData();
+        }
+    }
+
+    /**
+     * @param string $nickname 呼叫人.
+     * @param arra   $data     数据.
+     *
+     * @return boolean
+     */
+    public function callPerson($nickname, $data)
+    {
+        $this->sendData = $data;
+        $res = $this->sendTelegramData($this->nexmoUrl);
+        $res = json_decode($res, true);
+        if ($res['status'] == 0) {
+            $this->sendData = [
+                'chat_id' => $this->telegramUid,
+                'text' => '呼叫: '.$nickname.'成功!',
+            ];
+            $this->sendTelegramData();
+            return true;
+        } else {
+            $this->sendData = [
+                'chat_id' => $this->telegramUid,
+                'text' => '呼叫: '.$$nickname.'失败!',
+            ];
+            $this->sendTelegramData();
+            return false;
+        }
     }
 
     /**
@@ -467,7 +676,7 @@ class Telegram extends Model
      *
      * @return json.
      */
-    public function sendTelegramData()
+    public function sendTelegramData($url = null)
     {
         if (empty($this->telegramUid)) {
             return "error #:".$this->errorCode['emptyuid'];
@@ -475,12 +684,16 @@ class Telegram extends Model
         if (is_array($this->sendData)) {
             $this->sendData = json_encode($this->sendData, true);
         }
-        $this->setWebhook();
+        if (empty($url)) {
+            $this->setWebhook();
+            $url = $this->webhook;
+        }
+
         $curl = curl_init();
         curl_setopt_array(
             $curl,
             array(
-                CURLOPT_URL => $this->webhook,
+                CURLOPT_URL => $url,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
@@ -491,7 +704,6 @@ class Telegram extends Model
                 CURLOPT_HTTPHEADER => array(
                     "cache-control: no-cache",
                     "content-type: application/json",
-                    "postman-token: 66e489ad-7652-33ab-41dd-42c4e347d0b8"
                 ),
             )
         );
