@@ -395,6 +395,20 @@ class Telegram extends Model
     }
 
     /**
+     * 发送绑定telegram账号的验证码.
+     */
+    public function sendBindCode()
+    {
+        $this->setCode();
+        $this->sendData = [
+            'chat_id' => $this->telegramUid,
+            'text' => $this->code,
+        ];
+        $this->sendTelegramData();
+        return $this->errorCode['success'];
+    }
+
+    /**
      * 查询telegram账号.
      */
     public function queryTelegramData()

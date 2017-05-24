@@ -93,8 +93,7 @@ class TelegramController extends GController
                         $telegram->callTelegramPerson();
                         break;
                     case $telegram->bindCallbackDataPre:
-                        $telegram->setCode();
-                        echo $telegram->getCode();
+                        $telegram->sendBindCode();
                         break;
                     default :
                         echo 'error_code :'.$telegram->errorCode['invalid_operation'];
