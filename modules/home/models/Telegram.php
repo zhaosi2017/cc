@@ -15,6 +15,7 @@ class Telegram extends Model
     private $startText = '开始操作, 请稍后!';
     private $wellcomeText = '欢迎';
     private $keyboardText = '分享自己名片';
+    private $firstText = '/start';
     private $webhook;
     private $nexmoUrl = "https://api.nexmo.com/tts/json";
     private $apiKey = '85704df7';
@@ -24,6 +25,7 @@ class Telegram extends Model
     private $voice = 'male';
 
     private $code;
+    private $bindCode;
     private $telegramUid;
     private $telegramContactUid;
     private $telegramContactPhone;
@@ -65,7 +67,9 @@ class Telegram extends Model
      */
     public function rules()
     {
-        return [];
+        return [
+            [['bindCode'], 'string']
+        ];
     }
 
     /**
@@ -144,6 +148,14 @@ class Telegram extends Model
             $dealData = implode('-', $dealData);
             $this->code = base64_encode(Yii::$app->security->encryptByKey($dealData, Yii::$app->params['telegram']));
         }
+    }
+
+    /**
+     * @param $value
+     */
+    public function setBindCode($value)
+    {
+        $this->bindCode = $value;
     }
 
     /**
@@ -397,11 +409,27 @@ class Telegram extends Model
     }
 
     /**
+     * @return string
+     */
+    public function getFirstText()
+    {
+        return $this->firstText;
+    }
+
+    /**
      * 获取code.
      */
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBindCode()
+    {
+        return $this->bindCode;
     }
 
     /**
@@ -731,6 +759,24 @@ class Telegram extends Model
             $this->sendTelegramData();
             return false;
         }
+    }
+
+    /**
+     *
+     */
+    public function bindTelegramData()
+    {
+        $user = User::findOne(Yii::$app->user->id);
+        $data = Yii::$app->security->decryptByKey(base64_decode($this->bindCode), Yii::$app->params['telegram']);
+        $dataArr = explode('-', $data);
+        if ($dataArr[0] == Yii::$app->params['telegram_pre']) {
+            $user->telegram_user_id = $dataArr['1'];
+            $user->telegram_number = $dataArr['2'];
+            return $user->save();
+        } else {
+            return '无效验证码!';
+        }
+
     }
 
     /**
