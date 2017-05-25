@@ -13,6 +13,8 @@ class Telegram extends Model
     private $callText = "呼叫";
     private $bindText = '绑定账号';
     private $startText = '开始操作, 请稍后!';
+    private $wellcomeText = '欢迎';
+    private $keyboardText = '分享自己名片';
     private $webhook;
     private $nexmoUrl = "https://api.nexmo.com/tts/json";
     private $apiKey = '85704df7';
@@ -38,6 +40,7 @@ class Telegram extends Model
     private $queryMenu;
     private $callMenu;
     private $bindMenu;
+    private $keyboard;
     private $inlineKeyboard;
     private $sendData;
     private $errorCode = [
@@ -177,6 +180,21 @@ class Telegram extends Model
             'text' => $this->bindText,
             'callback_data' => $this->bindCallbackData,
         );
+    }
+
+    /**
+     * 设置keyboard.
+     */
+    public function setKeyboard()
+    {
+        $this->keyboard = [
+            [
+                [
+                    "text"=> $this->keyboardText,
+                    "request_contact"=> true,
+                ]
+            ]
+        ];
     }
 
     /**
@@ -411,6 +429,22 @@ class Telegram extends Model
     }
 
     /**
+     * @return mixed
+     */
+    public function getKeyboard()
+    {
+        return $this->keyboard;
+    }
+
+    /**
+     * @return string
+     */
+    public function getKeyboardText()
+    {
+        return $this->keyboardText;
+    }
+
+    /**
      * 获取查询回调参数.
      */
     public function getQueryCallbackData()
@@ -506,6 +540,34 @@ class Telegram extends Model
     public function getStartText()
     {
         return $this->startText;
+    }
+
+    /**
+     * 欢迎.
+     */
+    public function getWellcomeText()
+    {
+        return $this->wellcomeText;
+    }
+
+    /**
+     * 欢迎.
+     */
+    public function telegramWellcome()
+    {
+        $this->setKeyboard();
+        // 发送操作菜单.
+        $this->sendData = [
+            'chat_id' => $this->telegramUid,
+            'reply_to_message_id' => 0,
+            'text' => $this->wellcomeText,
+            'reply_markup' => [
+                'keyboard' => $this->keyboard,
+            ]
+        ];
+
+        $this->sendTelegramData();
+        return $this->errorCode['success'];
     }
 
     /**
@@ -710,8 +772,13 @@ class Telegram extends Model
 
         $response = curl_exec($curl);
         $err = curl_error($curl);
-
         curl_close($curl);
+        if (!empty($url)) {
+            $response = json_decode($response, true);
+            if (!$response['ok']) {
+                return "error_cod #:".$response['error_code'].', description: '.$response['description'];
+            }
+        }
 
         if ($err) {
             return "error #:" . $err;

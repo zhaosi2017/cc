@@ -64,6 +64,11 @@ class TelegramController extends GController
             $message = isset($postData['message']) ? $postData['message'] : array();
             $telegram->telegramUid = isset($message['from']['id']) ? $message['from']['id'] : (isset($postData['callback_query']) ? $postData['callback_query']['from']['id'] : null);
 
+            // 如果是用户第一次关注该机器人，发送欢迎信息,并发送内联快捷菜单.
+            if ($message['text'] == '/start') {
+                return $telegram->telegramWellcome();
+            }
+
             if (!empty($message) && isset($message['contact'])) {
                 // 分享了名片.
                 $telegram->telegramContactUid = $message['contact']['user_id'];
