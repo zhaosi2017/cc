@@ -631,8 +631,9 @@ class Telegram extends Model
             'text' => $this->startText,
         ];
         $this->sendTelegramData();
+        $contactArr = explode('-', $this->callbackQuery);
         // 查询是否绑定.
-        $res = User::findOne(['telegram_user_id' => $this->telegramUid]);
+        $res = User::findOne(['telegram_user_id' => $contactArr[1]]);
         $this->sendData = [
             'chat_id' => $this->telegramUid,
             'text' => $res ? $this->errorMessage['exist'] : $this->errorMessage['noexist'],
@@ -651,7 +652,8 @@ class Telegram extends Model
             'text' => $this->startText,
         ];
         $this->sendTelegramData();
-        $user = User::findOne(['telegram_user_id' => $this->telegramUid]);
+        $contactArr = explode('-', $this->callbackQuery);
+        $user = User::findOne(['telegram_user_id' => $contactArr[1]]);
         if ($user) {
             if (empty($user->phone_number) || empty($user->country_code)) {
                 $this->sendData = [
