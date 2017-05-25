@@ -599,6 +599,23 @@ class Telegram extends Model
     }
 
     /**
+     * 发送菜单.
+     */
+    public function sendMenulist()
+    {
+        $this->setInlineKeyboard();
+        $this->sendData = [
+            'chat_id' => $this->telegramUid,
+            'text' => $this->telegramText,
+            'reply_markup' => [
+                'inline_keyboard' => $this->inlineKeyboard,
+            ]
+        ];
+
+        return $this->sendTelegramData();
+    }
+
+    /**
      * 发送绑定telegram账号的验证码.
      */
     public function sendBindCode()
@@ -667,7 +684,7 @@ class Telegram extends Model
 
             $this->sendData = [
                 'chat_id' => $this->telegramUid,
-                'text' => '正在呼叫: '.$nickname.'请稍后!',
+                'text' => '正在呼叫: '.$nickname.', 请稍后!',
             ];
             $this->sendTelegramData();
 
