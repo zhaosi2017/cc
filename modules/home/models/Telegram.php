@@ -822,7 +822,7 @@ class Telegram extends Model
         $response = curl_exec($curl);
         $err = curl_error($curl);
         curl_close($curl);
-        if (!empty($url)) {
+        if (empty($url)) {
             $response = json_decode($response, true);
             if (!$response['ok']) {
                 return "error_cod #:".$response['error_code'].', description: '.$response['description'];
