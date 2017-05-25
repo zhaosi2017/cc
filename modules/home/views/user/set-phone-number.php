@@ -72,7 +72,7 @@ $this->title = '修改绑定电话';
                     var url = '<?php echo Url::to(['/home/user/send-short-message']); ?>';
                     var data = {};
 
-                    data.number = '+' + $('#phonenumberform-country_code').val() + $('#phonenumberform-phone_number').val();
+                    data.number = '+' + $('#contactform-country_code').val() + $('#contactform-phone_number').val();
                     $.post(url, data).done(function(r) {
                         console.log(r);
                     });
