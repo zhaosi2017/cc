@@ -3,6 +3,7 @@
 namespace app\modules\home\controllers;
 
 use app\modules\home\models\Telegram;
+use app\modules\home\models\User;
 use Yii;
 use app\controllers\GController;
 use yii\filters\AccessControl;
@@ -32,7 +33,7 @@ class TelegramController extends GController
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index'],
+                        'actions' => ['index', 'bind-telegram'],
                         'roles' => ['@'],
                     ],
                 ],
@@ -65,7 +66,7 @@ class TelegramController extends GController
             $telegram->telegramUid = isset($message['from']['id']) ? $message['from']['id'] : (isset($postData['callback_query']) ? $postData['callback_query']['from']['id'] : null);
 
             // 如果是用户第一次关注该机器人，发送欢迎信息,并发送内联快捷菜单.
-            if ($message['text'] == '/start') {
+            if (isset($message['text']) && $message['text'] == $telegram->getFirstText()) {
                 return $telegram->telegramWellcome();
             }
 
@@ -110,6 +111,30 @@ class TelegramController extends GController
             }
         } catch (\Exception $e) {
             echo $e->getMessage();
+        }
+    }
+
+    /**
+     * 绑定telegram账号到系统.
+     */
+    public function actionBindTelegram()
+    {
+        $isModify = false;
+        $user = User::findOne(Yii::$app->user->id);
+        if (!empty($user->telegram_user_id) && !empty($user->telegram_number)) {
+            $isModify = true;
+        }
+        $model = new Telegram();
+        // 提交绑定数据.
+        if ($model->load(Yii::$app->request->post())) {
+            $updateRes = $model->bindTelegramData();
+            if (!$updateRes) {
+                return $this->render('bind-telegram', ['model' => $model, 'isModify' => $isModify]);
+            }
+            return $this->redirect(['/home/user/index']);
+        } else {
+            // 加载页面.
+            return $this->render('bind-telegram', ['model' => $model, 'isModify' => $isModify]);
         }
     }
 

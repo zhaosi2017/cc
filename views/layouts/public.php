@@ -48,6 +48,9 @@ $module = $this->context->module->id;
                     <li>
                         <a class="J_menuItem" href="<?= Url::to(['/home/call-record/index']) ?>"><span class="nav-label">通话记录</span></a>
                     </li>
+                    <li>
+                        <a class="J_menuItem" href="<?= Url::to(['/home/telegram/bind-telegram']) ?>"><span class="nav-label">绑定telegram</span></a>
+                    </li>
 
                 </ul>
             </div>
