@@ -9,7 +9,7 @@ use yii\filters\VerbFilter;
 
 class PController extends Controller
 {
-    public $layout = '@app/views/layouts/global';
+    public $layout = '@app/views/layouts/right_admin';
 
     /**
      * @inheritdoc
@@ -51,7 +51,7 @@ class PController extends Controller
      * @param \yii\base\Action $action
      * @return bool
      */
-    public function beforeAction($action)
+    /*public function beforeAction($action)
     {
         $this->layout = '@app/views/layouts/right_admin';
 
@@ -61,7 +61,7 @@ class PController extends Controller
 
         return parent::beforeAction($action);
 
-    }
+    }*/
 
     /**
      * @param array $response

@@ -17,6 +17,14 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
     //        'filterModel' => $searchModel,
+            'pager'=>[
+                //'options'=>['class'=>'hidden']//关闭自带分页
+                'firstPageLabel'=>"首页",
+                'prevPageLabel'=>'上一页',
+                'nextPageLabel'=>'下一页',
+                'lastPageLabel'=>'末页',
+                'maxButtonCount' => 9,
+            ],
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn', 'header'=>'序号'],
 

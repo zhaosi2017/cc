@@ -34,8 +34,12 @@ class LoginController extends GController
 
     public function actionIndex()
     {
-        $this->layout = '@app/views/layouts/global';
+        // 已经登陆的就跳到首页.
+        if (!Yii::$app->user->isGuest) {
+            $this->redirect(['/home/default/welcome']);
+        }
 
+        $this->layout = '@app/views/layouts/global';
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post())) {
             //$forbidden = $model->forbidden();
