@@ -23,6 +23,11 @@ class DefaultController extends GController
         }
     }
 
+    public function actionWelcome()
+    {
+        return $this->render('welcome');
+    }
+
     public function actionDeny()
     {
         $this->layout = '@app/views/layouts/global';
