@@ -2,6 +2,7 @@
 
 namespace app\modules\home\controllers;
 
+use Yii;
 use app\controllers\GController;
 
 /**
@@ -15,8 +16,11 @@ class DefaultController extends GController
      */
     public function actionIndex()
     {
-        $this->layout = '@app/views/layouts/global';
-        return $this->render('index');
+        if (Yii::$app->user->isGuest) {
+            $this->redirect('/home/login/index');
+        } else {
+            $this->redirect('/home/default/welcome');
+        }
     }
 
     public function actionWelcome()
@@ -29,4 +33,5 @@ class DefaultController extends GController
         $this->layout = '@app/views/layouts/global';
         return $this->render('deny');
     }
+
 }

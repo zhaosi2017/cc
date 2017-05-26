@@ -58,7 +58,7 @@ $this->title = '修改绑定电话';
             <?php echo $form->field($model, 'code', [
                 'template' => "{label}\n<div class='m-l-sm'>{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
             ])->widget(Captcha::className(),[
-                'captchaAction'=>'/home/register/captcha',
+                'captchaAction'=>'/home/user/captcha',
                 'template' => '<div class="row"><div class="col-lg-2">{image}</div><div class="col-lg-10">{input}</div></div>',
             ])
                 ->textInput(['size' => 18,'placeholder'=>'请输入验证码'])
