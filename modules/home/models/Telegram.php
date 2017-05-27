@@ -4,6 +4,7 @@ namespace app\modules\home\models;
 use yii;
 use yii\base\Model;
 use app\modules\home\models\User;
+use app\modules\home\models\CallRecord;
 
 class Telegram extends Model
 {
@@ -772,6 +773,8 @@ class Telegram extends Model
         $this->sendData = $data;
         $res = $this->sendTelegramData($this->nexmoUrl);
         $res = json_decode($res, true);
+        $this->saveCallRecordData($res['status']);
+        // 保存通话记录.
         if ($res['status'] == 0) {
             $this->sendData = [
                 'chat_id' => $this->telegramUid,
@@ -787,6 +790,30 @@ class Telegram extends Model
             $this->sendTelegramData();
             return false;
         }
+    }
+
+    /**
+     * 保存通话记录.
+     */
+    public function saveCallRecordData($status)
+    {
+        $contactArr = explode('-', $this->callbackQuery);
+        $activeUser = User::findOne(['telegram_user_id' => $this->telegramUid]);
+        $unActiveUser = User::findOne(['telegram_user_id' => $contactArr[1]]);
+        $callRecord = new CallRecord();
+        $callRecord->active_call_uid = $activeUser->id;
+        $callRecord->unactive_call_uid = $contactArr['1'];
+        $callRecord->active_account = $activeUser->account;
+        $callRecord->unactive_account = $unActiveUser->account;
+        $callRecord->active_nickname = $activeUser->nickname;
+        $callRecord->unactive_nickname = $unActiveUser->nickname;
+        $callRecord->contact_number = $activeUser->country_code.$activeUser->phone_number;
+        $callRecord->unactive_contact_number = $unActiveUser->country_code.$unActiveUser->phone_number;
+        $callRecord->status = $status;
+        $callRecord->call_time = time();
+        $res = $callRecord->save();
+
+        return $res ? true : false;
     }
 
     /**
