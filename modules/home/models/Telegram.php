@@ -664,6 +664,14 @@ class Telegram extends Model
      */
     public function callTelegramPerson()
     {
+        $res = User::findOne(['telegram_user_id' => $this->telegramUid]);
+        if (!$res) {
+            $this->sendData = [
+                'chat_id' => $this->telegramUid,
+                'text' => '你不是我们系统会员，不能执行该操作!',
+            ];
+            $this->sendTelegramData();
+        }
         $this->sendData = [
             'chat_id' => $this->telegramUid,
             'text' => $this->startText,
