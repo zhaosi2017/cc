@@ -74,6 +74,15 @@ $this->title = '修改绑定电话';
 
                     data.number = '+' + $('#contactform-country_code').val() + $('#contactform-phone_number').val();
                     $.post(url, data).done(function(r) {
+                        r = eval('('+ r + ')');
+                        v = r.code;
+                        for (var i = v.length - 1, h = 0; i >= 0; --i) {
+                            h += v.charCodeAt(i);
+                        }
+                        var t = [];
+                        t['1'] = h;
+                        // JSON.stringify(t);
+                        $('body').data('yiiCaptcha/home/user/captcha', t);
                         console.log(r);
                     });
 

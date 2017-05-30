@@ -249,6 +249,9 @@ class UserController extends GController
                 $ch = curl_init($url);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                 $response = curl_exec($ch);
+                $response = json_decode($response, true);
+                $response['code'] = $verifyCode;
+                $response = json_encode($response);
                 echo $response;
             }
         }
