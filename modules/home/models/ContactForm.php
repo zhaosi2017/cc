@@ -3,6 +3,7 @@
 namespace app\modules\home\models;
 
 use yii\base\Model;
+use Yii;
 
 /**
  *
@@ -11,6 +12,19 @@ use yii\base\Model;
  */
 class ContactForm extends Model
 {
+    /**
+     * 短信限制时间
+     */
+    const SMS_LIMIT_TIME = 60;
+    /**
+     * 短信在限制时间内最多发送次数
+     */
+    const SMS_SEND_NUM = 1;
+    /**
+     * 短信验证码位数
+     */
+    const SMS_LENGTH = 4;
+
     public $country_code;
 
     public $potato_country_code;
@@ -83,10 +97,21 @@ class ContactForm extends Model
                 'urgent_contact_number_two',
             ], 'default', 'value'=>''],
             [['urgent_contact_person_one','urgent_contact_person_two'], 'string'],
-            ['code', 'captcha', 'message'=>'验证码输入不正确', 'captchaAction'=>'/home/user/captcha'],
+            ['code','required','on'=>['phone','telegram','potato']],
             ['nickname','string','length'=>[2, 6], 'message'=>'昵称请设置2～6个汉字']
         ];
 
+    }
+
+    public function scenarios()
+    {
+        $parent_scenarios = parent::scenarios();
+        $self = [
+            'phone' => ['code','country_code','phone_number'],
+            'telegram' => ['code','telegram_country_code','telegram_number'],
+            'potato' => ['code','potato_country_code','potato_number'],
+        ];
+        return array_merge($parent_scenarios,$self);
     }
 
     /**
@@ -127,5 +152,58 @@ class ContactForm extends Model
         $this->potato_number = $user->potato_number;
         $this->telegram_number = $user->telegram_number;
         return $this;
+    }
+
+    /**
+     * 短信验证 
+     */
+    public static function validateSms($type, $code)
+    {
+        
+        $session = Yii::$app->session;
+        $verifyCode = $session[$type];
+        if(empty($code) ||  empty($verifyCode) || $verifyCode != $code)
+        {
+            return true;
+        }
+        $session->remove($type);
+        return false;
+    }
+
+
+    public static function makeCode()
+    {
+
+        $letters = 'bcdfghjklmnpqrstvwxyz';
+        $vowels = 'aeiou';
+        $code = '';
+        for ($i = 0; $i < self::SMS_LENGTH ; ++$i) {
+            if ($i % 2 && mt_rand(0, 10) > 2 || !($i % 2) && mt_rand(0, 10) > 9) {
+                $code .= $vowels[mt_rand(0, 4)];
+            } else {
+                $code .= $letters[mt_rand(0, 20)];
+            }
+        }
+        return $code;
+    }
+
+    /**
+     * 短信速率限制
+     */
+    public static function smsRateLimit($type)
+    {   
+
+        $time = time()-self::SMS_LIMIT_TIME; 
+        $session = Yii::$app->session;
+        $name = 'rateLimit'.$type;
+        $smsRateLimit = $session[$name];
+
+        if($smsRateLimit['count'] <= 0 &&  $smsRateLimit['time'] > $time)
+        {
+            return ['messages'=>['status'=>1,'message'=>'您好！发送短信不能太平凡,请休息哈！']];
+        }else{
+            Yii::$app->session[$name] = ['time'=>time(),'count'=>self::SMS_SEND_NUM - 1 ];
+        }
+        return [];
     }
 }
