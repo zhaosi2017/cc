@@ -60,7 +60,16 @@ class UserController extends GController
         $id = Yii::$app->user->id;
         $model = (new ContactForm())->findModel($id);
         $user_model = $this->findModel($id);
-        if($model->load(Yii::$app->request->post()) && $model->validate(['country_code','phone_number','code'])){
+        $model->scenario='phone';
+        
+        if( $model->load(Yii::$app->request->post()) && $model->validate(['country_code','phone_number']) ){
+            $code = $_POST['ContactForm']['code'];
+            $type = Yii::$app->controller->action->id;
+            if($model->validateSms($type, $code)){
+                $model->addError('code', '验证码错误');
+                return $this->render('set-phone-number',['model'=>$model]);
+            }
+
             $user_model->country_code = $model->country_code;
             $user_model->phone_number = $model->phone_number;
             if($user_model->update()){
@@ -90,7 +99,7 @@ class UserController extends GController
                     break;
                 case 'telegram_number':
                     $model->telegram_number = '';
-                    $model->potato_country_code = null;
+                    $model->telegram_country_code = null;
                     break;
             }
             if($model->update()){
@@ -108,7 +117,16 @@ class UserController extends GController
         $id = Yii::$app->user->id;
         $model = (new ContactForm())->findModel($id);
         $user_model = $this->findModel($id);
-        if($model->load(Yii::$app->request->post()) && $model->validate(['potato_country_code','potato_number','code'])){
+        $model->scenario='potato';
+
+        if($model->load(Yii::$app->request->post()) && $model->validate(['potato_country_code','potato_number'])){
+            $code = $_POST['ContactForm']['code'];
+            $type = Yii::$app->controller->action->id;
+            if($model->validateSms($type, $code)){
+                $model->addError('code', '验证码错误');
+                return $this->render('bind-potato',['model'=>$model]);
+            }
+
             $user_model->potato_country_code = $model->potato_country_code;
             $user_model->potato_number = $model->potato_number;
             if($user_model->update()){
@@ -127,7 +145,16 @@ class UserController extends GController
         $id = Yii::$app->user->id;
         $model = (new ContactForm())->findModel($id);
         $user_model = $this->findModel($id);
-        if($model->load(Yii::$app->request->post()) && $model->validate(['telegram_country_code','telegram_number','code'])){
+        $model->scenario='telegram';
+
+        if($model->load(Yii::$app->request->post()) && $model->validate(['telegram_country_code','telegram_number'])){
+            
+            $code = $_POST['ContactForm']['code'];
+            $type = Yii::$app->controller->action->id;
+            if($model->validateSms($type,$code)){
+                $model->addError('code', '验证码错误');
+                return $this->render('bind-telegram',['model'=>$model]);
+            }
             $user_model->telegram_country_code = $model->telegram_country_code;
             $user_model->telegram_number = $model->telegram_number;
             if($user_model->update()){
@@ -232,10 +259,13 @@ class UserController extends GController
     {
         if(Yii::$app->request->isAjax){
             $number = Yii::$app->request->post('number');
-            if($number){
-                $captcha = $this->createAction('captcha');
-                $verifyCode = $captcha->getVerifyCode(true);
-
+            $type = Yii::$app->request->post('type');
+            if($number && $type ){
+                if( $response = ContactForm::smsRateLimit($type)){
+                    exit(json_encode($response));
+                }
+                $session = Yii::$app->session;
+                $verifyCode = $session[$type] = ContactForm::makeCode();
                 $url = 'https://rest.nexmo.com/sms/json?' . http_build_query(
                     [
                         'api_key' =>  Yii::$app->params['nexmo_api_key'],

@@ -67,13 +67,27 @@ $this->title = '修改绑定电话';
 
             <div class="form-group">
                 <input type="button" id="count-down" class="form-control" onclick="
+                    if($('#contactform-country_code').val() == ''){
+                        alert('国码不能为空');
+                        return false;
+                    }
+                    if($('#contactform-phone_number').val() == ''){
+                        alert('电话不能为空');
+                        return false;
+                    }
+
                     var duration = 59;
                     $('#count-down').attr('disabled','disabled');
                     var url = '<?php echo Url::to(['/home/user/send-short-message']); ?>';
                     var data = {};
 
                     data.number = '+' + $('#contactform-country_code').val() + $('#contactform-phone_number').val();
+                    data.type   = '<?php echo Yii::$app->controller->action->id; ?>';
                     $.post(url, data).done(function(r) {
+                        r = eval('('+ r + ')');
+                        if(r.messages.status == 1){
+                            alert('你好！发送短信太频繁,请稍微休息哈');
+                        }
                         console.log(r);
                     });
 
