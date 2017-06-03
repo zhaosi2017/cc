@@ -684,19 +684,6 @@ class Telegram extends Model
         $user = User::findOne(['telegram_user_id' => $contactArr[1]]);
         if ($user) {
             $nickname = !empty($user->nickname) ? $user->nickname : '他/她';
-            if (empty($user->phone_number) || empty($user->country_code)) {
-                $this->sendData = [
-                    'chat_id' => $this->telegramUid,
-                    'text' => $nickname.'的联系方式设置有问题, 呼叫失败!',
-                ];
-                $this->sendTelegramData();
-            }
-
-            $this->sendData = [
-                'chat_id' => $this->telegramUid,
-                'text' => '正在呼叫: '.$nickname.', 请稍后!',
-            ];
-            $this->sendTelegramData();
 
             // 呼叫本人.
             $nexmoData = [
@@ -708,9 +695,23 @@ class Telegram extends Model
                 'to'    => $user->country_code.$user->phone_number,
                 'text' => $this->telegramContactLastName.$this->telegramContactFirstName.'在telegram上找你!',
             ];
-            $res = $this->callPerson($nickname, $nexmoData);
-            if ($res) {
-                return $this->errorCode['success'];
+
+            if (empty($user->phone_number) || empty($user->country_code)) {
+                $this->sendData = [
+                    'chat_id' => $this->telegramUid,
+                    'text' => $nickname.'的联系方式设置有问题, 不能呼叫!',
+                ];
+                $this->sendTelegramData();
+            } else {
+                $res = $this->callPerson($nickname, $nexmoData);
+                if ($res) {
+                    return $this->errorCode['success'];
+                }
+                $this->sendData = [
+                    'chat_id' => $this->telegramUid,
+                    'text' => '呼叫：'.$nickname.'失败!',
+                ];
+                $this->sendTelegramData();
             }
 
             if (empty($user->urgent_contact_number_one) && empty($user->urgent_contact_number_two)) {
@@ -726,27 +727,39 @@ class Telegram extends Model
             if (!empty($user->urgent_contact_number_one)) {
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
-                    'text' => '尝试呼叫: '.$nickname.'紧急联系人'.$user->urgent_contact_person_one.'请稍后!',
+                    'text' => '尝试呼叫: '.$nickname.'的紧急联系人:'.$user->urgent_contact_person_one.', 请稍后!',
                 ];
                 $this->sendTelegramData();
                 // 尝试呼叫紧急联系人一.
+                $nexmoData['to'] = $user->urgent_contact_one_country_code.$user->urgent_contact_number_one;
                 $res = $this->callPerson($user->urgent_contact_person_one, $nexmoData);
-                if (!$res) {
-                    return $this->errorCode['error'];
+                if ($res) {
+                    return $this->errorCode['success'];
                 }
+                $this->sendData = [
+                    'chat_id' => $this->telegramUid,
+                    'text' => '呼叫：'.$nickname.'的紧急联系人:'.$user->urgent_contact_person_one.'失败!',
+                ];
+                $this->sendTelegramData();
             }
 
             if (!empty($user->urgent_contact_number_two)) {
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
-                    'text' => '尝试呼叫: '.$nickname.'紧急联系人'.$user->urgent_contact_person_two.'请稍后!',
+                    'text' => '尝试呼叫: '.$nickname.'的紧急联系人:'.$user->urgent_contact_person_two.', 请稍后!',
                 ];
                 $this->sendTelegramData();
                 // 尝试呼叫紧急联系人一.
+                $nexmoData['to'] = $user->urgent_contact_two_country_code.$user->urgent_contact_number_two;
                 $res = $this->callPerson($user->urgent_contact_person_two, $nexmoData);
-                if (!$res) {
-                    return $this->errorCode['error'];
+                if ($res) {
+                    return $this->errorCode['success'];
                 }
+                $this->sendData = [
+                    'chat_id' => $this->telegramUid,
+                    'text' => '呼叫：'.$nickname.'的紧急联系人:'.$user->urgent_contact_person_two.'失败!',
+                ];
+                $this->sendTelegramData();
             }
 
             $this->sendData = [
