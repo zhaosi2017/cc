@@ -88,7 +88,6 @@ $this->title = '修改绑定电话';
                         if(r.messages.status == 1){
                             alert('你好！发送短信太频繁,请稍微休息哈');
                         }
-                        console.log(r);
                     });
 
                     var countDown = function() {
