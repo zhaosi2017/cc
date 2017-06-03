@@ -48,6 +48,7 @@ class Telegram extends Model
     private $sendData;
     private $errorCode = [
         'success' => 200,
+        'error' => 400,
         'invalid_operation' => 401,
         'not_yourself' => 402,
         'exist' => 403,
@@ -56,6 +57,7 @@ class Telegram extends Model
     ];
     private $errorMessage = [
         'success' => '成功',
+        'error' => '失败',
         'invalid_operation' => '无效的操作',
         'not_yourself' => '不是自己的名片',
         'exist' => '已经绑定过',
@@ -688,7 +690,6 @@ class Telegram extends Model
                     'text' => $nickname.'的联系方式设置有问题, 呼叫失败!',
                 ];
                 $this->sendTelegramData();
-                return $this->errorCode['success'];
             }
 
             $this->sendData = [
@@ -718,6 +719,7 @@ class Telegram extends Model
                     'text' => '抱歉: '.$nickname.'没有设置紧急联系人, 本次呼叫失败，请稍后再试, 或尝试其他方式联系'.$user->nickname.'!',
                 ];
                 $this->sendTelegramData();
+
                 return $this->errorCode['success'];
             }
 
@@ -729,8 +731,8 @@ class Telegram extends Model
                 $this->sendTelegramData();
                 // 尝试呼叫紧急联系人一.
                 $res = $this->callPerson($user->urgent_contact_person_one, $nexmoData);
-                if ($res) {
-                    return $this->errorCode['success'];
+                if (!$res) {
+                    return $this->errorCode['error'];
                 }
             }
 
@@ -742,8 +744,8 @@ class Telegram extends Model
                 $this->sendTelegramData();
                 // 尝试呼叫紧急联系人一.
                 $res = $this->callPerson($user->urgent_contact_person_two, $nexmoData);
-                if ($res) {
-                    return $this->errorCode['success'];
+                if (!$res) {
+                    return $this->errorCode['error'];
                 }
             }
 
