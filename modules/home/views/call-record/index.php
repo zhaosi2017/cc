@@ -1,3 +1,4 @@
+
 <?php
 
 use yii\helpers\Html;
@@ -44,7 +45,7 @@ $actionId = Yii::$app->requestedAction->id;
             'unactive_nickname',
             'type',
             'unactive_contact_number',
-            'status',
+            'statusData',
             [
                 'attribute' => 'call_time',
                 'format'=>['date', 'php:Y-m-d H:i:s'],

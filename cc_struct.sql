@@ -94,22 +94,22 @@ DROP TABLE IF EXISTS `call_record`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `call_record` (
- `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
- `active_call_uid` int(10) unsigned NOT NULL DEFAULT '0',
- `unactive_call_uid` int(10) unsigned NOT NULL DEFAULT '0',
- `active_account` varchar(100) NOT NULL COMMENT '主叫账号',
- `unactive_account` varchar(100) NOT NULL COMMENT '被叫账号',
- `active_nickname` varchar(50) NOT NULL DEFAULT '*' COMMENT '主叫昵称',
- `unactive_nickname` varchar(50) NOT NULL DEFAULT '*' COMMENT '被叫昵称',
- `call_by_same_times` int(10) unsigned NOT NULL DEFAULT '0',
- `type` int(10) unsigned NOT NULL DEFAULT '0',
- `contact_number` varchar(64) NOT NULL DEFAULT '',
- `unactive_contact_number` char(15) NOT NULL COMMENT '被叫电话',
- `status` int(10) unsigned NOT NULL DEFAULT '0',
- `record_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '记录状态(1:正常, 2:黑名单, 3:垃圾桶)',
- `call_time` int(11) NOT NULL DEFAULT '0',
- PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `active_call_uid` int(10) unsigned NOT NULL DEFAULT '0',
+  `unactive_call_uid` int(10) unsigned NOT NULL DEFAULT '0',
+  `active_account` varchar(100) NOT NULL COMMENT '主叫账号',
+  `unactive_nickname` varchar(50) NOT NULL DEFAULT '*' COMMENT '被叫昵称',
+  `unactive_account` varchar(100) NOT NULL COMMENT '被叫账号',
+  `active_nickname` varchar(50) NOT NULL DEFAULT '*' COMMENT '主叫昵称',
+  `call_by_same_times` int(10) unsigned NOT NULL DEFAULT '0',
+  `type` int(10) unsigned NOT NULL DEFAULT '0',
+  `contact_number` varchar(64) NOT NULL DEFAULT '',
+  `unactive_contact_number` char(15) NOT NULL COMMENT '被叫电话',
+  `status` int(10) unsigned NOT NULL DEFAULT '0',
+  `record_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '记录状态(1:正常, 2:黑名单, 3:垃圾桶)',
+  `call_time` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +128,7 @@ CREATE TABLE `login_logs` (
   `unlock_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `unlock_uid` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=121 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=124 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,7 +153,24 @@ CREATE TABLE `manager` (
   `create_at` int(11) DEFAULT '0',
   `update_at` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `manager_login_logs`
+--
+
+DROP TABLE IF EXISTS `manager_login_logs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `manager_login_logs` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` int(10) unsigned NOT NULL,
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '1成功,2密码错误,3验证错误,4账号错误',
+  `login_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `login_ip` char(15) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -223,4 +240,5 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-02 13:42:56
+-- Dump completed on 2017-06-05 17:39:16
+-- end
