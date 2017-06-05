@@ -8,7 +8,7 @@ use yii\helpers\Url;
 /* @var $searchModel app\modules\home\models\CallRecordSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '呼叫记录';
+$this->title = '个人通过记录';
 $this->params['breadcrumbs'][] = $this->title;
 $actionId = Yii::$app->requestedAction->id;
 ?>

@@ -832,7 +832,7 @@ class Telegram extends Model
     }
 
     /**
-     *
+     * 绑定操作.
      */
     public function bindTelegramData()
     {
@@ -844,9 +844,20 @@ class Telegram extends Model
             $user->telegram_number = $dataArr['2'];
             return $user->save();
         } else {
-            return '无效验证码!';
+            return $this->addError('bindCode', '无效的验证码!');
         }
 
+    }
+
+    /**
+     * 解除绑定操作.
+     */
+    public function unbundleTelegramData()
+    {
+        $user = User::findOne(Yii::$app->user->id);
+        $user->telegram_user_id = 0;
+        $user->telegram_number = 0;
+        return $user->save();
     }
 
     /**
