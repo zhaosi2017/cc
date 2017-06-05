@@ -48,7 +48,7 @@ class CallRecordSearch extends CallRecord
     {
         $recordStatus = '1';
         $uid = Yii::$app->user->id;
-        $query = CallRecord::find()->where(['record_status' => $recordStatus, 'active_call_uid' => $uid])->orWhere(['record_status' => $recordStatus, 'unactive_call_uid' => $uid]);
+        $query = CallRecord::find()->where(['record_status' => $recordStatus, 'active_call_uid' => $uid])->orWhere(['record_status' => $recordStatus, 'unactive_call_uid' => $uid])->orderBy('call_time desc');
 
         // add conditions that should always apply here
         $dataProvider = new ActiveDataProvider([
