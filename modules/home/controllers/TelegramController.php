@@ -33,7 +33,7 @@ class TelegramController extends GController
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index', 'bind-telegram'],
+                        'actions' => ['index', 'bind-telegram', 'unbundle-telegram'],
                         'roles' => ['@'],
                     ],
                 ],
@@ -122,11 +122,26 @@ class TelegramController extends GController
             if (!$updateRes) {
                 return $this->render('bind-telegram', ['model' => $model, 'isModify' => $isModify]);
             }
+
+            Yii::$app->getSession()->setFlash('success', '操作成功');
             return $this->redirect(['/home/user/index']);
         } else {
             // 加载页面.
             return $this->render('bind-telegram', ['model' => $model, 'isModify' => $isModify]);
         }
+    }
+
+    public function actionUnbundleTelegram()
+    {
+        $model = new Telegram();
+        $updateRes = $model->unbundleTelegramData();
+        if (!$updateRes) {
+            Yii::$app->getSession()->setFlash('success', '操作失败');
+        } else {
+            Yii::$app->getSession()->setFlash('success', '操作成功');
+        }
+
+        return $this->redirect(['/home/user/index']);
     }
 
 }
