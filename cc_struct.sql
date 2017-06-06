@@ -241,4 +241,3 @@ CREATE TABLE `user` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2017-06-05 17:39:16
--- end
