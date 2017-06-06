@@ -5,7 +5,7 @@ $redis = require(__DIR__ . '/redis.php');
 $params = array_merge($params,$redis);
 
 $config = [
-    'id' => 'basic',
+    'id' => 'admin',
     'language'=>'zh-CN',
     'timeZone' => 'Asia/Phnom_Penh',
     'basePath' => dirname(__DIR__),
@@ -16,20 +16,20 @@ $config = [
         ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'nHqhOUsoOzvBjm8w4MFLTrcKaET-TCpK',
+            'cookieValidationKey' => 'nHqhOUsoOzvBjm8w4MFLTrcKaET-TCp',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\modules\home\models\User',
+            'identityClass' => 'app\modules\admin\models\Manager',
             'enableAutoLogin' => true,
-            'loginUrl' => ['/home/login/index'],
-            'identityCookie' => ['name' => '_identity-home', 'httpOnly' => true],
+            'loginUrl' => ['/admin/login/index'],
+            'identityCookie' => ['name' => '_identity-admin', 'httpOnly' => true],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
-            'name' => 'home',
+            'name' => 'admin',
         ],
         'errorHandler' => [
             'errorAction' => '/home/default/deny',
