@@ -64,7 +64,7 @@ class LoginController extends GController
 
     public function actionLogout()
     {
-        Yii::$app->user->logout();
+        Yii::$app->user->logout(false);
 
         return $this->redirect(Url::to(['/home/login/index']));
     }

@@ -64,7 +64,7 @@ class LoginController extends PController
 
     public function actionLogout()
     {
-        Yii::$app->user->logout();
+        Yii::$app->user->logout(false);
 
         return $this->redirect(Url::to(['/admin/login/index']));
     }
