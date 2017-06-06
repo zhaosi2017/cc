@@ -134,6 +134,8 @@ class User extends CActiveRecord implements IdentityInterface
             'reg_time' => 'Reg Time',
             'reg_ip' => 'Reg IP',
             'role_id' => 'Role ID',
+            'urgent_contact_one_country_code'=>'国码',
+            'urgent_contact_two_country_code'=>'国码',
         ];
     }
 
