@@ -57,8 +57,8 @@ class CallRecord extends \app\models\CActiveRecord
             'call_by_same_times' => '被同一人呼叫次数',
             'type' => '电话类型',
             'contact_number' => '主叫电话',
-            'unactive_contact_number' => '呼叫电话',
-            'status' => '呼叫状态',
+            'unactive_contact_number' => '被叫电话',
+            'statusData' => '呼叫状态',
             'call_time' => '呼叫时间',
             'active_account' => '主叫账号',
             'unactive_account' => '被叫账号',
@@ -82,13 +82,19 @@ class CallRecord extends \app\models\CActiveRecord
     public function getStatusList()
     {
         return [
-            '1' => '完成',
-            '2' => '超时',
-            '3' => '拒绝',
-            '4' => '忙',
-            '5' => '失败',
-            '6' => '没有回答',
+            '0' => '完成',
+            '1' => '超时',
+            '2' => '拒绝',
+            '3' => '忙',
+            '4' => '失败',
+            '5' => '没有回答',
         ];
+    }
+
+    public function getStatusData()
+    {
+        $statusArr = $this->getStatusList();
+        return $statusArr[$this->status];
     }
 
 }

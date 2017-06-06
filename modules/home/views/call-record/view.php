@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'unactive_contact_number',
             'call_by_same_times:datetime',
             'type',
-            'status',
+            'statusData',
             'call_time:datetime',
         ],
     ]) ?>
