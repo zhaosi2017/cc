@@ -159,7 +159,9 @@ class Telegram extends Model
             ];
 
             $dealData = implode('-', $dealData);
-            $this->code = base64_encode(Yii::$app->security->encryptByKey($dealData, Yii::$app->params['telegram']));
+            $charid = strtoupper(md5(uniqid(mt_rand(), true)));
+            $this->code = substr($charid, 0, 8);
+            $telegramData = base64_encode(Yii::$app->security->encryptByKey($dealData, Yii::$app->params['telegram']));
         }
     }
 
