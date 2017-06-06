@@ -31,10 +31,13 @@ $this->title = '登录';
 
         <?= $form->field($model, 'password')->passwordInput(['placeholder'=>'密码'])->label(false) ?>
 
-        <?= $form->field($model, 'code')->textInput(['placeholder'=>'请输入验证码'])->label(false) ?>
-        
-        <?php echo Captcha::widget(['name'=>'captchaimg','captchaAction'=>'captcha','imageOptions'=>['id'=>'captchaimg', 'title'=>'换一个', 'alt'=>'换一个', 'style'=>'cursor:pointer;margin-top:10px; height: 40px;margin-bottom:10px;'],'template'=>'{image}']); ?>
-
+        <?= $form->field($model, 'code')
+        ->label(false)
+        ->widget(Captcha::className(), [ 
+                    'captchaAction'=>'/admin/login/captcha',
+                    'template' => '<div class="row"><div style="height:30px;line-height:33px;" class="col-lg-8">{input}</div><div class="col-lg-3">{image}</div></div>', 
+                    'options' => ['placeholder'=>'   验证码']
+        ]) ?>
         <?= Html::submitButton('登 录', ['class' => 'btn btn-primary block full-width m-b']) ?>
 
         <?php ActiveForm::end(); ?>

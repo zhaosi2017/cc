@@ -38,6 +38,7 @@ class LoginController extends GController
         if (!Yii::$app->user->isGuest) {
             $this->redirect(['/home/default/welcome']);
         }
+        
 
         $this->layout = '@app/views/layouts/global';
         $model = new LoginForm();
