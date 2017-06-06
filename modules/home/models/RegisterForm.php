@@ -4,6 +4,8 @@ namespace app\modules\home\models;
 
 use Yii;
 use yii\base\Model;
+use yii\captcha\CaptchaValidator;
+use app\modules\home\models\ContactForm;
 
 /**
  * LoginForm is the model behind the login form.
@@ -27,7 +29,7 @@ class RegisterForm extends Model
             // username and password are both required
             [['rePassword', 'password', 'username'], 'required'],
             [['rePassword', 'password'], 'string', 'length' => [8,15]],
-            ['rePassword', 'compare', 'compareAttribute'=>'password'],
+            ['rePassword', 'compare', 'compareAttribute'=>'password','operator'=>'==='],
             ['username', 'email'],
             ['username', 'validateExist'],
             /*[
@@ -40,6 +42,8 @@ class RegisterForm extends Model
 
             ['password', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>'密码至少包含8个字符，至少包括以下2种字符：
  大写字母、小写字母、数字、符号'],
+            ['rePassword', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>'密码至少包含8个字符，至少包括以下2种字符：
+             大写字母、小写字母、数字、符号'],
             ['code', 'captcha', 'message'=>'验证码输入不正确', 'captchaAction'=>'/home/register/captcha'],
         ];
     }

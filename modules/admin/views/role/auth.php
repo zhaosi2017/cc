@@ -27,7 +27,7 @@ $data = [
         'items' => [
             [
                 'page_name' => '首页',
-                'permission' => ['admin/login/index', 7=>'admin/manager/password'],//注意顺序
+                'permission' => ['admin/default/index', 7=>'admin/manager/password'],//注意顺序
             ],
         ],
 

@@ -1018,4 +1018,15 @@ class DbManager extends BaseManager
             ->from($this->assignmentTable)
             ->where(['item_name' => $roleName])->column($this->db);
     }
+
+    /**
+     * 修改某个用户为某个角色时，使用
+     */
+    public function updateAssignment($role,$user_id)
+    {
+        $this->db->createCommand()
+                ->update($this->assignmentTable, ['item_name' => $role], ['user_id'=>$user_id])
+                ->execute();
+        return true;
+    }
 }

@@ -104,6 +104,7 @@ class User extends CActiveRecord implements IdentityInterface
 
             [['phone_number','urgent_contact_number_one','urgent_contact_number_two', 'telegram_number', 'potato_number'], 'number', 'max' => 99999999999],
             [['auth_key','password'], 'string', 'max' => 64],
+            ['nickname' ,'checkName'],
         ];
     }
 
@@ -134,6 +135,16 @@ class User extends CActiveRecord implements IdentityInterface
             'reg_ip' => 'Reg IP',
             'role_id' => 'Role ID',
         ];
+    }
+
+    public function checkName($attribute, $params)
+    {
+        
+        if (!preg_match("/^[\x{4e00}-\x{9fa5}]{2,6}+$/u",$this->nickname))
+        {
+            $this->addError($attribute,'昵称必须时2到6个中文');
+        }
+        
     }
 
     /**
