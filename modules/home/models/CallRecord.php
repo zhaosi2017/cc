@@ -55,7 +55,7 @@ class CallRecord extends \app\models\CActiveRecord
             'active_call_uid' => '主叫账号id',
             'unactive_call_uid' => '被叫账号id',
             'call_by_same_times' => '被同一人呼叫次数',
-            'type' => '电话类型',
+            'typeData' => '电话类型',
             'contact_number' => '主叫电话',
             'unactive_contact_number' => '被叫电话',
             'statusData' => '呼叫状态',
@@ -95,6 +95,20 @@ class CallRecord extends \app\models\CActiveRecord
     {
         $statusArr = $this->getStatusList();
         return $statusArr[$this->status];
+    }
+
+    public function getTypeList()
+    {
+        return [
+            '0' => '被叫联系电话',
+            '1' => '被叫紧急联系电话'
+        ];
+    }
+
+    public function getTypeData()
+    {
+        $typeArr = $this->getTypeList();
+        return $typeArr[$this->type];
     }
 
 }

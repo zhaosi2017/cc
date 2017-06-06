@@ -43,7 +43,7 @@ $actionId = Yii::$app->requestedAction->id;
             'contact_number',
             'unactive_account',
             'unactive_nickname',
-            'type',
+            'typeData',
             'unactive_contact_number',
             'statusData',
             [
