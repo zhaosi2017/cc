@@ -1,6 +1,8 @@
 <?php
 
 $params = require(__DIR__ . '/params.php');
+$redis = require(__DIR__ . '/redis.php');
+$params = array_merge($params,$redis);
 
 $config = [
     'id' => 'basic',
