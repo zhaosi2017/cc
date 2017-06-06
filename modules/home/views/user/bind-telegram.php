@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use yii\captcha\Captcha;
 
-$this->title = '修改绑定telegram';
+$this->title = '修改telegram';
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\home\models\User */
@@ -36,10 +36,13 @@ $this->title = '修改绑定telegram';
                 <div class="help-block"></div>
             </div>-->
             <?php echo $form->field($model, 'telegram_country_code', [
-                'template' => "{label}\n<div>&nbsp;+{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
+                'template' => "{label}\n<div style=\"width:130px;\">&nbsp;+{input}\n<span style=\"height:18px;\" class=\"help-block m-b-none\">{error}</span></div>",
             ])->textInput(['size' => 5,'placeholder'=>'国码'])->label(false) ?>
 
-            <?php echo $form->field($model, 'telegram_number')->textInput(['placeholder' => '您的telegram号码'])->label(false) ?>
+            <?php echo $form->field($model, 'telegram_number',[
+                 'template' => "{label}\n<div>&nbsp;+{input}\n<span style=\"height:18px;\" class=\"help-block m-b-none\">{error}</span></div>",
+
+            ])->textInput(['placeholder' => '您的telegram号码'])->label(false) ?>
 <!--            <div class="help-block">&nbsp;&nbsp;&nbsp;*请输入您的国码，然后输入您的手机号码</div>-->
         </div>
 
@@ -56,7 +59,7 @@ $this->title = '修改绑定telegram';
             </div>-->
 
             <?php echo $form->field($model, 'code', [
-                'template' => "{label}\n<div class='m-l-sm'>{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
+                'template' => "{label}\n<div class='m-l-sm'>{input}\n<span style=\"height:18px;\" class=\"help-block m-b-none\">{error}</span></div>",
             ])->widget(Captcha::className(),[
                 'captchaAction'=>'/home/register/captcha',
                 'template' => '<div class="row"><div class="col-lg-2">{image}</div><div class="col-lg-10">{input}</div></div>',

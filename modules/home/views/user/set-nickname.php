@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-$this->title = '设置昵称';
+$this->title = '修改昵称';
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\home\models\User */

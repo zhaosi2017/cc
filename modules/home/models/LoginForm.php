@@ -83,6 +83,24 @@ class LoginForm extends Model
         return Yii::$app->user->login($this->getIdentity());
     }
 
+    public function checkLock()
+    {
+
+        $redis = new \Redis(); 
+        $redis->connect(Yii::$app->params['redishost'], Yii::$app->params['redisport']); 
+        $redis->auth(Yii::$app->params['redispass']);  
+        //set the data in redis string 
+        $key = $this->username.'-'.'homenum';
+        $res =  $redis->hGetAll($key) ;
+        if( !empty($res) && $res['num'] > 2){
+            if($res['exprietime'] > time()){
+                return $res;
+            }
+        }
+        return false;
+
+    }
+
     public function forbidden()
     {
 
@@ -160,7 +178,8 @@ class LoginForm extends Model
 
     public function preLogin()
     {
-        if($this->validate(['username','password'])){
+        
+        if($this->validate(['username','password','code'])){
             return true;
         }
         return false;
@@ -178,6 +197,7 @@ class LoginForm extends Model
         }
 
         if(isset($errors['password'])){
+            $this->recordLoginError();
             if(!$this->writeLoginLog(2)){
                 parent::afterValidate();
             }
@@ -189,7 +209,43 @@ class LoginForm extends Model
             }
         }
 
+        
+
         parent::afterValidate();
+    }
+
+    public function  recordLoginError()
+    {
+        if($this->username)
+        {
+            $redis = new \Redis(); 
+            $redis->connect(Yii::$app->params['redishost'], Yii::$app->params['redisport']); 
+            $redis->auth(Yii::$app->params['redispass']);  
+           //set the data in redis string 
+            $key = $this->username.'-'.'homenum';
+            $res = $redis->hGetAll($key);
+            $time = time();
+
+            $redis->hIncrBy($key, 'num', 1);
+           
+            if(empty($res)){
+                $redis->expire($key, 60*60);
+                return;
+            }
+            if ($res['num'] == 2){
+                $redis->hset($key, 'exprietime', $time+30*60); //30分钟
+                $redis->hset($key, 'flag', 1);
+                $redis->expire($key, 60*60);
+                return;
+            }
+            if( $res['num'] == 3 )
+            {
+                $redis->hset($key, 'exprietime', $time+24*60*60); //24小时
+                $redis->hset($key, 'flag', 2);
+                $redis->expire($key, 24*60*60);
+            }   
+        }
+        
     }
 
     public function writeLoginLog($status)

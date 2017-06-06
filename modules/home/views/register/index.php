@@ -32,7 +32,25 @@ $this->title = '注册';
 
         <?= $form->field($model, 'rePassword')->passwordInput(['placeholder'=>'重复密码'])->label(false) ?>
 
-        <?= Html::submitButton('注 册', ['class' => 'btn btn-primary block full-width m-b']) ?>
+        <input type="button" id="registerButton" class="btn btn-primary block full-width m-b"  onclick="
+            var userpatter = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+            var passpatter = /(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/;
+            var username = $('#registerform-username').val().trim();
+            var password = $('#registerform-password').val();
+            var rePassword = $('#registerform-repassword').val();
+          
+            if( username != '' 
+                && password.trim() != '' 
+                && rePassword.trim() != '' 
+                && userpatter.test(username)
+                && passpatter.test(password.trim())
+                && (password == rePassword)
+                ){
+                $('#register-form').submit();
+                $('#registerButton').attr('disabled','disabled');
+            }
+
+                " value="注 册">
 
         <?php ActiveForm::end(); ?>
         <p class="text-muted text-center">

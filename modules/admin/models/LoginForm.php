@@ -17,6 +17,7 @@ class LoginForm extends Model
     public $username;
     public $password;
     public $rememberMe = true;
+    public $code;
     private $_user = null;
 
 
@@ -30,7 +31,7 @@ class LoginForm extends Model
             [['username', 'password'], 'required'],
             ['username', 'validateAccount'],
             ['password', 'validatePassword'],
-//            ['code', 'captcha', 'message'=>'验证码输入不正确，请重新输入！3次输入错误，账号将被锁定1年！', 'captchaAction'=>'/login/default/captcha'],
+            ['code', 'captcha', 'message'=>'验证码输入不正确', 'captchaAction'=>'/admin/login/captcha'],
         ];
     }
 
@@ -101,6 +102,7 @@ class LoginForm extends Model
         }*/
 
         if(isset($errors['password'])){
+            $this->recordLoginError();
             if(!$this->writeLoginLog(2)){
                 parent::afterValidate();
             }
@@ -114,6 +116,41 @@ class LoginForm extends Model
 
         parent::afterValidate();
     }
+    /**
+     * 登陆错误到达指定条件后的处理
+     */
+    public function  recordLoginError()
+    {
+        if($this->username)
+        {
+            $redis = new \Redis(); 
+            $redis->connect(Yii::$app->params['redishost'], Yii::$app->params['redisport']); 
+            $redis->auth(Yii::$app->params['redispass']);  
+           //set the data in redis string 
+            $key = $this->username.'-'.'adminnum';
+            $res = $redis->hGetAll($key);
+            $time = time();
+
+            $redis->hIncrBy($key, 'num', 1);
+           
+            if(empty($res)){
+                $redis->expire($key,60*60);
+                return;
+            }
+            if ($res['num'] == 2){
+                $redis->hset($key,'exprietime',$time+30*60); //30分钟
+                $redis->hset($key,'flag',1);
+                $redis->expire($key,60*60);
+            }
+            if( $res['num'] == 3 )
+            {
+                $redis->hset($key,'exprietime',$time+24*60*60); //24小时
+                $redis->hset($key,'flag',2);
+                $redis->expire($key,24*60*60);
+            }   
+        }
+        
+    }
 
     public function writeLoginLog($status)
     {
@@ -123,6 +160,26 @@ class LoginForm extends Model
         $loginLog->login_time = date('Y-m-d H:i:s',$_SERVER['REQUEST_TIME']);
         $loginLog->uid = $this->_user ? $this->_user->id : 0;
         return $loginLog->save();
+    }
+    /**
+     * 检查用户是否锁定
+     */
+    public function checkLock()
+    {
+
+        $redis = new \Redis(); 
+        $redis->connect(Yii::$app->params['redishost'], Yii::$app->params['redisport']); 
+        $redis->auth(Yii::$app->params['redispass']);  
+        //set the data in redis string 
+        $key = $this->username.'-'.'adminnum';
+        $res =  $redis->hGetAll($key) ;
+        if( !empty($res) && $res['num'] > 2){
+            if($res['exprietime'] > time()){
+                return $res;
+            }
+        }
+        return false;
+
     }
 
     /**

@@ -4,6 +4,7 @@ namespace app\modules\home\controllers;
 use app\controllers\GController;
 use app\modules\home\models\RegisterForm;
 use Yii;
+use app\modules\home\servers\MailClient;
 
 class RegisterController extends GController
 {
@@ -38,14 +39,13 @@ class RegisterController extends GController
                 //发送验证码到邮箱 todo 使用swoole 异步发提高性能
 		$captcha = $this->createAction('captcha');
                 $verifyCode = $captcha->getVerifyCode(true);
-                $message = Yii::$app->mailer->compose();
                 $email = $model->username;
-                $message->setTo($email)->setSubject('验证码')->setTextBody('验证码: ' . $verifyCode);
-                if($message->send()){
-                    return $this->render('email-code',['model' => $model,'email'=>$email]);
-                }else{
-                    return $this->render('code',['model'=>$model]);
-                }
+                $data = ['email' => $email, 'verifyCode' => $verifyCode];
+                $client = new MailClient();
+                $client->connect();
+                $res = $client->send($data);
+                $client->close();
+                return $this->render('email-code',['model' => $model,'email'=>$email]);
             }else{
                 return $this->render('index',['model'=>$model]);
             }

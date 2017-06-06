@@ -99,7 +99,13 @@ class ManagerController extends PController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->save() ? $model->sendSuccess() : $model->sendError();
+            if($model->save()) {
+                $auth = Yii::$app->authManager;
+                $auth->updateAssignment($model->role_id,$model->id);
+                $model->sendSuccess();
+            } else{ 
+                $model->sendError();
+            }
             return $this->redirect(['index']);
         } else {
             return $this->render('update', [
