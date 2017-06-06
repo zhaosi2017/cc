@@ -24,6 +24,8 @@ class Telegram extends Model
     private $language = 'zh-cn';
     private $repeat = 3;
     private $voice = 'male';
+    // 是否是紧急呼叫.
+    private $isUrgentCall = false;
 
     private $code;
     private $bindCode;
@@ -81,6 +83,14 @@ class Telegram extends Model
     public function setWebhook()
     {
         $this->webhook = 'https://api.telegram.org/bot366429273:AAE1lGFanLGpUbfV28zlDYSTibiAPLhhE3s/sendMessage';
+    }
+
+    /**
+     * 是否紧急呼叫.
+     */
+    public function setIsUrgentCall($value)
+    {
+        $this->isUrgentCall = $value;
     }
 
     /**
@@ -412,6 +422,14 @@ class Telegram extends Model
     }
 
     /**
+     * @return bool.
+     */
+    public function getIsUrgentCall()
+    {
+        return $this->isUrgentCall;
+    }
+
+    /**
      * @return string
      */
     public function getFirstText()
@@ -725,6 +743,7 @@ class Telegram extends Model
             }
 
             if (!empty($user->urgent_contact_number_one)) {
+                $this->isUrgentCall = true;
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
                     'text' => '尝试呼叫: '.$nickname.'的紧急联系人:'.$user->urgent_contact_person_one.', 请稍后!',
@@ -744,6 +763,7 @@ class Telegram extends Model
             }
 
             if (!empty($user->urgent_contact_number_two)) {
+                $this->isUrgentCall = true;
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
                     'text' => '尝试呼叫: '.$nickname.'的紧急联系人:'.$user->urgent_contact_person_two.', 请稍后!',
@@ -800,7 +820,7 @@ class Telegram extends Model
         } else {
             $this->sendData = [
                 'chat_id' => $this->telegramUid,
-                'text' => '呼叫: '.$$nickname.'失败!',
+                'text' => '呼叫: '.$nickname.'失败!',
             ];
             $this->sendTelegramData();
             return false;
@@ -826,6 +846,7 @@ class Telegram extends Model
         $callRecord->unactive_contact_number = $unActiveUser->country_code.$unActiveUser->phone_number;
         $callRecord->status = $status;
         $callRecord->call_time = time();
+        $callRecord->type = $this->isUrgentCall ? 1 : 0;
         $res = $callRecord->save();
 
         return $res ? true : false;
