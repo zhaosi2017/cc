@@ -35,9 +35,7 @@ class PController extends Controller
         ];
 
         $identity = (Object) Yii::$app->user->identity;
-        if($identity->account === 'Admin@one'){
-            return true;
-        }
+       
         if ( in_array(Yii::$app->requestedRoute, $arr)){
             return true;
         }

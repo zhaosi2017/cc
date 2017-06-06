@@ -48,7 +48,7 @@ if ($isModify) {
             ])->textInput(['size' => 5,'placeholder'=>'国码',])->label(false) ?>
 
             <?php echo $form->field($model, 'urgent_contact_number_one',[
-                'template' => "{label}\n<div style=\"margin-left:70px;\" class='col-sm-4'>{input}\n<span style=\"width:200px;\" class=\"help-block m-b-none\">{error}</span></div>",
+                'template' => "{label}\n<div style=\"margin-left:40px;\" class='col-sm-4'>{input}\n<span style=\"width:200px;\" class=\"help-block m-b-none\">{error}</span></div>",
             ])->textInput(['placeholder' => '紧急联系人号码', 'size'=>'21'])->label(false) ?>
         </div>
 
