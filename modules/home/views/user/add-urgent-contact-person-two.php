@@ -44,10 +44,12 @@ if ($isModify) {
                 </div>
             </div>
             <?php echo $form->field($model, 'urgent_contact_two_country_code', [
-                'template' => "{label}\n<div class='col-sm-4'>{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
+                'template' => "{label}\n<div class='col-sm-4'>{input}\n<span style=\"width:130px;\"  class=\"help-block m-b-none\">{error}</span></div>",
             ])->textInput(['size' => 5,'placeholder'=>'国码',])->label(false) ?>
 
-            <?php echo $form->field($model, 'urgent_contact_number_two')->textInput(['placeholder' => '紧急联系人号码', 'size'=>'21'])->label(false) ?>
+            <?php echo $form->field($model, 'urgent_contact_number_two',[
+                'template' => "{label}\n<div style=\"margin-left:40px;\" class='col-sm-4'>{input}\n<span style=\"width:200px;\" class=\"help-block m-b-none\">{error}</span></div>",
+            ])->textInput(['placeholder' => '紧急联系人号码', 'size'=>'21'])->label(false) ?>
         </div>
 
     </div>

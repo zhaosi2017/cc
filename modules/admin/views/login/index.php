@@ -5,6 +5,7 @@
 
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
+use yii\captcha\Captcha;
 
 $this->title = '登录';
 ?>
@@ -30,6 +31,13 @@ $this->title = '登录';
 
         <?= $form->field($model, 'password')->passwordInput(['placeholder'=>'密码'])->label(false) ?>
 
+        <?= $form->field($model, 'code')
+        ->label(false)
+        ->widget(Captcha::className(), [ 
+                    'captchaAction'=>'/admin/login/captcha',
+                    'template' => '<div class="row"><div style="height:30px;line-height:33px;" class="col-lg-8">{input}</div><div class="col-lg-3">{image}</div></div>', 
+                    'options' => ['placeholder'=>'   验证码']
+        ]) ?>
         <?= Html::submitButton('登 录', ['class' => 'btn btn-primary block full-width m-b']) ?>
 
         <?php ActiveForm::end(); ?>

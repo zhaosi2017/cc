@@ -26,6 +26,9 @@ use yii\web\IdentityInterface;
 class Manager extends CActiveRecord implements IdentityInterface
 {
 
+    const NORMAL_STATUS = 0; //正常状态
+    const INVALID_STATUS = 1; //作废状态
+    const FREEZE_STATUS =2 ;//冻结状态
     /**
      * @inheritdoc
      */
@@ -89,9 +92,9 @@ class Manager extends CActiveRecord implements IdentityInterface
 
     public function getStatuses(){
         return [
-            0 => '正常',
-            1 => '作废',
-            2 => '冻结',
+            self::NORMAL_STATUS => '正常',
+            self::INVALID_STATUS => '作废',
+            self::FREEZE_STATUS => '冻结',
         ];
     }
 

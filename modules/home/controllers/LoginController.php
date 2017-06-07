@@ -38,14 +38,19 @@ class LoginController extends GController
         if (!Yii::$app->user->isGuest) {
             $this->redirect(['/home/default/welcome']);
         }
+        
 
         $this->layout = '@app/views/layouts/global';
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post())) {
-            //$forbidden = $model->forbidden();
-            $forbidden = false;
-            if($forbidden){
-//                return $this->render('locked',$forbidden);
+            $lock = $model->checkLock();
+            if(isset($lock['flag'])){
+                $message = "已被冻结30分钟";
+                if($lock['flag'] == 2){
+                    $message = "已被冻结24小时";
+                }
+                $model->addError('username', '用户 '.$model->username. $message);
+                return $this->render('index',['model'=>$model]);
             }else{
                 if($model->preLogin()){
                     $model->login();
@@ -59,7 +64,7 @@ class LoginController extends GController
 
     public function actionLogout()
     {
-        Yii::$app->user->logout();
+        Yii::$app->user->logout(false);
 
         return $this->redirect(Url::to(['/home/login/index']));
     }
