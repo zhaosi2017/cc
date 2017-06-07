@@ -162,6 +162,8 @@ class Telegram extends Model
             $charid = strtoupper(md5(uniqid(mt_rand(), true)));
             $this->code = substr($charid, 0, 8);
             $telegramData = base64_encode(Yii::$app->security->encryptByKey($dealData, Yii::$app->params['telegram']));
+            // 验证码过期时间半小时.
+            Yii::$app->redis->setex($this->code, 30*60, $telegramData);
         }
     }
 
@@ -860,7 +862,16 @@ class Telegram extends Model
     public function bindTelegramData()
     {
         $user = User::findOne(Yii::$app->user->id);
-        $data = Yii::$app->security->decryptByKey(base64_decode($this->bindCode), Yii::$app->params['telegram']);
+        if (!Yii::$app->redis->exist($this->bindCode)) {
+            $this->addError('bindCode', '无效的验证码!');
+        } else {
+            $telegramData = Yii::$app->redis->get($this->bindCode);
+        }
+        if (empty($telegramData)) {
+            return $this->addError('bindCode', '无效的验证码!');
+        }
+
+        $data = Yii::$app->security->decryptByKey(base64_decode($telegramData), Yii::$app->params['telegram']);
         $dataArr = explode('-', $data);
         if ($dataArr[0] == Yii::$app->params['telegram_pre']) {
             $user->telegram_user_id = $dataArr['1'];
