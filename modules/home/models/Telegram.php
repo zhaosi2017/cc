@@ -770,6 +770,9 @@ class Telegram extends Model
                     'text' => '呼叫：'.$nickname.'失败! '.$res['message'],
                 ];
                 $this->sendTelegramData();
+                if (isset($res['isLimit'])) {
+                    return $this->errorCode['success'];
+                }
             }
 
             if (empty($user->urgent_contact_number_one) && empty($user->urgent_contact_number_two)) {
@@ -850,16 +853,15 @@ class Telegram extends Model
         if ($this->calledPersonData->long_time && $this->calledPersonData->un_call_number) {
             $callKey = $this->callPersonData->country_code.$this->callPersonData->phone_number;
             if (!Yii::$app->redis->exists($this->telegramUid)) {
-                Yii::$app->redis->hset($this->telegramUid, 'total', $this->calledPersonData->un_call_number);
-                Yii::$app->redis->hset($this->telegramUid, 'person', $this->calledPersonData->un_call_by_same_number);
+                Yii::$app->redis->hset($this->telegramUid, 'total', 1);
                 Yii::$app->redis->hset($this->telegramUid, $callKey, 1);
                 Yii::$app->redis->expire($this->telegramUid, $this->calledPersonData->long_time * 60);
             } else {
                 $totalNum = Yii::$app->redis->hmget($this->telegramUid, 'total');
-                $personNum = Yii::$app->redis->hmget($this->telegramUid, 'person');
                 $pnum = Yii::$app->redis->hexists($this->telegramUid, $callKey) ? Yii::$app->redis->hget($this->telegramUid, $callKey) : 0;
-                if ($totalNum >= $this->calledPersonData->un_call_number || $pnum >= $personNum) {
+                if ($totalNum >= $this->calledPersonData->un_call_number || $pnum >= $this->calledPersonData->un_call_by_same_number) {
                     $res['status'] = false;
+                    $res['isLimit'] = true;
                     $res['message'] = '呼叫超出本人设置的限制次数';
                     return $res;
                 }
@@ -881,7 +883,7 @@ class Telegram extends Model
     {
         // 呼叫限制检查.
         $res = $this->callLimit();
-        if ($res['status']) {
+        if (!$res['status']) {
             return $res;
         }
 
