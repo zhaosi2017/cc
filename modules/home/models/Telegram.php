@@ -166,7 +166,7 @@ class Telegram extends Model
             $telegramData = base64_encode(Yii::$app->security->encryptByKey($dealData, Yii::$app->params['telegram']));
             // 验证码过期时间半小时.
             Yii::$app->redis->setex($this->code, 30*60, $telegramData);
-            $this->code = $this->code.'[请在callu平台输入该验证码, 完成绑定操作!]';
+            $this->code = $this->code.'  [请在callu平台输入该验证码, 完成绑定操作!]';
         }
     }
 
@@ -175,7 +175,7 @@ class Telegram extends Model
      */
     public function setBindCode($value)
     {
-        $this->bindCode = $value;
+        $this->bindCode = trim($value, ' ');
     }
 
     /**
