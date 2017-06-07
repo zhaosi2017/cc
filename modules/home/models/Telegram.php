@@ -41,6 +41,8 @@ class Telegram extends Model
     private $callCallbackData;
     private $bindCallbackData;
     private $callbackQuery;
+    private $callPersonData;
+    private $calledPersonData;
 
     private $queryMenu;
     private $callMenu;
@@ -164,6 +166,7 @@ class Telegram extends Model
             $telegramData = base64_encode(Yii::$app->security->encryptByKey($dealData, Yii::$app->params['telegram']));
             // 验证码过期时间半小时.
             Yii::$app->redis->setex($this->code, 30*60, $telegramData);
+            $this->code = $this->code.'  [请在callu平台输入该验证码, 完成绑定操作!]';
         }
     }
 
@@ -172,7 +175,7 @@ class Telegram extends Model
      */
     public function setBindCode($value)
     {
-        $this->bindCode = $value;
+        $this->bindCode = trim($value, ' ');
     }
 
     /**
@@ -307,6 +310,22 @@ class Telegram extends Model
     public function setCallbackQuery($value)
     {
         $this->callbackQuery = $value;
+    }
+
+    /**
+     * @param $value.
+     */
+    public function setCalledPersonData($value)
+    {
+        $this->calledPersonData = $value;
+    }
+
+    /**
+     * @param $value
+     */
+    public function setCallPersonData($value)
+    {
+        $this->callPersonData = $value;
     }
 
     /**
@@ -562,6 +581,22 @@ class Telegram extends Model
     }
 
     /**
+     * 获取被叫用户数据.
+     */
+    public function getCalledPersonData()
+    {
+        return $this->calledPersonData;
+    }
+
+    /**
+     * 获取主叫用户数据.
+     */
+    public function getCallPersonData()
+    {
+        return $this->callPersonData;
+    }
+
+    /**
      * 获取错误码.
      */
     public function getErrorCode()
@@ -697,6 +732,7 @@ class Telegram extends Model
             ];
             $this->sendTelegramData();
         }
+        $this->callPersonData = $res;
         $this->sendData = [
             'chat_id' => $this->telegramUid,
             'text' => $this->startText,
@@ -704,6 +740,7 @@ class Telegram extends Model
         $this->sendTelegramData();
         $contactArr = explode('-', $this->callbackQuery);
         $user = User::findOne(['telegram_user_id' => $contactArr[1]]);
+        $this->calledPersonData = $user;
         if ($user) {
             $nickname = !empty($user->nickname) ? $user->nickname : '他/她';
 
@@ -726,14 +763,17 @@ class Telegram extends Model
                 $this->sendTelegramData();
             } else {
                 $res = $this->callPerson($nickname, $nexmoData);
-                if ($res) {
+                if ($res['status']) {
                     return $this->errorCode['success'];
                 }
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
-                    'text' => '呼叫：'.$nickname.'失败!',
+                    'text' => '呼叫：'.$nickname.'失败! '.$res['message'],
                 ];
                 $this->sendTelegramData();
+                if (isset($res['isLimit'])) {
+                    return $this->errorCode['success'];
+                }
             }
 
             if (empty($user->urgent_contact_number_one) && empty($user->urgent_contact_number_two)) {
@@ -756,12 +796,12 @@ class Telegram extends Model
                 // 尝试呼叫紧急联系人一.
                 $nexmoData['to'] = $user->urgent_contact_one_country_code.$user->urgent_contact_number_one;
                 $res = $this->callPerson($user->urgent_contact_person_one, $nexmoData);
-                if ($res) {
+                if ($res['status']) {
                     return $this->errorCode['success'];
                 }
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
-                    'text' => '呼叫：'.$nickname.'的紧急联系人:'.$user->urgent_contact_person_one.'失败!',
+                    'text' => '呼叫：'.$nickname.'的紧急联系人:'.$user->urgent_contact_person_one.'失败! '.$res['message'],
                 ];
                 $this->sendTelegramData();
             }
@@ -776,12 +816,12 @@ class Telegram extends Model
                 // 尝试呼叫紧急联系人一.
                 $nexmoData['to'] = $user->urgent_contact_two_country_code.$user->urgent_contact_number_two;
                 $res = $this->callPerson($user->urgent_contact_person_two, $nexmoData);
-                if ($res) {
+                if ($res['status']) {
                     return $this->errorCode['success'];
                 }
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
-                    'text' => '呼叫：'.$nickname.'的紧急联系人:'.$user->urgent_contact_person_two.'失败!',
+                    'text' => '呼叫：'.$nickname.'的紧急联系人:'.$user->urgent_contact_person_two.'失败! '.$res['message'],
                 ];
                 $this->sendTelegramData();
             }
@@ -802,6 +842,39 @@ class Telegram extends Model
     }
 
     /**
+     * 呼叫限制.
+     */
+    public function callLimit()
+    {
+        $res = [
+            'status' => true,
+            'message' => '',
+        ];
+        // 有呼叫限制的.
+        if ($this->calledPersonData->long_time && $this->calledPersonData->un_call_number) {
+            $callKey = $this->callPersonData->country_code.$this->callPersonData->phone_number;
+            if (!Yii::$app->redis->exists($this->telegramUid)) {
+                Yii::$app->redis->hset($this->telegramUid, 'total', 1);
+                Yii::$app->redis->hset($this->telegramUid, $callKey, 1);
+                Yii::$app->redis->expire($this->telegramUid, $this->calledPersonData->long_time * 60);
+            } else {
+                $totalNum = Yii::$app->redis->hmget($this->telegramUid, 'total');
+                $pnum = Yii::$app->redis->hexists($this->telegramUid, $callKey) ? Yii::$app->redis->hget($this->telegramUid, $callKey) : 0;
+                if ($totalNum >= $this->calledPersonData->un_call_number || $pnum >= $this->calledPersonData->un_call_by_same_number) {
+                    $res['status'] = false;
+                    $res['isLimit'] = true;
+                    $res['message'] = '呼叫超出本人设置的限制次数';
+                    return $res;
+                }
+                Yii::$app->redis->hincrby($this->telegramUid, 'total', 1);
+                Yii::$app->redis->hexists($this->telegramUid, $callKey) ? Yii::$app->redis->hincrby($this->telegramUid, $callKey, 1) : Yii::$app->redis->hset($this->telegramUid, $callKey, 1);
+            }
+        }
+
+        return $res;
+    }
+
+    /**
      * @param string $nickname 呼叫人.
      * @param arra   $data     数据.
      *
@@ -809,6 +882,16 @@ class Telegram extends Model
      */
     public function callPerson($nickname, $data)
     {
+        // 呼叫限制检查.
+        $res = $this->callLimit();
+        if (!$res['status']) {
+            return $res;
+        }
+
+        $result = [
+            'status' => true,
+            'message' => '',
+        ];
         $this->sendData = $data;
         $res = $this->sendTelegramData($this->nexmoUrl);
         $res = json_decode($res, true);
@@ -820,15 +903,16 @@ class Telegram extends Model
                 'text' => '呼叫: '.$nickname.'成功!',
             ];
             $this->sendTelegramData();
-            return true;
         } else {
             $this->sendData = [
                 'chat_id' => $this->telegramUid,
                 'text' => '呼叫: '.$nickname.'失败!',
             ];
             $this->sendTelegramData();
-            return false;
+            $result['status'] = false;
         }
+
+        return $result;
     }
 
     /**
@@ -862,7 +946,7 @@ class Telegram extends Model
     public function bindTelegramData()
     {
         $user = User::findOne(Yii::$app->user->id);
-        if (!Yii::$app->redis->exist($this->bindCode)) {
+        if (!Yii::$app->redis->exists($this->bindCode)) {
             $this->addError('bindCode', '无效的验证码!');
         } else {
             $telegramData = Yii::$app->redis->get($this->bindCode);
@@ -876,7 +960,11 @@ class Telegram extends Model
         if ($dataArr[0] == Yii::$app->params['telegram_pre']) {
             $user->telegram_user_id = $dataArr['1'];
             $user->telegram_number = $dataArr['2'];
-            return $user->save();
+            $res = $user->save();
+            if ($res) {
+                Yii::$app->redis->del($this->bindCode);
+            }
+            return $res;
         } else {
             return $this->addError('bindCode', '无效的验证码!');
         }
