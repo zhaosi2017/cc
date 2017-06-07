@@ -853,7 +853,7 @@ class Telegram extends Model
                 Yii::$app->redis->hset($this->telegramUid, 'total', $this->calledPersonData->un_call_number);
                 Yii::$app->redis->hset($this->telegramUid, 'person', $this->calledPersonData->un_call_by_same_number);
                 Yii::$app->redis->hset($this->telegramUid, $callKey, 1);
-                Yii::$app->redis->expire($this->telegramUid, $this->calledPersonData->long_time);
+                Yii::$app->redis->expire($this->telegramUid, $this->calledPersonData->long_time * 60);
             } else {
                 $totalNum = Yii::$app->redis->hmget($this->telegramUid, 'total');
                 $personNum = Yii::$app->redis->hmget($this->telegramUid, 'person');
