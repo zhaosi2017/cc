@@ -57,7 +57,11 @@ $data = [
         'items' => [
             [
                 'page_name' => '管理员角色',
-                'permission' => ['admin/role/index',2=>'admin/role/create',3=>'admin/role/update',5=>'admin/role/delete'],
+                'permission' => ['admin/role/index',2=>'admin/role/create',3=>'admin/role/update',5=>'admin/role/delete',],
+            ],
+            [
+                'page_name'=>'权限授权',
+                'permission'=>['admin/role/auth'],
             ],
             [
                 'page_name' => '管理员角色-垃圾桶',
