@@ -175,7 +175,7 @@ class Telegram extends Model
      */
     public function setBindCode($value)
     {
-        $this->bindCode = trim($value, ' ');
+        $this->bindCode = trim($value);
     }
 
     /**
