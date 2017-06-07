@@ -85,17 +85,18 @@ class LoginForm extends Model
 
     public function checkLock()
     {
-
-        $redis = new \Redis(); 
-        $redis->connect(Yii::$app->params['redishost'], Yii::$app->params['redisport']); 
-        $redis->auth(Yii::$app->params['redispass']);  
+        $redis = Yii::$app->redis;
+       
+        // $redis = new \Redis(); 
+        // $redis->connect(Yii::$app->params['redishost'], Yii::$app->params['redisport']); 
+        // $redis->auth(Yii::$app->params['redispass']);  
         //set the data in redis string 
         $key = $this->username.'-'.'homenum';
-        $res =  $redis->hGetAll($key) ;
-        if( !empty($res) && $res['num'] > 2){
-            if($res['exprietime'] > time()){
-                return $res;
-            }
+        $res =  $redis->hgetall($key) ;
+        if( !empty($res) && isset($res['falg'])){
+           
+            return $res;
+            
         }
         return false;
 
@@ -218,27 +219,24 @@ class LoginForm extends Model
     {
         if($this->username)
         {
-            $redis = new \Redis(); 
-            $redis->connect(Yii::$app->params['redishost'], Yii::$app->params['redisport']); 
-            $redis->auth(Yii::$app->params['redispass']);  
-           //set the data in redis string 
+            $redis = Yii::$app->redis;
             $key = $this->username.'-'.'homenum';
-            $res = $redis->hGetAll($key);
+            $res = $redis->hgetall($key);
             $time = time();
 
-            $redis->hIncrBy($key, 'num', 1);
+            $redis->hincrby($key, 'num', 1);
            
             if(empty($res)){
                 $redis->expire($key, 60*60);
                 return;
             }
-            if ($res['num'] == 2){
+            if ($res['1'] == 2){
                 $redis->hset($key, 'exprietime', $time+30*60); //30分钟
                 $redis->hset($key, 'flag', 1);
                 $redis->expire($key, 60*60);
                 return;
             }
-            if( $res['num'] == 3 )
+            if( $res['1'] == 3 )
             {
                 $redis->hset($key, 'exprietime', $time+24*60*60); //24小时
                 $redis->hset($key, 'flag', 2);
