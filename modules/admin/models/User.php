@@ -68,7 +68,7 @@ class User extends CActiveRecord
                 'long_time',
             ], 'integer'],
 
-            [['phone_number','urgent_contact_number_one','urgent_contact_number_two', 'telegram_number', 'potato_number'], 'number', 'max' => 99999999999],
+            [['phone_number','urgent_contact_number_one','urgent_contact_number_two', 'telegram_number', 'potato_number'], 'number', 'max' => 999999999999],
             [['auth_key','password'], 'string', 'max' => 64],
         ];
     }

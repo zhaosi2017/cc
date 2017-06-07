@@ -86,17 +86,13 @@ class LoginForm extends Model
     public function checkLock()
     {
         $redis = Yii::$app->redis;
-       
-        // $redis = new \Redis(); 
-        // $redis->connect(Yii::$app->params['redishost'], Yii::$app->params['redisport']); 
-        // $redis->auth(Yii::$app->params['redispass']);  
-        //set the data in redis string 
         $key = $this->username.'-'.'homenum';
-        $res =  $redis->hgetall($key) ;
-        if( !empty($res) && isset($res['falg'])){
-           
-            return $res;
-            
+        $num =  $redis->HGET($key,'num') ;
+        $flag = $redis->HGET($key,'flag');
+        $exprietime = $redis->hget($key,'exprietime');
+       
+        if( $num && $flag && $exprietime > time()){
+            return ['num'=>$num,'flag'=>$flag];
         }
         return false;
 
@@ -220,23 +216,23 @@ class LoginForm extends Model
         if($this->username)
         {
             $redis = Yii::$app->redis;
-            $key = $this->username.'-'.'homenum';
-            $res = $redis->hgetall($key);
+            $key  = $this->username.'-'.'homenum';
+            $num  = $redis->hget($key,'num');
             $time = time();
 
             $redis->hincrby($key, 'num', 1);
            
-            if(empty($res)){
+            if(empty($num)){
                 $redis->expire($key, 60*60);
                 return;
             }
-            if ($res['1'] == 2){
+            if ($num == 2){
                 $redis->hset($key, 'exprietime', $time+30*60); //30分钟
                 $redis->hset($key, 'flag', 1);
                 $redis->expire($key, 60*60);
                 return;
             }
-            if( $res['1'] == 3 )
+            if( $num == 3 )
             {
                 $redis->hset($key, 'exprietime', $time+24*60*60); //24小时
                 $redis->hset($key, 'flag', 2);

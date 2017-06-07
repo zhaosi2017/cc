@@ -50,6 +50,7 @@ class UserController extends GController
     {
         $model = $this->findModel(Yii::$app->user->id);
         if($model->load(Yii::$app->request->post()) && $model->update()){
+            Yii::$app->getSession()->setFlash('success', '操作成功');
             return $this->redirect(['index']);
         }
         return $this->render('set-nickname',['model'=>$model]);

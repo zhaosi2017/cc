@@ -127,24 +127,22 @@ class LoginForm extends Model
             $redis = Yii::$app->redis;
            //set the data in redis string 
             $key = $this->username.'-'.'adminnum';
-            $res = $redis->hgetall($key);
+            $num = $redis->hget($key,'num');
 
-
-            
             $time = time();
 
             $redis->hincrby($key, 'num', 1);
            
-            if(empty($res)){
+            if(empty($num)){
                 $redis->expire($key,60*60);
                 return;
             }
-            if ($res[1] == 2){
+            if ($num == 2){
                 $redis->hset($key,'exprietime',$time+30*60); //30分钟
                 $redis->hset($key,'flag',1);
                 $redis->expire($key,60*60);
             }
-            if( $res[1] == 3 )
+            if( $num == 3 )
             {
                 $redis->hset($key,'exprietime',$time+24*60*60); //24小时
                 $redis->hset($key,'flag',2);
@@ -173,10 +171,13 @@ class LoginForm extends Model
       
         //set the data in redis string 
         $key = $this->username.'-'.'adminnum';
-        $res =  $redis->hgetall($key) ;
-        if( !empty($res) &&  isset( $res['flag'])){
+        $num =  $redis->hget($key,'num') ;
+        $exprietime = $redis->hget($key,'exprietime');
+        $flag = $redis->hget($key,'flag');
+        
+        if( !empty($num) &&  $flag && $exprietime > time() ){
             
-            return $res;
+            return ['num' => $num,'flag'=>$flag];
             
         }
         return false;
