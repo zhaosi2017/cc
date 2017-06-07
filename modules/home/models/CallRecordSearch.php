@@ -77,10 +77,8 @@ class CallRecordSearch extends CallRecord
             'call_time' => $this->call_time,
         ]);
 
-        if((!empty($this->call_time_start) && !empty($this->call_time_end)) && ($this->call_time_start <= $this->call_time_end)){
-            $this->call_time_start = strtotime($this->call_time_start);
-            $this->call_time_end = strtotime($this->call_time_end);
-            $query->andFilterWhere(['between','call_time', $this->call_time_start, $this->call_time_end]);
+        if($this->call_time_start <= $this->call_time_end){
+            $query->andFilterWhere(['between', 'call_time', $this->call_time_start, $this->call_time_end]);
         }
         $this->search_type ==1 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like', 'active_account', $this->search_keywords]);
         $this->search_type ==2 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like', 'active_nickname', $this->search_keywords]);

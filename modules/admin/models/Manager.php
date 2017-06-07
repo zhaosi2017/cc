@@ -50,7 +50,8 @@ class Manager extends CActiveRecord implements IdentityInterface
             [['account', 'nickname', 'remark', 'auth_key','password'], 'string'],
             [['role_id', 'status', 'create_id', 'update_id', 'create_at', 'update_at'], 'integer'],
             [['login_ip'], 'string', 'max' => 64],
-            ['account','validateExist'],
+            ['account','validateExist','on'=>['addadmin']],
+            ['account','updateValidateExist','on'=>['updateadmin']],
         ];
     }
 
@@ -58,7 +59,14 @@ class Manager extends CActiveRecord implements IdentityInterface
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $res = ['passwordupdate' =>[ 'password' ] ,];
+        $res = [
+            'passwordupdate' =>[ 'password' ] ,
+
+            'updateadmin' => [ 'account','password','nickname', 'role_id','password','status'],
+
+            'addadmin' =>[  'account','nickname', 'role_id','password'],
+            
+        ];
         return array_merge($scenarios,$res);
     }
     public function validateExist($attribute)
@@ -76,6 +84,26 @@ class Manager extends CActiveRecord implements IdentityInterface
         }
     }
 
+    public function updateValidateExist($attribute)
+    {
+
+        $rows = Manager::find()->select(['account'])->indexBy('id')->column();
+        $accounts = [];
+        foreach ($rows as $i => $v)
+        {
+            
+            if($this->id == $i)
+            {
+                continue;
+            }            
+            $accounts[] = Yii::$app->security->decryptByKey(base64_decode($v), Yii::$app->params['inputKey']);
+            
+        }
+
+        if(in_array($this->account, $accounts)){
+            $this->addError($attribute, '管理员账号已存在');
+        }
+    }
     /**
      * @inheritdoc
      */

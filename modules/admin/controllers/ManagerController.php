@@ -21,7 +21,7 @@ class ManagerController extends PController
         if($model->load(Yii::$app->request->post()) ){
             if($res = $model->updateSave()){
                 Yii::$app->getSession()->setFlash('success', '密码修改成功');
-                return $this->redirect(['index'])->send();
+                return $this->redirect(['default/index'])->send();
             }else{
                 Yii::$app->getSession()->setFlash('success', '密码修改失败');
                 return $this->render('password',['model' => $model]);
@@ -77,7 +77,7 @@ class ManagerController extends PController
     public function actionCreate()
     {
         $model = new Manager();
-
+        $model->scenario = 'addadmin';
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             //权限逻辑
             $auth = Yii::$app->authManager;
@@ -106,14 +106,18 @@ class ManagerController extends PController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
+            $model->scenario = 'updateadmin';
             if($model->save()) {
                 $auth = Yii::$app->authManager;
                 $auth->updateAssignment($model->role_id,$model->id);
                 $model->sendSuccess();
+                return $this->redirect(['index']);
             } else{ 
-                $model->sendError();
+                return $this->render('update', [
+                'model' => $model,
+                ]);
             }
-            return $this->redirect(['index']);
+            
         } else {
             return $this->render('update', [
                 'model' => $model,

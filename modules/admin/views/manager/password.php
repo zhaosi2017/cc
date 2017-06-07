@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 
 $this->title = '修改密码';
-$this->params['breadcrumbs'][] = ['label'=>'用户','url'=>''];
+$this->params['breadcrumbs'][] = ['label'=>'首页','url'=>['default/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
