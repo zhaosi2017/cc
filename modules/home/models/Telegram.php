@@ -862,7 +862,7 @@ class Telegram extends Model
     public function bindTelegramData()
     {
         $user = User::findOne(Yii::$app->user->id);
-        if (!Yii::$app->redis->exist($this->bindCode)) {
+        if (!Yii::$app->redis->exists($this->bindCode)) {
             $this->addError('bindCode', '无效的验证码!');
         } else {
             $telegramData = Yii::$app->redis->get($this->bindCode);
@@ -876,7 +876,11 @@ class Telegram extends Model
         if ($dataArr[0] == Yii::$app->params['telegram_pre']) {
             $user->telegram_user_id = $dataArr['1'];
             $user->telegram_number = $dataArr['2'];
-            return $user->save();
+            $res = $user->save();
+            if ($res) {
+                Yii::$app->redis->del($this->bindCode);
+            }
+            return $res;
         } else {
             return $this->addError('bindCode', '无效的验证码!');
         }
