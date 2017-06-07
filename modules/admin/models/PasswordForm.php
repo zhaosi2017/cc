@@ -58,10 +58,14 @@ class PasswordForm extends Model
         if($this->validate()){
             if(Yii::$app->user->id){
                 $user = Manager::findOne(Yii::$app->user->id);
+                $user->scenario = 'passwordupdate';
                 $user->password = $this->newPassword;
-                return $user->save();
+                if($user->save()){
+                    return true;
+                }else{
+                    return false;
+                }
             }
-            Yii::$app->getSession()->setFlash('error', '操作失败');
         }
         return false;
     }

@@ -54,6 +54,13 @@ class Manager extends CActiveRecord implements IdentityInterface
         ];
     }
 
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $res = ['passwordupdate' =>[ 'password' ] ,];
+        return array_merge($scenarios,$res);
+    }
     public function validateExist($attribute)
     {
         $rows = Manager::find()->select(['account'])->indexBy('id')->column();
