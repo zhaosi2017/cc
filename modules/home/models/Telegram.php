@@ -859,7 +859,7 @@ class Telegram extends Model
                 Yii::$app->redis->hset($cacheKey, $callKey, 1);
                 Yii::$app->redis->expire($cacheKey, $this->calledPersonData->long_time * 60);
             } else {
-                $totalNum = Yii::$app->redis->hmget($cacheKey, 'total');
+                $totalNum = Yii::$app->redis->hget($cacheKey, 'total');
                 $personNum = Yii::$app->redis->hexists($cacheKey, $callKey) ? Yii::$app->redis->hget($cacheKey, $callKey) : 0;
                 if ($totalNum >= $this->calledPersonData->un_call_number || $personNum >= $this->calledPersonData->un_call_by_same_number) {
                     $res['status'] = false;
