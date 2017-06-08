@@ -61,7 +61,6 @@ class TelegramController extends GController
             // $postData = Yii::$app->request->bodyParams;
             $postData = @file_get_contents('php://input');
             $postData = json_decode($postData, true);
-	    file_put_contents('/tmp/aa.txt', var_export($postData, true).PHP_EOL, 8);
             $telegram = new Telegram();
             $message = isset($postData['message']) ? $postData['message'] : array();
             $telegram->telegramUid = isset($message['from']['id']) ? $message['from']['id'] : (isset($postData['callback_query']) ? $postData['callback_query']['from']['id'] : null);
