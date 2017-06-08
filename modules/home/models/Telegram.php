@@ -852,22 +852,23 @@ class Telegram extends Model
         ];
         // 有呼叫限制的.
         if ($this->calledPersonData->long_time && $this->calledPersonData->un_call_number) {
+            $cacheKey = $this->calledPersonData->telegram_user_id;
             $callKey = $this->callPersonData->country_code.$this->callPersonData->phone_number;
-            if (!Yii::$app->redis->exists($this->telegramUid)) {
-                Yii::$app->redis->hset($this->telegramUid, 'total', 1);
-                Yii::$app->redis->hset($this->telegramUid, $callKey, 1);
-                Yii::$app->redis->expire($this->telegramUid, $this->calledPersonData->long_time * 60);
+            if (!Yii::$app->redis->exists($cacheKey)) {
+                Yii::$app->redis->hset($cacheKey, 'total', 1);
+                Yii::$app->redis->hset($cacheKey, $callKey, 1);
+                Yii::$app->redis->expire($cacheKey, $this->calledPersonData->long_time * 60);
             } else {
-                $totalNum = Yii::$app->redis->hmget($this->telegramUid, 'total');
-                $pnum = Yii::$app->redis->hexists($this->telegramUid, $callKey) ? Yii::$app->redis->hget($this->telegramUid, $callKey) : 0;
-                if ($totalNum >= $this->calledPersonData->un_call_number || $pnum >= $this->calledPersonData->un_call_by_same_number) {
+                $totalNum = Yii::$app->redis->hget($cacheKey, 'total');
+                $personNum = Yii::$app->redis->hexists($cacheKey, $callKey) ? Yii::$app->redis->hget($cacheKey, $callKey) : 0;
+                if ($totalNum >= $this->calledPersonData->un_call_number || $personNum >= $this->calledPersonData->un_call_by_same_number) {
                     $res['status'] = false;
                     $res['isLimit'] = true;
                     $res['message'] = '呼叫超出本人设置的限制次数';
                     return $res;
                 }
-                Yii::$app->redis->hincrby($this->telegramUid, 'total', 1);
-                Yii::$app->redis->hexists($this->telegramUid, $callKey) ? Yii::$app->redis->hincrby($this->telegramUid, $callKey, 1) : Yii::$app->redis->hset($this->telegramUid, $callKey, 1);
+                Yii::$app->redis->hincrby($cacheKey, 'total', 1);
+                Yii::$app->redis->hexists($cacheKey, $callKey) ? Yii::$app->redis->hincrby($cacheKey, $callKey, 1) : Yii::$app->redis->hset($cacheKey, $callKey, 1);
             }
         }
 
