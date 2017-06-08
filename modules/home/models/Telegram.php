@@ -752,6 +752,7 @@ class Telegram extends Model
                 'repeat' => $this->repeat,
                 'voice' => $this->voice,
                 'to'    => $user->country_code.$user->phone_number,
+                'from'  => $this->callPersonData->country_code.$this->callPersonData->phone_number,
                 'text' => $this->telegramContactLastName.$this->telegramContactFirstName.'在telegram上找你!',
             ];
 
