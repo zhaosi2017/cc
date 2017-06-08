@@ -12,4 +12,6 @@ return [
     'nexmo_account_number'  => '+855965323063',
     'telegram' => 'callcenter',
     'telegram_pre' => 'cctelegram',
+    'potato' => 'callcenter',
+    'potato_pre' => 'ccpotato',
 ];

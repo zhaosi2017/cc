@@ -9,10 +9,6 @@ use app\modules\home\models\CallRecord;
 class Potato extends Model
 {
 
-    private $queryText = "查询";
-    private $telegramText = '操作菜单';
-    private $callText = "呼叫";
-    private $bindText = '绑定账号';
     private $startText = '开始操作, 请稍后!';
     private $wellcomeText = '欢迎';
     private $keyboardText = '分享自己名片';
@@ -29,26 +25,15 @@ class Potato extends Model
 
     private $code;
     private $bindCode;
-    private $telegramUid;
-    private $telegramContactUid;
-    private $telegramContactPhone;
-    private $telegramContactFirstName;
-    private $telegramContactLastName;
-    private $queryCallbackDataPre = 'cc_query';
-    private $callCallbackDataPre = 'cc_call';
-    private $bindCallbackDataPre = 'cc_bind';
-    private $queryCallbackData;
-    private $callCallbackData;
-    private $bindCallbackData;
-    private $callbackQuery;
+    private $potatoUid;
+    private $shareRequestType = 4;
+    private $potatoContactUid;
+    private $potatoContactPhone;
+    private $potatoContactFirstName;
+    private $potatoContactLastName = null;
     private $callPersonData;
     private $calledPersonData;
 
-    private $queryMenu;
-    private $callMenu;
-    private $bindMenu;
-    private $keyboard;
-    private $inlineKeyboard;
     private $sendData;
     private $errorCode = [
         'success' => 200,
@@ -85,7 +70,7 @@ class Potato extends Model
     public function setWebhook()
     {
         // $this->webhook = 'https://api.telegram.org/bot366429273:AAE1lGFanLGpUbfV28zlDYSTibiAPLhhE3s/sendMessage';
-        $this->webhook = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendMessage';
+        $this->webhook = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendTextMessage';
     }
 
     /**
@@ -99,15 +84,15 @@ class Potato extends Model
     /**
      * @param $value
      */
-    public function setTelegramUid($value)
+    public function setPotatoUid($value)
     {
-        $this->telegramUid = $value;
+        $this->potatoUid = $value;
     }
 
     /**
      * @param $value
      */
-    public function setTelegramContactUid($value)
+    public function setPotatoContactUid($value)
     {
         $this->telegramContactUid = $value;
     }
@@ -115,9 +100,9 @@ class Potato extends Model
     /**
      * @param $value
      */
-    public function setTelegramContactPhone($value)
+    public function setPotatoContactPhone($value)
     {
-        $this->telegramContactPhone = $value;
+        $this->potatoContactPhone = $value;
     }
 
     /**
@@ -125,9 +110,9 @@ class Potato extends Model
      *
      * @param string $value 名.
      */
-    public function setTelegramContactFirstName($value)
+    public function setPotatoContactFirstName($value)
     {
-        $this->telegramContactFirstName = $value;
+        $this->potatoContactFirstName = $value;
     }
 
     /**
@@ -135,9 +120,9 @@ class Potato extends Model
      *
      * @param string $value 名.
      */
-    public function setTelegramContactLastName($value)
+    public function setPotatoContactLastName($value)
     {
-        $this->telegramContactLastName = $value;
+        $this->potatoContactLastName = $value;
     }
 
     /**
@@ -146,29 +131,23 @@ class Potato extends Model
     public function setCode()
     {
         // 查询是否绑定自己的账号.
-        if ($this->telegramUid != $this->telegramContactUid) {
+        if ($this->potatoUid != $this->potatoContactUid) {
             return 'error_code :'.$this->errorCode['not_yourself'];
         }
 
-        // 查询是否绑定.
-        $res = User::findOne(['telegram_user_id' => $this->telegramUid]);
-        if ($res) {
-            return 'error_code :'.$this->errorCode['exist'];
-        } else {
-            $dealData = [
-                Yii::$app->params['telegram_pre'],
-                $this->telegramContactUid,
-                $this->telegramContactPhone,
-            ];
+        $dealData = [
+            Yii::$app->params['potato_pre'],
+            $this->potatoContactUid,
+            $this->potatoContactPhone,
+        ];
 
-            $dealData = implode('-', $dealData);
-            $charid = strtoupper(md5(uniqid(mt_rand(), true)));
-            $this->code = substr($charid, 0, 8);
-            $telegramData = base64_encode(Yii::$app->security->encryptByKey($dealData, Yii::$app->params['telegram']));
-            // 验证码过期时间半小时.
-            Yii::$app->redis->setex($this->code, 30*60, $telegramData);
-            $this->code = $this->code.'  [请在callu平台输入该验证码, 完成绑定操作!]';
-        }
+        $dealData = implode('-', $dealData);
+        $charid = strtoupper(md5(uniqid(mt_rand(), true)));
+        $this->code = substr($charid, 0, 8);
+        $telegramData = base64_encode(Yii::$app->security->encryptByKey($dealData, Yii::$app->params['potato']));
+        // 验证码过期时间半小时.
+        Yii::$app->redis->setex($this->code, 30*60, $telegramData);
+        $this->code = $this->code.'  [请在callu平台输入该验证码, 完成绑定操作!]';
     }
 
     /**
@@ -180,137 +159,11 @@ class Potato extends Model
     }
 
     /**
-     * 设置查询菜单.
-     */
-    public function setQueryMenu()
-    {
-        $this->setQueryCallbackData();
-        $this->queryMenu = array(
-            'text' => $this->queryText,
-            'callback_data' => $this->queryCallbackData,
-        );
-    }
-
-    /**
-     * 设置呼叫菜单.
-     */
-    public function setCallMenu()
-    {
-        $this->setCallCallbackData();
-        $this->callMenu = array(
-            'text' => $this->callText,
-            'callback_data' => $this->callCallbackData,
-        );
-    }
-
-    /**
-     * 设置绑定菜单.
-     */
-    public function setBindMenu()
-    {
-        $this->setBindCallbackData();
-        $this->bindMenu = array(
-            'text' => $this->bindText,
-            'callback_data' => $this->bindCallbackData,
-        );
-    }
-
-    /**
-     * 设置keyboard.
-     */
-    public function setKeyboard()
-    {
-        $this->keyboard = [
-            [
-                [
-                    "text"=> $this->keyboardText,
-                    "request_contact"=> true,
-                ]
-            ]
-        ];
-    }
-
-    /**
-     * 设置查询回调参数.
-     */
-    public function setQueryCallbackData()
-    {
-        $this->queryCallbackData = implode('-', array($this->queryCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone));
-    }
-
-    /**
-     * 设置呼叫回调参数.
-     */
-    public function setCallCallbackData()
-    {
-        $this->callCallbackData = implode('-', array($this->callCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone));
-    }
-
-    /**
-     * 设置绑定回调参数.
-     */
-    public function setBindCallbackData()
-    {
-        $this->bindCallbackData = implode('-', array($this->bindCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone));
-    }
-
-    /**
-     * 设置菜单.
-     *
-     * @return json.
-     */
-    public function setInlineKeyboard()
-    {
-        // 查询是否绑定.
-        $res = User::findOne(['telegram_user_id' => $this->telegramUid]);
-        if ($res) {
-            $this->setQueryMenu();
-            $this->setCallMenu();
-            $this->inlineKeyboard = [
-                [
-                    $this->queryMenu,
-                    $this->callMenu,
-                ]
-            ];
-        } else {
-            $this->setBindMenu();
-            $this->setQueryMenu();
-            $this->setCallMenu();
-            if ($this->telegramContactUid == $this->telegramUid) {
-                $this->inlineKeyboard = [
-                    [
-                        $this->bindMenu,
-                    ],
-                    [
-                        $this->queryMenu,
-                        $this->callMenu,
-                    ]
-                ];
-            } else {
-                $this->inlineKeyboard = [
-                    [
-                        $this->queryMenu,
-                        $this->callMenu,
-                    ]
-                ];
-            }
-        }
-    }
-
-    /**
      * @param $value
      */
     public function setSendData($value)
     {
         $this->sendData = $value;
-    }
-
-    /**
-     * @param $value
-     */
-    public function setCallbackQuery($value)
-    {
-        $this->callbackQuery = $value;
     }
 
     /**
@@ -329,6 +182,15 @@ class Potato extends Model
         $this->callPersonData = $value;
     }
 
+    /**
+     * 分享联系人名片请求方式.
+     *
+     * @return int
+     */
+    public function getShareRequestType()
+    {
+        return $this->shareRequestType;
+    }
     /**
      * @return mixeds
      */
@@ -364,25 +226,25 @@ class Potato extends Model
     /**
      * @return mixed
      */
-    public function getTelegramUid()
+    public function getPotatoUid()
     {
-        return $this->telegramUid;
+        return $this->potatoUid;
     }
 
     /**
      * @return mixed
      */
-    public function getTelegramContactFirstName()
+    public function getPotatoContactFirstName()
     {
-        return $this->telegramContactFirstName;
+        return $this->potatoContactFirstName;
     }
 
     /**
      * @return mixed
      */
-    public function getTelegramContactLastName()
+    public function getPotatoContactLastName()
     {
-        return $this->telegramContactLastName;
+        return $this->potatoContactLastName;
     }
 
     /**
@@ -518,67 +380,11 @@ class Potato extends Model
     }
 
     /**
-     * 获取查询回调参数.
-     */
-    public function getQueryCallbackData()
-    {
-        return $this->queryCallbackData;
-    }
-
-    /**
-     * 获取呼叫回调参数
-     */
-    public function getCallCallbackData()
-    {
-        return $this->callCallbackData;
-    }
-
-    /**
-     * 获取绑定回调参数.
-     */
-    public function getBindCallbackData()
-    {
-        return $this->bindCallbackData;
-    }
-
-    /**
-     * @return string
-     */
-    public function getQueryCallbackDataPre()
-    {
-        return $this->queryCallbackDataPre;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCallCallbackDataPre()
-    {
-        return $this->callCallbackDataPre;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBindCallbackDataPre()
-    {
-        return $this->bindCallbackDataPre;
-    }
-
-    /**
      * @return mixed
      */
     public function getSendData()
     {
         return $this->sendData;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCallbackQuery()
-    {
-        return $this->callbackQuery;
     }
 
     /**
@@ -611,16 +417,6 @@ class Potato extends Model
     public function getErrorMessage()
     {
         return $this->errorMessage;
-    }
-
-    /**
-     * 设置菜单.
-     *
-     * @return json.
-     */
-    public function getInlineKeyboard()
-    {
-        return $this->inlineKeyboard;
     }
 
     /**
@@ -660,61 +456,15 @@ class Potato extends Model
     }
 
     /**
-     * 发送菜单.
-     */
-    public function sendMenulist()
-    {
-        $this->setInlineKeyboard();
-        $this->sendData = [
-            'chat_id' => $this->telegramUid,
-            'text' => $this->telegramText,
-            'reply_markup' => [
-                'inline_keyboard' => $this->inlineKeyboard,
-            ]
-        ];
-
-        return $this->sendTelegramData();
-    }
-
-    /**
      * 发送绑定telegram账号的验证码.
      */
     public function sendBindCode()
     {
-        $this->sendData = [
-            'chat_id' => $this->telegramUid,
-            'text' => $this->startText,
-        ];
-        $this->sendTelegramData();
-
-        $callbackQuery = explode('-', $this->callbackQuery);
-        $this->telegramContactUid = $callbackQuery[1];
-        $this->telegramContactPhone = $callbackQuery[2];
         $this->setCode();
         $this->sendData = [
-            'chat_id' => $this->telegramUid,
+            'chat_type' => 1,
+            'chat_id' => $this->potatoUid,
             'text' => $this->code,
-        ];
-        $this->sendTelegramData();
-        return $this->errorCode['success'];
-    }
-
-    /**
-     * 查询telegram账号.
-     */
-    public function queryTelegramData()
-    {
-        $this->sendData = [
-            'chat_id' => $this->telegramUid,
-            'text' => $this->startText,
-        ];
-        $this->sendTelegramData();
-        $contactArr = explode('-', $this->callbackQuery);
-        // 查询是否绑定.
-        $res = User::findOne(['telegram_user_id' => $contactArr[1]]);
-        $this->sendData = [
-            'chat_id' => $this->telegramUid,
-            'text' => $res ? $this->errorMessage['exist'] : $this->errorMessage['noexist'],
         ];
         $this->sendTelegramData();
         return $this->errorCode['success'];
@@ -723,24 +473,32 @@ class Potato extends Model
     /**
      * 呼叫telegram账号.
      */
-    public function callTelegramPerson()
+    public function callPotatoPerson()
     {
-        $res = User::findOne(['telegram_user_id' => $this->telegramUid]);
-        if (!$res) {
-            $this->sendData = [
-                'chat_id' => $this->telegramUid,
-                'text' => '你不是我们系统会员，不能执行该操作!',
-            ];
-            $this->sendTelegramData();
-        }
-        $this->callPersonData = $res;
         $this->sendData = [
-            'chat_id' => $this->telegramUid,
+            'chat_type' => 1,
+            'chat_id' => $this->potatoUid,
             'text' => $this->startText,
         ];
         $this->sendTelegramData();
-        $contactArr = explode('-', $this->callbackQuery);
-        $user = User::findOne(['telegram_user_id' => $contactArr[1]]);
+
+        $res = User::findOne(['potato_user_id' => $this->potatoUid]);
+        if (!$res) {
+            $this->sendData = [
+                'chat_type' => 1,
+                'chat_id' => $this->potatoUid,
+                'text' => '你不是我们系统会员，不能执行该操作!',
+            ];
+            $this->sendPotatoData();
+        }
+        $this->callPersonData = $res;
+        $this->sendData = [
+            'chat_type' => 1,
+            'chat_id' => $this->potatoUid,
+            'text' => $this->startText,
+        ];
+        $this->sendPotatoData();
+        $user = User::findOne(['potato_user_id' => $this->potatoContactUid]);
         $this->calledPersonData = $user;
         if ($user) {
             $nickname = !empty($user->nickname) ? $user->nickname : '他/她';
@@ -754,25 +512,27 @@ class Potato extends Model
                 'voice' => $this->voice,
                 'to'    => $user->country_code.$user->phone_number,
                 'from'  => $this->callPersonData->country_code.$this->callPersonData->phone_number,
-                'text' => $this->telegramContactLastName.$this->telegramContactFirstName.'在telegram上找你!',
+                'text' => $this->potatoContactLastName.$this->potatoContactFirstName.'在telegram上找你!',
             ];
 
             if (empty($user->phone_number) || empty($user->country_code)) {
                 $this->sendData = [
-                    'chat_id' => $this->telegramUid,
+                    'chat_type' => 1,
+                    'chat_id' => $this->potatoUid,
                     'text' => $nickname.'的联系方式设置有问题, 不能呼叫!',
                 ];
-                $this->sendTelegramData();
+                $this->sendPotatoData();
             } else {
                 $res = $this->callPerson($nickname, $nexmoData);
                 if ($res['status']) {
                     return $this->errorCode['success'];
                 }
                 $this->sendData = [
-                    'chat_id' => $this->telegramUid,
+                    'chat_type' => 1,
+                    'chat_id' => $this->potatoUid,
                     'text' => '呼叫：'.$nickname.'失败! '.$res['message'],
                 ];
-                $this->sendTelegramData();
+                $this->sendPotatoData();
                 if (isset($res['isLimit'])) {
                     return $this->errorCode['success'];
                 }
@@ -780,10 +540,11 @@ class Potato extends Model
 
             if (empty($user->urgent_contact_number_one) && empty($user->urgent_contact_number_two)) {
                 $this->sendData = [
-                    'chat_id' => $this->telegramUid,
+                    'chat_type' => 1,
+                    'chat_id' => $this->potatoUid,
                     'text' => '抱歉: '.$nickname.'没有设置紧急联系人, 本次呼叫失败，请稍后再试, 或尝试其他方式联系'.$user->nickname.'!',
                 ];
-                $this->sendTelegramData();
+                $this->sendPotatoData();
 
                 return $this->errorCode['success'];
             }
@@ -791,10 +552,11 @@ class Potato extends Model
             if (!empty($user->urgent_contact_number_one)) {
                 $this->isUrgentCall = true;
                 $this->sendData = [
-                    'chat_id' => $this->telegramUid,
+                    'chat_type' => 1,
+                    'chat_id' => $this->potatoUid,
                     'text' => '尝试呼叫: '.$nickname.'的紧急联系人:'.$user->urgent_contact_person_one.', 请稍后!',
                 ];
-                $this->sendTelegramData();
+                $this->sendPotatoData();
                 // 尝试呼叫紧急联系人一.
                 $nexmoData['to'] = $user->urgent_contact_one_country_code.$user->urgent_contact_number_one;
                 $res = $this->callPerson($user->urgent_contact_person_one, $nexmoData);
@@ -802,19 +564,21 @@ class Potato extends Model
                     return $this->errorCode['success'];
                 }
                 $this->sendData = [
-                    'chat_id' => $this->telegramUid,
+                    'chat_type' => 1,
+                    'chat_id' => $this->potatoUid,
                     'text' => '呼叫：'.$nickname.'的紧急联系人:'.$user->urgent_contact_person_one.'失败! '.$res['message'],
                 ];
-                $this->sendTelegramData();
+                $this->sendPotatoData();
             }
 
             if (!empty($user->urgent_contact_number_two)) {
                 $this->isUrgentCall = true;
                 $this->sendData = [
-                    'chat_id' => $this->telegramUid,
+                    'chat_type' => 1,
+                    'chat_id' => $this->potatoUid,
                     'text' => '尝试呼叫: '.$nickname.'的紧急联系人:'.$user->urgent_contact_person_two.', 请稍后!',
                 ];
-                $this->sendTelegramData();
+                $this->sendPotatoData();
                 // 尝试呼叫紧急联系人一.
                 $nexmoData['to'] = $user->urgent_contact_two_country_code.$user->urgent_contact_number_two;
                 $res = $this->callPerson($user->urgent_contact_person_two, $nexmoData);
@@ -822,24 +586,27 @@ class Potato extends Model
                     return $this->errorCode['success'];
                 }
                 $this->sendData = [
-                    'chat_id' => $this->telegramUid,
+                    'chat_type' => 1,
+                    'chat_id' => $this->potatoUid,
                     'text' => '呼叫：'.$nickname.'的紧急联系人:'.$user->urgent_contact_person_two.'失败! '.$res['message'],
                 ];
-                $this->sendTelegramData();
+                $this->sendPotatoData();
             }
 
             $this->sendData = [
-                'chat_id' => $this->telegramUid,
+                'chat_type' => 1,
+                'chat_id' => $this->potatoUid,
                 'text' => '抱歉本次呼叫: '.$nickname.'失败，请稍后再试, 或尝试其他方式联系'.$user->nickname.'!',
             ];
-            $this->sendTelegramData();
+            $this->sendPotatoData();
             return $this->errorCode['success'];
         } else {
             $this->sendData = [
-                'chat_id' => $this->telegramUid,
+                'chat_type' => 1,
+                'chat_id' => $this->potatoUid,
                 'text' => $this->errorMessage['noexist'],
             ];
-            $this->sendTelegramData();
+            $this->sendPotatoData();
         }
     }
 
@@ -854,7 +621,7 @@ class Potato extends Model
         ];
         // 有呼叫限制的.
         if ($this->calledPersonData->long_time && $this->calledPersonData->un_call_number) {
-            $cacheKey = $this->calledPersonData->telegram_user_id;
+            $cacheKey = $this->calledPersonData->potato_user_id;
             $callKey = $this->callPersonData->country_code.$this->callPersonData->phone_number;
             if (!Yii::$app->redis->exists($cacheKey)) {
                 Yii::$app->redis->hset($cacheKey, 'total', 1);
@@ -896,7 +663,7 @@ class Potato extends Model
             'message' => '',
         ];
         $this->sendData = $data;
-        $res = $this->sendTelegramData($this->nexmoUrl);
+        $res = $this->sendPotatoData($this->nexmoUrl);
         $res = json_decode($res, true);
         $this->saveCallRecordData($res['status']);
         // 保存通话记录.
@@ -905,13 +672,13 @@ class Potato extends Model
                 'chat_id' => $this->telegramUid,
                 'text' => '呼叫: '.$nickname.'成功!',
             ];
-            $this->sendTelegramData();
+            $this->sendPotatoData();
         } else {
             $this->sendData = [
                 'chat_id' => $this->telegramUid,
                 'text' => '呼叫: '.$nickname.'失败!',
             ];
-            $this->sendTelegramData();
+            $this->sendPotatoData();
             $result['status'] = false;
         }
 
@@ -923,18 +690,15 @@ class Potato extends Model
      */
     public function saveCallRecordData($status)
     {
-        $contactArr = explode('-', $this->callbackQuery);
-        $activeUser = User::findOne(['telegram_user_id' => $this->telegramUid]);
-        $unActiveUser = User::findOne(['telegram_user_id' => $contactArr[1]]);
         $callRecord = new CallRecord();
-        $callRecord->active_call_uid = $activeUser->id;
-        $callRecord->unactive_call_uid = $contactArr['1'];
-        $callRecord->active_account = $activeUser->account;
-        $callRecord->unactive_account = $unActiveUser->account;
-        $callRecord->active_nickname = $activeUser->nickname;
-        $callRecord->unactive_nickname = $unActiveUser->nickname;
-        $callRecord->contact_number = $activeUser->country_code.$activeUser->phone_number;
-        $callRecord->unactive_contact_number = $unActiveUser->country_code.$unActiveUser->phone_number;
+        $callRecord->active_call_uid = $this->callPersonData->id;
+        $callRecord->unactive_call_uid = $this->calledPersonData->id;
+        $callRecord->active_account = $this->callPersonData->account;
+        $callRecord->unactive_account = $this->calledPersonData->account;
+        $callRecord->active_nickname = $this->callPersonData->nickname;
+        $callRecord->unactive_nickname = $this->calledPersonData->nickname;
+        $callRecord->contact_number = $this->callPersonData->country_code.$this->callPersonData->phone_number;
+        $callRecord->unactive_contact_number = $this->calledPersonData->country_code.$this->calledPersonData->phone_number;
         $callRecord->status = $status;
         $callRecord->call_time = time();
         $callRecord->type = $this->isUrgentCall ? 1 : 0;
@@ -946,23 +710,23 @@ class Potato extends Model
     /**
      * 绑定操作.
      */
-    public function bindTelegramData()
+    public function bindPotatoData()
     {
         $user = User::findOne(Yii::$app->user->id);
         if (!Yii::$app->redis->exists($this->bindCode)) {
             $this->addError('bindCode', '无效的验证码!');
         } else {
-            $telegramData = Yii::$app->redis->get($this->bindCode);
+            $potatoData = Yii::$app->redis->get($this->bindCode);
         }
-        if (empty($telegramData)) {
+        if (empty($potatoData)) {
             return $this->addError('bindCode', '无效的验证码!');
         }
 
-        $data = Yii::$app->security->decryptByKey(base64_decode($telegramData), Yii::$app->params['telegram']);
+        $data = Yii::$app->security->decryptByKey(base64_decode($potatoData), Yii::$app->params['potato']);
         $dataArr = explode('-', $data);
-        if ($dataArr[0] == Yii::$app->params['telegram_pre']) {
-            $user->telegram_user_id = $dataArr['1'];
-            $user->telegram_number = $dataArr['2'];
+        if ($dataArr[0] == Yii::$app->params['potato_pre']) {
+            $user->potato_user_id = $dataArr['1'];
+            $user->potato_number = $dataArr['2'];
             $res = $user->save();
             if ($res) {
                 Yii::$app->redis->del($this->bindCode);
@@ -977,11 +741,11 @@ class Potato extends Model
     /**
      * 解除绑定操作.
      */
-    public function unbundleTelegramData()
+    public function unbundlePotatoData()
     {
         $user = User::findOne(Yii::$app->user->id);
-        $user->telegram_user_id = 0;
-        $user->telegram_number = 0;
+        $user->potato_user_id = 0;
+        $user->potato_number = 0;
         return $user->save();
     }
 
@@ -990,9 +754,9 @@ class Potato extends Model
      *
      * @return json.
      */
-    public function sendTelegramData($url = null)
+    public function sendPotatoData($url = null)
     {
-        if (empty($this->telegramUid)) {
+        if (empty($this->potatoUid)) {
             return "error #:".$this->errorCode['emptyuid'];
         }
         if (is_array($this->sendData)) {
