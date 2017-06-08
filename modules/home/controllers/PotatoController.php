@@ -61,43 +61,18 @@ class PotatoController extends GController
             $postData = @file_get_contents('php://input');
             $postData = json_decode($postData, true);
             $potato = new Potato();
-            $message = isset($postData['message']) ? $postData['message'] : array();
-            $potato->telegramUid = isset($message['from']['id']) ? $message['from']['id'] : (isset($postData['callback_query']) ? $postData['callback_query']['from']['id'] : null);
+            $message = isset($postData['result']) ? $postData['result'] : array();
+            $potato->potatoUid = isset($message['sender_id']) ? $message['sender_id'] : $message['user_id'];
 
             // 如果是用户第一次关注该机器人，发送欢迎信息,并发送内联快捷菜单.
-            if (isset($message['text']) && $message['text'] == $potato->getFirstText()) {
-                return $potato->telegramWellcome();
-            }
-
-            if (!empty($message) && isset($message['contact'])) {
+            if ($message['request_type'] == $potato->shareRequestType) {
                 // 分享了名片.
-                $potato->telegramContactUid = $message['contact']['user_id'];
-                $potato->telegramContactPhone = $message['contact']['phone_number'];
+                $potato->potatoContactUid = $message['user_id'];
+                $potato->potatoContactPhone = str_replace(array('+', ' '), '', $message['phone_number']);
+                $potato->potatoContactFirstName = $message['first_name'];
                 // 发送操作菜单.
-                return $potato->sendMenulist();
-            } elseif (isset($postData['callback_query'])) {
-                // 点击菜单回调操作.
-                $potato->callbackQuery = $postData['callback_query']['data'];
-                $potato->telegramContactFirstName = $postData['callback_query']['message']['chat']['first_name'];
-                $potato->telegramContactLastName = $postData['callback_query']['message']['chat']['last_name'];
-                $action = explode('-', $potato->callbackQuery);
-                $action = $action[0];
-                switch ($action) {
-                    case $potato->queryCallbackDataPre:
-                        $result = $potato->queryTelegramData();
-                        echo $result;
-                        break;
-                    case $potato->callCallbackDataPre;
-                        $potato->callTelegramPerson();
-                        break;
-                    case $potato->bindCallbackDataPre:
-                        $result = $potato->sendBindCode();
-                        return $result;
-                        break;
-                    default :
-                        echo 'error_code :'.$potato->errorCode['invalid_operation'];
-                        break;
-                }
+                $result = $potato->callPotatoPerson();
+                return $result;
             }
         } catch (\Exception $e) {
             echo $e->getMessage();
