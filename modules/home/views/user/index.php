@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <p class="m-t-lg">绑定telegram或potato，正式启用离线呼叫提醒功能，让人可以找到您，同时也能让您找到别人！</p>
                             <div class="m-t-lg">Potato：<?php echo $model->potato_number ? '+'.$model->potato_number : '无'; ?>
                                 <?php if(!$model->potato_number){ ?>
-                                <a href="<?php echo Url::to(['/home/user/bind-potato']) ?>" class="btn btn-primary btn-sm pull-right">立即绑定</a>
+                                <a href="<?php echo Url::to(['/home/potato/bind-potato']) ?>" class="btn btn-primary btn-sm pull-right">立即绑定</a>
                                 <?php }else{ ?>
                                     <div class="pull-right btn-group">
                                         <a href="<?php echo Url::to(['/home/potato/bind-potato']) ?>" class="btn btn-primary btn-sm">修改</a>
