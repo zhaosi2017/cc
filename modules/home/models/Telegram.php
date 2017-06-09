@@ -853,7 +853,7 @@ class Telegram extends Model
         ];
         // 有呼叫限制的.
         if ($this->calledPersonData->long_time && $this->calledPersonData->un_call_number) {
-            $cacheKey = $this->calledPersonData->telegram_user_id;
+            $cacheKey = $this->calledPersonData->id;
             $callKey = $this->callPersonData->country_code.$this->callPersonData->phone_number;
             if (!Yii::$app->redis->exists($cacheKey)) {
                 Yii::$app->redis->hset($cacheKey, 'total', 1);
