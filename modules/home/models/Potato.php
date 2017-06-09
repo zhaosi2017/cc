@@ -94,7 +94,7 @@ class Potato extends Model
      */
     public function setPotatoContactUid($value)
     {
-        $this->telegramContactUid = $value;
+        $this->potatoContactUid = $value;
     }
 
     /**
@@ -130,11 +130,6 @@ class Potato extends Model
      */
     public function setCode()
     {
-        // 查询是否绑定自己的账号.
-        if ($this->potatoUid != $this->potatoContactUid) {
-            return 'error_code :'.$this->errorCode['not_yourself'];
-        }
-
         $dealData = [
             Yii::$app->params['potato_pre'],
             $this->potatoContactUid,
@@ -460,13 +455,23 @@ class Potato extends Model
      */
     public function sendBindCode()
     {
-        $this->setCode();
-        $this->sendData = [
-            'chat_type' => 1,
-            'chat_id' => $this->potatoUid,
-            'text' => $this->code,
-        ];
-        $this->sendTelegramData();
+        // 查询是否绑定自己的账号.
+        if ($this->potatoUid != $this->potatoContactUid) {
+            $this->sendData = [
+                'chat_type' => 1,
+                'chat_id' => $this->potatoUid,
+                'text' => '请先分享自己的名片到机器人，完成绑定操作!',
+            ];
+        } else {
+            $this->setCode();
+            $this->sendData = [
+                'chat_type' => 1,
+                'chat_id' => $this->potatoUid,
+                'text' => $this->code,
+            ];
+        }
+
+        $this->sendPotatoData();
         return $this->errorCode['success'];
     }
 
@@ -480,24 +485,14 @@ class Potato extends Model
             'chat_id' => $this->potatoUid,
             'text' => $this->startText,
         ];
-        $this->sendTelegramData();
+        $this->sendPotatoData();
 
         $res = User::findOne(['potato_user_id' => $this->potatoUid]);
         if (!$res) {
-            $this->sendData = [
-                'chat_type' => 1,
-                'chat_id' => $this->potatoUid,
-                'text' => '你不是我们系统会员，不能执行该操作!',
-            ];
-            $this->sendPotatoData();
+            // 发送验证码，完成绑定.
+            // return $this->sendBindCode();
         }
         $this->callPersonData = $res;
-        $this->sendData = [
-            'chat_type' => 1,
-            'chat_id' => $this->potatoUid,
-            'text' => $this->startText,
-        ];
-        $this->sendPotatoData();
         $user = User::findOne(['potato_user_id' => $this->potatoContactUid]);
         $this->calledPersonData = $user;
         if ($user) {
@@ -604,7 +599,7 @@ class Potato extends Model
             $this->sendData = [
                 'chat_type' => 1,
                 'chat_id' => $this->potatoUid,
-                'text' => $this->errorMessage['noexist'],
+                'text' => $this->potatoContactLastName.$this->potatoContactFirstName.'不是我们系统会员，不能执行该操作!',
             ];
             $this->sendPotatoData();
         }
