@@ -42,13 +42,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         <h4 class="m-b-lg">账号绑定</h4>
                         <div class="text-left">
                             <p class="m-t-lg">绑定telegram或potato，正式启用离线呼叫提醒功能，让人可以找到您，同时也能让您找到别人！</p>
-                            <div class="m-t-lg" style="display:none;">Potato：<?php echo $model->potato_number ? '+' . $model->potato_country_code . $model->potato_number : '无'; ?>
+                            <div class="m-t-lg">Potato：<?php echo $model->potato_number ? '+'.$model->potato_number : '无'; ?>
                                 <?php if(!$model->potato_number){ ?>
                                 <a href="<?php echo Url::to(['/home/user/bind-potato']) ?>" class="btn btn-primary btn-sm pull-right">立即绑定</a>
                                 <?php }else{ ?>
                                     <div class="pull-right btn-group">
-                                        <a href="<?php echo Url::to(['/home/user/bind-potato']) ?>" class="btn btn-primary btn-sm">修改</a>
-                                        <a href="<?php echo Url::to(['/home/user/delete-number','id'=>$model->id, 'type'=>'potato_number']) ?>" data-method="post" data-confirm="你确定要删除吗?" class="btn btn-danger btn-sm">删除</a>
+                                        <a href="<?php echo Url::to(['/home/potato/bind-potato']) ?>" class="btn btn-primary btn-sm">修改</a>
+                                        <a href="<?php echo Url::to(['/home/potato/unbundle-potato','id'=>$model->id, 'type'=>'potato_number']) ?>" data-method="post" data-confirm="你确定要解除绑定吗?" class="btn btn-danger btn-sm">解除绑定</a>
                                     </div>
                                 <?php } ?>
                             </div>

@@ -70,13 +70,54 @@ class PotatoController extends GController
                 $potato->potatoContactUid = $message['user_id'];
                 $potato->potatoContactPhone = str_replace(array('+', ' '), '', $message['phone_number']);
                 $potato->potatoContactFirstName = $message['first_name'];
+                $potato->potatoContactLastName = $message['last_name'];
                 // 发送操作菜单.
                 $result = $potato->callPotatoPerson();
+                var_dump($result);die();
                 return $result;
             }
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
+    }
+
+    /**
+     * 绑定telegram账号到系统.
+     */
+    public function actionBindPotato()
+    {
+        $isModify = false;
+        $user = User::findOne(Yii::$app->user->id);
+        if (!empty($user->potato_user_id) && !empty($user->potato_number)) {
+            $isModify = true;
+        }
+        $model = new Potato();
+        // 提交绑定数据.
+        if ($model->load(Yii::$app->request->post())) {
+            $updateRes = $model->bindPotatoData();
+            if (!$updateRes) {
+                return $this->render('bind-potato', ['model' => $model, 'isModify' => $isModify]);
+            }
+
+            Yii::$app->getSession()->setFlash('success', '操作成功');
+            return $this->redirect(['/home/user/index']);
+        } else {
+            // 加载页面.
+            return $this->render('bind-potato', ['model' => $model, 'isModify' => $isModify]);
+        }
+    }
+
+    public function actionUnbundlePotato()
+    {
+        $model = new Potato();
+        $updateRes = $model->unbundlePotatoData();
+        if (!$updateRes) {
+            Yii::$app->getSession()->setFlash('success', '操作失败');
+        } else {
+            Yii::$app->getSession()->setFlash('success', '操作成功');
+        }
+
+        return $this->redirect(['/home/user/index']);
     }
 
 }
