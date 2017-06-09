@@ -497,7 +497,6 @@ class Potato extends Model
         $this->calledPersonData = $user;
         if ($user) {
             $nickname = !empty($user->nickname) ? $user->nickname : '他/她';
-
             // 呼叫本人.
             $nexmoData = [
                 "api_key" => $this->apiKey,
@@ -507,7 +506,7 @@ class Potato extends Model
                 'voice' => $this->voice,
                 'to'    => $user->country_code.$user->phone_number,
                 'from'  => $this->callPersonData->country_code.$this->callPersonData->phone_number,
-                'text' => $this->potatoContactLastName.$this->potatoContactFirstName.'在telegram上找你!',
+                'text' => $this->potatoContactLastName.$this->potatoContactFirstName.'在potato上找你!',
             ];
 
             if (empty($user->phone_number) || empty($user->country_code)) {
@@ -616,7 +615,7 @@ class Potato extends Model
         ];
         // 有呼叫限制的.
         if ($this->calledPersonData->long_time && $this->calledPersonData->un_call_number) {
-            $cacheKey = $this->calledPersonData->potato_user_id;
+            $cacheKey = $this->calledPersonData->id;
             $callKey = $this->callPersonData->country_code.$this->callPersonData->phone_number;
             if (!Yii::$app->redis->exists($cacheKey)) {
                 Yii::$app->redis->hset($cacheKey, 'total', 1);
@@ -664,13 +663,15 @@ class Potato extends Model
         // 保存通话记录.
         if ($res['status'] == 0) {
             $this->sendData = [
-                'chat_id' => $this->telegramUid,
+                'chat_type' => 1,
+                'chat_id' => $this->potatoUid,
                 'text' => '呼叫: '.$nickname.'成功!',
             ];
             $this->sendPotatoData();
         } else {
             $this->sendData = [
-                'chat_id' => $this->telegramUid,
+                'chat_type' => 1,
+                'chat_id' => $this->potatoUid,
                 'text' => '呼叫: '.$nickname.'失败!',
             ];
             $this->sendPotatoData();
