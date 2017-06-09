@@ -490,7 +490,7 @@ class Potato extends Model
         $res = User::findOne(['potato_user_id' => $this->potatoUid]);
         if (!$res) {
             // 发送验证码，完成绑定.
-            // return $this->sendBindCode();
+            return $this->sendBindCode();
         }
         $this->callPersonData = $res;
         $user = User::findOne(['potato_user_id' => $this->potatoContactUid]);
