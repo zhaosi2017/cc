@@ -44,19 +44,27 @@ class LoginController extends GController
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post())) {
             $lock = $model->checkLock();
-            if(isset($lock['flag'])){
-                $message = "已被冻结30分钟";
-                if($lock['flag'] == 2){
-                    $message = "已被冻结24小时";
-                }
+            if(isset($lock['flag']) && $lock['flag'] > 1){
+                $lock['flag'] == 2 &&  $message ='已被冻结30分钟';
+                $lock['flag'] == 3 &&  $message ='已被冻结24小时';
                 $model->addError('username', '用户 '.$model->username. $message);
                 return $this->render('index',['model'=>$model]);
-            }else{
-                if($model->preLogin()){
-                    $model->login();
-                    return $this->redirect(['/home/default/welcome']);
-                }
             }
+
+            if($model->preLogin()){
+                $model->login();
+                $model->recordIp();
+                return $this->redirect(['/home/default/welcome']);
+            }
+
+            $flag = Yii::$app->redis->hget($model->username.'-'.'homenum','flag');
+            if($flag == 1){
+                $model->addError('username', '用户 '.$model->username. '再错一次账号将被冻结三十分钟');
+            }
+            if($flag == 2){
+                $model->addError('username', '用户 '.$model->username. '已被冻结30分钟');
+            }
+            
         }
 
         return $this->render('index',['model' => $model]);
@@ -128,6 +136,7 @@ class LoginController extends GController
             $user_model = User::findOne($model->getIdentity()->id);
             $user_model->password = $register_model->password;
             if($user_model->update()){
+                Yii::$app->getSession()->setFlash('success', '操作成功');
                 return $this->render('find-password-complete');
             }
         }

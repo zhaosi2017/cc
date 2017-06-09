@@ -21,7 +21,7 @@ $this->title = '找回登录密码';
             'options'=>['class'=>'m-t text-left'],
             'fieldConfig' => [
                 'template' => "{label}\n<div class=\"col-sm-9\">{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
-                'labelOptions' => ['class' => 'col-sm-3 control-label'],
+                'labelOptions' => ['class' => 'col-sm-3 '],
             ],
         ]); ?>
 

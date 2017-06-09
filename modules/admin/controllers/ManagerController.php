@@ -23,7 +23,7 @@ class ManagerController extends PController
                 Yii::$app->getSession()->setFlash('success', '密码修改成功');
                 return $this->redirect(['default/index'])->send();
             }else{
-                Yii::$app->getSession()->setFlash('success', '密码修改失败');
+                Yii::$app->getSession()->setFlash('error', '密码修改失败');
                 return $this->render('password',['model' => $model]);
             }
             
