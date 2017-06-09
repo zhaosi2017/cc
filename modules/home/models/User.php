@@ -33,6 +33,8 @@ use yii\web\IdentityInterface;
  * @property integer $potato_country_code
  * @property integer $reg_time
  * @property string $reg_ip
+ * @property integer $login_time
+ * @property string $login_ip
  * @property integer $role_id
  * @property integer $status
  */
@@ -104,6 +106,7 @@ class User extends CActiveRecord implements IdentityInterface
 
             [['phone_number','urgent_contact_number_one','urgent_contact_number_two', 'telegram_number', 'potato_number'], 'number','max'=> 999999999999],
             [['auth_key','password'], 'string', 'max' => 64],
+            [['login_ip','login_time'],'safe'],
             ['nickname' ,'checkName'],
         ];
     }
@@ -144,7 +147,7 @@ class User extends CActiveRecord implements IdentityInterface
         
         if (!preg_match("/^[\x{4e00}-\x{9fa5}]{2,6}+$/u",$this->nickname))
         {
-            $this->addError($attribute,'昵称必须时2到6个中文');
+            $this->addError($attribute,'请设置正确昵称');
         }
         
     }

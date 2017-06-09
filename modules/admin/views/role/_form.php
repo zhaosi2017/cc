@@ -26,11 +26,7 @@ use yii\widgets\ActiveForm;
         <div class="col-sm-6 col-sm-offset-2">
             <?= Html::submitButton($model->isNewRecord ? '创建角色' : '保存修改', ['class'=>'btn btn-primary']) ?>
 
-            <?php
-                if(!$model->isNewRecord){
-                    echo Html::a('权限配置',\yii\helpers\Url::to(['/admin/role/auth','id'=>$model->id]),['class'=>'btn btn-primary']);
-                }
-            ?>
+
         </div>
     </div>
 

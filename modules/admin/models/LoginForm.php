@@ -137,15 +137,23 @@ class LoginForm extends Model
                 $redis->expire($key,60*60);
                 return;
             }
+
+            if($num == 1 ){
+                $redis->hset($key, 'exprietime', $time+30*60); //30分钟
+                $redis->hset($key, 'flag', 1);
+                $redis->expire($key, 30*60);
+                return;
+            }
+
             if ($num == 2){
                 $redis->hset($key,'exprietime',$time+30*60); //30分钟
-                $redis->hset($key,'flag',1);
+                $redis->hset($key,'flag',2);
                 $redis->expire($key,60*60);
             }
             if( $num == 3 )
             {
                 $redis->hset($key,'exprietime',$time+24*60*60); //24小时
-                $redis->hset($key,'flag',2);
+                $redis->hset($key,'flag',3);
                 $redis->expire($key,24*60*60);
             }   
         }
@@ -175,9 +183,10 @@ class LoginForm extends Model
         $exprietime = $redis->hget($key,'exprietime');
         $flag = $redis->hget($key,'flag');
         
-        if( !empty($num) &&  $flag && $exprietime > time() ){
-            
-            return ['num' => $num,'flag'=>$flag];
+        if( $num > 1 ){
+            if( $flag == 1 || ($flag && $exprietime > time()) ){
+                return ['num' => $num,'flag'=>$flag];
+            }   
             
         }
         return false;

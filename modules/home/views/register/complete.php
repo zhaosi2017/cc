@@ -17,7 +17,7 @@ $this->title = '注册成功';
 
         <blockquote class="text-left">
             <p>请您牢记您的邮箱账号和密码！！！</p>
-            <p>你的邮箱账号：<?php echo $model->username ?></p>
+            <p>您的邮箱账号：<?php echo $model->username ?></p>
             <p>您的密码：<?php echo $model->password ?></p>
         </blockquote>
         <?php $form = ActiveForm::begin([

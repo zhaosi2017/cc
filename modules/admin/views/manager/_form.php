@@ -19,11 +19,11 @@ use yii\redactor\widgets\Redactor;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'account')->textInput() ?>
+    <?= $form->field($model, 'account')->textInput(['placeholder'=>'请输入账号']) ?>
 
-    <?= $form->field($model, 'password')->passwordInput() ?>
+    <?= $form->field($model, 'password')->passwordInput(['placeholder'=>'请输入账号']) ?>
 
-    <?= $form->field($model, 'nickname')->textInput() ?>
+    <?= $form->field($model, 'nickname')->textInput(['placeholder'=>'请输入管理员昵称']) ?>
 
     <?= $form->field($model, 'role_id')->dropDownList($model['roles'],['prompt'=>'请选择']) ?>
 
