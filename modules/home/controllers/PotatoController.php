@@ -34,7 +34,7 @@ class PotatoController extends GController
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index'],
+                        'actions' => ['index', 'bind-potato', 'unbundle-potato'],
                         'roles' => ['@'],
                     ],
                 ],
@@ -73,7 +73,6 @@ class PotatoController extends GController
                 $potato->potatoContactLastName = $message['last_name'];
                 // 发送操作菜单.
                 $result = $potato->callPotatoPerson();
-                var_dump($result);die();
                 return $result;
             }
         } catch (\Exception $e) {
