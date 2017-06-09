@@ -26,7 +26,7 @@ class UserSearch extends User
     {
         return [
             [['id', 'un_call_number', 'un_call_by_same_number', 'long_time', 'country_code', 'urgent_contact_one_country_code', 'urgent_contact_number_two', 'urgent_contact_two_country_code', 'telegram_country_code', 'potato_country_code', 'reg_time', 'role_id'], 'integer'],
-            [['auth_key', 'password', 'account', 'nickname', 'phone_number', 'urgent_contact_number_one', 'urgent_contact_person_one', 'urgent_contact_person_two', 'telegram_number', 'potato_number', 'search_type', 'search_keywords'], 'safe'],
+            [['auth_key', 'password', 'account', 'nickname', 'phone_number', 'urgent_contact_number_one', 'urgent_contact_person_one', 'urgent_contact_person_two', 'telegram_number', 'potato_number', 'search_type', 'search_keywords','start_date','end_date'], 'safe'],
         ];
     }
 
@@ -80,8 +80,24 @@ class UserSearch extends User
             'reg_time' => $this->reg_time,
             'role_id' => $this->role_id,
         ]);
+       
+        if(empty($this->start_date)  && !empty($this->end_date))
+        {
+            $query->andFilterWhere(['<=','user.reg_time', strtotime($this->end_date)]);
+        }
 
-        if($this->start_date && $this->end_date && $this->start_date <= $this->end_date){
+        if(!empty($this->start_date)  && empty($this->end_date))
+        {
+            $query->andFilterWhere(['>=','user.reg_time', strtotime($this->start_date)]);
+        }
+
+        if(!empty($this->start_date) && !empty($this->end_date )){
+            if($this->start_date > $this->end_date)
+            {
+                $tmp = $this->end_date;
+                $this->end_date = $this->start_date;
+                $this->start_date = $tmp;
+            }
             $query->andFilterWhere(['between','user.reg_time', strtotime($this->start_date), strtotime($this->end_date)]);
         }
 
@@ -90,8 +106,9 @@ class UserSearch extends User
         $this->search_type == 3 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['in', 'user.id', $this->searchIds($this->search_keywords)]);
         $this->search_type == 4 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['in', 'user.id', $this->searchIds($this->search_keywords, 'nickname')]);
         $this->search_type == 5 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like','user.phone_number', $this->search_keywords]);
-//        $this->search_type == 6 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like','user.phone_number', $this->search_keywords]);
-//        $this->search_type == 7 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like','user.phone_number', $this->search_keywords]);
+        $this->search_type == 6 && strlen($this->search_keywords)>0  && $query->andFilterWhere(['or',['in','user.id', $this->searchIds($this->search_keywords, 'urgent_contact_person_one')],['in','user.id',$this->searchIds($this->search_keywords, 'urgent_contact_person_two')]]);
+        $this->search_type == 7 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['OR',['like','user.urgent_contact_number_one', $this->search_keywords],[ 'like','user.urgent_contact_number_two',$this->search_keywords]]);
+
 
         return $dataProvider;
     }

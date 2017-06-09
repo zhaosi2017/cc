@@ -29,7 +29,7 @@ use yii\widgets\ActiveForm;
 
             <?= $form->field($model,'status')->dropDownList($model->getStatuses(),[
                     'prompt'=>'全部',
-                    'onchange'=>'$("#search_hide").click();',
+                    // 'onchange'=>'$("#search_hide").click();',
             ])->label('登录状态：') ?>
         </div>
         <div class="col-lg-6">
@@ -42,9 +42,7 @@ use yii\widgets\ActiveForm;
                 <?= $form->field($model, 'search_keywords')->textInput(['placeholder' => '请输入关键字查询'])->label(false) ?>
                 <div class="form-group">
                     <?= Html::submitButton('search', ['class' => 'hide','id'=>'search_hide']) ?>
-                    <?= Html::submitButton('搜索', ['class' => 'btn btn-primary m-t-n-xs','id'=>'search','onclick'=>'
-                        $("#loginlogssearch-status").val("");
-                    ']) ?>
+                    <?= Html::submitButton('搜索', ['class' => 'btn btn-primary m-t-n-xs','id'=>'search']) ?>
                 </div>
             </div>
         </div>

@@ -14,8 +14,8 @@ $this->title = '拒绝访问';
 <!--    <h1>--><?php //echo Html::encode($this->title) ?><!--</h1>-->
 
     <div class="alert alert-danger">
-        <p>您无权使用该功能！</p>
-        <p>若有疑问，请联系相关负责人！</p>
+        <p style="font-size: x-large;">您无此权限,请联系超级管理员！</p>
+        
     </div>
 
    <!-- <p>

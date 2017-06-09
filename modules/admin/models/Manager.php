@@ -51,7 +51,8 @@ class Manager extends CActiveRecord implements IdentityInterface
             [['role_id', 'status', 'create_id', 'update_id', 'create_at', 'update_at'], 'integer'],
             [['login_ip'], 'string', 'max' => 64],
             ['account','validateExist','on'=>['addadmin']],
-            ['account','updateValidateExist','on'=>['updateadmin']],
+            ['account', 'updateValidateExist', 'on'=>['updateadmin']],
+            ['remark','required','on'=>['updateadmin']],
         ];
     }
 
@@ -62,13 +63,15 @@ class Manager extends CActiveRecord implements IdentityInterface
         $res = [
             'passwordupdate' =>[ 'password' ] ,
 
-            'updateadmin' => [ 'account','password','nickname', 'role_id','password','status'],
+            'updateadmin' => [ 'account','password','nickname', 'role_id','password','status','remark'],
 
             'addadmin' =>[  'account','nickname', 'role_id','password'],
             
         ];
         return array_merge($scenarios,$res);
     }
+
+   
     public function validateExist($attribute)
     {
         $rows = Manager::find()->select(['account'])->indexBy('id')->column();

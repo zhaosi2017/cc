@@ -37,9 +37,24 @@ $this->title = '登录';
         ->label(false)
         ->widget(Captcha::className(), [ 
                     'captchaAction'=>'/home/login/captcha',
-                    'template' => '<div class="row"><div style="height:30px;line-height:33px;" class="col-lg-8">{input}</div><div class="col-lg-3">{image}</div></div>', 
-                    'options' => ['placeholder'=>'   验证码']
-        ]) ?>
+                    'template' => '<div class="row"><div style="height:30px;line-height:33px;display: inline-block;width: 120px;margin-left: 14px;" >{input}</div><div style="display: inline-block;margin-left: 95px;">{image}</div></div>', 
+                    'options' => ['placeholder'=>'验证码']
+        ]) 
+
+
+
+        ?>
+
+        <?php
+        //调整验证码输入框的框度和内容的左边距
+         echo ' <style type="text/css">
+            #loginform-code{
+                width: 200px;
+                padding-left: 10px;
+            }
+        </style>';
+
+        ?>
 
    
 

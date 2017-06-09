@@ -74,9 +74,19 @@ class LoginLogsSearch extends ManagerLoginLogs
             'login_time' => $this->login_time,
         ]);
 
-        if($this->start_date <= $this->end_date){
+
+        if(empty($this->start_date) && !empty($this->end_date)){
+            $query->andFilterWhere(['<=', 'manager_login_logs.login_time',  $this->end_date]);
+        }
+
+        if(!empty($this->start_date) && empty($this->end_date)){
+            $query->andFilterWhere(['>=', 'manager_login_logs.login_time',  $this->start_date]);
+        }
+
+        if(!empty($this->start_date) && !empty($this->end_date) && $this->start_date <= $this->end_date){
             $query->andFilterWhere(['between', 'manager_login_logs.login_time', $this->start_date, $this->end_date]);
         }
+        // !empty($this->status) && $query->andFilterWhere(['=', 'manager_login_logs.status', $this->status]);
 
         $this->search_type ==1 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['in', 'manager.id', (new ManagerSearch())->searchIds($this->search_keywords, 'account')]);
         $this->search_type ==2 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['in', 'manager.id', (new ManagerSearch())->searchIds($this->search_keywords, 'nickname')]);

@@ -30,7 +30,7 @@ class LoginForm extends Model
             ['username', 'email'],
             ['username', 'validateAccount'],
             ['password', 'validatePassword'],
-            ['code', 'captcha', 'message'=>'验证码输入不正确', 'captchaAction'=>'/home/login/captcha'],
+            ['code', 'captcha', 'message'=>'验证码错误', 'captchaAction'=>'/home/login/captcha'],
 //            ['code', 'captcha', 'message'=>'验证码输入不正确，请重新输入！3次输入错误，账号将被锁定1年！', 'captchaAction'=>'/login/default/captcha'],
         ];
     }
@@ -83,6 +83,17 @@ class LoginForm extends Model
         return Yii::$app->user->login($this->getIdentity());
     }
 
+    /**
+     * 用户登录记录ip和时间
+     */
+    public function recordIp()
+    {
+       $user = User::findOne($this->getIdentity()->id);
+       $user->login_ip = Yii::$app->request->getUserIP();
+       $user->login_time = time();
+       return $user->save();
+    }
+
     public function checkLock()
     {
         $redis = Yii::$app->redis;
@@ -91,8 +102,11 @@ class LoginForm extends Model
         $flag = $redis->HGET($key,'flag');
         $exprietime = $redis->hget($key,'exprietime');
        
-        if( $num && $flag && $exprietime > time()){
-            return ['num'=>$num,'flag'=>$flag];
+        if( $num > 1 ){
+            if( $flag == 1 || ($flag && $exprietime > time()) ){
+                return ['num' => $num,'flag'=>$flag];
+            }   
+            
         }
         return false;
 
@@ -226,16 +240,23 @@ class LoginForm extends Model
                 $redis->expire($key, 60*60);
                 return;
             }
-            if ($num == 2){
+
+            if($num == 1 ){
                 $redis->hset($key, 'exprietime', $time+30*60); //30分钟
                 $redis->hset($key, 'flag', 1);
+                $redis->expire($key, 30*60);
+                return;
+            }
+            if ($num == 2){
+                $redis->hset($key, 'exprietime', $time+30*60); //30分钟
+                $redis->hset($key, 'flag', 2);
                 $redis->expire($key, 60*60);
                 return;
             }
             if( $num == 3 )
             {
                 $redis->hset($key, 'exprietime', $time+24*60*60); //24小时
-                $redis->hset($key, 'flag', 2);
+                $redis->hset($key, 'flag', 3);
                 $redis->expire($key, 24*60*60);
             }   
         }
