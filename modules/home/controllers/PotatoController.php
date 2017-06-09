@@ -2,8 +2,9 @@
 
 namespace app\modules\home\controllers;
 
-
 use app\modules\home\models\Potato;
+use app\modules\home\models\User;
+use Yii;
 use app\controllers\GController;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
