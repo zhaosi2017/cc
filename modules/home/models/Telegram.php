@@ -717,7 +717,7 @@ class Telegram extends Model
         // 开始操作.
         $this->sendData = [
             'chat_type' => 1,
-            'chat_id' => $this->potatoUid,
+            'chat_id' => $this->telegramUid,
             'text' => $this->startText,
         ];
         $this->sendTelegramData();
