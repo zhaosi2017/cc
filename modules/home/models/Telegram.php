@@ -144,30 +144,20 @@ class Telegram extends Model
      */
     public function setCode()
     {
-        // 查询是否绑定自己的账号.
-        if ($this->telegramUid != $this->telegramContactUid) {
-            return 'error_code :'.$this->errorCode['not_yourself'];
-        }
-
         // 查询是否绑定.
-        $res = User::findOne(['telegram_user_id' => $this->telegramUid]);
-        if ($res) {
-            return 'error_code :'.$this->errorCode['exist'];
-        } else {
-            $dealData = [
-                Yii::$app->params['telegram_pre'],
-                $this->telegramContactUid,
-                $this->telegramContactPhone,
-            ];
+        $dealData = [
+            Yii::$app->params['telegram_pre'],
+            $this->telegramContactUid,
+            $this->telegramContactPhone,
+        ];
 
-            $dealData = implode('-', $dealData);
-            $charid = strtoupper(md5(uniqid(mt_rand(), true)));
-            $this->code = substr($charid, 0, 8);
-            $telegramData = base64_encode(Yii::$app->security->encryptByKey($dealData, Yii::$app->params['telegram']));
-            // 验证码过期时间半小时.
-            Yii::$app->redis->setex($this->code, 30*60, $telegramData);
-            $this->code = $this->code.'  [请在callu平台输入该验证码, 完成绑定操作!]';
-        }
+        $dealData = implode('-', $dealData);
+        $charid = strtoupper(md5(uniqid(mt_rand(), true)));
+        $this->code = substr($charid, 0, 8);
+        $telegramData = base64_encode(Yii::$app->security->encryptByKey($dealData, Yii::$app->params['telegram']));
+        // 验证码过期时间半小时.
+        Yii::$app->redis->setex($this->code, 30*60, $telegramData);
+        $this->code = $this->code.'  [请在callu平台输入该验证码, 完成绑定操作!]';
     }
 
     /**
@@ -680,20 +670,20 @@ class Telegram extends Model
      */
     public function sendBindCode()
     {
-        $this->sendData = [
-            'chat_id' => $this->telegramUid,
-            'text' => $this->startText,
-        ];
-        $this->sendTelegramData();
+        // 查询是否绑定自己的账号.
+        if ($this->telegramUid != $this->telegramContactUid) {
+            $this->sendData = [
+                'chat_id' => $this->telegramUid,
+                'text' => '请先分享自己的名片到机器人，完成绑定操作!',
+            ];
+        } else {
+            $this->setCode();
+            $this->sendData = [
+                'chat_id' => $this->telegramUid,
+                'text' => $this->code,
+            ];
+        }
 
-        $callbackQuery = explode('-', $this->callbackQuery);
-        $this->telegramContactUid = $callbackQuery[1];
-        $this->telegramContactPhone = $callbackQuery[2];
-        $this->setCode();
-        $this->sendData = [
-            'chat_id' => $this->telegramUid,
-            'text' => $this->code,
-        ];
         $this->sendTelegramData();
         return $this->errorCode['success'];
     }
@@ -724,24 +714,23 @@ class Telegram extends Model
      */
     public function callTelegramPerson()
     {
-        $res = User::findOne(['telegram_user_id' => $this->telegramUid]);
-        if (!$res) {
-            $this->sendData = [
-                'chat_id' => $this->telegramUid,
-                'text' => '你不是我们系统会员，不能执行该操作!',
-            ];
-            $this->sendTelegramData();
-        }
-        $this->callPersonData = $res;
+        // 开始操作.
         $this->sendData = [
-            'chat_id' => $this->telegramUid,
+            'chat_type' => 1,
+            'chat_id' => $this->potatoUid,
             'text' => $this->startText,
         ];
         $this->sendTelegramData();
-        $contactArr = explode('-', $this->callbackQuery);
-        $user = User::findOne(['telegram_user_id' => $contactArr[1]]);
-        $this->calledPersonData = $user;
+
+        $res = User::findOne(['telegram_user_id' => $this->telegramUid]);
+        if (!$res) {
+            // 发送验证码，完成绑定.
+            return $this->sendBindCode();
+        }
+        $this->callPersonData = $res;
+        $user = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
         if ($user) {
+            $this->calledPersonData = $user;
             $nickname = !empty($user->nickname) ? $user->nickname : '他/她';
 
             // 呼叫本人.
@@ -836,7 +825,7 @@ class Telegram extends Model
         } else {
             $this->sendData = [
                 'chat_id' => $this->telegramUid,
-                'text' => $this->errorMessage['noexist'],
+                'text' => $this->telegramContactLastName.$this->telegramContactFirstName.'不是我们系统会员，不能执行该操作!',
             ];
             $this->sendTelegramData();
         }
@@ -922,18 +911,15 @@ class Telegram extends Model
      */
     public function saveCallRecordData($status)
     {
-        $contactArr = explode('-', $this->callbackQuery);
-        $activeUser = User::findOne(['telegram_user_id' => $this->telegramUid]);
-        $unActiveUser = User::findOne(['telegram_user_id' => $contactArr[1]]);
         $callRecord = new CallRecord();
-        $callRecord->active_call_uid = $activeUser->id;
-        $callRecord->unactive_call_uid = $contactArr['1'];
-        $callRecord->active_account = $activeUser->account;
-        $callRecord->unactive_account = $unActiveUser->account;
-        $callRecord->active_nickname = $activeUser->nickname;
-        $callRecord->unactive_nickname = $unActiveUser->nickname;
-        $callRecord->contact_number = $activeUser->country_code.$activeUser->phone_number;
-        $callRecord->unactive_contact_number = $unActiveUser->country_code.$unActiveUser->phone_number;
+        $callRecord->active_call_uid = $this->callPersonData->id;
+        $callRecord->unactive_call_uid = $this->calledPersonData->id;
+        $callRecord->active_account = $this->callPersonData->account;
+        $callRecord->unactive_account = $this->calledPersonData->account;
+        $callRecord->active_nickname = $this->callPersonData->nickname;
+        $callRecord->unactive_nickname = $this->calledPersonData->nickname;
+        $callRecord->contact_number = $this->callPersonData->country_code.$this->callPersonData->phone_number;
+        $callRecord->unactive_contact_number = $this->calledPersonData->country_code.$this->calledPersonData->phone_number;
         $callRecord->status = $status;
         $callRecord->call_time = time();
         $callRecord->type = $this->isUrgentCall ? 1 : 0;

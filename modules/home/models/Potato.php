@@ -494,8 +494,8 @@ class Potato extends Model
         }
         $this->callPersonData = $res;
         $user = User::findOne(['potato_user_id' => $this->potatoContactUid]);
-        $this->calledPersonData = $user;
         if ($user) {
+            $this->calledPersonData = $user;
             $nickname = !empty($user->nickname) ? $user->nickname : '他/她';
             // 呼叫本人.
             $nexmoData = [

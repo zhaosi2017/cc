@@ -74,31 +74,8 @@ class TelegramController extends GController
                 // 分享了名片.
                 $telegram->telegramContactUid = $message['contact']['user_id'];
                 $telegram->telegramContactPhone = $message['contact']['phone_number'];
-                // 发送操作菜单.
-                return $telegram->sendMenulist();
-            } elseif (isset($postData['callback_query'])) {
-                // 点击菜单回调操作.
-                $telegram->callbackQuery = $postData['callback_query']['data'];
-                $telegram->telegramContactFirstName = $postData['callback_query']['message']['chat']['first_name'];
-                $telegram->telegramContactLastName = $postData['callback_query']['message']['chat']['last_name'];
-                $action = explode('-', $telegram->callbackQuery);
-                $action = $action[0];
-                switch ($action) {
-                    case $telegram->queryCallbackDataPre:
-                        $result = $telegram->queryTelegramData();
-                        echo $result;
-                        break;
-                    case $telegram->callCallbackDataPre;
-                        $telegram->callTelegramPerson();
-                        break;
-                    case $telegram->bindCallbackDataPre:
-                        $result = $telegram->sendBindCode();
-                        return $result;
-                        break;
-                    default :
-                        echo 'error_code :'.$telegram->errorCode['invalid_operation'];
-                        break;
-                }
+
+                return $telegram->callTelegramPerson();
             }
         } catch (\Exception $e) {
             echo $e->getMessage();
