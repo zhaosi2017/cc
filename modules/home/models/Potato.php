@@ -335,30 +335,6 @@ class Potato extends Model
     }
 
     /**
-     * 获取查询菜单.
-     */
-    public function getQueryMenu()
-    {
-        return $this->queryMenu;
-    }
-
-    /**
-     * 获取呼叫菜单.
-     */
-    public function getCallMenu()
-    {
-        return $this->callMenu;
-    }
-
-    /**
-     * 获取绑定菜单.
-     */
-    public function getBindMenu()
-    {
-        return $this->bindMenu;
-    }
-
-    /**
      * @return mixed
      */
     public function getKeyboard()
@@ -433,7 +409,7 @@ class Potato extends Model
     /**
      * 欢迎.
      */
-    public function telegramWellcome()
+    public function potatoWellcome()
     {
         $this->setKeyboard();
         // 发送操作菜单.
@@ -446,7 +422,7 @@ class Potato extends Model
             ]
         ];
 
-        $this->sendTelegramData();
+        $this->sendPotatoData();
         return $this->errorCode['success'];
     }
 

@@ -9,10 +9,7 @@ use app\modules\home\models\CallRecord;
 class Telegram extends Model
 {
 
-    private $queryText = "查询";
     private $telegramText = '操作菜单';
-    private $callText = "呼叫";
-    private $bindText = '绑定账号';
     private $startText = '开始操作, 请稍后!';
     private $wellcomeText = '欢迎';
     private $keyboardText = '分享自己名片';
@@ -34,21 +31,10 @@ class Telegram extends Model
     private $telegramContactPhone;
     private $telegramContactFirstName;
     private $telegramContactLastName;
-    private $queryCallbackDataPre = 'cc_query';
-    private $callCallbackDataPre = 'cc_call';
-    private $bindCallbackDataPre = 'cc_bind';
-    private $queryCallbackData;
-    private $callCallbackData;
-    private $bindCallbackData;
-    private $callbackQuery;
     private $callPersonData;
     private $calledPersonData;
 
-    private $queryMenu;
-    private $callMenu;
-    private $bindMenu;
     private $keyboard;
-    private $inlineKeyboard;
     private $sendData;
     private $errorCode = [
         'success' => 200,
@@ -169,42 +155,6 @@ class Telegram extends Model
     }
 
     /**
-     * 设置查询菜单.
-     */
-    public function setQueryMenu()
-    {
-        $this->setQueryCallbackData();
-        $this->queryMenu = array(
-            'text' => $this->queryText,
-            'callback_data' => $this->queryCallbackData,
-        );
-    }
-
-    /**
-     * 设置呼叫菜单.
-     */
-    public function setCallMenu()
-    {
-        $this->setCallCallbackData();
-        $this->callMenu = array(
-            'text' => $this->callText,
-            'callback_data' => $this->callCallbackData,
-        );
-    }
-
-    /**
-     * 设置绑定菜单.
-     */
-    public function setBindMenu()
-    {
-        $this->setBindCallbackData();
-        $this->bindMenu = array(
-            'text' => $this->bindText,
-            'callback_data' => $this->bindCallbackData,
-        );
-    }
-
-    /**
      * 设置keyboard.
      */
     public function setKeyboard()
@@ -220,86 +170,11 @@ class Telegram extends Model
     }
 
     /**
-     * 设置查询回调参数.
-     */
-    public function setQueryCallbackData()
-    {
-        $this->queryCallbackData = implode('-', array($this->queryCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone));
-    }
-
-    /**
-     * 设置呼叫回调参数.
-     */
-    public function setCallCallbackData()
-    {
-        $this->callCallbackData = implode('-', array($this->callCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone));
-    }
-
-    /**
-     * 设置绑定回调参数.
-     */
-    public function setBindCallbackData()
-    {
-        $this->bindCallbackData = implode('-', array($this->bindCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone));
-    }
-
-    /**
-     * 设置菜单.
-     *
-     * @return json.
-     */
-    public function setInlineKeyboard()
-    {
-        // 查询是否绑定.
-        $res = User::findOne(['telegram_user_id' => $this->telegramUid]);
-        if ($res) {
-            $this->setQueryMenu();
-            $this->setCallMenu();
-            $this->inlineKeyboard = [
-                [
-                    $this->queryMenu,
-                    $this->callMenu,
-                ]
-            ];
-        } else {
-            $this->setBindMenu();
-            $this->setQueryMenu();
-            $this->setCallMenu();
-            if ($this->telegramContactUid == $this->telegramUid) {
-                $this->inlineKeyboard = [
-                    [
-                        $this->bindMenu,
-                    ],
-                    [
-                        $this->queryMenu,
-                        $this->callMenu,
-                    ]
-                ];
-            } else {
-                $this->inlineKeyboard = [
-                    [
-                        $this->queryMenu,
-                        $this->callMenu,
-                    ]
-                ];
-            }
-        }
-    }
-
-    /**
      * @param $value
      */
     public function setSendData($value)
     {
         $this->sendData = $value;
-    }
-
-    /**
-     * @param $value
-     */
-    public function setCallbackQuery($value)
-    {
-        $this->callbackQuery = $value;
     }
 
     /**
@@ -324,30 +199,6 @@ class Telegram extends Model
     public function getTelegramText()
     {
         return $this->telegramText;
-    }
-
-    /**
-     * @return string
-     */
-    public function getQueryText()
-    {
-        return $this->queryText;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCallText()
-    {
-        return $this->callText;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBindText()
-    {
-        return $this->bindText;
     }
 
     /**
@@ -467,30 +318,6 @@ class Telegram extends Model
     }
 
     /**
-     * 获取查询菜单.
-     */
-    public function getQueryMenu()
-    {
-        return $this->queryMenu;
-    }
-
-    /**
-     * 获取呼叫菜单.
-     */
-    public function getCallMenu()
-    {
-        return $this->callMenu;
-    }
-
-    /**
-     * 获取绑定菜单.
-     */
-    public function getBindMenu()
-    {
-        return $this->bindMenu;
-    }
-
-    /**
      * @return mixed
      */
     public function getKeyboard()
@@ -507,67 +334,11 @@ class Telegram extends Model
     }
 
     /**
-     * 获取查询回调参数.
-     */
-    public function getQueryCallbackData()
-    {
-        return $this->queryCallbackData;
-    }
-
-    /**
-     * 获取呼叫回调参数
-     */
-    public function getCallCallbackData()
-    {
-        return $this->callCallbackData;
-    }
-
-    /**
-     * 获取绑定回调参数.
-     */
-    public function getBindCallbackData()
-    {
-        return $this->bindCallbackData;
-    }
-
-    /**
-     * @return string
-     */
-    public function getQueryCallbackDataPre()
-    {
-        return $this->queryCallbackDataPre;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCallCallbackDataPre()
-    {
-        return $this->callCallbackDataPre;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBindCallbackDataPre()
-    {
-        return $this->bindCallbackDataPre;
-    }
-
-    /**
      * @return mixed
      */
     public function getSendData()
     {
         return $this->sendData;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCallbackQuery()
-    {
-        return $this->callbackQuery;
     }
 
     /**
@@ -600,16 +371,6 @@ class Telegram extends Model
     public function getErrorMessage()
     {
         return $this->errorMessage;
-    }
-
-    /**
-     * 设置菜单.
-     *
-     * @return json.
-     */
-    public function getInlineKeyboard()
-    {
-        return $this->inlineKeyboard;
     }
 
     /**
@@ -649,23 +410,6 @@ class Telegram extends Model
     }
 
     /**
-     * 发送菜单.
-     */
-    public function sendMenulist()
-    {
-        $this->setInlineKeyboard();
-        $this->sendData = [
-            'chat_id' => $this->telegramUid,
-            'text' => $this->telegramText,
-            'reply_markup' => [
-                'inline_keyboard' => $this->inlineKeyboard,
-            ]
-        ];
-
-        return $this->sendTelegramData();
-    }
-
-    /**
      * 发送绑定telegram账号的验证码.
      */
     public function sendBindCode()
@@ -684,27 +428,6 @@ class Telegram extends Model
             ];
         }
 
-        $this->sendTelegramData();
-        return $this->errorCode['success'];
-    }
-
-    /**
-     * 查询telegram账号.
-     */
-    public function queryTelegramData()
-    {
-        $this->sendData = [
-            'chat_id' => $this->telegramUid,
-            'text' => $this->startText,
-        ];
-        $this->sendTelegramData();
-        $contactArr = explode('-', $this->callbackQuery);
-        // 查询是否绑定.
-        $res = User::findOne(['telegram_user_id' => $contactArr[1]]);
-        $this->sendData = [
-            'chat_id' => $this->telegramUid,
-            'text' => $res ? $this->errorMessage['exist'] : $this->errorMessage['noexist'],
-        ];
         $this->sendTelegramData();
         return $this->errorCode['success'];
     }
