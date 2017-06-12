@@ -615,6 +615,14 @@ class Potato extends Model
     }
 
     /**
+     * 白名单限制.
+     */
+    public function whiteList()
+    {
+        return WhiteList::findOne(['uid' => $this->calledPersonData, 'white_uid'=> $this->callPersonData->id]);
+    }
+
+    /**
      * @param string $nickname 呼叫人.
      * @param arra   $data     数据.
      *
@@ -622,16 +630,27 @@ class Potato extends Model
      */
     public function callPerson($nickname, $data)
     {
+        $result = [
+            'status' => true,
+            'message' => '',
+        ];
+        // 白名单检查.
+        $res = $this->whiteList();
+        if (!$res) {
+            $this->sendData = [
+                'chat_type' => 1,
+                'chat_id' => $this->potatoUid,
+                'text' => '你不在'.$nickname.'的白名单列表, 不能呼叫!',
+            ];
+            $this->sendTelegramData();
+            return $result;
+        }
         // 呼叫限制检查.
         $res = $this->callLimit();
         if (!$res['status']) {
             return $res;
         }
 
-        $result = [
-            'status' => true,
-            'message' => '',
-        ];
         $this->sendData = $data;
         $res = $this->sendPotatoData($this->nexmoUrl);
         $res = json_decode($res, true);

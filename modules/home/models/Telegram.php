@@ -5,6 +5,7 @@ use yii;
 use yii\base\Model;
 use app\modules\home\models\User;
 use app\modules\home\models\CallRecord;
+use app\modules\home\models\WhiteList;
 
 class Telegram extends Model
 {
@@ -593,7 +594,7 @@ class Telegram extends Model
      */
     public function whiteList()
     {
-
+        return WhiteList::findOne(['uid' => $this->calledPersonData, 'white_uid'=> $this->callPersonData->id]);
     }
 
     /**
@@ -604,16 +605,26 @@ class Telegram extends Model
      */
     public function callPerson($nickname, $data)
     {
+        $result = [
+            'status' => true,
+            'message' => '',
+        ];
+        // 白名单检查.
+        $res = $this->whiteList();
+        if (!$res) {
+            $this->sendData = [
+                'chat_id' => $this->telegramUid,
+                'text' => '你不在'.$nickname.'的白名单列表, 不能呼叫!',
+            ];
+            $this->sendTelegramData();
+            return $result;
+        }
         // 呼叫限制检查.
         $res = $this->callLimit();
         if (!$res['status']) {
             return $res;
         }
 
-        $result = [
-            'status' => true,
-            'message' => '',
-        ];
         $this->sendData = $data;
         $res = $this->sendTelegramData($this->nexmoUrl);
         $res = json_decode($res, true);
