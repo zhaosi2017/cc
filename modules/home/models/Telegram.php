@@ -453,7 +453,7 @@ class Telegram extends Model
         } elseif ($this->telegramUid == $this->telegramContactUid) {
             $this->sendData = [
                 'chat_id' => $this->telegramUid,
-                'text' => '你已经完成了绑定操作!',
+                'text' => '您已经完成了绑定操作!',
             ];
             $this->sendTelegramData();
             return $this->errorCode['success'];
@@ -463,6 +463,16 @@ class Telegram extends Model
         if ($user) {
             $this->calledPersonData = $user;
             $nickname = !empty($user->nickname) ? $user->nickname : '他/她';
+            // 白名单检查.
+            $res = $this->whiteList();
+            if (!$res) {
+                $this->sendData = [
+                    'chat_id' => $this->telegramUid,
+                    'text' => '您不在'.$nickname.'的白名单列表内, 不能呼叫!',
+                ];
+                $this->sendTelegramData();
+                return $this->errorCode['success'];
+            }
 
             // 呼叫本人.
             $nexmoData = [
@@ -616,16 +626,6 @@ class Telegram extends Model
             'status' => true,
             'message' => '',
         ];
-        // 白名单检查.
-        $res = $this->whiteList();
-        if (!$res) {
-            $this->sendData = [
-                'chat_id' => $this->telegramUid,
-                'text' => '您不在'.$nickname.'的白名单列表内, 不能呼叫!',
-            ];
-            $this->sendTelegramData();
-            return $result;
-        }
         // 呼叫限制检查.
         $res = $this->callLimit();
         if (!$res['status']) {

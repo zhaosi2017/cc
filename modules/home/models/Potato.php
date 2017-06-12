@@ -481,6 +481,17 @@ class Potato extends Model
         if ($user) {
             $this->calledPersonData = $user;
             $nickname = !empty($user->nickname) ? $user->nickname : '他/她';
+            // 白名单检查.
+            $res = $this->whiteList();
+            if (!$res) {
+                $this->sendData = [
+                    'chat_type' => 1,
+                    'chat_id' => $this->potatoUid,
+                    'text' => '您不在'.$nickname.'的白名单列表内, 不能呼叫!',
+                ];
+                $this->sendPotatoData();
+                return $this->errorCode['success'];
+            }
             // 呼叫本人.
             $nexmoData = [
                 "api_key" => $this->apiKey,
@@ -642,17 +653,6 @@ class Potato extends Model
             'status' => true,
             'message' => '',
         ];
-        // 白名单检查.
-        $res = $this->whiteList();
-        if (!$res) {
-            $this->sendData = [
-                'chat_type' => 1,
-                'chat_id' => $this->potatoUid,
-                'text' => '您不在'.$nickname.'的白名单列表内, 不能呼叫!',
-            ];
-            $this->sendTelegramData();
-            return $result;
-        }
         // 呼叫限制检查.
         $res = $this->callLimit();
         if (!$res['status']) {
