@@ -207,7 +207,7 @@ class LoginForm extends Model
             $this->addError('username', '用户再错两次账号将被冻结三十分钟');
         }
         if($flag == 1){
-            $this->addError('username', '用户已被冻结30分钟');
+            $this->addError('username', '用户已被冻结30分钟,30分钟后再错误直接冻结24小时');
         }
         if($flag == 2){
             $this->addError('username', '用户已被冻结24小时');

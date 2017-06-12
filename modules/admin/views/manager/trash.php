@@ -66,10 +66,18 @@ $actionId = Yii::$app->requestedAction->id;
                 'template' => '{recover}',
                 'buttons' => [
                     'recover' => function($url){
-                        return Html::a('恢复',$url,[
-                            'data-method' => 'post',
-                            'data' => ['confirm' => '你确定要恢复吗?']
-                        ]);
+                        if(Yii::$app->user->can('admin/manager/recover')){
+                            return Html::a('恢复',$url,[
+                                'data-method' => 'post',
+                                'data' => ['confirm' => '你确定要恢复吗?']
+                            ]); 
+                        }else{
+                            $url = 'trash';
+                             return Html::a('恢复',$url,[
+                                'data-method' => 'get',
+                                'data' => ['confirm' => '您没有该权限！']
+                            ]); 
+                        }
                     },
                 ],
             ],
