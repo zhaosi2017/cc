@@ -91,4 +91,9 @@ class CallRecord extends \app\models\CActiveRecord
         ];
     }
 
+     public function getUsers()
+    {
+        return $this->hasOne(User::className(), ['id' => 'active_call_uid']);
+    }
+
 }
