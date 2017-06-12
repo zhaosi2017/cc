@@ -12,7 +12,7 @@ if( Yii::$app->getSession()->hasFlash('success') ) {
                 color: #3c763d;
                 background-color: #dff0d8;
                 border-color: #d6e9c6;
-                width: 25%;
+                width: 30%;
                 left: 40%;
                 top: 30%;
                 z-index: 99999999;
@@ -39,7 +39,7 @@ if( Yii::$app->getSession()->hasFlash('error') ) {
                 color: #8a6d3b;
                 background-color: #fcf8e3;
                 border-color: #faebcc;
-                width: 25%;
+                width: 30%;
                 left: 40%;
                 top: 30%;
                 z-index: 99999999;
@@ -66,7 +66,7 @@ if( Yii::$app->getSession()->hasFlash('info') ) {
                 color: #31708f;
                 background-color: #d9edf7;
                 border-color: #bce8f1;
-                width: 25%;
+                width: 30%;
                 left: 40%;
                 top: 30%;
                 z-index: 99999999;
