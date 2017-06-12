@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\modules\home\models\CallRecord;
+use app\modules\home\models\User;
 
 /**
  * CallRecordSearch represents the model behind the search form about `app\modules\home\models\CallRecord`.
@@ -24,9 +25,10 @@ class CallRecordSearch extends CallRecord
     {
         return [
             [['id', 'active_call_uid', 'unactive_call_uid', 'call_by_same_times', 'type', 'status'], 'integer'],
-            [['contact_number', 'search_type', 'search_keywords', 'active_account', 'call_time_start', 'call_time_end'], 'safe'],
+            [['contact_number', 'search_type', 'search_keywords', 'active_account', 'call_time_start', 'call_time_end','long_time','total_nums'], 'safe'],
         ];
     }
+
 
     /**
      * @inheritdoc
