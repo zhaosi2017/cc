@@ -8,7 +8,6 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 $this->title = '防骚扰';
 $this->params['breadcrumbs'][] = ['label' => '用户列表', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['harassment', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = $this->title ;
 ?>
 <div class="user-harassment">
