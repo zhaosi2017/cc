@@ -638,7 +638,7 @@ class Potato extends Model
      */
     public function whiteList()
     {
-        return WhiteList::findOne(['uid' => $this->calledPersonData, 'white_uid'=> $this->callPersonData->id]);
+        return WhiteList::findOne(['uid' => $this->calledPersonData->id, 'white_uid'=> $this->callPersonData->id]);
     }
 
     /**
