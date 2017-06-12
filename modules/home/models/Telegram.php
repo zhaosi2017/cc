@@ -450,6 +450,13 @@ class Telegram extends Model
         if (!$res) {
             // 发送验证码，完成绑定.
             return $this->sendBindCode();
+        } elseif ($this->telegramUid == $this->telegramContactUid) {
+            $this->sendData = [
+                'chat_id' => $this->telegramUid,
+                'text' => '你已经完成了绑定操作!',
+            ];
+            $this->sendTelegramData();
+            return $this->errorCode['success'];
         }
         $this->callPersonData = $res;
         $user = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
