@@ -589,6 +589,14 @@ class Telegram extends Model
     }
 
     /**
+     * 白名单限制.
+     */
+    public function whiteList()
+    {
+
+    }
+
+    /**
      * @param string $nickname 呼叫人.
      * @param arra   $data     数据.
      *
