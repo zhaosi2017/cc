@@ -250,5 +250,17 @@ class Manager extends CActiveRecord implements IdentityInterface
     {
         return $this->getAuthKey() === $authKey;
     }
+    /**
+     * 用户修改密码后，删除该用户登录时错误密码的记录数
+     */
+     public function deleteLoginNum()
+    {
+        $redis = Yii::$app->redis;
+        $key = $this->account.'-adminnum' ; 
+        if($redis->exists($key))
+        {
+            $redis->del($key);
+        }
+    }
 
 }

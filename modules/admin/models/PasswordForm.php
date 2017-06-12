@@ -60,6 +60,7 @@ class PasswordForm extends Model
                 $user = Manager::findOne(Yii::$app->user->id);
                 $user->scenario = 'passwordupdate';
                 $user->password = $this->newPassword;
+                $user->deleteLoginNum();
                 if($user->save()){
                     return true;
                 }else{
