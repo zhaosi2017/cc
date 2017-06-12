@@ -12,4 +12,7 @@ return [
     'nexmo_account_number'  => '+855965323063',
     'telegram' => 'callcenter',
     'telegram_pre' => 'cctelegram',
+    'login_flag_time1' => 180,
+    'login_flag_time2'=> 180,
+    'login_flag_time3'=>360
 ];

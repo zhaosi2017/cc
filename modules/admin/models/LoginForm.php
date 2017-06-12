@@ -4,6 +4,7 @@ namespace app\modules\admin\models;
 
 use Yii;
 use yii\base\Model;
+use app\modules\admin\models\Manager;
 
 /**
  * LoginForm is the model behind the login form.
@@ -32,6 +33,7 @@ class LoginForm extends Model
             ['username', 'validateAccount'],
             ['password', 'validatePassword'],
             ['code', 'captcha', 'message'=>'验证码输入不正确', 'captchaAction'=>'/admin/login/captcha'],
+            ['username','checkAccountStatus'],
         ];
     }
 
@@ -90,11 +92,24 @@ class LoginForm extends Model
         }
     }
 
+    public function checkAccountStatus()
+    {
+       $user = $this->getUser();
+       if(isset($user->status) && $user->status != Manager::NORMAL_STATUS)
+       {
+             $this->addError('username','用户已被冻结或作废,请联系管理员');
+       }
+       
+    }
+
     //写入登录日志
     public function afterValidate()
     {
         $errors = $this->getErrors();
 
+    
+        
+        
         /*if(isset($errors['username'])){
             if(!$this->writeLoginLog(4)){
                 parent::afterValidate();
@@ -123,39 +138,29 @@ class LoginForm extends Model
     {
         if($this->username)
         {
-
             $redis = Yii::$app->redis;
-           //set the data in redis string 
             $key = $this->username.'-'.'adminnum';
+            $time = time();
+            $redis->hincrby($key, 'num', 1);
             $num = $redis->hget($key,'num');
 
-            $time = time();
+            switch ($num) {
+                case 1:
+                        $redis->expire($key,60*60);
+                        break;
+                case 3:
+                        $redis->hset($key,'exprietime',$time + Yii::$app->params['login_flag_time1']); //30分钟
+                        $redis->hset($key,'flag',1);
+                        $redis->expire($key,Yii::$app->params['login_flag_time1']+Yii::$app->params['login_flag_time2']);
+                        break;
 
-            $redis->hincrby($key, 'num', 1);
+                case 4:
+                        $redis->hset($key,'exprietime', $time + Yii::$app->params['login_flag_time3']); //24小时
+                        $redis->hset($key,'flag',2);
+                        $redis->expire($key,Yii::$app->params['login_flag_time3']);
+                        break;
+            }
            
-            if(empty($num)){
-                $redis->expire($key,60*60);
-                return;
-            }
-
-            if($num == 1 ){
-                $redis->hset($key, 'exprietime', $time+30*60); //30分钟
-                $redis->hset($key, 'flag', 1);
-                $redis->expire($key, 30*60);
-                return;
-            }
-
-            if ($num == 2){
-                $redis->hset($key,'exprietime',$time+30*60); //30分钟
-                $redis->hset($key,'flag',2);
-                $redis->expire($key,60*60);
-            }
-            if( $num == 3 )
-            {
-                $redis->hset($key,'exprietime',$time+24*60*60); //24小时
-                $redis->hset($key,'flag',3);
-                $redis->expire($key,24*60*60);
-            }   
         }
         
     }
@@ -176,21 +181,37 @@ class LoginForm extends Model
     {
 
         $redis = Yii::$app->redis;
-      
-        //set the data in redis string 
         $key = $this->username.'-'.'adminnum';
         $num =  $redis->hget($key,'num') ;
         $exprietime = $redis->hget($key,'exprietime');
         $flag = $redis->hget($key,'flag');
         
         if( $num > 1 ){
-            if( $flag == 1 || ($flag && $exprietime > time()) ){
-                return ['num' => $num,'flag'=>$flag];
+            if(( $flag && $exprietime > time()) ){
+                $flag == 1 &&  $message ='该用户已被冻结30分钟';
+                $flag == 2 &&  $message ='该用户已被冻结24小时';
+                $this->addError('username',  $message);
+                return true;
             }   
-            
         }
         return false;
 
+    }
+
+
+     public function afterCheckLock()
+    {
+        $flag = Yii::$app->redis->hget($this->username.'-'.'adminnum','flag');
+        $num = Yii::$app->redis->hget($this->username.'-'.'adminnum','num');
+        if($num == 1){
+            $this->addError('username', '用户再错两次账号将被冻结三十分钟');
+        }
+        if($flag == 1){
+            $this->addError('username', '用户已被冻结30分钟');
+        }
+        if($flag == 2){
+            $this->addError('username', '用户已被冻结24小时');
+        }
     }
 
     /**

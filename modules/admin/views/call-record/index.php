@@ -15,8 +15,11 @@ $actionId = Yii::$app->requestedAction->id;
 <div class="call-record-index">
     <p class="btn-group hidden-xs">
         <?= Html::a('呼叫记录', ['index'], ['class' => $actionId=='index' ? 'btn btn-primary' : 'btn btn-outline btn-default']) ?>
-        <?= Html::a('黑名单', ['blacklist'], ['class' => $actionId=='blacklist' ? 'btn btn-primary' : 'btn btn-outline btn-default']) ?>
-        <?= Html::a('垃圾筒', ['trash'], ['class' => $actionId=='trash' ? 'btn btn-primary' : 'btn btn-outline btn-default']) ?>
+        <!--  
+        // Html::a('黑名单', ['blacklist'], ['class' => $actionId=='blacklist' ? 'btn btn-primary' : 'btn btn-outline btn-default']) 
+
+        // Html::a('垃圾筒', ['trash'], ['class' => $actionId=='trash' ? 'btn btn-primary' : 'btn btn-outline btn-default']) 
+           -->
     </p>
     <div class="help-block m-t"></div>
     <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -28,6 +31,8 @@ $actionId = Yii::$app->requestedAction->id;
         'rowOptions' => function($model) {
             return ['id' => 'tr_'.$model->id, 'class' => '_tr'];
         },
+        'layout' => "{items}\n  <div><ul class='pagination'><li style='display:inline;'><span>共有".$dataProvider->getTotalCount(). "条数据 <span></li></ul>{pager}  </div>",
+
         'pager'=>[
             'firstPageLabel'=>"首页",
             'prevPageLabel'=>'上一页',

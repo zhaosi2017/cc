@@ -1,9 +1,6 @@
 <?php
 
 $params = require(__DIR__ . '/params.php');
-$redis = require(__DIR__ . '/redis.php');
-$params = array_merge($params,$redis);
-
 $config = [
     'id' => 'admin',
     'language'=>'zh-CN',
@@ -90,11 +87,11 @@ $config = [
         ],
     ],
     'params' => $params,
-    'defaultRoute'=>'home',
+    'defaultRoute'=>'admin',
     'modules' => [
-        'home' => [
-            'class' => 'app\modules\home\Module'
-        ],
+        // 'home' => [
+        //     'class' => 'app\modules\home\Module'
+        // ],
         'admin' => [
             'class' => 'app\modules\admin\Module'
         ],
