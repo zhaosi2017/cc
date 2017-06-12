@@ -83,7 +83,7 @@ class UserSearch extends User
        
         if(empty($this->start_date)  && !empty($this->end_date))
         {
-            $query->andFilterWhere(['<=','user.reg_time', strtotime($this->end_date)]);
+            $query->andFilterWhere(['<=','user.reg_time', strtotime($this->end_date)+24*60*60]);
         }
 
         if(!empty($this->start_date)  && empty($this->end_date))
@@ -98,7 +98,7 @@ class UserSearch extends User
                 $this->end_date = $this->start_date;
                 $this->start_date = $tmp;
             }
-            $query->andFilterWhere(['between','user.reg_time', strtotime($this->start_date), strtotime($this->end_date)]);
+            $query->andFilterWhere(['between','user.reg_time', strtotime($this->start_date), strtotime($this->end_date)+24*60*60]);
         }
 
         $this->search_type == 1 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like','user.potato', $this->search_keywords]);

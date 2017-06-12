@@ -89,7 +89,7 @@ class CallRecordSearch extends CallRecord
         }
 
         if(empty($this->call_time_start) && !empty($this->call_time_end)){
-             $end_time = strtotime($this->call_time_end);
+             $end_time = strtotime($this->call_time_end)+24*60*60;
              $query->andFilterWhere(['<=','call_time', $end_time,]);
         }
 
@@ -100,7 +100,7 @@ class CallRecordSearch extends CallRecord
                 $this->call_time_start = $tmp;
             }
             $start_time = strtotime( $this->call_time_start);
-            $end_time = strtotime($this->call_time_end);
+            $end_time = strtotime($this->call_time_end)+24*60*60;
             $query->andFilterWhere(['between','call_time', $start_time, $end_time]);
         }
         $this->search_type ==1 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like', 'active_account', $this->search_keywords]);
