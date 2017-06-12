@@ -134,14 +134,14 @@ class ManagerController extends PController
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $model->updateAttributes(['status'=>1]) ? $model->sendSuccess() : $model->sendError();
+        $model->updateAttributes(['update_at'=>time(),'update_id'=>Yii::$app->user->id,'status'=>1]) ? $model->sendSuccess() : $model->sendError();
         return $this->redirect(['index']);
     }
 
     public function actionRecover($id)
     {
         $model = $this->findModel($id);
-        $model->updateAttributes(['status'=>0]) ? $model->sendSuccess() : $model->sendError();
+        $model->updateAttributes(['update_at'=>time(),'update_id'=>Yii::$app->user->id,'status'=>0]) ? $model->sendSuccess() : $model->sendError();
         return $this->redirect(['index']);
     }
 

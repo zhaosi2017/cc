@@ -16,7 +16,7 @@ $this->title = '输入验证码';
         </div>
         <h3>找回登录密码</h3>
 
-        <blockquote class="text-left">
+        <blockquote class="text-left" style="border: 0;">
             我们已经向您的注册邮箱：<?php echo $model->username ?>发送了一封邮件,请填写收到的验证码。
         </blockquote>
 
@@ -39,7 +39,7 @@ $this->title = '输入验证码';
 
 
         ?>
-        <button class="btn btn-primary pull-right">下步</button>
+        <button class="btn btn-primary pull-right">下一步</button>
 
         
 

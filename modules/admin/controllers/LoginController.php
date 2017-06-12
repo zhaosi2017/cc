@@ -42,29 +42,19 @@ class LoginController extends PController
         }
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) ) {
-            $lock = $model->checkLock();
-           
-            if(isset($lock['flag']) && $lock['flag'] > 1){
-                $lock['flag'] == 2 &&  $message ='已被冻结30分钟';
-                $lock['flag'] == 3 &&  $message ='已被冻结24小时';
-                $model->addError('username', '用户 '.$model->username. $message);
+            
+
+            if($model->checkLock()){
                 return $this->render('index',['model'=>$model]);
             }
+           
             if($model->login())
-            {
+            {   // 登陆成功.
                 return $this->redirect(['/admin/default/index']);
             }
-            $flag = Yii::$app->redis->hget($model->username.'-'.'adminnum','flag');
-            if($flag == 1){
-                $model->addError('username', '用户 '.$model->username. '再错一次账号将被冻结三十分钟');
-            }
-            if($flag == 2){
-                $model->addError('username', '用户 '.$model->username. '已被冻结30分钟');
-            }
 
-        
-            // 登陆成功.
-            
+            $model->afterCheckLock();
+
         } 
         return $this->render('index',['model' => $model]);
         

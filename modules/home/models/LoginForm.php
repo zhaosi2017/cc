@@ -15,7 +15,7 @@ class LoginForm extends Model
 {
 
     public $username;
-    public $password;
+    public $pwd;
     public $code;
     private $identity = false;
 
@@ -26,10 +26,10 @@ class LoginForm extends Model
     {
         return [
             // username and password are both required
-            [['username', 'password','code'], 'required'],
-            ['username', 'email'],
+            [['username', 'pwd','code'], 'required'],
+            ['username', 'email','message'=>'账号不存在,请核实'],
             ['username', 'validateAccount'],
-            ['password', 'validatePassword'],
+            ['pwd', 'validatePassword'],
             ['code', 'captcha', 'message'=>'验证码错误', 'captchaAction'=>'/home/login/captcha'],
 //            ['code', 'captcha', 'message'=>'验证码输入不正确，请重新输入！3次输入错误，账号将被锁定1年！', 'captchaAction'=>'/login/default/captcha'],
         ];
@@ -41,8 +41,8 @@ class LoginForm extends Model
     public function attributeLabels()
     {
         return [
-            'username' => '用户名',
-            'password' => '密码',
+            'username' => '邮箱',
+            'pwd' => '密码',
             'code'     => '验证码',
         ];
     }
@@ -53,7 +53,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $identity = $this->getIdentity();
             if(!$identity){
-                $this->addError($attribute, '用户名不存在。');
+                $this->addError($attribute, '账号不存在，请核实');
             }
         }
     }
@@ -68,7 +68,7 @@ class LoginForm extends Model
     {
         if (!$this->hasErrors()) {
             $identity = $this->getIdentity();
-            if (!Yii::$app->getSecurity()->validatePassword($this->password, $identity->password)) {
+            if (!Yii::$app->getSecurity()->validatePassword($this->pwd, $identity->password)) {
                 $this->addError($attribute, '密码错误。');
             }
         }
@@ -80,7 +80,11 @@ class LoginForm extends Model
      */
     public function login()
     {
-        return Yii::$app->user->login($this->getIdentity());
+         if($this->validate(['username','pwd','code'])){
+            return Yii::$app->user->login($this->getIdentity());
+        }
+        return false;
+        
     }
 
     /**
@@ -88,10 +92,11 @@ class LoginForm extends Model
      */
     public function recordIp()
     {
-       $user = User::findOne($this->getIdentity()->id);
-       $user->login_ip = Yii::$app->request->getUserIP();
-       $user->login_time = time();
-       return $user->save();
+
+        $user = User::findOne($this->getIdentity()->id);
+        $user->login_ip = Yii::$app->request->getUserIP();
+        $user->login_time = $_SERVER['REQUEST_TIME'];
+        return $user->update();
     }
 
     public function checkLock()
@@ -100,16 +105,33 @@ class LoginForm extends Model
         $key = $this->username.'-'.'homenum';
         $num =  $redis->HGET($key,'num') ;
         $flag = $redis->HGET($key,'flag');
-        $exprietime = $redis->hget($key,'exprietime');
-       
+        $exprietime = $redis->hget($key,'exprietime'); 
         if( $num > 1 ){
-            if( $flag == 1 || ($flag && $exprietime > time()) ){
-                return ['num' => $num,'flag'=>$flag];
+            if(( $flag && $exprietime > time()) ){
+                $flag == 1 &&  $message ='该用户已被冻结30分钟';
+                $flag == 2 &&  $message ='该用户已被冻结24小时';
+                $this->addError('username',  $message);
+                return true;
             }   
-            
         }
         return false;
 
+    }
+
+
+    public function afterCheckLock()
+    {
+        $flag = Yii::$app->redis->hget($this->username.'-'.'homenum','flag');
+        $num = Yii::$app->redis->hget($this->username.'-'.'homenum','num');
+        if($num == 1){
+            $this->addError('username', '用户再错两次账号将被冻结三十分钟');
+        }
+        if($flag == 1){
+            $this->addError('username', '用户已被冻结30分钟');
+        }
+        if($flag == 2){
+            $this->addError('username', '用户已被冻结24小时');
+        }
     }
 
     public function forbidden()
@@ -190,7 +212,7 @@ class LoginForm extends Model
     public function preLogin()
     {
         
-        if($this->validate(['username','password','code'])){
+        if($this->validate(['username','pwd','code'])){
             return true;
         }
         return false;
@@ -207,7 +229,7 @@ class LoginForm extends Model
             }
         }
 
-        if(isset($errors['password'])){
+        if(isset($errors['pwd'])){
             $this->recordLoginError();
             if(!$this->writeLoginLog(2)){
                 parent::afterValidate();
@@ -231,34 +253,26 @@ class LoginForm extends Model
         {
             $redis = Yii::$app->redis;
             $key  = $this->username.'-'.'homenum';
-            $num  = $redis->hget($key,'num');
             $time = time();
-
             $redis->hincrby($key, 'num', 1);
+            $num = $redis->hget($key,'num');
            
-            if(empty($num)){
-                $redis->expire($key, 60*60);
-                return;
-            }
+            switch ($num) {
+                case 1:
+                        $redis->expire($key,60*60);
+                        break;
+                case 3:
+                        $redis->hset($key,'exprietime',$time + Yii::$app->params['login_flag_time1']); //30分钟
+                        $redis->hset($key,'flag',1);
+                        $redis->expire($key,Yii::$app->params['login_flag_time1']+Yii::$app->params['login_flag_time2']);
+                        break;
 
-            if($num == 1 ){
-                $redis->hset($key, 'exprietime', $time+30*60); //30分钟
-                $redis->hset($key, 'flag', 1);
-                $redis->expire($key, 30*60);
-                return;
+                case 4:
+                        $redis->hset($key,'exprietime', $time + Yii::$app->params['login_flag_time3']); //24小时
+                        $redis->hset($key,'flag',2);
+                        $redis->expire($key,Yii::$app->params['login_flag_time3']);
+                        break;
             }
-            if ($num == 2){
-                $redis->hset($key, 'exprietime', $time+30*60); //30分钟
-                $redis->hset($key, 'flag', 2);
-                $redis->expire($key, 60*60);
-                return;
-            }
-            if( $num == 3 )
-            {
-                $redis->hset($key, 'exprietime', $time+24*60*60); //24小时
-                $redis->hset($key, 'flag', 3);
-                $redis->expire($key, 24*60*60);
-            }   
         }
         
     }

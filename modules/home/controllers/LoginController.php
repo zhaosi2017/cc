@@ -38,33 +38,20 @@ class LoginController extends GController
         if (!Yii::$app->user->isGuest) {
             $this->redirect(['/home/default/welcome']);
         }
-        
 
         $this->layout = '@app/views/layouts/global';
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post())) {
-            $lock = $model->checkLock();
-            if(isset($lock['flag']) && $lock['flag'] > 1){
-                $lock['flag'] == 2 &&  $message ='已被冻结30分钟';
-                $lock['flag'] == 3 &&  $message ='已被冻结24小时';
-                $model->addError('username', '用户 '.$model->username. $message);
+
+            if($model->checkLock()){
                 return $this->render('index',['model'=>$model]);
             }
-
-            if($model->preLogin()){
-                $model->login();
+            if($model->login()){
                 $model->recordIp();
-                return $this->redirect(['/home/default/welcome']);
+                return $this->redirect(['/home/default/welcome'])->send();
             }
 
-            $flag = Yii::$app->redis->hget($model->username.'-'.'homenum','flag');
-            if($flag == 1){
-                $model->addError('username', '用户 '.$model->username. '再错一次账号将被冻结三十分钟');
-            }
-            if($flag == 2){
-                $model->addError('username', '用户 '.$model->username. '已被冻结30分钟');
-            }
-            
+            $model->afterCheckLock();
         }
 
         return $this->render('index',['model' => $model]);
@@ -92,14 +79,11 @@ class LoginController extends GController
             if(!$model->validate(['username'])){
                 return $this->render('find-password-one',['model' => $model]);
             }else{
-//                $register_model = new RegisterForm();
-
                 $captcha = $this->createAction('captcha');
                 $verifyCode = $captcha->getVerifyCode(true);
                 $message = Yii::$app->mailer->compose();
                 $email = $model->username;
                 $message->setTo($email)->setSubject('验证码')->setTextBody('验证码: ' . $verifyCode);
-
                 if($message->send()){
                     return $this->render('find-password-two',['model' =>  $model]);
                 }

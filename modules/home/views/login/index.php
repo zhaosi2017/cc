@@ -29,7 +29,7 @@ $this->title = '登录';
             'placeholder'=>'邮箱账号',
         ])->label(false) ?>
 
-        <?= $form->field($model, 'password')->passwordInput(['placeholder'=>'密码'])->label(false) ?>
+        <?= $form->field($model, 'pwd')->passwordInput(['placeholder'=>'密码'])->label(false) ?>
         
 
 

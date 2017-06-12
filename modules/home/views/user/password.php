@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'options'=>['class'=>'form-horizontal m-t'],
         'fieldConfig' => [
             'template' => "{label}\n<div class=\"col-sm-9\">{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
-            'labelOptions' => ['class' => 'col-sm-3 control-label'],
+            'labelOptions' => ['class' => 'col-sm-3 '],
         ],
     ]) ?>
 

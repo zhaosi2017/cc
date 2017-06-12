@@ -158,9 +158,17 @@ class RoleController extends PController
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $model->status = 1;
-        $model->update() && $model->sendSuccess();
+        $auth = Yii::$app->authManager;
+        $role = $auth->checkAssignment($model->id);
+        if($role === true)
+        {
+            $model->status = 1;
+            $model->update() && $model->sendSuccess();
+        }else{
+            $model->sendError('请先移除该角色下的管理员');
+        }
         return $this->redirect(['index']);
+       
     }
 
     public function actionRecover($id)

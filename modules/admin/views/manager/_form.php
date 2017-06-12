@@ -39,9 +39,13 @@ use yii\redactor\widgets\Redactor;
                 'clips',
                 'fontcolor'
             ],
-            'placeholder'=> $model->status==0 ? '*' : '冻结原因',
-            'maxlength'=>500
-        ]
+            'placeholder'=> '请填写原因',
+            'maxlength'=>500,
+         
+        ],
+        'options'=>[
+            'value'=>'',
+        ],
     ])->label('原因') ?>
 
     <?= $form->field($model, 'login_ip')->textInput(['value'=>Yii::$app->request->userIP,'readonly'=>true]) ?>
