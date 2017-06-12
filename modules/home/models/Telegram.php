@@ -450,6 +450,13 @@ class Telegram extends Model
         if (!$res) {
             // 发送验证码，完成绑定.
             return $this->sendBindCode();
+        } elseif ($this->telegramUid == $this->telegramContactUid) {
+            $this->sendData = [
+                'chat_id' => $this->telegramUid,
+                'text' => '你已经完成了绑定操作!',
+            ];
+            $this->sendTelegramData();
+            return $this->errorCode['success'];
         }
         $this->callPersonData = $res;
         $user = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
@@ -614,7 +621,7 @@ class Telegram extends Model
         if (!$res) {
             $this->sendData = [
                 'chat_id' => $this->telegramUid,
-                'text' => '你不在'.$nickname.'的白名单列表, 不能呼叫!',
+                'text' => '您不在'.$nickname.'的白名单列表内, 不能呼叫!',
             ];
             $this->sendTelegramData();
             return $result;

@@ -467,6 +467,14 @@ class Potato extends Model
         if (!$res) {
             // 发送验证码，完成绑定.
             return $this->sendBindCode();
+        } elseif ($this->potatoUid == $this->potatoContactUid) {
+            $this->sendData = [
+                'chat_type' => 1,
+                'chat_id' => $this->potatoUid,
+                'text' => '你已经完成了绑定操作!',
+            ];
+            $this->sendPotatoData();
+            return $this->errorCode['success'];
         }
         $this->callPersonData = $res;
         $user = User::findOne(['potato_user_id' => $this->potatoContactUid]);
@@ -640,7 +648,7 @@ class Potato extends Model
             $this->sendData = [
                 'chat_type' => 1,
                 'chat_id' => $this->potatoUid,
-                'text' => '你不在'.$nickname.'的白名单列表, 不能呼叫!',
+                'text' => '您不在'.$nickname.'的白名单列表内, 不能呼叫!',
             ];
             $this->sendTelegramData();
             return $result;
