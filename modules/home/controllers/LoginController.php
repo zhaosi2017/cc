@@ -120,6 +120,7 @@ class LoginController extends GController
             $user_model = User::findOne($model->getIdentity()->id);
             $user_model->password = $register_model->password;
             if($user_model->update()){
+                $model->deleteLoginNum();
                 Yii::$app->getSession()->setFlash('success', '操作成功');
                 return $this->render('find-password-complete');
             }

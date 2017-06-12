@@ -107,6 +107,7 @@ class ManagerController extends PController
 
         if ($model->load(Yii::$app->request->post())) {
             $model->scenario = 'updateadmin';
+            $model->deleteLoginNum();
             if($model->save()) {
                 $auth = Yii::$app->authManager;
                 $auth->updateAssignment($model->role_id,$model->id);

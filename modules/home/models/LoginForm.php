@@ -127,7 +127,7 @@ class LoginForm extends Model
             $this->addError('username', '用户再错两次账号将被冻结三十分钟');
         }
         if($flag == 1){
-            $this->addError('username', '用户已被冻结30分钟，30分钟后再错直接冻结24小时');
+            $this->addError('username', '用户已被冻结30分钟，30分钟后再错将冻结24小时');
         }
         if($flag == 2){
             $this->addError('username', '用户已被冻结24小时');
@@ -252,7 +252,7 @@ class LoginForm extends Model
         if($this->username)
         {
             $redis = Yii::$app->redis;
-            $key  = $this->username.'-'.'homenum';
+            $key  = $this->username.'-homenum';
             $time = time();
             $redis->hincrby($key, 'num', 1);
             $num = $redis->hget($key,'num');
@@ -299,5 +299,16 @@ class LoginForm extends Model
         return $this->identity;
     }
 
-
+    /**
+     * 用户修改密码后，删除该用户登录时错误密码的记录数
+     */
+    public function deleteLoginNum()
+    {
+        $redis = Yii::$app->redis;
+        $key = $this->username.'-homenum' ; 
+        if($redis->exists($key))
+        {
+            $redis->del($key);
+        }
+    }
 }
