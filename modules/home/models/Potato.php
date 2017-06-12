@@ -640,7 +640,7 @@ class Potato extends Model
             $this->sendData = [
                 'chat_type' => 1,
                 'chat_id' => $this->potatoUid,
-                'text' => '你不在'.$nickname.'的白名单列表, 不能呼叫!',
+                'text' => '您不在'.$nickname.'的白名单列表内, 不能呼叫!',
             ];
             $this->sendTelegramData();
             return $result;

@@ -614,7 +614,7 @@ class Telegram extends Model
         if (!$res) {
             $this->sendData = [
                 'chat_id' => $this->telegramUid,
-                'text' => '你不在'.$nickname.'的白名单列表, 不能呼叫!',
+                'text' => '您不在'.$nickname.'的白名单列表内, 不能呼叫!',
             ];
             $this->sendTelegramData();
             return $result;
