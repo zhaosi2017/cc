@@ -1029,4 +1029,24 @@ class DbManager extends BaseManager
                 ->execute();
         return true;
     }
+
+    /**
+     * 删除某个角色时，检查该角色下是否已经有用户了
+     */
+    public function checkAssignment($roleName)
+    {
+        if (empty($roleName)) {
+            return false;
+        }
+
+        $row = (new Query)->from($this->assignmentTable)
+            ->where(['item_name' => $roleName])
+            ->one($this->db);
+        if ($row === false) {
+            return true;
+        }
+        return false;
+
+        
+    }
 }

@@ -39,7 +39,7 @@ class PController extends Controller
         if ( in_array(Yii::$app->requestedRoute, $arr)){
             return true;
         }
-        if( $identity->status != Manager::NORMAL_STATUS|| !Yii::$app->user->can(Yii::$app->requestedRoute)  ) {
+        if( !Yii::$app->user->can(Yii::$app->requestedRoute)  ) {
             return  $this->redirect(Url::to(['/admin/default/deny']))->send();
             return false;
         }

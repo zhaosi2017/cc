@@ -48,6 +48,9 @@ $module = $this->context->module->id;
                     <li>
                         <a class="J_menuItem" href="<?= Url::to(['/home/call-record/index']) ?>"><span class="nav-label">个人通话记录</span></a>
                     </li>
+                     <li class="<?php if(Yii::$app->controller->id == 'white-list'){ echo 'active';}?>">
+                        <a class="J_menuItem" href="<?= Url::to(['/home/white-list/index']) ?>"><span class="nav-label">白名单</span></a>
+                    </li>
                 </ul>
             </div>
         </nav>

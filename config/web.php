@@ -95,9 +95,9 @@ $config = [
         'home' => [
             'class' => 'app\modules\home\Module'
         ],
-        'admin' => [
-            'class' => 'app\modules\admin\Module'
-        ],
+        // 'admin' => [
+        //     'class' => 'app\modules\admin\Module'
+        // ],
 
         'redactor' => 'yii\redactor\RedactorModule',
     ],

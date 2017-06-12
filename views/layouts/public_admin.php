@@ -39,25 +39,25 @@ $module = $this->context->module->id;
                     </li>
 
                     <li>
-                        <a class="J_menuItem" href="<?= Url::to(['/admin/default/index']) ?>"><i class="fa fa-home"></i> <span class="nav-label">主页</span></a>
+                        <a class="J_menuItem" href="<?= Url::to(['/admin/default/index']) ?>"><i class="fa fa-home"></i> <span class="nav-label">首页</span></a>
                     </li>
 
-                    <li>
+                    <li class="<?php if(Yii::$app->controller->id == 'user'){ echo 'active';}?>">
                         <a href="#"><span class="nav-label">用户管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="<?= Url::to(['/admin/user/index']) ?>">用户列表</a>
+                            <li class="<?php if(Yii::$app->controller->id == 'user'){ echo 'active';}?>"><a class="J_menuItem" href="<?= Url::to(['/admin/user/index']) ?>">用户列表</a>
                         </ul>
                     </li>
 
-                    <li>
+                    <li class="<?php if(Yii::$app->controller->id == 'role' || Yii::$app->controller->id =='manager' || Yii::$app->controller->id == 'login-logs' ){ echo 'active';}?>">
                         <a href="#"><span class="nav-label">后台用户管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="<?= Url::to(['/admin/role/index']) ?>">管理员角色</a>
-                            <li><a class="J_menuItem" href="<?= Url::to(['/admin/manager/index']) ?>">管理员列表</a>
-                            <li><a class="J_menuItem" href="<?= Url::to(['/admin/login-logs/index']) ?>">登录日志</a>
+                            <li class="<?php if(Yii::$app->controller->id == 'role'){ echo 'active';}?>"><a class="J_menuItem" href="<?= Url::to(['/admin/role/index']) ?>">管理员角色</a>
+                            <li class="<?php if(Yii::$app->controller->id == 'manager'){ echo 'active';}?>"><a class="J_menuItem" href="<?= Url::to(['/admin/manager/index']) ?>">管理员列表</a>
+                            <li class="<?php if(Yii::$app->controller->id == 'login-logs'){ echo 'active';}?>"><a class="J_menuItem" href="<?= Url::to(['/admin/login-logs/index']) ?>">登录日志</a>
                         </ul>
                     </li>
-                    <li>
+                    <li class="<?php if(Yii::$app->controller->id == 'call-record'){ echo 'active';}?>">
                         <a class="J_menuItem" href="<?= Url::to(['/admin/call-record/index']) ?>"><span class="nav-label">呼叫记录</span></a>
                     </li>
 
