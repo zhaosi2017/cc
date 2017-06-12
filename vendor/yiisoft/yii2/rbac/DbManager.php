@@ -1031,7 +1031,7 @@ class DbManager extends BaseManager
     }
 
     /**
-     * 删除某个角色时，检查该角色下是否已经有用户了
+     * 删除某个角色时，检查该角色下是否已经有用户了,有的话，返回总的数
      */
     public function checkAssignment($roleName)
     {
@@ -1041,12 +1041,9 @@ class DbManager extends BaseManager
 
         $row = (new Query)->from($this->assignmentTable)
             ->where(['item_name' => $roleName])
-            ->one($this->db);
-        if ($row === false) {
-            return true;
-        }
-        return false;
-
+            ->count();
+        return $row;
         
     }
+
 }
