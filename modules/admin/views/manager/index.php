@@ -76,11 +76,24 @@ $actionId = Yii::$app->requestedAction->id;
                         return Html::a('编辑',$url);
                     },
                     'delete' => function($url){
+                        if(Yii::$app->user->can('admin/manager/delete')){
+
                         return Html::a('删除',$url,[
                             'style' => 'color:red',
                             'data-method' => 'post',
                             'data' => ['confirm' => '你确定要删除吗?']
                         ]);
+                        }else{
+                            $url = 'index';
+                            return Html::a('删除',$url,[
+                            'style' => 'color:red',
+                            'data-method' => 'get',
+                            'data' => ['confirm' => '您没有该权限！']
+                            ]);
+
+                        }
+
+
                     },
                 ],
             ],

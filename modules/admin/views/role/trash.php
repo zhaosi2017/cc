@@ -46,16 +46,28 @@ $actionId = Yii::$app->requestedAction->id;
                 },
             ],
 
+           
+
             [
+                
                 'class' => 'yii\grid\ActionColumn',
                 'header' => '操作',
                 'template' => '{recover}',
                 'buttons' => [
                     'recover' => function($url){
-                        return Html::a('恢复',$url,[
+                        if(Yii::$app->user->can('admin/role/recover')){
+                            return Html::a('恢复',$url,[
                             'data-method' => 'post',
                             'data' => ['confirm' => '你确定要恢复吗?']
                         ]);
+                        }else{
+                            $url = 'trash';
+                            return Html::a('恢复',$url,[
+                            'data-method' => 'get',
+                            'data' => ['confirm' => '你没有该权限']
+                            ]);
+                        }
+                        
                     },
                 ],
             ],

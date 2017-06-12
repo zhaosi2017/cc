@@ -74,17 +74,21 @@ class LoginLogsSearch extends ManagerLoginLogs
             'login_time' => $this->login_time,
         ]);
 
-
         if(empty($this->start_date) && !empty($this->end_date)){
-            $query->andFilterWhere(['<=', 'manager_login_logs.login_time',  $this->end_date]);
+            $query->andFilterWhere(['<=', 'manager_login_logs.login_time',  date('Y-m-d', strtotime($this->end_date)+24*60*60)]);
         }
 
         if(!empty($this->start_date) && empty($this->end_date)){
             $query->andFilterWhere(['>=', 'manager_login_logs.login_time',  $this->start_date]);
         }
 
-        if(!empty($this->start_date) && !empty($this->end_date) && $this->start_date <= $this->end_date){
-            $query->andFilterWhere(['between', 'manager_login_logs.login_time', $this->start_date, $this->end_date]);
+        if(!empty($this->start_date) && !empty($this->end_date) ){
+            if($this->start_date > $this->end_date){
+                $tmp = $this->end_date;
+                $this->end_date = $this->start_date;
+                $this->start_date  = $tmp;
+            }
+            $query->andFilterWhere(['between', 'manager_login_logs.login_time', $this->start_date, date('Y-m-d', strtotime($this->end_date)+24*60*60)]);
         }
         // !empty($this->status) && $query->andFilterWhere(['=', 'manager_login_logs.status', $this->status]);
 
