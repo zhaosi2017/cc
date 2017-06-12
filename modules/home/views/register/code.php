@@ -16,7 +16,7 @@ $this->title = '登录';
         </div>
         <h3>验证注册邮箱</h3>
 
-        <blockquote class="text-left">
+        <blockquote class="text-left" style="border: 0;">
             我们已经向您的注册邮箱：<?php echo $model->username ?>发送了一封邮件,请填写收到的验证码。
         </blockquote>
         <?php $form = ActiveForm::begin([

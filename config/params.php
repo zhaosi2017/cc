@@ -14,4 +14,7 @@ return [
     'telegram_pre' => 'cctelegram',
     'potato' => 'callcenter',
     'potato_pre' => 'ccpotato',
+    'login_flag_time1' => 180,
+    'login_flag_time2'=> 180,
+    'login_flag_time3'=> 360
 ];

@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\captcha\CaptchaValidator;
 use app\modules\home\models\ContactForm;
+use app\modules\home\models\User;
 
 /**
  * LoginForm is the model behind the login form.
@@ -66,6 +67,8 @@ class RegisterForm extends Model
         $user = new User();
         $user->account = $this->username;
         $user->password = $this->password;
+        $user->login_time = time();
+        $user->login_ip = Yii::$app->request->getUserIP();
         return $user->save();
     }
 

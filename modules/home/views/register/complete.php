@@ -15,7 +15,7 @@ $this->title = '注册成功';
         </div>
         <h3>注册成功</h3>
 
-        <blockquote class="text-left">
+        <blockquote class="text-left" style="border: 0;">
             <p>请您牢记您的邮箱账号和密码！！！</p>
             <p>您的邮箱账号：<?php echo $model->username ?></p>
             <p>您的密码：<?php echo $model->password ?></p>

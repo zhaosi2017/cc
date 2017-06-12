@@ -171,6 +171,7 @@ class Manager extends CActiveRecord implements IdentityInterface
                 $this->create_at = $_SERVER['REQUEST_TIME'];
                 $this->update_at = $_SERVER['REQUEST_TIME'];
                 $this->create_id = $uid;
+                $this->update_id = $uid;
                 $this->auth_key  = Yii::$app->security->generateRandomString();
                 $this->account  = base64_encode(Yii::$app->security->encryptByKey($this->account, Yii::$app->params['inputKey']));
                 $this->password && $this->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
