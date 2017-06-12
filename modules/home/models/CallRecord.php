@@ -3,6 +3,7 @@
 namespace app\modules\home\models;
 
 use Yii;
+use app\modules\home\models\User;
 
 /*
 * @property integer $id
@@ -22,6 +23,9 @@ use Yii;
  */
 class CallRecord extends \app\models\CActiveRecord
 {
+    public $total_nums;
+    public $long_time;
+
     /**
      * @inheritdoc
      */
@@ -42,6 +46,7 @@ class CallRecord extends \app\models\CActiveRecord
             [['active_nickname', 'unactive_nickname'], 'string', 'max' => 50],
             [['contact_number'], 'string', 'max' => 64],
             [['unactive_contact_number'], 'string', 'max' => 15],
+            [['long_time','total_nums'],'safe'],
         ];
     }
 
@@ -57,13 +62,17 @@ class CallRecord extends \app\models\CActiveRecord
             'call_by_same_times' => '被同一人呼叫次数',
             'typeData' => '电话类型',
             'contact_number' => '主叫电话',
-            'unactive_contact_number' => '被叫电话',
+            'unactive_contact_number' => '联系电话',
+            'type'=> '电话类型',
+            'status' => '呼叫状态',
             'statusData' => '呼叫状态',
             'call_time' => '呼叫时间',
             'active_account' => '主叫账号',
             'unactive_account' => '被叫账号',
             'active_nickname' => '主叫昵称',
             'unactive_nickname' => '被叫昵称',
+            'long_time'=>'时间周期(分)',
+            'total_nums'=>'呼叫总次数'
         ];
     }
 
@@ -111,4 +120,8 @@ class CallRecord extends \app\models\CActiveRecord
         return $typeArr[$this->type];
     }
 
+    public function getUsers()
+    {
+        return $this->hasOne(User::className(), ['id' => 'active_call_uid']);
+    }
 }
