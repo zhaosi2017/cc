@@ -50,8 +50,9 @@ class LoginController extends GController
                 $model->recordIp();
                 return $this->redirect(['/home/default/welcome'])->send();
             }
-
+            
             $model->afterCheckLock();
+            return $this->render('index',['model' => $model]);
         }
 
         return $this->render('index',['model' => $model]);

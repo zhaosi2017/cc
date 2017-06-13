@@ -101,8 +101,8 @@ class UserSearch extends User
             $query->andFilterWhere(['between','user.reg_time', strtotime($this->start_date), strtotime($this->end_date)+24*60*60]);
         }
 
-        $this->search_type == 1 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like','user.potato', $this->search_keywords]);
-        $this->search_type == 2 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like','user.telegram', $this->search_keywords]);
+        $this->search_type == 1 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like','user.potato_number', $this->search_keywords]);
+        $this->search_type == 2 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like','user.telegram_number', $this->search_keywords]);
         $this->search_type == 3 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['in', 'user.id', $this->searchIds($this->search_keywords)]);
         $this->search_type == 4 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['in', 'user.id', $this->searchIds($this->search_keywords, 'nickname')]);
         $this->search_type == 5 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like','user.phone_number', $this->search_keywords]);

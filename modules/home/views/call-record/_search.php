@@ -21,9 +21,9 @@ use yii\widgets\ActiveForm;
     ]); ?>
     <div class="row">
         <div class="col-lg-6">
-            <?= $form->field($model,'call_time_start')->input('date',['prompt'=>'开始时间'])->label('呼叫时间：') ?>
+            <?= $form->field($model,'call_time_start')->input('date',['prompt'=>'开始时间','onchange'=>'timeChange()'])->label('呼叫时间：') ?>
             至
-            <?= $form->field($model,'call_time_end')->input('date',['prompt'=>'结束时间'])->label(false) ?>
+            <?= $form->field($model,'call_time_end')->input('date',['prompt'=>'结束时间','onchange'=>'timeChange()'])->label(false) ?>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <?= $form->field($model,'status')->dropDownList($model->getStatusList(),['prompt'=>'全部','onchange'=>'
                 $("#search_hide").click();
@@ -41,7 +41,7 @@ use yii\widgets\ActiveForm;
                     6 => '被叫电话',
                     7 => '呼叫类型',
                 ],
-                ['prompt' => '全部']
+                ['prompt' => '全部','onchange'=>'clearDate()']
                 )->label(false) ?>
                 <?= $form->field($model, 'search_keywords')->textInput()->label(false) ?>
                 <div class="form-group">
@@ -63,14 +63,30 @@ use yii\widgets\ActiveForm;
     function searchClick(){
         var start = $('#callrecordsearch-call_time_start').val(); 
         var end =  $('#callrecordsearch-call_time_end').val(); 
-        if (start == ""){
+        if (start == "" && end != ""){
             alert('请同时选择开始时间和结束时间进行查询！');
             return false;
         }
-        if(end == ""){
+        if(start != "" && end == ""){
             alert('请同时选择开始时间和结束时间进行查询！');
             return false;
         }
         return true;
+    }
+
+    function timeChange(){
+    
+        var start = $('#callrecordsearch-call_time_start').val(); 
+        var end =  $('#callrecordsearch-call_time_end').val(); 
+        if(start == '' || end ==''){
+            alert('请同时选择开始时间和结束时间进行查询！');
+            return true;
+        }
+        
+    }
+
+    function clearDate(){
+        $('#callrecordsearch-call_time_start').val('');
+        $('#callrecordsearch-call_time_end').val('');
     }
 </script>

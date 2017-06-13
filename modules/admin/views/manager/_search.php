@@ -32,7 +32,7 @@ use yii\widgets\ActiveForm;
                     1 => '账号',
                     2 => '昵称',
                     3 => '登录IP',
-                ])->label(false) ?>
+                ],['prompt' => '全部'])->label(false) ?>
                 <?= $form->field($model, 'search_keywords')->textInput()->label(false) ?>
                 <div class="form-group">
                     <?= Html::submitButton('search', ['class' => 'hide','id'=>'search_hide']) ?>

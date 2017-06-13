@@ -3,6 +3,7 @@
 namespace app\modules\home\models;
 
 use app\models\CActiveRecord;
+use app\modules\home\models\User;
 
 /**
  * This is the model class for table "login_logs".
@@ -45,12 +46,12 @@ class LoginLogs extends CActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'uid' => 'Uid',
-            'status' => 'Status',
-            'login_time' => 'Login Time',
-            'login_ip' => 'Login Ip',
-            'address' => 'Login address'
+            'id' => '编号',
+            'uid' => '用户id',
+            'status' => '登陆状态',
+            'login_time' => '登陆时间',
+            'login_ip' => '登陆Ip',
+            'address' => '登陆地址'
         ];
     }
 
@@ -66,11 +67,10 @@ class LoginLogs extends CActiveRecord
     public function getStatuses()
     {
         return [
-            0 => '登录成功',
-            1 => '已解锁',
+            1 => '登录成功',
             2 => '密码错误',
             3 => '验证错误',
-            4 => 'IP锁定中',
+            4 => '帐号错误',
         ];
     }
 

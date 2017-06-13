@@ -18,9 +18,9 @@ use yii\widgets\ActiveForm;
 
     <div class="row">
         <div class="col-lg-6">
-            <?= $form->field($model,'start_date')->input('date',['prompt'=>'请选择'])->label('登录时间：') ?>
+            <?= $form->field($model,'start_date')->input('date',['prompt'=>'请选择','onchange'=>'timeChange()'])->label('登录时间：') ?>
             至
-            <?= $form->field($model,'end_date')->input('date',['prompt'=>'请选择'])->label(false) ?>
+            <?= $form->field($model,'end_date')->input('date',['prompt'=>'请选择','onchange'=>'timeChange()'])->label(false) ?>
 
             <a class="btn btn-xs btn-danger" onclick="
                 $('#loginlogssearch-start_date').val('');
@@ -38,7 +38,8 @@ use yii\widgets\ActiveForm;
                     1 => '账号',
                     2 => '昵称',
                     3 => '登录IP',
-                ])->label(false) ?>
+                ],
+                ['prompt' => '全部','onchange'=>'clearDate()'])->label(false) ?>
                 <?= $form->field($model, 'search_keywords')->textInput(['placeholder' => '请输入关键字查询'])->label(false) ?>
                 <div class="form-group">
                     <?= Html::submitButton('search', ['class' => 'hide','id'=>'search_hide']) ?>
@@ -57,14 +58,30 @@ use yii\widgets\ActiveForm;
     function searchClick(){
         var start = $('#loginlogssearch-start_date').val(); 
         var end =  $('#loginlogssearch-end_date').val(); 
-        if (start == ""){
+        if (start == "" && end != ""){
             alert('请同时选择开始时间和结束时间进行查询！');
             return false;
         }
-        if(end == ""){
+        if(start != "" && end == ""){
             alert('请同时选择开始时间和结束时间进行查询！');
             return false;
         }
         return true;
+    }
+
+    function timeChange(){
+    
+        var start = $('#loginlogssearch-start_date').val(); 
+        var end =  $('#loginlogssearch-end_date').val(); 
+        if(start == '' || end ==''){
+            alert('请同时选择开始时间和结束时间进行查询！');
+            return false;
+        }
+        
+    }
+
+    function clearDate(){
+        $('#loginlogssearch-start_date').val('');
+        $('#loginlogssearch-end_date').val('');
     }
 </script>
