@@ -602,7 +602,7 @@ class Potato extends Model
                 if ($res['status']) {
                     $this->sendData = [
                         'chat_id' => $this->telegramUid,
-                        'text' => '呼叫"'.$nickname.'"的紧急联系人"'.$user->urgent_contact_person_one.'", 成功!',
+                        'text' => '呼叫"'.$nickname.'"的紧急联系人"'.$user->urgent_contact_person_two.'", 成功!',
                     ];
                     $this->sendTelegramData();
                     // 保存通话记录.
