@@ -679,7 +679,7 @@ class Potato extends Model
         $res = $this->sendPotatoData($this->nexmoUrl);
         $res = json_decode($res, true);
         // 保存通话记录.
-        if ($res['status'] == 0) {
+        if ($res['status'] != 0) {
             $result['status'] = false;
         }
 

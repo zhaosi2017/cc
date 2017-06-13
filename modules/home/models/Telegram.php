@@ -651,7 +651,7 @@ class Telegram extends Model
         $this->sendData = $data;
         $res = $this->sendTelegramData($this->nexmoUrl);
         $res = json_decode($res, true);
-        if ($res['status'] == 0) {
+        if ($res['status'] != 0) {
             $result['status'] = false;
         }
 
