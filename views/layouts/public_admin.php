@@ -45,7 +45,8 @@ $module = $this->context->module->id;
                     <li class="<?php if(Yii::$app->controller->id == 'user'){ echo 'active';}?>">
                         <a href="#"><span class="nav-label">用户管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li class="<?php if(Yii::$app->controller->id == 'user'){ echo 'active';}?>"><a class="J_menuItem" href="<?= Url::to(['/admin/user/index']) ?>">用户列表</a>
+                            <li class="<?php if(Yii::$app->controller->id == 'user' && Yii::$app->controller->action->id != 'login-logs'){ echo 'active';}?>"><a class="J_menuItem" href="<?= Url::to(['/admin/user/index']) ?>">用户列表</a>
+                            <li class="<?php if(Yii::$app->controller->id == 'user' && Yii::$app->controller->action->id == 'login-logs' ){ echo 'active';}?>"><a class="J_menuItem" href="<?= Url::to(['/admin/user/login-logs']) ?>">用户登陆日志</a>
                         </ul>
                     </li>
 

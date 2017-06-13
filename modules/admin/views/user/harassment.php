@@ -27,13 +27,13 @@ $this->params['breadcrumbs'][] = $this->title ;
         ])->textInput(['readonly' => 'readonly'])->label('用户账号') ?>
 
         <?= $form->field($model, 'un_call_number',[
-           'template' => "{label}<div class=\"row\"><div style=\"display:inline-block\">{input}</div><div style=\"display:inline-block\"><span >*请设置用户固定时间内被同一人呼叫次数</span></div></div>\n<div><span class=\"help-block m-b-none\">{error}</span></div>",
+           'template' => "{label}<div class=\"row\"><div style=\"display:inline-block\">{input}</div><div style=\"display:inline-block\"><span >*请设置固定时间内被叫次数</span></div></div>\n<div><span class=\"help-block m-b-none\">{error}</span></div>",
                 
                 
         ])->textInput() ?>
 
         <?= $form->field($model, 'un_call_by_same_number',[
-           'template' => "{label}<div class=\"row\"><div style=\"display:inline-block\">{input}</div><div style=\"display:inline-block\"><span >*请设置固定时间内被叫次数</span></div></div>\n<div><span class=\"help-block m-b-none\">{error}</span></div>",
+           'template' => "{label}<div class=\"row\"><div style=\"display:inline-block\">{input}</div><div style=\"display:inline-block\"><span >*请设置用户固定时间内被同一人呼叫次数</span></div></div>\n<div><span class=\"help-block m-b-none\">{error}</span></div>",
                 
                 
         ])->textInput() ?>

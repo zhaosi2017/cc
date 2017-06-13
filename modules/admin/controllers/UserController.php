@@ -8,6 +8,7 @@ use app\modules\admin\models\UserSearch;
 use app\controllers\PController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\modules\home\models\LoginLogsSearch;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -133,5 +134,19 @@ class UserController extends PController
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    /**
+     * 前台用户登陆日志
+     */
+    public function actionLoginLogs()
+    {
+        $searchModel = new LoginLogsSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('login_log_index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 }

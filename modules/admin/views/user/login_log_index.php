@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="manager-login-logs-index">
 
-    <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php  echo $this->render('login_log_search', ['model' => $searchModel]); ?>
 
 <?php Pjax::begin(); ?>
     <?= GridView::widget([
@@ -22,12 +22,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn', 'header' => '序号'],
 
-            ['header' => '管理员账号', 'value' => function($model){
-                return $model['manager']['account'];
+            ['header' => '用户帐号', 'value' => function($model){
+                return $model['user']['account'];
             }],
 
-            ['header' => '管理员昵称', 'value' => function($model){
-                return $model['manager']['nickname'];
+            ['header' => '用户昵称', 'value' => function($model){
+                return $model['user']['nickname'];
             }],
 
             ['header' => '登录状态', 'value' => function($model){
