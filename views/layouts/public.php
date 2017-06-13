@@ -42,10 +42,10 @@ $module = $this->context->module->id;
                     <li>
                         <a class="J_menuItem" href="<?= Url::to(['/home/default/welcome']) ?>"><i class="fa fa-home"></i> <span class="nav-label">主页</span></a>
                     </li>
-                    <li>
+                    <li class="<?php if(Yii::$app->controller->id == 'user' || Yii::$app->controller->id == 'potato' || Yii::$app->controller->id == 'telegram'){ echo 'active';}?>">
                         <a class="J_menuItem" href="<?= Url::to(['/home/user/index']) ?>"><span class="nav-label">账户中心</span></a>
                     </li>
-                    <li>
+                    <li class="<?php if(Yii::$app->controller->id == 'call-record'){ echo 'active';}?>">
                         <a class="J_menuItem" href="<?= Url::to(['/home/call-record/index']) ?>"><span class="nav-label">个人通话记录</span></a>
                     </li>
                      <li class="<?php if(Yii::$app->controller->id == 'white-list'){ echo 'active';}?>">

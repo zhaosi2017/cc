@@ -6,7 +6,7 @@ use yii\helpers\Url;
 use yii\captcha\Captcha;
 
 $this->title = '修改potato';
-
+$this->params['breadcrumbs'][] = $this->title;
 /* @var $this yii\web\View */
 /* @var $model app\modules\home\models\ContactForm */
 /* @var $form yii\widgets\ActiveForm */

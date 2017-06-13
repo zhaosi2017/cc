@@ -6,7 +6,7 @@ use yii\helpers\Url;
 use yii\captcha\Captcha;
 
 $this->title = '修改联系电话';
-
+$this->params['breadcrumbs'][] = $this->title;
 /* @var $this yii\web\View */
 /* @var $model app\modules\home\models\User */
 /* @var $form yii\widgets\ActiveForm */
@@ -70,7 +70,7 @@ $this->title = '修改联系电话';
             ?>
 
             <div class="form-group">
-                <input type="button" id="count-down" class="form-control" onclick="
+                <input type="button" id="count-down" class="form-control"  style="margin-top: -29px;" onclick="
                     if($('#contactform-country_code').val() == ''){
                         alert('国码不能为空');
                         return false;

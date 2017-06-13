@@ -8,7 +8,7 @@ if ($isModify) {
 } else {
     $this->title = '添加紧急联系人二';
 }
-
+$this->params['breadcrumbs'][] = $this->title;
 /* @var $this yii\web\View */
 /* @var $model app\modules\home\models\ContactForm */
 /* @var $form yii\widgets\ActiveForm */
@@ -45,7 +45,7 @@ if ($isModify) {
             </div>
             <?php echo $form->field($model, 'urgent_contact_two_country_code', [
                 'template' => "{label}\n<div class='col-sm-4'>{input}\n<span style=\"width:130px;\"  class=\"help-block m-b-none\">{error}</span></div>",
-            ])->textInput(['size' => 5,'placeholder'=>'国码',])->label(false) ?>
+            ])->textInput(['placeholder'=>'国码',])->label(false) ?>
 
             <?php echo $form->field($model, 'urgent_contact_number_two',[
                 'template' => "{label}\n<div style=\"margin-left:40px;\" class='col-sm-4'>{input}\n<span style=\"width:200px;\" class=\"help-block m-b-none\">{error}</span></div>",

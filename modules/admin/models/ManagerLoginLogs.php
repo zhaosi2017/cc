@@ -34,6 +34,7 @@ class ManagerLoginLogs extends CActiveRecord
             [['uid', 'status'], 'integer'],
             [['login_time'], 'safe'],
             [['login_ip'], 'string', 'max' => 15],
+            [['address'], 'string', 'max' => 100],
         ];
     }
 
@@ -48,6 +49,7 @@ class ManagerLoginLogs extends CActiveRecord
             'status' => '登录状态',
             'login_time' => '登录时间',
             'login_ip' => 'Login Ip',
+            'address' => '登陆地址',
         ];
     }
 

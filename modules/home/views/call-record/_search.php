@@ -14,6 +14,10 @@ use yii\widgets\ActiveForm;
         'action' => ['index'],
         'method' => 'get',
         'options' => ['class'=>'form-inline'],
+         'fieldConfig' => [
+         
+            'labelOptions' => [],
+        ],
     ]); ?>
     <div class="row">
         <div class="col-lg-6">
@@ -42,7 +46,8 @@ use yii\widgets\ActiveForm;
                 <?= $form->field($model, 'search_keywords')->textInput()->label(false) ?>
                 <div class="form-group">
                     <?= Html::submitButton('search', ['class' => 'hide','id'=>'search_hide']) ?>
-                    <?= Html::submitButton('搜索', ['class' => 'btn btn-primary m-t-n-xs','id'=>'search']) ?>
+                    <button onclick = "return searchClick();" id="search" class = 'btn btn-primary m-t-n-xs'>搜索</button>
+                    
                 </div>
             </div>
         </div>
@@ -50,3 +55,22 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
 
 </div>
+
+
+<script type="text/javascript">
+
+
+    function searchClick(){
+        var start = $('#callrecordsearch-call_time_start').val(); 
+        var end =  $('#callrecordsearch-call_time_end').val(); 
+        if (start == ""){
+            alert('请同时选择开始时间和结束时间进行查询！');
+            return false;
+        }
+        if(end == ""){
+            alert('请同时选择开始时间和结束时间进行查询！');
+            return false;
+        }
+        return true;
+    }
+</script>

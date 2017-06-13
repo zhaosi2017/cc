@@ -27,6 +27,10 @@ class ComposerStaticInitb5206e6aa33c5e29c80d8653607e539b
             'yii\\bootstrap\\' => 14,
             'yii\\' => 4,
         ),
+        'x' => 
+        array (
+            'xiaogouxo\\ip2region\\' => 20,
+        ),
         'p' => 
         array (
             'phpDocumentor\\Reflection\\' => 25,
@@ -122,6 +126,10 @@ class ComposerStaticInitb5206e6aa33c5e29c80d8653607e539b
         'yii\\' => 
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2',
+        ),
+        'xiaogouxo\\ip2region\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/xiaogouxo/yii2-ip2region',
         ),
         'phpDocumentor\\Reflection\\' => 
         array (

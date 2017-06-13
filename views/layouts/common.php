@@ -23,12 +23,18 @@ if( Yii::$app->getSession()->hasFlash('success') ) {
         ],
         'body' => Yii::$app->getSession()->getFlash('success'), //消息体
     ]);
+    $res = Yii::$app->getSession()->getFlash('pageMessTime');
+     if(!$res){
+        $res = 3000;
+     }else{
+        $res = $res*1000;
+     }
+
      echo '<script type="text/javascript"  ?>
             function closeSuccess(){
                 $(".alert").hide();
             }    
-            t = setTimeout(closeSuccess,2000);
-    </script>';
+            t = setTimeout(closeSuccess,'.$res.');</script>';
 }
 if( Yii::$app->getSession()->hasFlash('error') ) {
     echo Alert::widget([
@@ -50,11 +56,18 @@ if( Yii::$app->getSession()->hasFlash('error') ) {
         ],
         'body' => Yii::$app->getSession()->getFlash('error'),
     ]);
+     $res = Yii::$app->getSession()->getFlash('pageMessTime');
+     if(!$res){
+        $res = 3000;
+     }else{
+        $res = $res*1000;
+     }
+
      echo '<script type="text/javascript"  ?>
             function closeSuccess(){
                 $(".alert").hide();
             }    
-            t = setTimeout(closeSuccess,2000);
+            t = setTimeout(closeSuccess,'.$res.');
     </script>';
 }
 if( Yii::$app->getSession()->hasFlash('info') ) {
@@ -77,11 +90,17 @@ if( Yii::$app->getSession()->hasFlash('info') ) {
         ],
         'body' => Yii::$app->getSession()->getFlash('info'),
     ]);
+     $res = Yii::$app->getSession()->getFlash('pageMessTime');
+     if(!$res){
+        $res = 3000;
+     }else{
+        $res = $res*1000;
+     }
        echo '<script type="text/javascript"  ?>
             function closeSuccess(){
                 $(".alert").hide();
             }    
-            t = setTimeout(closeSuccess,2000);
+            t = setTimeout(closeSuccess,'.$res.');
     </script>';
 }
 ?>
