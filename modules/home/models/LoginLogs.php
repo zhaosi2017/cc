@@ -35,6 +35,7 @@ class LoginLogs extends CActiveRecord
             [['uid', 'status', 'unlock_uid'], 'integer'],
             [['login_time'], 'safe'],
             [['login_ip'], 'string', 'max' => 15],
+            [['address'],'string','max'=>'100'],
         ];
     }
 
@@ -49,6 +50,7 @@ class LoginLogs extends CActiveRecord
             'status' => 'Status',
             'login_time' => 'Login Time',
             'login_ip' => 'Login Ip',
+            'address' => 'Login address'
         ];
     }
 

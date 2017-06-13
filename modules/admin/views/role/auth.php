@@ -9,7 +9,6 @@ $this->title = '权限设置角色: ' . $model->name ;
 
 $this->title = '防骚扰';
 $this->params['breadcrumbs'][] = ['label' => '管理员角色', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['auth', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = '权限授权' ;
 
 $actionId = Yii::$app->requestedAction->id;

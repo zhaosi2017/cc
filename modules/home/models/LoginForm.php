@@ -242,6 +242,10 @@ class LoginForm extends Model
             }
         }
 
+        if(empty($errors)){
+            $this->writeLoginLog(1);
+        }
+
         
 
         parent::afterValidate();
@@ -280,10 +284,12 @@ class LoginForm extends Model
     public function writeLoginLog($status)
     {
         $loginLog = new LoginLogs();
-        $loginLog->login_ip = Yii::$app->request->getUserIP();
+        $ip = Yii::$app->request->getUserIP();
+        $loginLog->login_ip = $ip;
         $loginLog->status = $status;
         $loginLog->login_time = date('Y-m-d H:i:s',$_SERVER['REQUEST_TIME']);
         $loginLog->uid = $this->getIdentity() ? $this->getIdentity()->id : 0;
+        $loginLog->address =  Yii::$app->ip2region->getRegion($ip);
         return $loginLog->save();
     }
 

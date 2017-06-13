@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "baca338e94441242bd84d64fb97c67bd",
+    "content-hash": "0b05c4b101c290b4d9ec1294d5aab0df",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -516,6 +516,48 @@
                 "mailer"
             ],
             "time": "2017-02-13T07:52:53+00:00"
+        },
+        {
+            "name": "xiaogouxo/yii2-ip2region",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/xiaogouxo/yii2-ip2region.git",
+                "reference": "76fc680ed6fbe069f6d235cabfc5080b3157e0b1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/xiaogouxo/yii2-ip2region/zipball/76fc680ed6fbe069f6d235cabfc5080b3157e0b1",
+                "reference": "76fc680ed6fbe069f6d235cabfc5080b3157e0b1",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "xiaogouxo\\ip2region\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3"
+            ],
+            "authors": [
+                {
+                    "name": "Falco Lee",
+                    "email": "5493972@gmail.com"
+                }
+            ],
+            "description": "ip2region extension for yii2 to retrieve Chinese geolocation information",
+            "homepage": "https://github.com/xiaogouxo/yii2-ip2region",
+            "keywords": [
+                "IP",
+                "region",
+                "yii"
+            ],
+            "time": "2016-08-11 05:15:49"
         },
         {
             "name": "yiidoc/yii2-redactor",
@@ -3324,7 +3366,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "xiaogouxo/yii2-ip2region": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

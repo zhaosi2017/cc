@@ -25,7 +25,18 @@ class CallRecordSearch extends CallRecord
         return [
             [['id', 'active_call_uid', 'unactive_call_uid', 'call_by_same_times', 'type', 'status'], 'integer'],
             [['contact_number', 'search_type', 'search_keywords', 'active_account', 'call_time_start', 'call_time_end'], 'safe'],
+            // [['call_time_start','call_time_end'],'required'],
         ];
+    }
+
+    public function attributeLabels()
+    {
+        $parent = parent::attributeLabels();
+        $self = [
+        'call_time_start'=>'呼叫起止时间',
+        'call_time_end'=>'呼叫截止时间',
+        ];
+        return array_merge($parent,$self);
     }
 
     /**

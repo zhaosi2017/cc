@@ -8,7 +8,7 @@ if ($isModify) {
 } else {
     $this->title = '添加紧急联系人一';
 }
-
+$this->params['breadcrumbs'][] = $this->title;
 /* @var $this yii\web\View */
 /* @var $model app\modules\home\models\ContactForm */
 /* @var $form yii\widgets\ActiveForm */

@@ -8,7 +8,7 @@ if ($isModify) {
 } else {
     $this->title = '绑定telegram账号';
 }
-
+$this->params['breadcrumbs'][] = $this->title;
 /* @var $this yii\web\View */
 /* @var $model app\modules\home\models\ContactForm */
 /* @var $form yii\widgets\ActiveForm */

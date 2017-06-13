@@ -1,9 +1,6 @@
 <?php
 
 $params = require(__DIR__ . '/params.php');
-$redis = require(__DIR__ . '/redis.php');
-$params = array_merge($params,$redis);
-
 $config = [
     'id' => 'basic',
     'language'=>'zh-CN',
@@ -33,6 +30,10 @@ $config = [
         ],
         'errorHandler' => [
             'errorAction' => '/home/default/deny',
+        ],
+        'ip2region' => [
+          'class' => '\xiaogouxo\ip2region\Geolocation',
+          'mode' => 'SEARCH_BTREE',
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',

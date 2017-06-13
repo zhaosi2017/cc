@@ -52,19 +52,19 @@ $actionId = Yii::$app->requestedAction->id;
             'contact_number',
             'unactive_account',
             'unactive_nickname',
-             [
-                'attribute' => 'long_time', 
-                'value' => function($model){
-                    return $model['users']['long_time']/60 ;
-                }
-            ],
-             [
-                'attribute' => 'total_nums', 
-                'value' => function($model){
-                    return $model['users']['un_call_number'];
-                }
-            ],
-            'call_by_same_times',
+            //  [
+            //     'attribute' => 'long_time', 
+            //     'value' => function($model){
+            //         return $model['users']['long_time']/60 ;
+            //     }
+            // ],
+            //  [
+            //     'attribute' => 'total_nums', 
+            //     'value' => function($model){
+            //         return $model['users']['un_call_number'];
+            //     }
+            // ],
+            // 'call_by_same_times',
             'type',
             'unactive_contact_number',
             'status',

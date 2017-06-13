@@ -6,7 +6,7 @@ use yii\helpers\Url;
 /* @var $model app\modules\home\models\User */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Users';
+$this->title = '账户中心';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>

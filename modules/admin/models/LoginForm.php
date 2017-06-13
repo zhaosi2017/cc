@@ -168,10 +168,12 @@ class LoginForm extends Model
     public function writeLoginLog($status)
     {
         $loginLog = new ManagerLoginLogs();
-        $loginLog->login_ip = Yii::$app->request->getUserIP();
+        $ip = Yii::$app->request->getUserIP();
+        $loginLog->login_ip = $ip;
         $loginLog->status = $status;
         $loginLog->login_time = date('Y-m-d H:i:s',$_SERVER['REQUEST_TIME']);
         $loginLog->uid = $this->_user ? $this->_user->id : 0;
+        $loginLog->address =  Yii::$app->ip2region->getRegion($ip);
         return $loginLog->save();
     }
     /**

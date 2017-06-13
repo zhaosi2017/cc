@@ -31,6 +31,10 @@ $config = [
         'errorHandler' => [
             'errorAction' => '/home/default/deny',
         ],
+        'ip2region' => [
+          'class' => '\xiaogouxo\ip2region\Geolocation',
+          'mode' => 'SEARCH_BTREE',
+        ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             // send all mails to a file by default. You have to set

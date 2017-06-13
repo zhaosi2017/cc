@@ -3439,5 +3439,49 @@
             "session",
             "yii2"
         ]
+    },
+    {
+        "name": "xiaogouxo/yii2-ip2region",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/xiaogouxo/yii2-ip2region.git",
+            "reference": "76fc680ed6fbe069f6d235cabfc5080b3157e0b1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/xiaogouxo/yii2-ip2region/zipball/76fc680ed6fbe069f6d235cabfc5080b3157e0b1",
+            "reference": "76fc680ed6fbe069f6d235cabfc5080b3157e0b1",
+            "shasum": ""
+        },
+        "require": {
+            "yiisoft/yii2": "*"
+        },
+        "time": "2016-08-11T05:15:49+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "xiaogouxo\\ip2region\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3"
+        ],
+        "authors": [
+            {
+                "name": "Falco Lee",
+                "email": "5493972@gmail.com"
+            }
+        ],
+        "description": "ip2region extension for yii2 to retrieve Chinese geolocation information",
+        "homepage": "https://github.com/xiaogouxo/yii2-ip2region",
+        "keywords": [
+            "IP",
+            "region",
+            "yii"
+        ]
     }
 ]
