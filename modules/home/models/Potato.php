@@ -492,6 +492,19 @@ class Potato extends Model
                 $this->sendPotatoData();
                 return $this->errorCode['success'];
             }
+
+            // 呼叫限制检查.
+            $res = $this->callLimit();
+            if (!$res['status']) {
+                $this->sendData = [
+                    'chat_type' => 1,
+                    'chat_id' => $this->potatoUid,
+                    'text' => '呼叫"'.$nickname.'"失败! '.$res['message'],
+                ];
+                $this->sendPotatoData();
+                return $this->errorCode['success'];
+            }
+
             // 呼叫本人.
             $nexmoData = [
                 "api_key" => $this->apiKey,
@@ -512,7 +525,7 @@ class Potato extends Model
                 ];
                 $this->sendPotatoData();
             } else {
-                $res = $this->callPerson($nickname, $nexmoData);
+                $res = $this->callPerson($nexmoData);
                 if ($res['status']) {
                     $this->sendData = [
                         'chat_type' => 1,
@@ -524,15 +537,13 @@ class Potato extends Model
                     $this->saveCallRecordData($res['status']);
                     return $this->errorCode['success'];
                 }
+
                 $this->sendData = [
                     'chat_type' => 1,
                     'chat_id' => $this->potatoUid,
                     'text' => '呼叫"'.$nickname.'"失败! '.$res['message'],
                 ];
                 $this->sendPotatoData();
-                if (isset($res['isLimit'])) {
-                    return $this->errorCode['success'];
-                }
             }
 
             if (empty($user->urgent_contact_number_one) && empty($user->urgent_contact_number_two)) {
@@ -558,8 +569,13 @@ class Potato extends Model
                 $this->sendPotatoData();
                 // 尝试呼叫紧急联系人一.
                 $nexmoData['to'] = $user->urgent_contact_one_country_code.$user->urgent_contact_number_one;
-                $res = $this->callPerson($user->urgent_contact_person_one, $nexmoData);
+                $res = $this->callPerson($nexmoData);
                 if ($res['status']) {
+                    $this->sendData = [
+                        'chat_id' => $this->telegramUid,
+                        'text' => '呼叫"'.$nickname.'"的紧急联系人"'.$user->urgent_contact_person_one.'", 成功!',
+                    ];
+                    $this->sendTelegramData();
                     // 保存通话记录.
                     $this->saveCallRecordData($res['status']);
                     return $this->errorCode['success'];
@@ -582,8 +598,13 @@ class Potato extends Model
                 $this->sendPotatoData();
                 // 尝试呼叫紧急联系人一.
                 $nexmoData['to'] = $user->urgent_contact_two_country_code.$user->urgent_contact_number_two;
-                $res = $this->callPerson($user->urgent_contact_person_two, $nexmoData);
+                $res = $this->callPerson($nexmoData);
                 if ($res['status']) {
+                    $this->sendData = [
+                        'chat_id' => $this->telegramUid,
+                        'text' => '呼叫"'.$nickname.'"的紧急联系人"'.$user->urgent_contact_person_one.'", 成功!',
+                    ];
+                    $this->sendTelegramData();
                     // 保存通话记录.
                     $this->saveCallRecordData($res['status']);
                     return $this->errorCode['success'];
@@ -637,7 +658,6 @@ class Potato extends Model
                 $personNum = Yii::$app->redis->hexists($cacheKey, $callKey) ? Yii::$app->redis->hget($cacheKey, $callKey) : 0;
                 if ($totalNum >= $this->calledPersonData->un_call_number || $personNum >= $this->calledPersonData->un_call_by_same_number) {
                     $res['status'] = false;
-                    $res['isLimit'] = true;
                     $res['message'] = '呼叫超出本人设置的限制次数';
                     return $res;
                 }
@@ -663,17 +683,12 @@ class Potato extends Model
      *
      * @return boolean
      */
-    public function callPerson($nickname, $data)
+    public function callPerson($data)
     {
         $result = [
             'status' => true,
             'message' => '',
         ];
-        // 呼叫限制检查.
-        $res = $this->callLimit();
-        if (!$res['status']) {
-            return $res;
-        }
 
         $this->sendData = $data;
         $res = $this->sendPotatoData($this->nexmoUrl);
@@ -695,20 +710,18 @@ class Potato extends Model
         $callRecord->active_call_uid = $this->callPersonData->id;
         $callRecord->unactive_call_uid = $this->calledPersonData->id;
         $callRecord->active_account = $this->callPersonData->account;
-        if ($this->isUrgentCall == 1) {
-            $callRecord->unactive_account = $this->urgent_contact_person_one;
-            $callRecord->unactive_contact_number = $this->calledPersonData->urgent_contact_one_country_code.$this->calledPersonData->urgent_contact_number_one;
-        } elseif ($this->isUrgentCall == 2) {
-            $callRecord->unactive_account = $this->urgent_contact_person_two;
-            $callRecord->unactive_contact_number = $this->calledPersonData->urgent_contact_two_country_code.$this->calledPersonData->urgent_contact_number_two;
-        } else {
-            $callRecord->unactive_account = $this->calledPersonData->account;
-            $callRecord->unactive_contact_number = $this->calledPersonData->country_code.$this->calledPersonData->phone_number;
-        }
-
+        $callRecord->unactive_account = $this->calledPersonData->account;
         $callRecord->active_nickname = $this->callPersonData->nickname;
         $callRecord->unactive_nickname = $this->calledPersonData->nickname;
         $callRecord->contact_number = $this->callPersonData->country_code.$this->callPersonData->phone_number;
+
+        if ($this->isUrgentCall == 1) {
+            $callRecord->unactive_contact_number = $this->calledPersonData->urgent_contact_one_country_code.$this->calledPersonData->urgent_contact_number_one;
+        } elseif ($this->isUrgentCall == 2) {
+            $callRecord->unactive_contact_number = $this->calledPersonData->urgent_contact_two_country_code.$this->calledPersonData->urgent_contact_number_two;
+        } else {
+            $callRecord->unactive_contact_number = $this->calledPersonData->country_code.$this->calledPersonData->phone_number;
+        }
         $callRecord->status = $status ? 0 : 1;
         $callRecord->call_time = time();
         $callRecord->type = ($this->isUrgentCall > 0) ? 1 : 0;
