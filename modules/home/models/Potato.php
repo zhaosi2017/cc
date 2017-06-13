@@ -514,12 +514,18 @@ class Potato extends Model
             } else {
                 $res = $this->callPerson($nickname, $nexmoData);
                 if ($res['status']) {
+                    $this->sendData = [
+                        'chat_type' => 1,
+                        'chat_id' => $this->potatoUid,
+                        'text' => '呼叫"'.$nickname.'"成功!',
+                    ];
+                    $this->sendPotatoData();
                     return $this->errorCode['success'];
                 }
                 $this->sendData = [
                     'chat_type' => 1,
                     'chat_id' => $this->potatoUid,
-                    'text' => '呼叫：'.$nickname.'失败! '.$res['message'],
+                    'text' => '呼叫"'.$nickname.'"失败! '.$res['message'],
                 ];
                 $this->sendPotatoData();
                 if (isset($res['isLimit'])) {
@@ -531,7 +537,7 @@ class Potato extends Model
                 $this->sendData = [
                     'chat_type' => 1,
                     'chat_id' => $this->potatoUid,
-                    'text' => '抱歉: '.$nickname.'没有设置紧急联系人, 本次呼叫失败，请稍后再试, 或尝试其他方式联系'.$user->nickname.'!',
+                    'text' => '抱歉"'.$nickname.'"没有设置紧急联系人, 本次呼叫失败，请稍后再试, 或尝试其他方式联系'.$user->nickname.'!',
                 ];
                 $this->sendPotatoData();
 
@@ -543,7 +549,7 @@ class Potato extends Model
                 $this->sendData = [
                     'chat_type' => 1,
                     'chat_id' => $this->potatoUid,
-                    'text' => '尝试呼叫: '.$nickname.'的紧急联系人:'.$user->urgent_contact_person_one.', 请稍后!',
+                    'text' => '尝试呼叫"'.$nickname.'"的紧急联系人"'.$user->urgent_contact_person_one.'", 请稍后!',
                 ];
                 $this->sendPotatoData();
                 // 尝试呼叫紧急联系人一.
@@ -555,7 +561,7 @@ class Potato extends Model
                 $this->sendData = [
                     'chat_type' => 1,
                     'chat_id' => $this->potatoUid,
-                    'text' => '呼叫：'.$nickname.'的紧急联系人:'.$user->urgent_contact_person_one.'失败! '.$res['message'],
+                    'text' => '呼叫"'.$nickname.'"的紧急联系人"'.$user->urgent_contact_person_one.'"失败! '.$res['message'],
                 ];
                 $this->sendPotatoData();
             }
@@ -565,7 +571,7 @@ class Potato extends Model
                 $this->sendData = [
                     'chat_type' => 1,
                     'chat_id' => $this->potatoUid,
-                    'text' => '尝试呼叫: '.$nickname.'的紧急联系人:'.$user->urgent_contact_person_two.', 请稍后!',
+                    'text' => '尝试呼叫"'.$nickname.'"的紧急联系人"'.$user->urgent_contact_person_two.'", 请稍后!',
                 ];
                 $this->sendPotatoData();
                 // 尝试呼叫紧急联系人一.
@@ -577,7 +583,7 @@ class Potato extends Model
                 $this->sendData = [
                     'chat_type' => 1,
                     'chat_id' => $this->potatoUid,
-                    'text' => '呼叫：'.$nickname.'的紧急联系人:'.$user->urgent_contact_person_two.'失败! '.$res['message'],
+                    'text' => '呼叫"'.$nickname.'"的紧急联系人"'.$user->urgent_contact_person_two.'"失败! '.$res['message'],
                 ];
                 $this->sendPotatoData();
             }
@@ -585,7 +591,7 @@ class Potato extends Model
             $this->sendData = [
                 'chat_type' => 1,
                 'chat_id' => $this->potatoUid,
-                'text' => '抱歉本次呼叫: '.$nickname.'失败，请稍后再试, 或尝试其他方式联系'.$user->nickname.'!',
+                'text' => '抱歉本次呼叫"'.$nickname.'"失败，请稍后再试, 或尝试其他方式联系"'.$user->nickname.'"!',
             ];
             $this->sendPotatoData();
             return $this->errorCode['success'];
@@ -665,19 +671,6 @@ class Potato extends Model
         $this->saveCallRecordData($res['status']);
         // 保存通话记录.
         if ($res['status'] == 0) {
-            $this->sendData = [
-                'chat_type' => 1,
-                'chat_id' => $this->potatoUid,
-                'text' => '呼叫: '.$nickname.'成功!',
-            ];
-            $this->sendPotatoData();
-        } else {
-            $this->sendData = [
-                'chat_type' => 1,
-                'chat_id' => $this->potatoUid,
-                'text' => '呼叫: '.$nickname.'失败!',
-            ];
-            $this->sendPotatoData();
             $result['status'] = false;
         }
 
