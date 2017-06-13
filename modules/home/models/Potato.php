@@ -572,10 +572,11 @@ class Potato extends Model
                 $res = $this->callPerson($nexmoData);
                 if ($res['status']) {
                     $this->sendData = [
-                        'chat_id' => $this->telegramUid,
+                        'chat_type' => 1,
+                        'chat_id' => $this->potatoUid,
                         'text' => '呼叫"'.$nickname.'"的紧急联系人"'.$user->urgent_contact_person_one.'", 成功!',
                     ];
-                    $this->sendTelegramData();
+                    $this->sendPotatoData();
                     // 保存通话记录.
                     $this->saveCallRecordData($res['status']);
                     return $this->errorCode['success'];
@@ -601,10 +602,11 @@ class Potato extends Model
                 $res = $this->callPerson($nexmoData);
                 if ($res['status']) {
                     $this->sendData = [
-                        'chat_id' => $this->telegramUid,
+                        'chat_type' => 1,
+                        'chat_id' => $this->potatoUid,
                         'text' => '呼叫"'.$nickname.'"的紧急联系人"'.$user->urgent_contact_person_two.'", 成功!',
                     ];
-                    $this->sendTelegramData();
+                    $this->sendPotatoData();
                     // 保存通话记录.
                     $this->saveCallRecordData($res['status']);
                     return $this->errorCode['success'];
