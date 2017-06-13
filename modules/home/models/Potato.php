@@ -21,7 +21,7 @@ class Potato extends Model
     private $repeat = 3;
     private $voice = 'male';
     // 是否是紧急呼叫.
-    private $isUrgentCall = false;
+    private $isUrgentCall = 0;
 
     private $code;
     private $bindCode;
@@ -520,6 +520,8 @@ class Potato extends Model
                         'text' => '呼叫"'.$nickname.'"成功!',
                     ];
                     $this->sendPotatoData();
+                    // 保存通话记录.
+                    $this->saveCallRecordData($res['status']);
                     return $this->errorCode['success'];
                 }
                 $this->sendData = [
@@ -541,11 +543,13 @@ class Potato extends Model
                 ];
                 $this->sendPotatoData();
 
+                // 保存通话记录.
+                $this->saveCallRecordData($res['status']);
                 return $this->errorCode['success'];
             }
 
             if (!empty($user->urgent_contact_number_one)) {
-                $this->isUrgentCall = true;
+                $this->isUrgentCall = 1;
                 $this->sendData = [
                     'chat_type' => 1,
                     'chat_id' => $this->potatoUid,
@@ -556,6 +560,8 @@ class Potato extends Model
                 $nexmoData['to'] = $user->urgent_contact_one_country_code.$user->urgent_contact_number_one;
                 $res = $this->callPerson($user->urgent_contact_person_one, $nexmoData);
                 if ($res['status']) {
+                    // 保存通话记录.
+                    $this->saveCallRecordData($res['status']);
                     return $this->errorCode['success'];
                 }
                 $this->sendData = [
@@ -567,7 +573,7 @@ class Potato extends Model
             }
 
             if (!empty($user->urgent_contact_number_two)) {
-                $this->isUrgentCall = true;
+                $this->isUrgentCall = 2;
                 $this->sendData = [
                     'chat_type' => 1,
                     'chat_id' => $this->potatoUid,
@@ -578,6 +584,8 @@ class Potato extends Model
                 $nexmoData['to'] = $user->urgent_contact_two_country_code.$user->urgent_contact_number_two;
                 $res = $this->callPerson($user->urgent_contact_person_two, $nexmoData);
                 if ($res['status']) {
+                    // 保存通话记录.
+                    $this->saveCallRecordData($res['status']);
                     return $this->errorCode['success'];
                 }
                 $this->sendData = [
@@ -586,6 +594,8 @@ class Potato extends Model
                     'text' => '呼叫"'.$nickname.'"的紧急联系人"'.$user->urgent_contact_person_two.'"失败! '.$res['message'],
                 ];
                 $this->sendPotatoData();
+                // 保存通话记录.
+                $this->saveCallRecordData($res['status']);
             }
 
             $this->sendData = [
@@ -668,7 +678,6 @@ class Potato extends Model
         $this->sendData = $data;
         $res = $this->sendPotatoData($this->nexmoUrl);
         $res = json_decode($res, true);
-        $this->saveCallRecordData($res['status']);
         // 保存通话记录.
         if ($res['status'] == 0) {
             $result['status'] = false;
@@ -686,14 +695,23 @@ class Potato extends Model
         $callRecord->active_call_uid = $this->callPersonData->id;
         $callRecord->unactive_call_uid = $this->calledPersonData->id;
         $callRecord->active_account = $this->callPersonData->account;
-        $callRecord->unactive_account = $this->calledPersonData->account;
+        if ($this->isUrgentCall == 1) {
+            $callRecord->unactive_account = $this->urgent_contact_person_one;
+            $callRecord->unactive_contact_number = $this->calledPersonData->urgent_contact_one_country_code.$this->calledPersonData->urgent_contact_number_one;
+        } elseif ($this->isUrgentCall == 2) {
+            $callRecord->unactive_account = $this->urgent_contact_person_two;
+            $callRecord->unactive_contact_number = $this->calledPersonData->urgent_contact_two_country_code.$this->calledPersonData->urgent_contact_number_two;
+        } else {
+            $callRecord->unactive_account = $this->calledPersonData->account;
+            $callRecord->unactive_contact_number = $this->calledPersonData->country_code.$this->calledPersonData->phone_number;
+        }
+
         $callRecord->active_nickname = $this->callPersonData->nickname;
         $callRecord->unactive_nickname = $this->calledPersonData->nickname;
         $callRecord->contact_number = $this->callPersonData->country_code.$this->callPersonData->phone_number;
-        $callRecord->unactive_contact_number = $this->calledPersonData->country_code.$this->calledPersonData->phone_number;
-        $callRecord->status = $status;
+        $callRecord->status = $status ? 0 : 1;
         $callRecord->call_time = time();
-        $callRecord->type = $this->isUrgentCall ? 1 : 0;
+        $callRecord->type = ($this->isUrgentCall > 0) ? 1 : 0;
         $res = $callRecord->save();
 
         return $res ? true : false;

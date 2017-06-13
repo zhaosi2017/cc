@@ -23,7 +23,7 @@ class Telegram extends Model
     private $repeat = 3;
     private $voice = 'male';
     // 是否是紧急呼叫.
-    private $isUrgentCall = false;
+    private $isUrgentCall = 0;
 
     private $code;
     private $bindCode;
@@ -500,6 +500,8 @@ class Telegram extends Model
                         'text' => '呼叫"'.$nickname.'"成功!',
                     ];
                     $this->sendTelegramData();
+                    // 保存通话记录.
+                    $this->saveCallRecordData($res['status']);
                     return $this->errorCode['success'];
                 }
 
@@ -520,11 +522,13 @@ class Telegram extends Model
                 ];
                 $this->sendTelegramData();
 
+                // 保存通话记录.
+                $this->saveCallRecordData($res['status']);
                 return $this->errorCode['success'];
             }
 
             if (!empty($user->urgent_contact_number_one)) {
-                $this->isUrgentCall = true;
+                $this->isUrgentCall = 1;
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
                     'text' => '尝试呼叫"'.$nickname.'"的紧急联系人"'.$user->urgent_contact_person_one.'", 请稍后!',
@@ -534,6 +538,8 @@ class Telegram extends Model
                 $nexmoData['to'] = $user->urgent_contact_one_country_code.$user->urgent_contact_number_one;
                 $res = $this->callPerson($user->urgent_contact_person_one, $nexmoData);
                 if ($res['status']) {
+                    // 保存通话记录.
+                    $this->saveCallRecordData($res['status']);
                     return $this->errorCode['success'];
                 }
                 $this->sendData = [
@@ -544,7 +550,7 @@ class Telegram extends Model
             }
 
             if (!empty($user->urgent_contact_number_two)) {
-                $this->isUrgentCall = true;
+                $this->isUrgentCall = 2;
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
                     'text' => '尝试呼叫"'.$nickname.'"的紧急联系人"'.$user->urgent_contact_person_two.'", 请稍后!',
@@ -554,6 +560,8 @@ class Telegram extends Model
                 $nexmoData['to'] = $user->urgent_contact_two_country_code.$user->urgent_contact_number_two;
                 $res = $this->callPerson($user->urgent_contact_person_two, $nexmoData);
                 if ($res['status']) {
+                    // 保存通话记录.
+                    $this->saveCallRecordData($res['status']);
                     return $this->errorCode['success'];
                 }
                 $this->sendData = [
@@ -561,6 +569,8 @@ class Telegram extends Model
                     'text' => '呼叫"'.$nickname.'"的紧急联系人"'.$user->urgent_contact_person_two.'"失败! '.$res['message'],
                 ];
                 $this->sendTelegramData();
+                // 保存失败的通话记录.
+                $this->saveCallRecordData($res['status']);
             }
 
             $this->sendData = [
@@ -641,8 +651,6 @@ class Telegram extends Model
         $this->sendData = $data;
         $res = $this->sendTelegramData($this->nexmoUrl);
         $res = json_decode($res, true);
-        $this->saveCallRecordData($res['status']);
-        // 保存通话记录.
         if ($res['status'] == 0) {
             $result['status'] = false;
         }
@@ -659,14 +667,23 @@ class Telegram extends Model
         $callRecord->active_call_uid = $this->callPersonData->id;
         $callRecord->unactive_call_uid = $this->calledPersonData->id;
         $callRecord->active_account = $this->callPersonData->account;
-        $callRecord->unactive_account = $this->calledPersonData->account;
+        if ($this->isUrgentCall == 1) {
+            $callRecord->unactive_account = $this->urgent_contact_person_one;
+            $callRecord->unactive_contact_number = $this->calledPersonData->urgent_contact_one_country_code.$this->calledPersonData->urgent_contact_number_one;
+        } elseif ($this->isUrgentCall == 2) {
+            $callRecord->unactive_account = $this->urgent_contact_person_two;
+            $callRecord->unactive_contact_number = $this->calledPersonData->urgent_contact_two_country_code.$this->calledPersonData->urgent_contact_number_two;
+        } else {
+            $callRecord->unactive_account = $this->calledPersonData->account;
+            $callRecord->unactive_contact_number = $this->calledPersonData->country_code.$this->calledPersonData->phone_number;
+        }
+
         $callRecord->active_nickname = $this->callPersonData->nickname;
         $callRecord->unactive_nickname = $this->calledPersonData->nickname;
         $callRecord->contact_number = $this->callPersonData->country_code.$this->callPersonData->phone_number;
-        $callRecord->unactive_contact_number = $this->calledPersonData->country_code.$this->calledPersonData->phone_number;
-        $callRecord->status = $status;
+        $callRecord->status = $status ? 0 : 1;
         $callRecord->call_time = time();
-        $callRecord->type = $this->isUrgentCall ? 1 : 0;
+        $callRecord->type = ($this->isUrgentCall > 0) ? 1 : 0;
         $res = $callRecord->save();
 
         return $res ? true : false;
