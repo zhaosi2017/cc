@@ -481,7 +481,7 @@ class Telegram extends Model
                     'chat_id' => $this->telegramUid,
                     'text' => '呼叫"'.$nickname.'"失败! '.$res['message'],
                 ];
-                $this->sendPotatoData();
+                $this->sendTelegramData();
                 return $this->errorCode['success'];
             }
             // 呼叫本人.
