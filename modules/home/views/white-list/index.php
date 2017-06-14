@@ -34,35 +34,35 @@ $actionId = Yii::$app->requestedAction->id;
         ],
        
            'columns' => [
-            ['class' => 'yii\grid\SerialColumn', 'header' => '序号'],
+                ['class' => 'yii\grid\SerialColumn', 'header' => '序号'],
 
-            /*
-            ['header' => '编号', 'value' => function($model){
-                return $model['id'];
-            }],
-            */
+                /*
+                ['header' => '编号', 'value' => function($model){
+                    return $model['id'];
+                }],
+                */
 
-         
-            ['header' => '白名单用户', 'value' => function($model){
-                return $model['white']['account'];
-            }],
-           
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'header' => '操作',
-                'template' => '{delete}',
-                'buttons' => [
-                    'delete' => function($url){
-                        return Html::a('删除',$url,[
-                            'style' => 'color:red',
-                            'data-method' => 'post',
-                            'data' => ['confirm' => '你确定要删除吗?']
-                        ]);
-                    },
+
+                ['header' => '白名单用户', 'value' => function($model){
+                    return $model['white']['account'];
+                }],
+
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'header' => '操作',
+                    'template' => '{delete}',
+                    'buttons' => [
+                        'delete' => function($url){
+                            return Html::a('删除',$url,[
+                                'style' => 'color:red',
+                                'data-method' => 'post',
+                                'data' => ['confirm' => '你确定要删除吗?']
+                            ]);
+                        },
+                    ],
                 ],
-            ],
 
-        ],
+            ],
     ]);
     ?>
 <?php Pjax::end(); ?>
