@@ -41,12 +41,14 @@ $actionId = Yii::$app->requestedAction->id;
             'maxButtonCount' => 9,
         ],
         'columns' => [
+            /*
             [
                 'class' => 'yii\grid\CheckboxColumn',
                 // 'footer' =>'<a href="javascript:;" class="_delete_all" data-url="'.Url::to(['/user/delete-all']).'"></a>',
                 // 'footerOptions' => ['colspan' => 13],
             ],
-            'id',
+            */
+            ['class' => 'yii\grid\SerialColumn', 'header' => '序号'],
             'active_account',
             'active_nickname',
             'contact_number',
@@ -65,17 +67,19 @@ $actionId = Yii::$app->requestedAction->id;
             //     }
             // ],
             // 'call_by_same_times',
-            'type',
+            'typeData',
             'unactive_contact_number',
-            'status',
+            'statusData',
             [
                 'attribute' => 'call_time',
                 'format'=>['date', 'php:Y-m-d H:i:s'],
             ],
+            /*
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view}&nbsp;&nbsp;&nbsp;&nbsp;{delete}',
             ],
+            */
         ],
     ]);
     ?>

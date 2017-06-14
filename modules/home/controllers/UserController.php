@@ -69,6 +69,10 @@ class UserController extends GController
         $model = (new ContactForm())->findModel($id);
         $user_model = $this->findModel($id);
         $model->scenario='phone';
+        $isModify = false;
+        if ($user_model->phone_number) {
+            $isModify = true;
+        }
         
         if( $model->load(Yii::$app->request->post()) && $model->validate(['country_code','phone_number']) ){
             $code = $_POST['ContactForm']['code'];
@@ -88,7 +92,7 @@ class UserController extends GController
                 return $this->redirect('set-phone-number');
             }
         }
-        return $this->render('set-phone-number',['model'=>$model]);
+        return $this->render('set-phone-number',['model'=>$model, 'isModify' => $isModify]);
     }
 
     public function actionDeleteNumber($id)

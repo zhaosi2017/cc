@@ -34,11 +34,14 @@ $actionId = Yii::$app->requestedAction->id;
         ],
        
            'columns' => [
-            // ['class' => 'yii\grid\SerialColumn', 'header' => '序号'],
+                ['class' => 'yii\grid\SerialColumn', 'header' => '序号'],
 
-            ['header' => '编号', 'value' => function($model){
-                return $model['id'];
-            }],
+                /*
+                ['header' => '编号', 'value' => function($model){
+                    return $model['id'];
+                }],
+                */
+
 
            
             ['header' => '白名单用户', 'value' => function($model){
@@ -61,11 +64,13 @@ $actionId = Yii::$app->requestedAction->id;
                             'data' => ['confirm' => '你确定要删除吗?']
                         ]);
                     },
-                ],
+
+
+            ], 
             ],
 
-        ],
-    ]);
+            ],
+            ]);
     ?>
 <?php Pjax::end(); ?>
  <p class="text-right">
