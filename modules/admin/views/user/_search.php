@@ -18,9 +18,9 @@ use yii\widgets\ActiveForm;
 
     <div class="row">
         <div class="col-lg-6">
-            <?= $form->field($model,'start_date')->input('date',['prompt'=>'请选择','onChange'=>'timeChange()'])->label('注册时间：') ?>
+            <?= $form->field($model,'start_date')->input('date',['prompt'=>'请选择'])->label('注册时间：') ?>
             至
-            <?= $form->field($model,'end_date')->input('date',['prompt'=>'请选择','onChange'=>'timeChange()'])->label(false) ?>
+            <?= $form->field($model,'end_date')->input('date',['prompt'=>'请选择'])->label(false) ?>
 
             <a class="btn btn-xs btn-danger" onclick="
                 $('#usersearch-start_date').val('');

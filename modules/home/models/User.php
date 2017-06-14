@@ -108,6 +108,8 @@ class User extends CActiveRecord implements IdentityInterface
             [['auth_key','password'], 'string', 'max' => 64],
             [['login_ip','login_time'],'safe'],
             ['nickname' ,'checkName'],
+            [['urgent_contact_person_one','urgent_contact_one_country_code', 'urgent_contact_number_one'],'required','on'=>'urgent_contact_one'],
+            [[ 'urgent_contact_person_two','urgent_contact_two_country_code','urgent_contact_number_two'],'required','on'=>'urgent_contact_two'],
         ];
     }
 
@@ -140,6 +142,16 @@ class User extends CActiveRecord implements IdentityInterface
             'urgent_contact_one_country_code'=>'国码',
             'urgent_contact_two_country_code'=>'国码',
         ];
+    }
+
+     public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $res = [
+            'urgent_contact_one' =>[ 'urgent_contact_person_one','urgent_contact_one_country_code', 'urgent_contact_number_one'] ,
+            'urgent_contact_two' => [ 'urgent_contact_person_two','urgent_contact_two_country_code','urgent_contact_number_two'],
+        ];
+        return array_merge($scenarios,$res);
     }
 
     public function checkName($attribute, $params)
