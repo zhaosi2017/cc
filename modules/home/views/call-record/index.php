@@ -38,7 +38,7 @@ $actionId = Yii::$app->requestedAction->id;
                 // 'footer' =>'<a href="javascript:;" class="_delete_all" data-url="'.Url::to(['/user/delete-all']).'"></a>',
                 // 'footerOptions' => ['colspan' => 13],
             ],
-            'id',
+            ['class' => 'yii\grid\SerialColumn', 'header' => '序号'],
             'active_account',
             'active_nickname',
             'contact_number',
