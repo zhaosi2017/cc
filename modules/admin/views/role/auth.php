@@ -42,7 +42,10 @@ $data = [
         'items' => [
             [
                 'page_name' => '用户列表',
-                'permission' => ['admin/user/index', 6=>'admin/user/harassment'],
+                'permission' => [
+                'admin/user/index', 
+                // 6=>'admin/user/harassment'
+                ],
             ],
             [
                 'page_name' => '用户登陆日志',
