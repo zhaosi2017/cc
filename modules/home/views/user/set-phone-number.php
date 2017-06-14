@@ -5,7 +5,11 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use yii\captcha\Captcha;
 
-$this->title = '修改联系电话';
+if ($isModify) {
+    $this->title = '修改联系电话';
+} else {
+    $this->title = '绑定联系电话';
+}
 $this->params['breadcrumbs'][] = $this->title;
 /* @var $this yii\web\View */
 /* @var $model app\modules\home\models\User */
