@@ -40,17 +40,11 @@ $actionId = Yii::$app->requestedAction->id;
                 return $model['id'];
             }],
 
-            ['header' => '用户名称', 'value' => function($model){
-                return $model['user']['account'];
-            }],
-
+         
             ['header' => '白名单用户', 'value' => function($model){
                 return $model['white']['account'];
             }],
-            // [
-            //     'class' => 'yii\grid\ActionColumn',
-            //     'template' => '&nbsp;&nbsp;{delete}',
-            // ],
+           
             [
                 'class' => 'yii\grid\ActionColumn',
                 'header' => '操作',
