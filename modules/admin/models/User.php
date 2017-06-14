@@ -70,9 +70,18 @@ class User extends CActiveRecord
 
             [['phone_number','urgent_contact_number_one','urgent_contact_number_two', 'telegram_number', 'potato_number'], 'number', 'max' => 999999999999],
             [['auth_key','password'], 'string', 'max' => 64],
+             [['un_call_number','un_call_by_same_number','long_time'],'required','on'=>'harassment'],
         ];
     }
-
+    
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $res = [
+            'harassment'=>['un_call_number','un_call_by_same_number','long_time'],
+        ];
+        return array_merge($scenarios,$res);
+    }
     /**
      * @inheritdoc
      */

@@ -110,6 +110,7 @@ class User extends CActiveRecord implements IdentityInterface
             ['nickname' ,'checkName'],
             [['urgent_contact_person_one','urgent_contact_one_country_code', 'urgent_contact_number_one'],'required','on'=>'urgent_contact_one'],
             [[ 'urgent_contact_person_two','urgent_contact_two_country_code','urgent_contact_number_two'],'required','on'=>'urgent_contact_two'],
+            [['un_call_number','un_call_by_same_number','long_time'],'required','on'=>'harassment'],
         ];
     }
 
@@ -150,6 +151,7 @@ class User extends CActiveRecord implements IdentityInterface
         $res = [
             'urgent_contact_one' =>[ 'urgent_contact_person_one','urgent_contact_one_country_code', 'urgent_contact_number_one'] ,
             'urgent_contact_two' => [ 'urgent_contact_person_two','urgent_contact_two_country_code','urgent_contact_number_two'],
+            'harassment'=>['un_call_number','un_call_by_same_number','long_time'],
         ];
         return array_merge($scenarios,$res);
     }

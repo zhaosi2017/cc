@@ -17,10 +17,10 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'account')->textInput()->label('用户名：') ?>
+    <?= $form->field($model, 'account')->textInput(['placeholder'=>'请输入邮箱'])->label('用户名：') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('完成', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton('添加', ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
