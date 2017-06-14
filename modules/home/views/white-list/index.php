@@ -47,7 +47,7 @@ $actionId = Yii::$app->requestedAction->id;
             ['header' => '白名单用户', 'value' => function($model){
                 return $model['white']['account'];
             }],
-             ['header' => '白名单电话', 'value' => function($model){
+             ['header' => '联系电话', 'value' => function($model){
                 return $model['white']['phone_number'];
             }],
 
