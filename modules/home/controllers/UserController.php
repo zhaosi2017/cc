@@ -49,9 +49,16 @@ class UserController extends GController
     public function actionSetNickname()
     {
         $model = $this->findModel(Yii::$app->user->id);
-        if($model->load(Yii::$app->request->post()) && $model->update()){
-            Yii::$app->getSession()->setFlash('success', '操作成功');
-            return $this->redirect(['index']);
+        if($model->load(Yii::$app->request->post())){
+            if(empty($model->nickname)){
+                $model->addError('nickname','用户昵称不能为空');
+                return $this->render('set-nickname',['model'=>$model]);
+            }
+            if($model->update()){
+                Yii::$app->getSession()->setFlash('success', '操作成功');
+                return $this->redirect(['index']);
+            }
+            
         }
         return $this->render('set-nickname',['model'=>$model]);
     }
@@ -307,22 +314,28 @@ class UserController extends GController
         $modifyOne = isset($request['modify']) && ($request['modify'] == '1') ? true : false;
         $modifyTwo = isset($request['modify']) && ($request['modify'] == '2') ? true : false;
         if ($model->load(Yii::$app->request->post())) {
-            if (($modifyOne || $firstPersonNoExists) && !$model->validate(['urgent_contact_person_one', 'urgent_contact_one_country_code', 'urgent_contact_number_one'])) {
-                return $this->render('add-urgent-contact-person-one', ['model' => $model]);
+            
+            if (($modifyOne || $firstPersonNoExists)) {
+                $model->scenario  ='urgent_contact_one';
+                if( !$model->validate(['urgent_contact_person_one', 'urgent_contact_one_country_code', 'urgent_contact_number_one'])){
+
+                    return $this->render('add-urgent-contact-person-one', ['model' => $model,'isModify'=>$modifyOne]);
+                }
+                 $updateRes = $model->update();
+                 Yii::$app->getSession()->setFlash('success', '操作成功');
+                 return $this->redirect(['index']);
             }
 
-            if (($modifyTwo || $secondPersonNoExists) && !$model->validate(['urgent_contact_person_two', 'urgent_contact_two_country_code', 'urgent_contact_number_two'])) {
-                return $this->render('add-urgent-contact-person-two', ['model' => $model]);
+            if (($modifyTwo || $secondPersonNoExists)) {
+                $model->scenario  ='urgent_contact_two';
+                if(!$model->validate(['urgent_contact_person_two', 'urgent_contact_two_country_code', 'urgent_contact_number_two'])){
+                    return $this->render('add-urgent-contact-person-two', ['model' => $model,'isModify'=>$modifyTwo]);
+                }
+                 $updateRes = $model->update();
+                 Yii::$app->getSession()->setFlash('success', '操作成功');
+                 return $this->redirect(['index']);
+                
             }
-
-            $updateRes = $model->update();
-            if (!$updateRes && $firstPersonNoExists) {
-                return $this->render('add-urgent-contact-person-one', ['model' => $model]);
-            }
-            if (!$updateRes && $secondPersonNoExists) {
-                return $this->render('add-urgent-contact-person-two', ['model' => $model]);
-            }
-
             return $this->redirect(['index']);
         } else {
             $isModify = false;

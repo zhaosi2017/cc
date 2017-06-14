@@ -20,7 +20,7 @@ $actionId = Yii::$app->requestedAction->id;
 <?php Pjax::begin(); ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'layout' => "{items}\n  <div><ul class='pagination'><li style='display:inline;'><span>共有".$dataProvider->getTotalCount(). "条数据 <span></li></ul>{pager}  </div>",
+        'layout' => "{items}\n  <div><ul class='pagination'><li style='display:inline;'><span>共".$dataProvider->getTotalCount(). "条数据 <span></li></ul>{pager}  </div>",
         // 'filterModel' => $searchModel,
         'rowOptions' => function($model) {
             return ['id' => 'tr_'.$model->id, 'class' => '_tr'];
@@ -43,27 +43,34 @@ $actionId = Yii::$app->requestedAction->id;
                 */
 
 
-                ['header' => '白名单用户', 'value' => function($model){
-                    return $model['white']['account'];
-                }],
+           
+            ['header' => '白名单用户', 'value' => function($model){
+                return $model['white']['account'];
+            }],
+             ['header' => '白名单电话', 'value' => function($model){
+                return $model['white']['phone_number'];
+            }],
 
-                [
-                    'class' => 'yii\grid\ActionColumn',
-                    'header' => '操作',
-                    'template' => '{delete}',
-                    'buttons' => [
-                        'delete' => function($url){
-                            return Html::a('删除',$url,[
-                                'style' => 'color:red',
-                                'data-method' => 'post',
-                                'data' => ['confirm' => '你确定要删除吗?']
-                            ]);
-                        },
-                    ],
-                ],
+           
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'header' => '操作',
+                'template' => '{delete}',
+                'buttons' => [
+                    'delete' => function($url){
+                        return Html::a('删除',$url,[
+                            'style' => 'color:red',
+                            'data-method' => 'post',
+                            'data' => ['confirm' => '你确定要删除吗?']
+                        ]);
+                    },
+
+
+            ], 
+            ],
 
             ],
-    ]);
+            ]);
     ?>
 <?php Pjax::end(); ?>
  <p class="text-right">

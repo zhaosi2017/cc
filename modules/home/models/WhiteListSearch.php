@@ -74,8 +74,8 @@ class WhiteListSearch extends WhiteList
 
 
 
-        !empty($this->search_keywords) && strlen($this->search_keywords)>0 && $query->andFilterWhere(['in', 'white_uid', $this->searchIds($this->search_keywords,'account')]);
-        
+        $this->search_type == 1 && !empty($this->search_keywords) && strlen($this->search_keywords)>0 && $query->andFilterWhere(['in', 'white_uid', $this->searchIds($this->search_keywords,'account')]);
+         $this->search_type == 2 && !empty($this->search_keywords) && strlen($this->search_keywords)>0 && $query->andFilterWhere(['in', 'white_uid', $this->searchIds($this->search_keywords,'phone_number')]);
         return $dataProvider;
     }
 
