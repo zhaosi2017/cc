@@ -73,16 +73,16 @@ $this->params['breadcrumbs'][] = $this->title;
                         . $data->urgent_contact_number_two;
                 }],*/
 
-                [
-                    'class' => 'yii\grid\ActionColumn',
-                    'header' => '操作',
-                    'template' => '{harassment}',
-                    'buttons' => [
-                        'harassment' => function($url){
-                            return Html::a('防骚扰',$url);
-                        },
-                    ],
-                ],
+                // [
+                //     'class' => 'yii\grid\ActionColumn',
+                //     'header' => '操作',
+                //     'template' => '{harassment}',
+                //     'buttons' => [
+                //         'harassment' => function($url){
+                //             return Html::a('防骚扰',$url);
+                //         },
+                //     ],
+                // ],
             ],
         ]); ?>
     <?php Pjax::end(); ?>
