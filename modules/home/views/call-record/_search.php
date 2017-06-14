@@ -24,7 +24,12 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model,'call_time_start')->input('date',['prompt'=>'开始时间','onchange'=>'timeChange()'])->label('呼叫时间：') ?>
             至
             <?= $form->field($model,'call_time_end')->input('date',['prompt'=>'结束时间','onchange'=>'timeChange()'])->label(false) ?>
-            &nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;
+            <a class="btn btn-xs btn-danger" onclick="
+                $('#callrecordsearch-call_time_start').val('');
+                $('#callrecordsearch-call_time_end').val('');
+            ">清除时间</a>
+            &nbsp;&nbsp;
             <?= $form->field($model,'status')->dropDownList($model->getStatusList(),['prompt'=>'全部','onchange'=>'
                 $("#search_hide").click();
             '])->label('呼叫状态：') ?>

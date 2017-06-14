@@ -58,7 +58,7 @@ class CallRecord extends \app\models\CActiveRecord
             'typeData' => '电话类型',
             'contact_number' => '主叫电话',
             'unactive_contact_number' => '联系电话',
-            'type'=> '呼叫类型',
+            'typeData'=> '电话类型',
             'status' => '呼叫状态',
             'statusData' => '呼叫状态',
             'call_time' => '呼叫时间',
