@@ -34,11 +34,13 @@ $actionId = Yii::$app->requestedAction->id;
         ],
        
            'columns' => [
-            // ['class' => 'yii\grid\SerialColumn', 'header' => '序号'],
+            ['class' => 'yii\grid\SerialColumn', 'header' => '序号'],
 
+            /*
             ['header' => '编号', 'value' => function($model){
                 return $model['id'];
             }],
+            */
 
             ['header' => '用户名称', 'value' => function($model){
                 return $model['user']['account'];
