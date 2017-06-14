@@ -17,16 +17,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php $form = ActiveForm::begin([
         'options'=>['class'=>'form-horizontal m-t'],
         'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-sm-9\">{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
-            'labelOptions' => ['class' => 'col-sm-3 '],
+            'template' => "{label}\n<div class=\"col-sm-3\">{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
+            'labelOptions' => ['class' => 'col-sm-1 '],
         ],
     ]) ?>
 
-    <?= $form->field($model, 'password')->passwordInput() ?>
+    <?= $form->field($model, 'password')->passwordInput(['placeholder'=>'请输入原密码']) ?>
 
-    <?= $form->field($model, 'newPassword')->passwordInput() ?>
+    <?= $form->field($model, 'newPassword')->passwordInput(['placeholder'=>'请输入新密码']) ?>
 
-    <?= $form->field($model, 'rePassword')->passwordInput() ?>
+    <?= $form->field($model, 'rePassword')->passwordInput(['placeholder'=>'请重复输入密码']) ?>
 
     <div class="form-group">
         <div class="col-sm-6 col-sm-offset-3">
