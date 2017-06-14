@@ -51,10 +51,6 @@ $actionId = Yii::$app->requestedAction->id;
                 'attribute' => 'call_time',
                 'format'=>['date', 'php:Y-m-d H:i:s'],
             ],
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'template' => '{view}&nbsp;&nbsp;&nbsp;&nbsp;{delete}',
-            ],
         ],
     ]);
     ?>
