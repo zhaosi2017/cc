@@ -41,11 +41,13 @@ $actionId = Yii::$app->requestedAction->id;
             'maxButtonCount' => 9,
         ],
         'columns' => [
+            /*
             [
                 'class' => 'yii\grid\CheckboxColumn',
                 // 'footer' =>'<a href="javascript:;" class="_delete_all" data-url="'.Url::to(['/user/delete-all']).'"></a>',
                 // 'footerOptions' => ['colspan' => 13],
             ],
+            */
             ['class' => 'yii\grid\SerialColumn', 'header' => '序号'],
             'active_account',
             'active_nickname',
