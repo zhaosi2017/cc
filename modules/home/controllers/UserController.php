@@ -384,4 +384,20 @@ class UserController extends GController
         return $this->redirect(['index']);
     }
 
+
+    public function actionHarassment()
+    {   
+        $id = Yii::$app->user->id;
+        $model = $this->findModel($id);
+        $model->scenario = 'harassment';
+        if($model->load(Yii::$app->request->post()) && $model->validate()){
+
+            $model->save() ? $model->sendSuccess() : $model->sendError();
+            return $this->redirect(['index']);
+        }
+        return $this->render('harassment', [
+            'model' => $model,
+        ]);
+    }
+
 }
