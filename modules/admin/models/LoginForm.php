@@ -16,7 +16,7 @@ class LoginForm extends Model
 {
 
     public $username;
-    public $password;
+    public $pwd;
     public $rememberMe = true;
     public $code;
     private $_user = null;
@@ -29,9 +29,9 @@ class LoginForm extends Model
     {
         return [
             // username and password are both required
-            [['username', 'password'], 'required'],
+            [['username', 'pwd'], 'required'],
             ['username', 'validateAccount'],
-            ['password', 'validatePassword'],
+            ['pwd', 'validatePassword'],
             ['code', 'captcha', 'message'=>'验证码输入不正确', 'captchaAction'=>'/admin/login/captcha'],
             ['username','checkAccountStatus'],
         ];
@@ -44,7 +44,7 @@ class LoginForm extends Model
     {
         return [
             'username' => '用户名',
-            'password' => '密码',
+            'pwd' => '密码',
         ];
     }
 
@@ -70,7 +70,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $identity = $this->getUser();
 
-            if ($identity && !Yii::$app->getSecurity()->validatePassword($this->password, $identity->password)) {
+            if ($identity && !Yii::$app->getSecurity()->validatePassword($this->pwd, $identity->password)) {
                 $this->addError($attribute, '密码错误。');
             }
 
@@ -86,10 +86,22 @@ class LoginForm extends Model
         // 数据格式是否验证通过.
         if ($this->validate()) {
             $this->writeLoginLog(1);
+            $this->recordIp();
             return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 *30 : 0);
         } else {
             return false;
         }
+    }
+
+    /**
+     * 记录用户最后登录ip
+     */
+    public function recordIp()
+    {
+
+        $user = Manager::findOne($this->getUser()->id);
+        $user->login_ip = Yii::$app->request->getUserIP();
+        return $user->update();
     }
 
     public function checkAccountStatus()
@@ -116,7 +128,7 @@ class LoginForm extends Model
             }
         }*/
 
-        if(isset($errors['password'])){
+        if(isset($errors['pwd'])){
             $this->recordLoginError();
             if(!$this->writeLoginLog(2)){
                 parent::afterValidate();
