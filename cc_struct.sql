@@ -127,6 +127,7 @@ CREATE TABLE `login_logs` (
   `login_ip` char(15) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '0',
   `unlock_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `unlock_uid` int(10) unsigned NOT NULL DEFAULT '0',
+  `address` varchar(100)   DEFAULT NULL COMMENT '登录地址',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=124 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -169,6 +170,7 @@ CREATE TABLE `manager_login_logs` (
   `status` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '1成功,2密码错误,3验证错误,4账号错误',
   `login_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `login_ip` char(15) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '0',
+  `address` varchar(100)   DEFAULT NULL COMMENT '登录地址',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
