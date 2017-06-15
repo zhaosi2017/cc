@@ -14,6 +14,7 @@ class Telegram extends Model
     private $startText = '开始操作, 请稍后!';
     private $wellcomeText = '欢迎';
     private $keyboardText = '分享自己名片';
+    private $callText = "呼叫";
     private $firstText = '/start';
     private $webhook;
     private $nexmoUrl = "https://api.nexmo.com/tts/json";
@@ -24,6 +25,11 @@ class Telegram extends Model
     private $voice = 'male';
     // 是否是紧急呼叫.
     private $isUrgentCall = 0;
+    private $callCallbackDataPre = 'cc_call';
+    private $whiteCallbackDataPre = 'cc_bind';
+    private $unwhiteCallbackDataPre = 'cc_unbind';
+    private $whiteText = '加白名单';
+    private $unwhiteText = '解除百名单';
 
     private $code;
     private $bindCode;
@@ -32,10 +38,10 @@ class Telegram extends Model
     private $telegramContactPhone;
     private $telegramContactFirstName;
     private $telegramContactLastName;
+    private $callbackQuery;
     private $callPersonData;
     private $calledPersonData;
 
-    private $keyboard;
     private $sendData;
     private $errorCode = [
         'success' => 200,
@@ -156,18 +162,11 @@ class Telegram extends Model
     }
 
     /**
-     * 设置keyboard.
+     * 设置回调数据.
      */
-    public function setKeyboard()
+    public function setCallbackQuery($value)
     {
-        $this->keyboard = [
-            [
-                [
-                    "text"=> $this->keyboardText,
-                    "request_contact"=> true,
-                ]
-            ]
-        ];
+        $this->callbackQuery = $value;
     }
 
     /**
@@ -319,14 +318,6 @@ class Telegram extends Model
     }
 
     /**
-     * @return mixed
-     */
-    public function getKeyboard()
-    {
-        return $this->keyboard;
-    }
-
-    /**
      * @return string
      */
     public function getKeyboardText()
@@ -391,23 +382,142 @@ class Telegram extends Model
     }
 
     /**
+     * 返回回调数据.
+     */
+    public function getCallbackQuery()
+    {
+        return $this->callbackQuery;
+    }
+
+    /**
      * 欢迎.
      */
     public function telegramWellcome()
     {
         $this->setKeyboard();
+        $keyboard = [
+            [
+                [
+                    "text"=> $this->keyboardText,
+                    "request_contact"=> true,
+                ]
+            ]
+        ];
         // 发送操作菜单.
         $this->sendData = [
             'chat_id' => $this->telegramUid,
             'reply_to_message_id' => 0,
             'text' => $this->wellcomeText,
             'reply_markup' => [
-                'keyboard' => $this->keyboard,
+                'keyboard' => $keyboard,
             ]
         ];
 
         $this->sendTelegramData();
         return $this->errorCode['success'];
+    }
+
+    /**
+     * 发送菜单.
+     */
+    public function sendMenulist()
+    {
+        $this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
+        $this->calledPersonData = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
+        // 先检查自己是否完成绑定操作.
+        if (empty($this->callPersonData) && ($this->telegramUid == $this->telegramContactUid)) {
+            // 发送验证码完成绑定.
+            $this->setCode();
+            $this->sendData = [
+                'chat_id' => $this->telegramUid,
+                'text' => $this->code,
+            ];
+        } elseif (!empty($this->callPersonData) && ($this->telegramUid == $this->telegramContactUid)){
+            $this->sendData = [
+                'chat_id' => $this->telegramUid,
+                'text' => '您已经完成了绑定操作!',
+            ];
+        } elseif (empty($this->callPersonData) && ($this->telegramUid != $this->telegramContactUid)) {
+            $this->sendData = [
+                'chat_id' => $this->telegramUid,
+                'text' => '请先分享自己的名片到机器人，完成绑定操作!',
+            ];
+        } else {
+            // 检查是否加了呼叫人到自己到白名单.
+            $whiteRes = WhiteList::findOne(['uid' => $this->callPersonData->id, 'white_uid'=> $this->calledPersonData->id]);
+            $callMenu = [
+                'text' => $this->callText,
+                'callback_data' => implode('-', array($this->callCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone)),
+            ];
+            if ($whiteRes) {
+                $bindMenu = [
+                    'text' => $this->unwhiteText,
+                    'callback_data' => implode('-', array($this->unwhiteCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone)),
+                ];
+            } else {
+                $bindMenu = [
+                    'text' => $this->whiteText,
+                    'callback_data' => implode('-', array($this->whiteCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone)),
+                ];
+            }
+            $inlineKeyboard =[
+                [
+                    $callMenu,
+                    $bindMenu
+                ]
+            ];
+            $this->sendData = [
+                'chat_id' => $this->telegramUid,
+                'text' => $this->telegramText,
+                'reply_markup' => [
+                    'inline_keyboard' => $inlineKeyboard,
+                ]
+            ];
+        }
+
+        return $this->sendTelegramData();
+    }
+
+    /**
+     * 加入白名单.
+     */
+    public function joinWhiteList()
+    {
+        $whiteRes = WhiteList::findOne(['uid' => $this->callPersonData->id, 'white_uid'=> $this->calledPersonData->id]);
+        if ($whiteRes) {
+            $text = '已经在白名单里!';
+        } else {
+            $whiteRes->uid = $this->callPersonData->id;
+            $whiteRes->white_uid = $this->callbackQuery[1];
+            $res = $whiteRes->save();
+            $res ? ($text = '加入白名单成功!') : ($text = '加入白名单失败!');
+        }
+
+        $this->sendData = [
+            'chat_id' => $this->telegramUid,
+            'text' => $text,
+        ];
+        return $this->sendTelegramData();
+    }
+
+    /**
+     * 解除白名单.
+     */
+    public function unbindWhiteList()
+    {
+        $whiteRes = WhiteList::findOne(['uid' => $this->callPersonData->id, 'white_uid'=> $this->calledPersonData->id]);
+        if ($whiteRes){
+            $res = $whiteRes->delete();
+            $res ? ($text = '解除白名单成功!') : ($text = '解除白名单失败!');
+        } else {
+            $text = '不在白名单!';
+        }
+
+        $this->sendData = [
+            'chat_id' => $this->telegramUid,
+            'text' => $text,
+        ];
+        return $this->sendTelegramData();
     }
 
     /**
@@ -446,6 +556,7 @@ class Telegram extends Model
         ];
         $this->sendTelegramData();
 
+        $this->telegramContactUid = $this->callbackQuery[1];
         $res = User::findOne(['telegram_user_id' => $this->telegramUid]);
         if (!$res) {
             // 发送验证码，完成绑定.
