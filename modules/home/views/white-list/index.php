@@ -58,10 +58,10 @@ $actionId = Yii::$app->requestedAction->id;
                 'template' => '{delete}',
                 'buttons' => [
                     'delete' => function($url){
-                        return Html::a('删除',$url,[
+                        return Html::a('移出白名单',$url,[
                             'style' => 'color:red',
                             'data-method' => 'post',
-                            'data' => ['confirm' => '你确定要删除吗?']
+                            'data' => ['confirm' => '你确定要移出白名单吗?']
                         ]);
                     },
 
@@ -73,7 +73,5 @@ $actionId = Yii::$app->requestedAction->id;
             ]);
     ?>
 <?php Pjax::end(); ?>
- <p class="text-right">
-        <?= Html::a('添加白名单', ['create'], ['class' => 'btn btn-sm btn-primary']) ?>
-    </p>
+
 </div>
