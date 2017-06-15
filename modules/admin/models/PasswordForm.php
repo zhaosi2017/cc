@@ -24,11 +24,9 @@ class PasswordForm extends Model
             // username and password are both required
             [['rePassword', 'password', 'newPassword'], 'required'],
             [['rePassword', 'password', 'newPassword'], 'string'],
-            ['rePassword', 'compare', 'compareAttribute'=>'newPassword'],
-            ['newPassword', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>'至少包含8个字符，至少包括以下2种
-字符：大写字母，小写字母，数字，符号。'],
-            ['rePassword', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>'至少包含8个字符，至少包括以下2种
-字符：大写字母，小写字母，数字，符号。'],
+            ['rePassword', 'compare', 'compareAttribute'=>'newPassword','message'=>'两次密码输入不一致'],
+            ['newPassword', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>'密码格式错误'],
+            ['rePassword', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>'密码格式错误'],
             ['password', 'validatePassword'],
         ];
     }
@@ -37,7 +35,7 @@ class PasswordForm extends Model
     {
         $identity = (Object) Yii::$app->user->identity;
         if(!Yii::$app->getSecurity()->validatePassword($this->password, $identity->password)){
-            $this->addError($attribute, '原密码错误');
+            $this->addError($attribute, '管理员原密码错误');
         }
     }
 
@@ -49,7 +47,7 @@ class PasswordForm extends Model
         return [
             'password' => '原密码',
             'newPassword' => '新密码',
-            'rePassword' => '重复输入',
+            'rePassword' => '重复新密码',
         ];
     }
 

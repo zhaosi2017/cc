@@ -29,7 +29,7 @@ $module = $this->context->module->id;
                                 </span>
                             </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                <li><a class="J_menuItem" href="<?= Url::to(['/admin/user/password']) ?>">修改密码</a></li>
+                                <li><a class="J_menuItem" href="<?= Url::to(['/admin/default/password']) ?>">修改密码</a></li>
                                 <li class="divider"></li>
                                 <li><a data-method="post" href="<?= Url::to(['/admin/login/logout']) ?>">安全退出</a></li>
                             </ul>
@@ -38,7 +38,7 @@ $module = $this->context->module->id;
                         </div>
                     </li>
 
-                    <li>
+                    <li class="<?php if( Yii::$app->controller->id == 'default'){ echo 'active';}?>">
                         <a class="J_menuItem" href="<?= Url::to(['/admin/default/index']) ?>"><i class="fa fa-home"></i> <span class="nav-label">首页</span></a>
                     </li>
 
@@ -72,7 +72,7 @@ $module = $this->context->module->id;
                 <div class="pull-right m-r-md">
                     <span><?= isset($identity->account) ? $identity->account : ''; ?></span>
                     <span>|</span>
-                    <a href="<?= Url::to(['/admin/manager/password']) ?>">修改密码</a>
+                    <a href="<?= Url::to(['/admin/default/password']) ?>">修改密码</a>
                     <span>|</span>
                     <a data-method="post" href="<?= Url::to(['/admin/login/logout']) ?>">退出</a>
                 </div>

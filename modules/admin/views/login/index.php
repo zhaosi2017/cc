@@ -20,22 +20,23 @@ $this->title = '登录';
             'id' => 'register-form',
             'options'=>['class'=>'m-t text-left'],
             'fieldConfig' => [
-                'template' => "{label}\n<div>{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
+                'template' => "\n<div> <div style=\"display:inline-block\">{label}</div><div style=\"width: 210px;display:inline-block;margin-left:10px;\">{input}</div>\n<span class=\"help-block m-b-none\" style=\"margin-left:77px;\">{error}</span></div>",
+                 'labelOptions' => [],
             ],
         ]); ?>
 
         <?= $form->field($model, 'username')->textInput([
             'autofocus' => true,
             'placeholder'=>'邮箱账号',
-        ])->label(false) ?>
+        ])->label('管理员账号: ') ?>
 
-        <?= $form->field($model, 'password')->passwordInput(['placeholder'=>'密码'])->label(false) ?>
+        <?= $form->field($model, 'pwd')->passwordInput(['placeholder'=>'密码'])->label('管理员密码: ') ?>
 
         <?= $form->field($model, 'code')
-        ->label(false)
+         ->label(false)
         ->widget(Captcha::className(), [ 
                     'captchaAction'=>'/admin/login/captcha',
-                    'template' => '<div class="row"><div style="height:30px;line-height:33px;display: inline-block;width: 120px;margin-left: 14px;">{input}</div><div style="display: inline-block;margin-left: 95px;">{image}</div></div>', 
+                    'template' => '<div class="row" style="width:300px;"><div style="display:inline-block;"><label style="width:60px;padding-left:7px;" for="loginform-code">验证码:</label></div><div style="height:30px;line-height:33px;display: inline-block;width: 77px;margin-left: 22px;">{input}</div><div style="display: inline-block;margin-left:52px;">{image}</div></div>', 
                     'options' => ['placeholder'=>'验证码']
         ]) ?>
         <?= Html::submitButton('登 录', ['class' => 'btn btn-primary block full-width m-b']) ?>
@@ -51,6 +52,6 @@ $this->title = '登录';
 <?php echo '<style type="text/css">
     #loginform-code{
         padding-left: 10px;
-        width:200px;
+        width:100px;
     }
 </style>'; ?>

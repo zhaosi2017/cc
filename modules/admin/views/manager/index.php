@@ -41,10 +41,28 @@ $actionId = Yii::$app->requestedAction->id;
                     return $data['role']['name'];
                 },
             ],
+             [
+                'header' =>'角色备注',
+                'value' => function($data){
+                    return $data['role']['remark'];
+                },
+            ],
             [
-                'header' =>'状态',
+                'header' =>'账号状态',
                 'value' => function($data){
                     return $data['statuses'][$data->status];
+                },
+            ],
+            [
+                'header' =>'冻结／解冻备注',
+                'value' => function($data){
+                    return strip_tags($data['remark'])?strip_tags($data['remark']):'*';
+                },
+            ],
+            [
+                'header' =>'最后登陆ip',
+                'value' => function($data){
+                    return $data['login_ip'];
                 },
             ],
 
