@@ -79,7 +79,7 @@ class UserController extends GController
             $type = Yii::$app->controller->action->id;
             if($model->validateSms($type, $code)){
                 $model->addError('code', '验证码错误');
-                return $this->render('set-phone-number',['model'=>$model]);
+                return $this->render('set-phone-number',['model'=>$model,'isModify'=>$isModify]);
             }
 
             $user_model->country_code = $model->country_code;

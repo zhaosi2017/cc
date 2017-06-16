@@ -26,9 +26,12 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 
 
-    <?php echo $form->field($model, 'urgent_contact_person_two')->textInput(['placeholder' => '紧急联系人昵称',])->label('紧急联系人') ?>
+    <?php echo $form->field($model, 'urgent_contact_person_two',[
 
-    <div class="row form-inline">
+        'template' => "<div><div style=\"display：inline-block;\">{label}</div>\n<div class=\"\" style=\"display:inline-block;\">{input}</div><div style=\"display:inline-block;margin-left:10px;\"><span >*请输入紧急联系人<span></div>\n<div><span class=\"help-block m-b-none\" style=\"margin-left:17%;\">{error}</span></div>",
+    ])->textInput(['placeholder' => '紧急联系人昵称',])->label('紧急联系人') ?>
+
+    <div class="row form-inline" style="margin-top: 10px;">
 
         <div class="col-sm-2 text-right">
             <div class="form-group" style="">
@@ -45,7 +48,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?php echo $form->field($model, 'urgent_contact_number_two',[
                
-                'template' => "{label}\n<div>&nbsp;{input}\n<span style=\"height:18px;\" class=\"help-block m-b-none\">{error}</span></div>",
+                'template' => "<div>{label}\n<div >&nbsp;{input} <span style=\"margin-left:10px;\">
+*请填写紧急联系人电话</span></div>\n<span style=\"height:18px;\" class=\"help-block m-b-none\">{error}</span></div>",
             ])->textInput(['placeholder' => '紧急联系人号码', 'size'=>'17'])->label(false) ?>
         </div>
 

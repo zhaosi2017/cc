@@ -946,15 +946,18 @@ class Telegram extends Model
      * 绑定操作.
      */
     public function bindTelegramData()
-    {
+    {   
+        if(empty($this->bindCode)){
+            return  $this->addError('bindCode','验证码为空');
+        }
         $user = User::findOne(Yii::$app->user->id);
         if (!Yii::$app->redis->exists($this->bindCode)) {
-            $this->addError('bindCode', '无效的验证码!');
+            $this->addError('bindCode', '验证码错误!');
         } else {
             $telegramData = Yii::$app->redis->get($this->bindCode);
         }
         if (empty($telegramData)) {
-            return $this->addError('bindCode', '无效的验证码!');
+            return $this->addError('bindCode', '验证码错误!');
         }
 
         $data = Yii::$app->security->decryptByKey(base64_decode($telegramData), Yii::$app->params['telegram']);
@@ -968,7 +971,7 @@ class Telegram extends Model
             }
             return $res;
         } else {
-            return $this->addError('bindCode', '无效的验证码!');
+            return $this->addError('bindCode', '验证码错误!');
         }
 
     }
