@@ -34,6 +34,8 @@ class Telegram extends Model
     private $code;
     private $bindCode;
     private $telegramUid;
+    private $telegramFirstName;
+    private $telegramLastName;
     private $telegramContactUid;
     private $telegramContactPhone;
     private $telegramContactFirstName;
@@ -94,6 +96,22 @@ class Telegram extends Model
     public function setTelegramUid($value)
     {
         $this->telegramUid = $value;
+    }
+
+    /**
+     * @param $value
+     */
+    public function setTelegramFirstName($value)
+    {
+        $this->telegramFirstName = $value;
+    }
+
+    /**
+     * @param $value
+     */
+    public function setTelegramLastName($value)
+    {
+        $this->telegramLastName = $value;
     }
 
     /**
@@ -207,6 +225,22 @@ class Telegram extends Model
     public function getTelegramUid()
     {
         return $this->telegramUid;
+    }
+
+    /*
+     * @return string
+     */
+    public function getTelegramFirstName()
+    {
+        return $this->telegramFirstName;
+    }
+
+    /**
+     * @return mixedss
+     */
+    public function getTelegramLastName()
+    {
+        return $this->telegramLastName;
     }
 
     /**
@@ -511,7 +545,6 @@ class Telegram extends Model
     {
         // 开始操作.
         $this->sendData = [
-            'chat_type' => 1,
             'chat_id' => $this->telegramUid,
             'text' => $this->startText,
         ];
@@ -545,6 +578,29 @@ class Telegram extends Model
             $whiteRes->white_uid = $this->calledPersonData->id;
             $res = $whiteRes->save();
             $res ? ($sendData['text'] = '加入白名单成功!') : ($sendData['text'] = '加入白名单失败!');
+
+            $this->sendData = [
+                'chat_id' => $this->telegramContactUid,
+                'text' => $this->telegramLastName.$this->telegramFirstName.'已经将你加入黑名单, 你也可以点击下面按钮加他到您的白名单!',
+            ];
+            $this->sendTelegramData();
+            $bindMenu = [
+                'text' => $this->whiteText,
+                'callback_data' => implode('-', array($this->whiteCallbackDataPre, $this->telegramUid, $this->callPersonData->telegram_number)),
+            ];
+            $inlineKeyboard =[
+                [
+                    $bindMenu
+                ]
+            ];
+            $this->sendData = [
+                'chat_id' => $this->telegramContactUid,
+                'text' => $this->telegramText,
+                'reply_markup' => [
+                    'inline_keyboard' => $inlineKeyboard,
+                ]
+            ];
+            return $this->sendTelegramData();
         }
 
 
@@ -559,7 +615,6 @@ class Telegram extends Model
     {
         // 开始操作.
         $this->sendData = [
-            'chat_type' => 1,
             'chat_id' => $this->telegramUid,
             'text' => $this->startText,
         ];
@@ -627,7 +682,6 @@ class Telegram extends Model
     {
         // 开始操作.
         $this->sendData = [
-            'chat_type' => 1,
             'chat_id' => $this->telegramUid,
             'text' => $this->startText,
         ];
