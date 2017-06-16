@@ -53,7 +53,7 @@ $actionId = Yii::$app->requestedAction->id;
                 },
             ],
             [
-                'header' =>'最后登陆ip',
+                'header' =>'最后登陆IP',
                 'value' => function($data){
                     return $data['login_ip'];
                 },

@@ -22,11 +22,19 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
-    <?= $form->field($model, 'password')->passwordInput(['placeholder'=>'请输入原密码']) ?>
+    <?= $form->field($model, 'password',[
+         'template' => "{label}\n<div class=\"col-sm-3\">{input}</div> <span class=\"col-sm-5\">*请输入管理员原密码</span>\n<br/><div><span class=\"help-block m-b-none \" style=\" margin-left:9.4%;   margin-top: 16px;\">{error}</span></div>",
+    ])->passwordInput() ?>
 
-    <?= $form->field($model, 'newPassword')->passwordInput(['placeholder'=>'请输入新密码']) ?>
+    <?= $form->field($model, 'newPassword',[
+             'template' => "{label}\n<div class=\"col-sm-3\">{input}</div> <span class=\"col-sm-5\">*密码至少包含8个字符，至少包括以下2种字符：
+ 大写字母，小写字母，数字，符号</span>\n<br/><div><span class=\"help-block m-b-none \" style=\" margin-left:9.4%;   margin-top: 18px;\">{error}</span></div>",
+    ])->passwordInput() ?>
 
-    <?= $form->field($model, 'rePassword')->passwordInput(['placeholder'=>'请重复输入密码']) ?>
+    <?= $form->field($model, 'rePassword',[
+             'template' => "{label}\n<div class=\"col-sm-3\">{input}</div> <span class=\"col-sm-5\"> *密码至少包含8个字符，至少包括以下2种字符：
+ 大写字母，小写字母，数字，符号</span>\n<br/><div><span class=\"help-block m-b-none \" style=\" margin-left:9.4%;   margin-top: 18px;\">{error}</span></div>",
+    ])->passwordInput() ?>
 
     <div class="form-group">
         <div class="col-sm-6 col-sm-offset-3">

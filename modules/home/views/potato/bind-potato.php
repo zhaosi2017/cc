@@ -21,11 +21,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'options'=>['class'=>'form-horizontal m-t text-left'],
         'fieldConfig' => [
             'template' => "{label}\n<div class=\"col-sm-3\">{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
-            'labelOptions' => ['class' => 'col-sm-2 control-label text-right'],
+            'labelOptions' => ['class' => 'col-sm-2  text-right'],
         ],
     ]); ?>
 
-    <?php echo $form->field($model, 'bindCode')->textInput(['placeholder' => '验证码',])->label('验证码') ?>
+    <?php echo $form->field($model, 'bindCode',[
+
+        'template' => "{label}\n<div class=\"col-sm-3\">{input}</div><span>
+*请输入您从potato上获取的绑定验证码</span>\n<span class=\"help-block m-b-none\" style=\"margin-top:17px;margin-left:17.5%;\">{error}</span></div>",
+    ])->textInput(['placeholder' => '验证码',])->label('验证码') ?>
 
     <div class="form-group m-b-lg">
         <div class="col-sm-6 col-sm-offset-2">

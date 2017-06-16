@@ -47,8 +47,14 @@ $actionId = Yii::$app->requestedAction->id;
             ['header' => '白名单用户', 'value' => function($model){
                 return $model['white']['account'];
             }],
-             ['header' => '联系电话', 'value' => function($model){
-                return $model['white']['phone_number'];
+            //  ['header' => '联系电话', 'value' => function($model){
+            //     return $model['white']['phone_number'];
+            // }],
+            ['header' => 'telegram', 'value' => function($model){
+                return '+'.$model['white']['telegram_country_code'].$model['white']['telegram_number'];
+            }],
+            ['header' => 'potato', 'value' => function($model){
+                return '+'.$model['white']['potato_country_code'].$model['white']['potato_number'];
             }],
 
            
