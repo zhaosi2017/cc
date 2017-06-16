@@ -583,7 +583,7 @@ class Telegram extends Model
             if (empty($res)) {
                 $this->sendData = [
                     'chat_id' => $this->telegramContactUid,
-                    'text' => $this->telegramLastName . $this->telegramFirstName . '已经将您加入黑名单, 您也可以点击下面按钮加他到您的白名单!',
+                    'text' => $this->telegramLastName . $this->telegramFirstName . '已经将您加入白名单, 您也可以点击下面按钮加他到您的白名单!',
                 ];
                 $this->sendTelegramData();
                 $bindMenu = [
