@@ -26,8 +26,8 @@ class Telegram extends Model
     // 是否是紧急呼叫.
     private $isUrgentCall = 0;
     private $callCallbackDataPre = 'cc_call';
-    private $whiteCallbackDataPre = 'cc_bind';
-    private $unwhiteCallbackDataPre = 'cc_unbind';
+    private $whiteCallbackDataPre = 'cc_white';
+    private $unwhiteCallbackDataPre = 'cc_unwhite';
     private $whiteText = '加白名单';
     private $unwhiteText = '解除白名单';
 
@@ -283,6 +283,27 @@ class Telegram extends Model
     public function getVoice()
     {
         return $this->voice;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCallCallbackDataPre()
+    {
+        return $this->callCallbackDataPre;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWhiteCallbackDataPre()
+    {
+        return $this->whiteCallbackDataPre;
+    }
+
+    public function getUnwhiteCallbackDataPre()
+    {
+        return $this->unwhiteCallbackDataPre;
     }
 
     /**
@@ -710,7 +731,7 @@ class Telegram extends Model
         } else {
             $this->sendData = [
                 'chat_id' => $this->telegramUid,
-                'text' => $this->telegramContactLastName.$this->telegramContactFirstName.'不是我们系统会员，不能执行该操作!',
+                'text' => '他／她不是我们系统会员，不能执行该操作!',
             ];
             $this->sendTelegramData();
         }
