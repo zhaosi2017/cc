@@ -82,19 +82,16 @@ class TelegramController extends GController
                 $telegram->callbackQuery = explode('-', $postData['callback_query']['data']);
                 $telegram->telegramContactFirstName = $postData['callback_query']['message']['chat']['first_name'];
                 $telegram->telegramContactLastName = $postData['callback_query']['message']['chat']['last_name'];
-                $action = explode('-', $telegram->callbackQuery);
-                $action = $action[0];
+                $action = $telegram->callbackQuery[0];
                 switch ($action) {
                     case $telegram->callCallbackDataPre;
                         $telegram->callTelegramPerson();
                         break;
                     case $telegram->whiteCallbackDataPre:
-                        $result = $telegram->joinWhiteList();
-                        return $result;
+                        $telegram->joinWhiteList();
                         break;
                     case $telegram->unwhiteCallbackDataPre:
-                        $result = $telegram->unbindWhiteList();
-                        echo $result;
+                        $telegram->unbindWhiteList();
                         break;
                     default :
                         echo 'error_code :'.$telegram->errorCode['invalid_operation'];
