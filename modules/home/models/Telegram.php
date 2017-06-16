@@ -29,7 +29,7 @@ class Telegram extends Model
     private $whiteCallbackDataPre = 'cc_bind';
     private $unwhiteCallbackDataPre = 'cc_unbind';
     private $whiteText = '加白名单';
-    private $unwhiteText = '解除百名单';
+    private $unwhiteText = '解除白名单';
 
     private $code;
     private $bindCode;
