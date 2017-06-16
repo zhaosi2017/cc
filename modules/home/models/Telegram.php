@@ -469,12 +469,12 @@ class Telegram extends Model
                 $this->sendData = $sendData;
                 return $this->sendTelegramData();
             }
-            // 检查是否加了呼叫人到自己到白名单.
-            $whiteRes = WhiteList::findOne(['uid' => $this->callPersonData->id, 'white_uid'=> $this->calledPersonData->id]);
             $callMenu = [
                 'text' => $this->callText,
                 'callback_data' => implode('-', array($this->callCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone)),
             ];
+            // 检查是否加了呼叫人到自己到白名单.
+            $whiteRes = WhiteList::findOne(['uid' => $this->callPersonData->id, 'white_uid'=> $this->calledPersonData->id]);
             if ($whiteRes) {
                 $bindMenu = [
                     'text' => $this->unwhiteText,
@@ -632,7 +632,6 @@ class Telegram extends Model
         ];
         $this->sendTelegramData();
 
-        $this->telegramContactUid = $this->callbackQuery[1];
         $res = User::findOne(['telegram_user_id' => $this->telegramUid]);
         if (!$res) {
             // 发送验证码，完成绑定.
