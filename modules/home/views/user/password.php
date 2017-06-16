@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
     <?= $form->field($model, 'password',[
-         'template' => "{label}\n<div class=\"col-sm-3\">{input}</div> <span class=\"col-sm-5\">*请输入管理员原密码</span>\n<br/><div><span class=\"help-block m-b-none \" style=\" margin-left:9.4%;   margin-top: 16px;\">{error}</span></div>",
+         'template' => "{label}\n<div class=\"col-sm-3\">{input}</div> <span class=\"col-sm-5\">*请输入账户原密码</span>\n<br/><div><span class=\"help-block m-b-none \" style=\" margin-left:9.4%;   margin-top: 16px;\">{error}</span></div>",
     ])->passwordInput() ?>
 
     <?= $form->field($model, 'newPassword',[
