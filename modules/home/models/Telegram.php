@@ -579,28 +579,31 @@ class Telegram extends Model
             $res = $whiteRes->save();
             $res ? ($sendData['text'] = '加入白名单成功!') : ($sendData['text'] = '加入白名单失败!');
 
-            $this->sendData = [
-                'chat_id' => $this->telegramContactUid,
-                'text' => $this->telegramLastName.$this->telegramFirstName.'已经将你加入黑名单, 你也可以点击下面按钮加他到您的白名单!',
-            ];
-            $this->sendTelegramData();
-            $bindMenu = [
-                'text' => $this->whiteText,
-                'callback_data' => implode('-', array($this->whiteCallbackDataPre, $this->telegramUid, $this->callPersonData->telegram_number)),
-            ];
-            $inlineKeyboard =[
-                [
-                    $bindMenu
-                ]
-            ];
-            $this->sendData = [
-                'chat_id' => $this->telegramContactUid,
-                'text' => $this->telegramText,
-                'reply_markup' => [
-                    'inline_keyboard' => $inlineKeyboard,
-                ]
-            ];
-            return $this->sendTelegramData();
+            $res = WhiteList::findOne(['uid' => $this->calledPersonData->id, 'white_uid'=> $this->callPersonData->id]);
+            if (empty($res)) {
+                $this->sendData = [
+                    'chat_id' => $this->telegramContactUid,
+                    'text' => $this->telegramLastName . $this->telegramFirstName . '已经将您加入黑名单, 您也可以点击下面按钮加他到您的白名单!',
+                ];
+                $this->sendTelegramData();
+                $bindMenu = [
+                    'text' => $this->whiteText,
+                    'callback_data' => implode('-', array($this->whiteCallbackDataPre, $this->telegramUid, $this->callPersonData->telegram_number)),
+                ];
+                $inlineKeyboard = [
+                    [
+                        $bindMenu
+                    ]
+                ];
+                $this->sendData = [
+                    'chat_id' => $this->telegramContactUid,
+                    'text' => $this->telegramText,
+                    'reply_markup' => [
+                        'inline_keyboard' => $inlineKeyboard,
+                    ]
+                ];
+                $this->sendTelegramData();
+            }
         }
 
 
