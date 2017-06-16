@@ -540,8 +540,9 @@ class Telegram extends Model
         if ($whiteRes) {
             $sendData['text'] = '已经在白名单里!';
         } else {
+            $whiteRes = new WhiteList();
             $whiteRes->uid = $this->callPersonData->id;
-            $whiteRes->white_uid = $this->callbackQuery[1];
+            $whiteRes->white_uid = $this->calledPersonData->id;
             $res = $whiteRes->save();
             $res ? ($sendData['text'] = '加入白名单成功!') : ($sendData['text'] = '加入白名单失败!');
         }
