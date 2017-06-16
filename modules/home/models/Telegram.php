@@ -109,7 +109,7 @@ class Telegram extends Model
      */
     public function setTelegramContactPhone($value)
     {
-        $this->telegramContactPhone = $value;
+        $this->telegramContactPhone = trim($value, '+');
     }
 
     /**
