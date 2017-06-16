@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="ibox-content text-center p-md">
                     <h4 class="m-b-lg">个人中心</h4>
                     <div class="text-left">
-                        <p class="m-t-lg">管理个人昵称、联系电话.</p>
+                        <p class="m-t-lg">管理个人昵称、联系电话。</p>
                         <p class="m-t-lg">账号：<?php echo $model->account; ?></p>
                         <p class="m-t-lg">昵称：<?php echo $model->nickname; ?><a href="<?php echo Url::to(['/home/user/set-nickname']) ?>" class="btn btn-primary btn-sm pull-right"><?php echo $model->nickname ? '修改' : '去设置'?></a></p>
                          <p class="m-t-lg">防骚扰：<a href="<?php echo Url::to(['/home/user/harassment']) ?>" class="btn btn-primary btn-sm pull-right"><?php echo $model->un_call_number ? '修改' : '去设置'?></a></p>
@@ -31,7 +31,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </div>
                             <?php } ?>
                         </div>
-                        <a class="btn btn-primary full-width m-t-lg" href="<?php echo Url::to(['/home/user/password'])?>">修改密码</a>
+                        <div class="text-right" style="    margin-top: 23px;">
+                                <a class="btn btn-primary m-t-md" href="<?php echo Url::to(['/home/user/password'])?>">修改密码</a>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -39,10 +42,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-sm-4">
             <div class="ibox float-e-margins">
                 <div class="ibox float-e-margins">
-                    <div class="ibox-content text-center p-md">
+                    <div class="ibox-content text-center p-md" style="height: 393px;">
                         <h4 class="m-b-lg">账号绑定</h4>
                         <div class="text-left">
-                            <p class="m-t-lg">绑定telegram或potato，正式启用离线呼叫提醒功能，让人可以找到您，同时也能让您找到别人.</p>
+                            <p class="m-t-lg">绑定telegram或potato，正式启用离线呼叫提醒功能，让人可以找到您，同时也能让您找到别人！</p>
                             <div class="m-t-lg">Potato：<?php echo $model->potato_number ? '+'.$model->potato_number : '无'; ?>
                                 <?php if(!$model->potato_number){ ?>
                                 <a href="<?php echo Url::to(['/home/potato/bind-potato']) ?>" class="btn btn-primary btn-sm pull-right">立即绑定</a>
@@ -74,7 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="ibox-content text-center p-md">
                         <h4 class="m-b-lg">紧急联系人</h4>
                         <div class="text-left">
-                            <p class="m-t-lg">为账号设置2个紧急联系人，便于自己联系电话无法使用时其他人可以联系到自己.</p>
+                            <p class="m-t-lg">为账号设置2个紧急联系人，便于自己联系电话无法使用时其他人可以联系到自己！</p>
                             <?php
                                 if ($model->urgent_contact_person_one) {
                             ?>

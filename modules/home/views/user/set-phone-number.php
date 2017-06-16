@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?php echo $form->field($model, 'phone_number',[
 
-                 'template' => "{label}\n<div>&nbsp;+{input}\n<span style=\"height:18px;\" class=\"help-block m-b-none\">{error}</span></div>",
+                 'template' => "{label}\n<div>&nbsp;{input}<span style=\"padding-left:10px\">*请输入您的国码，然后输入您的手机号码</span>\n<span style=\"height:18px;\" class=\"help-block m-b-none\">{error}</span></div>",
 
                 ])->textInput(['placeholder' => '您的手机号码'])->label(false) ?>
 <!--            <div class="help-block">&nbsp;&nbsp;&nbsp;*请输入您的国码，然后输入您的手机号码</div>-->
@@ -108,7 +108,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         }
                     };
                     var dt = self.setInterval(countDown,1000);
-                " value="获取验证码">
+                " value="获取验证码"><span style=" 
+    font-size: 14px;
+    padding-left: 10px;
+    /* padding-top: 0px; */
+    position: relative;
+    top: -12px;">*请输入手机验证码</span>
                 <div class="help-block"></div>
             </div>
         </div>

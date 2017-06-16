@@ -30,7 +30,7 @@ class RegisterForm extends Model
             // username and password are both required
             [['rePassword', 'password', 'username'], 'required'],
             [['rePassword', 'password'], 'string', 'length' => [8,15]],
-            ['rePassword', 'compare', 'compareAttribute'=>'password','operator'=>'==='],
+            ['rePassword', 'compare', 'compareAttribute'=>'password','operator'=>'===','message'=>'两次密码不一致'],
             ['username', 'email'],
             ['username', 'validateExist'],
             /*[
@@ -41,10 +41,8 @@ class RegisterForm extends Model
                 'message' => '账号已占用'
             ],*/
 
-            ['password', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>'密码至少包含8个字符，至少包括以下2种字符：
- 大写字母、小写字母、数字、符号'],
-            ['rePassword', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>'密码至少包含8个字符，至少包括以下2种字符：
-             大写字母、小写字母、数字、符号'],
+            ['password', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>'密码格式错误'],
+            ['rePassword', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>'密码格式错误'],
             ['code', 'captcha', 'message'=>'验证码输入不正确', 'captchaAction'=>'/home/register/captcha'],
         ];
     }
