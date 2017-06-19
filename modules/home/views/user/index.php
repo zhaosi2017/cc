@@ -21,13 +21,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         <p class="m-t-lg">账号：<?php echo $model->account; ?></p>
                         <p class="m-t-lg">昵称：<?php echo $model->nickname; ?><a href="<?php echo Url::to(['/home/user/set-nickname']) ?>" class="btn btn-primary btn-sm pull-right"><?php echo $model->nickname ? '修改' : '去设置'?></a></p>
                          <p class="m-t-lg">防骚扰：
-                         <span title="<?php echo $model->un_call_number.('(总数)');echo $model->un_call_by_same_number.('(同一)');echo $model->long_time.('(时间)');?>"  alt="<?php echo $model->un_call_number.('(总数)');echo $model->un_call_by_same_number.('(同一)');echo $model->long_time.('(时间)');?>" style="    overflow: hidden;
+                         <span title="<?php echo $model->un_call_number.('(总数)  ');echo $model->un_call_by_same_number.('(同一人)  ');echo $model->long_time.('(时间)');?>"  alt="<?php echo $model->un_call_number.('(总数)  ');echo $model->un_call_by_same_number.('(同一人)  ');echo $model->long_time.('(时间)');?>" style="    overflow: hidden;
     text-overflow: hidden;
     white-space: nowrap;
     word-break: keep-all;
-    width: 120px;
-    max-width: 120px;
-    display: inline-block; " ><?php echo $model->un_call_number.('(总数)');echo $model->un_call_by_same_number.('(同一)');echo $model->long_time.('(时间)');?></span>
+    width: 160px;
+    max-width: 160px;
+    display: inline-block; " ><?php echo $model->un_call_number.('(总数)  ');echo $model->un_call_by_same_number.('(同一人)  ');echo $model->long_time.('  (时间)');?></span>
                          <a href="<?php echo Url::to(['/home/user/harassment']) ?>" class="btn btn-primary btn-sm pull-right"><?php echo $model->un_call_number ? '修改' : '去设置'?>
                              
                          </a>
