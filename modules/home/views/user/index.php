@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-sm-4">
             <div class="ibox float-e-margins">
-                <div class="ibox-content text-center p-md">
+                <div class="ibox-content text-center p-md" style="height: 393px;">
                     <h4 class="m-b-lg">个人中心</h4>
                     <div class="text-left">
                         <p class="m-t-lg">管理个人昵称、联系电话。</p>
