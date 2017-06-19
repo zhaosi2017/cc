@@ -85,7 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-sm-4">
             <div class="ibox float-e-margins">
                 <div class="ibox float-e-margins">
-                    <div class="ibox-content text-center p-md">
+                    <div class="ibox-content text-center p-md" style="height: 393px;">
                         <h4 class="m-b-lg">紧急联系人</h4>
                         <div class="text-left">
                             <p class="m-t-lg">为账号设置2个紧急联系人，便于自己联系电话无法使用时其他人可以联系到自己！</p>
