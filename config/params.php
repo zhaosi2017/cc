@@ -17,4 +17,6 @@ return [
     'login_flag_time1' => 1800,
     'login_flag_time2'=> 1800,
     'login_flag_time3'=> 86400,
+    'telegram_name' => 'callu_bot',
+    'potato_name' =>'callu_bot',
 ];
