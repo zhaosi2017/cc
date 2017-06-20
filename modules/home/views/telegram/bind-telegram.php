@@ -24,6 +24,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'labelOptions' => ['class' => 'col-sm-2  text-right'],
         ],
     ]); ?>
+     <div>
+        <p style="margin-left: 10%;font-size: 13px;font-weight: 700;">操作步骤：</p>
+    </div>
     <div class="form-group" style="margin-left: 16.6%;">
         <p>1、请先在telegram上登录个人账号</p>
         <p>2、添加机器人好友：<?php echo Yii::$app->params['telegram_name'];?></p>
@@ -36,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
          'template' => "{label}\n<div class=\"col-sm-3\">{input}</div><span>
 
 *请输入您从telegram上获取的绑定验证码</span>\n<span class=\"help-block m-b-none\" style=\"margin-top:17px;margin-left:17.5%;\">{error}</span></div>",
-    ])->textInput(['placeholder' => '验证码',])->label('验证码') ?>
+    ])->textInput(['placeholder' => '验证码',])->label('验证码:') ?>
 
     <div class="form-group m-b-lg">
         <div class="col-sm-6 col-sm-offset-2">
