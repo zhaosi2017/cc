@@ -25,6 +25,14 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
+    <div class="form-group" style="margin-left: 16.6%;">
+        <p>1、请先在potato上登录个人账号</p>
+        <p>2、添加机器人好友：<?php echo Yii::$app->params['potato_name'];?></p>
+        <p>3、分享自己名片给机器人</p>
+        <p>4、 选择绑定操作</p>
+        <p>5、将获取的验证码填写在下方输入框中进行绑定操作</p>
+    </div>
+
     <?php echo $form->field($model, 'bindCode',[
 
         'template' => "{label}\n<div class=\"col-sm-3\">{input}</div><span>
