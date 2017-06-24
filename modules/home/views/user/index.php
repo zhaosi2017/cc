@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-sm-4">
             <div class="ibox float-e-margins">
-                <div class="ibox-content text-center p-md" style="height: 393px;">
+                <div class="ibox-content text-center p-md" style="height: 430px;">
                     <h4 class="m-b-lg">个人中心</h4>
                     <div class="text-left">
                         <p class="m-t-lg">管理个人昵称、联系电话。</p>
@@ -32,6 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
                              
                          </a>
                          </p>
+                        <p class="m-t-lg">白名单开关：<?php echo ($model->whitelist_switch? '开启':'关闭'); ?>
+                        </p>
                         <div class="m-t-lg">联系电话：<?php echo $model->phone_number ? '+' . $model->country_code . $model->phone_number : '无'; ?>
                             <?php if(!$model->phone_number){ ?>
                                 <a href="<?php echo Url::to(['/home/user/set-phone-number']) ?>" class="btn btn-primary btn-sm pull-right">去绑定</a>
@@ -53,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-sm-4">
             <div class="ibox float-e-margins">
                 <div class="ibox float-e-margins">
-                    <div class="ibox-content text-center p-md" style="height: 393px;">
+                    <div class="ibox-content text-center p-md" style="height: 430px;">
                         <h4 class="m-b-lg">账号绑定</h4>
                         <div class="text-left">
                             <p class="m-t-lg">绑定telegram或potato，正式启用离线呼叫提醒功能，让人可以找到您，同时也能让您找到别人！</p>
@@ -85,7 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-sm-4">
             <div class="ibox float-e-margins">
                 <div class="ibox float-e-margins">
-                    <div class="ibox-content text-center p-md" style="height: 393px;">
+                    <div class="ibox-content text-center p-md" style="height: 430px;">
                         <h4 class="m-b-lg">紧急联系人</h4>
                         <div class="text-left">
                             <p class="m-t-lg">为账号设置2个紧急联系人，便于自己联系电话无法使用时其他人可以联系到自己！</p>

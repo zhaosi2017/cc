@@ -229,6 +229,7 @@ CREATE TABLE `user` (
   `reg_time` int(10) unsigned NOT NULL DEFAULT '0',
   `role_id` int(10) unsigned NOT NULL DEFAULT '0',
   `reg_ip` varchar(64) NOT NULL DEFAULT '',
+  `whitelist_switch` tinyint(1) NOT NULL DEFAULT '0'
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
