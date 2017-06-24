@@ -70,8 +70,8 @@ class PotatoController extends GController
                 // 分享了名片.
                 $potato->potatoContactUid = $message['user_id'];
                 $potato->potatoContactPhone = str_replace(array('+', ' '), '', $message['phone_number']);
-                $potato->potatoContactFirstName = $message['first_name'];
-                $potato->potatoContactLastName = $message['last_name'];
+                $potato->potatoContactFirstName = isset($message['first_name']) ? $message['first_name'] : "";
+                $potato->potatoContactLastName = isset($message['last_name']) ? $message['last_name'] : "";
                 // 发送操作菜单.
                 $result = $potato->callPotatoPerson();
                 return $result;
