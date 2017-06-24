@@ -74,8 +74,8 @@ class TelegramController extends GController
                 // 分享了名片.
                 $telegram->telegramContactUid = $message['contact']['user_id'];
                 $telegram->telegramContactPhone = $message['contact']['phone_number'];
-                $telegram->telegramContactFirstName = $message['contact']['first_name'];
-                $telegram->telegramContactLastName = $message['contact']['last_name'];
+                $telegram->telegramContactFirstName = isset($message['contact']['first_name']) ? $message['contact']['first_name'] : "";
+                $telegram->telegramContactLastName = isset($message['contact']['last_name']) ? $message['contact']['last_name'] : '';
 
                 // 发送操作菜单.
                 return $telegram->sendMenulist();
@@ -83,8 +83,8 @@ class TelegramController extends GController
                 // 点击菜单回调操作.
                 $telegram->callbackQuery = explode('-', $postData['callback_query']['data']);
                 $telegram->telegramContactUid = $telegram->callbackQuery[1];
-                $telegram->telegramFirstName = $postData['callback_query']['message']['chat']['first_name'];
-                $telegram->telegramLastName = $postData['callback_query']['message']['chat']['last_name'];
+                $telegram->telegramContactFirstName = isset($postData['callback_query']['message']['chat']['first_name']) ? $postData['callback_query']['message']['chat']['first_name'] : "";
+                $telegram->telegramContactLastName = isset($postData['callback_query']['message']['chat']['last_name']) ? $postData['callback_query']['message']['chat']['last_name'] : "";
                 $action = $telegram->callbackQuery[0];
                 switch ($action) {
                     case $telegram->callCallbackDataPre;

@@ -514,7 +514,8 @@ class Potato extends Model
                 'voice' => $this->voice,
                 'to'    => $user->country_code.$user->phone_number,
                 'from'  => $this->callPersonData->country_code.$this->callPersonData->phone_number,
-                'text' => $this->potatoContactLastName.$this->potatoContactFirstName.'在potato上找你!',
+                // 'text' => $this->potatoContactLastName.$this->potatoContactFirstName.'在potato上找你!',
+                'text' => $nickname.'在potato上找你!',
             ];
 
             if (empty($user->phone_number) || empty($user->country_code)) {
