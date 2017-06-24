@@ -99,11 +99,11 @@ class TelegramController extends GController
                         $result = $telegram->unbindWhiteList();
                         return $result;
                         break;
-                    case $telegram->whiteSwitchText:
+                    case $telegram->whitelistSwitchCallbackDataPre:
                         $result = $telegram->enableWhiteSwith();
                         return $result;
                         break;
-                    case $telegram->unwhiteSwitchText:
+                    case $telegram->unwhitelistSwitchCallbackDataPre:
                         $result = $telegram->disableWhiteSwith();
                         return $result;
                         break;
