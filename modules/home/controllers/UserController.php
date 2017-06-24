@@ -4,6 +4,7 @@ namespace app\modules\home\controllers;
 
 use app\modules\home\models\ContactForm;
 use app\modules\home\models\PasswordForm;
+use app\modules\home\models\UserPhone;
 use Yii;
 use app\modules\home\models\User;
 use app\controllers\GController;
@@ -43,7 +44,8 @@ class UserController extends GController
     {
         $this->layout = '@app/views/layouts/container';
         $model = $this->findModel(Yii::$app->user->id);
-        return $this->render('index',['model'=>$model]);
+        $user_phone_numbers = (new UserPhone())::findAll(array('user_id'=>Yii::$app->user->id));  //取用户的全部绑定电话
+        return $this->render('index',['model'=>$model , 'user_phone_numbers'=>$user_phone_numbers]);
     }
 
     public function actionSetNickname()
@@ -73,9 +75,10 @@ class UserController extends GController
         if ($user_model->phone_number) {
             $isModify = true;
         }
-        
+
         if( $model->load(Yii::$app->request->post()) && $model->validate(['country_code','phone_number']) ){
-            $code = $_POST['ContactForm']['code'];
+            $code = $model->code;
+            $phone_number = $model->phone_number;
             $type = Yii::$app->controller->action->id;
             if($model->validateSms($type, $code)){
                 $model->addError('code', '验证码错误');
