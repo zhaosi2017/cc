@@ -258,3 +258,14 @@ CREATE TABLE `white_list` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2017-06-07 16:44:03
+
+CREATE TABLE `user_phone` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户id',
+  `user_phone_sort` int(11) NOT NULL DEFAULT '1' COMMENT '号码在用户下的顺序',
+  `phone_country_code` char(8) NOT NULL DEFAULT '+86' COMMENT '电话号码的国际编码',
+  `reg_time` int(11) NOT NULL DEFAULT '0' COMMENT '绑定时间',
+  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '修改时间',
+  `user_phone_number` char(16) NOT NULL DEFAULT '' COMMENT '电话号码',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

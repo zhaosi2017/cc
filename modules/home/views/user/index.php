@@ -32,15 +32,25 @@ $this->params['breadcrumbs'][] = $this->title;
                              
                          </a>
                          </p>
-                        <div class="m-t-lg">联系电话：<?php echo $model->phone_number ? '+' . $model->country_code . $model->phone_number : '无'; ?>
-                            <?php if(!$model->phone_number){ ?>
-                                <a href="<?php echo Url::to(['/home/user/set-phone-number']) ?>" class="btn btn-primary btn-sm pull-right">去绑定</a>
-                            <?php }else{ ?>
-                                <div class="pull-right btn-group">
-                                    <a href="<?php echo Url::to(['/home/user/set-phone-number']) ?>" class="btn btn-primary btn-sm">修改</a>
-                                    <a href="<?php echo Url::to(['/home/user/delete-number','id'=>$model->id, 'type'=>'phone_number']) ?>" data-method="post" data-confirm="你确定要删除吗?" class="btn btn-danger btn-sm">删除</a>
-                                </div>
-                            <?php } ?>
+                        <div class="m-t-lg">联系电话：
+                            <div>
+                                <table>
+                                    <?php   foreach($user_phone_numbers as $key=>$number){?>
+                                        <tr> <td><?php echo   $number->phone_country_code . $number->user_phone_number  ;?></td>
+                                             <td><div class="pull-right btn-group">
+                                                    <a href="<?php echo Url::to(['/home/user/set-phone-number']) ?>" class="btn btn-primary btn-sm">修改</a>
+                                                    <a href="<?php echo Url::to(['/home/user/delete-number','id'=>$model->id, 'type'=>'phone_number']) ?>" data-method="post" data-confirm="你确定要删除吗?" class="btn btn-danger btn-sm">删除</a>
+                                                </div>
+                                             </td>
+                                        </tr>
+                                    <?php  } ?>
+                                    <tr> <td></td>
+                                        <td><a href="<?php echo Url::to(['/home/user/set-phone-number']) ?>" class="btn btn-primary btn-sm pull-right">去绑定</a><td>
+                                    </tr>
+                                </table>
+
+
+                            </div>
                         </div>
                         <div class="text-right" style="    margin-top: 23px;">
                                 <a class="btn btn-primary m-t-md" href="<?php echo Url::to(['/home/user/password'])?>">修改密码</a>
