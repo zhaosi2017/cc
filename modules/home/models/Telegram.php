@@ -854,14 +854,16 @@ class Telegram extends Model
             $this->calledPersonData = $user;
             $nickname = !empty($user->nickname) ? $user->nickname : '他/她';
             // 白名单检查.
-            $res = $this->whiteList();
-            if (!$res) {
-                $this->sendData = [
-                    'chat_id' => $this->telegramUid,
-                    'text' => '您不在'.$nickname.'的白名单列表内, 不能呼叫!',
-                ];
-                $this->sendTelegramData();
-                return $this->errorCode['success'];
+            if ($this->calledPersonData->whitelist_switch == 1) {
+                $res = $this->whiteList();
+                if (!$res) {
+                    $this->sendData = [
+                        'chat_id' => $this->telegramUid,
+                        'text' => '您不在'.$nickname.'的白名单列表内, 不能呼叫!',
+                    ];
+                    $this->sendTelegramData();
+                    return $this->errorCode['success'];
+                }
             }
 
             // 呼叫限制检查.
