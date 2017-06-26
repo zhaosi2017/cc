@@ -443,4 +443,33 @@ class UserController extends GController
         ]);
     }
 
+
+    public function actionBindUsername()
+    {
+        $id = Yii::$app->user->id;
+        $model = $this->findModel($id);
+        $model->scenario = 'bind-username';
+        if($model->load(Yii::$app->request->post()) && $model->validate('username')){
+            $model->save() ? $model->sendSuccess() : $model->sendError();
+            return $this->redirect(['index']);
+        }
+        return $this->render('bind-username', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionBindEmail()
+    {
+        $id = Yii::$app->user->id;
+        $model = $this->findModel($id);
+        $model->scenario = 'bind-email';//邮箱
+        if($model->load(Yii::$app->request->post()) && $model->validate('account')){
+            $model->save() ? $model->sendSuccess() : $model->sendError();
+            return $this->redirect(['index']);
+        }
+        return $this->render('bind-email', [
+            'model' => $model,
+        ]);
+    }
+
 }
