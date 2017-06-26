@@ -99,6 +99,8 @@ class UserPhone extends CActiveRecord
                 }
                 $this->reg_time = $_SERVER['REQUEST_TIME'];
                 $this->update_time = $_SERVER['REQUEST_TIME'];
+            }else{
+                $this->update_time = $_SERVER['REQUEST_TIME'];
             }
             return true;
         }
