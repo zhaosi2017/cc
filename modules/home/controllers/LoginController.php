@@ -2,6 +2,8 @@
 
 namespace app\modules\home\controllers;
 
+use app\modules\home\models\PhoneRegisterForm;
+use app\modules\home\models\ContactForm;
 use app\modules\home\models\RegisterForm;
 use app\modules\home\models\User;
 use Yii;
@@ -127,6 +129,48 @@ class LoginController extends GController
             }
         }
 //        return $this->render('find-password-complete');
+        return false;
+    }
+
+
+    public function actionForgetPassword()
+    {
+        $this->layout = '@app/views/layouts/global';
+        return $this->render('forget-password');
+    }
+
+    public function actionPhoneFindPassword()
+    {
+        $this->layout = '@app/views/layouts/global';
+        $model = new PhoneRegisterForm();
+        $model->setScenario('find-password');
+        if($model->load(Yii::$app->request->post()) )
+        {
+            if($model->validate('country_code','phone','code')){
+                $code =$_POST['PhoneRegisterForm']['code'];
+                $type = Yii::$app->controller->action->id;
+                if(ContactForm::validateSms($type, $code)){
+                    $model->addError('code', '验证码错误');
+                    return $this->render('phone-find-password',['model'=>$model]);
+                }
+                $model->setScenario('update-password');
+                return $this->render('phone-find-password-one',['model'=>$model]);
+            }
+
+        }
+        return $this->render('phone-find-password',['model'=>$model]);
+    }
+
+    public function actionPhonePasswordComplete()
+    {
+        $this->layout = '@app/views/layouts/global';
+        $register_model = new PhoneRegisterForm();
+        if($register_model->load(Yii::$app->request->post())){
+            if($register_model->updatePassword()){
+                Yii::$app->getSession()->setFlash('success', '操作成功');
+                return $this->render('find-password-complete');
+            }
+        }
         return false;
     }
 
