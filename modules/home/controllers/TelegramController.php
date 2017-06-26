@@ -99,6 +99,14 @@ class TelegramController extends GController
                         $result = $telegram->unbindWhiteList();
                         return $result;
                         break;
+                    case $telegram->whitelistSwitchCallbackDataPre:
+                        $result = $telegram->enableWhiteSwith();
+                        return $result;
+                        break;
+                    case $telegram->unwhitelistSwitchCallbackDataPre:
+                        $result = $telegram->disableWhiteSwith();
+                        return $result;
+                        break;
                     default :
                         echo 'error_code :'.$telegram->errorCode['invalid_operation'];
                         break;

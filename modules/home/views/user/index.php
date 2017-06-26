@@ -14,11 +14,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-sm-4">
             <div class="ibox float-e-margins">
-                <div class="ibox-content text-center p-md" style="height: 393px;">
+                <div class="ibox-content text-center p-md" style="height: 553px;">
                     <h4 class="m-b-lg">个人中心</h4>
                     <div class="text-left">
                         <p class="m-t-lg">管理个人昵称、联系电话。</p>
-                        <p class="m-t-lg">账号：<?php echo $model->account; ?></p>
+                        <p class="m-t-lg" >账号：<?php echo $model->account; ?>    <a  style="margin-left: 45px ; margin-top: 10px" class="btn btn-primary m-t-md" href="<?php echo Url::to(['/home/user/password'])?>">修改密码</a></p>
                         <p class="m-t-lg">昵称：<?php echo $model->nickname; ?><a href="<?php echo Url::to(['/home/user/set-nickname']) ?>" class="btn btn-primary btn-sm pull-right"><?php echo $model->nickname ? '修改' : '去设置'?></a></p>
                          <p class="m-t-lg">防骚扰：
                          <span title="<?php echo $model->un_call_number.('(总数)  ');echo $model->un_call_by_same_number.('(同一人)  ');echo $model->long_time.('(时间)');?>"  alt="<?php echo $model->un_call_number.('(总数)  ');echo $model->un_call_by_same_number.('(同一人)  ');echo $model->long_time.('(时间)');?>" style="    overflow: hidden;
@@ -32,30 +32,29 @@ $this->params['breadcrumbs'][] = $this->title;
                              
                          </a>
                          </p>
-                        <div class="m-t-lg">联系电话：
-                            <div>
-                                <table>
-                                    <?php   foreach($user_phone_numbers as $key=>$number){?>
-                                        <tr> <td><?php echo   $number->phone_country_code . $number->user_phone_number  ;?></td>
-                                             <td><div class="pull-right btn-group">
-                                                    <a href="<?php echo Url::to(['/home/user/set-phone-number']) ?>" class="btn btn-primary btn-sm">修改</a>
-                                                    <a href="<?php echo Url::to(['/home/user/delete-number','id'=>$model->id, 'type'=>'phone_number']) ?>" data-method="post" data-confirm="你确定要删除吗?" class="btn btn-danger btn-sm">删除</a>
-                                                </div>
-                                             </td>
+                        <div class="m-t-lg" style="text-right">联系电话：
+                                <div style="float: right">
+                                    <table>
+                                        <?php   foreach($user_phone_numbers as $key=>$number){?>
+                                            <tr> <td><?php echo   '+'.$number->phone_country_code . $number->user_phone_number  ;?></td>
+                                                 <td><div class="pull-right btn-group">
+                                                        <a href="<?php echo Url::to(['/home/user/set-phone-number' ,'phone_number'=>$number->user_phone_number]) ?>" class="btn btn-primary btn-sm">修改</a>
+                                                        <a href="<?php echo Url::to(['/home/user/delete-number','id'=>$model->id, 'type'=>'phone_number', 'phone_number'=>$number->user_phone_number , 'country_code'=>$number->phone_country_code]) ?>" data-method="post" data-confirm="你确定要删除吗?" class="btn btn-danger btn-sm">删除</a>
+                                                    </div>
+                                                 </td>
+                                            </tr>
+                                        <?php  } ?>
+                                        <tr> <td></td>
+                                            <td><a href="<?php echo Url::to(['/home/user/set-phone-number']) ?>" class="btn btn-primary btn-sm pull-right">去绑定</a><td>
                                         </tr>
-                                    <?php  } ?>
-                                    <tr> <td></td>
-                                        <td><a href="<?php echo Url::to(['/home/user/set-phone-number']) ?>" class="btn btn-primary btn-sm pull-right">去绑定</a><td>
-                                    </tr>
-                                </table>
-
-
-                            </div>
+                                    </table>
+                                </div>
                         </div>
-                        <div class="text-right" style="    margin-top: 23px;">
-                                <a class="btn btn-primary m-t-md" href="<?php echo Url::to(['/home/user/password'])?>">修改密码</a>
-                        </div>
-                        
+
+<!--                        <div class="text-right" style="    position: relative; top:105px; left:180px">-->
+<!--                            <a class="btn btn-primary m-t-md" href="--><?php //echo Url::to(['/home/user/password'])?><!--">修改密码</a>-->
+<!--                        </div>-->
+<!--                        -->
                     </div>
                 </div>
             </div>
@@ -63,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-sm-4">
             <div class="ibox float-e-margins">
                 <div class="ibox float-e-margins">
-                    <div class="ibox-content text-center p-md" style="height: 393px;">
+                    <div class="ibox-content text-center p-md" style="height: 553px;">
                         <h4 class="m-b-lg">账号绑定</h4>
                         <div class="text-left">
                             <p class="m-t-lg">绑定telegram或potato，正式启用离线呼叫提醒功能，让人可以找到您，同时也能让您找到别人！</p>
@@ -95,7 +94,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-sm-4">
             <div class="ibox float-e-margins">
                 <div class="ibox float-e-margins">
-                    <div class="ibox-content text-center p-md" style="height: 393px;">
+                    <div class="ibox-content text-center p-md" style="height: 553px;">
                         <h4 class="m-b-lg">紧急联系人</h4>
                         <div class="text-left">
                             <p class="m-t-lg">为账号设置2个紧急联系人，便于自己联系电话无法使用时其他人可以联系到自己！</p>
