@@ -888,7 +888,7 @@ class Telegram extends Model
         if ($blackRes) {
             $sendData['text'] = '已经在黑名单里!';
         } else {
-            $blackRes = new WhiteList();
+            $blackRes = new BlackList();
             $blackRes->uid = $this->callPersonData->id;
             $blackRes->black_uid = $this->calledPersonData->id;
             $res = $blackRes->save();
