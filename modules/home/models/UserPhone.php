@@ -94,7 +94,7 @@ public function beforeSave($insert)
                         return false;
                     }
                 }
-                $this->user_phone_sort = $numbers[0]->user_phone_sort;
+                $this->user_phone_sort = ++$numbers[0]->user_phone_sort;
             }
             $this->user_id = Yii::$app->user->id;
             $this->reg_time = $_SERVER['REQUEST_TIME'];
