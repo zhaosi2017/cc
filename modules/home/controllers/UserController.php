@@ -72,31 +72,52 @@ class UserController extends GController
         $user_model = $this->findModel($id);
         $model->scenario='phone';
         $isModify = false;
-        if ($user_model->phone_number) {
+        $phone_number = $this->getUserPhoneNumber(Yii::$app->request->get('phone_number'));
+        if(!empty($phone_number->user_phone_number)){    //已经有电话号码的  显示电话号码
             $isModify = true;
         }
-
+        $model->phone_number = $phone_number->user_phone_number;
+        $model->country_code = $phone_number->phone_country_code;
         if( $model->load(Yii::$app->request->post()) && $model->validate(['country_code','phone_number']) ){
             $code = $model->code;
-            $phone_number = $model->phone_number;
+            $user_phone_number = $model->phone_number;
+            $phone_country_code = $model->country_code;
             $type = Yii::$app->controller->action->id;
             if($model->validateSms($type, $code)){
                 $model->addError('code', '验证码错误');
                 return $this->render('set-phone-number',['model'=>$model,'isModify'=>$isModify]);
             }
+            $phone_number->user_phone_number = $user_phone_number;
+            $phone_number->phone_country_code = $phone_country_code;
 
-            $user_model->country_code = $model->country_code;
-            $user_model->phone_number = $model->phone_number;
-            if($user_model->update()){
+            if($phone_number->save()){
                 Yii::$app->getSession()->setFlash('success', '操作成功');
                 return $this->redirect(['index']);
-            }else{
+            }else {
                 Yii::$app->getSession()->setFlash('error', '操作失败');
                 return $this->redirect('set-phone-number');
             }
         }
         return $this->render('set-phone-number',['model'=>$model, 'isModify' => $isModify]);
     }
+
+    /**
+     * @param null $phone_number 电话号码
+     * 根据已有的电话号码选择号码的详细信息
+     */
+    private function getUserPhoneNumber($phone_number = null){
+        $res = array();
+        if(empty($phone_number)){
+            $phone_number = new UserPhone();
+            $phone_number->user_phone_number ='';
+            $phone_number->phone_country_code ='';
+         }else{
+            $phone_number = (new UserPhone())::findOne(array('user_phone_number'=>$phone_number , 'user_id'=>Yii::$app->user->id));
+        }
+        return $phone_number;
+    }
+
+
 
     public function actionDeleteNumber($id)
     {
@@ -105,8 +126,9 @@ class UserController extends GController
             $get = Yii::$app->request->get();
             switch ($get['type']){
                 case 'phone_number':
-                    $model->phone_number = '';
-                    $model->country_code = null;
+//                    $model->phone_number = '';
+//                    $model->country_code = null;
+                    $this->deletePhoneNumber($get['phone_number'] , $get['country_code']);
                     break;
                 case 'potato_number':
                     $model->potato_number = '';
@@ -126,6 +148,22 @@ class UserController extends GController
         }
         return false;
     }
+
+    /**
+     * @param $phone_number
+     * 删除电话号码
+     */
+    private function deletePhoneNumber($phone_number , $country_code)
+    {
+        $model = (new UserPhone())::findOne(array('user_phone_number'=>$phone_number , 'user_id'=>Yii::$app->user->id , 'phone_country_code'=>$country_code));
+        if($model->delete()){
+            Yii::$app->getSession()->setFlash('success', '操作成功');
+        }else{
+            Yii::$app->getSession()->setFlash('error', '操作失败');
+        }
+        $this->redirect(['index']);
+    }
+
 
     public function actionBindPotato()
     {
