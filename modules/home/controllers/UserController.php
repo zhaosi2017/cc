@@ -396,18 +396,14 @@ class UserController extends GController
     public function actionDeleteUrgentContactPerson()
     {
         $request = Yii::$app->request->get();
-        $model = $this->findModel(Yii::$app->user->id);
-        if ($request['type'] == '1') {
-            $model->urgent_contact_person_one = '';
-            $model->urgent_contact_one_country_code = '';
-            $model->urgent_contact_number_one = '';
-        } elseif ($request['type'] == '2') {
-            $model->urgent_contact_person_two = '';
-            $model->urgent_contact_two_country_code = '';
-            $model->urgent_contact_number_two = '';
+        $contact_id = $request['id'];
+        $contact = (new UserGentContact())::findOne($contact_id);
+        if($contact->delete()){
+            Yii::$app->getSession()->setFlash('success', '操作成功');
+        }else{
+            Yii::$app->getSession()->setFlash('success', '操作失败');
         }
 
-        $model->update();
         return $this->redirect(['index']);
     }
 
