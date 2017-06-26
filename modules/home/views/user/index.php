@@ -115,7 +115,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <div class="help-block"></div>
 
                         <?php } ?>
-                            
+
                             <div class="text-right">
                                 <a class="btn btn-primary m-t-md" href="<?php echo Url::to(['/home/user/add-urgent-contact-person'])?>">立即添加</a>
                             </div>

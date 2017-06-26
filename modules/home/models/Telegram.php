@@ -6,6 +6,7 @@ use yii\base\Model;
 use app\modules\home\models\User;
 use app\modules\home\models\CallRecord;
 use app\modules\home\models\WhiteList;
+use app\modules\home\models\BlackList;
 
 class Telegram extends Model
 {
@@ -617,7 +618,7 @@ class Telegram extends Model
 
             // 检查是否加了呼叫人到自己到白名单.
             $whiteRes = WhiteList::findOne(['uid' => $this->callPersonData->id, 'white_uid'=> $this->calledPersonData->id]);
-            $blackRes = BlackList::findOne(['uid' => $this->callPersonData->id, 'white_uid'=> $this->calledPersonData->id]);
+            $blackRes = BlackList::findOne(['uid' => $this->callPersonData->id, 'black_uid'=> $this->calledPersonData->id]);
             if ($whiteRes) {
                 $whiteMenu = [
                     'text' => $this->unwhiteText,
