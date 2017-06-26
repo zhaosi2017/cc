@@ -352,55 +352,39 @@ class UserController extends GController
     {
         $model = $this->findModel(Yii::$app->user->id);
         $request = Yii::$app->request->get();
-        $firstPersonNoExists = empty($model->urgent_contact_person_one) ? true : false;
-        $secondPersonNoExists = empty($model->urgent_contact_person_two) ? true : false;
-        $modifyOne = isset($request['modify']) && ($request['modify'] == '1') ? true : false;
-        $modifyTwo = isset($request['modify']) && ($request['modify'] == '2') ? true : false;
-        if ($model->load(Yii::$app->request->post())) {
-            
-            if (($modifyOne || $firstPersonNoExists)) {
-                $model->scenario  ='urgent_contact_one';
-                if( !$model->validate(['urgent_contact_person_one', 'urgent_contact_one_country_code', 'urgent_contact_number_one'])){
+        if (!empty(Yii::$app->request->post('UserGentContact'))) {
 
-                    return $this->render('add-urgent-contact-person-one', ['model' => $model,'isModify'=>$modifyOne]);
-                }
-                 $updateRes = $model->update();
-                 Yii::$app->getSession()->setFlash('success', '操作成功');
-                 return $this->redirect(['index']);
-            }
+            $contact_id = isset($request['id'])?$request['id'] :'';
 
-            if (($modifyTwo || $secondPersonNoExists)) {
-                $model->scenario  ='urgent_contact_two';
-                if(!$model->validate(['urgent_contact_person_two', 'urgent_contact_two_country_code', 'urgent_contact_number_two'])){
-                    return $this->render('add-urgent-contact-person-two', ['model' => $model,'isModify'=>$modifyTwo]);
-                }
-                 $updateRes = $model->update();
-                 Yii::$app->getSession()->setFlash('success', '操作成功');
-                 return $this->redirect(['index']);
-                
+            if(empty($contact_id)){
+                $contact = new UserGentContact();
+            }else{
+                $contact = (new UserGentContact())::findOne($contact_id);
             }
+            $contact->contact_nickname      = Yii::$app->request->post('UserGentContact')['contact_nickname'];
+            $contact->contact_country_code  = Yii::$app->request->post('UserGentContact')['contact_country_code'];
+            $contact->contact_phone_number  = Yii::$app->request->post('UserGentContact')['contact_phone_number'];
+            if($contact->save()){
+                Yii::$app->getSession()->setFlash('success', '操作成功');
+                return $this->redirect(['index']);
+            }
+            Yii::$app->getSession()->setFlash('success', '操作失败');
             return $this->redirect(['index']);
+
         } else {
             $isModify = false;
             // 修改紧急联系人.
-            if (isset($request['modify'])) {
-                $isModify = true;
-                if ($modifyOne) {
-                    return $this->render('add-urgent-contact-person-one', ['model' => $model, 'isModify' => $isModify]);
-                } elseif ($modifyTwo) {
-                    return $this->render('add-urgent-contact-person-two', ['model' => $model, 'isModify' => $isModify]);
-                }
-            } else {
-                // 判断用户添加几位紧急联系人, 当两位联系人没有满, 才能继续添加联系人.
-                if ($firstPersonNoExists) {
-                    return $this->render('add-urgent-contact-person-one', ['model' => $model, 'isModify' => $isModify]);
-                } elseif ($secondPersonNoExists) {
-                    return $this->render('add-urgent-contact-person-two', ['model' => $model, 'isModify' => $isModify]);
-                } else {
-                    Yii::$app->getSession()->setFlash('error', '只能添加两位紧急联系人!');
-                    return $this->redirect(['index']);
-                }
+            $contact_id = isset($request['id'])?$request['id'] :'';      //紧急联系人的id
+            $contact = (new UserGentContact())::findOne($contact_id);
+            if(empty($contact)){
+                $contact = new UserGentContact();
+                $contact->contact_nickname="";
+                $contact->contact_phone_number ='';
+                $contact->contact_country_code ='';
+                return $this->render('add-urgent-contact-person', ['model' =>$contact , 'isModify' => $isModify]);
             }
+            $isModify = true;
+            return $this->render('add-urgent-contact-person', ['model' =>$contact , 'isModify' => $isModify]);
         }
     }
 
@@ -412,18 +396,14 @@ class UserController extends GController
     public function actionDeleteUrgentContactPerson()
     {
         $request = Yii::$app->request->get();
-        $model = $this->findModel(Yii::$app->user->id);
-        if ($request['type'] == '1') {
-            $model->urgent_contact_person_one = '';
-            $model->urgent_contact_one_country_code = '';
-            $model->urgent_contact_number_one = '';
-        } elseif ($request['type'] == '2') {
-            $model->urgent_contact_person_two = '';
-            $model->urgent_contact_two_country_code = '';
-            $model->urgent_contact_number_two = '';
+        $contact_id = $request['id'];
+        $contact = (new UserGentContact())::findOne($contact_id);
+        if($contact->delete()){
+            Yii::$app->getSession()->setFlash('success', '操作成功');
+        }else{
+            Yii::$app->getSession()->setFlash('success', '操作失败');
         }
 
-        $model->update();
         return $this->redirect(['index']);
     }
 

@@ -6,6 +6,7 @@ use yii\base\Model;
 use app\modules\home\models\User;
 use app\modules\home\models\CallRecord;
 use app\modules\home\models\WhiteList;
+use app\modules\home\models\BlackList;
 
 class Telegram extends Model
 {
@@ -605,6 +606,7 @@ class Telegram extends Model
             ];
         } else {
             if (empty($this->calledPersonData)) {
+                $sendData['chat_id'] = $this->telegramUid;
                 $sendData['text'] = '他/她不是我们系统会员，不能执行该操作!';
                 $this->sendData = $sendData;
                 return $this->sendTelegramData();
@@ -616,7 +618,7 @@ class Telegram extends Model
 
             // 检查是否加了呼叫人到自己到白名单.
             $whiteRes = WhiteList::findOne(['uid' => $this->callPersonData->id, 'white_uid'=> $this->calledPersonData->id]);
-            $blackRes = BlackList::findOne(['uid' => $this->callPersonData->id, 'white_uid'=> $this->calledPersonData->id]);
+            $blackRes = BlackList::findOne(['uid' => $this->callPersonData->id, 'black_uid'=> $this->calledPersonData->id]);
             if ($whiteRes) {
                 $whiteMenu = [
                     'text' => $this->unwhiteText,
@@ -888,7 +890,7 @@ class Telegram extends Model
         if ($blackRes) {
             $sendData['text'] = '已经在黑名单里!';
         } else {
-            $blackRes = new WhiteList();
+            $blackRes = new BlackList();
             $blackRes->uid = $this->callPersonData->id;
             $blackRes->black_uid = $this->calledPersonData->id;
             $res = $blackRes->save();
@@ -999,7 +1001,7 @@ class Telegram extends Model
 
             // 黑名单检查.
             $res = $this->blackList();
-            if (!$res) {
+            if ($res) {
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
                     'text' => '您在'.$nickname.'的黑名单列表内, 不能呼叫!',

@@ -82,7 +82,7 @@ class UserGentContact extends  CActiveRecord{
 
   public function beforeSave($insert)
   {
-     $contacts = self::find()->where(array('uer_id'=>Yii::$app->user->id))->orderBy(' contact_sort desc');
+     $contacts = self::find()->where(array('user_id'=>Yii::$app->user->id))->orderBy(' contact_sort desc')->all();
 
     if( parent::beforeSave($insert)){
         if($this->isNewRecord){                        //insert
@@ -97,6 +97,8 @@ class UserGentContact extends  CActiveRecord{
             $this->reg_time = $_SERVER['REQUEST_TIME'];
             $this->update_time = $_SERVER['REQUEST_TIME'];
 
+        }else{
+            $this->update_time = $_SERVER['REQUEST_TIME'];
         }
         return true;
     }
