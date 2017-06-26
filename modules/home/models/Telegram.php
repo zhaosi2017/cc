@@ -1001,7 +1001,7 @@ class Telegram extends Model
 
             // 黑名单检查.
             $res = $this->blackList();
-            if (!$res) {
+            if ($res) {
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
                     'text' => '您在'.$nickname.'的黑名单列表内, 不能呼叫!',
