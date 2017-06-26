@@ -107,6 +107,12 @@ class TelegramController extends GController
                         $result = $telegram->disableWhiteSwith();
                         return $result;
                         break;
+                    case $telegram->blackCallbackDataPre:
+                        $result = $telegram->joinBlackList();
+                        return $result;
+                    case $telegram->unblackCallbackDataPre:
+                        $result = $telegram->unbindBlackList();
+                        return $result;
                     default :
                         echo 'error_code :'.$telegram->errorCode['invalid_operation'];
                         break;
