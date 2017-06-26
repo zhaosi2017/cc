@@ -41,7 +41,7 @@ class PhoneRegisterForm extends Model
             [['rePassword', 'password'],'required','on'=>'register'],
 
             ['phone','validatePhone','on'=>'find-password,update-password'],
-            ['phone','validateExist','on'=>'regiseter'],
+            ['phone','validateExist','on'=>'register'],
             ['password', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>'密码格式错误'],
             ['rePassword', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>'密码格式错误'],
             ['password','required','on'=>'update-password'],
@@ -103,16 +103,20 @@ class PhoneRegisterForm extends Model
         $user->password = $this->password;
         $user->login_time = time();
         $user->login_ip = Yii::$app->request->getUserIP();
-        $user->save();
+        if($user->insert()){
+            $userPhone = new UserPhone();
+            $userPhone->user_id = $user->id;
+            $userPhone->phone_country_code = $this->country_code;
+            $userPhone->user_phone_number = $this->phone;
+            $userPhone->reg_time = $_SERVER['REQUEST_TIME'];
+            $userPhone->user_phone_sort = 1;
+            $userPhone->update_time = $_SERVER['REQUEST_TIME'];
+            return $userPhone->save();
+        }else{
 
-        $userPhone = new UserPhone();
-        $userPhone->user_id = $user->id;
-        $userPhone->phone_country_code = $this->country_code;
-        $userPhone->user_phone_number = $this->phone;
-        $userPhone->reg_time = $_SERVER['REQUEST_TIME'];
-        $userPhone->user_phone_sort = 1;
-        $userPhone->update_time = $_SERVER['REQUEST_TIME'];
-        return $userPhone->save();
+            return false;
+        }
+
 
     }
 
