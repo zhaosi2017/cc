@@ -20,7 +20,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         <p class="m-t-lg">管理个人昵称、联系电话。</p>
                         <p class="m-t-lg" >账号：<?php echo $model->account; ?>    <a  style="margin-left: 45px ; margin-top: 10px" class="btn btn-primary m-t-md" href="<?php echo Url::to(['/home/user/password'])?>">修改密码</a></p>
                         <p class="m-t-lg">昵称：<?php echo $model->nickname; ?><a href="<?php echo Url::to(['/home/user/set-nickname']) ?>" class="btn btn-primary btn-sm pull-right"><?php echo $model->nickname ? '修改' : '去设置'?></a></p>
-                         <p class="m-t-lg">防骚扰：
+                        <p class="m-t-lg">白名单开关：<?php echo $model->whitelist_switch ? '开':'关' ;?></p>
+
+                        <p class="m-t-lg">防骚扰：
                          <span title="<?php echo $model->un_call_number.('(总数)  ');echo $model->un_call_by_same_number.('(同一人)  ');echo $model->long_time.('(时间)');?>"  alt="<?php echo $model->un_call_number.('(总数)  ');echo $model->un_call_by_same_number.('(同一人)  ');echo $model->long_time.('(时间)');?>" style="    overflow: hidden;
     text-overflow: hidden;
     white-space: nowrap;

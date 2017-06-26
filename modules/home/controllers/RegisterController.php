@@ -76,8 +76,10 @@ class RegisterController extends GController
                     $model->addError('code', '验证码错误');
                     return $this->render('phone-index',['model'=>$model]);
                 }
-                $model->register();
-                return $this->redirect('/home/login/index');
+                if($model->register()){
+                    return $this->redirect('/home/login/index')->send();
+                }
+                Yii::$app->getSession()->setFlash('error', '操作失败');
 
             }else{
                 return $this->render('phone-index',['model'=>$model]);

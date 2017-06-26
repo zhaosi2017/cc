@@ -89,7 +89,7 @@ class UserController extends GController
             }
             $phone_number->user_phone_number = $user_phone_number;
             $phone_number->phone_country_code = $phone_country_code;
-
+            $phone_number->user_id = Yii::$app->user->id;
             if($phone_number->save()){
                 Yii::$app->getSession()->setFlash('success', '操作成功');
                 return $this->redirect(['index']);
