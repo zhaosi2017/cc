@@ -103,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?php foreach($user_gent_contents  as $content){ ?>
 
                                     <div class="fa-border p-sm">
-                                    <p class="m-t-sm">联系人一：<?php echo $content->contact_nickname; ?></p>
+                                    <p class="m-t-sm">联系人&nbsp;&nbsp;&nbsp;&nbsp;：<?php echo $content->contact_nickname; ?></p>
                                     <div class="m-t-sm">
                                         <span>联系电话：<?php echo $content->contact_country_code.' '.$content->contact_phone_number; ?></span>
                                         <div class="pull-right btn-group m-t-n-xs">
