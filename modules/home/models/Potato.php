@@ -126,6 +126,27 @@ class Potato extends Model
     }
 
     /**
+     * 获取验证码.
+     *
+     * @return string
+     */
+    public function makeCode()
+    {
+
+        $letters = 'bcdfghjklmnpqrstvwxyz';
+        $vowels = 'aeiou';
+        $code = '';
+        for ($i = 0; $i < self::CODE_LENGTH ; ++$i) {
+            if ($i % 2 && mt_rand(0, 10) > 2 || !($i % 2) && mt_rand(0, 10) > 9) {
+                $code .= $vowels[mt_rand(0, 4)];
+            } else {
+                $code .= $letters[mt_rand(0, 20)];
+            }
+        }
+        return $code;
+    }
+
+    /**
      * 设置验证码.
      */
     public function setCode()
@@ -137,8 +158,7 @@ class Potato extends Model
         ];
 
         $dealData = implode('-', $dealData);
-        $charid = strtoupper(md5(uniqid(mt_rand(), true)));
-        $this->code = substr($charid, 0, 8);
+        $this->code = $this->makeCode();
         $telegramData = base64_encode(Yii::$app->security->encryptByKey($dealData, Yii::$app->params['potato']));
         // 验证码过期时间半小时.
         Yii::$app->redis->setex($this->code, 30*60, $telegramData);
@@ -150,7 +170,7 @@ class Potato extends Model
      */
     public function setBindCode($value)
     {
-        $this->bindCode = trim($value);
+        $this->bindCode = strtolower(trim($value));
     }
 
     /**
