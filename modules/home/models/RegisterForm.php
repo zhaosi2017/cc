@@ -53,7 +53,7 @@ class RegisterForm extends Model
     public function attributeLabels()
     {
         return [
-            'username' => '账号',
+            'username' => '邮箱',
             'password' => '新密码',
             'rePassword' => '重复密码输入',
             'code'     => '验证码',

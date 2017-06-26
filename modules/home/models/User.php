@@ -13,6 +13,7 @@ use yii\web\IdentityInterface;
  * @property string $auth_key
  * @property string $password
  * @property string $account
+ * @property string $username
  * @property string $nickname
  * @property integer $un_call_number
  * @property integer $un_call_by_same_number
@@ -86,7 +87,7 @@ class User extends CActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['account', 'nickname', 'urgent_contact_person_one', 'urgent_contact_person_two', 'reg_ip'], 'string'],
+            [['account', 'nickname','username', 'urgent_contact_person_one', 'urgent_contact_person_two', 'reg_ip'], 'string'],
 
             [[
                 'un_call_number',
@@ -123,6 +124,7 @@ class User extends CActiveRecord implements IdentityInterface
             'id' => 'ID',
             'auth_key' => 'Auth Key',
             'account' => 'Account',
+            'username'=>'用户名',
             'nickname' => '昵称',
             'un_call_number' => '被叫总次数',
             'un_call_by_same_number' => '被同一人呼叫次数',
@@ -166,6 +168,12 @@ class User extends CActiveRecord implements IdentityInterface
         
     }
 
+    public function checkUsername($attribute)
+    {
+
+
+    }
+
     /**
      * @inheritdoc
      * @return UserQuery the active query used by this AR class.
@@ -183,12 +191,14 @@ class User extends CActiveRecord implements IdentityInterface
                 $this->reg_time = $_SERVER['REQUEST_TIME'];
                 $this->auth_key = Yii::$app->security->generateRandomString();
                 $this->account  = base64_encode(Yii::$app->security->encryptByKey($this->account, Yii::$app->params['inputKey']));
+                $this->username  = base64_encode(Yii::$app->security->encryptByKey($this->username, Yii::$app->params['inputKey']));
                 $this->password && $this->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
                 $this->nickname && $this->nickname = base64_encode(Yii::$app->security->encryptByKey($this->nickname, Yii::$app->params['inputKey']));
             }else{
                 if(!empty(array_column(Yii::$app->request->post(),'password'))){
                     $this->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
                 }
+                $this->username = base64_encode(Yii::$app->security->encryptByKey($this->username, Yii::$app->params['inputKey']));
                 $this->account = base64_encode(Yii::$app->security->encryptByKey($this->account, Yii::$app->params['inputKey']));
                 $this->nickname = base64_encode(Yii::$app->security->encryptByKey($this->nickname, Yii::$app->params['inputKey']));
                 $this->urgent_contact_person_one = base64_encode(Yii::$app->security->encryptByKey($this->urgent_contact_person_one, Yii::$app->params['inputKey']));
@@ -206,6 +216,8 @@ class User extends CActiveRecord implements IdentityInterface
         $this->nickname && $this->nickname = Yii::$app->security->decryptByKey(base64_decode($this->nickname), Yii::$app->params['inputKey']);
         $this->urgent_contact_person_one && $this->urgent_contact_person_one = Yii::$app->security->decryptByKey(base64_decode($this->urgent_contact_person_one), Yii::$app->params['inputKey']);
         $this->urgent_contact_person_two && $this->urgent_contact_person_two = Yii::$app->security->decryptByKey(base64_decode($this->urgent_contact_person_two), Yii::$app->params['inputKey']);
+        $this->username && $this->username = Yii::$app->security->decryptByKey(base64_decode($this->username), Yii::$app->params['inputKey']);
+
     }
 
     /**

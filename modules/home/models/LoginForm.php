@@ -27,7 +27,7 @@ class LoginForm extends Model
         return [
             // username and password are both required
             [['username', 'pwd','code'], 'required'],
-            ['username', 'email','message'=>'账号不存在,请核实'],
+
             ['username', 'validateAccount'],
             ['pwd', 'validatePassword'],
             ['code', 'captcha', 'message'=>'验证码错误', 'captchaAction'=>'/home/login/captcha'],
@@ -41,7 +41,7 @@ class LoginForm extends Model
     public function attributeLabels()
     {
         return [
-            'username' => '邮箱',
+            'username' => '邮箱/电话／用户名',
             'pwd' => '密码',
             'code'     => '验证码',
         ];
@@ -51,7 +51,7 @@ class LoginForm extends Model
     public function validateAccount($attribute)
     {
         if (!$this->hasErrors()) {
-            $identity = $this->getIdentity();
+            $identity = $this->getUserInfo();
             if(!$identity){
                 $this->addError($attribute, '账号不存在，请核实');
             }
@@ -67,8 +67,10 @@ class LoginForm extends Model
     public function validatePassword($attribute)
     {
         if (!$this->hasErrors()) {
-            $identity = $this->getIdentity();
-            if (!Yii::$app->getSecurity()->validatePassword($this->pwd, $identity->password)) {
+            $identity = $this->getUserInfo();
+
+            if ( (!isset($identity->user) && !Yii::$app->getSecurity()->validatePassword($this->pwd, $identity->password) )
+                || (isset($identity->user) &&  !Yii::$app->getSecurity()->validatePassword($this->pwd, $identity->user->password))) {
                 $this->addError($attribute, '密码错误。');
             }
         }
@@ -81,7 +83,12 @@ class LoginForm extends Model
     public function login()
     {
          if($this->validate(['username','pwd','code'])){
-            return Yii::$app->user->login($this->getIdentity());
+            $identity = $this->getUserInfo();
+            if(isset($identity->user))
+            {
+                $identity = $identity->user;
+            }
+            return Yii::$app->user->login($identity);
         }
         return false;
         
@@ -92,8 +99,9 @@ class LoginForm extends Model
      */
     public function recordIp()
     {
-
-        $user = User::findOne($this->getIdentity()->id);
+        $userInfo = $this->getUserInfo();
+        isset($userInfo->user) && $userInfo = $userInfo->user;
+        $user = User::findOne($userInfo->id);
         $user->login_ip = Yii::$app->request->getUserIP();
         $user->login_time = $_SERVER['REQUEST_TIME'];
         return $user->update();
@@ -302,6 +310,39 @@ class LoginForm extends Model
                 && $this->identity = User::findOne($id);
             }
         }
+        return $this->identity;
+    }
+
+    private function getUserInfo()
+    {
+        if($this->identity === false)
+        {
+            $accounts = User::find()->select(['id','account'])->indexBy('account')->column();
+            foreach ($accounts as $account => $id){
+                $this->username == Yii::$app->security->decryptByKey(base64_decode($account),Yii::$app->params['inputKey'])
+                && $this->identity = User::findOne($id);
+            }
+        }
+
+        if($this->identity === false)
+        {
+            $usernames = User::find()->select(['id','username'])->indexBy('username')->column();
+            foreach ($usernames as $username => $id){
+                $this->username == Yii::$app->security->decryptByKey(base64_decode($username),Yii::$app->params['inputKey'])
+                && $this->identity = User::findOne($id);
+            }
+        }
+
+        if($this->identity === false)
+        {
+            $userPhone = UserPhone::find()->select(['id','user_phone_number'])->indexBy('user_phone_number')->column();
+            foreach ($userPhone as $phone => $id){
+                $this->username == $phone
+                && $this->identity = UserPhone::findOne($id);
+
+            }
+        }
+
         return $this->identity;
     }
 

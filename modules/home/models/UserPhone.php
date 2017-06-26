@@ -5,6 +5,7 @@ namespace app\modules\home\models;
 use Yii;
 use app\models\CActiveRecord;
 use yii\web\IdentityInterface;
+use app\modules\home\models\User;
 
 /**
  * This is the model class for table "user".
@@ -74,6 +75,11 @@ class UserPhone extends CActiveRecord
         ];
     }
 
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
 
 
 
