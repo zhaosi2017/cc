@@ -18,7 +18,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     <h4 class="m-b-lg">个人中心</h4>
                     <div class="text-left">
                         <p class="m-t-lg">管理个人昵称、联系电话。</p>
-                        <p class="m-t-lg" >账号：<?php echo $model->account; ?>    <a  style="margin-left: 45px ; margin-top: 10px" class="btn btn-primary m-t-md" href="<?php echo Url::to(['/home/user/password'])?>">修改密码</a></p>
+                        <p class="m-t-lg" >邮箱：<?php echo $model->account; ?>  <a   class="btn btn-primary btn-sm pull-right" href="<?php echo Url::to(['/home/user/bind-email'])?>"><?php echo $model->username?'修改':'去添加';?></a>    </p>
+                        <p class="m-t-lg" >用户名：<?php echo $model->username; ?>    <a   class="btn btn-primary btn-sm pull-right" href="<?php echo Url::to(['/home/user/bind-username'])?>"><?php echo $model->username?'修改':'去添加';?></a></p>
+
                         <p class="m-t-lg">昵称：<?php echo $model->nickname; ?><a href="<?php echo Url::to(['/home/user/set-nickname']) ?>" class="btn btn-primary btn-sm pull-right"><?php echo $model->nickname ? '修改' : '去设置'?></a></p>
                         <p class="m-t-lg">白名单开关：<?php echo $model->whitelist_switch ? '开':'关' ;?></p>
 
@@ -34,6 +36,12 @@ $this->params['breadcrumbs'][] = $this->title;
                              
                          </a>
                          </p>
+
+                        <p class="m-t-lg" style="margin-top: 43px;">登录密码：******<a href="<?php echo Url::to(['/home/user/password']) ?>" class="btn btn-primary btn-sm pull-right">去修改</a></p>
+
+
+
+                        </p>
                         <div class="m-t-lg" style="text-right">联系电话：
                                 <div style="float: right">
                                     <table>
@@ -92,7 +100,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                 </div>
             </div>
-        </div>
+        </div>  
         <div class="col-sm-4">
             <div class="ibox float-e-margins">
                 <div class="ibox float-e-margins">
@@ -102,7 +110,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <p class="m-t-lg">为账号设置2个紧急联系人，便于自己联系电话无法使用时其他人可以联系到自己！</p>
                             <?php foreach($user_gent_contents  as $content){ ?>
 
-                                    <div class="fa-border p-sm">
+                                <div class="fa-border p-sm">
                                     <p class="m-t-sm">联系人&nbsp;&nbsp;&nbsp;&nbsp;：<?php echo $content->contact_nickname; ?></p>
                                     <div class="m-t-sm">
                                         <span>联系电话：<?php echo $content->contact_country_code.' '.$content->contact_phone_number; ?></span>
@@ -111,11 +119,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <a href="<?php echo Url::to(['/home/user/delete-urgent-contact-person', 'type'=>'1' , 'id'=>$content->id]) ?>" class="btn btn-danger btn-sm">删除</a>
                                         </div>
                                     </div>
-                                    </div>
-                                    <div class="help-block"></div>
+                                </div>
+                                <div class="help-block"></div>
 
-                        <?php } ?>
-
+                            <?php } ?>
                             <div class="text-right">
                                 <a class="btn btn-primary m-t-md" href="<?php echo Url::to(['/home/user/add-urgent-contact-person'])?>">立即添加</a>
                             </div>
