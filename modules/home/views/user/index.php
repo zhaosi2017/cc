@@ -100,55 +100,22 @@ $this->params['breadcrumbs'][] = $this->title;
                         <h4 class="m-b-lg">紧急联系人</h4>
                         <div class="text-left">
                             <p class="m-t-lg">为账号设置2个紧急联系人，便于自己联系电话无法使用时其他人可以联系到自己！</p>
-                            <?php
-                                if ($model->urgent_contact_person_one) {
-                            ?>
-                                <div class="fa-border p-sm">
-                                    <p class="m-t-sm">联系人一：<?php echo $model->urgent_contact_person_one; ?></p>
+                            <?php foreach($user_gent_contents  as $content){ ?>
+
+                                    <div class="fa-border p-sm">
+                                    <p class="m-t-sm">联系人一：<?php echo $content->contact_nickname; ?></p>
                                     <div class="m-t-sm">
-                                        <span>联系电话：<?php echo $model->urgent_contact_one_country_code.' '.$model->urgent_contact_number_one; ?></span>
+                                        <span>联系电话：<?php echo $content->contact_country_code.' '.$content->contact_phone_number; ?></span>
                                         <div class="pull-right btn-group m-t-n-xs">
-                                            <a href="<?php echo Url::to(['/home/user/add-urgent-contact-person', 'modify' => '1']) ?>" class="btn btn-primary btn-sm">修改</a>
-                                            <a href="<?php echo Url::to(['/home/user/delete-urgent-contact-person', 'type'=>'1']) ?>" class="btn btn-danger btn-sm">删除</a>
+                                            <a href="<?php echo Url::to(['/home/user/add-urgent-contact-person', 'modify' => '1' , 'id'=>$content->id]) ?>" class="btn btn-primary btn-sm">修改</a>
+                                            <a href="<?php echo Url::to(['/home/user/delete-urgent-contact-person', 'type'=>'1' , 'id'=>$content->id]) ?>" class="btn btn-danger btn-sm">删除</a>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="help-block"></div>
-                            <?php
-                                } else {
-                            ?>
-                                    <div class="fa-border p-sm">
-                                        <p class="m-t-sm">联系人一：无</p>
-                                        <p class="m-t-sm">联系电话：无</p>
                                     </div>
                                     <div class="help-block"></div>
-                            <?php
-                                }
-                            ?>
-                            <?php
-                                if ($model->urgent_contact_person_two) {
-                            ?>
-                                <div class="fa-border p-sm">
-                                    <p class="m-t-sm">联系人二：<?php echo $model->urgent_contact_person_two; ?></p>
-                                    <div class="m-t-sm">
-                                        <span>联系电话：<?php echo $model->urgent_contact_two_country_code.' '.$model->urgent_contact_number_two; ?></span>
-                                        <div class="pull-right btn-group m-t-n-xs">
-                                            <a href="<?php echo Url::to(['/home/user/add-urgent-contact-person', 'modify'=>'2']) ?>" class="btn btn-primary btn-sm"">修改</a>
-                                            <a href="<?php echo Url::to(['/home/user/delete-urgent-contact-person/', 'type'=>'2']) ?>" class="btn btn-danger btn-sm">删除</a>
-                                        </div>
 
-                                    </div>
-                                </div>
-                            <?php
-                                } else {
-                            ?>
-                                <div class="fa-border p-sm">
-                                    <p class="m-t-sm">联系人二：无</p>
-                                    <p class="m-t-sm">联系电话：无</p>
-                                </div>
-                            <?php
-                                }
-                            ?>
+                        <?php } ?>
+                            
                             <div class="text-right">
                                 <a class="btn btn-primary m-t-md" href="<?php echo Url::to(['/home/user/add-urgent-contact-person'])?>">立即添加</a>
                             </div>

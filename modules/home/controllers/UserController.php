@@ -4,6 +4,7 @@ namespace app\modules\home\controllers;
 
 use app\modules\home\models\ContactForm;
 use app\modules\home\models\PasswordForm;
+use app\modules\home\models\UserGentContact;
 use app\modules\home\models\UserPhone;
 use Yii;
 use app\modules\home\models\User;
@@ -45,7 +46,8 @@ class UserController extends GController
         $this->layout = '@app/views/layouts/container';
         $model = $this->findModel(Yii::$app->user->id);
         $user_phone_numbers = (new UserPhone())::findAll(array('user_id'=>Yii::$app->user->id));  //取用户的全部绑定电话
-        return $this->render('index',['model'=>$model , 'user_phone_numbers'=>$user_phone_numbers]);
+        $user_gent_contacts  = (new UserGentContact())::findAll(array('user_id'=>Yii::$app->user->id));   //取全部的紧急联系人
+        return $this->render('index',['model'=>$model , 'user_phone_numbers'=>$user_phone_numbers , 'user_gent_contents'=>$user_gent_contacts]);
     }
 
     public function actionSetNickname()
