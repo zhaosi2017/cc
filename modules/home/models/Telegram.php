@@ -32,8 +32,12 @@ class Telegram extends Model
     private $unwhiteCallbackDataPre = 'cc_unwhite';
     private $whitelistSwitchCallbackDataPre = 'cc_whiteswitch';
     private $unwhitelistSwitchCallbackDataPre = 'cc_unwhiteswitch';
+    private $blackCallbackDataPre = "cc_black";
+    private $unblackCallbackDataPre = "cc_unblack";
     private $whiteText = '加白名单';
     private $unwhiteText = '解除白名单';
+    private $blackText = "加黑名单";
+    private $unblackText = "解除黑名单";
     private $whiteSwitchText = '开启白名单';
     private $unwhiteSwitchText = '关闭白名单';
 
@@ -382,6 +386,36 @@ class Telegram extends Model
         return $this->unwhitelistSwitchCallbackDataPre;
     }
 
+    public function getBlackCallbackDataPre()
+    {
+        return $this->blackCallbackDataPre;
+    }
+
+    public function getUnblackCallbackDataPre()
+    {
+        return $this->unblackCallbackDataPre;
+    }
+
+    public function getWhiteText()
+    {
+        return $this->whiteText;
+    }
+
+    public function getUnwhiteText()
+    {
+        return $this->unwhiteText;
+    }
+
+    public function getBlackText()
+    {
+        return $this->blackText;
+    }
+
+    public function getUnblackText()
+    {
+        return $this->unblackText;
+    }
+
     public function getWhiteSwitchText()
     {
         return $this->whiteSwitchText;
@@ -571,6 +605,7 @@ class Telegram extends Model
             ];
         } else {
             if (empty($this->calledPersonData)) {
+                $sendData['chat_id'] = $this->telegramUid;
                 $sendData['text'] = '他/她不是我们系统会员，不能执行该操作!';
                 $this->sendData = $sendData;
                 return $this->sendTelegramData();
@@ -579,23 +614,41 @@ class Telegram extends Model
                 'text' => $this->callText,
                 'callback_data' => implode('-', array($this->callCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone)),
             ];
+
             // 检查是否加了呼叫人到自己到白名单.
             $whiteRes = WhiteList::findOne(['uid' => $this->callPersonData->id, 'white_uid'=> $this->calledPersonData->id]);
+            $blackRes = BlackList::findOne(['uid' => $this->callPersonData->id, 'white_uid'=> $this->calledPersonData->id]);
             if ($whiteRes) {
-                $bindMenu = [
+                $whiteMenu = [
                     'text' => $this->unwhiteText,
                     'callback_data' => implode('-', array($this->unwhiteCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone)),
                 ];
             } else {
-                $bindMenu = [
+                $whiteMenu = [
                     'text' => $this->whiteText,
                     'callback_data' => implode('-', array($this->whiteCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone)),
                 ];
             }
+            // 黑名单按钮.
+            if ($blackRes) {
+                $blackMenu = [
+                    'text' => $this->unblackText,
+                    'callback_data' => implode('-', array($this->unblackCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone)),
+                ];
+            } else {
+                $blackMenu = [
+                    'text' => $this->blackText,
+                    'callback_data' => implode('-', array($this->blackCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone)),
+                ];
+            }
+
             $inlineKeyboard =[
                 [
-                    $callMenu,
-                    $bindMenu
+                    $whiteMenu,
+                    $blackMenu
+                ],
+                [
+                    $callMenu
                 ]
             ];
             $this->sendData = [
@@ -802,6 +855,97 @@ class Telegram extends Model
     }
 
     /**
+     * 加入黑名单.
+     */
+    public function joinBlackList()
+    {
+        // 开始操作.
+        $this->sendData = [
+            'chat_id' => $this->telegramUid,
+            'text' => $this->startText,
+        ];
+        $this->sendTelegramData();
+
+        $sendData = [
+            'chat_id' => $this->telegramUid,
+            'text' => '',
+        ];
+
+        $this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
+        if (empty($this->callPersonData)) {
+            $sendData['text'] = '您不是我们系统会员，不能执行该操作!';
+            $this->sendData = $sendData;
+            return $this->sendTelegramData();
+        }
+
+        $this->calledPersonData = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
+        if (empty($this->calledPersonData)) {
+            $sendData['text'] = '他/她不是我们系统会员，不能执行该操作!';
+            $this->sendData = $sendData;
+            return $this->sendTelegramData();
+        }
+
+        $blackRes = BlackList::findOne(['uid' => $this->callPersonData->id, 'black_uid'=> $this->calledPersonData->id]);
+        if ($blackRes) {
+            $sendData['text'] = '已经在黑名单里!';
+        } else {
+            $blackRes = new BlackList();
+            $blackRes->uid = $this->callPersonData->id;
+            $blackRes->black_uid = $this->calledPersonData->id;
+            $res = $blackRes->save();
+            $res ? ($sendData['text'] = '加入黑名单成功!') : ($sendData['text'] = '加入黑名单失败!');
+        }
+
+
+        $this->sendData = $sendData;
+        return $this->sendTelegramData();
+    }
+
+    /**
+     * 解除白名单.
+     */
+    public function unbindBlackList()
+    {
+        // 开始操作.
+        $this->sendData = [
+            'chat_id' => $this->telegramUid,
+            'text' => $this->startText,
+        ];
+        $this->sendTelegramData();
+
+        $sendData = [
+            'chat_id' => $this->telegramUid,
+            'text' => '',
+        ];
+
+        $this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
+        if (empty($this->callPersonData)) {
+            $sendData['text'] = '您不是我们系统会员，不能执行该操作!';
+            $this->sendData = $sendData;
+            return $this->sendTelegramData();
+        }
+
+        $this->calledPersonData = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
+        if (empty($this->calledPersonData)) {
+            $sendData['text'] = '他/她不是我们系统会员，不能执行该操作!';
+            $this->sendData = $sendData;
+            return $this->sendTelegramData();
+        }
+
+        $blackRes = BlackList::findOne(['uid' => $this->callPersonData->id, 'black_uid' => $this->calledPersonData->id]);
+        if ($blackRes) {
+            $res = $blackRes->delete();
+            $res ? ($sendData['text'] = '解除黑名单成功!') : ($sendData['text'] = '解除黑名单失败!');
+        } else {
+            $sendData['text'] = '不在白名单!';
+        }
+
+
+        $this->sendData = $sendData;
+        return $this->sendTelegramData();
+    }
+
+    /**
      * 发送绑定telegram账号的验证码.
      */
     public function sendBindCode()
@@ -853,6 +997,18 @@ class Telegram extends Model
         if ($user) {
             $this->calledPersonData = $user;
             $nickname = !empty($user->nickname) ? $user->nickname : '他/她';
+
+            // 黑名单检查.
+            $res = $this->blackList();
+            if (!$res) {
+                $this->sendData = [
+                    'chat_id' => $this->telegramUid,
+                    'text' => '您在'.$nickname.'的黑名单列表内, 不能呼叫!',
+                ];
+                $this->sendTelegramData();
+                return $this->errorCode['success'];
+            }
+            
             // 白名单检查.
             if ($this->calledPersonData->whitelist_switch == 1) {
                 $res = $this->whiteList();
@@ -1036,6 +1192,14 @@ class Telegram extends Model
     public function whiteList()
     {
         return WhiteList::findOne(['uid' => $this->calledPersonData->id, 'white_uid'=> $this->callPersonData->id]);
+    }
+
+    /**
+     * 黑名单限制.
+     */
+    public function blackList()
+    {
+        return BlackList::findOne(['uid' => $this->calledPersonData->id, 'black_uid'=> $this->callPersonData->id]);
     }
 
     /**
