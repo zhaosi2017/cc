@@ -358,6 +358,18 @@ class UserController extends GController
 
             if(empty($contact_id)){
                 $contact = new UserGentContact();
+                if(empty(Yii::$app->request->post('UserGentContact')['contact_nickname'])) {
+                    Yii::$app->getSession()->setFlash('success', '操作失败,昵称为空');
+                    return $this->redirect(['index']);
+                }
+                if(empty(Yii::$app->request->post('UserGentContact')['contact_country_code'])) {
+                    Yii::$app->getSession()->setFlash('success', '操作失败,国码为空');
+                    return $this->redirect(['index']);
+                }
+                if(empty(Yii::$app->request->post('UserGentContact')['contact_phone_number'])) {
+                    Yii::$app->getSession()->setFlash('success', '操作失败,电话号码为空');
+                    return $this->redirect(['index']);
+                }
             }else{
                 $contact = (new UserGentContact())::findOne($contact_id);
             }
