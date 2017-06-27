@@ -90,8 +90,8 @@ class TelegramController extends GController
                 $action = $telegram->callbackQuery[0];
                 switch ($action) {
                     case $telegram->callCallbackDataPre;
-                        $result = $telegram->callTelegramPerson();
                         $telegram->telegramContactFirstName = array_pop($telegram->callbackQuery);
+                        $result = $telegram->callTelegramPerson();
                         return $result;
                         break;
                     case $telegram->whiteCallbackDataPre:
