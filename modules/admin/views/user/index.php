@@ -18,8 +18,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'dataProvider' => $dataProvider,
 
             'layout' => "{items}\n  <div><ul class='pagination'><li style='display:inline;'><span>共".$dataProvider->getTotalCount(). "条数据 <span></li></ul>{pager}  </div>",
-            // 'summary'=>true,
-    //        'filterModel' => $searchModel,
             'pager'=>[
                 //'options'=>['class'=>'hidden']//关闭自带分页
                 
@@ -40,49 +38,31 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['header'=>'时间(min)', 'value'=>function($data){
                     return $data['long_time'];
                 }],
+                
+                ['header'=>'联系电话' , 'format'=>'html' , 'value'=>function($data){
+                        $phone_number = (new \app\modules\home\models\UserPhone())::findAll(array('user_id'=>$data->id));
+                        if(empty($phone_number)){
+                                return '';
+                        }
+                        return '+'.$phone_number[0]->phone_country_code . $phone_number[0]->user_phone_number;
 
-                'phone_number',
+                }],
                 'telegram_number',
                 'potato_number',
 
                 ['header'=>'紧急联系人/电话', 'format'=>'html', 'value'=>function($data){
-                    if(!empty($data->urgent_contact_number_one)){
-                        return $data->urgent_contact_person_one. '<br> +' . $data->urgent_contact_one_country_code
-                            . $data->urgent_contact_number_one;
-                    }
-                    return '';
+                        $contacts = (new \app\modules\home\models\UserGentContact())::findAll(array('user_id'=>$data->id));
+                        if(empty($contacts)){
+                            return '';
+                        }
+                        return $contacts[0]->contact_nickname . '<br> +' . $contacts[0]->contact_country_code . $contacts[0]->contact_phone_number;
                 }],
-
-                ['header'=>'紧急联系人/电话', 'format'=>'html', 'value'=>function($data){
-                    if(!empty($data->urgent_contact_number_two)){
-                        return $data->urgent_contact_person_two. '<br> +' . $data->urgent_contact_two_country_code
-                            . $data->urgent_contact_number_two;
-                    }
-                    return '';
-                }],
-
                 ['header'=>'注册IP/注册时间', 'format'=>'html', 'value'=>function($data){
                     return $data->reg_ip. '<br> ' . date('Y-m-d H:i:s' , $data->reg_time);
                 }],
                 ['header'=>'最后登陆IP/最后登陆时间', 'format'=>'html', 'value'=>function($data){
                     return $data->login_ip. '<br> ' . date('Y-m-d H:i:s' , $data->login_time);
                 }],
-
-                /*['header'=>'最后登录IP/最后登录时间', 'format'=>'html', 'value'=>function($data){
-                    return $data->urgent_contact_person_two. '<br> +' . $data->urgent_contact_two_country_code
-                        . $data->urgent_contact_number_two;
-                }],*/
-
-                // [
-                //     'class' => 'yii\grid\ActionColumn',
-                //     'header' => '操作',
-                //     'template' => '{harassment}',
-                //     'buttons' => [
-                //         'harassment' => function($url){
-                //             return Html::a('防骚扰',$url);
-                //         },
-                //     ],
-                // ],
             ],
         ]); ?>
     <?php Pjax::end(); ?>

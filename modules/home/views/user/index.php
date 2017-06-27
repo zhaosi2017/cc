@@ -18,26 +18,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     <h4 class="m-b-lg">个人中心</h4>
                     <div class="text-left">
                         <p class="m-t-lg">管理个人昵称、联系电话。</p>
-                        <p class="m-t-lg" >邮箱：<?php echo $model->account; ?>  <a   class="btn btn-primary btn-sm pull-right" href="<?php echo Url::to(['/home/user/bind-email'])?>"><?php echo $model->username?'修改':'去添加';?></a>    </p>
-                        <p class="m-t-lg" >用户名：<?php echo $model->username; ?>    <a   class="btn btn-primary btn-sm pull-right" href="<?php echo Url::to(['/home/user/bind-username'])?>"><?php echo $model->username?'修改':'去添加';?></a></p>
+                        <p class="m-t-lg" >邮箱：<?php echo $model->account; ?>  <a   class="btn btn-primary btn-sm pull-right" href="<?php echo Url::to(['/home/user/bind-email'])?>"><?php echo $model->account?'修改':'添加';?></a>    </p>
+                        <p class="m-t-lg" >用户名：<?php echo $model->username; ?>    <a   class="btn btn-primary btn-sm pull-right" href="<?php echo Url::to(['/home/user/bind-username'])?>"><?php echo $model->username?'修改':'添加';?></a></p>
 
-                        <p class="m-t-lg">昵称：<?php echo $model->nickname; ?><a href="<?php echo Url::to(['/home/user/set-nickname']) ?>" class="btn btn-primary btn-sm pull-right"><?php echo $model->nickname ? '修改' : '去设置'?></a></p>
+                        <p class="m-t-lg">昵称：<?php echo $model->nickname; ?><a href="<?php echo Url::to(['/home/user/set-nickname']) ?>" class="btn btn-primary btn-sm pull-right"><?php echo $model->nickname ? '修改' : '设置'?></a></p>
                         <p class="m-t-lg">白名单开关：<?php echo $model->whitelist_switch ? '开':'关' ;?></p>
 
-                        <p class="m-t-lg">防骚扰：
-                         <span title="<?php echo $model->un_call_number.('(总数)  ');echo $model->un_call_by_same_number.('(同一人)  ');echo $model->long_time.('(时间)');?>"  alt="<?php echo $model->un_call_number.('(总数)  ');echo $model->un_call_by_same_number.('(同一人)  ');echo $model->long_time.('(时间)');?>" style="    overflow: hidden;
-    text-overflow: hidden;
-    white-space: nowrap;
-    word-break: keep-all;
-    width: 160px;
-    max-width: 160px;
-    display: inline-block; " ><?php echo $model->un_call_number.('(总数)  ');echo $model->un_call_by_same_number.('(同一人)  ');echo $model->long_time.('  (时间)');?></span>
-                         <a href="<?php echo Url::to(['/home/user/harassment']) ?>" class="btn btn-primary btn-sm pull-right"><?php echo $model->un_call_number ? '修改' : '去设置'?>
-                             
-                         </a>
-                         </p>
 
-                        <p class="m-t-lg" style="margin-top: 43px;">登录密码：******<a href="<?php echo Url::to(['/home/user/password']) ?>" class="btn btn-primary btn-sm pull-right">去修改</a></p>
+
+                        <p class="m-t-lg" style="margin-top: 43px;">登录密码：******<a href="<?php echo Url::to(['/home/user/password']) ?>" class="btn btn-primary btn-sm pull-right">修改</a></p>
 
 
 
@@ -55,16 +44,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                             </tr>
                                         <?php  } ?>
                                         <tr> <td></td>
-                                            <td><a href="<?php echo Url::to(['/home/user/set-phone-number']) ?>" class="btn btn-primary btn-sm pull-right">去绑定</a><td>
+                                            <td><a href="<?php echo Url::to(['/home/user/set-phone-number']) ?>" class="btn btn-primary btn-sm pull-right">绑定</a><td>
                                         </tr>
                                     </table>
                                 </div>
                         </div>
-
-<!--                        <div class="text-right" style="    position: relative; top:105px; left:180px">-->
-<!--                            <a class="btn btn-primary m-t-md" href="--><?php //echo Url::to(['/home/user/password'])?><!--">修改密码</a>-->
-<!--                        </div>-->
-<!--                        -->
+                        
                     </div>
                 </div>
             </div>

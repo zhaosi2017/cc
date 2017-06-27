@@ -42,17 +42,18 @@ $module = $this->context->module->id;
                     <li>
                         <a class="J_menuItem" href="<?= Url::to(['/home/default/welcome']) ?>"><i class="fa fa-home"></i> <span class="nav-label">主页</span></a>
                     </li>
-                    <li class="<?php if(Yii::$app->controller->id == 'user' || Yii::$app->controller->id == 'potato' || Yii::$app->controller->id == 'telegram'){ echo 'active';}?>">
+                    <li class="<?php if((Yii::$app->controller->id == 'user' && Yii::$app->controller->action->id != 'harassment')|| Yii::$app->controller->id == 'potato' || Yii::$app->controller->id == 'telegram' ){ echo 'active';}?>">
                         <a class="J_menuItem" href="<?= Url::to(['/home/user/index']) ?>"><span class="nav-label">账户中心</span></a>
                     </li>
                     <li class="<?php if(Yii::$app->controller->id == 'call-record'){ echo 'active';}?>">
                         <a class="J_menuItem" href="<?= Url::to(['/home/call-record/index']) ?>"><span class="nav-label">个人通话记录</span></a>
                     </li>
-                     <li class="<?php if(Yii::$app->controller->id == 'white-list' || Yii::$app->controller->id == 'black-list'){ echo 'active';}?>">
+                     <li class="<?php if(Yii::$app->controller->id == 'white-list' || Yii::$app->controller->id == 'black-list' || Yii::$app->controller->action->id == 'harassment'){ echo 'active';}?>">
                          <a href="#"><span class="nav-label">防骚扰</span><span class="fa arrow"></span></a>
                          <ul class="nav nav-second-level">
                          <li><a class="J_menuItem" href="<?= Url::to(['/home/white-list/index']) ?>">白名单</a></li>
                              <li> <a class="J_menuItem" href="<?= Url::to(['/home/black-list/index']) ?>">黑名单</a></li>
+                             <li> <a class="J_menuItem" href="<?= Url::to(['/home/user/harassment']) ?>">参数设置</a></li>
                          </ul>
                     </li>
 
