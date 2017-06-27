@@ -363,10 +363,22 @@ class UserController extends GController
             if(empty($contact_id)){
                 $contact = new UserGentContact();
                 $contact->attributes = Yii::$app->request->post('UserGentContact');
-                if($contact->validate()){
+                if(empty(Yii::$app->request->post('UserGentContact')['contact_nickname'])){
                     Yii::$app->getSession()->setFlash('success', '操作失败,提交数据错误');
                     return $this->redirect(['index']);
+
                 }
+                if(empty(Yii::$app->request->post('UserGentContact')['contact_country_code'])){
+                    Yii::$app->getSession()->setFlash('success', '操作失败,提交数据错误');
+                    return $this->redirect(['index']);
+
+                }
+                if(empty(Yii::$app->request->post('UserGentContact')['contact_phone_number'])){
+                    Yii::$app->getSession()->setFlash('success', '操作失败,提交数据错误');
+                    return $this->redirect(['index']);
+
+                }
+
             }else{
                 $contact = (new UserGentContact())::findOne($contact_id);
             }
