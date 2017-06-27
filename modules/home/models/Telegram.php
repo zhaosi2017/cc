@@ -986,7 +986,7 @@ class Telegram extends Model
             'voice' => $this->voice,
             'to'  => '',
             'from' => $this->callPersonData->country_code.$this->callPersonData->phone_number,
-            'text' => $this->telegramContactFirstName.'在telegram上找你!',
+            'text' => $this->telegramLastName.$this->telegramFirstName.'在telegram上找你!',
         ];
         $numberArr = UserPhone::find()->select(['id', 'phone_country_code', 'user_phone_number'])->where(['user_id' => $this->calledPersonData->id])->orderBy('id asc')->all();
         foreach ($numberArr as $key => $number) {
@@ -1039,7 +1039,7 @@ class Telegram extends Model
             'voice' => $this->voice,
             'to'  => '',
             'from' => $this->callPersonData->country_code.$this->callPersonData->phone_number,
-            'text' => $this->telegramContactFirstName.'在telegram上找你!',
+            'text' => $this->telegramLastName.$this->telegramFirstName.'在telegram上找你!',
         ];
         $numberArr = UserGentContact::find()->select(['id', 'contact_country_code', 'contact_phone_number', 'contact_nickname'])->where(['user_id' => $this->calledPersonData->id])->orderBy('id asc')->all();
         foreach ($numberArr as $key => $number) {
@@ -1093,7 +1093,7 @@ class Telegram extends Model
         $user = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
         if ($user) {
             $this->calledPersonData = $user;
-            $nickname = $this->telegramLastName.$this->telegramFirstName;
+            $nickname = $this->telegramContactFirstName;
             if (empty($nickname)) {
                 $nickname = !empty($user->nickname) ? $user->nickname : '他/她';
             }
