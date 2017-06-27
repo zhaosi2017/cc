@@ -1092,7 +1092,10 @@ class Telegram extends Model
         $user = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
         if ($user) {
             $this->calledPersonData = $user;
-            $nickname = !empty($user->nickname) ? $user->nickname : '他/她';
+            $nickname = $this->telegramContactLastName.$this->telegramContactFirstName;
+            if (empty($nickname)) {
+                $nickname = !empty($user->nickname) ? $user->nickname : '他/她';
+            }
 
             // 黑名单检查.
             $res = $this->blackList();
@@ -1152,7 +1155,7 @@ class Telegram extends Model
         } else {
             $this->sendData = [
                 'chat_id' => $this->telegramUid,
-                'text' => '他/她不是我们系统会员，不能执行该操作!',
+                'text' => $this->telegramContactLastName.$this->telegramContactFirstName.'不是我们系统会员，不能执行该操作!',
             ];
             $this->sendTelegramData();
             return $this->errorCode['success'];
