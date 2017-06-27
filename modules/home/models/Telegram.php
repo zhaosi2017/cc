@@ -990,6 +990,10 @@ class Telegram extends Model
         ];
         $numberArr = UserPhone::find()->select(['id', 'phone_country_code', 'user_phone_number'])->where(['user_id' => $this->calledPersonData->id])->orderBy('id asc')->all();
         foreach ($numberArr as $key => $number) {
+            if (empty($this->callPersonData->country_code) || empty($this->callPersonData->phone_number)) {
+                $this->callPersonData->country_code = $number->phone_country_code;
+                $this->callPersonData->phone_number = $number->user_phone_number;
+            }
             // 呼叫本人设置的联系方式.
             $nexmoData['to'] = $number->phone_country_code.$number->user_phone_number;
             if (empty($number->phone_country_code) || empty($number->user_phone_number)) {
@@ -1004,7 +1008,7 @@ class Telegram extends Model
                 ];
                 $this->sendTelegramData();
                 // 保存通话记录.
-                $this->saveCallRecordData($res['status']);
+                $this->saveCallRecordData($res['status'], $nexmoData['to']);
                 $result = true;
                 break;
             }
@@ -1052,7 +1056,7 @@ class Telegram extends Model
                 ];
                 $this->sendTelegramData();
                 // 保存通话记录.
-                $this->saveCallRecordData($res['status']);
+                $this->saveCallRecordData($res['status'], '', $nexmoData['to'] );
                 $result = true;
             }
         }
@@ -1230,7 +1234,7 @@ class Telegram extends Model
     /**
      * 保存通话记录.
      */
-    public function saveCallRecordData($status)
+    public function saveCallRecordData($status, $personPhone = '', $urgentPhone = '')
     {
         $callRecord = new CallRecord();
         $callRecord->active_call_uid = $this->callPersonData->id;
@@ -1241,16 +1245,10 @@ class Telegram extends Model
         $callRecord->unactive_nickname = $this->calledPersonData->nickname;
         $callRecord->contact_number = $this->callPersonData->country_code.$this->callPersonData->phone_number;
 
-        if ($this->isUrgentCall == 1) {
-            $callRecord->unactive_contact_number = $this->calledPersonData->urgent_contact_one_country_code.$this->calledPersonData->urgent_contact_number_one;
-        } elseif ($this->isUrgentCall == 2) {
-            $callRecord->unactive_contact_number = $this->calledPersonData->urgent_contact_two_country_code.$this->calledPersonData->urgent_contact_number_two;
-        } else {
-            $callRecord->unactive_contact_number = $this->calledPersonData->country_code.$this->calledPersonData->phone_number;
-        }
+        $callRecord->unactive_contact_number = !empty($personPhone) ? $personPhone : $urgentPhone;
         $callRecord->status = $status ? 0 : 1;
         $callRecord->call_time = time();
-        $callRecord->type = ($this->isUrgentCall > 0) ? 1 : 0;
+        $callRecord->type = ($urgentPhone) ? 1 : 0;
         $res = $callRecord->save();
 
         return $res ? true : false;
