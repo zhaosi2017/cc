@@ -562,6 +562,7 @@ class Potato extends Model
                 // 保存通话记录.
                 $this->saveCallRecordData($res['status'], '', $nexmoData['to'] );
                 $result = true;
+                break;
             }
         }
 
