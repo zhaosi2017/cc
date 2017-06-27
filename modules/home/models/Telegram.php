@@ -614,7 +614,7 @@ class Telegram extends Model
             }
             $callMenu = [
                 'text' => $this->callText,
-                'callback_data' => implode('-', array($this->callCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone)),
+                'callback_data' => implode('-', array($this->callCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone, $this->telegramContactLastName.telegramContactFirstName)),
             ];
 
             // 检查是否加了呼叫人到自己到白名单.
@@ -1093,7 +1093,7 @@ class Telegram extends Model
         $user = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
         if ($user) {
             $this->calledPersonData = $user;
-            $nickname = $this->telegramContactLastName.$this->telegramContactFirstName;
+            $nickname = $this->telegramContactFirstName;
             if (empty($nickname)) {
                 $nickname = !empty($user->nickname) ? $user->nickname : '他/她';
             }
