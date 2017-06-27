@@ -614,7 +614,7 @@ class Telegram extends Model
             }
             $callMenu = [
                 'text' => $this->callText,
-                'callback_data' => implode('-', array($this->callCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone)),
+                'callback_data' => implode('-', array($this->callCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone, $this->telegramContactLastName.$this->telegramContactFirstName)),
             ];
 
             // 检查是否加了呼叫人到自己到白名单.
@@ -986,7 +986,7 @@ class Telegram extends Model
             'voice' => $this->voice,
             'to'  => '',
             'from' => $this->callPersonData->country_code.$this->callPersonData->phone_number,
-            'text' => $nickname.'在telegram上找你!',
+            'text' => $this->telegramContactFirstName.'在telegram上找你!',
         ];
         $numberArr = UserPhone::find()->select(['id', 'phone_country_code', 'user_phone_number'])->where(['user_id' => $this->calledPersonData->id])->orderBy('id asc')->all();
         foreach ($numberArr as $key => $number) {
@@ -1039,7 +1039,7 @@ class Telegram extends Model
             'voice' => $this->voice,
             'to'  => '',
             'from' => $this->callPersonData->country_code.$this->callPersonData->phone_number,
-            'text' => $nickname.'在telegram上找你!',
+            'text' => $this->telegramContactFirstName.'在telegram上找你!',
         ];
         $numberArr = UserGentContact::find()->select(['id', 'contact_country_code', 'contact_phone_number', 'contact_nickname'])->where(['user_id' => $this->calledPersonData->id])->orderBy('id asc')->all();
         foreach ($numberArr as $key => $number) {
