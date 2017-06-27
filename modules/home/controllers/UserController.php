@@ -3,13 +3,17 @@
 namespace app\modules\home\controllers;
 
 use app\modules\home\models\ContactForm;
+use app\modules\home\models\EmailForm;
+use app\modules\home\models\LoginForm;
 use app\modules\home\models\PasswordForm;
+use app\modules\home\models\PhoneRegisterForm;
 use app\modules\home\models\UserGentContact;
 use app\modules\home\models\UserPhone;
 use Yii;
 use app\modules\home\models\User;
 use app\controllers\GController;
 use yii\web\NotFoundHttpException;
+use app\modules\home\servers\MailClient;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -444,12 +448,41 @@ class UserController extends GController
         $model = $this->findModel($id);
         $model->scenario = 'bind-email';//邮箱
         if($model->load(Yii::$app->request->post()) && $model->validate('account')){
-            $model->save() ? $model->sendSuccess() : $model->sendError();
-            return $this->redirect(['index']);
+            $emailModel = new EmailForm();
+            $key = $model->account.'bindemail';
+            $session = Yii::$app->session;
+            $session[$key]   =  $verifyCode = ContactForm::makeCode();
+            $email = $emailModel->username =$model->account;
+            $data = ['email' => $email, 'verifyCode' => $verifyCode];
+            $client = new MailClient();
+            $client->connect();
+            $res = $client->send($data);
+            $client->close();
+            return $this->render('bind-email-code',['model'=>$emailModel]);
         }
         return $this->render('bind-email', [
             'model' => $model,
         ]);
+    }
+
+    public  function actionBindEmailCode()
+    {
+        $model = new EmailForm();
+        if($model->load(Yii::$app->request->post())){
+            if($model->validate(['username','code'])){
+                $id = Yii::$app->user->id;
+                $userModel = $this->findModel($id);
+                $userModel->account = $model->username;
+                $userModel->save();
+                Yii::$app->getSession()->setFlash('success', '邮箱绑定成功');
+                return $this->redirect('/home/user/index')->send();
+
+            }else{
+                return $this->render('bind-email-code',['model'=>$model]);
+            }
+
+        }
+        return false;
     }
 
 }
