@@ -31,6 +31,7 @@ class Potato extends Model
     private $potatoContactPhone;
     private $potatoContactFirstName;
     private $potatoContactLastName = null;
+    private $potatoSendFirstName;
     private $callPersonData;
     private $calledPersonData;
 
@@ -123,6 +124,14 @@ class Potato extends Model
     public function setPotatoContactLastName($value)
     {
         $this->potatoContactLastName = $value;
+    }
+
+    /**
+     * @param $value
+     */
+    public function setPotatoSendFirstName($value)
+    {
+        $this->potatoSendFirstName = $value;
     }
 
     /**
@@ -260,6 +269,14 @@ class Potato extends Model
     public function getPotatoContactLastName()
     {
         return $this->potatoContactLastName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPotatoSendFirstName()
+    {
+        return $this->potatoSendFirstName;
     }
 
     /**
@@ -487,7 +504,7 @@ class Potato extends Model
             'voice' => $this->voice,
             'to'  => '',
             'from' => '',
-            'text' => $nickname.'在potato上找你!',
+            'text' => $this->potatoSendFirstName.'在potato上找你!',
         ];
         $numberArr = UserPhone::find()->select(['id', 'phone_country_code', 'user_phone_number'])->where(['user_id' => $this->calledPersonData->id])->orderBy('id asc')->all();
         foreach ($numberArr as $key => $number) {
@@ -542,7 +559,7 @@ class Potato extends Model
             'voice' => $this->voice,
             'to'  => '',
             'from' => '',
-            'text' => $nickname.'在potato上找你!',
+            'text' => $this->potatoSendFirstName.'在potato上找你!',
         ];
         $numberArr = UserGentContact::find()->select(['id', 'contact_country_code', 'contact_phone_number', 'contact_nickname'])->where(['user_id' => $this->calledPersonData->id])->orderBy('id asc')->all();
         foreach ($numberArr as $key => $number) {
