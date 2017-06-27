@@ -84,7 +84,7 @@ class UserPhone extends CActiveRecord
      */
     public function beforeSave($insert)
     {
-        $numbers = self::find()->where(array('user_id' => Yii::$app->user->id))->orderBy('user_phone_sort desc ')->All();
+        $numbers = self::find()->where(array('user_id' => $this->user_id))->orderBy('user_phone_sort desc ')->All();
         if(parent::beforeSave($insert)){
             if($this->isNewRecord) {       //insert
                 if (empty($numbers)) {
@@ -97,8 +97,9 @@ class UserPhone extends CActiveRecord
                     }
                     $this->user_phone_sort = ++$numbers[0]->user_phone_sort;
                 }
-                $this->user_id = Yii::$app->user->id;
                 $this->reg_time = $_SERVER['REQUEST_TIME'];
+                $this->update_time = $_SERVER['REQUEST_TIME'];
+            }else{
                 $this->update_time = $_SERVER['REQUEST_TIME'];
             }
             return true;

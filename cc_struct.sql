@@ -270,3 +270,27 @@ CREATE TABLE `user_phone` (
   `user_phone_number` char(16) NOT NULL DEFAULT '' COMMENT '电话号码',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `black_list`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `black_list` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` int(10) unsigned NOT NULL DEFAULT '0',
+  `black_uid` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE user_gent_contact (
+  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  user_id int(11) NOT NULL DEFAULT '0' COMMENT '用户id',
+  contact_country_code char(32) NOT NULL DEFAULT '86' COMMENT '国际编码',
+  contact_phone_number char(32) NOT NULL DEFAULT '0' COMMENT '电话号码',
+  contact_nickname char(64) NOT NULL DEFAULT '' COMMENT '联系人昵称',
+  reg_time int(11) NOT NULL DEFAULT '0' COMMENT '添加时间',
+  update_time int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
+  contact_sort int(11) NOT NULL DEFAULT '1' COMMENT '紧急联系人的优先顺序  数字大优先级高',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;

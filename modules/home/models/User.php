@@ -112,6 +112,12 @@ class User extends CActiveRecord implements IdentityInterface
             [['urgent_contact_person_one','urgent_contact_one_country_code', 'urgent_contact_number_one'],'required','on'=>'urgent_contact_one'],
             [[ 'urgent_contact_person_two','urgent_contact_two_country_code','urgent_contact_number_two'],'required','on'=>'urgent_contact_two'],
             [['un_call_number','un_call_by_same_number','long_time'],'required','on'=>'harassment'],
+            ['username','required','on'=>'bind-username'],
+            ['username','checkUsername','on'=>'bind-username'],
+            [['username'],'string','min'=>6,'max'=>100,'on'=>'bind-username'],
+            ['account','checkAccount','on'=>'bind-email'],
+            ['account','required','message'=>'邮箱不能为空','on'=>'bind-email'],
+            ['account','email','message'=>'邮箱格式错误','on'=>'bind-email'],
         ];
     }
 
@@ -123,7 +129,7 @@ class User extends CActiveRecord implements IdentityInterface
         return [
             'id' => 'ID',
             'auth_key' => 'Auth Key',
-            'account' => 'Account',
+            'account' => '邮箱',
             'username'=>'用户名',
             'nickname' => '昵称',
             'un_call_number' => '被叫总次数',
@@ -154,6 +160,8 @@ class User extends CActiveRecord implements IdentityInterface
             'urgent_contact_one' =>[ 'urgent_contact_person_one','urgent_contact_one_country_code', 'urgent_contact_number_one'] ,
             'urgent_contact_two' => [ 'urgent_contact_person_two','urgent_contact_two_country_code','urgent_contact_number_two'],
             'harassment'=>['un_call_number','un_call_by_same_number','long_time'],
+            'bind-username'=>['username'],
+            'bind-email'=>['account'],
         ];
         return array_merge($scenarios,$res);
     }
@@ -170,9 +178,46 @@ class User extends CActiveRecord implements IdentityInterface
 
     public function checkUsername($attribute)
     {
+        $rows = User::find()->select(['username'])->indexBy('id')->column();
+        $accounts = [];
+        foreach ($rows as $i => $v)
+        {
 
+            if($this->id == $i)
+            {
+                continue;
+            }
+            $accounts[] = Yii::$app->security->decryptByKey(base64_decode($v), Yii::$app->params['inputKey']);
 
+        }
+
+        if(in_array($this->username, $accounts)){
+            $this->addError($attribute, '管理员账号已存在');
+        }
     }
+
+
+    public function checkAccount ($attribute)
+    {
+        $rows = User::find()->select(['account'])->indexBy('id')->column();
+        $accounts = [];
+        foreach ($rows as $i => $v)
+        {
+
+            if($this->id == $i)
+            {
+                continue;
+            }
+            $accounts[] = Yii::$app->security->decryptByKey(base64_decode($v), Yii::$app->params['inputKey']);
+
+        }
+
+        if(in_array($this->account, $accounts)){
+            $this->addError($attribute, '邮箱已存在');
+        }
+    }
+
+
 
     /**
      * @inheritdoc
