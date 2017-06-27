@@ -21,9 +21,8 @@ $this->params['breadcrumbs'][] = $this->title ;
         ]); ?>
 
         <?= $form->field($model, 'account',[
-            'template' => "{label}<div class=\"row\"><div style=\"display:inline-block\">{input}</div><div style=\"display:inline-block\"><span ></span></div></div>\n<div ><span class=\"help-block m-b-none\">{error}</span></div>",
-              
-        ])->textInput(['readonly' => 'readonly'])->label('用户账号') ?>
+
+        ])->hiddenInput(['readonly' => 'readonly'])->label(false) ?>
 
         <?= $form->field($model, 'un_call_number',[
            'template' => "{label}<div class=\"row\"><div style=\"display:inline-block\">{input}</div><div style=\"display:inline-block\"><span >*请设置固定时间内被叫次数</span></div></div>\n<div><span class=\"help-block m-b-none\">{error}</span></div>",
