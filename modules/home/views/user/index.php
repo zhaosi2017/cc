@@ -43,10 +43,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         </p>
                         <div class="m-t-lg" style="text-right">联系电话：
-                                <div style="float: right">
+                                <div style="float: right ;    height: 120px;overflow: scroll;overflow-x: visible;">
                                     <table>
                                         <?php   foreach($user_phone_numbers as $key=>$number){?>
-                                            <tr> <td><?php echo   '+'.$number->phone_country_code . $number->user_phone_number  ;?></td>
+                                            <tr> <td><?php echo   '+'.$number->phone_country_code . $number->user_phone_number  ;?> &nbsp;&nbsp;</td>
                                                  <td><div class="pull-right btn-group">
                                                         <a href="<?php echo Url::to(['/home/user/set-phone-number' ,'phone_number'=>$number->user_phone_number]) ?>" class="btn btn-primary btn-sm">修改</a>
                                                         <a href="<?php echo Url::to(['/home/user/delete-number','id'=>$model->id, 'type'=>'phone_number', 'phone_number'=>$number->user_phone_number , 'country_code'=>$number->phone_country_code]) ?>" data-method="post" data-confirm="你确定要删除吗?" class="btn btn-danger btn-sm">删除</a>
@@ -100,7 +100,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                 </div>
             </div>
-        </div>  
+        </div>
         <div class="col-sm-4">
             <div class="ibox float-e-margins">
                 <div class="ibox float-e-margins">

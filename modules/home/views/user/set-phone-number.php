@@ -69,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'captchaAction'=>'/home/user/captcha',
                 'template' => '<div class="row"><div class="col-lg-2">{image}</div><div class="col-lg-10">{input}</div></div>',
             ])
-                ->textInput(['size' => 18,'placeholder'=>'请输入验证码'])
+                ->textInput(['size' => 18])
                 ->label(false)
             ?>
 
