@@ -71,7 +71,9 @@ class ContactForm extends Model
                 'telegram_country_code',
             ], 'default', 'value'=>''],
             ['code','required','on'=>['phone','telegram','potato']],
-            ['nickname','string','length'=>[2, 6], 'message'=>'昵称请设置2～6个汉字']
+            ['nickname','string','length'=>[2, 6], 'message'=>'昵称请设置2～6个汉字'],
+            ['phone_number','checkPhone','on'=>['phone']],
+
         ];
 
     }
@@ -85,6 +87,15 @@ class ContactForm extends Model
             'potato' => ['code','potato_country_code','potato_number'],
         ];
         return array_merge($parent_scenarios,$self);
+    }
+
+    public function checkPhone($attribute)
+    {
+        $res = UserPhone::findOne(['user_phone_number'=>$this->phone_number]);
+        if(!empty($res))
+        {
+            $this->addError('phone_number','电话已经存在');
+        }
     }
 
     /**
