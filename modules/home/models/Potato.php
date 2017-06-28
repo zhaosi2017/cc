@@ -559,7 +559,7 @@ class Potato extends Model
             'voice' => $this->voice,
             'to'  => '',
             'from' => '',
-            'text' => $this->potatoSendFirstName.'在potato上找你!',
+            'text' => $this->potatoSendFirstName.'在potato上找'.$nickname.', 请您及时转告!',
         ];
         $numberArr = UserGentContact::find()->select(['id', 'contact_country_code', 'contact_phone_number', 'contact_nickname'])->where(['user_id' => $this->calledPersonData->id])->orderBy('id asc')->all();
         foreach ($numberArr as $key => $number) {
