@@ -10,8 +10,10 @@ $this->params['breadcrumbs'][] = $this->title;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
+
 <div class="user-form">
     <div class="text-center" >
+
 
     </div>
     <div>
@@ -20,6 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="col-xs-4">
 
                 <?php echo  ($model->country_code.$model->phone_number) ? $model->country_code.$model->phone_number: '<span style="color:rgb(255,102,0);">未绑定手机</span>';?>
+
             </div>
             <div class="col-xs-4">
                 <a href="/home/user/set-phone-number"> <?php echo ($model->country_code.$model->phone_number)? '修改':'立即添加';?></a>

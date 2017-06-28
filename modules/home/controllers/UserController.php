@@ -47,7 +47,6 @@ class UserController extends GController
      */
     public function actionIndex()
     {
-        $this->layout = '@app/views/layouts/container';
         $model = $this->findModel(Yii::$app->user->id);
         $user_phone_numbers = (new UserPhone())::findAll(array('user_id'=>Yii::$app->user->id));  //取用户的全部绑定电话
         $user_gent_contacts  = (new UserGentContact())::findAll(array('user_id'=>Yii::$app->user->id));   //取全部的紧急联系人
@@ -362,18 +361,23 @@ class UserController extends GController
 
             if(empty($contact_id)){
                 $contact = new UserGentContact();
-                if(empty(Yii::$app->request->post('UserGentContact')['contact_nickname'])) {
-                    Yii::$app->getSession()->setFlash('success', '操作失败,昵称为空');
+                $contact->attributes = Yii::$app->request->post('UserGentContact');
+                if(empty(Yii::$app->request->post('UserGentContact')['contact_nickname'])){
+                    Yii::$app->getSession()->setFlash('success', '操作失败,提交数据错误');
                     return $this->redirect(['index']);
+
                 }
-                if(empty(Yii::$app->request->post('UserGentContact')['contact_country_code'])) {
-                    Yii::$app->getSession()->setFlash('success', '操作失败,国码为空');
+                if(empty(Yii::$app->request->post('UserGentContact')['contact_country_code'])){
+                    Yii::$app->getSession()->setFlash('success', '操作失败,提交数据错误');
                     return $this->redirect(['index']);
+
                 }
-                if(empty(Yii::$app->request->post('UserGentContact')['contact_phone_number'])) {
-                    Yii::$app->getSession()->setFlash('success', '操作失败,电话号码为空');
+                if(empty(Yii::$app->request->post('UserGentContact')['contact_phone_number'])){
+                    Yii::$app->getSession()->setFlash('success', '操作失败,提交数据错误');
                     return $this->redirect(['index']);
+
                 }
+
             }else{
                 $contact = (new UserGentContact())::findOne($contact_id);
             }
