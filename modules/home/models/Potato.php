@@ -666,7 +666,7 @@ class Potato extends Model
             if (!$res) {
                 $this->sendData = [
                     'chat_type' => 1,
-                    'chat_id' => $this->potatoUidd,
+                    'chat_id' => $this->potatoUid,
                     'text' => '呼叫"'.$nickname.'"失败, 尝试呼叫"'.$nickname.'"的紧急联系人, 请稍后!',
                 ];
                 $this->sendPotatoData();
