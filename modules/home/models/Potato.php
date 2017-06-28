@@ -636,15 +636,17 @@ class Potato extends Model
             }
 
             // 白名单检查.
-            $res = $this->whiteList();
-            if (!$res) {
-                $this->sendData = [
-                    'chat_type' => 1,
-                    'chat_id' => $this->potatoUid,
-                    'text' => '您不在'.$nickname.'的白名单列表内, 不能呼叫!',
-                ];
-                $this->sendPotatoData();
-                return $this->errorCode['success'];
+            if ($this->calledPersonData->whitelist_switch == 1) {
+                $res = $this->whiteList();
+                if (!$res) {
+                    $this->sendData = [
+                        'chat_type' => 1,
+                        'chat_id' => $this->potatoUid,
+                        'text' => '您不在' . $nickname . '的白名单列表内, 不能呼叫!',
+                    ];
+                    $this->sendPotatoData();
+                    return $this->errorCode['success'];
+                }
             }
 
             // 呼叫限制检查.
