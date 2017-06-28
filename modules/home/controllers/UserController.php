@@ -415,7 +415,7 @@ class UserController extends GController
     {
         $request = Yii::$app->request->get();
         $contact_id = $request['id'];
-        $contact = (new UserGentContact())::findOne($contact_id);
+        $contact = UserGentContact::findOne($contact_id);
         if($contact->delete()){
             Yii::$app->getSession()->setFlash('success', '操作成功');
         }else{
