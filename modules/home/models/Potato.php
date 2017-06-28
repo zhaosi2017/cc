@@ -453,7 +453,8 @@ class Potato extends Model
         $this->setKeyboard();
         // 发送操作菜单.
         $this->sendData = [
-            'chat_id' => $this->telegramUid,
+            'chat_type' => 1,
+            'chat_id' => $this->potatoUid,
             'reply_to_message_id' => 0,
             'text' => $this->wellcomeText,
             'reply_markup' => [
@@ -662,7 +663,8 @@ class Potato extends Model
             // 本人联系方式呼叫失败，尝试呼叫本人的紧急联系方式.
             if (!$res) {
                 $this->sendData = [
-                    'chat_id' => $this->telegramUid,
+                    'chat_type' => 1,
+                    'chat_id' => $this->potatoUidd,
                     'text' => '呼叫"'.$nickname.'"失败, 尝试呼叫"'.$nickname.'"的紧急联系人, 请稍后!',
                 ];
                 $this->sendPotatoData();
@@ -671,7 +673,8 @@ class Potato extends Model
 
             if (!$res) {
                 $this->sendData = [
-                    'chat_id' => $this->telegramUid,
+                    'chat_type' => 1,
+                    'chat_id' => $this->potatoUid,
                     'text' => '抱歉本次呼叫"' . $nickname . '"失败，请稍后再试, 或尝试其他方式联系' . $user->nickname . '!',
                 ];
                 $this->sendPotatoData();
