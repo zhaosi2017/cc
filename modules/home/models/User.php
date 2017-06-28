@@ -20,12 +20,6 @@ use yii\web\IdentityInterface;
  * @property integer $long_time
  * @property integer $country_code
  * @property string $phone_number
- * @property string $urgent_contact_number_one
- * @property integer $urgent_contact_one_country_code
- * @property integer $urgent_contact_two_country_code
- * @property integer $urgent_contact_number_two
- * @property string $urgent_contact_person_one
- * @property string $urgent_contact_person_two
  * @property string $telegram_number
  * @property string $potato_number
  * @property integer $telegram_country_code
@@ -87,7 +81,7 @@ class User extends CActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['account', 'nickname','username', 'urgent_contact_person_one', 'urgent_contact_person_two', 'reg_ip'], 'string'],
+            [['account', 'nickname','username', 'reg_ip'], 'string'],
 
             [[
                 'un_call_number',
@@ -101,16 +95,12 @@ class User extends CActiveRecord implements IdentityInterface
                 'telegram_user_id',
                 'potato_country_code',
                 'potato_user_id',
-                'urgent_contact_one_country_code',
-                'urgent_contact_two_country_code',
             ], 'integer'],
 
-            [['phone_number','urgent_contact_number_one','urgent_contact_number_two', 'telegram_number', 'potato_number'], 'number','max'=> 9999999999999],
+            [['phone_number', 'telegram_number', 'potato_number'], 'number','max'=> 9999999999999],
             [['auth_key','password'], 'string', 'max' => 64],
             [['login_ip','login_time'],'safe'],
             ['nickname' ,'checkName'],
-            [['urgent_contact_person_one','urgent_contact_one_country_code', 'urgent_contact_number_one'],'required','on'=>'urgent_contact_one'],
-            [[ 'urgent_contact_person_two','urgent_contact_two_country_code','urgent_contact_number_two'],'required','on'=>'urgent_contact_two'],
             [['un_call_number','un_call_by_same_number','long_time'],'required','on'=>'harassment'],
             ['username','required','on'=>'bind-username'],
             ['username','checkUsername','on'=>'bind-username'],
@@ -137,10 +127,6 @@ class User extends CActiveRecord implements IdentityInterface
             'long_time' => '时间设置',
             'country_code' => '国码',
             'phone_number' => '绑定电话',
-            'urgent_contact_number_one' => '紧急联系电话一',
-            'urgent_contact_number_two' => '紧急联系电话二',
-            'urgent_contact_person_one' => '紧急联系人一',
-            'urgent_contact_person_two' => '紧急联系人二',
             'telegram_number' => 'Telegram Number',
             'potato_number' => 'Potato Number',
             'telegram_country_code' => 'telegram country code',
@@ -157,8 +143,6 @@ class User extends CActiveRecord implements IdentityInterface
     {
         $scenarios = parent::scenarios();
         $res = [
-            'urgent_contact_one' =>[ 'urgent_contact_person_one','urgent_contact_one_country_code', 'urgent_contact_number_one'] ,
-            'urgent_contact_two' => [ 'urgent_contact_person_two','urgent_contact_two_country_code','urgent_contact_number_two'],
             'harassment'=>['un_call_number','un_call_by_same_number','long_time'],
             'bind-username'=>['username'],
             'bind-email'=>['account'],
@@ -246,8 +230,6 @@ class User extends CActiveRecord implements IdentityInterface
                 $this->username = base64_encode(Yii::$app->security->encryptByKey($this->username, Yii::$app->params['inputKey']));
                 $this->account = base64_encode(Yii::$app->security->encryptByKey($this->account, Yii::$app->params['inputKey']));
                 $this->nickname = base64_encode(Yii::$app->security->encryptByKey($this->nickname, Yii::$app->params['inputKey']));
-                $this->urgent_contact_person_one = base64_encode(Yii::$app->security->encryptByKey($this->urgent_contact_person_one, Yii::$app->params['inputKey']));
-                $this->urgent_contact_person_two = base64_encode(Yii::$app->security->encryptByKey($this->urgent_contact_person_two, Yii::$app->params['inputKey']));
             }
             return true;
         }
@@ -259,8 +241,6 @@ class User extends CActiveRecord implements IdentityInterface
         parent::afterFind();
         $this->account = Yii::$app->security->decryptByKey(base64_decode($this->account), Yii::$app->params['inputKey']);
         $this->nickname && $this->nickname = Yii::$app->security->decryptByKey(base64_decode($this->nickname), Yii::$app->params['inputKey']);
-        $this->urgent_contact_person_one && $this->urgent_contact_person_one = Yii::$app->security->decryptByKey(base64_decode($this->urgent_contact_person_one), Yii::$app->params['inputKey']);
-        $this->urgent_contact_person_two && $this->urgent_contact_person_two = Yii::$app->security->decryptByKey(base64_decode($this->urgent_contact_person_two), Yii::$app->params['inputKey']);
         $this->username && $this->username = Yii::$app->security->decryptByKey(base64_decode($this->username), Yii::$app->params['inputKey']);
 
     }
