@@ -497,4 +497,20 @@ class UserController extends GController
         return false;
     }
 
+
+    public function actionAppBind()
+    {
+        $id = Yii::$app->user->id;
+        $model = User::findOne($id);
+        return $this->render('app-bind', ['model' => $model]);
+    }
+
+    public function actionLinks()
+    {
+        $id = Yii::$app->user->id;
+        $userPhone = UserPhone::findAll(['user_id'=>$id]);
+        $urgentContact = UserGentContact::findAll(['user_id'=>$id]);
+        return $this->render('links', ['userPhone' => $userPhone,'urgentContact'=>$urgentContact]);
+    }
+
 }

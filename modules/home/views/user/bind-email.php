@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <br>
     <div class="form-group">
        
-        <div style=" " > <button class='<?php $btnnn = $model->isNewRecord ? ( "btn btn-success") : ( "btn btn-primary");echo $btnnn; ?> ' style="    width: 23%;margin-left: 108px;" >下一步</button></div>
+        <div style=" " > <button class='<?php $btnnn = $model->isNewRecord ? ( "btn btn-success button-new-color") : ( "btn btn-primary button-new-color");echo $btnnn; ?> ' style="    width: 23%;margin-left: 108px;" >下一步</button></div>
     </div>
 
     <?php ActiveForm::end(); ?>

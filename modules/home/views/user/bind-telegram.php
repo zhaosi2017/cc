@@ -111,7 +111,7 @@ $this->title = '修改telegram';
 
     <div class="form-group m-b-lg">
         <div class="col-sm-6 col-sm-offset-2">
-            <?= Html::submitButton('绑定', ['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton('绑定', ['class' => 'btn btn-primary button-new-color']) ?>
         </div>
     </div>
 

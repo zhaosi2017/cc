@@ -25,6 +25,7 @@ class DefaultController extends GController
 
     public function actionWelcome()
     {
+        $this->layout = '@app/views/layouts/shouye';
         return $this->render('welcome');
     }
 

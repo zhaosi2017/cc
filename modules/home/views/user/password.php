@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="form-group">
         <div class="col-sm-6 col-sm-offset-3">
-            <?= Html::submitButton('提交', ['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton('提交', ['class' => 'btn btn-primary button-new-color']) ?>
         </div>
     </div>
 
