@@ -9,6 +9,8 @@ use app\modules\home\models\CallRecord;
 class Potato extends Model
 {
 
+    const CODE_LENGTH = 5;
+
     private $startText = '开始操作, 请稍后!';
     private $wellcomeText = '欢迎';
     private $keyboardText = '分享自己名片';
