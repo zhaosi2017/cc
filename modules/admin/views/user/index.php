@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }],
                 
                 ['header'=>'联系电话' , 'format'=>'html' , 'value'=>function($data){
-                        $phone_number = (new \app\modules\home\models\UserPhone())::findAll(array('user_id'=>$data->id));
+                        $phone_number =\app\modules\home\models\UserPhone::findAll(array('user_id'=>$data->id));
                         if(empty($phone_number)){
                                 return '';
                         }
@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'potato_number',
 
                 ['header'=>'紧急联系人/电话', 'format'=>'html', 'value'=>function($data){
-                        $contacts = (new \app\modules\home\models\UserGentContact())::findAll(array('user_id'=>$data->id));
+                        $contacts = \app\modules\home\models\UserGentContact()::findAll(array('user_id'=>$data->id));
                         if(empty($contacts)){
                             return '';
                         }

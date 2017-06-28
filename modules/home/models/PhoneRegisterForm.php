@@ -108,9 +108,6 @@ class PhoneRegisterForm extends Model
             $userPhone->user_id = $user->id;
             $userPhone->phone_country_code = $this->country_code;
             $userPhone->user_phone_number = $this->phone;
-            $userPhone->reg_time = $_SERVER['REQUEST_TIME'];
-            $userPhone->user_phone_sort = 1;
-            $userPhone->update_time = $_SERVER['REQUEST_TIME'];
             return $userPhone->save();
         }else{
 

@@ -48,8 +48,8 @@ class UserController extends GController
     public function actionIndex()
     {
         $model = $this->findModel(Yii::$app->user->id);
-        $user_phone_numbers = (new UserPhone())::findAll(array('user_id'=>Yii::$app->user->id));  //取用户的全部绑定电话
-        $user_gent_contacts  = (new UserGentContact())::findAll(array('user_id'=>Yii::$app->user->id));   //取全部的紧急联系人
+        $user_phone_numbers = UserPhone::findAll(array('user_id'=>Yii::$app->user->id));  //取用户的全部绑定电话
+        $user_gent_contacts  =  UserGentContact::findAll(array('user_id'=>Yii::$app->user->id));   //取全部的紧急联系人
         return $this->render('index',['model'=>$model , 'user_phone_numbers'=>$user_phone_numbers , 'user_gent_contents'=>$user_gent_contacts]);
     }
 
@@ -117,7 +117,7 @@ class UserController extends GController
             $phone_number->user_phone_number ='';
             $phone_number->phone_country_code ='';
          }else{
-            $phone_number = (new UserPhone())::findOne(array('user_phone_number'=>$phone_number , 'user_id'=>Yii::$app->user->id));
+            $phone_number =  UserPhone::findOne(array('user_phone_number'=>$phone_number , 'user_id'=>Yii::$app->user->id));
         }
         return $phone_number;
     }
@@ -131,8 +131,6 @@ class UserController extends GController
             $get = Yii::$app->request->get();
             switch ($get['type']){
                 case 'phone_number':
-//                    $model->phone_number = '';
-//                    $model->country_code = null;
                     $this->deletePhoneNumber($get['phone_number'] , $get['country_code']);
                     break;
                 case 'potato_number':
@@ -160,7 +158,7 @@ class UserController extends GController
      */
     private function deletePhoneNumber($phone_number , $country_code)
     {
-        $model = (new UserPhone())::findOne(array('user_phone_number'=>$phone_number , 'user_id'=>Yii::$app->user->id , 'phone_country_code'=>$country_code));
+        $model =  UserPhone::findOne(array('user_phone_number'=>$phone_number , 'user_id'=>Yii::$app->user->id , 'phone_country_code'=>$country_code));
         if($model->delete()){
             Yii::$app->getSession()->setFlash('success', '操作成功');
         }else{
@@ -379,7 +377,7 @@ class UserController extends GController
                 }
 
             }else{
-                $contact = (new UserGentContact())::findOne($contact_id);
+                $contact = UserGentContact::findOne($contact_id);
             }
             $contact->contact_nickname      = Yii::$app->request->post('UserGentContact')['contact_nickname'];
             $contact->contact_country_code  = Yii::$app->request->post('UserGentContact')['contact_country_code'];
@@ -395,7 +393,7 @@ class UserController extends GController
             $isModify = false;
             // 修改紧急联系人.
             $contact_id = isset($request['id'])?$request['id'] :'';      //紧急联系人的id
-            $contact = (new UserGentContact())::findOne($contact_id);
+            $contact = UserGentContact::findOne($contact_id);
             if(empty($contact)){
                 $contact = new UserGentContact();
                 $contact->contact_nickname="";

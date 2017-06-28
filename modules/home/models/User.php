@@ -224,8 +224,8 @@ class User extends CActiveRecord implements IdentityInterface
                 $this->password && $this->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
                 $this->nickname && $this->nickname = base64_encode(Yii::$app->security->encryptByKey($this->nickname, Yii::$app->params['inputKey']));
             }else{
-                if(!empty(array_column(Yii::$app->request->post(),'password'))){
-                    $this->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
+                if(!empty(array_column(Yii::$app->request->post(),'password'))){    //必须是post中的password 否则出现二次加密
+                    $this->password = Yii::$app->getSecurity()->generatePasswordHash(array_column(Yii::$app->request->post(),'password')[0]);
                 }
                 $this->username = base64_encode(Yii::$app->security->encryptByKey($this->username, Yii::$app->params['inputKey']));
                 $this->account = base64_encode(Yii::$app->security->encryptByKey($this->account, Yii::$app->params['inputKey']));
