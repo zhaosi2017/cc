@@ -21,11 +21,15 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="col-xs-4 app-bind-1">绑定手机</div>
             <div class="col-xs-4">
 
-                <?php echo  ($model->country_code.$model->phone_number) ? $model->country_code.$model->phone_number: '<span style="color:rgb(255,102,0);">未绑定手机</span>';?>
+                <?php echo  ($model->country_code.$model->phone_number) ? $model->country_code.'--'.$model->phone_number: '<span style="color:rgb(255,102,0);">未绑定手机</span>';?>
 
             </div>
             <div class="col-xs-4">
-                <a href="/home/user/set-phone-number"> <?php echo ($model->country_code.$model->phone_number)? '修改':'立即添加';?></a>
+                <?php if ($model->phone_number){?>
+                    <a href="/home/user/update-phone-number">修改</a>
+                <?php }else{?>
+                    <a href="/home/user/set-phone-number"> 立即添加</a>
+                <?php }?>
             </div>
         </div>
     </div>

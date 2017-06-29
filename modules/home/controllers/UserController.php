@@ -438,7 +438,7 @@ class UserController extends GController
         if($model->load(Yii::$app->request->post()) && $model->validate()){
 
             $model->save() ? $model->sendSuccess() : $model->sendError();
-            return $this->redirect(['index']);
+            return $this->redirect(['/home/user/harassment']);
         }
         return $this->render('harassment', [
             'model' => $model,
@@ -517,6 +517,40 @@ class UserController extends GController
         $userPhone = UserPhone::findAll(['user_id'=>$id]);
         $urgentContact = UserGentContact::findAll(['user_id'=>$id]);
         return $this->render('links', ['userPhone' => $userPhone,'urgentContact'=>$urgentContact]);
+    }
+
+
+    public function actionUpdatePhoneNumber()
+    {
+        $id = Yii::$app->user->id;
+        $userModel = $this->findModel($id);
+        $model = new PhoneRegisterForm();
+        $model->phone = $userModel->phone_number;
+        $model->country_code = $userModel->country_code;
+        $model->setScenario('update-phone');
+        if(Yii::$app->request->isPost){
+
+            if($model->load(Yii::$app->request->post()) )
+            {
+
+                if( $model->load(Yii::$app->request->post()) && $model->validate('country_code','phone','code')){
+
+                    $code =$_POST['PhoneRegisterForm']['code'];
+                    $type = Yii::$app->controller->action->id;
+                    if(ContactForm::validateSms($type, $code)){
+                        $model->addError('code', '验证码错误');
+                        return $this->render('update-phone-number',['model'=>$model]);
+                    }
+                    $userModel->phone_number = $model->phone;
+                    $userModel->country_code = $model->country_code;
+                    $userModel->save();
+                    Yii::$app->getSession()->setFlash('success', '操作成功');
+                    return $this->redirect('/home/user/index')->send();
+                }
+            }
+        }
+
+        return $this->render('update-phone-number',['model'=>$model]);
     }
 
 }
