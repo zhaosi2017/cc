@@ -103,24 +103,29 @@ class PhoneRegisterForm extends Model
         $user->password = $this->password;
         $user->login_time = time();
         $user->login_ip = Yii::$app->request->getUserIP();
+        $transaction = Yii::$app->db->beginTransaction();
         if($user->insert()){
             $userPhone = new UserPhone();
             $userPhone->user_id = $user->id;
             $userPhone->phone_country_code = $this->country_code;
             $userPhone->user_phone_number = $this->phone;
-            return $userPhone->save();
+            $status = $userPhone->save();
+            if($status){
+                $transaction->commit();
+            }else{
+                $transaction->rollBack();
+            }
+            return $status;
         }else{
-
+            $transaction->rollBack();
             return false;
         }
-
-
     }
 
 
     public function validatePhone($attribute)
     {
-        $res = UserPhone::find()->where(['phone_country_code'=>$this->country_code,'user_phone_number'=>$this->phone])->one();
+        $res = User::find()->where(['phone_number'=>$this->phone])->one();
         if(empty($res)) {
             $this->addError('phone', '手机号不存在');
         }
@@ -129,7 +134,7 @@ class PhoneRegisterForm extends Model
 
     public function updatePassword()
     {
-        $userPhone = UserPhone::find()->where(['phone_country_code'=>$this->country_code,'user_phone_number'=>$this->phone])->one();
+        $userPhone = UserPhone::find()->where(['user_phone_number'=>$this->phone])->one();
         if(isset($userPhone->user) && !empty($userPhone->user)){
             $user = $userPhone->user;
             $user->password = $this->password;
