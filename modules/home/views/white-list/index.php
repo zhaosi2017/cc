@@ -52,10 +52,10 @@ $actionId = Yii::$app->requestedAction->id;
             //     return $model['white']['phone_number'];
             // }],
             ['header' => 'telegram', 'value' => function($model){
-                return '+'.$model['white']['telegram_country_code'].$model['white']['telegram_number'];
+                return !empty($model['white']['telegram_number'])?'+'.$model['white']['telegram_country_code'].$model['white']['telegram_number']:'';
             }],
             ['header' => 'potato', 'value' => function($model){
-                return '+'.$model['white']['potato_country_code'].$model['white']['potato_number'];
+                return !empty($model['white']['potato_number'])?'+'.$model['white']['potato_country_code'].$model['white']['potato_number']:'';
             }],
 
            
