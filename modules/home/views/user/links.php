@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use yii\helpers\url;
 $this->title = '联系方式';
 $this->params['breadcrumbs'][] = $this->title;
 /* @var $this yii\web\View */
@@ -41,7 +41,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php echo  $phone->phone_country_code.$phone->user_phone_number;?>
             </div>
             <div class="col-xs-4">
-                <a href="/home/user/set-phone-number">修改</a>
+                <a href="<?php echo Url::to(['/home/user/set-phone-number' ,'phone_number'=>$phone->user_phone_number]) ?>" >修改</a>
+                <a href="<?php echo Url::to(['/home/user/delete-number', 'type'=>'phone_number', 'phone_number'=>$phone->user_phone_number , 'country_code'=>$phone->phone_country_code]) ?>" data-method="post" data-confirm="你确定要删除吗?" >删除</a>
             </div>
             </div>
          <?php   }
@@ -52,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <di>
-        <div>
+        <div style="margin-top: 50px;">
             <div class="">
                 <span style="    font-size: 25px;
     font-weight: 500;">紧急联系人电话</span>
@@ -79,7 +80,9 @@ position: relative;
 
             </div>
             <div class="col-xs-4">
-                <a href="/home/user/bind-email"> 修改</a>
+                <a href="<?php echo Url::to(['/home/user/add-urgent-contact-person', 'modify' => '1' , 'id'=>$contact->id]) ?>" >修改</a>
+                <a href="<?php echo Url::to(['/home/user/delete-urgent-contact-person', 'type'=>'1' , 'id'=>$contact->id]) ?>" data-method="post" data-confirm="你确定要删除吗?"  >删除</a>
+
             </div>
         </div>
         <?php }}?>

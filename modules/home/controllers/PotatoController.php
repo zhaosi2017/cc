@@ -101,7 +101,7 @@ class PotatoController extends GController
             }
 
             Yii::$app->getSession()->setFlash('success', '操作成功');
-            return $this->redirect(['/home/user/index']);
+            return $this->redirect(['/home/user/app-bind']);
         } else {
             // 加载页面.
             return $this->render('bind-potato', ['model' => $model, 'isModify' => $isModify]);
@@ -118,7 +118,7 @@ class PotatoController extends GController
             Yii::$app->getSession()->setFlash('success', '操作成功');
         }
 
-        return $this->redirect(['/home/user/index']);
+        return $this->redirect(['/home/user/app-bind']);
     }
 
 }

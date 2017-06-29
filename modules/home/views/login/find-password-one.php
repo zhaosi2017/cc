@@ -27,7 +27,7 @@ $this->title = '找回登录密码';
 
         <?= $form->field($model, 'username')->textInput()->label('邮箱:') ?>
 
-        <?= Html::submitButton('下一步', ['class' => 'btn btn-primary pull-right','style' =>'margin-right: 15px']) ?>
+        <?= Html::submitButton('下一步', ['class' => 'btn btn-primary pull-right button-new-color','style' =>'margin-right: 15px']) ?>
 
         <?php ActiveForm::end(); ?>
 

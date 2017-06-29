@@ -39,7 +39,7 @@ $this->title = '登录';
         ?>
 
 
-        <?= Html::submitButton('确定', ['class' => 'btn btn-primary block full-width m-b']) ?>
+        <?= Html::submitButton('确定', ['class' => 'btn btn-primary block full-width m-b button-new-color']) ?>
 
         <?php ActiveForm::end(); ?>
 

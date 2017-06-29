@@ -17,7 +17,7 @@ $this->title = '找回密码成功';
 </div>
 <script>
     setTimeout(function () {
-        window.location.href = '<?php echo \yii\helpers\Url::to(['/home/login/index']) ?>';
+        window.location.href = '<?php echo \yii\helpers\Url::to(['/home/login/login']) ?>';
     },2000)
 </script>
 

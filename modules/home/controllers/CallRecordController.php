@@ -8,6 +8,7 @@ use app\modules\home\models\CallRecordSearch;
 use app\controllers\GController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * CallRecordController implements the CRUD actions for CallRecord model.
@@ -19,7 +20,18 @@ class CallRecordController extends GController
      */
     public function behaviors()
     {
+
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [	'allow' => true,
+                        'actions' => ['delete','index','create'],
+                        'roles' => ['@'],
+                    ],
+
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

@@ -39,7 +39,7 @@ $this->title = '输入验证码';
 
 
         ?>
-        <button class="btn btn-primary pull-right">下一步</button>
+        <button class="btn btn-primary pull-right button-new-color">下一步</button>
 
         
 

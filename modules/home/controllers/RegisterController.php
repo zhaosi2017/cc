@@ -32,7 +32,7 @@ class RegisterController extends GController
         ];
     }
 
-    public function actionIndex()
+    public function actionRegister()
     {
         $this->layout = '@app/views/layouts/global';
         $model = new RegisterForm();
@@ -77,7 +77,7 @@ class RegisterController extends GController
                     return $this->render('phone-index',['model'=>$model]);
                 }
                 if($model->register()){
-                    return $this->redirect('/home/login/index')->send();
+                    return $this->redirect('/home/login/login')->send();
                 }
                 Yii::$app->getSession()->setFlash('error', '操作失败');
 
@@ -163,7 +163,7 @@ class RegisterController extends GController
     public function actionComplete()
     {
         if(Yii::$app->request->isPost){
-            return $this->redirect(['/home/login/index']);
+            return $this->redirect(['/home/login/login']);
         }
         return false;
     }

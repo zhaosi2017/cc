@@ -97,7 +97,7 @@ class UserController extends GController
             $phone_number->user_id = Yii::$app->user->id;
             if($phone_number->save()){
                 Yii::$app->getSession()->setFlash('success', '操作成功');
-                return $this->redirect(['index']);
+                return $this->redirect(['/home/user/links']);
             }else {
                 Yii::$app->getSession()->setFlash('error', '操作失败');
                 return $this->redirect('set-phone-number');
@@ -124,9 +124,9 @@ class UserController extends GController
 
 
 
-    public function actionDeleteNumber($id)
+    public function actionDeleteNumber()
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel(Yii::$app->user->id);
         if(Yii::$app->request->isPost){
             $get = Yii::$app->request->get();
             switch ($get['type']){
@@ -134,14 +134,17 @@ class UserController extends GController
 //                    $model->phone_number = '';
 //                    $model->country_code = null;
                     $this->deletePhoneNumber($get['phone_number'] , $get['country_code']);
+                    $url = '/home/user/links';
                     break;
                 case 'potato_number':
                     $model->potato_number = '';
                     $model->potato_country_code = null;
+                    $url = '/home/user/app-bind';
                     break;
                 case 'telegram_number':
                     $model->telegram_number = '';
                     $model->telegram_country_code = null;
+                    $url = '/home/user/app-bind';
                     break;
             }
             if($model->update()){
@@ -149,7 +152,7 @@ class UserController extends GController
             }else{
                 Yii::$app->getSession()->setFlash('error', '操作失败');
             }
-            $this->redirect(['index']);
+            $this->redirect([$url]);
         }
         return false;
     }
@@ -293,6 +296,7 @@ class UserController extends GController
         $model = new PasswordForm();
         if($model->load(Yii::$app->request->post()) && $model->updateSave()){
             Yii::$app->getSession()->setFlash('success', '密码修改成功');
+            return $this->redirect('/home/user/index');
         }
         return $this->render('password',['model' => $model]);
     }
@@ -364,17 +368,17 @@ class UserController extends GController
                 $contact->attributes = Yii::$app->request->post('UserGentContact');
                 if(empty(Yii::$app->request->post('UserGentContact')['contact_nickname'])){
                     Yii::$app->getSession()->setFlash('success', '操作失败,提交数据错误');
-                    return $this->redirect(['index']);
+                    return $this->redirect(['/home/user/links']);
 
                 }
                 if(empty(Yii::$app->request->post('UserGentContact')['contact_country_code'])){
                     Yii::$app->getSession()->setFlash('success', '操作失败,提交数据错误');
-                    return $this->redirect(['index']);
+                    return $this->redirect(['/home/user/links']);
 
                 }
                 if(empty(Yii::$app->request->post('UserGentContact')['contact_phone_number'])){
                     Yii::$app->getSession()->setFlash('success', '操作失败,提交数据错误');
-                    return $this->redirect(['index']);
+                    return $this->redirect(['/home/user/links']);
 
                 }
 
@@ -386,10 +390,10 @@ class UserController extends GController
             $contact->contact_phone_number  = Yii::$app->request->post('UserGentContact')['contact_phone_number'];
             if($contact->save()){
                 Yii::$app->getSession()->setFlash('success', '操作成功');
-                return $this->redirect(['index']);
+                return $this->redirect(['/home/user/links']);
             }
             Yii::$app->getSession()->setFlash('success', '操作失败');
-            return $this->redirect(['index']);
+            return $this->redirect(['/home/user/links']);
 
         } else {
             $isModify = false;
@@ -424,7 +428,7 @@ class UserController extends GController
             Yii::$app->getSession()->setFlash('success', '操作失败');
         }
 
-        return $this->redirect(['index']);
+        return $this->redirect(['/home/user/links']);
     }
 
 

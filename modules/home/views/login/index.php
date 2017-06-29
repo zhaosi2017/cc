@@ -69,7 +69,7 @@ $this->title = '登录';
 
 
 
-                    <?= Html::submitButton('登 录', ['class' => 'btn btn-primary block full-width m-b']) ?>
+                    <?= Html::submitButton('登 录', ['class' => 'btn btn-primary block full-width m-b button-new-color']) ?>
 
                     <?php ActiveForm::end(); ?>
 
@@ -90,6 +90,6 @@ $this->title = '登录';
 
 
         <p class="text-muted text-center">
-            <a href="<?php echo \yii\helpers\Url::to(['/home/login/forget-password']) ?>"><small>忘记密码了？</small></a> | <a href="<?php echo \yii\helpers\Url::to(['/home/register/index']) ?>">注册一个新账号</a>
+            <a href="<?php echo \yii\helpers\Url::to(['/home/login/forget-password']) ?>"><small>忘记密码了？</small></a> | <a href="<?php echo \yii\helpers\Url::to(['/home/register/register']) ?>">注册一个新账号</a>
         </p>
     </div>

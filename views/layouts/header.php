@@ -50,8 +50,8 @@ $module = $this->context->module->id;
                     <div>
                         <div style="display: inline-block;"><img src="/img/logo1.png" width="52" alt=""></div>
                         <div style="display: inline-block;">
-                            <div style="height: 5px;font-size: 32px;font-weight: bolder;">呼叫支持中心</div>
-                            <div style="height: 20px;position: relative; top: 22px;">c a l l &nbsp;&nbsp;&nbsp; s u p p o r t &nbsp;&nbsp;&nbsp;    c e n t e r</div>
+                            <div style="color: black;height: 5px;font-size: 32px;font-weight: bolder;">呼叫支持中心</div>
+                            <div style="color:black;height: 20px;position: relative; top: 22px;">c a l l &nbsp;&nbsp;&nbsp; s u p p o r t &nbsp;&nbsp;&nbsp;    c e n t e r</div>
                         </div>
                     </div>
                 </div>
@@ -61,17 +61,17 @@ $module = $this->context->module->id;
 
                             <a class="" href="<?= Url::to(['/home/default/welcome']) ?>">
                                 <i class="fa fa-home"></i>
-                                <span >首页</span>
+                                <span style="color: black;">首页</span>
                             </a>
                         </li>
                         <li style="color: black;font-size: 18px;" class="<?php if((Yii::$app->controller->id == 'user' && Yii::$app->controller->action->id != 'harassment')|| Yii::$app->controller->id == 'potato' || Yii::$app->controller->id == 'telegram' ){ echo 'active';}?>">
                             <a class="" href="<?= Url::to(['/home/user/index']) ?>">
-                                <span >账户中心</span>
+                                <span style="color: black;">账户中心</span>
                             </a>
                         </li>
                         <li style="color: black;font-size: 18px;" class="<?php if(Yii::$app->controller->id == 'call-record'){ echo 'active';}?>">
                             <a class="" href="<?= Url::to(['/home/call-record/index']) ?>">
-                                <span >个人通话记录</span>
+                                <span style="color: black;">个人通话记录</span>
                             </a>
                         </li>
 
@@ -79,7 +79,7 @@ $module = $this->context->module->id;
                             Yii::$app->controller->id == 'white-list' || Yii::$app->controller->id == 'black-list'
                         ){ echo 'active';}?>">
                             <a class="" href="<?= Url::to(['/home/user/harassment']) ?>">
-                                <span >防骚扰</span>
+                                <span style="color: black;">防骚扰</span>
                             </a>
 
                         </li>

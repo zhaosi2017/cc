@@ -26,7 +26,7 @@ $this->title = '注册成功';
             'options'=>['class'=>'m-t text-left'],
         ]); ?>
 
-        <?= Html::submitButton('确定', ['class' => 'btn btn-primary block full-width m-b']) ?>
+        <?= Html::submitButton('确定', ['class' => 'btn btn-primary block full-width m-b button-new-color']) ?>
 
         <?php ActiveForm::end(); ?>
 

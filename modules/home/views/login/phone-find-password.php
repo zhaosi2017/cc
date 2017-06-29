@@ -118,7 +118,7 @@ $this->title = '忘记密码';
 
 
 
-                    <input type="button" id="phoneregisterButton" class="btn btn-primary block full-width m-b"
+                    <input type="button" id="phoneregisterButton" class="btn btn-primary block full-width m-b button-new-color"
                            onclick="
 //            var phonepatter = /^[0-9]{2,11}$/;
 //

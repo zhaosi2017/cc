@@ -10,17 +10,14 @@ use app\controllers\GController;
  */
 class DefaultController extends GController
 {
+    public $defaultAction = 'home';
     /**
      * Renders the index view for the module
      * @return string
      */
-    public function actionIndex()
+    public function actionHome()
     {
-        if (Yii::$app->user->isGuest) {
-            $this->redirect('/home/login/index');
-        } else {
-            $this->redirect('/home/default/welcome');
-        }
+        $this->redirect('/home/default/welcome');
     }
 
     public function actionWelcome()

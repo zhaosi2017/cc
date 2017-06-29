@@ -2,24 +2,39 @@
 
 use yii\helpers\Url;
 
-$identity = Yii::$app->user->identity;
-$identity = (Object) $identity;
+if(!Yii::$app->user->isGuest){
+    $identity = Yii::$app->user->identity;
+    $identity = (Object) $identity;
 
-$account_info = \app\modules\home\models\User::findOne($identity->id);
-$username = isset($identity->account) ? $identity->account : 'Guest';
-$module = $this->context->module->id;
+    $account_info = \app\modules\home\models\User::findOne($identity->id);
+    $username = isset($identity->account) ? $identity->account : 'Guest';
+    $module = $this->context->module->id;
+}else{
+    $username = 'Guest';
+}
+
+
 ?>
 <?php $this->beginContent('@app/views/layouts/global.php'); ?>
-
+<?= $this->render('common') ?>
 <?php $srcDataPrefix = 'data:image/jpg;base64,'; ?>
 <?php $imgUrl = Url::home(true) .'img/'; ?>
 <div>
     <div  class="text-right" style="background-color: rgb(96,96,96);height: 40px;line-height: 40px;">
         <div style="display: inline-block;color:white;">您好,<?php echo $username;?></div>
+        <?php if (!Yii::$app->user->isGuest){?>
         <div style="display: inline-block;color:white;"><a data-method="post" href="<?= Url::to(['/home/login/logout']) ?>"><span style="color: white;">退出</span></a> &nbsp;&nbsp;|&nbsp;&nbsp; </div>
         <div style="display: inline-block;color:white; ">
             请选择语言 中文简体
         </div>
+        <?php }else{?>
+            <div style="display: inline-block;color:white;"><a data-method="post" href="<?= Url::to(['/home/login/login']) ?>"><span style="color: white;">登录</span></a> |
+                <a href="/home/register/register" style="color: white;">注册</a> &nbsp;&nbsp;|&nbsp;&nbsp; </div>
+            <div style="display: inline-block;color:white; ">
+                请选择语言 中文简体
+            </div>
+        <?php }?>
+
         <div style="display: inline-block;width: 60px;"></div>
     </div>
 </div>
@@ -28,8 +43,9 @@ $module = $this->context->module->id;
         style="position: relative;
         z-index: 99999999;min-width: 1220px !important;
          height: 100px;line-height: 100px;
-         background-color: rgb(221,231,241);opacity: 0.5;
-        filter: alpha(opacity=50)"
+         background-color: rgb(221,231,241);
+         opacity: 0.7;
+        filter: alpha(opacity=70)"
 >
     <div class="row" style="margin: auto;">
 
@@ -42,8 +58,8 @@ $module = $this->context->module->id;
                         <div>
                             <div style="display: inline-block;"><img src="/img/logo1.png" width="52" alt=""></div>
                             <div style="display: inline-block;">
-                                <div style="height: 5px;font-size: 32px;font-weight: bolder;">呼叫支持中心</div>
-                                <div style="height: 20px;position: relative; top: 22px;">c a l l &nbsp;&nbsp;&nbsp; s u p p o r t &nbsp;&nbsp;&nbsp;    c e n t e r</div>
+                                <div style="color:black;height: 5px;font-size: 32px;font-weight: bolder;">呼叫支持中心</div>
+                                <div style="color:black;height: 20px;position: relative; top: 22px;">c a l l &nbsp;&nbsp;&nbsp; s u p p o r t &nbsp;&nbsp;&nbsp;    c e n t e r</div>
                             </div>
                         </div>
                     </div>
@@ -52,23 +68,31 @@ $module = $this->context->module->id;
                         <li style="color: black;font-size: 18px;">
                             <a class="" href="<?= Url::to(['/home/default/welcome']) ?>">
                                 <i class="fa fa-home"></i>
-                                <span >首页</span>
+                                <span style="    position: relative;
+    z-index: 9999999999999999999999999;
+    color: black" >首页</span>
                             </a>
                         </li>
                         <li style="color: black;font-size: 18px;" class="<?php if((Yii::$app->controller->id == 'user' && Yii::$app->controller->action->id != 'harassment')|| Yii::$app->controller->id == 'potato' || Yii::$app->controller->id == 'telegram' ){ echo 'active';}?>">
                             <a class="" href="<?= Url::to(['/home/user/index']) ?>">
-                                <span >账户中心</span>
+                                <span style="    position: relative;
+    z-index: 9999999999999999999999999;
+    color: black">账户中心</span>
                             </a>
                         </li>
                         <li style="color: black;font-size: 18px;" class="<?php if(Yii::$app->controller->id == 'call-record'){ echo 'active';}?>">
                             <a class="" href="<?= Url::to(['/home/call-record/index']) ?>">
-                                <span >个人通话记录</span>
+                                <span style="    position: relative;
+    z-index: 9999999999999999999999999;
+    color: black">个人通话记录</span>
                             </a>
                         </li>
 
                         <li  style="color: black;font-size: 18px;" class="<?php if(Yii::$app->controller->id == 'call-record'){ echo 'active';}?>">
                             <a class="" href="<?= Url::to(['/home/user/harassment']) ?>">
-                                <span >防骚扰</span>
+                                <span style="    position: relative;
+    z-index: 9999999999999999999999999;
+    color: black">防骚扰</span>
                             </a>
                         </li>
 

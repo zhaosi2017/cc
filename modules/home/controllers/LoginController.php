@@ -34,7 +34,7 @@ class LoginController extends GController
         ];
     }
 
-    public function actionIndex()
+    public function actionLogin()
     {
         // 已经登陆的就跳到首页.
         if (!Yii::$app->user->isGuest) {
@@ -64,7 +64,7 @@ class LoginController extends GController
     {
         Yii::$app->user->logout(false);
 
-        return $this->redirect(Url::to(['/home/login/index']));
+        return $this->redirect(Url::to(['/home/default/welcome']));
     }
 
     public function actionFindPasswordOne()
