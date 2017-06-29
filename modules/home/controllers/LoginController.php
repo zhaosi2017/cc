@@ -165,12 +165,18 @@ class LoginController extends GController
     {
         $this->layout = '@app/views/layouts/global';
         $register_model = new PhoneRegisterForm();
+
         if($register_model->load(Yii::$app->request->post())){
+
             if($register_model->updatePassword()){
                 Yii::$app->getSession()->setFlash('success', '操作成功');
-                return $this->render('find-password-complete');
+                return $this->redirect('/home/login/login');
+            }else{
+                Yii::$app->getSession()->setFlash('error', '操作失败');
+                return $this->redirect('/home/login/phone-find-password');
             }
         }
+
         return false;
     }
 

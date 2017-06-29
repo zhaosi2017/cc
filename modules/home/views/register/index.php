@@ -34,7 +34,7 @@ $this->title = '注册';
 
 
                     <?php $form = ActiveForm::begin([
-                        'action' => ['index#home'],
+                        'action' => ['register#home'],
                         'id' => 'register-email',
                         'options'=>['class'=>'m-t text-left'],
                         'fieldConfig' => [

@@ -76,7 +76,7 @@ position: relative;
         <div class="row app-bind-div">
             <div class="col-xs-4 ">紧急联系电话<?php echo ($i+1);?> </div>
             <div class="col-xs-4">
-                <?php echo  $contact->contact_country_code.$contact->contact_phone_number;?>
+                <?php echo  $contact->contact_country_code.'--'.$contact->contact_phone_number;?>
 
             </div>
             <div class="col-xs-4">

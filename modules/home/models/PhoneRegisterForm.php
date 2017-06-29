@@ -145,9 +145,8 @@ class PhoneRegisterForm extends Model
 
     public function updatePassword()
     {
-        $userPhone = UserPhone::find()->where(['user_phone_number'=>$this->phone])->one();
-        if(isset($userPhone->user) && !empty($userPhone->user)){
-            $user = $userPhone->user;
+        $user = User::findOne(['phone_number'=>$this->phone]);
+        if(isset($user) && !empty($user)){
             $user->password = $this->password;
             $user->save();
             $this->deleteLoginNum();
