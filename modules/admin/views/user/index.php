@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         if(empty($phone_number)){
                                 return '';
                         }
-                        return '+'.$phone_number[0]->phone_country_code . $phone_number[0]->user_phone_number;
+                        return '+'.$phone_number[0]->phone_country_code .' '. $phone_number[0]->user_phone_number;
 
                 }],
                 'telegram_number',
@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         if(empty($contacts)){
                             return '';
                         }
-                        return $contacts[0]->contact_nickname . '<br> +' . $contacts[0]->contact_country_code . $contacts[0]->contact_phone_number;
+                        return $contacts[0]->contact_nickname . '<br> +' . $contacts[0]->contact_country_code . ' '.$contacts[0]->contact_phone_number;
                 }],
                 ['header'=>'注册IP/注册时间', 'format'=>'html', 'value'=>function($data){
                     return $data->reg_ip. '<br> ' . date('Y-m-d H:i:s' , $data->reg_time);
