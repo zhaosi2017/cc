@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'potato_number',
 
                 ['header'=>'紧急联系人/电话', 'format'=>'html', 'value'=>function($data){
-                        $contacts = \app\modules\home\models\UserGentContact()::findAll(array('user_id'=>$data->id));
+                        $contacts = \app\modules\home\models\UserGentContact::findAll(array('user_id'=>$data->id));
                         if(empty($contacts)){
                             return '';
                         }
