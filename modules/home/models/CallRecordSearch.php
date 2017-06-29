@@ -101,7 +101,7 @@ class CallRecordSearch extends CallRecord
         }
 
         if(!empty($this->call_time_start) &&  !empty($this->call_time_end)){
-            if( $this->call_time_start > $this->call_time_end)
+            if( $this->call_time_start >= $this->call_time_end)
             {   
                 $tmp = $this->call_time_end;
                 $this->call_time_end = $this->call_time_start;
