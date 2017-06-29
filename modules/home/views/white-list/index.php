@@ -8,8 +8,9 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\home\models\WhiteListSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+$userModels = \app\modules\home\models\User::findOne(Yii::$app->user->id);
 
-$this->title = '白名单';
+$this->title = isset($userModels->whitelist_switch) && $userModels->whitelist_switch ? '白名单开关：开':'白名单开关：关';
 $this->params['breadcrumbs'][] = $this->title;
 $actionId = Yii::$app->requestedAction->id;
 ?>

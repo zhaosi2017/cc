@@ -27,10 +27,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <br>
     <div class="form-group">
-        <!-- <?= Html::submitButton('保存', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'],[
+        <!-- <?= Html::submitButton('保存', ['class' => $model->isNewRecord ? 'btn btn-success button-new-color' : 'btn btn-primary button-new-color'],[
             'template' => "<div style=\" width: 67%;margin: auto;\" >{button}</div>",
         ]) ?> -->
-       <div style=" " > <button class='<?php $btnnn = $model->isNewRecord ? ( "btn btn-success") : ( "btn btn-primary");echo $btnnn; ?> ' style="    width: 23%;margin-left: 108px;" >保存</button></div>
+       <div style=" " > <button class='<?php $btnnn = $model->isNewRecord ? ( "btn btn-success button-new-color") : ( "btn btn-primary button-new-color");echo $btnnn; ?> ' style="    width: 23%;margin-left: 108px;" >保存</button></div>
     </div>
 
     <?php ActiveForm::end(); ?>

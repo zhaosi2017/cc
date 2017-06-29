@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\bootstrap\Alert;
 
 ?>
-<?php $this->beginContent('@app/views/layouts/public.php'); ?>
+<?php $this->beginContent('@app/views/layouts/header.php'); ?>
 
     <?= $this->render('common') ?>
 

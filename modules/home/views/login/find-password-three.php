@@ -40,7 +40,7 @@ $this->title = '设置新密码';
 
         <?= $form->field($model, 'username')->hiddenInput()->label(false) ?>
 
-        <?= Html::submitButton('完成', ['class' => 'btn btn-primary pull-center','style' =>'margin-right: 58px' ]) ?>
+        <?= Html::submitButton('完成', ['class' => 'btn btn-primary pull-center button-new-color','style' =>'margin-right: 58px' ]) ?>
 
         <?php ActiveForm::end(); ?>
 

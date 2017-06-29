@@ -51,7 +51,7 @@ use yii\widgets\ActiveForm;
                 <?= $form->field($model, 'search_keywords')->textInput()->label(false) ?>
                 <div class="form-group">
                     <?= Html::submitButton('search', ['class' => 'hide','id'=>'search_hide']) ?>
-                    <button onclick = "return searchClick();" id="search" class = 'btn btn-primary m-t-n-xs'>搜索</button>
+                    <button onclick = "return searchClick();" id="search" class = 'btn btn-primary m-t-n-xs button-new-color'>搜索</button>
                     
                 </div>
             </div>

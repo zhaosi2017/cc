@@ -34,7 +34,7 @@ $this->title = '注册';
 
 
                     <?php $form = ActiveForm::begin([
-                        'action' => ['index#home'],
+                        'action' => ['register#home'],
                         'id' => 'register-email',
                         'options'=>['class'=>'m-t text-left'],
                         'fieldConfig' => [
@@ -51,7 +51,7 @@ $this->title = '注册';
 
                     <?= $form->field($model, 'rePassword')->passwordInput(['placeholder'=>'重复密码'])->label(false) ?>
 
-                    <input type="button" id="emailregisterButton" class="btn btn-primary block full-width m-b" onclick="
+                    <input type="button" id="emailregisterButton" class="btn btn-primary block full-width m-b button-new-color" onclick="
             var userpatter = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
             var passpatter = /(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/;
             var username = $('#registerform-username').val().trim();
@@ -97,7 +97,7 @@ $this->title = '注册';
 
 
         <p class="text-muted text-center">
-            <small>已经有账户了？</small><a href="<?php echo \yii\helpers\Url::to(['/home/login/index']) ?>">点此登录</a>
+            <small>已经有账户了？</small><a href="<?php echo \yii\helpers\Url::to(['/home/login/login']) ?>">点此登录</a>
         </p>
     </div>
 </div>

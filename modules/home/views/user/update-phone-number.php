@@ -7,21 +7,19 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\captcha\Captcha;
-$this->title = '忘记密码';
+$this->title = '修改手机';
 ?>
 <div class="middle-box text-center loginscreen  animated fadeInDown">
     <div>
-        <div>
-            <h1 class="logo-name">&nbsp;</h1>
-        </div>
-        <h3>忘记密码</h3>
 
 
 
 
 
-        <div>
 
+
+        <div style="margin-top: -60px;">
+            <h3>忘记密码</h3>
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist" style="visibility: hidden !important;">
 
@@ -76,40 +74,40 @@ $this->title = '忘记密码';
                         <div class="col-sm-6 " style="margin-left: -12px;">
                             <div class="form-group" style="    ">
                                 <input type="button" id="count-down" class="form-control"  style="" onclick="
-                                        if($('#phoneregisterform-country_code').val() == ''){
-                                        alert('国码不能为空');
-                                        return false;
-                                        }
-                                        if($('#phoneregisterform-phone').val() == ''){
-                                        alert('电话不能为空');
-                                        return false;
-                                        }
+                                    if($('#phoneregisterform-country_code').val() == ''){
+                                    alert('国码不能为空');
+                                    return false;
+                                    }
+                                    if($('#phoneregisterform-phone').val() == ''){
+                                    alert('电话不能为空');
+                                    return false;
+                                    }
 
-                                        var duration = 59;
-                                        $('#count-down').attr('disabled','disabled');
-                                        var url = '<?php echo Url::to(['/home/register/mobile-code']); ?>';
-                                        var data = {};
+                                    var duration = 59;
+                                    $('#count-down').attr('disabled','disabled');
+                                    var url = '<?php echo Url::to(['/home/user/send-short-message']); ?>';
+                                    var data = {};
 
-                                        data.number = '+' + $('#phoneregisterform-country_code').val() + $('#phoneregisterform-phone').val();
-                                        data.type   = '<?php echo Yii::$app->controller->action->id; ?>';
-                                        $.post(url, data).done(function(r) {
-                                        r = eval('('+ r + ')');
-                                        if(r.messages.status == 1){
-                                        alert('你好！发送短信太频繁,请稍微休息哈');
-                                        }
-                                        });
+                                    data.number = '+' + $('#phoneregisterform-country_code').val() + $('#phoneregisterform-phone').val();
+                                    data.type   = '<?php echo Yii::$app->controller->action->id; ?>';
+                                    $.post(url, data).done(function(r) {
+                                    r = eval('('+ r + ')');
+                                    if(r.messages.status == 1){
+                                    alert('你好！发送短信太频繁,请稍微休息哈');
+                                    }
+                                    });
 
-                                        var countDown = function() {
-                                        if(duration>0){
-                                        $('#count-down').val(duration);
-                                        duration--;
-                                        }else{
-                                        window.clearInterval(dt);
-                                        $('#count-down').attr('disabled',false).val('获取验证码');
-                                        }
-                                        };
-                                        var dt = self.setInterval(countDown,1000);
-                                        " value="获取验证码">
+                                    var countDown = function() {
+                                    if(duration>0){
+                                    $('#count-down').val(duration);
+                                    duration--;
+                                    }else{
+                                    window.clearInterval(dt);
+                                    $('#count-down').attr('disabled',false).val('获取验证码');
+                                    }
+                                    };
+                                    var dt = self.setInterval(countDown,1000);
+                                    " value="获取验证码">
                                 <div class="help-block"></div>
                             </div>
                         </div>

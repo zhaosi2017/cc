@@ -29,7 +29,7 @@ use yii\widgets\ActiveForm;
                 <?= $form->field($model, 'search_keywords')->textInput()->label(false) ?>
                 <div class="form-group">
                     <?= Html::submitButton('search', ['class' => 'hide','id'=>'search_hide']) ?>
-                    <?= Html::submitButton('搜索', ['class' => 'btn btn-primary m-t-n-xs','id'=>'search']) ?>
+                    <?= Html::submitButton('搜索', ['class' => 'btn btn-primary m-t-n-xs button-new-color','id'=>'search']) ?>
                 </div>
             </div>
         </div>

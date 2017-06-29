@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title ;
         ])->textInput() ?>
 
         <div class="form-group">
-           <div class="col-sm-2"></div><div><button type="submit" class="btn btn-primary" style="width: 174px;">完成</button>    </div>
+           <div class="col-sm-2"></div><div><button type="submit" class="btn btn-primary button-new-color" style="width: 174px;">完成</button>    </div>
                      
         </div>
 

@@ -1,121 +1,89 @@
 <?php
 
-use yii\helpers\Url;
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model app\modules\home\models\User */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-
-$this->title = '账户中心';
+$this->title = '基本资料';
 $this->params['breadcrumbs'][] = $this->title;
-
+/* @var $this yii\web\View */
+/* @var $model app\modules\home\models\ContactForm */
+/* @var $form yii\widgets\ActiveForm */
 ?>
-<div class="user-index">
-    <div class="row">
-        <div class="col-sm-4">
-            <div class="ibox float-e-margins">
-                <div class="ibox-content text-center p-md" style="height: 553px;">
-                    <h4 class="m-b-lg">个人中心</h4>
-                    <div class="text-left">
-                        <p class="m-t-lg">管理个人昵称、联系电话。</p>
-                        <p class="m-t-lg" >邮箱：<?php echo $model->account; ?>  <a   class="btn btn-primary btn-sm pull-right" href="<?php echo Url::to(['/home/user/bind-email'])?>"><?php echo $model->account?'修改':'添加';?></a>    </p>
-                        <p class="m-t-lg" >用户名：<?php echo $model->username; ?>    <a   class="btn btn-primary btn-sm pull-right" href="<?php echo Url::to(['/home/user/bind-username'])?>"><?php echo $model->username?'修改':'添加';?></a></p>
-
-                        <p class="m-t-lg">昵称：<?php echo $model->nickname; ?><a href="<?php echo Url::to(['/home/user/set-nickname']) ?>" class="btn btn-primary btn-sm pull-right"><?php echo $model->nickname ? '修改' : '设置'?></a></p>
-                        <p class="m-t-lg">白名单开关：<?php echo $model->whitelist_switch ? '开':'关' ;?></p>
 
 
+<div class="user-form">
+    <div class="text-center" >
 
-                        <p class="m-t-lg" style="margin-top: 43px;">登录密码：******<a href="<?php echo Url::to(['/home/user/password']) ?>" class="btn btn-primary btn-sm pull-right">修改</a></p>
 
+    </div>
+    <div>
+        <div class="row app-bind-div" style="margin-top: 20px;border-bottom: 1px solid rgb(217,217,217); ">
+            <div class="col-xs-4 app-bind-1">绑定手机</div>
+            <div class="col-xs-4">
 
+                <?php echo  ($model->country_code.$model->phone_number) ? $model->country_code.'--'.$model->phone_number: '<span style="color:rgb(255,102,0);">未绑定手机</span>';?>
 
-                        </p>
-                        <div class="m-t-lg" style="text-right">联系电话：
-                                <div style="float: right ;    height: 120px;overflow: scroll;overflow-x: visible;">
-                                    <table>
-                                        <?php   foreach($user_phone_numbers as $key=>$number){?>
-                                            <tr> <td><?php echo   '+'.$number->phone_country_code . $number->user_phone_number  ;?> &nbsp;&nbsp;</td>
-                                                 <td><div class="pull-right btn-group">
-                                                        <a href="<?php echo Url::to(['/home/user/set-phone-number' ,'phone_number'=>$number->user_phone_number]) ?>" class="btn btn-primary btn-sm">修改</a>
-                                                        <a href="<?php echo Url::to(['/home/user/delete-number','id'=>$model->id, 'type'=>'phone_number', 'phone_number'=>$number->user_phone_number , 'country_code'=>$number->phone_country_code]) ?>" data-method="post" data-confirm="你确定要删除吗?" class="btn btn-danger btn-sm">删除</a>
-                                                    </div>
-                                                 </td>
-                                            </tr>
-                                        <?php  } ?>
-                                        <tr> <td></td>
-                                            <td><a href="<?php echo Url::to(['/home/user/set-phone-number']) ?>" class="btn btn-primary btn-sm pull-right">绑定</a><td>
-                                        </tr>
-                                    </table>
-                                </div>
-                        </div>
-                        
-                    </div>
-                </div>
             </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="ibox float-e-margins">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-content text-center p-md" style="height: 553px;">
-                        <h4 class="m-b-lg">账号绑定</h4>
-                        <div class="text-left">
-                            <p class="m-t-lg">绑定telegram或potato，正式启用离线呼叫提醒功能，让人可以找到您，同时也能让您找到别人！</p>
-                            <div class="m-t-lg">Potato：<?php echo $model->potato_number ? '+'.$model->potato_number : '无'; ?>
-                                <?php if(!$model->potato_number){ ?>
-                                <a href="<?php echo Url::to(['/home/potato/bind-potato']) ?>" class="btn btn-primary btn-sm pull-right">立即绑定</a>
-                                <?php }else{ ?>
-                                    <div class="pull-right btn-group">
-                                        <a href="<?php echo Url::to(['/home/potato/bind-potato']) ?>" class="btn btn-primary btn-sm">修改</a>
-                                        <a href="<?php echo Url::to(['/home/potato/unbundle-potato','id'=>$model->id, 'type'=>'potato_number']) ?>" data-method="post" data-confirm="你确定要解除绑定吗?" class="btn btn-danger btn-sm">解除绑定</a>
-                                    </div>
-                                <?php } ?>
-                            </div>
-                            <div class="m-t-lg">Telegram：<?php echo $model->telegram_number ? '+' .$model->telegram_number : '无'; ?>
-                                <?php if(!$model->telegram_number){ ?>
-                                <a href="<?php echo Url::to(['/home/telegram/bind-telegram']) ?>" class="btn btn-primary btn-sm pull-right">立即绑定</a>
-                                <?php }else{ ?>
-                                    <div class="pull-right btn-group">
-                                        <a href="<?php echo Url::to(['/home/telegram/bind-telegram']) ?>" class="btn btn-primary btn-sm">修改</a>
-                                        <a href="<?php echo Url::to(['/home/telegram/unbundle-telegram']) ?>" data-method="post" data-confirm="你确定要解除绑定吗?" class="btn btn-danger btn-sm">解除绑定</a>
-                                    </div>
-                                <?php } ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="ibox float-e-margins">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-content text-center p-md" style="height: 553px;">
-                        <h4 class="m-b-lg">紧急联系人</h4>
-                        <div class="text-left">
-                            <p class="m-t-lg">为账号设置2个紧急联系人，便于自己联系电话无法使用时其他人可以联系到自己！</p>
-                            <?php foreach($user_gent_contents  as $content){ ?>
-
-                                <div class="fa-border p-sm">
-                                    <p class="m-t-sm">联系人&nbsp;&nbsp;&nbsp;&nbsp;：<?php echo $content->contact_nickname; ?></p>
-                                    <div class="m-t-sm">
-                                        <span>联系电话：<?php echo $content->contact_country_code.' '.$content->contact_phone_number; ?></span>
-                                        <div class="pull-right btn-group m-t-n-xs">
-                                            <a href="<?php echo Url::to(['/home/user/add-urgent-contact-person', 'modify' => '1' , 'id'=>$content->id]) ?>" class="btn btn-primary btn-sm">修改</a>
-                                            <a href="<?php echo Url::to(['/home/user/delete-urgent-contact-person', 'type'=>'1' , 'id'=>$content->id]) ?>" class="btn btn-danger btn-sm">删除</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="help-block"></div>
-
-                            <?php } ?>
-                            <div class="text-right">
-                                <a class="btn btn-primary m-t-md" href="<?php echo Url::to(['/home/user/add-urgent-contact-person'])?>">立即添加</a>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+            <div class="col-xs-4">
+                <?php if ($model->phone_number){?>
+                    <a href="/home/user/update-phone-number">修改</a>
+                <?php }else{?>
+                    <a href="/home/user/set-phone-number"> 立即添加</a>
+                <?php }?>
             </div>
         </div>
     </div>
+    <div>
+        <div class="row app-bind-div">
+            <div class="col-xs-4 app-bind-1">绑定邮箱</div>
+            <div class="col-xs-4">
+                <?php echo  ($model->account) ? $model->account: '<span style="color:rgb(255,102,0);">未绑定邮箱账号</span>';?>
+
+            </div>
+            <div class="col-xs-4">
+                <a href="/home/user/bind-email"> <?php echo ($model->telegram_country_code.$model->telegram_number)? '修改':'立即绑定';?></a>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="row app-bind-div">
+            <div class="col-xs-4 app-bind-1">绑定用户名</div>
+            <div class="col-xs-4">
+                <?php echo  ($model->username) ? $model->username: '<span style="color:rgb(255,102,0);">未绑定用户名</span>';?>
+
+            </div>
+            <div class="col-xs-4">
+                <a href="/home/user/bind-username"> <?php echo ($model->telegram_country_code.$model->telegram_number)? '修改':'立即绑定';?></a>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="row app-bind-div">
+            <div class="col-xs-4 app-bind-1">登录密码</div>
+            <div class="col-xs-4">
+               <spn>***************</spn>
+
+            </div>
+            <div class="col-xs-4">
+                <a href="/home/user/password"> 修改</a>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+
+<style>
+    .app-bind-1{
+        font-size: 17px; !important;
+        font-weight: 500;!important;
+    }
+
+    .app-bind-div{
+        margin-top: 20px;
+        border-bottom: 1px solid rgb(217,217,217);
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        text-align: center;
+    }
+</style>

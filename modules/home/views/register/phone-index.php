@@ -24,7 +24,7 @@ $this->title = '注册';
 
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" ><a href="/home/register/index" >邮箱</a></li>
+                <li role="presentation" ><a href="/home/register/register" >邮箱</a></li>
                 <li role="presentation" class="active"><a href="#" >电话</a></li>
 
             </ul>
@@ -122,7 +122,7 @@ $this->title = '注册';
 
 
 
-                    <input type="button" id="phoneregisterButton" class="btn btn-primary block full-width m-b"
+                    <input type="button" id="phoneregisterButton" class="btn btn-primary block full-width m-b button-new-color"
                            onclick="
             var phonepatter = /^[0-9]{2,11}$/;
             var passpatter = /(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/;
@@ -158,7 +158,7 @@ $this->title = '注册';
 
 
         <p class="text-muted text-center">
-            <small>已经有账户了？</small><a href="<?php echo \yii\helpers\Url::to(['/home/login/index']) ?>">点此登录</a>
+            <small>已经有账户了？</small><a href="<?php echo \yii\helpers\Url::to(['/home/login/login']) ?>">点此登录</a>
         </p>
     </div>
 </div>

@@ -56,6 +56,12 @@ class WhiteListSearch extends WhiteList
             'pagination'=>[
                 'pagesize'=> 10,
             ],
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC,
+                ]
+            ],
+
         ]);
 
         $this->load($params);
