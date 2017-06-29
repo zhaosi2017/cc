@@ -335,12 +335,9 @@ class LoginForm extends Model
 
         if($this->identity === false)
         {
-            $userPhone = UserPhone::find()->select(['id','user_phone_number'])->indexBy('user_phone_number')->column();
-            foreach ($userPhone as $phone => $id){
-                $this->username == $phone
-                && $this->identity = UserPhone::findOne($id);
+            $this->identity =  User::findOne(array('phone_number'=>$this->username));
 
-            }
+
         }
 
         return $this->identity;

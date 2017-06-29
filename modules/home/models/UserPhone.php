@@ -89,6 +89,7 @@ class UserPhone extends CActiveRecord
             if($this->isNewRecord) {       //insert
                 if (empty($numbers)) {
                     $this->user_phone_sort = 1;
+                    if(!$this->updateUserPhoneNumber()) return false;
                 } else {
                     foreach ($numbers as $number){
                         if($number->user_phone_number == $this->user_phone_number && $this->phone_country_code ==$number->phone_country_code ){ //相同号码不能插入
@@ -106,6 +107,15 @@ class UserPhone extends CActiveRecord
         }
     }
 
+    private function updateUserPhoneNumber(){
+        $row = User::findOne(array($this->user_id));
+        if(empty($row)){
+            return false;
+        }
+        $row->phone_number = $this->user_phone_number;
+        $row->country_code = $this->phone_country_code;
+        return $row->save();
+    }
 
     public function getUser()
     {
