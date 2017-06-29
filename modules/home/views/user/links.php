@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="row app-bind-div" style="margin-top: 20px;border-bottom: 1px solid rgb(217,217,217); ">
                     <div class="col-xs-4 ">联系人<?php echo ($k+1);?> </div>
                     <div class="col-xs-4">
-                        <?php echo  $phone->phone_country_code.$phone->user_phone_number;?>
+                        <?php echo  $phone->phone_country_code.' -- '.$phone->user_phone_number;?>
             </div>
             <div class="col-xs-4">
                 <a href="<?php echo Url::to(['/home/user/set-phone-number' ,'phone_number'=>$phone->user_phone_number]) ?>" >修改</a>
@@ -74,9 +74,9 @@ position: relative;
         foreach($urgentContact as $i => $contact){?>
 
         <div class="row app-bind-div">
-            <div class="col-xs-4 app-bind-1">紧急联系电话<?php echo ($i+1);?> </div>
+            <div class="col-xs-4 ">紧急联系电话<?php echo ($i+1);?> </div>
             <div class="col-xs-4">
-                <?php echo  $contact->contact_country_code.$contact->contact_phone_number;?>
+                <?php echo  $contact->contact_country_code.'--'.$contact->contact_phone_number;?>
 
             </div>
             <div class="col-xs-4">

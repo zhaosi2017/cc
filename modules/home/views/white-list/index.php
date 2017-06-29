@@ -10,7 +10,7 @@ use yii\helpers\Url;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 $userModels = \app\modules\home\models\User::findOne(Yii::$app->user->id);
 
-$this->title = isset($userModels->white_switch) && $userModels->white_switch ? '白名单开关：开':'白名单开关：关';
+$this->title = isset($userModels->whitelist_switch) && $userModels->whitelist_switch ? '白名单开关：开':'白名单开关：关';
 $this->params['breadcrumbs'][] = $this->title;
 $actionId = Yii::$app->requestedAction->id;
 ?>

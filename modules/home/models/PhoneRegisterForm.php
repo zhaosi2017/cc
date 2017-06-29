@@ -46,6 +46,7 @@ class PhoneRegisterForm extends Model
             ['rePassword', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>'密码格式错误'],
             ['password','required','on'=>'update-password'],
             ['rePassword','required','on'=>'update-password'],
+            ['phone','checkPhone','on'=>'update-phone'],
 
         ];
     }
@@ -57,6 +58,7 @@ class PhoneRegisterForm extends Model
             'find-password'=> ['phone','country_code','code'],
             'register'=>['phone','country_code','code','password','rePassword'],
             'update-password'=>['password','rePassword','phone','country_code'],
+            'update-phone'=>['phone','country_code','code'],
 
         ];
         return array_merge($parent_scenarios,$self);
@@ -75,6 +77,15 @@ class PhoneRegisterForm extends Model
             'code'     => '验证码',
             'country_code'=>'国码',
         ];
+    }
+
+
+    public function checkPhone($attribute)
+    {
+        $res =  User::findOne(['phone_number'=>$this->phone]);
+        if( !empty($res) && $res->id != Yii::$app->user->id){
+            $this->addError('phone','手机号已经存在');
+        }
     }
 
 
@@ -134,9 +145,8 @@ class PhoneRegisterForm extends Model
 
     public function updatePassword()
     {
-        $userPhone = UserPhone::find()->where(['user_phone_number'=>$this->phone])->one();
-        if(isset($userPhone->user) && !empty($userPhone->user)){
-            $user = $userPhone->user;
+        $user = User::findOne(['phone_number'=>$this->phone]);
+        if(isset($user) && !empty($user)){
             $user->password = $this->password;
             $user->save();
             $this->deleteLoginNum();

@@ -5,8 +5,13 @@ use yii\helpers\Url;
 $identity = Yii::$app->user->identity;
 $identity = (Object) $identity;
 
-$account_info = \app\modules\home\models\User::findOne($identity->id);
-$username = isset($identity->account) ? $identity->account : 'Guest';
+$username = !empty($identity->account)? $identity->account : '';
+if(empty($username)){
+    $username = !empty($identity->username)? $identity->username : '';
+}
+if(empty($username)){
+    $username = !empty($identity->phone_number)? substr($identity->phone_number,0,1).'***'.substr($identity->phone_number,-1,1)  : '';
+}
 $module = $this->context->module->id;
 ?>
 <?php $this->beginContent('@app/views/layouts/global.php'); ?>
