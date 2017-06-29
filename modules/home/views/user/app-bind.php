@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div>
         <div class="row app-bind-div">
-            <div class="col-xs-4 app-bind-1">绑定telegram<?php echo Yii::$app->user->id;?></div>
+            <div class="col-xs-4 app-bind-1">绑定telegram</div>
             <div class="col-xs-4">
                 <?php echo  ($model->telegram_number) ? $model->telegram_number: '<span style="color:rgb(255,102,0);">未绑定telegram账号</span>';?>
 
