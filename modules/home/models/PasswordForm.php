@@ -59,6 +59,9 @@ class PasswordForm extends Model
         if($this->validate()){
             if(Yii::$app->user->id){
                 $user = User::findOne(Yii::$app->user->id);
+                $posts = Yii::$app->request->post();
+                $posts['PasswordForm']['password'] = $this->newPassword;
+                Yii::$app->request->setBodyParams($posts);
                 $user->password = $this->newPassword;
                 return $user->save();
             }
