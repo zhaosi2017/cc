@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\helpers\url;
+use yii\helpers\Url;
 $this->title = '联系方式';
 $this->params['breadcrumbs'][] = $this->title;
 /* @var $this yii\web\View */
