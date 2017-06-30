@@ -12,8 +12,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="user-form">
-    <div class="text-center" >
-       <span style="margin: auto;font-size: 18px;font-weight: 600;"> 绑定telegram或potato，正式启用离线呼叫提醒功能，让人可以找到您，同时也能让您找到别人！</span>
+    <div class="text-center" style="margin-bottom: 100px; ">
+       <span style="margin: auto;font-size: 12px;font-weight: 600;"> 绑定telegram或potato，正式启用离线呼叫提醒功能，让别人可以找到您，同时也能让您找到别人！</span>
     </div>
     <div>
         <div class="row app-bind-div" style="margin-top: 20px;border-bottom: 1px solid rgb(217,217,217); ">
@@ -22,9 +22,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php echo  ($model->potato_number) ? $model->potato_number: '<span style="color:rgb(255,102,0);">未绑定potato账号</span>';?>
             </div>
             <div class="col-xs-4">
-                <a href="/home/potato/bind-potato"> <?php echo ($model->potato_number)? '修改':'立即绑定';?></a>
+                <a href="/home/potato/bind-potato" style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px"> <?php echo ($model->potato_number)? '修改':'立即绑定';?></a>
                 <?php if ($model->potato_number){?>
-                <a href="<?php echo Url::to(['/home/potato/unbundle-potato']) ?>" data-method="post" data-confirm="你确定要解除绑定吗?" >解除绑定</a>
+                <a  style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px" href="<?php echo Url::to(['/home/potato/unbundle-potato']) ?>" data-method="post" data-confirm="你确定要解除绑定吗?" >解除绑定</a>
                 <?php }?>
             </div>
         </div>
@@ -37,9 +37,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
             </div>
             <div class="col-xs-4">
-                <a href="/home/telegram/bind-telegram"> <?php echo ($model->telegram_number)? '修改':'立即绑定';?></a>
+                <a href="/home/telegram/bind-telegram" style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px"> <?php echo ($model->telegram_number)? '修改':'立即绑定';?></a>
                <?php  if($model->telegram_number) {?>
-                <a href="<?php echo Url::to(['/home/telegram/unbundle-telegram']) ?>" data-method="post" data-confirm="你确定要解除绑定吗?" >解除绑定</a>
+                <a href="<?php echo Url::to(['/home/telegram/unbundle-telegram']) ?>" data-method="post" data-confirm="你确定要解除绑定吗?"  style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px">解除绑定</a>
                 <?php }?>
             </div>
         </div>

@@ -50,7 +50,7 @@ class LoginController extends GController
             }
             if($model->login()){
                 $model->recordIp();
-                return $this->redirect(['/home/default/welcome'])->send();
+                return $this->redirect(['/home/user/index'])->send();
             }
             
             $model->afterCheckLock();

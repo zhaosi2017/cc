@@ -145,7 +145,7 @@ $module = $this->context->module->id;
     padding: 10px;
     background-color: rgb(245,245,246);">
         <li  class="second-nav-li <?php if((Yii::$app->controller->id == 'user' && Yii::$app->controller->action->id =='harassment')
-        ){ echo 'active';}?>" style="display: inline-block;"><a class="second-nav-a" href="/home/user/harassment">防骚扰</a></li>
+        ){ echo 'active';}?>" style="display: inline-block;"><a class="second-nav-a" href="/home/user/harassment">参数设置</a></li>
 
         <li class="second-nav-li <?php if((Yii::$app->controller->id == 'white-list')
         ){ echo 'active';}?>" style="display: inline-block;"><a class="second-nav-a" href="/home/white-list/index">白名单</a></li>
