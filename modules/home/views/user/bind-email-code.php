@@ -5,7 +5,7 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\captcha\Captcha;
 
-$this->title = '登录';
+$this->title = '绑定邮箱';
 ?>
 <div class="middle-box text-center   animated fadeInDown" style="margin-top: 0px !important;">
     <div>
