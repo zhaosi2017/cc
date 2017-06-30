@@ -22,7 +22,8 @@ $this->title = '绑定邮箱';
         <?php $form = ActiveForm::begin([
             'id' => 'verify-form',
             'action' => 'bind-email-code',
-            'options'=>['class'=>'m-t text-left'],
+            'options'=>['class'=>'m-t text-left','style'=>"width: 350px;
+    margin-left: 18px;"],
         ]); ?>
 
         <?= $form->field($model, 'username')->hiddenInput(['value' => isset($model->username) ? $model->username : ''])->label(false) ?>
