@@ -294,7 +294,7 @@ $localLanguage = $identity->language;
        data = {};
        data.language = language
        $.post('/home/user/change-language',data).done(function (r) {
-           console.log(r);
+//           console.log(r);
        })
     }
 </script>

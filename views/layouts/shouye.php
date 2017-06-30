@@ -404,7 +404,7 @@ if(!Yii::$app->user->isGuest){
         data = {};
         data.language = language
         $.post('/home/user/change-language',data).done(function (r) {
-            console.log(r);
+//            console.log(r);
         })
     }
 </script>
@@ -420,7 +420,7 @@ if(!Yii::$app->user->isGuest){
         data = {};
         data.language = sessionLanguage
         $.post('/home/login/change-language',data).done(function (r) {
-            console.log(r);
+//            console.log(r);
         })
     }
 </script>
