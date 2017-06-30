@@ -180,4 +180,18 @@ class LoginController extends GController
         return false;
     }
 
+    public function actionChangeLanguage()
+    {
+        if (Yii::$app->request->isPost) {
+            $language = $_POST['language'];
+            $languages = Yii::$app->params['languages'];
+            if(isset($languages[$language])){
+                $session = Yii::$app->session;
+                $session['language'] = $language;
+                    return json_encode(['status'=>0]);
+            }
+        }
+        return json_encode(['status'=>1]);
+    }
+
 }

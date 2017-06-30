@@ -553,4 +553,22 @@ class UserController extends GController
         return $this->render('update-phone-number',['model'=>$model]);
     }
 
+
+    public function actionChangeLanguage(){
+        if (Yii::$app->request->isPost) {
+            $language = $_POST['language'];
+            $languages = Yii::$app->params['languages'];
+            if(isset($languages[$language])){
+                $id = Yii::$app->user->id;
+                $user = User::findOne($id);
+                $user->language = $language;
+                if ($user->save()){
+                    file_put_contents('/tmp/r.log','chanage langeus'. 'success'.PHP_EOL,8);
+                    return json_encode(['status'=>0]);
+                }
+            }
+        }
+        return json_encode(['status'=>1]);
+    }
+
 }
