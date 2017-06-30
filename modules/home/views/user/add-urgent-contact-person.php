@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="form-group m-b-lg">
         <div class="col-sm-6 col-sm-offset-2">
-            <?= Html::submitButton($isModify ? '修改　' :'添加', ['class' => 'btn btn-primary button-new-color']) ?>
+            <?= Html::submitButton($isModify ? '修改　' :'添加', ['class' => 'btn btn-primary button-new-color','style'=>'width: 250px; margin-left: -6px;']) ?>
         </div>
     </div>
 
