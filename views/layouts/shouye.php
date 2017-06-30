@@ -117,7 +117,7 @@ if(!Yii::$app->user->isGuest){
 <!-----------------------------------------轮播---------------------------------------------->
 <div style="margin-top: -150px;min-width: 900px !important;">
 
-    <div id="myCarousel" class="carousel slide">
+    <div id="myCarousel" class="carousel slide" style="">
         <ol class="carousel-indicators">
             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
             <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -135,15 +135,15 @@ if(!Yii::$app->user->isGuest){
                 <img src="/img/shouye2.jpg">
                 <div class="shouye-img-pos">
                     <div class="first" style="font-size: 66px;">高效</div>
-                    <div class=" second"> 让 连 接 更 高 效 ， 沟 通 更 便 捷.
+                    <div class=" second"> 让 连 接 更 高 效 .
                 </div>
             </div>
             </div>
             <div class="item">
                 <img src="/img/shouye3.jpg">
                 <div class="shouye-img-pos">
-                    <div class="first">高效</div>
-                    <div class=" second">让 连 接 更 高 效 ， 沟 通 更 便 捷.</div>
+                    <div class="first">便捷</div>
+                    <div class=" second">让 连 沟 通 更 便 捷.</div>
                 </div>
             </div>
         </div>
@@ -161,9 +161,13 @@ if(!Yii::$app->user->isGuest){
 <!--    --><?//= isset($content) ? $content : '' ?>
 <!--</div>-->
 
+<?= $this->render('footer') ?>
+
 </div>
 </div>
+
 <?php $this->endContent(); ?>
+
 
 <style>
     #myCarousel{

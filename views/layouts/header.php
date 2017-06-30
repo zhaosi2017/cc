@@ -24,6 +24,13 @@ $module = $this->context->module->id;
         border-left: 0px !important;
         border-radius: 6px !important;
     }
+    body{
+        background: white !important;
+    }
+    .pagination{
+        margin: 3px 0px !important;
+    }
+
 </style>
 <div>
     <div  class="text-right" style="background-color: rgb(96,96,96);height: 40px;line-height: 40px;">
@@ -38,8 +45,10 @@ $module = $this->context->module->id;
 <!-------------------------------------------     导航栏   ------------------------------>
 
 <div
-        style="position: relative;
-        z-index: 99999999;min-width: 1220px !important;
+        style="
+        /*position: relative;*/
+       /*z-index: 99999999;*/
+        min-width: 1220px !important;
          height: 100px;line-height: 100px;
          background-color: rgb(221,231,241);
         "
@@ -109,7 +118,10 @@ $module = $this->context->module->id;
 <div style="<?php if((Yii::$app->controller->id == 'user' && Yii::$app->controller->action->id !='harassment') ||
     Yii::$app->controller->id == 'potato' || Yii::$app->controller->id == 'telegram'
 ){ echo 'display:;';}else{echo 'display:none;';}?>">
-    <ul style="position: relative;top: 17px;">
+    <ul style="
+    /*position: relative;top: 17px; */
+       padding: 10px;
+    background-color: rgb(245,245,246);">
         <li  class="second-nav-li <?php if((Yii::$app->controller->id == 'user' && ( !in_array( Yii::$app->controller->action->id,['harassment','app-bind','set-phone-number','add-urgent-contact-person','links'] )))
         ){ echo 'active';}?>" style="display: inline-block;"><a class="second-nav-a" href="/home/user/index">基本资料</a></li>
 
@@ -128,7 +140,10 @@ $module = $this->context->module->id;
 <div style="<?php if((Yii::$app->controller->id == 'user' && Yii::$app->controller->action->id =='harassment') ||
     Yii::$app->controller->id == 'white-list' || Yii::$app->controller->id == 'black-list'
 ){ echo 'display:;';}else{echo 'display:none;';}?>">
-    <ul style="position: relative;top: 17px;">
+    <ul style="
+    /*position: relative;top: 17px; */
+    padding: 10px;
+    background-color: rgb(245,245,246);">
         <li  class="second-nav-li <?php if((Yii::$app->controller->id == 'user' && Yii::$app->controller->action->id =='harassment')
         ){ echo 'active';}?>" style="display: inline-block;"><a class="second-nav-a" href="/home/user/harassment">防骚扰</a></li>
 
@@ -144,7 +159,7 @@ $module = $this->context->module->id;
 
 
 
-        <div class="row" id="content-main" style=" height: calc(100% - 50px)">
+        <div class="row" id="content-main" style=" height: calc(100% - 213px)">
             <?= isset($content) ? $content : '' ?>
         </div>
         <!--<div class="footer">
@@ -152,6 +167,9 @@ $module = $this->context->module->id;
                 <a href="#">V 1.0.0</a>
             </div>
         </div>-->
+
+<?= $this->render('footer') ?>
+
     </div>
 </div>
 <?php $this->endContent(); ?>
