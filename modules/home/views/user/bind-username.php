@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-$this->title = '修改用户名';
+$this->title = !empty($model->username)?'修改用户名':'绑定用户名';
 $this->params['breadcrumbs'][] = $this->title;
 /* @var $this yii\web\View */
 /* @var $model app\modules\home\models\User */
@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <!-- <?= Html::submitButton('保存', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'],[
             'template' => "<div style=\" width: 67%;margin: auto;\" >{button}</div>",
         ]) ?> -->
-        <div style=" " > <button class='<?php $btnnn = $model->isNewRecord ? ( "btn btn-success button-new-color") : ( "btn btn-primary button-new-color");echo $btnnn; ?> ' style="    width: 23%;margin-left: 108px;" >保存</button></div>
+        <div style=" " > <button class='<?php $btnnn = $model->isNewRecord ? ( "btn btn-success button-new-color") : ( "btn btn-primary button-new-color");echo $btnnn; ?> ' style="    width: 23%;margin-left: 128px;" >保存</button></div>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -37,8 +37,8 @@ $this->params['breadcrumbs'][] = $this->title;
     ])->passwordInput() ?>
 
     <div class="form-group">
-        <div class="col-sm-6 col-sm-offset-3">
-            <?= Html::submitButton('提交', ['class' => 'btn btn-primary button-new-color']) ?>
+        <div style="margin-left: 133px;">
+            <?= Html::submitButton('提交', ['class' => 'btn btn-primary button-new-color' , 'style'=>'width:325px']) ?>
         </div>
     </div>
 

@@ -74,7 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ?>
 
             <div class="form-group">
-                <input type="button" id="count-down" class="form-control"  style="margin-top: -29px;" onclick="
+                <input type="button" id="count-down" class="form-control"   onclick="
                     if($('#contactform-country_code').val() == ''){
                         alert('国码不能为空');
                         return false;
@@ -108,12 +108,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         }
                     };
                     var dt = self.setInterval(countDown,1000);
-                " value="获取验证码"><span style=" 
+                " value="获取验证码" style="background-color: #39b5e7;color: white;margin-top: -29px;"><span style="
     font-size: 14px;
     padding-left: 10px;
     /* padding-top: 0px; */
     position: relative;
-    top: -12px;">*请输入手机验证码</span>
+    top: -12px;
+">*请输入手机验证码</span>
                 <div class="help-block"></div>
             </div>
         </div>
@@ -121,7 +122,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="form-group m-b-lg">
         <div class="col-sm-6 col-sm-offset-2">
-            <?= Html::submitButton($isModify ? '修改' : '绑定', ['class' => 'btn btn-primary button-new-color']) ?>
+            <?= Html::submitButton($isModify ? '修改' : '绑定', ['class' => 'btn btn-primary button-new-color','style'=>'width: 265px; margin-left: -6px;']) ?>
         </div>
     </div>
 
