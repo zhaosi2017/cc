@@ -25,6 +25,7 @@ $actionId = Yii::$app->requestedAction->id;
         'rowOptions' => function($model) {
             return ['id' => 'tr_'.$model->id, 'class' => '_tr'];
         },
+        'tableOptions'=>['class' => 'table table-striped table-bordered','style'=>'text-align:center;'],
         'pager'=>[
             'firstPageLabel'=>"首页",
             'prevPageLabel'=>'上一页',
@@ -32,9 +33,8 @@ $actionId = Yii::$app->requestedAction->id;
             'lastPageLabel'=>'末页',
             'maxButtonCount' => 9,
         ],
-
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn', 'header' => '序号'],
+            ['class' => 'yii\grid\SerialColumn', 'header' => '序号' , 'headerOptions'=>['class'=>'text-center']],
 
             /*
             ['header' => '编号', 'value' => function($model){
@@ -46,16 +46,16 @@ $actionId = Yii::$app->requestedAction->id;
 
             ['header' => ' 黑名单用户', 'value' => function($model){
                 return $model['black']['account'];
-            }],
+            }, 'headerOptions'=>['class'=>'text-center']],
             //  ['header' => '联系电话', 'value' => function($model){
             //     return $model['black']['phone_number'];
             // }],
             ['header' => 'telegram', 'value' => function($model){
                 return !empty($model['black']['telegram_number'])?'+'.$model['black']['telegram_country_code'].$model['black']['telegram_number']:'';
-            }],
+            }, 'headerOptions'=>['class'=>'text-center']],
             ['header' => 'potato', 'value' => function($model){
                 return !empty($model['black']['telegram_number'])?'+'.$model['black']['potato_country_code'].$model['black']['potato_number']:'';
-            }],
+            }, 'headerOptions'=>['class'=>'text-center']],
 
 
             [
@@ -73,6 +73,7 @@ $actionId = Yii::$app->requestedAction->id;
 
 
                 ],
+                'headerOptions'=>['class'=>'text-center']
             ],
 
         ],
