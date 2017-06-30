@@ -19,7 +19,7 @@ $this->title = '修改手机';
 
 
         <div style="margin-top: -60px;">
-            <h3>忘记密码</h3>
+          
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist" style="visibility: hidden !important;">
 

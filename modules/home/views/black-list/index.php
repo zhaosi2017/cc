@@ -51,10 +51,10 @@ $actionId = Yii::$app->requestedAction->id;
             //     return $model['black']['phone_number'];
             // }],
             ['header' => 'telegram', 'value' => function($model){
-                return '+'.$model['black']['telegram_country_code'].$model['black']['telegram_number'];
+                return !empty($model['black']['telegram_number'])?'+'.$model['black']['telegram_country_code'].$model['black']['telegram_number']:'';
             }],
             ['header' => 'potato', 'value' => function($model){
-                return '+'.$model['black']['potato_country_code'].$model['black']['potato_number'];
+                return !empty($model['black']['telegram_number'])?'+'.$model['black']['potato_country_code'].$model['black']['potato_number']:'';
             }],
 
 
