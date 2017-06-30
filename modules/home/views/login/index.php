@@ -69,7 +69,7 @@ $this->title = '登录';
 
 
 
-                    <?= Html::submitButton('登 录', ['class' => 'btn btn-primary block full-width m-b button-new-color']) ?>
+                    <?= Html::submitButton('登 录', ['class' => 'btn btn-primary block full-width m-b button-new-color' ,'style'=>'border-color:rgb(57,181,231)']) ?>
 
                     <?php ActiveForm::end(); ?>
 

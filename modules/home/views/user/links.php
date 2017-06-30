@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <di>
         <div >
             <div class="">
-                <span style=" font-size: 25px;font-weight: 500; padding: 4px 0px">个人联系电话</span>
+                <span style=" font-size: 17px;font-weight: 500; padding: 4px 0px">个人联系电话</span>
                 <a style="    padding: 4px 18px;
     background-color: rgb(22,155,214);
     border-radius: 5px;
@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <di>
         <div style="margin-top: 50px;">
             <div class="">
-                <span style="    font-size: 25px;
+                <span style="    font-size: 17px;
     font-weight: 500;">紧急联系人电话</span>
                 <a style="    padding: 4px 18px;
     background-color: rgb(22,155,214);

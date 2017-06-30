@@ -12,8 +12,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="user-form">
-    <div class="text-center" >
-       <span style="margin: auto;font-size: 18px;font-weight: 600;"> 绑定telegram或potato，正式启用离线呼叫提醒功能，让人可以找到您，同时也能让您找到别人！</span>
+    <div class="text-center" style="margin-bottom: 100px; ">
+       <span style="margin: auto;font-size: 12px;font-weight: 600;"> 绑定telegram或potato，正式启用离线呼叫提醒功能，让别人可以找到您，同时也能让您找到别人！</span>
     </div>
     <div>
         <div class="row app-bind-div" style="margin-top: 20px;border-bottom: 1px solid rgb(217,217,217); ">
