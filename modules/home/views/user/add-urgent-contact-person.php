@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php echo $form->field($model, 'contact_nickname',[
         'template' => "<div><div style=\"display：inline-block;\">{label}</div>\n<div class=\"\" style=\"display:inline-block;\">{input}</div><div style=\"display:inline-block;margin-left:10px;\"><span >*请输入紧急联系人<span></div>\n<div><span class=\"help-block m-b-none\" style=\"margin-left:17%;\">{error}</span></div>",
-    ])->textInput(['placeholder' => '紧急联系人昵称',])->label('紧急联系人') ?>
+    ])->textInput(['placeholder' => '紧急联系人昵称',])->label('紧急联系人' ,['style'=>"    text-align: left;padding-left: 120px;"]) ?>
 
     <div class="row form-inline">
 
