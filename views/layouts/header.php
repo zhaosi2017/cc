@@ -130,7 +130,7 @@ $module = $this->context->module->id;
 ){ echo 'display:;';}else{echo 'display:none;';}?>">
     <ul style="position: relative;top: 17px;">
         <li  class="second-nav-li <?php if((Yii::$app->controller->id == 'user' && Yii::$app->controller->action->id =='harassment')
-        ){ echo 'active';}?>" style="display: inline-block;"><a class="second-nav-a" href="/home/user/harassment">防骚扰</a></li>
+        ){ echo 'active';}?>" style="display: inline-block;"><a class="second-nav-a" href="/home/user/harassment">参数设置</a></li>
 
         <li class="second-nav-li <?php if((Yii::$app->controller->id == 'white-list')
         ){ echo 'active';}?>" style="display: inline-block;"><a class="second-nav-a" href="/home/white-list/index">白名单</a></li>

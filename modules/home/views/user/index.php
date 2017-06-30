@@ -26,9 +26,23 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="col-xs-4">
                 <?php if ($model->phone_number){?>
-                    <a href="/home/user/update-phone-number">修改</a>
+                    <a href="/home/user/update-phone-number" style="    padding: 4px 18px;
+    background-color: rgb(22,155,214);
+    border-radius: 5px;
+color: white;
+position: relative;
+    top: -3px;
+    left: 31px
+">修改</a>
                 <?php }else{?>
-                    <a href="/home/user/set-phone-number"> 立即添加</a>
+                    <a href="/home/user/set-phone-number" style="    padding: 4px 18px;
+    background-color: rgb(22,155,214);
+    border-radius: 5px;
+color: white;
+position: relative;
+    top: -3px;
+    left: 31px
+"> 立即添加</a>
                 <?php }?>
             </div>
         </div>
@@ -41,7 +55,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
             </div>
             <div class="col-xs-4">
-                <a href="/home/user/bind-email"> <?php echo ($model->telegram_country_code.$model->telegram_number)? '修改':'立即绑定';?></a>
+                <a  style="    padding: 4px 18px;
+    background-color: rgb(22,155,214);
+    border-radius: 5px;
+color: white;
+position: relative;
+    top: -3px;
+    left: 31px
+"href="/home/user/bind-email"> <?php echo ($model->telegram_country_code.$model->telegram_number)? '修改':'立即绑定';?></a>
             </div>
         </div>
     </div>
@@ -53,7 +74,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
             </div>
             <div class="col-xs-4">
-                <a href="/home/user/bind-username"> <?php echo ($model->telegram_country_code.$model->telegram_number)? '修改':'立即绑定';?></a>
+                <a href="/home/user/bind-username" style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px">
+                    <?php echo ($model->username)? '修改':'立即绑定';?></a>
             </div>
         </div>
     </div>
@@ -65,7 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             </div>
             <div class="col-xs-4">
-                <a href="/home/user/password"> 修改</a>
+                <a href="/home/user/password" style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px"> 修改</a>
             </div>
         </div>
     </div>

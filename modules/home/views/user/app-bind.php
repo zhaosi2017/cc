@@ -22,9 +22,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php echo  ($model->potato_number) ? $model->potato_number: '<span style="color:rgb(255,102,0);">未绑定potato账号</span>';?>
             </div>
             <div class="col-xs-4">
-                <a href="/home/potato/bind-potato"> <?php echo ($model->potato_number)? '修改':'立即绑定';?></a>
+                <a href="/home/potato/bind-potato" style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px"> <?php echo ($model->potato_number)? '修改':'立即绑定';?></a>
                 <?php if ($model->potato_number){?>
-                <a href="<?php echo Url::to(['/home/potato/unbundle-potato']) ?>" data-method="post" data-confirm="你确定要解除绑定吗?" >解除绑定</a>
+                <a  style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px" href="<?php echo Url::to(['/home/potato/unbundle-potato']) ?>" data-method="post" data-confirm="你确定要解除绑定吗?" >解除绑定</a>
                 <?php }?>
             </div>
         </div>
@@ -37,9 +37,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
             </div>
             <div class="col-xs-4">
-                <a href="/home/telegram/bind-telegram"> <?php echo ($model->telegram_number)? '修改':'立即绑定';?></a>
+                <a href="/home/telegram/bind-telegram" style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px"> <?php echo ($model->telegram_number)? '修改':'立即绑定';?></a>
                <?php  if($model->telegram_number) {?>
-                <a href="<?php echo Url::to(['/home/telegram/unbundle-telegram']) ?>" data-method="post" data-confirm="你确定要解除绑定吗?" >解除绑定</a>
+                <a href="<?php echo Url::to(['/home/telegram/unbundle-telegram']) ?>" data-method="post" data-confirm="你确定要解除绑定吗?"  style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px">解除绑定</a>
                 <?php }?>
             </div>
         </div>

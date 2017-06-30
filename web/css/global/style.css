@@ -1160,6 +1160,9 @@ button.btn-danger.dim:active {
 .button-new-color:focus{
     background-color:rgb(56,181,231);
 }
+.button-new-color{
+    border-color: #38b5e7;
+}
 
 button.dim:before {
     font-size: 50px;
