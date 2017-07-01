@@ -7,8 +7,8 @@ use yii\widgets\ActiveForm;
 /* @var $model app\modules\home\models\User */
 /* @var $form yii\widgets\ActiveForm */
 
-$this->title = '修改密码';
-$this->params['breadcrumbs'][] = ['label'=>'用户','url'=>''];
+$this->title = Yii::t('app/user/password' , 'Edit The Password');
+$this->params['breadcrumbs'][] = ['label'=>Yii::t('app/user/password', 'User'),'url'=>''];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -23,22 +23,32 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
     <?= $form->field($model, 'password',[
-         'template' => "{label}\n<div class=\"col-sm-3\">{input}</div> <span class=\"col-sm-5\">*请输入账户原密码</span>\n<br/><div><span class=\"help-block m-b-none \" style=\" margin-left:9.4%;   margin-top: 16px;\">{error}</span></div>",
-    ])->passwordInput() ?>
+         'template' => "{label}\n<div class=\"col-sm-3\">{input}</div> <span class=\"col-sm-5\" style='padding-top: 9px'>*".
+            Yii::t('app/user/password' , 'Please Enter the old Password')
+            
+        ."</span>\n<br/><div><span class=\"help-block m-b-none \" style=\" margin-left:9.4%;   margin-top: 16px;\">{error}</span></div>",
+    ])->passwordInput()->label(Yii::t('app/user/password' ,'Old Password') ,['style'=>'padding-top:7px']) ?>
 
     <?= $form->field($model, 'newPassword',[
-             'template' => "{label}\n<div class=\"col-sm-3\">{input}</div> <span class=\"col-sm-5\">*密码至少包含8个字符，至少包括以下2种字符：
- 大写字母，小写字母，数字，符号</span>\n<br/><div><span class=\"help-block m-b-none \" style=\" margin-left:9.4%;   margin-top: 18px;\">{error}</span></div>",
-    ])->passwordInput() ?>
+             'template' => "{label}\n<div class=\"col-sm-3\">{input}</div> <span class=\"col-sm-5\">*".
+                 Yii::t('app/user/password' , 'The password contains at least 8 characters, including at least two characters:Uppercase letters, lowercase letters, numbers, symbols')
+
+                 ."</span>\n<br/><div><span class=\"help-block m-b-none \" style=\" margin-left:9.4%;   margin-top: 18px;\">{error}</span></div>",
+    ])->passwordInput()
+    ->label(Yii::t('app/user/password' , 'Password'),['style'=>'padding-top:7px'])
+    ?>
 
     <?= $form->field($model, 'rePassword',[
-             'template' => "{label}\n<div class=\"col-sm-3\">{input}</div> <span class=\"col-sm-5\"> *密码至少包含8个字符，至少包括以下2种字符：
- 大写字母，小写字母，数字，符号</span>\n<br/><div><span class=\"help-block m-b-none \" style=\" margin-left:9.4%;   margin-top: 18px;\">{error}</span></div>",
-    ])->passwordInput() ?>
+             'template' => "{label}\n<div class=\"col-sm-3\">{input}</div> <span class=\"col-sm-5\"> *".
+                    Yii::t('app/user/password' ,'The password contains at least 8 characters, including at least two characters:Uppercase letters, lowercase letters, numbers, symbols')
+                 ."</span>\n<br/><div><span class=\"help-block m-b-none \" style=\" margin-left:9.4%;   margin-top: 18px;\">{error}</span></div>",
+    ])->passwordInput()
+    ->label(Yii::t('app/user/password' , 'Repeat'),['style'=>'padding-top:7px'])
+    ?>
 
     <div class="form-group">
         <div style="margin-left: 133px;">
-            <?= Html::submitButton('提交', ['class' => 'btn btn-primary button-new-color' , 'style'=>'width:325px']) ?>
+            <?= Html::submitButton(Yii::t('app/user/password','Submit'), ['class' => 'btn btn-primary button-new-color' , 'style'=>'width:325px']) ?>
         </div>
     </div>
 
