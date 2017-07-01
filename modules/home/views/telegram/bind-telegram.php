@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
      <div>
-        <p style="margin-left: 10%;font-size: 13px;font-weight: 700;">操作步骤：</p>
+        <p style="margin-left: 160px;font-size: 13px;font-weight: 700;">操作步骤：</p>
     </div>
     <div class="form-group" style="margin-left: 16.6%;">
         <p>1、请先在telegram上登录个人账号</p>
