@@ -8,6 +8,23 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
+        'i18n' => [
+            //'class' => yii\i18n\I18N::className(), 默认的就不需要修改--------------------
+            'translations' => [
+                'app*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/messages',
+                    'sourceLanguage' => 'zh-CN',
+                    'fileMap' => [
+                        'app' => 'app.php'
+                    ],
+                    'on missingTranslation' => ['app\modules\home\controllers\TranslationEventHandler', 'handleMissingTranslation']
+                ],
+                '*' => [
+                    'class' => 'yii\i18n\GettextMessageSource'
+                ]
+            ],
+        ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
