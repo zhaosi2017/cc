@@ -14,9 +14,10 @@ $config = [
                 'app*' => [
                     'class' => 'yii\i18n\PhpMessageSource',
                     'basePath' => '@app/messages',
-                    'sourceLanguage' => 'zh-CN',
+                    'sourceLanguage' => 'en-US',
                     'fileMap' => [
-                        'app' => 'app.php'
+                        'app' => 'app.php',
+                        'app/index' => 'index.php',
                     ],
                     'on missingTranslation' => ['app\modules\home\controllers\TranslationEventHandler', 'handleMissingTranslation']
                 ],

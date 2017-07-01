@@ -90,10 +90,10 @@ $localLanguage = $identity->language;
 </style>
 <div>
     <div  class="text-right" style="background-color: rgb(96,96,96);height: 40px;line-height: 40px;">
-        <div style="display: inline-block;color:white;">您好,<?php echo $username;?></div>
-        <div style="display: inline-block;color:white;"><a data-method="post" href="<?= Url::to(['/home/login/logout']) ?>"><span style="color: white;">退出</span></a> &nbsp;&nbsp;|&nbsp;&nbsp; </div>
+        <div style="display: inline-block;color:white;"><?= Yii::t('app/index','Hello')?>,<?php echo $username;?></div>
+        <div style="display: inline-block;color:white;"><a data-method="post" href="<?= Url::to(['/home/login/logout']) ?>"><span style="color: white;"><?= Yii::t('app/index','Logout')?></span></a> &nbsp;&nbsp;|&nbsp;&nbsp; </div>
         <div style="display: inline-block;color:white; ">
-            请选择语言
+            <?= Yii::t('app/index','Please select language')?>
         </div>
         <div style="display: inline-block;">
             <?php if (!Yii::$app->user->isGuest) {?>
@@ -123,57 +123,6 @@ $localLanguage = $identity->language;
     <div class="row" style="margin: auto;">
 
 
-<!--
-        <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="background-color: white;">
-            <div class="container-fluid">
-
-                <div class="navbar-header" >
-                    <div>
-                        <div style="display: inline-block;padding-left: 50px;"><img src="/img/logo1.png" width="52" alt=""></div>
-                        <div style="display: inline-block;">
-                            <div style="padding-left:20px;color: black;height: 5px;font-size: 32px;font-weight: bolder;">呼叫支持中心</div>
-                            <div style="padding-left:20px;color:black;height: 20px;position: relative; top: 22px;">c a l l &nbsp;&nbsp;&nbsp; s u p p o r t &nbsp;&nbsp;&nbsp;    c e n t e r</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="collapse navbar-collapse navbar-ex1-collapse">
-                    <ul class="nav navbar-nav navbar-right" style="margin-top: 24px;">
-                        <li style="color: black;font-size: 18px;">
-
-                            <a class="" href="<?= Url::to(['/home/default/welcome']) ?>">
-                                <i class="fa fa-home"></i>
-                                <span style="color: black;">首页</span>
-                            </a>
-                        </li>
-                        <li style="color: black;font-size: 18px;" class="<?php if((Yii::$app->controller->id == 'user' && Yii::$app->controller->action->id != 'harassment')|| Yii::$app->controller->id == 'potato' || Yii::$app->controller->id == 'telegram' ){ echo 'active';}?>">
-                            <a class="" href="<?= Url::to(['/home/user/index']) ?>">
-                                <span style="color: black;">账户中心</span>
-                            </a>
-                        </li>
-                        <li style="color: black;font-size: 18px;" class="<?php if(Yii::$app->controller->id == 'call-record'){ echo 'active';}?>">
-                            <a class="" href="<?= Url::to(['/home/call-record/index']) ?>">
-                                <span style="color: black;">个人通话记录</span>
-                            </a>
-                        </li>
-
-                        <li  style="padding-right:50px;color: black;font-size: 18px;" class="<?php if((Yii::$app->controller->id == 'user' && Yii::$app->controller->action->id =='harassment') ||
-                            Yii::$app->controller->id == 'white-list' || Yii::$app->controller->id == 'black-list'
-                        ){ echo 'active';}?>">
-                            <a class="" href="<?= Url::to(['/home/user/harassment']) ?>">
-                                <span style="color: black;">防骚扰</span>
-                            </a>
-
-                        </li>
-
-
-
-
-                    </ul>
-
-                </div>
-            </div>
-        </nav>
--->
 <div style="background-color: white;height: 105px;">
     <div style="display: inline-block;">
         <div style="display: inline-block;margin-left: 67px;"><img src="/img/logo1.png" width="52" alt=""></div>
@@ -182,8 +131,7 @@ $localLanguage = $identity->language;
 
 
     <div style="display: inline-block;margin-left: 20px;">
-        <div style="color:black;height: 5px;font-size: 32px;font-weight: bolder;">呼叫支持中心</div>
-        <div style="color:black;height: 20px;position: relative; top: 22px;">c a l l &nbsp;&nbsp;&nbsp; s u p p o r t &nbsp;&nbsp;&nbsp;    c e n t e r</div>
+        <div style="color:black;height: 5px;font-size: 32px;font-weight: bolder;"><?= Yii::t('app/index','Call support center')?></div>
     </div>
 
     <div style="display: inline-block;float: right;">
@@ -191,24 +139,24 @@ $localLanguage = $identity->language;
         <div class="header-div-1" style="display: inline-block;">
             <a class="header-a-1 header-a-0 <?php if(Yii::$app->controller->action->id=='welcome'){echo 'active';}?>" href="<?= Url::to(['/home/default/welcome']) ?>">
                 <i class="fa fa-home"></i>&nbsp;&nbsp;
-                <span class="" style="color: black;">首页</span>
+                <span class="" style="color: black;"><?= Yii::t('app/index','Home')?></span>
             </a>
         </div>
         <div class="header-div-1" style="display: inline-block;">
             <a class="header-a-1 <?php if((Yii::$app->controller->id == 'user' && Yii::$app->controller->action->id != 'harassment')|| Yii::$app->controller->id == 'potato' || Yii::$app->controller->id == 'telegram' ){ echo 'active';}?>" href="<?= Url::to(['/home/user/index']) ?>">
-                <span class="header-span-1" style="color: black;">账户中心</span>
+                <span class="header-span-1" style="color: black;"><?= Yii::t('app/index','Account center')?></span>
             </a>
         </div>
         <div class="header-div-1" style="display: inline-block;">
             <a class="header-a-1 <?php if(Yii::$app->controller->id == 'call-record'){ echo 'active';}?>" href="<?= Url::to(['/home/call-record/index']) ?>">
-                <span class="header-span-1" style="color: black;">个人通话记录</span>
+                <span class="header-span-1" style="color: black;"><?= Yii::t('app/index','Personal call records')?></span>
             </a>
         </div>
         <div class="header-div-1" style="display: inline-block;">
             <a class="header-a-1 <?php if((Yii::$app->controller->id == 'user' && Yii::$app->controller->action->id =='harassment') ||
                 Yii::$app->controller->id == 'white-list' || Yii::$app->controller->id == 'black-list'
             ){ echo 'active';}?>" href="<?= Url::to(['/home/user/harassment']) ?>">
-                <span  class="header-span-1" style="color: black;">防骚扰</span>
+                <span  class="header-span-1" style="color: black;"><?= Yii::t('app/index','Anti harassment')?></span>
             </a>
         </div>
         <div style="display: inline-block;width: 50px;"></div>

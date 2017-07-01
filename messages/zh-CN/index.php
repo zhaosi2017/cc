@@ -1,0 +1,25 @@
+<?php
+//首页
+return [
+    'Call support center' => '呼叫支持中心',
+    'Home'=>'首页',
+    'Account center'=>'账户中心',
+    'Personal call records'=>'个人通话记录',
+    'Anti harassment'=>'防骚扰',
+    'Hello'=>'您好',
+    'Logout'=>'退出',
+    'Login'=>'登录',
+    'Please select language'=>'请选择语言',
+    'Address'=>'地址',
+    'Iceland'=>'冰岛',
+    'Callu'=>'callu',
+    'Technical Support'=>'技术支持',
+    'Contact us'=>'联系我们',
+    'Sign up'=>'注册',
+    'Security'=>'安全',
+    'Private data encryption transmission, user privacy security'=>'私 密 数 据 加 密 传 输 ，用 户 隐 私 安 全 保 障',
+    'Convenient'=>'便捷',
+    'Efficient'=>'高效',
+    'Make the connection more efficient'=>'让 连 接 更 高 效',
+    'So that communication is more convenient'=>'让 连 沟 通 更 便 捷',
+];
