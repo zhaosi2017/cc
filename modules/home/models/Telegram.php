@@ -44,7 +44,7 @@ class Telegram extends Model
     private $whiteSwitchText = '开启白名单';
     private $unwhiteSwitchText = '关闭白名单';
     private $menuShareText = "请先分享自己的名片到机器人，完成绑定操作!";
-    private $menuNoMemberText = "He is not a member of our system and you perform this operation!";
+    private $menuNoMemberText = "He is not a member of our system and you can not perform this operation!";
 
     private $code;
     private $bindCode;
