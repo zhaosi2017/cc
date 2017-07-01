@@ -58,11 +58,11 @@ class UserController extends GController
         $model = $this->findModel(Yii::$app->user->id);
         if($model->load(Yii::$app->request->post())){
             if(empty($model->nickname)){
-                $model->addError('nickname','用户昵称不能为空');
+                $model->addError('nickname',Yii::t('app/index','User nickname can not be empty'));
                 return $this->render('set-nickname',['model'=>$model]);
             }
             if($model->update()){
-                Yii::$app->getSession()->setFlash('success', '操作成功');
+                Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
                 return $this->redirect(['index']);
             }
             
@@ -89,17 +89,17 @@ class UserController extends GController
             $phone_country_code = $model->country_code;
             $type = Yii::$app->controller->action->id;
             if($model->validateSms($type, $code)){
-                $model->addError('code', '验证码错误');
+                $model->addError('code', Yii::t('app/index','Verification code error'));
                 return $this->render('set-phone-number',['model'=>$model,'isModify'=>$isModify]);
             }
             $phone_number->user_phone_number = $user_phone_number;
             $phone_number->phone_country_code = $phone_country_code;
             $phone_number->user_id = Yii::$app->user->id;
             if($phone_number->save()){
-                Yii::$app->getSession()->setFlash('success', '操作成功');
+                Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
                 return $this->redirect(['/home/user/links']);
             }else {
-                Yii::$app->getSession()->setFlash('error', '操作失败');
+                Yii::$app->getSession()->setFlash('error', Yii::t('app/index','Operation failed'));
                 return $this->redirect('set-phone-number');
             }
         }
@@ -146,9 +146,9 @@ class UserController extends GController
                     break;
             }
             if($model->update()){
-                Yii::$app->getSession()->setFlash('success', '操作成功');
+                Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
             }else{
-                Yii::$app->getSession()->setFlash('error', '操作失败');
+                Yii::$app->getSession()->setFlash('error', Yii::t('app/index','Operation failed'));
             }
             $this->redirect([$url]);
         }
@@ -163,9 +163,9 @@ class UserController extends GController
     {
         $model =  UserPhone::findOne(array('user_phone_number'=>$phone_number , 'user_id'=>Yii::$app->user->id , 'phone_country_code'=>$country_code));
         if($model->delete()){
-            Yii::$app->getSession()->setFlash('success', '操作成功');
+            Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
         }else{
-            Yii::$app->getSession()->setFlash('error', '操作失败');
+            Yii::$app->getSession()->setFlash('error', Yii::t('app/index','Operation failed'));
         }
         $this->redirect(['index']);
     }
@@ -182,17 +182,17 @@ class UserController extends GController
             $code = $_POST['ContactForm']['code'];
             $type = Yii::$app->controller->action->id;
             if($model->validateSms($type, $code)){
-                $model->addError('code', '验证码错误');
+                $model->addError('code', Yii::t('app/index','Verification code error'));
                 return $this->render('bind-potato',['model'=>$model]);
             }
 
             $user_model->potato_country_code = $model->potato_country_code;
             $user_model->potato_number = $model->potato_number;
             if($user_model->update()){
-                Yii::$app->getSession()->setFlash('success', '操作成功');
+                Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
                 return $this->redirect(['index']);
             }else{
-                Yii::$app->getSession()->setFlash('error', '操作失败');
+                Yii::$app->getSession()->setFlash('error', Yii::t('app/index','Operation failed'));
                 return $this->redirect('bind-potato');
             }
         }
@@ -211,16 +211,16 @@ class UserController extends GController
             $code = $_POST['ContactForm']['code'];
             $type = Yii::$app->controller->action->id;
             if($model->validateSms($type,$code)){
-                $model->addError('code', '验证码错误');
+                $model->addError('code', Yii::t('app/index','Verification code error'));
                 return $this->render('bind-telegram',['model'=>$model]);
             }
             $user_model->telegram_country_code = $model->telegram_country_code;
             $user_model->telegram_number = $model->telegram_number;
             if($user_model->update()){
-                Yii::$app->getSession()->setFlash('success', '操作成功');
+                Yii::$app->getSession()->setFlash('success',  Yii::t('app/index','Successful operation'));
                 return $this->redirect(['index']);
             }else{
-                Yii::$app->getSession()->setFlash('error', '操作失败');
+                Yii::$app->getSession()->setFlash('error',  Yii::t('app/index','Operation failed'));
                 return $this->redirect('bind-telegram',['model'=>$model]);
             }
         }
@@ -293,7 +293,7 @@ class UserController extends GController
     {
         $model = new PasswordForm();
         if($model->load(Yii::$app->request->post()) && $model->updateSave()){
-            Yii::$app->getSession()->setFlash('success', '密码修改成功');
+            Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Password reset complete'));
             return $this->redirect('/home/user/index');
         }
         return $this->render('password',['model' => $model]);
@@ -365,17 +365,17 @@ class UserController extends GController
                 $contact = new UserGentContact();
                 $contact->attributes = Yii::$app->request->post('UserGentContact');
                 if(empty(Yii::$app->request->post('UserGentContact')['contact_nickname'])){
-                    Yii::$app->getSession()->setFlash('success', '操作失败,提交数据错误');
+                    Yii::$app->getSession()->setFlash('error',  Yii::t('app/index','Operation failed'));
                     return $this->redirect(['/home/user/links']);
 
                 }
                 if(empty(Yii::$app->request->post('UserGentContact')['contact_country_code'])){
-                    Yii::$app->getSession()->setFlash('success', '操作失败,提交数据错误');
+                    Yii::$app->getSession()->setFlash('error',  Yii::t('app/index','Operation failed'));
                     return $this->redirect(['/home/user/links']);
 
                 }
                 if(empty(Yii::$app->request->post('UserGentContact')['contact_phone_number'])){
-                    Yii::$app->getSession()->setFlash('success', '操作失败,提交数据错误');
+                    Yii::$app->getSession()->setFlash('error',  Yii::t('app/index','Operation failed'));
                     return $this->redirect(['/home/user/links']);
 
                 }
@@ -387,10 +387,10 @@ class UserController extends GController
             $contact->contact_country_code  = Yii::$app->request->post('UserGentContact')['contact_country_code'];
             $contact->contact_phone_number  = Yii::$app->request->post('UserGentContact')['contact_phone_number'];
             if($contact->save()){
-                Yii::$app->getSession()->setFlash('success', '操作成功');
+                Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
                 return $this->redirect(['/home/user/links']);
             }
-            Yii::$app->getSession()->setFlash('success', '操作失败');
+            Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
             return $this->redirect(['/home/user/links']);
 
         } else {
@@ -421,9 +421,9 @@ class UserController extends GController
         $contact_id = $request['id'];
         $contact = UserGentContact::findOne($contact_id);
         if($contact->delete()){
-            Yii::$app->getSession()->setFlash('success', '操作成功');
+            Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
         }else{
-            Yii::$app->getSession()->setFlash('success', '操作失败');
+            Yii::$app->getSession()->setFlash('error',  Yii::t('app/index','Operation failed'));
         }
 
         return $this->redirect(['/home/user/links']);
@@ -437,7 +437,11 @@ class UserController extends GController
         $model->scenario = 'harassment';
         if($model->load(Yii::$app->request->post()) && $model->validate()){
 
-            $model->save() ? $model->sendSuccess() : $model->sendError();
+            if($model->save()){
+                Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
+            }else{
+                Yii::$app->getSession()->setFlash('error',  Yii::t('app/index','Operation failed'));
+            }
             return $this->redirect(['/home/user/harassment']);
         }
         return $this->render('harassment', [
@@ -452,7 +456,11 @@ class UserController extends GController
         $model = $this->findModel($id);
         $model->scenario = 'bind-username';
         if($model->load(Yii::$app->request->post()) && $model->validate('username')){
-            $model->save() ? $model->sendSuccess() : $model->sendError();
+            if($model->save()){
+                Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
+            }else{
+                Yii::$app->getSession()->setFlash('error',  Yii::t('app/index','Operation failed'));
+            }
             return $this->redirect(['index']);
         }
         return $this->render('bind-username', [
@@ -492,7 +500,7 @@ class UserController extends GController
                 $userModel = $this->findModel($id);
                 $userModel->account = $model->username;
                 $userModel->save();
-                Yii::$app->getSession()->setFlash('success', '邮箱绑定成功');
+                Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Mailbox binding is successful'));
                 return $this->redirect('/home/user/index')->send();
 
             }else{
@@ -538,13 +546,13 @@ class UserController extends GController
                     $code =$_POST['PhoneRegisterForm']['code'];
                     $type = Yii::$app->controller->action->id;
                     if(ContactForm::validateSms($type, $code)){
-                        $model->addError('code', '验证码错误');
+                        $model->addError('code', Yii::t('app/index','Verification code error'));
                         return $this->render('update-phone-number',['model'=>$model]);
                     }
                     $userModel->phone_number = $model->phone;
                     $userModel->country_code = $model->country_code;
                     $userModel->save();
-                    Yii::$app->getSession()->setFlash('success', '操作成功');
+                    Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
                     return $this->redirect('/home/user/index')->send();
                 }
             }
@@ -563,7 +571,6 @@ class UserController extends GController
                 $user = User::findOne($id);
                 $user->language = $language;
                 if ($user->save()){
-                    file_put_contents('/tmp/r.log','chanage langeus'. 'success'.PHP_EOL,8);
                     return json_encode(['status'=>0]);
                 }
             }

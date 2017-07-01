@@ -29,6 +29,11 @@ return [
     'Basic information'=>'基本资料',
     'Communication app binding'=>'通讯app绑定',
     'Contact information'=>'联系方式',
-    ''=>'',
+    'Successful operation'=>'操作成功',
+    'Operation failed'=>'操作失败',
+    'Password reset complete'=>'密码修改成功',
+    'Verification code error'=>'验证码错误',
+    'User nickname can not be empty'=>'用户昵称不能为空',
+    'Mailbox binding is successful'=>'邮箱绑定成功',
 
 ];

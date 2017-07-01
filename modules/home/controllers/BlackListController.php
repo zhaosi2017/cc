@@ -57,7 +57,7 @@ class BlackListController extends GController
             if($model->validate())
             {
                 if ($model->createBlackList()){
-                    Yii::$app->getSession()->setFlash('success', '操作成功');
+                    Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
                     return $this->redirect(['index']);
                 }
             }
@@ -76,9 +76,9 @@ class BlackListController extends GController
     {
         if($this->findModel($id)->delete())
         {
-            Yii::$app->getSession()->setFlash('success', '操作成功');
+            Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
         }else{
-            Yii::$app->getSession()->setFlash('error', '操作失败');
+            Yii::$app->getSession()->setFlash('error', Yii::t('app/index','Operation failed'));
         }
         return $this->redirect(['index']);
     }
