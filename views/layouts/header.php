@@ -124,7 +124,8 @@ $localLanguage = $identity->language;
 
 
 <div style="background-color: white;height: 105px;">
-    <div style="display: inline-block;">
+    <div style="display: inline-block;    position: relative;
+    top: -8px;">
         <div style="display: inline-block;margin-left: 67px;"><img src="/img/logo1.png" width="52" alt=""></div>
     </div>
 
@@ -179,13 +180,13 @@ $localLanguage = $identity->language;
        padding: 10px;
     background-color: rgb(245,245,246);">
         <li  class="second-nav-li <?php if((Yii::$app->controller->id == 'user' && ( !in_array( Yii::$app->controller->action->id,['harassment','app-bind','set-phone-number','add-urgent-contact-person','links'] )))
-        ){ echo 'active';}?>" style="display: inline-block;margin-left: 50px;"><a class="second-nav-a" href="/home/user/index">基本资料</a></li>
+        ){ echo 'active';}?>" style="display: inline-block;margin-left: 50px;"><a class="second-nav-a" href="/home/user/index"><?= Yii::t('app/index','Basic information')?></a></li>
 
         <li class="second-nav-li <?php if( (Yii::$app->controller->id == 'user' && Yii::$app->controller->action->id =='app-bind') || (Yii::$app->controller->id == 'potato' || Yii::$app->controller->id == 'telegram')
-        ){ echo 'active';}?>" style="display: inline-block;"><a class="second-nav-a" href="/home/user/app-bind">通讯app绑定</a></li>
+        ){ echo 'active';}?>" style="display: inline-block;"><a class="second-nav-a" href="/home/user/app-bind"><?= Yii::t('app/index','Communication app binding')?></a></li>
 
         <li class="second-nav-li <?php if((Yii::$app->controller->action->id == 'set-phone-number' || Yii::$app->controller->action->id == 'links' || Yii::$app->controller->action->id == 'add-urgent-contact-person')
-        ){ echo 'active';}?>" style="display: inline-block;"><a class="second-nav-a" href="/home/user/links">联系方式</a></li>
+        ){ echo 'active';}?>" style="display: inline-block;"><a class="second-nav-a" href="/home/user/links"><?= Yii::t('app/index','Contact information')?></a></li>
     </ul>
 </div>
 
@@ -201,13 +202,13 @@ $localLanguage = $identity->language;
     padding: 10px;
     background-color: rgb(245,245,246);">
         <li  class="second-nav-li <?php if((Yii::$app->controller->id == 'user' && Yii::$app->controller->action->id =='harassment')
-        ){ echo 'active';}?>" style="display: inline-block;margin-left: 50px;"><a class="second-nav-a" href="/home/user/harassment">参数设置</a></li>
+        ){ echo 'active';}?>" style="display: inline-block;margin-left: 50px;"><a class="second-nav-a" href="/home/user/harassment"><?= Yii::t('app/index','Param settings')?></a></li>
 
         <li class="second-nav-li <?php if((Yii::$app->controller->id == 'white-list')
-        ){ echo 'active';}?>" style="display: inline-block;"><a class="second-nav-a" href="/home/white-list/index">白名单</a></li>
+        ){ echo 'active';}?>" style="display: inline-block;"><a class="second-nav-a" href="/home/white-list/index"><?= Yii::t('app/index','Whitelist')?></a></li>
 
         <li class="second-nav-li <?php if((Yii::$app->controller->id == 'black-list')
-        ){ echo 'active';}?>" style="display: inline-block;"><a class="second-nav-a" href="/home/black-list/index">黑名单</a></li>
+        ){ echo 'active';}?>" style="display: inline-block;"><a class="second-nav-a" href="/home/black-list/index"><?= Yii::t('app/index','Blacklist')?></a></li>
     </ul>
 </div>
 
@@ -242,7 +243,7 @@ $localLanguage = $identity->language;
        data = {};
        data.language = language
        $.post('/home/user/change-language',data).done(function (r) {
-//           console.log(r);
+           location.reload()
        })
     }
 </script>

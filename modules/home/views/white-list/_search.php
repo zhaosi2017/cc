@@ -21,17 +21,17 @@ use yii\widgets\ActiveForm;
             <div >
                  <?= $form->field($model, 'search_type')->dropDownList(
                 [
-                    1 => Yii::t('app/search', '白名单账号'),
+                    1 => Yii::t('app/harassment', 'Whitelist account'),
                     // 2 => '白名单电话',
                     2=>'telegram',
                     3=>'potato'
                 ],
-                ['prompt' => '全部']
+                ['prompt' => Yii::t('app/harassment','All')]
                 )->label(false) ?>
                 <?= $form->field($model, 'search_keywords')->textInput()->label(false) ?>
                 <div class="form-group">
                     <?= Html::submitButton('search', ['class' => 'hide','id'=>'search_hide']) ?>
-                    <?= Html::submitButton('搜索', ['class' => 'btn btn-primary m-t-n-xs button-new-color','id'=>'search']) ?>
+                    <?= Html::submitButton(Yii::t('app/harassment','Search'), ['class' => 'btn btn-primary m-t-n-xs button-new-color','id'=>'search']) ?>
                 </div>
             </div>
         </div>

@@ -22,8 +22,8 @@ return [
     'languages'=>[
         'zh-CN'=>'Chinese',
         'en-US'=>'English',
-        'zh-TW'=>'Traditional',//繁体中文
-        'ko-KR'=>'Korean',
-        'ja-JP'=>'Japan'
+//        'zh-TW'=>'Traditional',//繁体中文
+//        'ko-KR'=>'Korean',
+//        'ja-JP'=>'Japan'
     ]
 ];

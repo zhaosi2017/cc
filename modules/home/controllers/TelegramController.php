@@ -145,7 +145,7 @@ class TelegramController extends GController
                 return $this->render('bind-telegram', ['model' => $model, 'isModify' => $isModify]);
             }
 
-            Yii::$app->getSession()->setFlash('success', '操作成功');
+            Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
             return $this->redirect(['/home/user/app-bind']);
         } else {
             // 加载页面.
@@ -158,9 +158,9 @@ class TelegramController extends GController
         $model = new Telegram();
         $updateRes = $model->unbundleTelegramData();
         if (!$updateRes) {
-            Yii::$app->getSession()->setFlash('success', '操作失败');
+            Yii::$app->getSession()->setFlash('error', Yii::t('app/index','Operation failed'));
         } else {
-            Yii::$app->getSession()->setFlash('success', '操作成功');
+            Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
         }
 
         return $this->redirect(['/home/user/app-bind']);

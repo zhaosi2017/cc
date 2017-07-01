@@ -18,9 +18,11 @@ $config = [
                     'fileMap' => [
                         'app' => 'app.php',
                         'app/index' => 'index.php',
+                        'app/call-record/index'=>'call-record/index.php',
+                        'app/harassment'=>'harassment/index.php',
                         'app/model/telegram' => 'telegram.php',
                         'app/user/index'=>'user/index.php',
-                        'app/user/app-build'=>'user/app-bind.php',
+                        'app/user/app-build'=>'user/app-build.php',
                         'app/user/links'=>'user/links.php',
                         'app/user/update-phone-number'=>'user/update-phone-number.php',
                         'app/user/set-phone-number'=>'user/set-phone-number.php',
@@ -28,6 +30,8 @@ $config = [
                         'app/user/bind-username'=>'user/bind-username.php',
                         'app/user/password'=>'user/password.php',
                         'app/user/add-urgent-contact-person'=>'user/add-urgent-contact-person.php',
+                        'app/telegram/bind-telegram'=>'telegram/bind-telegram.php',
+                        'app/potato/bind-potato'=>'potato/bind-potato.php',
                     ],
                     'on missingTranslation' => ['app\modules\home\controllers\TranslationEventHandler', 'handleMissingTranslation']
                 ],

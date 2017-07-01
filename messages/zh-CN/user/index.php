@@ -18,9 +18,7 @@ return [
     'No Email'=>'未绑定邮箱账号',
     'No UserName'=>'未绑定用户名',
     'Edit'=>'修改',
-    'Build Now'=>'立即绑定'
-
-
-
+    'Build Now'=>'立即绑定',
+    'Create UserName'=>'绑定用户名'
 
 ];

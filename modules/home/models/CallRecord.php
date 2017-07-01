@@ -61,16 +61,16 @@ class CallRecord extends \app\models\CActiveRecord
             'unactive_call_uid' => '被叫账号id',
             'call_by_same_times' => '被同一人呼叫次数',
             'typeData' => '电话类型',
-            'contact_number' => '主叫电话',
-            'unactive_contact_number' => '联系电话',
-            'typeData'=> '呼叫类型',
-            'status' => '呼叫状态',
-            'statusData' => '呼叫状态',
-            'call_time' => '呼叫时间',
-            'active_account' => '主叫账号',
-            'unactive_account' => '被叫账号',
-            'active_nickname' => '主叫昵称',
-            'unactive_nickname' => '被叫昵称',
+            'contact_number' => Yii::t('app/call-record/index','Call phone'),
+            'unactive_contact_number' => Yii::t('app/call-record/index','Called phone'),
+            'typeData'=> Yii::t('app/call-record/index','Call type'),
+            'status' => Yii::t('app/call-record/index','Call status'),
+            'statusData' =>Yii::t('app/call-record/index','Call status'),
+            'call_time' => Yii::t('app/call-record/index','Call time'),
+            'active_account' => Yii::t('app/call-record/index','Call account'),
+            'unactive_account' => Yii::t('app/call-record/index','Called account'),
+            'active_nickname' => Yii::t('app/call-record/index','Call nickname'),
+            'unactive_nickname' => Yii::t('app/call-record/index','Called nickname'),
             'long_time'=>'时间周期(分)',
             'total_nums'=>'呼叫总次数'
         ];
@@ -91,19 +91,19 @@ class CallRecord extends \app\models\CActiveRecord
     public function getStatusList()
     {
         return [
-            '0' => '完成',
-            '1' => '超时',
-            '2' => '拒绝',
-            '3' => '忙',
-            '4' => '失败',
-            '5' => '没有回答',
+            '0' => Yii::t('app/call-record/index','Success'),
+            '1' => Yii::t('app/call-record/index','Time out'),
+            '2' => Yii::t('app/call-record/index','Refuse'),
+            '3' => Yii::t('app/call-record/index','Busy'),
+            '4' => Yii::t('app/call-record/index','Failure'),
+            '5' => Yii::t('app/call-record/index','No answer'),
         ];
     }
 
     public function getStatusListBySearch(){
         return [
-            '0' => '完成',
-            '4' => '失败',
+            '0' => Yii::t('app/call-record/index','Success'),
+            '4' =>  Yii::t('app/call-record/index','Failure'),
         ];
     }
 
@@ -116,8 +116,8 @@ class CallRecord extends \app\models\CActiveRecord
     public function getTypeList()
     {
         return [
-            '0' => '被叫联系电话',
-            '1' => '被叫紧急联系电话'
+            '0' => Yii::t('app/call-record/index','Called phone'),
+            '1' => Yii::t('app/call-record/index','Called emergency call'),
         ];
     }
 

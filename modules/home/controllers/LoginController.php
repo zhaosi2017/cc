@@ -124,7 +124,7 @@ class LoginController extends GController
             $user_model->password = $register_model->password;
             if($user_model->update()){
                 $model->deleteLoginNum();
-                Yii::$app->getSession()->setFlash('success', '操作成功');
+                Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
                 return $this->render('find-password-complete');
             }
         }
@@ -169,10 +169,10 @@ class LoginController extends GController
         if($register_model->load(Yii::$app->request->post())){
 
             if($register_model->updatePassword()){
-                Yii::$app->getSession()->setFlash('success', '操作成功');
+                Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
                 return $this->redirect('/home/login/login');
             }else{
-                Yii::$app->getSession()->setFlash('error', '操作失败');
+                Yii::$app->getSession()->setFlash('error', Yii::t('app/index','Operation failed'));
                 return $this->redirect('/home/login/phone-find-password');
             }
         }
