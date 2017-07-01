@@ -18,6 +18,7 @@ $config = [
                     'fileMap' => [
                         'app' => 'app.php',
                         'app/index' => 'index.php',
+                        'app/model/telegram' => 'telegram.php',
                     ],
                     'on missingTranslation' => ['app\modules\home\controllers\TranslationEventHandler', 'handleMissingTranslation']
                 ],
