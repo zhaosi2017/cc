@@ -10,7 +10,7 @@ use yii\helpers\Url;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 $userModels = \app\modules\home\models\User::findOne(Yii::$app->user->id);
 
-$this->title = isset($userModels->whitelist_switch) && $userModels->whitelist_switch ? '白名单开启状态：开':'白名单开启状态：关';
+$this->title = isset($userModels->whitelist_switch) && $userModels->whitelist_switch ? Yii::t('app/harassment','Whitelist switch').'：'.Yii::t('app/harassment','Open'): Yii::t('app/harassment','Whitelist switch').'：'.Yii::t('app/harassment','Closed');
 $this->params['breadcrumbs'][] = $this->title;
 $actionId = Yii::$app->requestedAction->id;
 ?>
@@ -21,22 +21,22 @@ $actionId = Yii::$app->requestedAction->id;
 <?php Pjax::begin(); ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'layout' => "{items}\n  <div><ul class='pagination'><li style='display:inline;'><span>共".$dataProvider->getTotalCount(). "条数据 <span></li></ul>{pager}  </div>",
+        'layout' => "{items}\n  <div><ul class='pagination'><li style='display:inline;'><span>".Yii::t('app/harassment','Total').'&nbsp;&nbsp;'.$dataProvider->getTotalCount().'&nbsp;&nbsp;'.Yii::t('app/harassment','Data') ." <span></li></ul>{pager}  </div>",
         // 'filterModel' => $searchModel,
         'rowOptions' => function($model) {
             return ['id' => 'tr_'.$model->id, 'class' => '_tr'];
         },
         'tableOptions'=>['class' => 'table table-striped table-bordered','style'=>'text-align:center;'],
         'pager'=>[
-            'firstPageLabel'=>"首页",
-            'prevPageLabel'=>'上一页',
-            'nextPageLabel'=>'下一页',
-            'lastPageLabel'=>'末页',
+            'firstPageLabel'=>Yii::t('app/harassment','Frist'),
+            'prevPageLabel'=>Yii::t('app/harassment','Previous'),
+            'nextPageLabel'=>Yii::t('app/harassment','Next'),
+            'lastPageLabel'=>Yii::t('app/harassment','Last page'),
             'maxButtonCount' => 9,
         ],
        
            'columns' => [
-                ['class' => 'yii\grid\SerialColumn', 'header' => '序号', 'headerOptions'=>['class'=>'text-center']],
+                ['class' => 'yii\grid\SerialColumn', 'header' => Yii::t('app/harassment','Serial number'), 'headerOptions'=>['class'=>'text-center']],
 
                 /*
                 ['header' => '编号', 'value' => function($model){
@@ -46,7 +46,7 @@ $actionId = Yii::$app->requestedAction->id;
 
 
            
-            ['header' => '白名单用户', 'value' => function($model){
+            ['header' => Yii::t('app/harassment','Whitelist account'), 'value' => function($model){
                 return $model['white']['account'];
             }, 'headerOptions'=>['class'=>'text-center']],
             //  ['header' => '联系电话', 'value' => function($model){
@@ -62,14 +62,14 @@ $actionId = Yii::$app->requestedAction->id;
            
             [
                 'class' => 'yii\grid\ActionColumn',
-                'header' => '操作',
+                'header' => Yii::t('app/harassment','Operating'),
                 'template' => '{delete}',
                 'buttons' => [
                     'delete' => function($url){
-                        return Html::a('移出白名单',$url,[
+                        return Html::a(Yii::t('app/harassment','Remove the whitelist'),$url,[
                             'style' => 'color:red',
                             'data-method' => 'post',
-                            'data' => ['confirm' => '你确定要移出白名单吗?']
+                            'data' => ['confirm' => Yii::t('app/harassment','Are you sure you want to remove the whitelist?')]
                         ]);
                     },
 

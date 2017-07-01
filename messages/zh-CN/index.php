@@ -22,4 +22,13 @@ return [
     'Efficient'=>'高效',
     'Make the connection more efficient'=>'让 连 接 更 高 效',
     'So that communication is more convenient'=>'让 连 沟 通 更 便 捷',
+    'Guest'=>'游客',
+    'Param settings'=>'参数设置',
+    'Whitelist'=>'白名单',
+    'Blacklist'=>'黑名单',
+    'Basic information'=>'基本资料',
+    'Communication app binding'=>'通讯app绑定',
+    'Contact information'=>'联系方式',
+    ''=>'',
+
 ];

@@ -16,9 +16,10 @@ if(!Yii::$app->user->isGuest){
 
     $localLanguage = $identity->language;
 }else{
-    $username = 'Guest';
+    $username = Yii::t('app/index','Guest');
     $localLanguage = isset(Yii::$app->session['language'])? Yii::$app->session['language']:'zh-CN';
 }
+
 
 
 ?>
@@ -278,6 +279,7 @@ if(!Yii::$app->user->isGuest){
         data.language = language
         $.post('/home/user/change-language',data).done(function (r) {
 //            console.log(r);
+            location.reload()
         })
     }
 </script>
@@ -294,6 +296,7 @@ if(!Yii::$app->user->isGuest){
         data.language = sessionLanguage
         $.post('/home/login/change-language',data).done(function (r) {
 //            console.log(r);
+            location.reload()
         })
     }
 </script>
