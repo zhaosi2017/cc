@@ -4,9 +4,9 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 if ($isModify) {
-    $this->title = '修改potato账号';
+    $this->title = Yii::t('app/potato/bind-potato','Edit potato account');
 } else {
-    $this->title = '绑定potato账号';
+    $this->title = Yii::t('app/potato/bind-potato','Bind potato account');;
 }
 $this->params['breadcrumbs'][] = $this->title;
 /* @var $this yii\web\View */
@@ -25,26 +25,31 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
     <div>
-        <p style="margin-left: 160px;font-size: 13px;font-weight: 700;">操作步骤：</p>
+        <p style="margin-left: 160px;font-size: 13px;font-weight: 700;"><?=  Yii::t('app/potato/bind-potato','Steps') ?>：</p>
     </div>
     <div class="form-group" style="margin-left: 16.6%;">
 
-        <p>1、请先在potato上登录个人账号</p>
-        <p>2、添加机器人好友：<?php echo Yii::$app->params['potato_name'];?></p>
-        <p>3、分享自己名片给机器人</p>
-        <p>4、 选择绑定操作</p>
-        <p>5、将获取的验证码填写在下方输入框中进行绑定操作</p>
+        <p>1、<?= Yii::t('app/potato/bind-potato' , 'Please log in to the personal account on potato')?></p>
+        <p>2、<?= Yii::t('app/potato/bind-potato','Add a robot friend')?>：<?php echo Yii::$app->params['potato_name'];?></p>
+        <p>3、<?= Yii::t('app/potato/bind-potato' , 'Share your business card to the robot')?></p>
+        <p>4、 <?= Yii::t('app/potato/bind-potato' , 'Select the binding operation')?></p>
+        <p>5、<?= Yii::t('app/potato/bind-potato','Will get the verification code fill in the bottom of the input box for binding operation')?></p>
+
     </div>
 
     <?php echo $form->field($model, 'bindCode',[
 
         'template' => "{label}\n<div class=\"col-sm-3\">{input}</div><span>
-*请输入您从potato上获取的绑定验证码</span>\n<span class=\"help-block m-b-none\" style=\"margin-top:17px;margin-left:17.5%;\">{error}</span></div>",
-    ])->textInput(['placeholder' => '验证码',])->label('验证码:') ?>
+*".
+            Yii::t('app/potato/bind-potato','Please enter the verification code you obtained from the potato')
+            ."</span>\n<span class=\"help-block m-b-none\" style=\"margin-top:17px;margin-left:17.5%;\">{error}</span></div>",
+    ])->textInput(['placeholder' => Yii::t('app/potato/bind-potato','Code'),])
+      ->label(Yii::t('app/potato/bind-potato','Code')) ?>
 
     <div class="form-group m-b-lg">
         <div class="col-sm-6 col-sm-offset-2">
-            <?= Html::submitButton($isModify ? '修改　' :'绑定', ['class' => 'btn btn-primary button-new-color','style'=>'width: 325px; margin-left: -10px;']) ?>
+            <?= Html::submitButton($isModify ? Yii::t('app/potato/bind-potato','Edit') :Yii::t('app/potato/bind-potato','Build'),
+                ['class' => 'btn btn-primary button-new-color','style'=>'width: 325px; margin-left: -10px;']) ?>
         </div>
     </div>
 
