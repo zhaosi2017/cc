@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div>
         <div class="row app-bind-div" style="margin-top: 20px;border-bottom: 1px solid rgb(217,217,217); ">
-            <div class="col-xs-4 app-bind-1"><?= Yii::t('app/user/index' ,'Build CellPhone Number')?></div>
+            <div class="col-xs-4 app-bind-1"><?= Yii::t('app/user/index' ,'Bind CellPhone Number')?></div>
             <div class="col-xs-4">
 
                 <?php echo  ($model->country_code.$model->phone_number) ? $model->country_code.'--'.$model->phone_number: '<span style="color:rgb(255,102,0);">'.
@@ -50,7 +50,7 @@ position: relative;
     </div>
     <div>
         <div class="row app-bind-div">
-            <div class="col-xs-4 app-bind-1"><?= Yii::t('app/user/index', 'Build Email') ?></div>
+            <div class="col-xs-4 app-bind-1"><?= Yii::t('app/user/index', 'Bind Email') ?></div>
             <div class="col-xs-4">
                 <?php echo  ($model->account) ? $model->account: '<span style="color:rgb(255,102,0);">'.
                     Yii::t('app/user/index','No Email')

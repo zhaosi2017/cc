@@ -17,7 +17,4 @@ return [
     'lift the binding'=>'解除绑定',
     'No Telegram account'=>'未绑定telegram账号'
 
-
-
-
 ];

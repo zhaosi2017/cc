@@ -120,7 +120,7 @@ $this->params['breadcrumbs'][] = $this->title;
     /* padding-top: 0px; */
     position: relative;
     top: -12px;
-">*<?= Yii::t('app/user/update-phone-number' , 'Please enter your phone verification code')?></span>
+">*<?= Yii::t('app/user/set-phone-number' , 'Please enter your phone verification code')?></span>
                 <div class="help-block"></div>
             </div>
         </div>
