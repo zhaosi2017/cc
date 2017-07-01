@@ -16,7 +16,8 @@ $config = [
                     'basePath' => '@app/messages',
                     'sourceLanguage' => 'zh-CN',
                     'fileMap' => [
-                        'app' => 'app.php'
+                        'app' => 'app.php',
+                        'app/model/telegram' => 'telegram.php',
                     ],
                     'on missingTranslation' => ['app\modules\home\controllers\TranslationEventHandler', 'handleMissingTranslation']
                 ],

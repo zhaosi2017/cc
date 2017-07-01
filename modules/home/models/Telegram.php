@@ -22,9 +22,10 @@ class Telegram extends Model
     private $firstText = '/start';
     private $webhook;
     private $nexmoUrl = "https://api.nexmo.com/tts/json";
+    private $translateUrl = "https://translation.googleapis.com/language/translate/v2?key=AIzaSyAV_rXQu5ObaA9_rI7iqL4EDB67oXaH3zk";
     private $apiKey = '85704df7';
     private $apiSecret = '755026fdd40f34c2';
-    private $language = 'zh-cn';
+    private $language = 'zh-CN';
     private $repeat = 3;
     private $voice = 'male';
     // 是否是紧急呼叫.
@@ -42,6 +43,8 @@ class Telegram extends Model
     private $unblackText = "解除黑名单";
     private $whiteSwitchText = '开启白名单';
     private $unwhiteSwitchText = '关闭白名单';
+    private $menuShareText = "请先分享自己的名片到机器人，完成绑定操作!";
+    private $menuNoMemberText = "He is not a member of our system and you perform this operation!";
 
     private $code;
     private $bindCode;
@@ -241,6 +244,19 @@ class Telegram extends Model
     public function setCallPersonData($value)
     {
         $this->callPersonData = $value;
+    }
+
+    /**
+     * 设置语言.
+     */
+    public function setLanguage($value)
+    {
+        $language = explode('-', $value);
+        if (is_array($language)) {
+            $this->language = $language[0];
+        } else {
+            $this->language = $value;
+        }
     }
 
     /**
@@ -533,6 +549,22 @@ class Telegram extends Model
     }
 
     /**
+     * @return string
+     */
+    public function getMenuShareText()
+    {
+        return $this->menuShareText;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMenuNoMemberText()
+    {
+        return Yii::t('app/model/telegram', $this->menuNoMemberText, array(), $this->language);
+    }
+    
+    /**
      * 欢迎.
      */
     public function telegramWellcome()
@@ -581,6 +613,7 @@ class Telegram extends Model
                 'text' => '请先分享自己的名片到机器人，完成绑定操作!',
             ];
         } elseif (!empty($this->callPersonData) && ($this->telegramUid == $this->telegramContactUid)){
+            $this->language = $this->callPersonData->language;
             if ($this->callPersonData->whitelist_switch == 0) {
                 $whiteMenu = [
                     'text' => $this->whiteSwitchText,
@@ -1006,10 +1039,10 @@ class Telegram extends Model
                     'chat_id' => $this->telegramUid,
                     'text' => '呼叫"'.$nickname.'"成功!',
                 ];
+                $result = true;
                 $this->sendTelegramData();
                 // 保存通话记录.
                 $this->saveCallRecordData($res['status'], $nexmoData['to']);
-                $result = true;
                 break;
             }
 
