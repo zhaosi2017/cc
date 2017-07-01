@@ -15,4 +15,13 @@ return [
     'Has closed the whitelist function.' => '已经关闭了白名单功能.',
     'Close White List Function successfully.' => '关闭白名单功能成功.',
     'Close whitelist failed.' => '关闭白名单功能失败.',
+    'Already in the white list.' => '已经在白名单里.',
+    'Join whitelist successfully.' => '加入白名单成功.',
+    'Has already added you to the whitelist, you can also click the button below to add him to your whitelist.' => '已经将您加入白名单, 您也可以点击下面按钮加他到您的白名单.',
+    'Cancel the whitelist successfully.' => '解除白名单成功.',
+    'Cancel the whitelist failed.' => '解除白名单失败.',
+    'Not in the white list.' => '不在白名单.',
+    'Already in the blacklist.' => '已经在黑名单里.',
+    'Add to Blacklist successfully' => '加入黑名单成功.',
+    'Add to Blacklist failed' => '加入黑名单失败.',
 ];

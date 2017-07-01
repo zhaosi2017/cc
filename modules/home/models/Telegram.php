@@ -52,7 +52,16 @@ class Telegram extends Model
     private $disableWhiteText = "Has closed the whitelist function.";
     private $disableWhiteSuccessText = "Close White List Function successfully.";
     private $disableWhiteFailureText = "Close whitelist failed.";
-
+    private $joinAlreadyText = "Already in the white list.";
+    private $joinWhiteListSuccess = "Join whitelist successfully.";
+    private $joinWhiteListFailure = "Join whitelist failed.";
+    private $joinRecommendText = "Has already added you to the whitelist, you can also click the button below to add him to your whitelist.";
+    private $unbindSuccessText = "Cancel the whitelist successfully.";
+    private $unbindFailureText = "Cancel the whitelist failed.";
+    private $unbindNotText = "Not in the white list.";
+    private $joinBlackListAreadyText = "Already in the blacklist.";
+    private $joinBlackListSuccessText = "Add to Blacklist Success.";
+    private $joinBlackListFailureText = "Add to Blacklist failed.";
 
     private $code;
     private $bindCode;
@@ -629,6 +638,86 @@ class Telegram extends Model
     }
 
     /**
+     * @return string.
+     */
+    public function getJoinAlreadyText()
+    {
+        return Yii::t('app/model/telegram', $this->joinAlreadyText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getJoinWhiteListSuccess()
+    {
+        return Yii::t('app/model/telegram', $this->joinWhiteListSuccess, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getJoinWhiteListFailure()
+    {
+        return Yii::t('app/model/telegram', $this->joinWhiteListFailure, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getJoinRecommendText()
+    {
+        return Yii::t('app/model/telegram', $this->joinRecommendText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getUnbindSuccessText()
+    {
+        return Yii::t('app/model/telegram', $this->unbindSuccessText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getUnbindFailureText()
+    {
+        return Yii::t('app/model/telegram', $this->unbindFailureText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getUnbindNotText()
+    {
+        return Yii::t('app/model/telegram', $this->unbindNotText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getJoinBlackListAreadyText()
+    {
+        return Yii::t('app/model/telegram', $this->joinBlackListAreadyText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getJoinBlackListSuccessText()
+    {
+        return Yii::t('app/model/telegram', $this->joinBlackListSuccessText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getJoinBlackListFailureText()
+    {
+        return Yii::t('app/model/telegram', $this->joinBlackListFailureText, array(), $this->language);
+    }
+
+    /**
      * 欢迎.
      */
     public function telegramWellcome()
@@ -856,13 +945,13 @@ class Telegram extends Model
         ];
 
         $this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
-        $this->language = $this->callPersonData->language;
         if (empty($this->callPersonData)) {
             $sendData['text'] = $this->enableNoMemberText();
             $this->sendData = $sendData;
             return $this->sendTelegramData();
         }
 
+        $this->language = $this->callPersonData->language;
         $this->calledPersonData = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
         if (empty($this->calledPersonData)) {
             $sendData['text'] = $this->menuNoMemberText();
@@ -872,19 +961,20 @@ class Telegram extends Model
 
         $whiteRes = WhiteList::findOne(['uid' => $this->callPersonData->id, 'white_uid'=> $this->calledPersonData->id]);
         if ($whiteRes) {
-            $sendData['text'] = '已经在白名单里!';
+            $sendData['text'] = $this->getJoinAlreadyText();
         } else {
             $whiteRes = new WhiteList();
             $whiteRes->uid = $this->callPersonData->id;
             $whiteRes->white_uid = $this->calledPersonData->id;
             $res = $whiteRes->save();
-            $res ? ($sendData['text'] = '加入白名单成功!') : ($sendData['text'] = '加入白名单失败!');
+            $res ? ($sendData['text'] = $this->getJoinWhiteListSuccess()) : ($sendData['text'] = $this->getJoinWhiteListFailure());
 
             $res = WhiteList::findOne(['uid' => $this->calledPersonData->id, 'white_uid'=> $this->callPersonData->id]);
             if (empty($res)) {
+                $this->language = $this->calledPersonData->language;
                 $this->sendData = [
                     'chat_id' => $this->telegramContactUid,
-                    'text' => $this->telegramLastName . $this->telegramFirstName . '已经将您加入白名单, 您也可以点击下面按钮加他到您的白名单!',
+                    'text' => $this->telegramLastName . $this->telegramFirstName.$this->getJoinRecommendText(),
                 ];
                 $this->sendTelegramData();
                 $bindMenu = [
@@ -907,7 +997,7 @@ class Telegram extends Model
             }
         }
 
-
+        $this->language = $this->callPersonData->language;
         $this->sendData = $sendData;
         return $this->sendTelegramData();
     }
@@ -931,14 +1021,15 @@ class Telegram extends Model
 
         $this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
         if (empty($this->callPersonData)) {
-            $sendData['text'] = '您不是我们系统会员，不能执行该操作!';
+            $sendData['text'] = $this->getMenuNoMemberText();
             $this->sendData = $sendData;
             return $this->sendTelegramData();
         }
 
+        $this->language = $this->callPersonData->language;
         $this->calledPersonData = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
         if (empty($this->calledPersonData)) {
-            $sendData['text'] = '他/她不是我们系统会员，不能执行该操作!';
+            $sendData['text'] = $this->enableNoMemberText();
             $this->sendData = $sendData;
             return $this->sendTelegramData();
         }
@@ -946,9 +1037,9 @@ class Telegram extends Model
         $whiteRes = WhiteList::findOne(['uid' => $this->callPersonData->id, 'white_uid' => $this->calledPersonData->id]);
         if ($whiteRes) {
             $res = $whiteRes->delete();
-            $res ? ($sendData['text'] = '解除白名单成功!') : ($sendData['text'] = '解除白名单失败!');
+            $res ? ($sendData['text'] = $this->getUnbindSuccessText()) : ($sendData['text'] = $this->unbindFailureText());
         } else {
-            $sendData['text'] = '不在白名单!';
+            $sendData['text'] = $this->getUnbindNotText();
         }
 
 
@@ -975,27 +1066,28 @@ class Telegram extends Model
 
         $this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
         if (empty($this->callPersonData)) {
-            $sendData['text'] = '您不是我们系统会员，不能执行该操作!';
+            $sendData['text'] = $this->getMenuNoMemberText();
             $this->sendData = $sendData;
             return $this->sendTelegramData();
         }
 
+        $this->language = $this->callPersonData->language;
         $this->calledPersonData = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
         if (empty($this->calledPersonData)) {
-            $sendData['text'] = '他/她不是我们系统会员，不能执行该操作!';
+            $sendData['text'] = $this->enableNoMemberText();
             $this->sendData = $sendData;
             return $this->sendTelegramData();
         }
 
         $blackRes = BlackList::findOne(['uid' => $this->callPersonData->id, 'black_uid'=> $this->calledPersonData->id]);
         if ($blackRes) {
-            $sendData['text'] = '已经在黑名单里!';
+            $sendData['text'] = $this->getJoinBlackListAreadyText();
         } else {
             $blackRes = new BlackList();
             $blackRes->uid = $this->callPersonData->id;
             $blackRes->black_uid = $this->calledPersonData->id;
             $res = $blackRes->save();
-            $res ? ($sendData['text'] = '加入黑名单成功!') : ($sendData['text'] = '加入黑名单失败!');
+            $res ? ($sendData['text'] = $this->getJoinBlackListSuccessText()) : ($sendData['text'] = $this->getJoinBlackListFailureText());
         }
 
 
@@ -1022,14 +1114,15 @@ class Telegram extends Model
 
         $this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
         if (empty($this->callPersonData)) {
-            $sendData['text'] = '您不是我们系统会员，不能执行该操作!';
+            $sendData['text'] = $this->getMenuNoMemberText();
             $this->sendData = $sendData;
             return $this->sendTelegramData();
         }
 
+        $this->language = $this->callPersonData->language;
         $this->calledPersonData = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
         if (empty($this->calledPersonData)) {
-            $sendData['text'] = '他/她不是我们系统会员，不能执行该操作!';
+            $sendData['text'] = $this->enableNoMemberText();
             $this->sendData = $sendData;
             return $this->sendTelegramData();
         }
