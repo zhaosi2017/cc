@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-$this->title = !empty($model->username)?'修改用户名':'绑定用户名';
+$this->title = !empty($model->username)?Yii::t('app/user/bind-username', 'Edit UserName'):Yii::t('app/user/bind-username', 'Build UserName');
 $this->params['breadcrumbs'][] = $this->title;
 /* @var $this yii\web\View */
 /* @var $model app\modules\home\models\User */
@@ -22,15 +22,27 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 
     <?= $form->field($model, 'username',[
-        'template' => "{label}\n<div class=\"col-sm-3\"> {input}  </div> <span class=\"col-sm-2 \" style=\" padding-top:9px;\">*请输入用户名</span> \n<br><div style=\"height:20px; \"></div><label class = \"col-sm-1 \"></label><div style=\" width: 67%; \"><span style=\" padding-top:8px;\">{error}</span></div>",
-    ])->textInput()->label('用户名',['style'=>'font-size: 17px;padding-top: 5px;']) ?>
+        'template' => "{label}\n<div class=\"col-sm-3\"> {input} 
+            </div> 
+                <span class=\"col-sm-2 \" style=\" padding-top:9px;\">*".
+                    Yii::t('app/user/bind-username' , 'Please Entry your UserName')
+                ."</span> 
+                \n<br><div style=\"height:20px; \"></div><label class = \"col-sm-1 \"></label><div style=\" width: 67%; \">
+                
+                 <span style=\" padding-top:8px;\">{error}</span>
+                 
+            </div>",
+    ])->textInput()->label(Yii::t('app/user/bind-username' ,'UserName'),['style'=>'font-size: 17px;padding-top: 5px;']) ?>
 
     <br>
     <div class="form-group">
-        <!-- <?= Html::submitButton('保存', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'],[
+        <!-- <?= Html::submitButton(Yii::t('app/user/bind-username' ,'Save'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'],[
             'template' => "<div style=\" width: 67%;margin: auto;\" >{button}</div>",
         ]) ?> -->
-        <div style=" " > <button class='<?php $btnnn = $model->isNewRecord ? ( "btn btn-success button-new-color") : ( "btn btn-primary button-new-color");echo $btnnn; ?> ' style="    width: 23%;margin-left: 128px;" >保存</button></div>
+        <div style=" " > <button class='<?php $btnnn = $model->isNewRecord ? ( "btn btn-success button-new-color") : ( "btn btn-primary button-new-color");echo $btnnn; ?> ' style="    width: 23%;margin-left: 128px;" >
+                            <?= Yii::t('app/user/bind-username' ,'Save')?>
+                        </button>
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>

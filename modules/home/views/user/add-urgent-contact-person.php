@@ -4,9 +4,9 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 if ($isModify) {
-    $this->title = '修改紧急联系人';
+    $this->title = Yii::t('app/user/add-urgent-contact-person' ,'Edit Contact Info');
 } else {
-    $this->title = '添加紧急联系人';
+    $this->title = Yii::t('app/user/add-urgent-contact-person' ,'Build Contact ');
 }
 $this->params['breadcrumbs'][] = $this->title;
 /* @var $this yii\web\View */
@@ -27,14 +27,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <?php echo $form->field($model, 'contact_nickname',[
-        'template' => "<div><div style=\"display：inline-block;\">{label}</div>\n<div class=\"\" style=\"display:inline-block;\">{input}</div><div style=\"display:inline-block;margin-left:10px;\"><span >*请输入紧急联系人<span></div>\n<div><span class=\"help-block m-b-none\" style=\"margin-left:17%;\">{error}</span></div>",
-    ])->textInput(['placeholder' => '紧急联系人昵称',])->label('紧急联系人' ,['style'=>"    text-align: left;padding-left: 120px;"]) ?>
+        'template' => "<div><div style=\"display：inline-block;\">{label}</div>\n<div class=\"\" style=\"display:inline-block;\">{input}</div><div style=\"display:inline-block;margin-left:10px;\">
+                        <span >*".Yii::t('app/user/add-urgent-contact-person','Please Enter The Contact')."
+                        <span></div>\n<div><span class=\"help-block m-b-none\" style=\"margin-left:17%;\">{error}</span></div>",
+    ])->textInput(['placeholder' => Yii::t('app/user/add-urgent-contact-person','Emergency contact nickname')])
+    ->label(Yii::t('app/user/add-urgent-contact-person','Emergency Contact') ,['style'=>"    text-align: left;padding-left: 80px; padding-top:7px"])
+
+    ?>
 
     <div class="row form-inline">
 
         <div class="col-sm-2 text-right">
             <div class="form-group">
-                <label for="task-customer-category" class="col-sm-12 ">紧急联系人电话</label>
+                <label for="task-customer-category" class="col-sm-12 " style="padding: 7px;"><?=  Yii::t('app/user/add-urgent-contact-person','Emergency contact phone')?></label>
             </div>
         </div>
 
@@ -48,20 +53,28 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php echo $form->field($model, 'contact_country_code', [
 
                  'template' => "{label}\n<div style=\"width:130px;\">&nbsp;+{input}\n<span style=\"height:18px;\" class=\"help-block m-b-none\">{error}</span></div>",
-            ])->textInput(['size' => 5,'placeholder'=>'国码',])->label(false) ?>
+            ])->textInput(['size' => 5,'placeholder'=>Yii::t('app/user/add-urgent-contact-person','Country Code'),])
+             ->label(false) ?>
 
             <?php echo $form->field($model, 'contact_phone_number',[
 
-                'template' => "<div>{label}\n<div>&nbsp;{input}<span style=\"margin-left:10px;\">*请填写紧急联系人电话</span></div>\n<span style=\"height:18px;\" class=\"help-block m-b-none\">{error}</span></div>",
+                'template' => "<div>{label}\n<div>&nbsp;{input}<span style=\"margin-left:10px;\">*".
+                    Yii::t('app/user/add-urgent-contact-person','Please enter the contact Phone number')
 
-            ])->textInput(['placeholder' => '紧急联系人号码', 'size'=>'17'])->label(false) ?>
+            ."</span></div>\n<span style=\"height:18px;\" class=\"help-block m-b-none\">{error}</span></div>",
+
+            ])->textInput(['placeholder' => Yii::t('app/user/add-urgent-contact-person','Emergency contact phone'), 'size'=>'17'])->label(false) ?>
         </div>
 
     </div>
 
     <div class="form-group m-b-lg">
         <div class="col-sm-6 col-sm-offset-2">
-            <?= Html::submitButton($isModify ? '修改　' :'添加', ['class' => 'btn btn-primary button-new-color','style'=>'width: 250px; margin-left: -6px;']) ?>
+            <?= Html::submitButton($isModify ? Yii::t('app/user/add-urgent-contact-person' ,'Edit')
+                                                    :Yii::t('app/user/add-urgent-contact-person' ,'Build') ,
+
+
+                ['class' => 'btn btn-primary button-new-color','style'=>'width: 250px; margin-left: -6px;']) ?>
         </div>
     </div>
 
