@@ -6,9 +6,9 @@ use yii\helpers\Url;
 use yii\captcha\Captcha;
 
 if ($isModify) {
-    $this->title = '修改联系电话';
+    $this->title = Yii::t('app/user/set-phone-number' ,'Edit Phone number');
 } else {
-    $this->title = '绑定联系电话';
+    $this->title = Yii::t('app/user/set-phone-number' ,'Build Phone number');
 }
 $this->params['breadcrumbs'][] = $this->title;
 /* @var $this yii\web\View */
@@ -30,7 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row form-inline">
         <div class="col-sm-2 text-right">
             <div class="form-group">
-                <label for="task-customer-category" class="col-sm-12 control-label" style="padding-top: 7px;">电话号码</label>
+                <label for="task-customer-category" class="col-sm-12 control-label" style="padding-top: 7px;">
+                   <?= Yii::t('app/user/set-phone-number' ,'CellPhone Number');?>
+                </label>
             </div>
         </div>
         <div class="col-sm-10">
@@ -41,13 +43,15 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>-->
             <?php echo $form->field($model, 'country_code', [
                 'template' => "{label}\n<div style=\"width:130px;\">&nbsp;+{input}\n<span style=\"height:18px;\" class=\"help-block m-b-none\">{error}</span></div>",
-            ])->textInput(['size' => 5,'placeholder'=>'国码'])->label(false) ?>
+            ])->textInput(['size' => 5,'placeholder'=>Yii::t('app/user/set-phone-number' ,'Country code')])->label(false) ?>
 
             <?php echo $form->field($model, 'phone_number',[
 
-                 'template' => "{label}\n<div>&nbsp;{input}<span style=\"padding-left:10px\">*请输入您的国码，然后输入您的手机号码</span>\n<span style=\"height:18px;\" class=\"help-block m-b-none\">{error}</span></div>",
+                 'template' => "{label}\n<div>&nbsp;{input}<span style=\"padding-left:10px\">*".
+                     Yii::t('app/user/set-phone-number' , 'Please enter your country code and enter your mobile number')
+                     ."</span>\n<span style=\"height:18px;\" class=\"help-block m-b-none\">{error}</span></div>",
 
-                ])->textInput(['placeholder' => '您的手机号码'])->label(false) ?>
+                ])->textInput(['placeholder' => Yii::t('app/user/set-phone-number' ,'CellPhone Number')])->label(false) ?>
 <!--            <div class="help-block">&nbsp;&nbsp;&nbsp;*请输入您的国码，然后输入您的手机号码</div>-->
         </div>
 
@@ -76,11 +80,11 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="form-group">
                 <input type="button" id="count-down" class="form-control"   onclick="
                     if($('#contactform-country_code').val() == ''){
-                        alert('国码不能为空');
+                        alert('<?= Yii::t("app/user/update-phone-number", "Country Code is empty")?>');
                         return false;
                     }
                     if($('#contactform-phone_number').val() == ''){
-                        alert('电话不能为空');
+                        alert('<?= Yii::t("app/user/update-phone-number", "Cellphone Number is empty")?>');
                         return false;
                     }
 
@@ -94,7 +98,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     $.post(url, data).done(function(r) {
                         r = eval('('+ r + ')');
                         if(r.messages.status == 1){
-                            alert('你好！发送短信太频繁,请稍微休息哈');
+                            alert('<?= Yii::t("app/user/update-phone-number","Send SMS too often, please take a break")?>');
                         }
                     });
 
@@ -104,17 +108,19 @@ $this->params['breadcrumbs'][] = $this->title;
                             duration--;
                         }else{
                             window.clearInterval(dt);
-                            $('#count-down').attr('disabled',false).val('获取验证码');
+                            $('#count-down').attr('disabled',false).val(
+                                                    <?= Yii::t("app/user/update-phone-number" ,"Get verification code")?>);
                         }
                     };
                     var dt = self.setInterval(countDown,1000);
-                " value="获取验证码" style="background-color: #39b5e7;color: white;margin-top: -29px;"><span style="
+                " value='<?= Yii::t("app/user/update-phone-number" ,"Get verification code")?>'
+                       style="background-color: #39b5e7;color: white;margin-top: -29px;"><span style="
     font-size: 14px;
     padding-left: 10px;
     /* padding-top: 0px; */
     position: relative;
     top: -12px;
-">*请输入手机验证码</span>
+">*<?= Yii::t('app/user/set-phone-number' , 'Please enter your phone verification code')?></span>
                 <div class="help-block"></div>
             </div>
         </div>
@@ -122,7 +128,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="form-group m-b-lg">
         <div class="col-sm-6 col-sm-offset-2">
-            <?= Html::submitButton($isModify ? '修改' : '绑定', ['class' => 'btn btn-primary button-new-color','style'=>'width: 265px; margin-left: -6px;']) ?>
+            <?= Html::submitButton(Yii::t('app/user/update-phone-number','Submit'), ['class' => 'btn btn-primary button-new-color','style'=>'width: 265px; margin-left: -6px;']) ?>
         </div>
     </div>
 

@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-$this->title = '基本资料';
+$this->title = Yii::t('app/user/index','Base Info');
 $this->params['breadcrumbs'][] = $this->title;
 /* @var $this yii\web\View */
 /* @var $model app\modules\home\models\ContactForm */
@@ -18,10 +18,11 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div>
         <div class="row app-bind-div" style="margin-top: 20px;border-bottom: 1px solid rgb(217,217,217); ">
-            <div class="col-xs-4 app-bind-1">绑定手机</div>
+            <div class="col-xs-4 app-bind-1"><?= Yii::t('app/user/index' ,'Bind CellPhone Number')?></div>
             <div class="col-xs-4">
 
-                <?php echo  ($model->country_code.$model->phone_number) ? $model->country_code.'--'.$model->phone_number: '<span style="color:rgb(255,102,0);">未绑定手机</span>';?>
+                <?php echo  ($model->country_code.$model->phone_number) ? $model->country_code.'--'.$model->phone_number: '<span style="color:rgb(255,102,0);">'.
+                Yii::t('app/user/index','No Phone NUmber').'</span>';?>
 
             </div>
             <div class="col-xs-4">
@@ -33,7 +34,7 @@ color: white;
 position: relative;
     top: -3px;
     left: 31px
-">修改</a>
+"><?= Yii::t('app/user/index', 'Edit')?></a>
                 <?php }else{?>
                     <a href="/home/user/set-phone-number" style="    padding: 4px 18px;
     background-color: rgb(22,155,214);
@@ -42,16 +43,19 @@ color: white;
 position: relative;
     top: -3px;
     left: 31px
-"> 立即添加</a>
+"> <?= Yii::t('app/user/index' , 'Build Now')?></a>
                 <?php }?>
             </div>
         </div>
     </div>
     <div>
         <div class="row app-bind-div">
-            <div class="col-xs-4 app-bind-1">绑定邮箱</div>
+            <div class="col-xs-4 app-bind-1"><?= Yii::t('app/user/index', 'Bind Email') ?></div>
             <div class="col-xs-4">
-                <?php echo  ($model->account) ? $model->account: '<span style="color:rgb(255,102,0);">未绑定邮箱账号</span>';?>
+                <?php echo  ($model->account) ? $model->account: '<span style="color:rgb(255,102,0);">'.
+                    Yii::t('app/user/index','No Email')
+
+                    .'</span>';?>
 
             </div>
             <div class="col-xs-4">
@@ -62,32 +66,36 @@ color: white;
 position: relative;
     top: -3px;
     left: 31px
-"href="/home/user/bind-email"> <?php echo ($model->telegram_country_code.$model->telegram_number)? '修改':'立即绑定';?></a>
+"href="/home/user/bind-email"> <?php echo ($model->telegram_country_code.$model->telegram_number)?
+                                                                        Yii::t('app/user/index', 'Edit')
+                                                                        : Yii::t('app/user/index' , 'Build Now');?></a>
             </div>
         </div>
     </div>
     <div>
         <div class="row app-bind-div">
-            <div class="col-xs-4 app-bind-1">绑定用户名</div>
+            <div class="col-xs-4 app-bind-1"><?= Yii::t('app/user/index' , 'Create UserName') ?></div>
             <div class="col-xs-4">
-                <?php echo  ($model->username) ? $model->username: '<span style="color:rgb(255,102,0);">未绑定用户名</span>';?>
+                <?php echo  ($model->username) ? $model->username: '<span style="color:rgb(255,102,0);">'.
+                    Yii::t('app/user/index','No UserName')
+                .'</span>';?>
 
             </div>
             <div class="col-xs-4">
                 <a href="/home/user/bind-username" style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px">
-                    <?php echo ($model->username)? '修改':'立即绑定';?></a>
+                    <?php echo ($model->username)? Yii::t('app/user/index', 'Edit'):Yii::t('app/user/index' , 'Build Now');?></a>
             </div>
         </div>
     </div>
     <div>
         <div class="row app-bind-div">
-            <div class="col-xs-4 app-bind-1">登录密码</div>
+            <div class="col-xs-4 app-bind-1"><?= Yii::t('app/user/index', 'Password') ?></div>
             <div class="col-xs-4">
                <spn>***************</spn>
 
             </div>
             <div class="col-xs-4">
-                <a href="/home/user/password" style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px"> 修改</a>
+                <a href="/home/user/password" style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px"> <?= Yii::t('app/user/index', 'Edit')?></a>
             </div>
         </div>
     </div>
