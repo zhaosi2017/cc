@@ -62,6 +62,10 @@ class Telegram extends Model
     private $joinBlackListAreadyText = "Already in the blacklist.";
     private $joinBlackListSuccessText = "Add to Blacklist Success.";
     private $joinBlackListFailureText = "Add to Blacklist failed.";
+    private $unlockBlackListSuccessText = "Unlock the blacklist successfully.";
+    private $unlockBlackListFailureText = "Unlock the blacklist failed.";
+    private $notInBlackList = "Not in blacklist.";
+
 
     private $code;
     private $bindCode;
@@ -718,6 +722,30 @@ class Telegram extends Model
     }
 
     /**
+     * @return string
+     */
+    public function getUnlockBlackListSuccessText()
+    {
+        return Yii::t('app/model/telegram', $this->unlockBlackListSuccessText, array(), $this->language);
+    }
+
+    /**
+     * @return string.
+     */
+    public function getUnlockBlackListFailureText()
+    {
+        return Yii::t('app/model/telegram', $this->unlockBlackListFailureText, array(), $this->language);
+    }
+
+    /**
+     * @return string.
+     */
+    public function getNotInBlackList()
+    {
+        return Yii::t('app/model/telegram', $this->notInBlackList, array(), $this->language);
+    }
+
+    /**
      * 欢迎.
      */
     public function telegramWellcome()
@@ -946,7 +974,7 @@ class Telegram extends Model
 
         $this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
         if (empty($this->callPersonData)) {
-            $sendData['text'] = $this->enableNoMemberText();
+            $sendData['text'] = $this->getEnableNoMemberText();
             $this->sendData = $sendData;
             return $this->sendTelegramData();
         }
@@ -954,7 +982,7 @@ class Telegram extends Model
         $this->language = $this->callPersonData->language;
         $this->calledPersonData = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
         if (empty($this->calledPersonData)) {
-            $sendData['text'] = $this->menuNoMemberText();
+            $sendData['text'] = $this->getMenuNoMemberText();
             $this->sendData = $sendData;
             return $this->sendTelegramData();
         }
@@ -1021,7 +1049,7 @@ class Telegram extends Model
 
         $this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
         if (empty($this->callPersonData)) {
-            $sendData['text'] = $this->getMenuNoMemberText();
+            $sendData['text'] = $this->getEnableNoMemberText();
             $this->sendData = $sendData;
             return $this->sendTelegramData();
         }
@@ -1029,7 +1057,7 @@ class Telegram extends Model
         $this->language = $this->callPersonData->language;
         $this->calledPersonData = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
         if (empty($this->calledPersonData)) {
-            $sendData['text'] = $this->enableNoMemberText();
+            $sendData['text'] = $this->getMenuNoMemberText();
             $this->sendData = $sendData;
             return $this->sendTelegramData();
         }
@@ -1037,7 +1065,7 @@ class Telegram extends Model
         $whiteRes = WhiteList::findOne(['uid' => $this->callPersonData->id, 'white_uid' => $this->calledPersonData->id]);
         if ($whiteRes) {
             $res = $whiteRes->delete();
-            $res ? ($sendData['text'] = $this->getUnbindSuccessText()) : ($sendData['text'] = $this->unbindFailureText());
+            $res ? ($sendData['text'] = $this->getUnbindSuccessText()) : ($sendData['text'] = $this->getUnbindFailureText());
         } else {
             $sendData['text'] = $this->getUnbindNotText();
         }
@@ -1066,7 +1094,7 @@ class Telegram extends Model
 
         $this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
         if (empty($this->callPersonData)) {
-            $sendData['text'] = $this->getMenuNoMemberText();
+            $sendData['text'] = $this->getEnableNoMemberText();
             $this->sendData = $sendData;
             return $this->sendTelegramData();
         }
@@ -1074,7 +1102,7 @@ class Telegram extends Model
         $this->language = $this->callPersonData->language;
         $this->calledPersonData = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
         if (empty($this->calledPersonData)) {
-            $sendData['text'] = $this->enableNoMemberText();
+            $sendData['text'] = $this->getMenuNoMemberText();
             $this->sendData = $sendData;
             return $this->sendTelegramData();
         }
@@ -1114,7 +1142,7 @@ class Telegram extends Model
 
         $this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
         if (empty($this->callPersonData)) {
-            $sendData['text'] = $this->getMenuNoMemberText();
+            $sendData['text'] = $this->getEnableNoMemberText();
             $this->sendData = $sendData;
             return $this->sendTelegramData();
         }
@@ -1122,7 +1150,7 @@ class Telegram extends Model
         $this->language = $this->callPersonData->language;
         $this->calledPersonData = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
         if (empty($this->calledPersonData)) {
-            $sendData['text'] = $this->enableNoMemberText();
+            $sendData['text'] = $this->getMenuNoMemberText();
             $this->sendData = $sendData;
             return $this->sendTelegramData();
         }
@@ -1130,9 +1158,9 @@ class Telegram extends Model
         $blackRes = BlackList::findOne(['uid' => $this->callPersonData->id, 'black_uid' => $this->calledPersonData->id]);
         if ($blackRes) {
             $res = $blackRes->delete();
-            $res ? ($sendData['text'] = '解除黑名单成功!') : ($sendData['text'] = '解除黑名单失败!');
+            $res ? ($sendData['text'] = $this->getUnlockBlackListSuccessText()) : ($sendData['text'] = $this->getUnlockBlackListFailureText());
         } else {
-            $sendData['text'] = '不在白名单!';
+            $sendData['text'] = $this->getNotInBlackList();
         }
 
 
