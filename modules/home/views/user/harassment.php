@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\modules\admin\models\User */
 /* @var $form yii\widgets\ActiveForm */
-$this->title = '防骚扰';
+$this->title = '参数设置';
 $this->params['breadcrumbs'][] = $this->title ;
 ?>
 <div class="user-harassment">

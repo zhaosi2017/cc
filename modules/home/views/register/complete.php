@@ -13,7 +13,7 @@ $this->title = '注册成功';
             <h1 class="logo-name">&nbsp;</h1>
 
         </div>
-        <h3>注册成功</h3>
+        <h2>注册成功</h2>
 
         <blockquote class="text-left" style="border: 0;">
             <p>请您牢记您的邮箱账号和密码！！！</p>

@@ -25,6 +25,8 @@ $actionId = Yii::$app->requestedAction->id;
         'rowOptions' => function($model) {
             return ['id' => 'tr_'.$model->id, 'class' => '_tr'];
         },
+        'headerRowOptions'=>['class'=>'text-center'],
+        'tableOptions'=>['class' => 'table table-striped table-bordered','style'=>'text-align:center;'],
         'pager'=>[
             'firstPageLabel'=>"首页",
             'prevPageLabel'=>'上一页',
@@ -33,18 +35,19 @@ $actionId = Yii::$app->requestedAction->id;
             'maxButtonCount' => 9,
         ],
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn', 'header' => '序号'],
-            'active_account',
-            'active_nickname',
-            'contact_number',
-            'unactive_account',
-            'unactive_nickname',
-            'typeData',
-            'unactive_contact_number',
-            'statusData',
+            ['class' => 'yii\grid\SerialColumn', 'header' => '序号', 'headerOptions'=>['class'=>'text-center']],
+            ['attribute' =>'active_account' , 'headerOptions'=>['class'=>'text-center']],
+            ['attribute' =>'active_nickname' , 'headerOptions'=>['class'=>'text-center']],
+            ['attribute' =>'contact_number' , 'headerOptions'=>['class'=>'text-center']],
+            ['attribute' =>'unactive_account' , 'headerOptions'=>['class'=>'text-center']],
+            ['attribute' =>'unactive_nickname' , 'headerOptions'=>['class'=>'text-center']],
+            ['attribute' =>'typeData' , 'headerOptions'=>['class'=>'text-center']],
+            ['attribute' =>'unactive_contact_number' , 'headerOptions'=>['class'=>'text-center']],
+            ['attribute' =>'statusData' , 'headerOptions'=>['class'=>'text-center']],
             [
                 'attribute' => 'call_time',
                 'format'=>['date', 'php:Y-m-d H:i:s'],
+                'headerOptions'=>['class'=>'text-center']
             ],
         ],
     ]);
