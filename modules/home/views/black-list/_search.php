@@ -23,6 +23,8 @@ use yii\widgets\ActiveForm;
                     [
                         1 => '黑名单账号',
                         // 2 => '黑名单电话',
+                        2=>'telegram',
+                        3=>'potato'
                     ],
                     ['prompt' => '全部']
                 )->label(false) ?>

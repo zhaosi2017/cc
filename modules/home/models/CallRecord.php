@@ -100,6 +100,13 @@ class CallRecord extends \app\models\CActiveRecord
         ];
     }
 
+    public function getStatusListBySearch(){
+        return [
+            '0' => '完成',
+            '4' => '失败',
+        ];
+    }
+
     public function getStatusData()
     {
         $statusArr = $this->getStatusList();

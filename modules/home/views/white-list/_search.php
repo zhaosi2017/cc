@@ -21,8 +21,10 @@ use yii\widgets\ActiveForm;
             <div >
                  <?= $form->field($model, 'search_type')->dropDownList(
                 [
-                    1 => '白名单账号',
+                    1 => Yii::t('app/search', '白名单账号'),
                     // 2 => '白名单电话',
+                    2=>'telegram',
+                    3=>'potato'
                 ],
                 ['prompt' => '全部']
                 )->label(false) ?>

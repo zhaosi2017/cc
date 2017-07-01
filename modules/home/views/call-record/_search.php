@@ -30,7 +30,7 @@ use yii\widgets\ActiveForm;
                 $('#callrecordsearch-call_time_end').val('');
             ">清除时间</a>
             &nbsp;&nbsp;
-            <?= $form->field($model,'status')->dropDownList($model->getStatusList(),['prompt'=>'全部','onchange'=>'
+            <?= $form->field($model,'status')->dropDownList($model->getStatusListBySearch(),['prompt'=>'全部','onchange'=>'
                 $("#search_hide").click();
             '])->label('呼叫状态：') ?>
         </div>

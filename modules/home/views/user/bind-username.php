@@ -22,8 +22,8 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 
     <?= $form->field($model, 'username',[
-        'template' => "{label}\n<div class=\"col-sm-3\"> {input}  </div> <span class=\"col-sm-2 \">*请输入用户名</span> \n<br><div style=\"height:20px;\"></div><label class = \"col-sm-1 \"></label><div style=\" width: 67%;\"><span style=\"\">{error}</span></div>",
-    ])->textInput() ?>
+        'template' => "{label}\n<div class=\"col-sm-3\"> {input}  </div> <span class=\"col-sm-2 \" style=\" padding-top:9px;\">*请输入用户名</span> \n<br><div style=\"height:20px; \"></div><label class = \"col-sm-1 \"></label><div style=\" width: 67%; \"><span style=\" padding-top:8px;\">{error}</span></div>",
+    ])->textInput()->label('用户名',['style'=>'font-size: 17px;padding-top: 5px;']) ?>
 
     <br>
     <div class="form-group">

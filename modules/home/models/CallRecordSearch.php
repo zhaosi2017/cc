@@ -59,7 +59,12 @@ class CallRecordSearch extends CallRecord
     {
         $recordStatus = '1';
         $uid = Yii::$app->user->id;
-        $query = CallRecord::find()->where(['record_status' => $recordStatus, 'active_call_uid' => $uid])->orWhere(['record_status' => $recordStatus, 'unactive_call_uid' => $uid])->orderBy('call_time desc');
+        $query = CallRecord::find()->where(['record_status' => $recordStatus,
+                                            'active_call_uid' => $uid ,
+                                            ])
+                                   ->orWhere(['record_status' => $recordStatus,
+                                              'unactive_call_uid' => $uid])
+                                   ->orderBy('call_time desc');
 
         // add conditions that should always apply here
         $dataProvider = new ActiveDataProvider([
@@ -87,7 +92,7 @@ class CallRecordSearch extends CallRecord
             'status' => $this->status,
             'call_time' => $this->call_time,
         ]);
-
+        $query->andFilterWhere(['in', 'status', array_flip($this->getStatusListBySearch())]);   //限定只能查询页面上允许的状态
 
         if(empty($this->call_time_start) && !empty($this->call_time_end))
         {
