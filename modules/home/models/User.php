@@ -32,6 +32,7 @@ use yii\web\IdentityInterface;
  * @property string $login_ip
  * @property integer $role_id
  * @property integer $status
+ * @property string $language
  */
 class User extends CActiveRecord implements IdentityInterface
 {
@@ -108,6 +109,7 @@ class User extends CActiveRecord implements IdentityInterface
             ['account','checkAccount','on'=>'bind-email'],
             ['account','required','message'=>'邮箱不能为空','on'=>'bind-email'],
             ['account','email','message'=>'邮箱格式错误','on'=>'bind-email'],
+
         ];
     }
 
@@ -146,6 +148,7 @@ class User extends CActiveRecord implements IdentityInterface
             'harassment'=>['un_call_number','un_call_by_same_number','long_time'],
             'bind-username'=>['username'],
             'bind-email'=>['account'],
+            'change-language'=>['language'],
         ];
         return array_merge($scenarios,$res);
     }

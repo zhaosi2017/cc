@@ -19,4 +19,11 @@ return [
     'login_flag_time3'=> 86400,
     'telegram_name' => 'callu_bot',
     'potato_name' =>'callu_bot',
+    'languages'=>[
+        'zh-CN'=>'Chinese',
+        'en-US'=>'English',
+        'zh-TW'=>'Traditional',//繁体中文
+        'ko-KR'=>'Korean',
+        'ja-JP'=>'Japan'
+    ]
 ];

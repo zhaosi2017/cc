@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
     <div>
-        <p style="margin-left: 10%;font-size: 13px;font-weight: 700;">操作步骤：</p>
+        <p style="margin-left: 160px;font-size: 13px;font-weight: 700;">操作步骤：</p>
     </div>
     <div class="form-group" style="margin-left: 16.6%;">
 
@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="form-group m-b-lg">
         <div class="col-sm-6 col-sm-offset-2">
-            <?= Html::submitButton($isModify ? '修改　' :'绑定', ['class' => 'btn btn-primary button-new-color']) ?>
+            <?= Html::submitButton($isModify ? '修改　' :'绑定', ['class' => 'btn btn-primary button-new-color','style'=>'width: 325px; margin-left: -10px;']) ?>
         </div>
     </div>
 

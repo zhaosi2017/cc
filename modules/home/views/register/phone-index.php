@@ -79,7 +79,7 @@ $this->title = '注册';
             </div>
             <div class="col-sm-6 " style="margin-left: -12px;">
                 <div class="form-group" style="    ">
-                <input type="button" id="count-down" class="form-control"  style="" onclick="
+                <input type="button" id="count-down" class="form-control"  style="background-color: #39b5e7;color: white;" onclick="
                     if($('#phoneregisterform-country_code').val() == ''){
                         alert('国码不能为空');
                         return false;

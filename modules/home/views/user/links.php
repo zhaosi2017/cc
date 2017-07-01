@@ -41,8 +41,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php echo  $phone->phone_country_code.' -- '.$phone->user_phone_number;?>
             </div>
             <div class="col-xs-4">
-                <a href="<?php echo Url::to(['/home/user/set-phone-number' ,'phone_number'=>$phone->user_phone_number]) ?>" >修改</a>
-                <a href="<?php echo Url::to(['/home/user/delete-number', 'type'=>'phone_number', 'phone_number'=>$phone->user_phone_number , 'country_code'=>$phone->phone_country_code]) ?>" data-method="post" data-confirm="你确定要删除吗?" >删除</a>
+                <a href="<?php echo Url::to(['/home/user/set-phone-number' ,'phone_number'=>$phone->user_phone_number]) ?>"
+                   style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px"
+                >修改</a>
+                <a  href="<?php echo Url::to(['/home/user/delete-number', 'type'=>'phone_number', 'phone_number'=>$phone->user_phone_number , 'country_code'=>$phone->phone_country_code]) ?>" data-method="post" data-confirm="你确定要删除吗?"
+                    style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px"
+                >删除</a>
             </div>
             </div>
          <?php   }
@@ -80,8 +84,12 @@ position: relative;
 
             </div>
             <div class="col-xs-4">
-                <a href="<?php echo Url::to(['/home/user/add-urgent-contact-person', 'modify' => '1' , 'id'=>$contact->id]) ?>" >修改</a>
-                <a href="<?php echo Url::to(['/home/user/delete-urgent-contact-person', 'type'=>'1' , 'id'=>$contact->id]) ?>" data-method="post" data-confirm="你确定要删除吗?"  >删除</a>
+                <a href="<?php echo Url::to(['/home/user/add-urgent-contact-person', 'modify' => '1' , 'id'=>$contact->id]) ?>"
+                   style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px"
+                >修改</a>
+                <a href="<?php echo Url::to(['/home/user/delete-urgent-contact-person', 'type'=>'1' , 'id'=>$contact->id]) ?>" data-method="post" data-confirm="你确定要删除吗?"
+                   style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px"
+                >删除</a>
 
             </div>
         </div>

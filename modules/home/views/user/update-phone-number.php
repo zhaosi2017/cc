@@ -10,11 +10,6 @@ use yii\captcha\Captcha;
 $this->title = '修改手机';
 ?>
 <div class="middle-box text-center loginscreen  animated fadeInDown">
-    <div>
-
-
-
-
 
 
 
@@ -41,26 +36,25 @@ $this->title = '修改手机';
                     ],
                 ]); ?>
 
-                <div class="row">
-                    <div class="col-sm-6 " style="margin-left: -12px;">
-                        <?= $forms->field($model, 'country_code')->textInput([
-                            'autofocus' => true,
-                            'placeholder'=>'国码',
-                            'size'=>5,
-                        ])->label(false) ?>
-                    </div>
-                    <div  class="col-sm-6" style="display: inline-block;margin-left: 10px;">
-                        <?= $forms->field($model, 'phone')->textInput([
-                            'autofocus' => true,
-                            'placeholder'=>'电话号码',
-                        ])->label(false) ?>
-                    </div>
-
-
-
-
-                    <div class="row" style="margin-top:73px; ">
+                    <div class="row">
                         <div class="col-sm-6 " style="margin-left: -12px;">
+                            <?= $forms->field($model, 'country_code')->textInput([
+                                'autofocus' => true,
+                                'placeholder'=>'国码',
+                                'size'=>5,
+                            ])->label(false)->input('', ['style'=>'width:70px']) ?>
+                        </div>
+                        <div  class="col-sm-6" style="display: inline-block;margin-left: 10px;">
+                            <?= $forms->field($model, 'phone')->textInput([
+                                'autofocus' => true,
+                                'placeholder'=>'电话号码',
+                            ])->label(false) ?>
+                        </div>
+                    </div>
+
+
+                    <div class="row" style="margin-top:15px; ">
+                        <div class="col-sm-6 " style="margin-left: -23px;">
                             <?php echo $forms->field($model, 'code', [
                                 'template' => "{label}\n<div class='m-l-sm'>{input}\n<span style=\"height:28px;\" class=\"help-block m-b-none\">{error}</span></div>",
                             ])->widget(Captcha::className(),[
@@ -71,9 +65,9 @@ $this->title = '修改手机';
                                 ->label(false)
                             ?>
                         </div>
-                        <div class="col-sm-6 " style="margin-left: -12px;">
+                        <div class="col-sm-6 " style="margin-left: 12px;">
                             <div class="form-group" style="    ">
-                                <input type="button" id="count-down" class="form-control"  style="" onclick="
+                                <input type="button" id="count-down" class="form-control"  onclick="
                                     if($('#phoneregisterform-country_code').val() == ''){
                                     alert('国码不能为空');
                                     return false;
@@ -107,47 +101,21 @@ $this->title = '修改手机';
                                     }
                                     };
                                     var dt = self.setInterval(countDown,1000);
-                                    " value="获取验证码">
+                                    " value="获取验证码" style="background-color: #39b5e7;color: white;">
                                 <div class="help-block"></div>
                             </div>
                         </div>
                     </div>
 
 
-
-
-                    <input type="button" id="phoneregisterButton" class="btn btn-primary block full-width m-b button-new-color"
-                           onclick="
-//            var phonepatter = /^[0-9]{2,11}$/;
-//
-//            var phone = $('#phoneregisterform-phone').val().trim();
-//
-//
-//            if( phone != ''
-//                && phonepatter.test(phone)
-//                ){
-                $('#register-phone').submit();
-//                $('#phoneregisterButton').attr('disabled','disabled');
-//            }
-
-                " value="下一步">
-
+                    <div class="row">
+                        <input type="button" id="phoneregisterButton" class="btn btn-primary block full-width m-b button-new-color"
+                               onclick="$('#register-phone').submit();"
+                               value="提交" />
+                    </div>
                     <?php ActiveForm::end(); ?>
 
-
-                </div>
-
             </div>
-
-        </div>
-
-
-
-
-
-
-
-
     </div>
 </div>
 

@@ -5,7 +5,7 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\captcha\Captcha;
 
-$this->title = '登录';
+$this->title = '绑定邮箱';
 ?>
 <div class="middle-box text-center   animated fadeInDown" style="margin-top: 0px !important;">
     <div>
@@ -22,7 +22,8 @@ $this->title = '登录';
         <?php $form = ActiveForm::begin([
             'id' => 'verify-form',
             'action' => 'bind-email-code',
-            'options'=>['class'=>'m-t text-left'],
+            'options'=>['class'=>'m-t text-left','style'=>"width: 350px;
+    margin-left: 18px;"],
         ]); ?>
 
         <?= $form->field($model, 'username')->hiddenInput(['value' => isset($model->username) ? $model->username : ''])->label(false) ?>
