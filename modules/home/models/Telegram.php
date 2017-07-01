@@ -641,7 +641,7 @@ class Telegram extends Model
         } else {
             if (empty($this->calledPersonData)) {
                 $sendData['chat_id'] = $this->telegramUid;
-                $sendData['text'] = '他/她不是我们系统会员，不能执行该操作!';
+                $sendData['text'] = $this->menuNoMemberText;
                 $this->sendData = $sendData;
                 return $this->sendTelegramData();
             }
