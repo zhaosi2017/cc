@@ -58,4 +58,21 @@ class GController extends Controller
         exit(json_encode($response, JSON_UNESCAPED_UNICODE));
     }
 
+
+    public function beforeAction($event)
+    {
+
+
+        if (!Yii::$app->user->isGuest)
+        {
+            $identy = Yii::$app->user->identity;
+
+            Yii::$app->language = $identy->language;
+        }else{
+            Yii::$app->language = isset($_SESSION['language'])? $_SESSION['language']:'zh-CN';
+        }
+
+        return parent::beforeAction($event);
+    }
+
 }

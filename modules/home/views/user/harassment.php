@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\modules\admin\models\User */
 /* @var $form yii\widgets\ActiveForm */
-$this->title = '参数设置';
+$this->title = Yii::t('app/harassment','Param settings');
 $this->params['breadcrumbs'][] = $this->title ;
 ?>
 <div class="user-harassment">
@@ -25,25 +25,25 @@ $this->params['breadcrumbs'][] = $this->title ;
         ])->hiddenInput(['readonly' => 'readonly'])->label(false) ?>
 
         <?= $form->field($model, 'un_call_number',[
-           'template' => "{label}<div class=\"row\"><div style=\"display:inline-block\">{input}</div><div style=\"display:inline-block\"><span >*请设置固定时间内被叫次数</span></div></div>\n<div><span class=\"help-block m-b-none\">{error}</span></div>",
+           'template' => "{label}<div class=\"row\"><div style=\"display:inline-block\">{input}</div><div style=\"display:inline-block\"><span >&nbsp;&nbsp; *".Yii::t('app/harassment','Please set the number of times to be called in the fixed time')."</span></div></div>\n<div><span class=\"help-block m-b-none\">{error}</span></div>",
                 
                 
         ])->textInput() ?>
 
         <?= $form->field($model, 'un_call_by_same_number',[
-           'template' => "{label}<div class=\"row\"><div style=\"display:inline-block\">{input}</div><div style=\"display:inline-block\"><span >*请设置用户固定时间内被同一人呼叫次数</span></div></div>\n<div><span class=\"help-block m-b-none\">{error}</span></div>",
+           'template' => "{label}<div class=\"row\"><div style=\"display:inline-block\">{input}</div><div style=\"display:inline-block\"><span >&nbsp;&nbsp;*".Yii::t('app/harassment','Please set the number of times a user has been called by the same person within a fixed time')."</span></div></div>\n<div><span class=\"help-block m-b-none\">{error}</span></div>",
                 
                 
         ])->textInput() ?>
 
         <?= $form->field($model, 'long_time',[
 
-                'template' => "{label}<div class=\"row\"><div style=\"display:inline-block\">{input}</div><div style=\"display:inline-block\"><span >*请设置固定时间,单位：分，此时间将影响被叫次数和被同一呼叫次数</span></div></div>\n<div><span class=\"help-block m-b-none\">{error}</span></div>",
+                'template' => "{label}<div class=\"row\"><div style=\"display:inline-block\">{input}</div><div style=\"display:inline-block\"><span >&nbsp;&nbsp;*".Yii::t('app/harassment','Please set the fixed time, unit: minutes, this time will affect the number of calls and the same number of calls')."</span></div></div>\n<div><span class=\"help-block m-b-none\">{error}</span></div>",
               
         ])->textInput() ?>
 
         <div class="form-group">
-           <div class="col-sm-2"></div><div><button type="submit" class="btn btn-primary button-new-color" style="width: 174px;">完成</button>    </div>
+           <div class="col-sm-2"></div><div><button type="submit" class="btn btn-primary button-new-color" style="width: 174px;"><?= Yii::t('app/harassment','Finshed')?></button>    </div>
                      
         </div>
 

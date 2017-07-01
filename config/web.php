@@ -3,7 +3,7 @@
 $params = require(__DIR__ . '/params.php');
 $config = [
     'id' => 'basic',
-    'language'=>'zh-CN',
+//    'language'=>'zh-CN',
     'timeZone' => 'Asia/Phnom_Penh',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
@@ -18,6 +18,8 @@ $config = [
                     'fileMap' => [
                         'app' => 'app.php',
                         'app/index' => 'index.php',
+                        'app/call-record/index'=>'call-record/index.php',
+                        'app/harassment'=>'harassment/index.php'
                     ],
                     'on missingTranslation' => ['app\modules\home\controllers\TranslationEventHandler', 'handleMissingTranslation']
                 ],
