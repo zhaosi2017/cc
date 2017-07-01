@@ -43,8 +43,16 @@ class Telegram extends Model
     private $unblackText = "解除黑名单";
     private $whiteSwitchText = '开启白名单';
     private $unwhiteSwitchText = '关闭白名单';
-    private $menuShareText = "请先分享自己的名片到机器人，完成绑定操作!";
-    private $menuNoMemberText = "He is not a member of our system and you can not perform this operation!";
+    private $menuShareText = "Please share your own business card to the robot, complete the binding operation.";
+    private $menuNoMemberText = "He is not a member of our system and you can not perform this operation.";
+    private $enableNoMemberText = "You are not a member of our system and can not perform this operation.";
+    private $enableWhiteText = "White List has been turned on.";
+    private $enableWhiteSuccessText = "Open white list function successfully.";
+    private $enableWhiteFailureText = "Open whitelist failed.";
+    private $disableWhiteText = "Has closed the whitelist function.";
+    private $disableWhiteSuccessText = "Close White List Function successfully.";
+    private $disableWhiteFailureText = "Close whitelist failed.";
+
 
     private $code;
     private $bindCode;
@@ -251,8 +259,8 @@ class Telegram extends Model
      */
     public function setLanguage($value)
     {
-        $language = explode('-', $value);
-        if (is_array($language)) {
+        if (!stripos($value, 'zh')) {
+            $language = explode('-', $value);
             $this->language = $language[0];
         } else {
             $this->language = $value;
@@ -553,7 +561,7 @@ class Telegram extends Model
      */
     public function getMenuShareText()
     {
-        return $this->menuShareText;
+        return Yii::t('app/model/telegram', $this->menuShareText, array(), $this->language);
     }
 
     /**
@@ -563,7 +571,63 @@ class Telegram extends Model
     {
         return Yii::t('app/model/telegram', $this->menuNoMemberText, array(), $this->language);
     }
-    
+
+    /**
+     * @return string
+     */
+    public function getEnableNoMemberText()
+    {
+        return Yii::t('app/model/telegram', $this->enableNoMemberText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnableWhiteText()
+    {
+        return Yii::t('app/model/telegram', $this->enableWhiteText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnableWhiteSuccessText()
+    {
+        return Yii::t('app/model/telegram', $this->enableWhiteSuccessText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnableWhiteFailureText()
+    {
+        return Yii::t('app/model/telegram', $this->enableWhiteFailureText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getDisableWhiteText()
+    {
+        return Yii::t('app/model/telegram', $this->disableWhiteText(), array(), $this->language);
+    }
+
+    /**
+     * @return string.
+     */
+    public function getDisableWhiteSuccessText()
+    {
+        return Yii::t('app/model/telegram', $this->disableWhiteSuccessText, array(), $this->language);
+    }
+
+    /**
+     * @return string.
+     */
+    public function getDisableWhiteFailureText()
+    {
+        return Yii::t('app/model/telegram', $this->disableWhiteFailureText, array(), $this->language);
+    }
+
     /**
      * 欢迎.
      */
@@ -610,10 +674,9 @@ class Telegram extends Model
         } elseif (empty($this->callPersonData) && ($this->telegramUid != $this->telegramContactUid)) {
             $this->sendData = [
                 'chat_id' => $this->telegramUid,
-                'text' => '请先分享自己的名片到机器人，完成绑定操作!',
+                'text' => $this->getMenuShareText(),
             ];
         } elseif (!empty($this->callPersonData) && ($this->telegramUid == $this->telegramContactUid)){
-            $this->language = $this->callPersonData->language;
             if ($this->callPersonData->whitelist_switch == 0) {
                 $whiteMenu = [
                     'text' => $this->whiteSwitchText,
@@ -640,8 +703,9 @@ class Telegram extends Model
             ];
         } else {
             if (empty($this->calledPersonData)) {
+                $this->language = $this->callPersonData->language;
                 $sendData['chat_id'] = $this->telegramUid;
-                $sendData['text'] = $this->menuNoMemberText;
+                $sendData['text'] = $this->getMenuNoMemberText();
                 $this->sendData = $sendData;
                 return $this->sendTelegramData();
             }
@@ -717,18 +781,19 @@ class Telegram extends Model
 
         $this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
         if (empty($this->callPersonData)) {
-            $sendData['text'] = '您不是我们系统会员，不能执行该操作!';
+            $sendData['text'] = $this->getEnableNoMemberText();
             $this->sendData = $sendData;
             return $this->sendTelegramData();
         }
 
 
+        $this->language = $this->callPersonData->language;
         if ($this->callPersonData->whitelist_switch == 1) {
-            $sendData['text'] = '已经开启了白名单功能!';
+            $sendData['text'] = $this->getEnableWhiteText();
         } else {
             $this->callPersonData->whitelist_switch=1;
             $res = $this->callPersonData->save();
-            $res ? ($sendData['text'] = '开启白名单功能成功!') : ($sendData['text'] = '开启白名单功能失败!');
+            $res ? ($sendData['text'] = $this->enableWhiteSuccessText()) : ($sendData['text'] = $this->enableWhiteSuccessText());
         }
 
         $this->sendData = $sendData;
@@ -754,18 +819,19 @@ class Telegram extends Model
 
         $this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
         if (empty($this->callPersonData)) {
-            $sendData['text'] = '您不是我们系统会员，不能执行该操作!';
+            $sendData['text'] = $this->getEnableNoMemberText();
             $this->sendData = $sendData;
             return $this->sendTelegramData();
         }
 
 
+        $this->language = $this->callPersonData->language;
         if ($this->callPersonData->whitelist_switch == 0) {
-            $sendData['text'] = '已经关闭了白名单功能!';
+            $sendData['text'] = $this->getDisableWhiteText();
         } else {
             $this->callPersonData->whitelist_switch=0;
             $res = $this->callPersonData->save();
-            $res ? ($sendData['text'] = '关闭白名单功能成功!') : ($sendData['text'] = '关闭白名单功能失败!');
+            $res ? ($sendData['text'] = $this->disableWhiteSuccessText()) : ($sendData['text'] = $this->disableWhiteFailureText());
         }
 
         $this->sendData = $sendData;
@@ -790,15 +856,16 @@ class Telegram extends Model
         ];
 
         $this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
+        $this->language = $this->callPersonData->language;
         if (empty($this->callPersonData)) {
-            $sendData['text'] = '您不是我们系统会员，不能执行该操作!';
+            $sendData['text'] = $this->enableNoMemberText();
             $this->sendData = $sendData;
             return $this->sendTelegramData();
         }
 
         $this->calledPersonData = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
         if (empty($this->calledPersonData)) {
-            $sendData['text'] = '他/她不是我们系统会员，不能执行该操作!';
+            $sendData['text'] = $this->menuNoMemberText();
             $this->sendData = $sendData;
             return $this->sendTelegramData();
         }
