@@ -124,7 +124,8 @@ $localLanguage = $identity->language;
 
 
 <div style="background-color: white;height: 105px;">
-    <div style="display: inline-block;">
+    <div style="display: inline-block;    position: relative;
+    top: -8px;">
         <div style="display: inline-block;margin-left: 67px;"><img src="/img/logo1.png" width="52" alt=""></div>
     </div>
 
