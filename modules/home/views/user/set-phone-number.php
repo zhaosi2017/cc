@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row form-inline">
         <div class="col-sm-2 text-right">
             <div class="form-group">
-                <label for="task-customer-category" class="col-sm-12 control-label">电话号码</label>
+                <label for="task-customer-category" class="col-sm-12 control-label" style="padding-top: 7px;">电话号码</label>
             </div>
         </div>
         <div class="col-sm-10">

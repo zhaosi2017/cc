@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
          'template' => "{label}\n<div class=\"col-sm-3\">{input}</div><span>
 
 *请输入您从telegram上获取的绑定验证码</span>\n<span class=\"help-block m-b-none\" style=\"margin-top:17px;margin-left:17.5%;\">{error}</span></div>",
-    ])->textInput(['placeholder' => '验证码',])->label('验证码:') ?>
+    ])->textInput(['placeholder' => '验证码',])->label('验证码:' ,['style'=>'padding-top: 9px;']) ?>
 
     <div class="form-group m-b-lg">
         <div class="col-sm-6 col-sm-offset-2">
