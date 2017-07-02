@@ -1,6 +1,6 @@
 <?php
 
-$this->title = '找回密码成功';
+$this->title = Yii::t('app/login','Retrieve password successfully');
 ?>
 <div class="middle-box text-center loginscreen  animated fadeInDown">
     <div>
@@ -9,9 +9,9 @@ $this->title = '找回密码成功';
             <h1 class="logo-name">&nbsp;</h1>
 
         </div>
-        <h3>找回密码成功</h3>
+        <h3><?= Yii::t('app/login','Retrieve password successfully')?></h3>
         <blockquote class="text-center">
-            2秒后跳转至登录页面
+            2<?= Yii::t('app/login','Seconds to jump to the login page')?>
         </blockquote>
     </div>
 </div>

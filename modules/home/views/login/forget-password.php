@@ -4,7 +4,7 @@
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
-$this->title = '忘记密码';
+$this->title = Yii::t('app/login','Forget password');
 ?>
 <div class="text-center   animated fadeInDown">
     <div>
@@ -13,14 +13,14 @@ $this->title = '忘记密码';
             <h1 class="logo-name">&nbsp;</h1>
 
         </div>
-        <h3>忘记密码</h3>
+        <h3><?= Yii::t('app/login','Forget password')?></h3>
 
         <div class="row">
             <a href="/home/login/find-password-one"><div style="display: inline-block;">
                 <img style="border: 1px solid rgb(229, 229, 229);border-bottom: 0px ;background-color: rgb(245,245,245);padding: 20px;" src="/img/find-email.png" alt="">
                 <div style="border: 1px solid rgb(229, 229, 229);border-top:0px;padding: 24px;">
-                <div><strong style="font-size: 15px;">邮箱验证</strong></div>
-                <div>通过验证注册邮箱来重置密码</div>
+                <div><strong style="font-size: 15px;"><strong><?= Yii::t('app/login','Email verification')?></strong></div>
+                <div><?= Yii::t('app/login','Reset the password by verifying the registered email')?></div>
                 </div>
             </div>
             </a>
@@ -30,8 +30,8 @@ $this->title = '忘记密码';
             <div style="display: inline-block;">
                 <img style="border: 1px solid rgb(229, 229, 229);background-color: rgb(245,245,245);padding: 20px" src="/img/find-mobile.png" alt="">
                 <div style="border: 1px solid rgb(229, 229, 229);border-top:0px;padding: 24px; ">
-                    <div><strong style="font-size: 15px;">手机验证</strong></div>
-                    <div>通过验证绑定手机来重置密码</div>
+                    <div><strong style="font-size: 15px;"><?= Yii::t('app/login','Phone verification')?></strong></div>
+                    <div><?= Yii::t('app/login','Resets the password by verifying the binding phone')?></div>
                 </div>
             </div>
             </a>

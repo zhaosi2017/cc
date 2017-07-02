@@ -5,7 +5,7 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\captcha\Captcha;
 
-$this->title = '输入验证码';
+$this->title = Yii::t('app/login','Retrieve login password');
 ?>
 <div class="middle-box text-center loginscreen  animated fadeInDown">
     <div>
@@ -14,10 +14,10 @@ $this->title = '输入验证码';
             <h1 class="logo-name">&nbsp;</h1>
 
         </div>
-        <h3>找回登录密码</h3>
+        <h3><?= Yii::t('app/login','Retrieve login password')?></h3>
 
         <blockquote class="text-left" style="border: 0;">
-            我们已经向您的注册邮箱：<?php echo $model->username ?>发送了一封邮件,请填写收到的验证码。
+           <?= Yii::t('app/login','We have registered your email')?>：<?php echo $model->username ?><?= Yii::t('app/login','With you Sent a message Pease fill in the verification code received')?>。
         </blockquote>
 
         <?php $form = ActiveForm::begin([
@@ -29,17 +29,17 @@ $this->title = '输入验证码';
 
         <?= $form->field($model, 'username')->hiddenInput()->label(false) ?>
 
-        <?= $form->field($model, 'code',['labelOptions' => ['class' => 'col-sm-3 ','label'=>'验证码:',
+        <?= $form->field($model, 'code',['labelOptions' => ['class' => 'col-sm-3 ','label'=>Yii::t('app/login','Verification code').':',
             ],])
             ->widget(Captcha::className(),[
                 'captchaAction'=>'/home/login/captcha',
                 'template' => '{image}<div style="display: inline-block;">{input}</div>',
             ])
-            ->textInput(['autofocus' => true,'placeholder'=>'请输入验证码']);
+            ->textInput(['autofocus' => true,'placeholder'=>Yii::t('app/login','Please input code')]);
 
 
         ?>
-        <button class="btn btn-primary pull-right button-new-color">下一步</button>
+        <button class="btn btn-primary pull-right button-new-color"><?= Yii::t('app/login','Next')?></button>
 
         
 

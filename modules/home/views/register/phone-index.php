@@ -7,14 +7,14 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\captcha\Captcha;
-$this->title = '注册';
+$this->title = Yii::t('app/login','Register');
 ?>
 <div class="middle-box text-center loginscreen  animated fadeInDown">
     <div>
         <div>
             <h1 class="logo-name">&nbsp;</h1>
         </div>
-        <h3>注册个人账号</h3>
+        <h3><?= Yii::t('app/login','Register a personal account')?></h3>
 
 
 
@@ -24,8 +24,8 @@ $this->title = '注册';
 
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" ><a href="/home/register/register" >邮箱</a></li>
-                <li role="presentation" class="active"><a href="#" >电话</a></li>
+                <li role="presentation" ><a href="/home/register/register" ><?= Yii::t('app/login','Email')?></a></li>
+                <li role="presentation" class="active"><a href="#" ><?= Yii::t('app/login','Phone')?></a></li>
 
             </ul>
 
@@ -48,20 +48,20 @@ $this->title = '注册';
                     <div class="col-sm-6 " style="margin-left: -12px;">
                       <?= $forms->field($model, 'country_code')->textInput([
                         'autofocus' => true,
-                        'placeholder'=>'国码',
+                        'placeholder'=>Yii::t('app/login','Country Code'),
                         'size'=>5,
                     ])->label(false) ?>
                     </div>
                      <div  class="col-sm-6" style="display: inline-block;margin-left: 10px;">
                     <?= $forms->field($model, 'phone')->textInput([
                         'autofocus' => true,
-                        'placeholder'=>'电话号码',
+                        'placeholder'=>Yii::t('app/login','Phone number'),
                     ])->label(false) ?>
                     </div>
 
-                    <?= $forms->field($model, 'password')->passwordInput(['placeholder'=>'密码(至少8个字符,由大小写字母数字组合)'])->label(false) ?>
+                    <?= $forms->field($model, 'password')->passwordInput(['placeholder'=>Yii::t('app/login','Password  least 8  upper & lower char')])->label(false) ?>
 
-                    <?= $forms->field($model, 'rePassword')->passwordInput(['placeholder'=>'重复密码'])->label(false) ?>
+                    <?= $forms->field($model, 'rePassword')->passwordInput(['placeholder'=>Yii::t('app/login','Repeat password')])->label(false) ?>
 
 
 
@@ -73,7 +73,7 @@ $this->title = '注册';
                 'captchaAction'=>'/home/user/captcha',
                 'template' => '<div class="row"><div class="col-lg-2">{image}</div><div class="col-lg-10">{input}</div></div>',
             ])
-                ->textInput(['size' => 18,'placeholder'=>'请输入验证码'])
+                ->textInput(['size' => 18,'placeholder'=>Yii::t('app/login','Please input code')])
                 ->label(false)
             ?>
             </div>
@@ -81,11 +81,11 @@ $this->title = '注册';
                 <div class="form-group" style="    ">
                 <input type="button" id="count-down" class="form-control"  style="background-color: #39b5e7;color: white;" onclick="
                     if($('#phoneregisterform-country_code').val() == ''){
-                        alert('国码不能为空');
+                        alert('<?=Yii::t("app/login","Country code can not be empty")?>');
                         return false;
                     }
                     if($('#phoneregisterform-phone').val() == ''){
-                        alert('电话不能为空');
+                        alert('<?=Yii::t("app/login","The phone can not be empty")?>');
                         return false;
                     }
 
@@ -99,7 +99,7 @@ $this->title = '注册';
                     $.post(url, data).done(function(r) {
                         r = eval('('+ r + ')');
                         if(r.messages.status == 1){
-                            alert('你好！发送短信太频繁,请稍微休息哈');
+                            alert('<?=Yii::t("app/login","Hello there! Send text messages too often, please take a break")?>');
                         }
                     });
 
@@ -109,11 +109,11 @@ $this->title = '注册';
                             duration--;
                         }else{
                             window.clearInterval(dt);
-                            $('#count-down').attr('disabled',false).val('获取验证码');
+                            $('#count-down').attr('disabled',false).val('<?=Yii::t("app/login","Get verification code")?>');
                         }
                     };
                     var dt = self.setInterval(countDown,1000);
-                " value="获取验证码">
+                " value='<?=Yii::t("app/login","Get verification code")?>'>
                 <div class="help-block"></div>
             </div>
             </div>
@@ -141,7 +141,7 @@ $this->title = '注册';
                 $('#phoneregisterButton').attr('disabled','disabled');
             }
 
-                " value="注 册">
+                " value='<?=Yii::t("app/login","Register")?>'>
 
                     <?php ActiveForm::end(); ?>
 
@@ -158,7 +158,7 @@ $this->title = '注册';
 
 
         <p class="text-muted text-center">
-            <small>已经有账户了？</small><a href="<?php echo \yii\helpers\Url::to(['/home/login/login']) ?>">点此登录</a>
+            <small><?= Yii::t('app/login','Already have an account')?> &nbsp;？</small><a href="<?php echo \yii\helpers\Url::to(['/home/login/login']) ?>"><?= Yii::t('app/login','Sign in')?></a>
         </p>
     </div>
 </div>
