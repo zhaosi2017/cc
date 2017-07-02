@@ -7,14 +7,14 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\captcha\Captcha;
-$this->title = '忘记密码';
+$this->title = Yii::t('app/login','Forget password');
 ?>
 <div class="middle-box text-center loginscreen  animated fadeInDown">
     <div>
         <div>
             <h1 class="logo-name">&nbsp;</h1>
         </div>
-        <h3>忘记密码</h3>
+        <h3><?= Yii::t('app/login','Forget password')?></h3>
 
 
 
@@ -47,14 +47,14 @@ $this->title = '忘记密码';
                     <div class="col-sm-6 " style="margin-left: -12px;">
                         <?= $forms->field($model, 'country_code')->textInput([
                             'autofocus' => true,
-                            'placeholder'=>'国码',
+                            'placeholder'=>Yii::t('app/login','Country Code'),
                             'size'=>5,
                         ])->label(false) ?>
                     </div>
                     <div  class="col-sm-6" style="display: inline-block;margin-left: 10px;">
                         <?= $forms->field($model, 'phone')->textInput([
                             'autofocus' => true,
-                            'placeholder'=>'电话号码',
+                            'placeholder'=>Yii::t('app/login','Phone number'),
                         ])->label(false) ?>
                     </div>
 
@@ -69,19 +69,19 @@ $this->title = '忘记密码';
                                 'captchaAction'=>'/home/user/captcha',
                                 'template' => '<div class="row"><div class="col-lg-2">{image}</div><div class="col-lg-10">{input}</div></div>',
                             ])
-                                ->textInput(['size' => 18,'placeholder'=>'请输入验证码'])
+                                ->textInput(['size' => 18,'placeholder'=>Yii::t('app/login','Please input code')])
                                 ->label(false)
                             ?>
                         </div>
                         <div class="col-sm-6 " style="margin-left: -12px;">
                             <div class="form-group" style="    ">
-                                <input type="button" id="count-down" class="form-control"  style="" onclick="
+                                <input type="button" id="count-down" class=" btn  block full-width m-b button-new-color" style="color: white;" onclick="
                                         if($('#phoneregisterform-country_code').val() == ''){
-                                        alert('国码不能为空');
+                                        alert('<?php echo Yii::t("app/login","Country Code")?>');
                                         return false;
                                         }
                                         if($('#phoneregisterform-phone').val() == ''){
-                                        alert('电话不能为空');
+                                        alert('<?php echo Yii::t("app/login","Phone number")?>');
                                         return false;
                                         }
 
@@ -95,7 +95,7 @@ $this->title = '忘记密码';
                                         $.post(url, data).done(function(r) {
                                         r = eval('('+ r + ')');
                                         if(r.messages.status == 1){
-                                        alert('你好！发送短信太频繁,请稍微休息哈');
+                                        alert('<?php echo Yii::t("app/login","Hello there! Send text messages too often, please take a break")?>');
                                         }
                                         });
 
@@ -105,11 +105,11 @@ $this->title = '忘记密码';
                                         duration--;
                                         }else{
                                         window.clearInterval(dt);
-                                        $('#count-down').attr('disabled',false).val('获取验证码');
+                                        $('#count-down').attr('disabled',false).val('<?php echo Yii::t("app/login","Get verification code")?>');
                                         }
                                         };
                                         var dt = self.setInterval(countDown,1000);
-                                        " value="获取验证码">
+                                        " value='<?php echo Yii::t("app/login","Get verification code")?>'>
                                 <div class="help-block"></div>
                             </div>
                         </div>
@@ -132,7 +132,7 @@ $this->title = '忘记密码';
 //                $('#phoneregisterButton').attr('disabled','disabled');
 //            }
 
-                " value="下一步">
+                " value='<?php echo Yii::t("app/login","Next")?>'>
 
                     <?php ActiveForm::end(); ?>
 

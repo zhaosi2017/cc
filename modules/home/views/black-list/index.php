@@ -65,8 +65,9 @@ $actionId = Yii::$app->requestedAction->id;
                 'buttons' => [
                     'delete' => function($url){
                         return Html::a(Yii::t('app/harassment','Remove the blacklist'),$url,[
-                            'style' => 'color:red',
+                            'style' => 'color:white',
                             'data-method' => 'post',
+                            'class'=>'index-button-1',
                             'data' => ['confirm' => Yii::t('app/harassment','Are you sure you want to remove the blacklist?')]
                         ]);
                     },

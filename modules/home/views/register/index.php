@@ -6,14 +6,14 @@
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
-$this->title = '注册';
+$this->title = Yii::t('app/login','Register');
 ?>
 <div class="middle-box text-center loginscreen  animated fadeInDown">
     <div>
         <div>
             <h1 class="logo-name">&nbsp;</h1>
         </div>
-        <h3>注册个人账号</h3>
+        <h3><?= Yii::t('app/login','Register a personal account')?></h3>
 
 
 
@@ -23,8 +23,8 @@ $this->title = '注册';
 
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#" >邮箱</a></li>
-                <li role="presentation"><a href="/home/register/phone-index" >电话</a></li>
+                <li role="presentation" class="active"><a href="#" ><?= Yii::t('app/login','Email')?></a></li>
+                <li role="presentation"><a href="/home/register/phone-index" ><?= Yii::t('app/login','Phone')?></a></li>
 
             </ul>
 
@@ -44,12 +44,12 @@ $this->title = '注册';
 
                     <?= $form->field($model, 'username')->textInput([
                         'autofocus' => true,
-                        'placeholder'=>'账号(仅支持邮箱：如xxx@gmail.com)',
+                        'placeholder'=> Yii::t('app/login','Account only  email: eg xx@gmail.com'),
                     ])->label(false) ?>
 
-                    <?= $form->field($model, 'password')->passwordInput(['placeholder'=>'密码(至少8个字符,由大小写字母数字组合)'])->label(false) ?>
+                    <?= $form->field($model, 'password')->passwordInput(['placeholder'=>Yii::t('app/login','Password  least 8  upper & lower char')])->label(false) ?>
 
-                    <?= $form->field($model, 'rePassword')->passwordInput(['placeholder'=>'重复密码'])->label(false) ?>
+                    <?= $form->field($model, 'rePassword')->passwordInput(['placeholder'=>Yii::t('app/login','Repeat password')])->label(false) ?>
 
                     <input type="button" id="emailregisterButton" class="btn btn-primary block full-width m-b button-new-color" onclick="
             var userpatter = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
@@ -72,7 +72,7 @@ $this->title = '注册';
                 $('#registerButton').attr('disabled','disabled');
             }
 
-                " value="注 册">
+                " value=<?= Yii::t('app/login','Register')?>>
 
                     <?php ActiveForm::end(); ?>
 
@@ -97,7 +97,7 @@ $this->title = '注册';
 
 
         <p class="text-muted text-center">
-            <small>已经有账户了？</small><a href="<?php echo \yii\helpers\Url::to(['/home/login/login']) ?>">点此登录</a>
+            <small><?= Yii::t('app/login','Already have an account')?> &nbsp;？</small><a href="<?php echo \yii\helpers\Url::to(['/home/login/login']) ?>"><?= Yii::t('app/login','Login')?></a>
         </p>
     </div>
 </div>

@@ -20,6 +20,7 @@ $config = [
                         'app/index' => 'index.php',
                         'app/call-record/index'=>'call-record/index.php',
                         'app/harassment'=>'harassment/index.php',
+                        'app/login'=>'login.php',
                         'app/model/telegram' => 'telegram.php',
                         'app/user/index'=>'user/index.php',
                         'app/user/app-build'=>'user/app-build.php',

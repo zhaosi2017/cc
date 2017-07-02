@@ -7,14 +7,14 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\captcha\Captcha;
 
-$this->title = '登录';
+$this->title = Yii::t('app/login','Login');
 ?>
 <div class="middle-box text-center loginscreen  animated fadeInDown">
     <div>
         <div>
             <h1 class="logo-name">&nbsp;</h1>
         </div>
-        <h3>登录</h3>
+        <h3><?= Yii::t('app/login','Login')?></h3>
 
 
         <div>
@@ -37,10 +37,10 @@ $this->title = '登录';
 
                     <?= $form->field($model, 'username')->textInput([
                         'autofocus' => true,
-                        'placeholder'=>'邮箱／电话(不用输入国码)／用户名',
+                        'placeholder'=> Yii::t('app/login','Email/Phone/Username'),
                     ])->label(false) ?>
 
-                    <?= $form->field($model, 'pwd')->passwordInput(['placeholder'=>'密码'])->label(false) ?>
+                    <?= $form->field($model, 'pwd')->passwordInput(['placeholder'=>Yii::t('app/login','Password')])->label(false) ?>
 
 
 
@@ -49,7 +49,7 @@ $this->title = '登录';
                         ->widget(Captcha::className(), [
                             'captchaAction'=>'/home/login/captcha',
                             'template' => '<div class="row"><div style="height:30px;line-height:33px;display: inline-block;width: 120px;margin-left: 14px;" >{input}</div><div style="display: inline-block;margin-left: 95px;">{image}</div></div>',
-                            'options' => ['placeholder'=>'验证码']
+                            'options' => ['placeholder'=>Yii::t('app/login','Verification code')]
                         ])
 
 
@@ -69,7 +69,7 @@ $this->title = '登录';
 
 
 
-                    <?= Html::submitButton('登 录', ['class' => 'btn btn-primary block full-width m-b button-new-color' ,'style'=>'border-color:rgb(57,181,231)']) ?>
+                    <?= Html::submitButton(Yii::t('app/login','Login'), ['class' => 'btn btn-primary block full-width m-b button-new-color' ,'style'=>'border-color:rgb(57,181,231)']) ?>
 
                     <?php ActiveForm::end(); ?>
 
@@ -90,6 +90,6 @@ $this->title = '登录';
 
 
         <p class="text-muted text-center">
-            <a href="<?php echo \yii\helpers\Url::to(['/home/login/forget-password']) ?>"><small>忘记密码了？</small></a> | <a href="<?php echo \yii\helpers\Url::to(['/home/register/register']) ?>">注册一个新账号</a>
+            <a href="<?php echo \yii\helpers\Url::to(['/home/login/forget-password']) ?>"><small><?= Yii::t('app/login','Forget password')?>&nbsp; ？</small></a> | <a href="<?php echo \yii\helpers\Url::to(['/home/register/register']) ?>"><?= Yii::t('app/login','Sign in')?></a>
         </p>
     </div>

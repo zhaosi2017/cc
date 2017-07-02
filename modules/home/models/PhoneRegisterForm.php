@@ -91,15 +91,16 @@ class PhoneRegisterForm extends Model
 
     public function validateExist($attribute)
     {
-        $rows = UserPhone::find()->select(['user_phone_number'])->indexBy('id')->column();
-
-        $accounts = [];
-        foreach ($rows as $i => $v)
+        $user = User::findOne(['phone_number'=>$this->phone]);
+        if(!empty($user))
         {
-            $accounts[] = $v;
+            $this->addError($attribute, '此电话号码已被占用');
+            return ;
         }
+        $userPhone = UserPhone::findOne(['user_phone_number'=>$this->phone]);
 
-        if(in_array($this->phone, $accounts)){
+
+        if(!empty($userPhone)){
             $this->addError($attribute, '此电话号码已被占用');
         }
     }
