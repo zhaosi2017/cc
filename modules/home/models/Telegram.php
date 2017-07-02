@@ -14,10 +14,10 @@ class Telegram extends Model
 
     const CODE_LENGTH = 5;
 
-    private $telegramText = '操作菜单';
-    private $startText = '开始操作, 请稍后!';
-    private $wellcomeText = '欢迎';
-    private $keyboardText = '分享自己名片';
+    private $telegramText = 'Operation menu.';
+    private $startText = 'Start the operation, please wait later.';
+    private $wellcomeText = 'welcome!';
+    private $keyboardText = 'Share your contact card.';
     private $callText = "呼叫";
     private $firstText = '/start';
     private $webhook;
@@ -43,7 +43,7 @@ class Telegram extends Model
     private $unblackText = "解除黑名单";
     private $whiteSwitchText = '开启白名单';
     private $unwhiteSwitchText = '关闭白名单';
-    private $menuShareText = "Please share your own business card to the robot, complete the binding operation.";
+    private $menuShareText = "Please share your own contact card to the robot, complete the binding operation.";
     private $menuNoMemberText = "He is not a member of our system and you can not perform this operation.";
     private $enableNoMemberText = "You are not a member of our system and can not perform this operation.";
     private $enableWhiteText = "White List has been turned on.";
@@ -285,7 +285,7 @@ class Telegram extends Model
      */
     public function getTelegramText()
     {
-        return $this->telegramText;
+        return Yii::t('app/model/telegram', $this->telegramText, array(), $this->language);
     }
 
     /**
@@ -622,7 +622,7 @@ class Telegram extends Model
      */
     public function getDisableWhiteText()
     {
-        return Yii::t('app/model/telegram', $this->disableWhiteText(), array(), $this->language);
+        return Yii::t('app/model/telegram', $this->disableWhiteText, array(), $this->language);
     }
 
     /**
@@ -1177,7 +1177,7 @@ class Telegram extends Model
         if ($this->telegramUid != $this->telegramContactUid) {
             $this->sendData = [
                 'chat_id' => $this->telegramUid,
-                'text' => '请先分享自己的名片到机器人，完成绑定操作!',
+                'text' => $this->getMenuShareText(),
             ];
         } else {
             $this->setCode();

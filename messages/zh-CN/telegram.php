@@ -7,7 +7,7 @@
  */
 return [
     'He is not a member of our system and you can not perform this operation.' => '他/她不是我们系统会员，不能执行该操作.',
-    'Please share your own business card to the robot, complete the binding operation.' => '请先分享自己的名片到机器人，完成绑定操作.',
+    'Please share your own contact card to the robot, complete the binding operation.' => '请先分享自己的名片到机器人，完成绑定操作.',
     'You are not a member of our system and can not perform this operation.' => '您不是我们系统会员，不能执行该操作.',
     'White List has been turned on.' => '已经开启了白名单功能.',
     'Open white list function successfully.' => '开启白名单功能成功.',
@@ -27,4 +27,8 @@ return [
     'Unlock the blacklist successfully.' => '解除黑名单成功.',
     'Unlock the blacklist failed.' => '解除黑名单失败.',
     'Not in blacklist.' => '不在黑名单.',
+    'Operation menu.' =>  '操作菜单.',
+    'Start the operation, please wait later.' => '开始操作, 请稍后.',
+    'welcome!' => '欢迎!',
+    'Share your contact card.' => '分享自己名片.'
 ];
