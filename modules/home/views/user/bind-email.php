@@ -17,15 +17,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'options'=>['class'=>'m-t text-left'],
         'fieldConfig' => [
             'template' => "{label}\n<div class=\"col-sm-5\">{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
-            'labelOptions' => ['class' => 'col-sm-1 '],
+            'labelOptions' => ['class' => 'col-sm-1 text-right'],
         ],
     ]); ?>
 
     <?= $form->field($model, 'account',[
-        'template' => "{label}\n<div class=\"col-sm-3\"> {input}  </div> <span class=\"col-sm-2 \" style='padding-top: 9px'>*".
+        'template' => "{label}\n<div class=\"col-sm-3\"> {input}  </div> <span class=\"col-sm-3 \" style='padding-top: 9px'>*".
 
             Yii::t('app/user/bind-email' , 'Please Entry your Eamil address')
-            ."</span> \n<br><div style=\"height:20px;\"></div><label class = \"col-sm-1 \"></label><div style=\" width: 67%;\"><span style=\"\">{error}</span></div>",
+            ."</span> \n<br><div style=\"height:20px;\"></div><label class = \"col-sm-1 \"></label><div style=\" width: 67%; padding-left: 15px !important;\"><span style=\"\">{error}</span></div>",
     ])->textInput()->label(Yii::t('app/user/bind-email','Email'),['style'=>'padding-top:5px ;font-size:17px']) ?>
 
     <br>
