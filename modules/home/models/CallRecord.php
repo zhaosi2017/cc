@@ -103,7 +103,7 @@ class CallRecord extends \app\models\CActiveRecord
     public function getStatusListBySearch(){
         return [
             '0' => Yii::t('app/call-record/index','Success'),
-            '4' =>  Yii::t('app/call-record/index','Failure'),
+            '1' =>  Yii::t('app/call-record/index','Failure'),
         ];
     }
 

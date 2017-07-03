@@ -37,19 +37,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="row form-inline">
 
-        <div class="col-sm-2 text-right">
-            <div class="form-group">
-                <label for="task-customer-category" class="col-sm-12 " style="padding: 7px;"><?=  Yii::t('app/user/add-urgent-contact-person','Emergency contact phone')?></label>
-            </div>
-        </div>
 
-        <div class="col-sm-10">
+
+        <div class="col-sm-12">
            <!--  <div class="form-group">
                 <div class="col-sm-1">
                     +
                     <div class="help-block"></div>
                 </div>
             </div> -->
+            <div class="col-sm-2 text-center" style="    font-weight: 600;">
+                <?=  Yii::t('app/user/add-urgent-contact-person','Emergency contact phone')?></label>
+
+            </div>
             <?php echo $form->field($model, 'contact_country_code', [
 
                  'template' => "{label}\n<div style=\"width:130px;\">&nbsp;+{input}\n<span style=\"height:18px;\" class=\"help-block m-b-none\">{error}</span></div>",
