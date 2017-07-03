@@ -42,7 +42,8 @@ $this->title =  Yii::t('app/user/update-phone-number','Edit Phone number');
                                 'autofocus' => true,
                                 'placeholder'=>Yii::t('app/user/update-phone-number','Country code'),
                                 'size'=>5,
-                            ])->label(false)->input('', ['style'=>'width:70px']) ?>
+                                'style'=>'width:125px;',
+                            ])->label(false) ?>
                         </div>
                         <div  class="col-sm-6" style="display: inline-block;margin-left: 10px;">
                             <?= $forms->field($model, 'phone')->textInput([

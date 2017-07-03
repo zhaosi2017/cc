@@ -17,28 +17,26 @@ $this->params['breadcrumbs'][] = $this->title;
         'options'=>['class'=>'m-t text-left'],
         'fieldConfig' => [
             'template' => "{label}\n<div class=\"col-sm-5\">{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
-            'labelOptions' => ['class' => 'col-sm-1 '],
+            'labelOptions' => ['class' => 'col-sm-1 text-right'],
         ],
     ]); ?>
 
     <?= $form->field($model, 'username',[
-        'template' => "{label}\n<div class=\"col-sm-3\"> {input} 
+        'template' => "{label}\n<div class=\"col-sm-3\" style=\"margin-left: 10px; \"> {input} 
             </div> 
-                <span class=\"col-sm-2 \" style=\" padding-top:9px;\">*".
+                <span class=\"col-sm-3 \" style=\" padding-top:9px;\">*".
                     Yii::t('app/user/bind-username' , 'Please Entry your UserName')
                 ."</span> 
-                \n<br><div style=\"height:20px; \"></div><label class = \"col-sm-1 \"></label><div style=\" width: 67%; \">
+                \n<br><div style=\"height:20px; \"></div><label class = \"col-sm-1 \"></label><div style=\" width: 67%;padding-left: 31px !important; \">
                 
                  <span style=\" padding-top:8px;\">{error}</span>
                  
             </div>",
-    ])->textInput()->label(Yii::t('app/user/bind-username' ,'UserName'),['style'=>'font-size: 17px;padding-top: 5px;']) ?>
+    ])->textInput()->label(Yii::t('app/user/bind-username' ,'UserName'),['style'=>'font-size: 17px;padding-top: 5px;padding-right:2px;']) ?>
 
     <br>
     <div class="form-group">
-        <!-- <?= Html::submitButton(Yii::t('app/user/bind-username' ,'Save'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'],[
-            'template' => "<div style=\" width: 67%;margin: auto;\" >{button}</div>",
-        ]) ?> -->
+
         <div style=" " > <button class='<?php $btnnn = $model->isNewRecord ? ( "btn btn-success button-new-color") : ( "btn btn-primary button-new-color");echo $btnnn; ?> ' style="    width: 23%;margin-left: 128px;" >
                             <?= Yii::t('app/user/bind-username' ,'Save')?>
                         </button>
