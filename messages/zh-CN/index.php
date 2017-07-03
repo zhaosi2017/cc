@@ -16,6 +16,7 @@ return [
     'Technical Support'=>'技术支持',
     'Contact us'=>'联系我们',
     'Sign up'=>'注册',
+    'Sign in'=>'登录',
     'Security'=>'安全',
     'Private data encryption transmission, user privacy security'=>'私 密 数 据 加 密 传 输 ，用 户 隐 私 安 全 保 障',
     'Convenient'=>'便捷',
