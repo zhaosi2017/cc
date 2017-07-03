@@ -36,14 +36,12 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
         <div class="col-sm-10">
-            <!--<div class="form-group">
-                +
-                <input title="" id="country-code" class="form-control" size="5" type="text">
-                <div class="help-block"></div>
-            </div>-->
+
             <?php echo $form->field($model, 'country_code', [
-                'template' => "{label}\n<div style=\"width:130px;\">&nbsp;+{input}\n<span style=\"height:18px;\" class=\"help-block m-b-none\">{error}</span></div>",
-            ])->textInput(['size' => 5,'placeholder'=>Yii::t('app/user/set-phone-number' ,'Country code')])->label(false) ?>
+                'template' => "{label}\n<div style=\"width:130px;\">&nbsp;&nbsp;&nbsp;{input}\n
+                                            <span style=\"height:18px;\" class=\"help-block m-b-none\">{error}</span>
+                                        </div>",
+            ])->textInput(['size' => 10,'placeholder'=>Yii::t('app/user/set-phone-number' ,'Country code')])->label(false ) ?>
 
             <?php echo $form->field($model, 'phone_number',[
 
@@ -57,7 +55,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="col-sm-2 text-right">
             <div class="form-group">
-                <label for="task-customer-category" class="col-sm-12 control-label"> </label>
+                <label for="task-customer-category" class="col-sm-12 control-label" style="padding-top: 7px;">
+                    <?= Yii::t('app/user/set-phone-number' ,'Verification code');?>
             </div>
         </div>
         <div class="col-sm-10">
