@@ -332,7 +332,7 @@ class UserController extends GController
                         'api_secret' => Yii::$app->params['nexmo_api_secret'],
                         'to' => $number,
                         'from' => Yii::$app->params['nexmo_account_number'],
-                        'text' => $verifyCode
+                        'text' => $verifyCode.' : [ From callu code ]'
                     ]
                 );
 

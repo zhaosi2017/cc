@@ -21,13 +21,18 @@ $this->title = Yii::t('app/login','Retrieve login password');
             'options'=>['class'=>'m-t text-left'],
             'fieldConfig' => [
                 'template' => "{label}\n<div class=\"col-sm-9\">{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
-                'labelOptions' => ['class' => 'col-sm-3 '],
+                'labelOptions' => ['class' => 'col-sm-3 text-right','style'=>'margin-top:8px;'],
             ],
         ]); ?>
 
         <?= $form->field($model, 'username')->textInput()->label(Yii::t('app/login','Email')) ?>
 
-        <?= Html::submitButton(Yii::t('app/login','Next'), ['class' => 'btn btn-primary pull-right button-new-color','style' =>'margin-right: 15px']) ?>
+        <div class="form-group">
+            <label class="col-sm-3"></label>
+            <div class = "col-sm-9">
+            <?= Html::submitButton(Yii::t('app/login','Next'), ['class' => ' btn btn-primary pull-right button-new-color','style' =>'width:100%;']) ?>
+            </div>
+        </div>
 
         <?php ActiveForm::end(); ?>
 

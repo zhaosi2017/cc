@@ -137,13 +137,14 @@ class RegisterController extends GController
                 }
                 $session = Yii::$app->session;
                 $verifyCode = $session[$type] = ContactForm::makeCode();
+
                  $url = 'https://rest.nexmo.com/sms/json?' . http_build_query(
                      [
                          'api_key' =>  Yii::$app->params['nexmo_api_key'],
                          'api_secret' => Yii::$app->params['nexmo_api_secret'],
                          'to' => $number,
                          'from' => Yii::$app->params['nexmo_account_number'],
-                         'text' => $verifyCode
+                         'text' => $verifyCode.' : [ From callu code ]'
                      ]
                  );
 
