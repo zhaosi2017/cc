@@ -4,7 +4,7 @@
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
-$this->title = '设置新密码';
+$this->title = Yii::t('app/login','Setting password');
 ?>
 <div class=" text-center loginscreen  animated fadeInDown">
     <div>
@@ -13,7 +13,7 @@ $this->title = '设置新密码';
             <h1 class="logo-name">&nbsp;</h1>
 
         </div>
-        <h3>设置新密码</h3>
+        <h3><?= Yii::t('app/login','Setting password')?></h3>
 
         <?php $form = ActiveForm::begin([
             'id' => 'verify-form',
@@ -27,20 +27,20 @@ $this->title = '设置新密码';
 
 
         <?= $form->field($model, 'password',[
-        'template' => "<div> <div style=\"display:inline-block;width:91px;\">{label}</div>\n<div style=\"display:inline-block;width:215px;\">{input}</div> <span  style=\"display:inline-block;width:304px;line-height:13px;font-size:13px;\">*请输入账户新密码 ,密码至少包含8个字符，至少包括以下2种字符：大写字母、小写字母、数字、符号</span></div>\n<div class=\"row\">
+        'template' => "<div> <div style=\"display:inline-block;width:91px;\">{label}</div>\n<div style=\"display:inline-block;width:215px;\">{input}</div> <span  style=\"display:inline-block;width:304px;line-height:13px;font-size:13px;\">*".Yii::t('app/login','Please enter the account new password, the password contains at least 8 characters, including at least the following two characters: capital letters, lowercase letters, numbers, symbols')."</span></div>\n<div class=\"row\">
         <div style=\"display:inline-block;width:91px;display:none;\">{label}</div>\n
         <div style=\"text-align:center;\"><span class=\"help-block m-b-none \" style=\"     
     margin-right: 157px;  \">{error}</span></div></div>",
-        ])->passwordInput()->label('新密码：') ?>
+        ])->passwordInput()->label(Yii::t('app/login','New password')) ?>
 
         <?= $form->field($model, 'rePassword',[
         
-            'template' => "<div> <div style=\"display:inline-block\">{label}</div>\n<div style=\"display:inline-block;width:215px;\">{input}</div> <span  style=\"display:inline-block;width:304px;  line-height:12px;\">*请输入账户新密码 ,密码至少包含8个字符，至少包括以下2种字符：大写字母、小写字母、数字、符号</span>\n<br/><div style=\"text-align:center;\"><span class=\"help-block m-b-none \" style=\" margin-right:187px;   \">{error}</span></div></div>",
-        ])->passwordInput()->label('重复输入密码：') ?>
+            'template' => "<div> <div style=\"display:inline-block\">{label}</div>\n<div style=\"display:inline-block;width:215px;\">{input}</div> <span  style=\"display:inline-block;width:304px;  line-height:12px;\">*".Yii::t('app/login','Please enter the account new password, the password contains at least 8 characters, including at least the following two characters: capital letters, lowercase letters, numbers, symbols')."</span>\n<br/><div style=\"text-align:center;\"><span class=\"help-block m-b-none \" style=\" margin-right:187px;   \">{error}</span></div></div>",
+        ])->passwordInput()->label(Yii::t('app/login','Repeat input password').':') ?>
 
         <?= $form->field($model, 'username')->hiddenInput()->label(false) ?>
 
-        <?= Html::submitButton('完成', ['class' => 'btn btn-primary pull-center button-new-color','style' =>'margin-right: 58px' ]) ?>
+        <?= Html::submitButton(Yii::t('app/login','Ok'), ['class' => 'btn btn-primary pull-center button-new-color','style' =>'margin-right: 58px' ]) ?>
 
         <?php ActiveForm::end(); ?>
 

@@ -4,7 +4,7 @@
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
-$this->title = '找回登录密码';
+$this->title = Yii::t('app/login','Retrieve login password');
 ?>
 <div class="middle-box text-center loginscreen  animated fadeInDown">
     <div>
@@ -13,7 +13,7 @@ $this->title = '找回登录密码';
             <h1 class="logo-name">&nbsp;</h1>
 
         </div>
-        <h3>找回登录密码</h3>
+        <h3><?= Yii::t('app/login','Retrieve login password')?></h3>
 
         <?php $form = ActiveForm::begin([
             'id' => 'verify-form',
@@ -25,9 +25,9 @@ $this->title = '找回登录密码';
             ],
         ]); ?>
 
-        <?= $form->field($model, 'username')->textInput()->label('邮箱:') ?>
+        <?= $form->field($model, 'username')->textInput()->label(Yii::t('app/login','Email')) ?>
 
-        <?= Html::submitButton('下一步', ['class' => 'btn btn-primary pull-right button-new-color','style' =>'margin-right: 15px']) ?>
+        <?= Html::submitButton(Yii::t('app/login','Next'), ['class' => 'btn btn-primary pull-right button-new-color','style' =>'margin-right: 15px']) ?>
 
         <?php ActiveForm::end(); ?>
 

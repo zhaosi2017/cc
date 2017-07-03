@@ -67,8 +67,13 @@ $actionId = Yii::$app->requestedAction->id;
                 'buttons' => [
                     'delete' => function($url){
                         return Html::a(Yii::t('app/harassment','Remove the whitelist'),$url,[
+<<<<<<< HEAD
                             //'style' => 'color:red',
                             'style'=>'background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;',
+=======
+                            'style' => 'color:white',
+                            'class'=>'index-button-1',
+>>>>>>> e1b886c8ff1b5538f1bea5a2e3228fd5630c7c71
                             'data-method' => 'post',
                             'data' => ['confirm' => Yii::t('app/harassment','Are you sure you want to remove the whitelist?')]
                         ]);
