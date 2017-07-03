@@ -1004,7 +1004,7 @@ class Telegram extends Model
         } else {
             $this->callPersonData->whitelist_switch=1;
             $res = $this->callPersonData->save();
-            $res ? ($sendData['text'] = $this->enableWhiteSuccessText()) : ($sendData['text'] = $this->enableWhiteSuccessText());
+            $res ? ($sendData['text'] = $this->getEnableWhiteSuccessText()) : ($sendData['text'] = $this->getEnableWhiteSuccessText());
         }
 
         $this->sendData = $sendData;
@@ -1042,7 +1042,7 @@ class Telegram extends Model
         } else {
             $this->callPersonData->whitelist_switch=0;
             $res = $this->callPersonData->save();
-            $res ? ($sendData['text'] = $this->disableWhiteSuccessText()) : ($sendData['text'] = $this->disableWhiteFailureText());
+            $res ? ($sendData['text'] = $this->getDisableWhiteSuccessText()) : ($sendData['text'] = $this->getDisableWhiteFailureText());
         }
 
         $this->sendData = $sendData;
