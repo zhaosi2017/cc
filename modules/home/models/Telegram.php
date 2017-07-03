@@ -286,7 +286,6 @@ class Telegram extends Model
                 case 'zh';
                     $this->llanguage = 'zh-CN';
                 default;
-                default :
                     break;
             }
         } else {
