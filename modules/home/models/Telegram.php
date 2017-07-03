@@ -281,7 +281,6 @@ class Telegram extends Model
     public function setLanguage($value)
     {
         if (!stripos($value, 'zh')) {
-            file_put_contents('/tmp/11.txt', var_export($value, true).PHP_EOL, 8);
             $language = explode('-', $value);
             $this->llanguage = $language[0];
         } else {
