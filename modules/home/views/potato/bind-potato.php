@@ -39,12 +39,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php echo $form->field($model, 'bindCode',[
 
-        'template' => "{label}\n<div class=\"col-sm-3\">{input}</div><span>
-*".
-            Yii::t('app/potato/bind-potato','Please enter the verification code you obtained from the potato')
-            ."</span>\n<span class=\"help-block m-b-none\" style=\"margin-top:17px;margin-left:17.5%;\">{error}</span></div>",
+        'template' => "{label}\n<div class=\"col-sm-3\">{input}</div>
+                                <span class='col-sm-5' style='margin-top: 8px'>*".
+                                    Yii::t('app/potato/bind-potato','Please enter the verification code you obtained from the potato')
+                                ."</span>\n
+                                <span class=\"help-block m-b-none\" style=\"\">{error}</span>
+                                </div>",
     ])->textInput(['placeholder' => Yii::t('app/potato/bind-potato','Code'),])
-      ->label(Yii::t('app/potato/bind-potato','Code')) ?>
+      ->label(Yii::t('app/potato/bind-potato','Code'),['style'=>'margin-top: 8px;']) ?>
 
     <div class="form-group m-b-lg">
         <div class="col-sm-6 col-sm-offset-2">
