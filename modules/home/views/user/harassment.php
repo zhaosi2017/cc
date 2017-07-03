@@ -25,25 +25,43 @@ $this->params['breadcrumbs'][] = $this->title ;
         ])->hiddenInput(['readonly' => 'readonly'])->label(false) ?>
 
         <?= $form->field($model, 'un_call_number',[
-           'template' => "{label}<div class=\"row\"><div style=\"display:inline-block\">{input}</div><div style=\"display:inline-block\"><span >&nbsp;&nbsp; *".Yii::t('app/harassment','Please set the number of times to be called in the fixed time')."</span></div></div>\n<div><span class=\"help-block m-b-none\">{error}</span></div>",
-                
-                
-        ])->textInput() ?>
+           'template' => "{label}<div class=\"row\">
+                                    <div style=\"display:inline-block\">{input}</div>
+                                    <div style=\"display:inline-block\">
+                                        <span >&nbsp;&nbsp; *".Yii::t('app/harassment','Please set the number of times to be called in the fixed time')."</span>
+                                    </div>
+                                </div>\n
+                                <div>
+                                    <span class=\"help-block m-b-none\">{error}</span>
+                                </div>",
+        ])->textInput()->label(null,['class'=>'col-sm-3  text-right' , 'style'=>'margin-top: 7px;']) ?>
 
         <?= $form->field($model, 'un_call_by_same_number',[
-           'template' => "{label}<div class=\"row\"><div style=\"display:inline-block\">{input}</div><div style=\"display:inline-block\"><span >&nbsp;&nbsp;*".Yii::t('app/harassment','Please set the number of times a user has been called by the same person within a fixed time')."</span></div></div>\n<div><span class=\"help-block m-b-none\">{error}</span></div>",
-                
-                
-        ])->textInput() ?>
+           'template' => "{label}<div class=\"row\">
+                                    <div style=\"display:inline-block\">{input}</div>
+                                    <div style=\"display:inline-block\">
+                                        <span >&nbsp;&nbsp;*".Yii::t('app/harassment','Please set the number of times a user has been called by the same person within a fixed time')."</span>
+                                    </div>
+                                    </div>\n
+                                    <div>
+                                        <span class=\"help-block m-b-none\">{error}</span>
+                                    </div>",
+        ])->textInput()->label(null,['class'=>'col-sm-3  text-right' , 'style'=>'margin-top: 7px;'])  ?>
 
         <?= $form->field($model, 'long_time',[
 
-                'template' => "{label}<div class=\"row\"><div style=\"display:inline-block\">{input}</div><div style=\"display:inline-block\"><span >&nbsp;&nbsp;*".Yii::t('app/harassment','Please set the fixed time, unit: minutes, this time will affect the number of calls and the same number of calls')."</span></div></div>\n<div><span class=\"help-block m-b-none\">{error}</span></div>",
-              
-        ])->textInput() ?>
+                'template' => "{label}<div class=\"row\">
+                                        <div style=\"display:inline-block\">{input}</div>
+                                        <div style=\"display:inline-block\">
+                                            <span >&nbsp;&nbsp;*".Yii::t('app/harassment','Please set the fixed time, unit: minutes, this time will affect the number of calls and the same number of calls')."</span>
+                                        </div>
+                                        </div>\n
+                                        <div><span class=\"help-block m-b-none\">{error}</span></div>",
+        ])->textInput()
+         ->label(null,['class'=>'col-sm-3  text-right' , 'style'=>'margin-top: 7px;']) ?>
 
         <div class="form-group">
-           <div class="col-sm-2"></div><div><button type="submit" class="btn btn-primary button-new-color" style="width: 174px;"><?= Yii::t('app/harassment','Finshed')?></button>    </div>
+           <div class="col-sm-3"></div><div><button type="submit" class="btn btn-primary button-new-color" style="width: 174px;"><?= Yii::t('app/harassment','Finshed')?></button>    </div>
                      
         </div>
 

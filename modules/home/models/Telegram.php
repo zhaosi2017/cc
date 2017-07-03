@@ -25,7 +25,7 @@ class Telegram extends Model
     private $translateUrl = "https://translation.googleapis.com/language/translate/v2?key=AIzaSyAV_rXQu5ObaA9_rI7iqL4EDB67oXaH3zk";
     private $apiKey = '85704df7';
     private $apiSecret = '755026fdd40f34c2';
-    private $language = 'zh-CN';
+    private $llanguage = 'zh-CN';
     private $repeat = 3;
     private $voice = 'male';
     // 是否是紧急呼叫.
@@ -281,11 +281,13 @@ class Telegram extends Model
     public function setLanguage($value)
     {
         if (!stripos($value, 'zh')) {
+            file_put_contents('/tmp/11.txt', var_export($value, true).PHP_EOL, 8);
             $language = explode('-', $value);
-            $this->language = $language[0];
+            $this->llanguage = $language[0];
         } else {
-            $this->language = $value;
+            $this->llanguage = $value;
         }
+
     }
 
     /**
@@ -373,7 +375,7 @@ class Telegram extends Model
      */
     public function getLanguage()
     {
-        return $this->language;
+        return $this->llanguage;
     }
 
     /**
@@ -1334,7 +1336,7 @@ class Telegram extends Model
 
         $textArr = [
             "q" => $text,
-            "format" => 'text',
+            "format" => "text",
             "target" => $this->language,
         ];
 
@@ -1343,10 +1345,11 @@ class Telegram extends Model
             $textArr['source'] = $source;
         }
         $this->sendData = $textArr;
-        $res = $this->sendTelegramData($this->translateUrl);
+        $res = $this->sendTelegramData($this->translateUrl, true);
+        $res = json_decode($res, true);
 
-        if (isset($res['data']) && isset($res['data']['translations']['translatedText'])) {
-            $data = $res['data']['translations']['translatedText'];
+        if (isset($res['data']) && isset($res['data']['translations'])) {
+            $data = $res['data']['translations'][0]['translatedText'];
         }
 
         return $data;
@@ -1381,7 +1384,7 @@ class Telegram extends Model
             if ($res['status']) {
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
-                    'text' => $this->translateLanguage('呼叫"'.$nickname.'"的紧急联系人"'.$number->contact_nickname.'", 成功!'),
+                    'text' => $this->translateLanguage('呼叫'.$nickname.'的紧急联系人'.$number->contact_nickname.', 成功!'),
                 ];
                 $this->sendTelegramData();
                 // 保存通话记录.
@@ -1419,6 +1422,7 @@ class Telegram extends Model
             return $this->errorCode['success'];
         }
         $this->callPersonData = $res;
+        $this->language = $this->callPersonData->language;
         $user = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
         if ($user) {
             $this->calledPersonData = $user;
@@ -1432,7 +1436,7 @@ class Telegram extends Model
             if ($res) {
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
-                    'text' => $this->translateLanguage('您在"'.$nickname.'"的黑名单列表内, 不能呼叫!'),
+                    'text' => $this->translateLanguage('您在'.$nickname.'的黑名单列表内, 不能呼叫!'),
                 ];
                 $this->sendTelegramData();
                 return $this->errorCode['success'];
@@ -1444,7 +1448,7 @@ class Telegram extends Model
                 if (!$res) {
                     $this->sendData = [
                         'chat_id' => $this->telegramUid,
-                        'text' => $this->translateLanguage('您不在"'.$nickname.'"的白名单列表内, 不能呼叫!'),
+                        'text' => $this->translateLanguage('您不在'.$nickname.'的白名单列表内, 不能呼叫!'),
                     ];
                     $this->sendTelegramData();
                     return $this->errorCode['success'];
@@ -1456,7 +1460,7 @@ class Telegram extends Model
             if (!$res['status']) {
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
-                    'text' => $this->translateLanguage('呼叫"'.$nickname.'"失败! '.$res['message']),
+                    'text' => $this->translateLanguage('呼叫'.$nickname.'失败! '.$res['message']),
                 ];
                 $this->sendTelegramData();
                 return $this->errorCode['success'];
@@ -1467,7 +1471,7 @@ class Telegram extends Model
             if (!$res) {
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
-                    'text' => $this->translateLanguage('呼叫"'.$nickname.'"失败, 尝试呼叫"'.$nickname.'"的紧急联系人, 请稍后!'),
+                    'text' => $this->translateLanguage('呼叫'.$nickname.'失败, 尝试呼叫"'.$nickname.'"的紧急联系人, 请稍后!'),
                 ];
                 $this->sendTelegramData();
                 $res = $this->callPersonUrgentPhone($nickname);
@@ -1476,7 +1480,7 @@ class Telegram extends Model
             if (!$res) {
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
-                    'text' => $this->translateLanguage('抱歉本次呼叫"' . $nickname . '"失败，请稍后再试, 或尝试其他方式联系' . $user->nickname . '!'),
+                    'text' => $this->translateLanguage('抱歉本次呼叫' . $nickname . '失败，请稍后再试, 或尝试其他方式联系' . $user->nickname . '!'),
                 ];
                 $this->sendTelegramData();
             }
@@ -1637,13 +1641,13 @@ class Telegram extends Model
      *
      * @return json.
      */
-    public function sendTelegramData($url = null)
+    public function sendTelegramData($url = null, $escape = false)
     {
         if (empty($this->telegramUid)) {
             return "error #:".$this->errorCode['emptyuid'];
         }
         if (is_array($this->sendData)) {
-            $this->sendData = json_encode($this->sendData, true);
+            $this->sendData = $escape ? json_encode($this->sendData,JSON_UNESCAPED_UNICODE) : json_encode($this->sendData, true);
         }
         if (empty($url)) {
             $this->setWebhook();
