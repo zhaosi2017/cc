@@ -36,11 +36,11 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <?php echo $form->field($model, 'bindCode',[
-         'template' => "{label}\n<div class=\"col-sm-3\">{input}</div><span>
+         'template' => "{label}\n<div class=\"col-sm-3\">{input}</div><span class='col-sm-5' style='margin-top:7px;'>
 
 *".
              Yii::t('app/telegram/bind-telegram','Please enter the verification code you obtained from the telegram')
-             ."</span>\n<span class=\"help-block m-b-none\" style=\"margin-top:17px;margin-left:17.5%;\">{error}</span></div>",
+             ."</span>\n<span class=\"help-block m-b-none\" >{error}</span></div>",
     ])->textInput(['placeholder' => Yii::t('app/telegram/bind-telegram','Code'),])
         ->label( Yii::t('app/telegram/bind-telegram','Code') ,['style'=>'padding-top: 9px;']) ?>
 

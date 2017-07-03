@@ -64,7 +64,10 @@ class TelegramController extends GController
             $telegram = new Telegram();
             $message = isset($postData['message']) ? $postData['message'] : array();
             $telegram->telegramUid = isset($message['from']['id']) ? $message['from']['id'] : (isset($postData['callback_query']) ? $postData['callback_query']['from']['id'] : null);
-            $telegram->language = isset($message['from']['language_code']) ? array_pop(explode('-', $message['from']['language_code'])) : null;
+            if (isset($message['from']['language_code'])) {
+                $tmp = explode('-', $message['from']['language_code']);
+                $telegram->language = array_shift($tmp);
+            }
 
             // 如果是用户第一次关注该机器人，发送欢迎信息,并发送内联快捷菜单.
             if (isset($message['text']) && $message['text'] == $telegram->getFirstText()) {

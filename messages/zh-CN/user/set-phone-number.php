@@ -19,7 +19,8 @@ return [
     'Get verification code'=>'获取验证码',
     'Submit'=>'提交',
     'Please enter your country code and enter your mobile number'=>'请输入您的国码，然后输入您的手机号码',
-    'Please enter your phone verification code'=>'请输入手机验证码'
+    'Please enter your phone verification code'=>'请输入手机验证码',
+    'Verification code'=>'验证码'
 
 
 

@@ -19,6 +19,7 @@ return [
     'No UserName'=>'未绑定用户名',
     'Edit'=>'修改',
     'Build Now'=>'立即绑定',
-    'Create UserName'=>'绑定用户名'
+    'Create UserName'=>'绑定用户名',
+    'Language'=>'语言'
 
 ];

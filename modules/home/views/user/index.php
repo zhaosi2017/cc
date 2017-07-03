@@ -100,6 +100,18 @@ position: relative;
         </div>
     </div>
 
+    <div>
+        <div class="row app-bind-div">
+            <div class="col-xs-4 app-bind-1"><?= Yii::t('app/user/index', 'Language') ?></div>
+            <div class="col-xs-4">
+                <?php echo  ($model->language);?>
+
+                    </div>
+
+        </div>
+    </div>
+
+
 </div>
 
 
