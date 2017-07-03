@@ -28,13 +28,17 @@ $this->params['breadcrumbs'][] = $this->title;
             ."</span> \n<br><div style=\"height:20px;\"></div><label class = \"col-sm-1 \"></label><div style=\" width: 67%; padding-left: 15px !important;\"><span style=\"\">{error}</span></div>",
     ])->textInput()->label(Yii::t('app/user/bind-email','Email'),['style'=>'padding-top:5px ;font-size:17px' ,'class'=>'col-sm-1  text-right']) ?>
 
-    <br>
+    <div class="col-sm-12"></div>
     <div class="form-group">
-       
-        <div style=" " > <button class='<?php $btnnn = $model->isNewRecord ? ( "btn btn-success button-new-color") : ( "btn btn-primary button-new-color");echo $btnnn; ?> ' style="    width: 23%;margin-left: 128px;" >
+
+        <div class="col-sm-1"></div>
+        <div class="col-sm-3" >
+            <button style="width: 100%;" class='<?php $btnnn = $model->isNewRecord ? ( "btn btn-success button-new-color") : ( "btn btn-primary button-new-color");echo $btnnn; ?> ' style="    width: 23%;margin-left: 128px;" >
                 <?= Yii::t('app/user/bind-email' , 'Next')?>
 
-            </button></div>
+            </button>
+        </div>
+        <div class="col-sm-3"></div>
     </div>
 
     <?php ActiveForm::end(); ?>

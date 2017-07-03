@@ -90,6 +90,6 @@ $this->title = Yii::t('app/login','Login');
 
 
         <p class="text-muted text-center">
-            <a href="<?php echo \yii\helpers\Url::to(['/home/login/forget-password']) ?>"><small><?= Yii::t('app/login','Forget password')?>&nbsp; ？</small></a> | <a href="<?php echo \yii\helpers\Url::to(['/home/register/register']) ?>"><?= Yii::t('app/login','Sign up')?></a>
+            <a href="<?php echo \yii\helpers\Url::to(['/home/login/forget-password']) ?>"><small><?= Yii::t('app/login','Forget password')?>&nbsp; ？</small></a> | <a href="<?php echo \yii\helpers\Url::to(['/home/register/register']) ?>"><?= Yii::t('app/login','Sign up')?></a> | <a href="<?php echo \yii\helpers\Url::to(['/home/default/welcome']) ?>"><?= Yii::t('app/index','Home')?></a>
         </p>
     </div>
