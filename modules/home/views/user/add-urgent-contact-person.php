@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <span >*".Yii::t('app/user/add-urgent-contact-person','Please Enter The Contact')."
                         <span></div>\n<div><span class=\"help-block m-b-none\" style=\"margin-left:17%;\">{error}</span></div>",
     ])->textInput(['placeholder' => Yii::t('app/user/add-urgent-contact-person','Emergency contact nickname')])
-    ->label(Yii::t('app/user/add-urgent-contact-person','Emergency Contact') ,['style'=>"    text-align: left;padding-left: 80px; padding-top:7px"])
+    ->label(Yii::t('app/user/add-urgent-contact-person','Emergency Contact') ,['style'=>"    text-align: left;padding-left: 100px; padding-top:7px"])
 
     ?>
 
@@ -52,7 +52,9 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <?php echo $form->field($model, 'contact_country_code', [
 
-                 'template' => "{label}\n<div style=\"width:130px;\">&nbsp;+{input}\n<span style=\"height:18px;\" class=\"help-block m-b-none\">{error}</span></div>",
+                 'template' => "{label}\n<div style=\"width:130px;\">&nbsp;&nbsp;&nbsp;&nbsp;{input}\n
+                                            <span style=\"height:18px;\" class=\"help-block m-b-none\">{error}</span>
+                                         </div>",
             ])->textInput(['size' => 5,'placeholder'=>Yii::t('app/user/add-urgent-contact-person','Country Code'),])
              ->label(false) ?>
 
