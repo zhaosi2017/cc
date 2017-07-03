@@ -978,13 +978,6 @@ class Telegram extends Model
      */
     public function enableWhiteSwith()
     {
-        // 开始操作.
-        $this->sendData = [
-            'chat_id' => $this->telegramUid,
-            'text' => $this->getStartText(),
-        ];
-        $this->sendTelegramData();
-
         $sendData = [
             'chat_id' => $this->telegramUid,
             'text' => '',
@@ -999,6 +992,12 @@ class Telegram extends Model
 
 
         $this->language = $this->callPersonData->language;
+        // 开始操作.
+        $this->sendData = [
+            'chat_id' => $this->telegramUid,
+            'text' => $this->getStartText(),
+        ];
+        $this->sendTelegramData();
         if ($this->callPersonData->whitelist_switch == 1) {
             $sendData['text'] = $this->getEnableWhiteText();
         } else {
@@ -1016,13 +1015,6 @@ class Telegram extends Model
      */
     public function disableWhiteSwith()
     {
-        // 开始操作.
-        $this->sendData = [
-            'chat_id' => $this->telegramUid,
-            'text' => $this->getStartText(),
-        ];
-        $this->sendTelegramData();
-
         $sendData = [
             'chat_id' => $this->telegramUid,
             'text' => '',
@@ -1037,6 +1029,12 @@ class Telegram extends Model
 
 
         $this->language = $this->callPersonData->language;
+        // 开始操作.
+        $this->sendData = [
+            'chat_id' => $this->telegramUid,
+            'text' => $this->getStartText(),
+        ];
+        $this->sendTelegramData();
         if ($this->callPersonData->whitelist_switch == 0) {
             $sendData['text'] = $this->getDisableWhiteText();
         } else {
@@ -1054,13 +1052,6 @@ class Telegram extends Model
      */
     public function joinWhiteList()
     {
-        // 开始操作.
-        $this->sendData = [
-            'chat_id' => $this->telegramUid,
-            'text' => $this->getStartText(),
-        ];
-        $this->sendTelegramData();
-
         $sendData = [
             'chat_id' => $this->telegramUid,
             'text' => '',
@@ -1074,6 +1065,13 @@ class Telegram extends Model
         }
 
         $this->language = $this->callPersonData->language;
+        // 开始操作.
+        $this->sendData = [
+            'chat_id' => $this->telegramUid,
+            'text' => $this->getStartText(),
+        ];
+        $this->sendTelegramData();
+
         $this->calledPersonData = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
         if (empty($this->calledPersonData)) {
             $sendData['text'] = $this->getMenuNoMemberText();
@@ -1129,13 +1127,6 @@ class Telegram extends Model
      */
     public function unbindWhiteList()
     {
-        // 开始操作.
-        $this->sendData = [
-            'chat_id' => $this->telegramUid,
-            'text' => $this->getStartText(),
-        ];
-        $this->sendTelegramData();
-
         $sendData = [
             'chat_id' => $this->telegramUid,
             'text' => '',
@@ -1149,6 +1140,12 @@ class Telegram extends Model
         }
 
         $this->language = $this->callPersonData->language;
+        // 开始操作.
+        $this->sendData = [
+            'chat_id' => $this->telegramUid,
+            'text' => $this->getStartText(),
+        ];
+        $this->sendTelegramData();
         $this->calledPersonData = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
         if (empty($this->calledPersonData)) {
             $sendData['text'] = $this->getMenuNoMemberText();
@@ -1174,13 +1171,6 @@ class Telegram extends Model
      */
     public function joinBlackList()
     {
-        // 开始操作.
-        $this->sendData = [
-            'chat_id' => $this->telegramUid,
-            'text' => $this->getStartText(),
-        ];
-        $this->sendTelegramData();
-
         $sendData = [
             'chat_id' => $this->telegramUid,
             'text' => '',
@@ -1194,6 +1184,12 @@ class Telegram extends Model
         }
 
         $this->language = $this->callPersonData->language;
+        // 开始操作.
+        $this->sendData = [
+            'chat_id' => $this->telegramUid,
+            'text' => $this->getStartText(),
+        ];
+        $this->sendTelegramData();
         $this->calledPersonData = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
         if (empty($this->calledPersonData)) {
             $sendData['text'] = $this->getMenuNoMemberText();
@@ -1222,13 +1218,6 @@ class Telegram extends Model
      */
     public function unbindBlackList()
     {
-        // 开始操作.
-        $this->sendData = [
-            'chat_id' => $this->telegramUid,
-            'text' => $this->getStartText(),
-        ];
-        $this->sendTelegramData();
-
         $sendData = [
             'chat_id' => $this->telegramUid,
             'text' => '',
@@ -1242,6 +1231,12 @@ class Telegram extends Model
         }
 
         $this->language = $this->callPersonData->language;
+        // 开始操作.
+        $this->sendData = [
+            'chat_id' => $this->telegramUid,
+            'text' => $this->getStartText(),
+        ];
+        $this->sendTelegramData();
         $this->calledPersonData = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
         if (empty($this->calledPersonData)) {
             $sendData['text'] = $this->getMenuNoMemberText();
@@ -1414,18 +1409,12 @@ class Telegram extends Model
      */
     public function callTelegramPerson()
     {
-        // 开始操作.
-        $this->sendData = [
-            'chat_id' => $this->telegramUid,
-            'text' => $this->getStartText(),
-        ];
-        $this->sendTelegramData();
-
         $res = User::findOne(['telegram_user_id' => $this->telegramUid]);
         if (!$res) {
             // 发送验证码，完成绑定.
             return $this->sendBindCode();
         } elseif ($this->telegramUid == $this->telegramContactUid) {
+            $this->language = $res->language;
             $this->sendData = [
                 'chat_id' => $this->telegramUid,
                 'text' => $this->getCompleteText(),
@@ -1433,8 +1422,15 @@ class Telegram extends Model
             $this->sendTelegramData();
             return $this->errorCode['success'];
         }
+
         $this->callPersonData = $res;
         $this->language = $this->callPersonData->language;
+        // 开始操作.
+        $this->sendData = [
+            'chat_id' => $this->telegramUid,
+            'text' => $this->getStartText(),
+        ];
+        $this->sendTelegramData();
         $user = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
         if ($user) {
             $this->calledPersonData = $user;
