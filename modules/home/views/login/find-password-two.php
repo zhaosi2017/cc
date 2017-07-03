@@ -16,31 +16,39 @@ $this->title = Yii::t('app/login','Retrieve login password');
         </div>
         <h3><?= Yii::t('app/login','Retrieve login password')?></h3>
 
-        <blockquote class="text-left" style="border: 0;">
-           <?= Yii::t('app/login','We have registered your email')?>：<?php echo $model->username ?><?= Yii::t('app/login','With you Sent a message Pease fill in the verification code received')?>。
+        <blockquote class="text-center" style="border: 0;font-size: 13px;font-family: "open sans, Helvetica Neue, Helvetica, Arial, sans-serif";>
+           <?= Yii::t('app/login','We have registered your email')?>：<?php echo $model->username ?><?= Yii::t('app/login','With you Sent a message Pease fill in the verification code received')?>
         </blockquote>
 
         <?php $form = ActiveForm::begin([
             'id' => 'verify-form',
             'action' => 'find-password-three',
             'options'=>['class'=>'m-t text-left'],
+            'fieldConfig' => [
+
+                'labelOptions' => ['class' => 'col-sm-3 text-right','style'=>'margin-top:8px;'],
+            ],
 
         ]); ?>
 
         <?= $form->field($model, 'username')->hiddenInput()->label(false) ?>
 
-        <?= $form->field($model, 'code',['labelOptions' => ['class' => 'col-sm-3 ','label'=>Yii::t('app/login','Verification code').':',
+        <?= $form->field($model, 'code',['labelOptions' => ['class' => 'col-sm-4 ','label'=>Yii::t('app/login','Verification code').':',
             ],])
             ->widget(Captcha::className(),[
                 'captchaAction'=>'/home/login/captcha',
-                'template' => '{image}<div style="display: inline-block;">{input}</div>',
+                'template' => '{image}<div  style="display: inline-block;">{input}</div>',
             ])
             ->textInput(['autofocus' => true,'placeholder'=>Yii::t('app/login','Please input code')]);
 
 
         ?>
-        <button class="btn btn-primary pull-right button-new-color"><?= Yii::t('app/login','Next')?></button>
-
+        <div class="form-group">
+            <label class="col-sm-4"></label>
+            <div class="col-sm-8" style="padding: 0;">
+                <button class="btn btn-primary pull-right button-new-color" style="width: 100%;"><?= Yii::t('app/login','Next')?></button>
+            </div>
+        </div>
         
 
         <?php ActiveForm::end(); ?>
@@ -63,6 +71,7 @@ echo '<style type="text/css">
 
   .help-block-error{
     padding-left:78px !important;
+       margin-left: 20px !important;
   }
 
 </style>';
