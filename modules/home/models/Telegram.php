@@ -17,7 +17,7 @@ class Telegram extends Model
     private $telegramText = 'Operation menu.';
     private $startText = 'Start the operation, please wait later.';
     private $wellcomeText = 'welcome!';
-    private $keyboardText = 'Share your contact card.';
+    private $keyboardText = 'Share your contact card';
     private $callText = "call";
     private $firstText = '/start';
     private $webhook;
@@ -41,11 +41,11 @@ class Telegram extends Model
     private $blackCallbackDataPre = "cc_black";
     private $unblackCallbackDataPre = "cc_unblack";
     private $whiteText = 'Join Whitelist';
-    private $unwhiteText = 'Cancel the whitelist';
+    private $unwhiteText = 'Unlock the whitelist';
     private $blackText = "Join blacklist";
     private $unblackText = "Unlock the blacklist";
-    private $whiteSwitchText = 'Open the whitelist.';
-    private $unwhiteSwitchText = 'Close the whitelist.';
+    private $whiteSwitchText = 'Open the whitelist';
+    private $unwhiteSwitchText = 'Close the whitelist';
     private $menuShareText = "Please share your own contact card to the robot, complete the binding operation.";
     private $menuNoMemberText = "He is not a member of our system and you can not perform this operation.";
     private $enableNoMemberText = "You are not a member of our system and can not perform this operation.";
