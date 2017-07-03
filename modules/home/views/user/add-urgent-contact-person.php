@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 if ($isModify) {
     $this->title = Yii::t('app/user/add-urgent-contact-person' ,'Edit Contact Info');
 } else {
-    $this->title = Yii::t('app/user/add-urgent-contact-person' ,'Build Contact ');
+    $this->title = Yii::t('app/user/add-urgent-contact-person' ,'Build Emergency Contact');
 }
 $this->params['breadcrumbs'][] = $this->title;
 /* @var $this yii\web\View */
@@ -28,10 +28,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php echo $form->field($model, 'contact_nickname',[
         'template' => "<div><div style=\"display：inline-block;\">{label}</div>\n<div class=\"\" style=\"display:inline-block;\">{input}</div><div style=\"display:inline-block;margin-left:10px;\">
-                        <span >*".Yii::t('app/user/add-urgent-contact-person','Please Enter The Contact')."
+                        <span >*".Yii::t('app/user/add-urgent-contact-person','Please enter the name of emergency contact.')."
                         <span></div>\n<div><span class=\"help-block m-b-none\" style=\"margin-left:17%;\">{error}</span></div>",
     ])->textInput(['placeholder' => Yii::t('app/user/add-urgent-contact-person','Emergency contact nickname')])
-    ->label(Yii::t('app/user/add-urgent-contact-person','Emergency Contact') ,['style'=>"    text-align: left;padding-left: 100px; padding-top:7px"])
+    ->label(Yii::t('app/user/add-urgent-contact-person','Name') ,['style'=>"    text-align: left;padding-left: 100px; padding-top:7px"])
 
     ?>
 
@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div> -->
             <div class="col-sm-2 text-center" style="    font-weight: 600;">
-                <?=  Yii::t('app/user/add-urgent-contact-person','Emergency contact phone')?></label>
+                <?=  Yii::t('app/user/add-urgent-contact-person','Phone Number')?></label>
 
             </div>
             <?php echo $form->field($model, 'contact_country_code', [
@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php echo $form->field($model, 'contact_phone_number',[
 
                 'template' => "<div>{label}\n<div>&nbsp;{input}<span style=\"margin-left:10px;\">*".
-                    Yii::t('app/user/add-urgent-contact-person','Please enter the contact Phone number')
+                    Yii::t('app/user/add-urgent-contact-person','Please enter the phone number of emergency contact.')
 
             ."</span></div>\n<span style=\"height:18px;\" class=\"help-block m-b-none\">{error}</span></div>",
 
