@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'options'=>['class'=>'form-horizontal m-t'],
         'fieldConfig' => [
             'template' => "{label}\n<div class=\"col-sm-3\">{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
-            'labelOptions' => ['class' => 'col-sm-1 '],
+            'labelOptions' => ['class' => 'col-sm-1 text-right'],
         ],
     ]) ?>
 
@@ -47,11 +47,16 @@ $this->params['breadcrumbs'][] = $this->title;
     ?>
 
     <div class="form-group">
-        <div style="margin-left: 133px;">
-            <?= Html::submitButton(Yii::t('app/user/password','Submit'), ['class' => 'btn btn-primary button-new-color' , 'style'=>'width:325px']) ?>
+        <label class="col-sm-1" for="">
+
+        </label>
+        <div class="col-sm-3" >
+            <?= Html::submitButton(Yii::t('app/user/password','Submit'), ['class' => ' btn btn-primary button-new-color' , 'style'=>'width:100%;','id'=>"passwordupdate"]) ?>
         </div>
+        <span class="col-sm-5"></span>
     </div>
 
     <?php ActiveForm::end(); ?>
 
 </div>
+
