@@ -913,12 +913,12 @@ class Telegram extends Model
             ];
         } else {
             if (empty($this->calledPersonData)) {
-                $this->language = $this->callPersonData->language;
                 $sendData['chat_id'] = $this->telegramUid;
                 $sendData['text'] = $this->getMenuNoMemberText();
                 $this->sendData = $sendData;
                 return $this->sendTelegramData();
             }
+            $this->language = $this->callPersonData->language;
             $callMenu = [
                 'text' => $this->getCallText(),
                 'callback_data' => implode('-', array($this->callCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone, $this->telegramContactLastName.$this->telegramContactFirstName)),
