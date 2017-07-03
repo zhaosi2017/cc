@@ -571,7 +571,7 @@ class Telegram extends Model
      */
     public function getStartText()
     {
-        return $this->startText;
+        return Yii::t('app/model/telegram', $this->startText, array(), $this->language);
     }
 
     /**
