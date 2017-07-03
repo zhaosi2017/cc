@@ -26,6 +26,7 @@ class Telegram extends Model
     private $apiKey = '85704df7';
     private $apiSecret = '755026fdd40f34c2';
     private $llanguage = 'zh-CN';
+    private $tlanguage = 'zh-CN';
     private $repeat = 3;
     private $voice = 'male';
     // 是否是紧急呼叫.
@@ -39,10 +40,10 @@ class Telegram extends Model
     private $unwhitelistSwitchCallbackDataPre = 'cc_unwhiteswitch';
     private $blackCallbackDataPre = "cc_black";
     private $unblackCallbackDataPre = "cc_unblack";
-    private $whiteText = 'Join Whitelist.';
-    private $unwhiteText = 'Cancel the white list.';
-    private $blackText = "Join in blacklist.";
-    private $unblackText = "Unlock the blacklist.";
+    private $whiteText = 'Join Whitelist';
+    private $unwhiteText = 'Cancel the whitelist';
+    private $blackText = "Join blacklist";
+    private $unblackText = "Unlock the blacklist";
     private $whiteSwitchText = 'Open the whitelist.';
     private $unwhiteSwitchText = 'Close the whitelist.';
     private $menuShareText = "Please share your own contact card to the robot, complete the binding operation.";
@@ -280,13 +281,25 @@ class Telegram extends Model
      */
     public function setLanguage($value)
     {
-        if (!stripos($value, 'zh')) {
-            $language = explode('-', $value);
-            $this->llanguage = $language[0];
+        if (!stripos($value, '-')) {
+            switch ($value) {
+                case 'zh';
+                    $this->llanguage = 'zh-CN';
+                default;
+                default :
+                    break;
+            }
         } else {
             $this->llanguage = $value;
         }
 
+        // tlanguage语言设置.
+        if (!stripos($value, 'zh')) {
+            $language = explode('-', $value);
+            $this->tlanguage = $language[0];
+        } else {
+            $this->tlanguage = $value;
+        }
     }
 
     /**
@@ -446,32 +459,32 @@ class Telegram extends Model
 
     public function getWhiteText()
     {
-        return $this->whiteText;
+        return Yii::t('app/model/telegram', $this->whiteText, array(), $this->language);
     }
 
     public function getUnwhiteText()
     {
-        return $this->unwhiteText;
+        return Yii::t('app/model/telegram', $this->unwhiteText, array(), $this->language);
     }
 
     public function getBlackText()
     {
-        return $this->blackText;
+        return Yii::t('app/model/telegram', $this->blackText, array(), $this->language);
     }
 
     public function getUnblackText()
     {
-        return $this->unblackText;
+        return Yii::t('app/model/telegram', $this->unblackText, array(), $this->language);
     }
 
     public function getWhiteSwitchText()
     {
-        return $this->whiteSwitchText;
+        return Yii::t('app/model/telegram', $this->whiteSwitchText, array(), $this->language);
     }
 
     public function getUnwhiteSwitchText()
     {
-        return $this->unwhiteSwitchText;
+        return Yii::t('app/model/telegram', $this->unwhiteSwitchText, array(), $this->language);
     }
 
     /**
@@ -487,7 +500,7 @@ class Telegram extends Model
      */
     public function getFirstText()
     {
-        return $this->firstText;
+        return Yii::t('app/model/telegram', $this->firstText, array(), $this->language);
     }
 
     /**
@@ -511,7 +524,7 @@ class Telegram extends Model
      */
     public function getKeyboardText()
     {
-        return $this->keyboardText;
+        return Yii::t('app/model/telegram', $this->keyboardText, array(), $this->language);
     }
 
     /**
@@ -948,6 +961,7 @@ class Telegram extends Model
                     $callMenu
                 ]
             ];
+
             $this->sendData = [
                 'chat_id' => $this->telegramUid,
                 'text' => $this->getTelegramText(),
@@ -1336,7 +1350,7 @@ class Telegram extends Model
         $textArr = [
             "q" => $text,
             "format" => "text",
-            "target" => $this->language,
+            "target" => $this->tlanguage,
         ];
 
         $data = $text;
@@ -1647,6 +1661,7 @@ class Telegram extends Model
         }
         if (is_array($this->sendData)) {
             $this->sendData = $escape ? json_encode($this->sendData,JSON_UNESCAPED_UNICODE) : json_encode($this->sendData, true);
+            // $this->sendData = json_encode($this->sendData, true);
         }
         if (empty($url)) {
             $this->setWebhook();
