@@ -14,11 +14,11 @@ class Telegram extends Model
 
     const CODE_LENGTH = 5;
 
-    private $telegramText = '操作菜单';
-    private $startText = '开始操作, 请稍后!';
-    private $wellcomeText = '欢迎';
-    private $keyboardText = '分享自己名片';
-    private $callText = "呼叫";
+    private $telegramText = 'Operation menu.';
+    private $startText = 'Start the operation, please wait later.';
+    private $wellcomeText = 'welcome!';
+    private $keyboardText = 'Share your contact card.';
+    private $callText = "call";
     private $firstText = '/start';
     private $webhook;
     private $nexmoUrl = "https://api.nexmo.com/tts/json";
@@ -29,6 +29,8 @@ class Telegram extends Model
     private $repeat = 3;
     private $voice = 'male';
     // 是否是紧急呼叫.
+    private $successText = 'success';
+    private $failureText = 'failure';
     private $isUrgentCall = 0;
     private $callCallbackDataPre = 'cc_call';
     private $whiteCallbackDataPre = 'cc_white';
@@ -37,13 +39,13 @@ class Telegram extends Model
     private $unwhitelistSwitchCallbackDataPre = 'cc_unwhiteswitch';
     private $blackCallbackDataPre = "cc_black";
     private $unblackCallbackDataPre = "cc_unblack";
-    private $whiteText = '加白名单';
-    private $unwhiteText = '解除白名单';
-    private $blackText = "加黑名单";
-    private $unblackText = "解除黑名单";
-    private $whiteSwitchText = '开启白名单';
-    private $unwhiteSwitchText = '关闭白名单';
-    private $menuShareText = "Please share your own business card to the robot, complete the binding operation.";
+    private $whiteText = 'Join Whitelist.';
+    private $unwhiteText = 'Cancel the white list.';
+    private $blackText = "Join in blacklist.";
+    private $unblackText = "Unlock the blacklist.";
+    private $whiteSwitchText = 'Open the whitelist.';
+    private $unwhiteSwitchText = 'Close the whitelist.';
+    private $menuShareText = "Please share your own contact card to the robot, complete the binding operation.";
     private $menuNoMemberText = "He is not a member of our system and you can not perform this operation.";
     private $enableNoMemberText = "You are not a member of our system and can not perform this operation.";
     private $enableWhiteText = "White List has been turned on.";
@@ -65,6 +67,11 @@ class Telegram extends Model
     private $unlockBlackListSuccessText = "Unlock the blacklist successfully.";
     private $unlockBlackListFailureText = "Unlock the blacklist failed.";
     private $notInBlackList = "Not in blacklist.";
+    private $isNotMemberText = 'is not a member of our system, can not perform the operation.';
+    private $completeText = 'You have completed the binding operation.';
+    private $exceedText = 'The number of times the call has exceeded the limit set by he.';
+    private $codeEmptyText = 'The verification code is empty.';
+    private $codeErrorText = 'Verification code error.';
 
 
     private $code;
@@ -285,7 +292,7 @@ class Telegram extends Model
      */
     public function getTelegramText()
     {
-        return $this->telegramText;
+        return Yii::t('app/model/telegram', $this->telegramText, array(), $this->language);
     }
 
     /**
@@ -622,7 +629,7 @@ class Telegram extends Model
      */
     public function getDisableWhiteText()
     {
-        return Yii::t('app/model/telegram', $this->disableWhiteText(), array(), $this->language);
+        return Yii::t('app/model/telegram', $this->disableWhiteText, array(), $this->language);
     }
 
     /**
@@ -746,6 +753,70 @@ class Telegram extends Model
     }
 
     /**
+     * @return string
+     */
+    public function getSuccessText()
+    {
+        return Yii::t('app/model/telegram', $this->successText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getFailureText()
+    {
+        return Yii::t('app/model/telegram', $this->failureText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCallText()
+    {
+        return Yii::t('app/model/telegram', $this->callText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getIsNotMemberText()
+    {
+        return Yii::t('app/model/telegram', $this->isNotMemberText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCompleteText()
+    {
+        return Yii::t('app/model/telegram', $this->completeText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getExceedText()
+    {
+        return Yii::t('app/model/telegram', $this->exceedText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCodeEmptyText()
+    {
+        return Yii::t('app/model/telegram', $this->codeEmptyText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCodeErrorText()
+    {
+        return Yii::t('app/model/telegram', $this->codeErrorText, array(), $this->language);
+    }
+
+    /**
      * 欢迎.
      */
     public function telegramWellcome()
@@ -754,7 +825,7 @@ class Telegram extends Model
         $keyboard = [
             [
                 [
-                    "text"=> $this->keyboardText,
+                    "text"=> $this->getKeyboardText(),
                     "request_contact"=> true,
                 ]
             ]
@@ -763,7 +834,7 @@ class Telegram extends Model
         $this->sendData = [
             'chat_id' => $this->telegramUid,
             'reply_to_message_id' => 0,
-            'text' => $this->wellcomeText,
+            'text' => $this->getWellcomeText(),
             'reply_markup' => [
                 'keyboard' => $keyboard,
             ]
@@ -796,12 +867,12 @@ class Telegram extends Model
         } elseif (!empty($this->callPersonData) && ($this->telegramUid == $this->telegramContactUid)){
             if ($this->callPersonData->whitelist_switch == 0) {
                 $whiteMenu = [
-                    'text' => $this->whiteSwitchText,
+                    'text' => $this->getWhiteSwitchText(),
                     'callback_data' => implode('-', array($this->whitelistSwitchCallbackDataPre, $this->telegramUid, $this->callPersonData->telegram_number)),
                 ];
             } else {
                 $whiteMenu = [
-                    'text' => $this->unwhiteSwitchText,
+                    'text' => $this->getUnwhiteSwitchText(),
                     'callback_data' => implode('-', array($this->unwhitelistSwitchCallbackDataPre, $this->telegramUid, $this->callPersonData->telegram_number)),
                 ];
             }
@@ -813,7 +884,7 @@ class Telegram extends Model
             ];
             $this->sendData = [
                 'chat_id' => $this->telegramUid,
-                'text' => $this->telegramText,
+                'text' => $this->getTelegramText(),
                 'reply_markup' => [
                     'inline_keyboard' => $inlineKeyboard,
                 ]
@@ -827,7 +898,7 @@ class Telegram extends Model
                 return $this->sendTelegramData();
             }
             $callMenu = [
-                'text' => $this->callText,
+                'text' => $this->getCallText(),
                 'callback_data' => implode('-', array($this->callCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone, $this->telegramContactLastName.$this->telegramContactFirstName)),
             ];
 
@@ -836,24 +907,24 @@ class Telegram extends Model
             $blackRes = BlackList::findOne(['uid' => $this->callPersonData->id, 'black_uid'=> $this->calledPersonData->id]);
             if ($whiteRes) {
                 $whiteMenu = [
-                    'text' => $this->unwhiteText,
+                    'text' => $this->getUnwhiteText(),
                     'callback_data' => implode('-', array($this->unwhiteCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone)),
                 ];
             } else {
                 $whiteMenu = [
-                    'text' => $this->whiteText,
+                    'text' => $this->getWhiteText(),
                     'callback_data' => implode('-', array($this->whiteCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone)),
                 ];
             }
             // 黑名单按钮.
             if ($blackRes) {
                 $blackMenu = [
-                    'text' => $this->unblackText,
+                    'text' => $this->getUnblackText(),
                     'callback_data' => implode('-', array($this->unblackCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone)),
                 ];
             } else {
                 $blackMenu = [
-                    'text' => $this->blackText,
+                    'text' => $this->getBlackText(),
                     'callback_data' => implode('-', array($this->blackCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone)),
                 ];
             }
@@ -869,7 +940,7 @@ class Telegram extends Model
             ];
             $this->sendData = [
                 'chat_id' => $this->telegramUid,
-                'text' => $this->telegramText,
+                'text' => $this->getTelegramText(),
                 'reply_markup' => [
                     'inline_keyboard' => $inlineKeyboard,
                 ]
@@ -887,7 +958,7 @@ class Telegram extends Model
         // 开始操作.
         $this->sendData = [
             'chat_id' => $this->telegramUid,
-            'text' => $this->startText,
+            'text' => $this->getStartText(),
         ];
         $this->sendTelegramData();
 
@@ -925,7 +996,7 @@ class Telegram extends Model
         // 开始操作.
         $this->sendData = [
             'chat_id' => $this->telegramUid,
-            'text' => $this->startText,
+            'text' => $this->getStartText(),
         ];
         $this->sendTelegramData();
 
@@ -963,7 +1034,7 @@ class Telegram extends Model
         // 开始操作.
         $this->sendData = [
             'chat_id' => $this->telegramUid,
-            'text' => $this->startText,
+            'text' => $this->getStartText(),
         ];
         $this->sendTelegramData();
 
@@ -1006,7 +1077,7 @@ class Telegram extends Model
                 ];
                 $this->sendTelegramData();
                 $bindMenu = [
-                    'text' => $this->whiteText,
+                    'text' => $this->getWhiteText(),
                     'callback_data' => implode('-', array($this->whiteCallbackDataPre, $this->telegramUid, $this->callPersonData->telegram_number)),
                 ];
                 $inlineKeyboard = [
@@ -1016,7 +1087,7 @@ class Telegram extends Model
                 ];
                 $this->sendData = [
                     'chat_id' => $this->telegramContactUid,
-                    'text' => $this->telegramText,
+                    'text' => $this->getTelegramText(),
                     'reply_markup' => [
                         'inline_keyboard' => $inlineKeyboard,
                     ]
@@ -1038,7 +1109,7 @@ class Telegram extends Model
         // 开始操作.
         $this->sendData = [
             'chat_id' => $this->telegramUid,
-            'text' => $this->startText,
+            'text' => $this->getStartText(),
         ];
         $this->sendTelegramData();
 
@@ -1083,7 +1154,7 @@ class Telegram extends Model
         // 开始操作.
         $this->sendData = [
             'chat_id' => $this->telegramUid,
-            'text' => $this->startText,
+            'text' => $this->getStartText(),
         ];
         $this->sendTelegramData();
 
@@ -1131,7 +1202,7 @@ class Telegram extends Model
         // 开始操作.
         $this->sendData = [
             'chat_id' => $this->telegramUid,
-            'text' => $this->startText,
+            'text' => $this->getStartText(),
         ];
         $this->sendTelegramData();
 
@@ -1177,7 +1248,7 @@ class Telegram extends Model
         if ($this->telegramUid != $this->telegramContactUid) {
             $this->sendData = [
                 'chat_id' => $this->telegramUid,
-                'text' => '请先分享自己的名片到机器人，完成绑定操作!',
+                'text' => $this->getMenuShareText(),
             ];
         } else {
             $this->setCode();
@@ -1199,6 +1270,7 @@ class Telegram extends Model
     public function callPersonPhone($nickname)
     {
         $result = false;
+        $this->language = $this->callPersonData->language;
         $nexmoData = [
             "api_key" => $this->apiKey,
             'api_secret' => $this->apiSecret,
@@ -1207,7 +1279,7 @@ class Telegram extends Model
             'voice' => $this->voice,
             'to'  => '',
             'from' => $this->callPersonData->country_code.$this->callPersonData->phone_number,
-            'text' => $this->telegramLastName.$this->telegramFirstName.'在telegram上找你!',
+            'text' => $this->telegramLastName.$this->telegramFirstName.$this->translateLanguage('在telegram上找你!'),
         ];
         $numberArr = UserPhone::find()->select(['id', 'phone_country_code', 'user_phone_number'])->where(['user_id' => $this->calledPersonData->id])->orderBy('id asc')->all();
         foreach ($numberArr as $key => $number) {
@@ -1225,7 +1297,7 @@ class Telegram extends Model
             if ($res['status']) {
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
-                    'text' => '呼叫"'.$nickname.'"成功!',
+                    'text' => $this->getCallText().$nickname.$this->getSuccessText(),
                 ];
                 $result = true;
                 $this->sendTelegramData();
@@ -1236,12 +1308,39 @@ class Telegram extends Model
 
             $this->sendData = [
                 'chat_id' => $this->telegramUid,
-                'text' => '呼叫"'.$nickname.'"失败! '.$res['message'],
+                // 'text' => '呼叫"'.$nickname.'"失败! '.$res['message'],
+                'text' => $this->getCallText().$nickname.$this->getFailureText().$this->translateLanguage($res['message']),
             ];
             $this->sendTelegramData();
         }
 
         return $result;
+    }
+
+    /**
+     * 翻译语言.
+     */
+    public function translateLanguage($text, $source = null)
+    {
+
+        $textArr = [
+            "q" => $text,
+            "format" => 'text',
+            "target" => $this->language,
+        ];
+
+        $data = $text;
+        if (!empty($source)) {
+            $textArr['source'] = $source;
+        }
+        $this->sendData = $textArr;
+        $res = $this->sendTelegramData($this->translateUrl);
+
+        if (isset($res['data']) && isset($res['data']['translations']['translatedText'])) {
+            $data = $res['data']['translations']['translatedText'];
+        }
+
+        return $data;
     }
 
     /**
@@ -1260,7 +1359,7 @@ class Telegram extends Model
             'voice' => $this->voice,
             'to'  => '',
             'from' => $this->callPersonData->country_code.$this->callPersonData->phone_number,
-            'text' => $this->telegramLastName.$this->telegramFirstName.'在telegram上找'.$nickname.', 请您及时转告!',
+            'text' => $this->telegramLastName.$this->telegramFirstName.$this->translateLanguage('在telegram上找'.$nickname.', 请您及时转告!'),
         ];
         $numberArr = UserGentContact::find()->select(['id', 'contact_country_code', 'contact_phone_number', 'contact_nickname'])->where(['user_id' => $this->calledPersonData->id])->orderBy('id asc')->all();
         foreach ($numberArr as $key => $number) {
@@ -1273,7 +1372,7 @@ class Telegram extends Model
             if ($res['status']) {
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
-                    'text' => '呼叫"'.$nickname.'"的紧急联系人"'.$number->contact_nickname.'", 成功!',
+                    'text' => $this->translateLanguage('呼叫"'.$nickname.'"的紧急联系人"'.$number->contact_nickname.'", 成功!'),
                 ];
                 $this->sendTelegramData();
                 // 保存通话记录.
@@ -1294,7 +1393,7 @@ class Telegram extends Model
         // 开始操作.
         $this->sendData = [
             'chat_id' => $this->telegramUid,
-            'text' => $this->startText,
+            'text' => $this->getStartText(),
         ];
         $this->sendTelegramData();
 
@@ -1305,7 +1404,7 @@ class Telegram extends Model
         } elseif ($this->telegramUid == $this->telegramContactUid) {
             $this->sendData = [
                 'chat_id' => $this->telegramUid,
-                'text' => '您已经完成了绑定操作!',
+                'text' => $this->getCompleteText(),
             ];
             $this->sendTelegramData();
             return $this->errorCode['success'];
@@ -1324,7 +1423,7 @@ class Telegram extends Model
             if ($res) {
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
-                    'text' => '您在"'.$nickname.'"的黑名单列表内, 不能呼叫!',
+                    'text' => $this->translateLanguage('您在"'.$nickname.'"的黑名单列表内, 不能呼叫!'),
                 ];
                 $this->sendTelegramData();
                 return $this->errorCode['success'];
@@ -1336,7 +1435,7 @@ class Telegram extends Model
                 if (!$res) {
                     $this->sendData = [
                         'chat_id' => $this->telegramUid,
-                        'text' => '您不在"'.$nickname.'"的白名单列表内, 不能呼叫!',
+                        'text' => $this->translateLanguage('您不在"'.$nickname.'"的白名单列表内, 不能呼叫!'),
                     ];
                     $this->sendTelegramData();
                     return $this->errorCode['success'];
@@ -1348,7 +1447,7 @@ class Telegram extends Model
             if (!$res['status']) {
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
-                    'text' => '呼叫"'.$nickname.'"失败! '.$res['message'],
+                    'text' => $this->translateLanguage('呼叫"'.$nickname.'"失败! '.$res['message']),
                 ];
                 $this->sendTelegramData();
                 return $this->errorCode['success'];
@@ -1359,7 +1458,7 @@ class Telegram extends Model
             if (!$res) {
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
-                    'text' => '呼叫"'.$nickname.'"失败, 尝试呼叫"'.$nickname.'"的紧急联系人, 请稍后!',
+                    'text' => $this->translateLanguage('呼叫"'.$nickname.'"失败, 尝试呼叫"'.$nickname.'"的紧急联系人, 请稍后!'),
                 ];
                 $this->sendTelegramData();
                 $res = $this->callPersonUrgentPhone($nickname);
@@ -1368,7 +1467,7 @@ class Telegram extends Model
             if (!$res) {
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
-                    'text' => '抱歉本次呼叫"' . $nickname . '"失败，请稍后再试, 或尝试其他方式联系' . $user->nickname . '!',
+                    'text' => $this->translateLanguage('抱歉本次呼叫"' . $nickname . '"失败，请稍后再试, 或尝试其他方式联系' . $user->nickname . '!'),
                 ];
                 $this->sendTelegramData();
             }
@@ -1377,7 +1476,7 @@ class Telegram extends Model
         } else {
             $this->sendData = [
                 'chat_id' => $this->telegramUid,
-                'text' => $this->telegramContactLastName.$this->telegramContactFirstName.'不是我们系统会员，不能执行该操作!',
+                'text' => $this->telegramContactLastName.$this->telegramContactFirstName.$this->getIsNotMemberText(),
             ];
             $this->sendTelegramData();
             return $this->errorCode['success'];
@@ -1406,7 +1505,7 @@ class Telegram extends Model
                 $personNum = Yii::$app->redis->hexists($cacheKey, $callKey) ? Yii::$app->redis->hget($cacheKey, $callKey) : 0;
                 if ($totalNum >= $this->calledPersonData->un_call_number || $personNum >= $this->calledPersonData->un_call_by_same_number) {
                     $res['status'] = false;
-                    $res['message'] = '呼叫超出本人设置的限制次数';
+                    $res['message'] = $this->getExceedText();
                     return $res;
                 }
                 Yii::$app->redis->hincrby($cacheKey, 'total', 1);
@@ -1485,16 +1584,16 @@ class Telegram extends Model
     public function bindTelegramData()
     {   
         if(empty($this->bindCode)){
-            return  $this->addError('bindCode','验证码为空');
+            return  $this->addError('bindCode', $this->getCodeEmptyText());
         }
         $user = User::findOne(Yii::$app->user->id);
         if (!Yii::$app->redis->exists($this->bindCode)) {
-            $this->addError('bindCode', '验证码错误!');
+            $this->addError('bindCode', $this->getCodeErrorText());
         } else {
             $telegramData = Yii::$app->redis->get($this->bindCode);
         }
         if (empty($telegramData)) {
-            return $this->addError('bindCode', '验证码错误!');
+            return $this->addError('bindCode', $this->getCodeErrorText());
         }
 
         $data = Yii::$app->security->decryptByKey(base64_decode($telegramData), Yii::$app->params['telegram']);
@@ -1508,7 +1607,7 @@ class Telegram extends Model
             }
             return $res;
         } else {
-            return $this->addError('bindCode', '验证码错误!');
+            return $this->addError('bindCode', $this->getCodeErrorText());
         }
 
     }
