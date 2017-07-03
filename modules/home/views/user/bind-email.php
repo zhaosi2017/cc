@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             Yii::t('app/user/bind-email' , 'Please Entry your Eamil address')
             ."</span> \n<br><div style=\"height:20px;\"></div><label class = \"col-sm-1 \"></label><div style=\" width: 67%; padding-left: 15px !important;\"><span style=\"\">{error}</span></div>",
-    ])->textInput()->label(Yii::t('app/user/bind-email','Email'),['style'=>'padding-top:5px ;font-size:17px']) ?>
+    ])->textInput()->label(Yii::t('app/user/bind-email','Email'),['style'=>'padding-top:5px ;font-size:17px' ,'class'=>'col-sm-1  text-right']) ?>
 
     <br>
     <div class="form-group">
