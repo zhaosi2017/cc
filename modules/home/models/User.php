@@ -225,14 +225,14 @@ class User extends CActiveRecord implements IdentityInterface
                 $this->account  = base64_encode(Yii::$app->security->encryptByKey($this->account, Yii::$app->params['inputKey']));
                 $this->username  = base64_encode(Yii::$app->security->encryptByKey($this->username, Yii::$app->params['inputKey']));
                 $this->password && $this->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
-                $this->nickname && $this->nickname = base64_encode(Yii::$app->security->encryptByKey($this->nickname, Yii::$app->params['inputKey']));
+                //$this->nickname && $this->nickname = base64_encode(Yii::$app->security->encryptByKey($this->nickname, Yii::$app->params['inputKey']));
             }else{
                 if(!empty(array_column(Yii::$app->request->post(),'password'))){    //必须是post中的password 否则出现二次加密
                     $this->password = Yii::$app->getSecurity()->generatePasswordHash(array_column(Yii::$app->request->post(),'password')[0]);
                 }
                 $this->username = base64_encode(Yii::$app->security->encryptByKey($this->username, Yii::$app->params['inputKey']));
                 $this->account = base64_encode(Yii::$app->security->encryptByKey($this->account, Yii::$app->params['inputKey']));
-                $this->nickname = base64_encode(Yii::$app->security->encryptByKey($this->nickname, Yii::$app->params['inputKey']));
+               // $this->nickname = base64_encode(Yii::$app->security->encryptByKey($this->nickname, Yii::$app->params['inputKey']));
             }
             return true;
         }
@@ -243,7 +243,7 @@ class User extends CActiveRecord implements IdentityInterface
     {
         parent::afterFind();
         $this->account = Yii::$app->security->decryptByKey(base64_decode($this->account), Yii::$app->params['inputKey']);
-        $this->nickname && $this->nickname = Yii::$app->security->decryptByKey(base64_decode($this->nickname), Yii::$app->params['inputKey']);
+        //$this->nickname && $this->nickname = Yii::$app->security->decryptByKey(base64_decode($this->nickname), Yii::$app->params['inputKey']);
         $this->username && $this->username = Yii::$app->security->decryptByKey(base64_decode($this->username), Yii::$app->params['inputKey']);
 
     }

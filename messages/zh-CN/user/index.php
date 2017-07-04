@@ -20,6 +20,7 @@ return [
     'Edit'=>'修改',
     'Build Now'=>'立即绑定',
     'Create UserName'=>'绑定用户名',
-    'Language'=>'语言'
+    'Language'=>'语言',
+    'NickName'=>'昵称',
 
 ];

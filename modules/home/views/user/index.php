@@ -102,14 +102,31 @@ position: relative;
 
     <div>
         <div class="row app-bind-div">
-            <div class="col-xs-4 app-bind-1"><?= Yii::t('app/user/index', 'Language') ?></div>
+            <div class="col-xs-4 app-bind-1"><?= Yii::t('app/user/index', 'NickName') ?></div>
             <div class="col-xs-4">
-                <?php echo  ($model->language);?>
+                <?php echo  ($model->nickname);?>
 
-                    </div>
+            </div>
+            <div class="col-xs-4">
+                <a href="/home/user/set-nickname" style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px">
+                    <?php echo ($model->nickname)? Yii::t('app/user/index', 'Edit'):Yii::t('app/user/index' , 'Build Now');?></a>
+            </div>
 
         </div>
     </div>
+
+<!--    <div>-->
+<!--        <div class="row app-bind-div">-->
+<!--            <div class="col-xs-4 app-bind-1">--><?//= Yii::t('app/user/index', 'Language') ?><!--</div>-->
+<!--            <div class="col-xs-4">-->
+<!--                --><?php //echo  ($model->language);?>
+<!---->
+<!--                    </div>-->
+<!---->
+<!--        </div>-->
+<!--    </div>-->
+
+
 
 
 </div>
