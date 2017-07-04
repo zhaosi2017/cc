@@ -37,9 +37,11 @@ class TelegramController extends GController
                         'roles' => ['@'],
                     ],
                 ],
+                /*
                 'denyCallback' => function($rule, $action) {
                     echo 'You are not allowed to access this page!';
                 }
+                */
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
