@@ -37,11 +37,11 @@ $actionId = Yii::$app->requestedAction->id;
             ['class' => 'yii\grid\SerialColumn', 'header' => Yii::t('app/call-record/index','Serial number'), 'headerOptions'=>['class'=>'text-center']],
             ['attribute' =>'active_account' , 'headerOptions'=>['class'=>'text-center']],
             ['attribute' =>'active_nickname' , 'headerOptions'=>['class'=>'text-center']],
-            ['attribute' =>'contact_number' , 'headerOptions'=>['class'=>'text-center']],
+            // ['attribute' =>'contact_number' , 'headerOptions'=>['class'=>'text-center']],
             ['attribute' =>'unactive_account' , 'headerOptions'=>['class'=>'text-center']],
             ['attribute' =>'unactive_nickname' , 'headerOptions'=>['class'=>'text-center']],
             ['attribute' =>'typeData' , 'headerOptions'=>['class'=>'text-center']],
-            ['attribute' =>'unactive_contact_number' , 'headerOptions'=>['class'=>'text-center']],
+            // ['attribute' =>'unactive_contact_number' , 'headerOptions'=>['class'=>'text-center']],
             ['attribute' =>'statusData' , 'headerOptions'=>['class'=>'text-center']],
             [
                 'attribute' => 'call_time',
