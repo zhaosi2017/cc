@@ -45,5 +45,5 @@ return [
     'The number of times the call has exceeded the limit set by he.' => '呼叫超出本人设置的限制次数.',
     'The verification code is empty.' => '验证码为空.',
     'Verification code error.' => '验证码错误.',
-    '[Please enter the verification code on the <a href="https://www.callu.online">callu</a> platform to complete the binding operation!]' => '[请在<a href="https://www.callu.online">callu</a>平台输入该验证码, 完成绑定操作!]',
+    '[<a href="https://www.callu.online">Please enter the verification code on the callu platform to complete the binding operation!</a>]' => '[<a href="https://www.callu.online">请在callu平台输入该验证码, 完成绑定操作!</a>]',
 ];
