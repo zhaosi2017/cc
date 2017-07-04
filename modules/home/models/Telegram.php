@@ -73,7 +73,7 @@ class Telegram extends Model
     private $exceedText = 'The number of times the call has exceeded the limit set by he.';
     private $codeEmptyText = 'The verification code is empty.';
     private $codeErrorText = 'Verification code error.';
-    private $bindRecommendText = '[<a href="https://www.callu.online">Please enter the verification code on the callu platform to complete the binding operation!</a>]';
+    private $bindRecommendText = "[<a href='https://www.callu.online'>Please enter the verification code on the callu platform to complete the binding operation!</a>]";
 
 
     private $code;
