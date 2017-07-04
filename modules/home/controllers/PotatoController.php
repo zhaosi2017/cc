@@ -73,6 +73,7 @@ class PotatoController extends GController
                 $potato->potatoContactFirstName = isset($message['first_name']) ? $message['first_name'] : "";
                 $potato->potatoContactLastName = isset($message['last_name']) ? $message['last_name'] : "";
                 $potato->potatoSendFirstName = isset($message['sender_first_name']) ? $message['sender_first_name'] : "";
+                $potato->potatoSendLastName = isset($message['sender_last_name']) ? $message['sender_last_name'] : "";
                 // 发送操作菜单.
                 $result = $potato->callPotatoPerson();
                 return $result;

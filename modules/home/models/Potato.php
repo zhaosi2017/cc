@@ -11,15 +11,17 @@ class Potato extends Model
 
     const CODE_LENGTH = 5;
 
-    private $startText = '开始操作, 请稍后!';
-    private $wellcomeText = '欢迎';
-    private $keyboardText = '分享自己名片';
+    private $startText = 'Start the operation, please wait later.';
+    private $wellcomeText = 'welcome';
+    private $keyboardText = 'Share your contact card';
     private $firstText = '/start';
     private $webhook;
     private $nexmoUrl = "https://api.nexmo.com/tts/json";
+    private $translateUrl = "https://translation.googleapis.com/language/translate/v2?key=AIzaSyAV_rXQu5ObaA9_rI7iqL4EDB67oXaH3zk";
     private $apiKey = '85704df7';
     private $apiSecret = '755026fdd40f34c2';
-    private $language = 'zh-cn';
+    private $tlanguage = 'zh-CN';
+    private $llanguage = 'zh-cn';
     private $repeat = 3;
     private $voice = 'male';
     // 是否是紧急呼叫.
@@ -34,8 +36,13 @@ class Potato extends Model
     private $potatoContactFirstName;
     private $potatoContactLastName = null;
     private $potatoSendFirstName;
+    private $potatoSendLastName;
     private $callPersonData;
     private $calledPersonData;
+    private $bindRecommendText = "[Please enter the verification code on the callu platform to complete the binding operation!]";
+    private $menuShareText = "Please share your own contact card to the robot, complete the binding operation.";
+    private $successText = 'success';
+    private $failureText = 'failure';
 
     private $sendData;
     private $errorCode = [
@@ -137,6 +144,14 @@ class Potato extends Model
     }
 
     /**
+     * @param $value
+     */
+    public function setPotatoSendLastName($value)
+    {
+        $this->potatoSendLastName = $value;
+    }
+
+    /**
      * 获取验证码.
      *
      * @return string
@@ -174,7 +189,7 @@ class Potato extends Model
         $telegramData = base64_encode(Yii::$app->security->encryptByKey($dealData, Yii::$app->params['potato']));
         // 验证码过期时间半小时.
         Yii::$app->redis->setex($this->code, 30*60, $telegramData);
-        $this->code = $this->code.'  [请在callu平台输入该验证码, 完成绑定操作!]';
+        $this->code = $this->code.' '.$this->getBindRecommendText();
     }
 
     /**
@@ -207,6 +222,31 @@ class Potato extends Model
     public function setCallPersonData($value)
     {
         $this->callPersonData = $value;
+    }
+
+    /**
+     * 设置语言.
+     */
+    public function setLanguage($value)
+    {
+        if (!stripos($value, '-')) {
+            switch ($value) {
+                case 'zh';
+                    $this->llanguage = 'zh-CN';
+                default;
+                    break;
+            }
+        } else {
+            $this->llanguage = $value;
+        }
+
+        // tlanguage语言设置.
+        if (!stripos($value, 'zh')) {
+            $language = explode('-', $value);
+            $this->tlanguage = $language[0];
+        } else {
+            $this->tlanguage = $value;
+        }
     }
 
     /**
@@ -283,6 +323,14 @@ class Potato extends Model
     }
 
     /**
+     * @return mixed
+     */
+    public function getPotatoSendLastName()
+    {
+        return $this->potatoSendLastName;
+    }
+
+    /**
      * 获取webhook.
      */
     public function getWebhook()
@@ -319,7 +367,7 @@ class Potato extends Model
      */
     public function getLanguage()
     {
-        return $this->language;
+        return $this->llanguage;
     }
 
     /**
@@ -387,7 +435,7 @@ class Potato extends Model
      */
     public function getKeyboardText()
     {
-        return $this->keyboardText;
+        return Yii::t('app/model/potato', $this->keyboardText, array(), $this->language);
     }
 
     /**
@@ -435,7 +483,7 @@ class Potato extends Model
      */
     public function getStartText()
     {
-        return $this->startText;
+        return Yii::t('app/model/potato', $this->startText, array(), $this->language);
     }
 
     /**
@@ -443,7 +491,39 @@ class Potato extends Model
      */
     public function getWellcomeText()
     {
-        return $this->wellcomeText;
+        return Yii::t('app/model/potato', $this->wellcomeText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getBindRecommendText()
+    {
+        return Yii::t('app/model/potato', $this->bindRecommendText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getMenuShareText()
+    {
+        return Yii::t('app/model/potato', $this->menuShareText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getSuccessText()
+    {
+        return Yii::t('app/model/potato', $this->successText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getFailureText()
+    {
+        return Yii::t('app/model/potato', $this->failureText, array(), $this->language);
     }
 
     /**
@@ -457,7 +537,7 @@ class Potato extends Model
             'chat_type' => 1,
             'chat_id' => $this->potatoUid,
             'reply_to_message_id' => 0,
-            'text' => $this->wellcomeText,
+            'text' => $this->getWellcomeText(),
             'reply_markup' => [
                 'keyboard' => $this->keyboard,
             ]
@@ -477,7 +557,7 @@ class Potato extends Model
             $this->sendData = [
                 'chat_type' => 1,
                 'chat_id' => $this->potatoUid,
-                'text' => '请先分享自己的名片到机器人，完成绑定操作!',
+                'text' => $this->getMenuShareText(),
             ];
         } else {
             $this->setCode();
@@ -527,7 +607,7 @@ class Potato extends Model
                 $this->sendData = [
                     'chat_type' => 1,
                     'chat_id' => $this->potatoUid,
-                    'text' => '呼叫"'.$nickname.'"成功!',
+                    'text' => '呼叫'.$nickname.$this->getSuccessText(),
                 ];
                 $this->sendPotatoData();
                 // 保存通话记录.
@@ -539,7 +619,7 @@ class Potato extends Model
             $this->sendData = [
                 'chat_type' => 1,
                 'chat_id' => $this->potatoUid,
-                'text' => '呼叫"'.$nickname.'"失败! '.$res['message'],
+                'text' => '呼叫"'.$nickname.$this->getFailureText().' '.$this->translateLanguage($res['message']),
             ];
             $this->sendPotatoData();
         }
@@ -598,7 +678,7 @@ class Potato extends Model
         $this->sendData = [
             'chat_type' => 1,
             'chat_id' => $this->potatoUid,
-            'text' => $this->startText,
+            'text' => $this->getStartText(),
         ];
         $this->sendPotatoData();
 
@@ -834,6 +914,33 @@ class Potato extends Model
         $user->potato_user_id = 0;
         $user->potato_number = 0;
         return $user->save();
+    }
+
+    /**
+     * 翻译语言.
+     */
+    public function translateLanguage($text, $source = null)
+    {
+
+        $textArr = [
+            "q" => $text,
+            "format" => "text",
+            "target" => $this->tlanguage,
+        ];
+
+        $data = $text;
+        if (!empty($source)) {
+            $textArr['source'] = $source;
+        }
+        $this->sendData = $textArr;
+        $res = $this->sendPotatoData($this->translateUrl, true);
+        $res = json_decode($res, true);
+
+        if (isset($res['data']) && isset($res['data']['translations'])) {
+            $data = $res['data']['translations'][0]['translatedText'];
+        }
+
+        return $data;
     }
 
     /**
