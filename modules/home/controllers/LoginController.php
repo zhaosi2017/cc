@@ -86,7 +86,7 @@ class LoginController extends GController
                 $verifyCode = $captcha->getVerifyCode(true);
                 $message = Yii::$app->mailer->compose();
                 $email = $model->username;
-                $message->setTo($email)->setSubject('验证码')->setTextBody('验证码: ' . $verifyCode);
+                $message->setTo($email)->setSubject(Yii::t('app/index','Verification code'))->setTextBody(Yii::t('app/index','Verification code').' : ' . $verifyCode);
                 if($message->send()){
                     return $this->render('find-password-two',['model' =>  $model]);
                 }
@@ -150,7 +150,7 @@ class LoginController extends GController
                 $code =$_POST['PhoneRegisterForm']['code'];
                 $type = Yii::$app->controller->action->id;
                 if(ContactForm::validateSms($type, $code)){
-                    $model->addError('code', '验证码错误');
+                    $model->addError('code', Yii::t('app/index','Verification code error'));
                     return $this->render('phone-find-password',['model'=>$model]);
                 }
                 $model->setScenario('update-password');

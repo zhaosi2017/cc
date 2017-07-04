@@ -34,7 +34,9 @@ return [
     'Operation failed'=>'操作失败',
     'Password reset complete'=>'密码修改成功',
     'Verification code error'=>'验证码错误',
+    'Verification code'=>'验证码',
     'User nickname can not be empty'=>'用户昵称不能为空',
     'Mailbox binding is successful'=>'邮箱绑定成功',
+    'The requested page does not exist'=>'请求页不存在',
 
 ];
