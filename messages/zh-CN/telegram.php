@@ -9,7 +9,6 @@ return [
     'He is not a member of our system and you can not perform this operation.' => '他/她不是我们系统会员，不能执行该操作.',
     'Please share your own contact card to the robot, complete the binding operation.' => '请先分享自己的名片到机器人，完成绑定操作.',
     'You are not a member of our system and can not perform this operation.' => '您不是我们系统会员，不能执行该操作.',
-    'is not a member of our system, can not perform the operation.' => '不是我们系统会员，不能执行该操作.',
     'White List has been turned on.' => '已经开启了白名单功能.',
     'Open white list function successfully.' => '开启白名单功能成功.',
     'Open whitelist failed.' => '开启白名单功能失败.',

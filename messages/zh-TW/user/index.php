@@ -1,26 +1,15 @@
-
-<?php
-/**
- * Created by PhpStorm.
- * User: zhangqing
- * Date: 2017/7/1
- * Time: 下午2:18
- */
-
-return [
-
-    'Bind CellPhone Number'=>'绑定手机',
-    'Bind Email'=>'绑定邮箱',
-    'Build UserName'=>'绑定用户名',
-    'Password'=>'登录密码',
-    'Base Info'=>'基本资料',
-    'No Phone NUmber'=>'未绑定手机',
-    'No Email'=>'未绑定邮箱账号',
-    'No UserName'=>'未绑定用户名',
-    'Edit'=>'修改',
-    'Build Now'=>'立即绑定',
-    'Create UserName'=>'绑定用户名',
-    'Language'=>'语言',
-    'NickName'=>'昵称',
-
-];
+<?php return array (
+  'Bind CellPhone Number' => '綁定手機',
+  'Bind Email' => '綁定郵箱',
+  'Build UserName' => '綁定用戶名',
+  'Password' => '登錄密碼',
+  'Base Info' => '基本資料',
+  'No Phone NUmber' => '未綁定手機',
+  'No Email' => '未綁定郵箱賬號',
+  'No UserName' => '未綁定用戶名',
+  'Edit' => '修改',
+  'Build Now' => '立即綁定',
+  'Create UserName' => '綁定用戶名',
+  'Language' => '語言',
+  'NickName' => '暱稱',
+); 

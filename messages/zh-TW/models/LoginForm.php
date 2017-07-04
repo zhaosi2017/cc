@@ -1,29 +1,13 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: zhangqing
- * Date: 2017/7/4
- * Time: 上午10:31
- */
-
-return [
-    'Verification code error'=>'验证码错误',
-    'E-mail / phone / username'=>'邮箱/电话／用户名',
-    'Password'=>'密码',
-    'Verification code'=>'验证码',
-    'Account does not exist, please verify'=>'账号不存在，请核实',
-    'Wrong password'=>'密码错误',
-    'The user has been frozen for 30 minutes'=>'该用户已被冻结30分钟',
-    'The user has been frozen for 24 hours'=>'该用户已被冻结24小时',
-    'The user will miss the account twice and will be frozen for thirty minutes'=>'用户再错两次账号将被冻结三十分钟',
-    'The user has been frozen for 30 minutes and 30 minutes after the error will freeze for 24 hours'=>'用户已被冻结30分钟，30分钟后再错将冻结24小时',
-    'The user has been frozen for 24 hours'=>'用户已被冻结24小时',
-    'Account number'=>'账号',
-
-
-
-
-];
-
-
-
+<?php return array (
+  'Verification code error' => '驗證碼錯誤',
+  'E-mail / phone / username' => '郵箱/電話／用戶名',
+  'Password' => '密碼',
+  'Verification code' => '驗證碼',
+  'Account does not exist, please verify' => '賬號不存在，請核實',
+  'Wrong password' => '密碼錯誤',
+  'The user has been frozen for 30 minutes' => '該用戶已被凍結30分鐘',
+  'The user has been frozen for 24 hours' => '用戶已被凍結24小時',
+  'The user will miss the account twice and will be frozen for thirty minutes' => '用戶再錯兩次賬號將被凍結三十分鐘',
+  'The user has been frozen for 30 minutes and 30 minutes after the error will freeze for 24 hours' => '用戶已被凍結30分鐘，30分鐘後再錯將凍結24小時',
+  'Account number' => '賬號',
+); 

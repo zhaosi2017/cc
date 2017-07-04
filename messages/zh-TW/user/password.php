@@ -1,21 +1,10 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: zhangqing
- * Date: 2017/7/1
- * Time: 下午5:01
- */
-return [
-
-    'Edit The Password'=>'修改密码',
-    'User' =>'用户',
-    'Please Enter the old Password'=>'请输入账户原密码',
-    'The password contains at least 8 characters, including at least two characters:Uppercase letters, lowercase letters, numbers, symbols'=>'密码至少包含8个字符，至少包括以下2种字符：大写字母，小写字母，数字，符号',
-    'Submit'=>'提交',
-    'Old Password'=>'原密码',
-    'Password'=>'新密码',
-    'Repeat'=>'重复输入'
-
-
-
-];
+<?php return array (
+  'Edit The Password' => '修改密碼',
+  'User' => '用戶',
+  'Please Enter the old Password' => '請輸入賬戶原密碼',
+  'The password contains at least 8 characters, including at least two characters:Uppercase letters, lowercase letters, numbers, symbols' => '密碼至少包含8個字符，至少包括以下2種字符：大寫字母，小寫字母，數字，符號',
+  'Submit' => '提交',
+  'Old Password' => '原密碼',
+  'Password' => '新密碼',
+  'Repeat' => '重複輸入',
+); 

@@ -1,5 +1,3 @@
-<?php
-return [
-    'Number'=>'编号',
-
-];
+<?php return array (
+  'Number' => '編號',
+); 
