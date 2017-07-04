@@ -1,10 +1,10 @@
 <?php
 return [
     'User id'=>'用户id',
-    'Phone sort'=>'号码排序号',
-    'Binding time'=>'绑定时间',
-    'Update time'=>'更新时间',
-    'Country code'=>'国码',
-    'phone number'=>'电话号码',
+    'Phone sort'=>'號碼排序號',
+    'Binding time'=>'綁定時間',
+    'Update time'=>'更新時間',
+    'Country code'=>'國碼',
+    'phone number'=>'電話號碼',
 
 ];

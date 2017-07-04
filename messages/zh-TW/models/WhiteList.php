@@ -1,5 +1,5 @@
 <?php
 return [
-    'Number'=>'编号',
+    'Number'=>'編號',
 
 ];

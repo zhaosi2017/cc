@@ -1,15 +1,15 @@
 <?php
 
 return [
-    'Email'=>'邮箱',
+    'Email'=>'郵箱',
     'Username' =>'用户名',
-    'Nickname'=>'昵称',
-    'Country code'=>'国码',
-    'Bind the phone'=>'绑定电话',
-    'Please set the correct nickname'=>'请设置正确昵称',
-    'Account already exists'=>'账号已存在',
-    'The email already exists'=>'邮箱已存在',
-    'Email can not be empty'=>'邮箱不能为空',
-    'Email format is incorrect'=>'邮箱格式错误',
+    'Nickname'=>'暱稱',
+    'Country code'=>'國碼',
+    'Bind the phone'=>'綁定電話',
+    'Please set the correct nickname'=>'請設置正確暱稱',
+    'Account already exists'=>'賬號已存在',
+    'The email already exists'=>'郵箱已存在',
+    'Email can not be empty'=>'郵箱不能為空',
+    'Email format is incorrect'=>'郵箱格式錯誤',
 
 ];

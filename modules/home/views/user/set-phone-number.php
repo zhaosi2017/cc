@@ -45,11 +45,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?php echo $form->field($model, 'phone_number',[
 
-                 'template' => "{label}\n<div>&nbsp;{input}<span style=\"padding-left:10px\">*".
-                     Yii::t('app/user/set-phone-number' , 'Please enter your country code and enter your mobile number')
-                     ."</span>\n<span style=\"height:18px;\" class=\"help-block m-b-none\">{error}</span></div>",
+                 'template' => "{label}\n<div >&nbsp;{input}
+                                            <span style=\"padding-left:10px\">*".
+                                                Yii::t('app/user/set-phone-number' , 'Please enter your country code and enter your mobile number')
+                                            ."</span>\n
+                                            <span style=\"height:18px;\" class=\"help-block m-b-none\">{error}</span>
+                                         </div>",
 
-                ])->textInput(['placeholder' => Yii::t('app/user/set-phone-number' ,'CellPhone Number')])->label(false) ?>
+                ])->textInput(['placeholder' => Yii::t('app/user/set-phone-number' ,'CellPhone Number') ,'size' => 14,])->label(false) ?>
 <!--            <div class="help-block">&nbsp;&nbsp;&nbsp;*请输入您的国码，然后输入您的手机号码</div>-->
         </div>
 

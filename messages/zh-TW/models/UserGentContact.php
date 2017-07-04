@@ -1,11 +1,11 @@
 <?php
 return [
     'User id'=>'用户id',
-    'Contact sort number'=>'联系人排序号',
-    'Binding time'=>'绑定时间',
-    'Update time'=>'更新时间',
-    'Country code'=>'国码',
-    'phone number'=>'电话号码',
-    'Contact nickname'=>'联系人昵称',
+    'Contact sort number'=>'聯繫人排序號',
+    'Binding time'=>'綁定時間',
+    'Update time'=>'更新時間',
+    'Country code'=>'國碼',
+    'phone number'=>'電話號碼',
+    'Contact nickname'=>'聯繫人暱稱',
 
 ];
