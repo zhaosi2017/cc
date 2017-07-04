@@ -73,7 +73,7 @@ class Telegram extends Model
     private $exceedText = 'The number of times the call has exceeded the limit set by he.';
     private $codeEmptyText = 'The verification code is empty.';
     private $codeErrorText = 'Verification code error.';
-    private $bindRecommendText = '[Please enter the verification code on the callu platform to complete the binding operation!]';
+    private $bindRecommendText = '[Please enter the verification code on the <a href="https://www.callu.online">callu</a> platform to complete the binding operation!]';
 
 
     private $code;
@@ -1274,6 +1274,7 @@ class Telegram extends Model
             $this->sendData = [
                 'chat_id' => $this->telegramUid,
                 'text' => $this->code,
+                "parse_mode"=> "HTML",
             ];
         }
 
