@@ -27,9 +27,9 @@ class PasswordForm extends Model
             // username and password are both required
             [['rePassword', 'password', 'newPassword'], 'required'],
             [['rePassword', 'password', 'newPassword'], 'string'],
-            ['rePassword', 'compare', 'compareAttribute'=>'newPassword','message'=>'两次密码不一致'],
-            ['newPassword', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>'密码格式错误'],
-            ['rePassword', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>'密码格式错误'],
+            ['rePassword', 'compare', 'compareAttribute'=>'newPassword','message'=>Yii::t('app/models/PasswordForm' , 'Two passwords are inconsistent')/*'两次密码不一致'*/],
+            ['newPassword', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>Yii::t('app/models/PasswordForm' , 'Password format is incorrect')/*'密码格式错误'*/],
+            ['rePassword', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>Yii::t('app/models/PasswordForm' , 'Password format is incorrect')/*'密码格式错误'*/],
             ['password', 'validatePassword'],
         ];
     }
@@ -38,7 +38,7 @@ class PasswordForm extends Model
     {
         $identity = (Object) Yii::$app->user->identity;
         if(!Yii::$app->security->validatePassword($this->password, $identity->password)){
-            $this->addError($attribute, '原密码错误');
+            $this->addError($attribute, Yii::t('app/models/PasswordForm' ,'he original password is incorrect')/*'原密码错误'*/);
         }
     }
 
@@ -48,9 +48,9 @@ class PasswordForm extends Model
     public function attributeLabels()
     {
         return [
-            'password' => '原密码',
-            'newPassword' => '新密码',
-            'rePassword' => '重复输入',
+            'password' => Yii::t('app/models/PasswordForm' ,'old password'),//'原密码',
+            'newPassword' => Yii::t('app/models/PasswordForm' ,'new password'),//'新密码',
+            'rePassword' => Yii::t('app/models/PasswordForm' ,'Repeat input'),//'重复输入',
         ];
     }
 
@@ -65,7 +65,7 @@ class PasswordForm extends Model
                 $user->password = $this->newPassword;
                 return $user->save();
             }
-            Yii::$app->getSession()->setFlash('error', '操作失败');
+            Yii::$app->getSession()->setFlash('error', Yii::t('app/models/PasswordForm' ,'operation failed')/*'操作失败'*/);
         }
         return false;
     }

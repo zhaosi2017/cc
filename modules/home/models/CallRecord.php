@@ -57,10 +57,10 @@ class CallRecord extends \app\models\CActiveRecord
     {
         return [
             'id' => 'ID',
-            'active_call_uid' => '主叫账号id',
-            'unactive_call_uid' => '被叫账号id',
-            'call_by_same_times' => '被同一人呼叫次数',
-            'typeData' => '电话类型',
+            'active_call_uid' => Yii::t('app/models/CallRecord' , 'Call account id'),//'主叫账号id',
+            'unactive_call_uid' => Yii::t('app/models/CallRecord','Called account id') ,//'被叫账号id',
+            'call_by_same_times' => Yii::t('app/models/CallRecord','The number of calls by the same person'),//'被同一人呼叫次数',
+            'typeData' => Yii::t('app/models/CallRecord' , 'Phone type'),//'电话类型',
             'contact_number' => Yii::t('app/call-record/index','Call phone'),
             'unactive_contact_number' => Yii::t('app/call-record/index','Called phone'),
             'typeData'=> Yii::t('app/call-record/index','Call type'),
@@ -71,8 +71,8 @@ class CallRecord extends \app\models\CActiveRecord
             'unactive_account' => Yii::t('app/call-record/index','Called account'),
             'active_nickname' => Yii::t('app/call-record/index','Call nickname'),
             'unactive_nickname' => Yii::t('app/call-record/index','Called nickname'),
-            'long_time'=>'时间周期(分)',
-            'total_nums'=>'呼叫总次数'
+            'long_time'=>Yii::t('app/models/CallRecord','Time period'),//'时间周期(分)',
+            'total_nums'=>Yii::t('app/models/CallRecord','Total number of calls'),//'呼叫总次数'
         ];
     }
 
