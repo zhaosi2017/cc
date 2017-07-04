@@ -1,13 +1,10 @@
-<?php
-return [
-    'Email'=>'邮箱',
-    'New password'=>'新密码',
-    'Repeat password'=>'重复密码',
-    'Verification code'=>'验证码',
-    'Two passwords are inconsistent'=>'两次密码不一致',
-    'Password format is incorrect'=>'密码格式错误',
-    'Verification code entered incorrectly'=>'验证码输入不正确',
-    'This account has been occupied'=>'此账号已被占用',
-
-
-];
+<?php return array (
+  'Email' => '郵箱',
+  'New password' => '新密碼',
+  'Repeat password' => '重複密碼',
+  'Verification code' => '驗證碼',
+  'Two passwords are inconsistent' => '兩次密碼不一致',
+  'Password format is incorrect' => '密碼格式錯誤',
+  'Verification code entered incorrectly' => '驗證碼輸入不正確',
+  'This account has been occupied' => '此賬號已被佔用',
+); 

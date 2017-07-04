@@ -1,18 +1,7 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: zhangqing
- * Date: 2017/7/1
- * Time: 下午4:52
- */
-return [
-        'Edit UserName'=>'修改用户名',
-        'Build UserName'=>'绑定用户名',
-        'Please Entry your UserName'=>'请输入用户名',
-        'UserName'=>'用户名',
-        'Save'=>'保存'
-
-
-
-
-];
+<?php return array (
+  'Edit UserName' => '修改用戶名',
+  'Build UserName' => '綁定用戶名',
+  'Please Entry your UserName' => '請輸入用戶名',
+  'UserName' => '用戶名',
+  'Save' => '保存',
+); 
