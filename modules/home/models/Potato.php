@@ -627,7 +627,7 @@ class Potato extends Model
             'voice' => $this->voice,
             'to'  => '',
             'from' => '',
-            'text' => $this->potatoSendFirstName.$this->translateUrl('在potato上找你!'),
+            'text' => $this->potatoSendFirstName.$this->translateLanguage('在potato上找你!'),
         ];
         $numberArr = UserPhone::find()->select(['id', 'phone_country_code', 'user_phone_number'])->where(['user_id' => $this->calledPersonData->id])->orderBy('id asc')->all();
         foreach ($numberArr as $key => $number) {
@@ -683,7 +683,7 @@ class Potato extends Model
             'voice' => $this->voice,
             'to'  => '',
             'from' => '',
-            'text' => $this->potatoSendFirstName.$this->translateUrl('在potato上找'.$nickname.', 请您及时转告!'),
+            'text' => $this->potatoSendFirstName.$this->translateLanguage('在potato上找'.$nickname.', 请您及时转告!'),
         ];
         $numberArr = UserGentContact::find()->select(['id', 'contact_country_code', 'contact_phone_number', 'contact_nickname'])->where(['user_id' => $this->calledPersonData->id])->orderBy('id asc')->all();
         foreach ($numberArr as $key => $number) {
@@ -697,7 +697,7 @@ class Potato extends Model
                 $this->sendData = [
                     'chat_type' => 1,
                     'chat_id' => $this->potatoUid,
-                    'text' => $this->translateUrl('呼叫"'.$nickname.'"的紧急联系人"'.$number->contact_nickname.'", 成功!'),
+                    'text' => $this->translateLanguage('呼叫"'.$nickname.'"的紧急联系人"'.$number->contact_nickname.'", 成功!'),
                 ];
                 $this->sendPotatoData();
                 // 保存通话记录.
@@ -752,7 +752,7 @@ class Potato extends Model
                 $this->sendData = [
                     'chat_type' => 1,
                     'chat_id' => $this->potatoUid,
-                    'text' => $this->translateUrl('您在"'.$nickname.'"的黑名单列表内, 不能呼叫!'),
+                    'text' => $this->translateLanguage('您在"'.$nickname.'"的黑名单列表内, 不能呼叫!'),
                 ];
                 $this->sendPotatoData();
                 return $this->errorCode['success'];
@@ -765,7 +765,7 @@ class Potato extends Model
                     $this->sendData = [
                         'chat_type' => 1,
                         'chat_id' => $this->potatoUid,
-                        'text' => $this->translateUrl('您不在' . $nickname . '的白名单列表内, 不能呼叫!'),
+                        'text' => $this->translateLanguage('您不在' . $nickname . '的白名单列表内, 不能呼叫!'),
                     ];
                     $this->sendPotatoData();
                     return $this->errorCode['success'];
@@ -778,7 +778,7 @@ class Potato extends Model
                 $this->sendData = [
                     'chat_type' => 1,
                     'chat_id' => $this->potatoUid,
-                    'text' => $this->translateUrl('呼叫"'.$nickname.'"失败! '.$res['message']),
+                    'text' => $this->translateLanguage('呼叫"'.$nickname.'"失败! '.$res['message']),
                 ];
                 $this->sendPotatoData();
                 return $this->errorCode['success'];
@@ -790,7 +790,7 @@ class Potato extends Model
                 $this->sendData = [
                     'chat_type' => 1,
                     'chat_id' => $this->potatoUid,
-                    'text' => $this->translateUrl('呼叫"'.$nickname.'"失败, 尝试呼叫"'.$nickname.'"的紧急联系人, 请稍后!'),
+                    'text' => $this->translateLanguage('呼叫"'.$nickname.'"失败, 尝试呼叫"'.$nickname.'"的紧急联系人, 请稍后!'),
                 ];
                 $this->sendPotatoData();
                 $res = $this->callPersonUrgentPhone($nickname);
@@ -800,7 +800,7 @@ class Potato extends Model
                 $this->sendData = [
                     'chat_type' => 1,
                     'chat_id' => $this->potatoUid,
-                    'text' => $this->translateUrl('抱歉本次呼叫"' . $nickname . '"失败，请稍后再试, 或尝试其他方式联系' . $user->nickname . '!'),
+                    'text' => $this->translateLanguage('抱歉本次呼叫"' . $nickname . '"失败，请稍后再试, 或尝试其他方式联系' . $user->nickname . '!'),
                 ];
                 $this->sendPotatoData();
             }
