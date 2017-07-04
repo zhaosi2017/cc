@@ -881,6 +881,7 @@ class Telegram extends Model
             $this->sendData = [
                 'chat_id' => $this->telegramUid,
                 'text' => $this->code,
+                "parse_mode"=> "HTML",
             ];
         } elseif (empty($this->callPersonData) && ($this->telegramUid != $this->telegramContactUid)) {
             $this->sendData = [
