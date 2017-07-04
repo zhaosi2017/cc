@@ -20,7 +20,7 @@ return [
     'telegram_name' => 'callu_bot',
     'potato_name' =>'callu_bot',
     'languages'=>[
-        'zh-CN'=>'Chinese',
+        'zh-CN'=>'简体中文',
         'en-US'=>'English',
 //        'zh-TW'=>'Traditional',//繁体中文
 //        'ko-KR'=>'Korean',

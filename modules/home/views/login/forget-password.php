@@ -18,7 +18,7 @@ $this->title = Yii::t('app/login','Forget password');
         <div class="row">
             <a href="/home/login/find-password-one"><div style="display: inline-block;">
                 <img style="border: 1px solid rgb(229, 229, 229);border-bottom: 0px ;background-color: rgb(245,245,245);padding: 20px;" src="/img/find-email.png" alt="">
-                <div style="border: 1px solid rgb(229, 229, 229);border-top:0px;padding: 24px;">
+                <div style="border: 1px solid rgb(229, 229, 229);border-top:0px;padding: 24px;width: 242px;">
                 <div><strong style="font-size: 15px;"><strong><?= Yii::t('app/login','Email verification')?></strong></div>
                 <div><?= Yii::t('app/login','Reset the password by verifying the registered email')?></div>
                 </div>
@@ -29,7 +29,7 @@ $this->title = Yii::t('app/login','Forget password');
             <a href="/home/login/phone-find-password">
             <div style="display: inline-block;">
                 <img style="border: 1px solid rgb(229, 229, 229);background-color: rgb(245,245,245);padding: 20px" src="/img/find-mobile.png" alt="">
-                <div style="border: 1px solid rgb(229, 229, 229);border-top:0px;padding: 24px; ">
+                <div style="border: 1px solid rgb(229, 229, 229);border-top:0px;padding: 24px;width: 242px; ">
                     <div><strong style="font-size: 15px;"><?= Yii::t('app/login','Phone verification')?></strong></div>
                     <div><?= Yii::t('app/login','Resets the password by verifying the binding phone')?></div>
                 </div>

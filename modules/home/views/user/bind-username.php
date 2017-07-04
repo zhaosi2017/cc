@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 
     <?= $form->field($model, 'username',[
-        'template' => "{label}\n<div class=\"col-sm-3\" style=\"margin-left: 10px; \"> {input} 
+        'template' => "{label}\n<div class=\"col-sm-3\" > {input} 
             </div> 
                 <span class=\"col-sm-3 \" style=\" padding-top:9px;\">*".
                     Yii::t('app/user/bind-username' , 'Please Entry your UserName')
@@ -36,11 +36,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <br>
     <div class="form-group">
-
-        <div style=" " > <button class='<?php $btnnn = $model->isNewRecord ? ( "btn btn-success button-new-color") : ( "btn btn-primary button-new-color");echo $btnnn; ?> ' style="    width: 23%;margin-left: 128px;" >
+        <div class="col-sm-1"></div>
+        <div class="col-sm-3" >
+            <button style="width: 100%;" class='<?php $btnnn = $model->isNewRecord ? ( "btn btn-success button-new-color") : ( "btn btn-primary button-new-color");echo $btnnn; ?> ' style="    width: 23%;margin-left: 128px;" >
                             <?= Yii::t('app/user/bind-username' ,'Save')?>
                         </button>
         </div>
+        <div class="col-sm-3"></div>
     </div>
 
     <?php ActiveForm::end(); ?>

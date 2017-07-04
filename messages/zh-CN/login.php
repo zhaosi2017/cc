@@ -5,7 +5,8 @@ return [
     'Verification code'=>'验证码',
     'Email/Phone/Username'=>'邮箱／电话(不用输入国码)/用户名',
     'Forget password'=>'忘记密码',
-    'Sign in'=>'注册一个新账号',
+    'Sign up'=>'注册',
+    'Sign in'=>'登录',
     'Email verification'=>'邮箱验证',
     'Reset the password by verifying the registered email'=>'通过验证注册邮箱来重置密码',
     'Phone verification'=>'手机验证',
@@ -43,7 +44,7 @@ return [
     'Already have an account'=>'已经有账户了',
     'Registration success'=>'注册成功',
     'Verify email registration'=>'验证邮箱注册',
-    'Please enter the account new password, the password contains at least 8 characters, including at least the following two characters: capital letters, lowercase letters, numbers, symbols'=>
+    'Password contains at least 8 characters, including at least the following two characters: capital letters, lowercase letters, numbers, symbols'=>
     '请输入账户新密码 ,密码至少包含8个字符，至少包括以下2种字符：大写字母、小写字母、数字、符号',
 
 

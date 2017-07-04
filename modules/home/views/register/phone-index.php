@@ -159,6 +159,7 @@ $this->title = Yii::t('app/login','Register');
 
         <p class="text-muted text-center">
             <small><?= Yii::t('app/login','Already have an account')?> &nbsp;？</small><a href="<?php echo \yii\helpers\Url::to(['/home/login/login']) ?>"><?= Yii::t('app/login','Sign in')?></a>
+            | <a href="<?php echo \yii\helpers\Url::to(['/home/default/welcome']) ?>"><?= Yii::t('app/index','Home')?></a>
         </p>
     </div>
 </div>
