@@ -27,9 +27,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <?php echo $form->field($model, 'contact_nickname',[
-        'template' => "<div><div style=\"display：inline-block;\">{label}</div>\n<div class=\"\" style=\"display:inline-block;\">{input}</div><div style=\"display:inline-block;margin-left:10px;\">
-                        <span >*".Yii::t('app/user/add-urgent-contact-person','Please enter the name of emergency contact.')."
-                        <span></div>\n<div><span class=\"help-block m-b-none\" style=\"margin-left:17%;\">{error}</span></div>",
+        'template' => "<div>
+                            <div style=\"display：inline-block;\">{label}</div>\n
+                            <div class=\"\" style=\"display:inline-block;     width: 245px;\">{input}</div>
+                            <div style=\"display:inline-block;margin-left:10px;\">
+                                <span >*".Yii::t('app/user/add-urgent-contact-person','Please enter the name of emergency contact.')."
+                                <span>
+                            </div>\n
+                            <div><span class=\"help-block m-b-none\" style=\"margin-left:17%;\">{error}</span></div>",
     ])->textInput(['placeholder' => Yii::t('app/user/add-urgent-contact-person','Emergency contact nickname')])
     ->label(Yii::t('app/user/add-urgent-contact-person','Name') ,['style'=>"    text-align: left;padding-left: 100px; padding-top:7px"])
 

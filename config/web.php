@@ -30,6 +30,7 @@ $config = [
                         'app/user/bind-email'=>'user/bind-email.php',
                         'app/user/bind-username'=>'user/bind-username.php',
                         'app/user/password'=>'user/password.php',
+                        'app/user/set-nickname'=>'user/set-nickname.php',
                         'app/user/add-urgent-contact-person'=>'user/add-urgent-contact-person.php',
                         'app/telegram/bind-telegram'=>'telegram/bind-telegram.php',
                         'app/potato/bind-potato'=>'potato/bind-potato.php',
