@@ -16,8 +16,9 @@ return [
     'Country Code'=>'国码',
     'Emergency contact phone'=>'紧急联系人号码',
     'Please enter the phone number of emergency contact.'=>'请填写紧急联系人电话',
+    'Phone Number' => '电话',
     'Edit'=>'修改',
-    'Build'=>'添加'
+    'Build'=>'添加',
 
 
 
