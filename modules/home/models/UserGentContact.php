@@ -69,13 +69,13 @@ class UserGentContact extends  CActiveRecord{
     {
         return [
             'id' => 'ID',
-            'user_id' => '用户id',
-            'contact_sort' => '联系人排序号',
-            'reg_time' => '绑定时间',
-            'update_time' => '更新时间',
-            'contact_country_code' => '号码的国际编码',
-            'contact_phone_number' => '电话号码',
-            'contact_nickname'=>   '联系人昵称'
+            'user_id' => Yii::t('app/models/user-gent-contact','User id'),
+            'contact_sort' => Yii::t('app/models/user-gent-contact','Contact sort number'),
+            'reg_time' => Yii::t('app/models/user-gent-contact','Binding time'),
+            'update_time' => Yii::t('app/models/user-gent-contact','Update time'),
+            'contact_country_code' => Yii::t('app/models/user-gent-contact','Country code'),
+            'contact_phone_number' => Yii::t('app/models/user-gent-contact','phone number'),
+            'contact_nickname'=>   Yii::t('app/models/user-gent-contact','Contact nickname'),
         ];
     }
 

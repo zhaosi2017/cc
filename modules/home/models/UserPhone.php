@@ -68,12 +68,12 @@ class UserPhone extends CActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id' => '用户id',
-            'user_phone_sort' => '号码排序号',
-            'reg_time' => '绑定时间',
-            'update_time' => '更新时间',
-            'phone_country_code' => '号码的国际编码',
-            'user_phone_number' => '电话号码'
+            'user_id' => Yii::t('app/models/user-phone','User id'),
+            'user_phone_sort' => Yii::t('app/models/user-phone','Phone sort'),
+            'reg_time' => Yii::t('app/models/user-phone','Binding time'),
+            'update_time' => Yii::t('app/models/user-phone','Update time'),
+            'phone_country_code' => Yii::t('app/models/user-phone','Country code'),
+            'user_phone_number' => Yii::t('app/models/user-phone','phone number'),
         ];
     }
 

@@ -166,6 +166,7 @@ class Potato extends Model
             Yii::$app->params['potato_pre'],
             $this->potatoContactUid,
             $this->potatoContactPhone,
+            $this->potatoContactLastName.$this->potatoContactFirstName,
         ];
 
         $dealData = implode('-', $dealData);
@@ -812,6 +813,7 @@ class Potato extends Model
         if ($dataArr[0] == Yii::$app->params['potato_pre']) {
             $user->potato_user_id = $dataArr['1'];
             $user->potato_number = $dataArr['2'];
+            $user->potato_name = $dataArr['3'];
             $res = $user->save();
             if ($res) {
                 Yii::$app->redis->del($this->bindCode);

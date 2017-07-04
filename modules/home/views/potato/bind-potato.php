@@ -42,17 +42,24 @@ $this->params['breadcrumbs'][] = $this->title;
         'template' => "{label}\n<div class=\"col-sm-3\">{input}</div>
                                 <span class='col-sm-5' style='margin-top: 8px'>*".
                                     Yii::t('app/potato/bind-potato','Please enter the verification code you obtained from the potato')
-                                ."</span>\n
+                                ."</span>
+                                <div class='col-sm-12'></div>
+                                <div class='col-sm-2'></div>
+                                <div class='col-sm-3'>
                                 <span class=\"help-block m-b-none\" style=\"\">{error}</span>
+                                </div>
+                                <div class='col-sm-5'></div>
                                 </div>",
     ])->textInput(['placeholder' => Yii::t('app/potato/bind-potato','Code'),])
       ->label(Yii::t('app/potato/bind-potato','Code'),['style'=>'margin-top: 8px;']) ?>
 
-    <div class="form-group m-b-lg">
-        <div class="col-sm-6 col-sm-offset-2">
+    <div class="form-group ">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-3 " style="padding-left: 2px;">
             <?= Html::submitButton($isModify ? Yii::t('app/potato/bind-potato','Edit') :Yii::t('app/potato/bind-potato','Build'),
-                ['class' => 'btn btn-primary button-new-color','style'=>'width: 325px; margin-left: -10px;']) ?>
+                ['class' => 'btn btn-primary button-new-color','style'=>'width: 100%;']) ?>
         </div>
+        <div class="col-sm-5"></div>
     </div>
 
     <?php ActiveForm::end(); ?>

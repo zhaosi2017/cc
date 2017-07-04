@@ -30,7 +30,7 @@ class RegisterForm extends Model
             // username and password are both required
             [['rePassword', 'password', 'username'], 'required'],
             [['rePassword', 'password'], 'string', 'length' => [8,15]],
-            ['rePassword', 'compare', 'compareAttribute'=>'password','operator'=>'===','message'=>'两次密码不一致'],
+            ['rePassword', 'compare', 'compareAttribute'=>'password','operator'=>'===','message'=>Yii::t('app/models/register-form','Two passwords are inconsistent')],
             ['username', 'email'],
             ['username', 'validateExist'],
             /*[
@@ -41,9 +41,9 @@ class RegisterForm extends Model
                 'message' => '账号已占用'
             ],*/
 
-            ['password', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>'密码格式错误'],
-            ['rePassword', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>'密码格式错误'],
-            ['code', 'captcha', 'message'=>'验证码输入不正确', 'captchaAction'=>'/home/register/captcha'],
+            ['password', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>Yii::t('app/models/register-form','Password format is incorrect')],
+            ['rePassword', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>Yii::t('app/models/register-form','Password format is incorrect')],
+            ['code', 'captcha', 'message'=>Yii::t('app/models/register-form','Verification code entered incorrectly'), 'captchaAction'=>'/home/register/captcha'],
         ];
     }
 
@@ -53,10 +53,10 @@ class RegisterForm extends Model
     public function attributeLabels()
     {
         return [
-            'username' => '邮箱',
-            'password' => '新密码',
-            'rePassword' => '重复密码输入',
-            'code'     => '验证码',
+            'username' => Yii::t('app/models/register-form','Email'),
+            'password' => Yii::t('app/models/register-form','New password'),
+            'rePassword' => Yii::t('app/models/register-form','Repeat password'),
+            'code'     => Yii::t('app/models/register-form','Verification code'),
         ];
     }
 
@@ -81,7 +81,7 @@ class RegisterForm extends Model
         }
 
         if(in_array($this->username, $accounts)){
-            $this->addError($attribute, '此账号已被占用');
+            $this->addError($attribute, Yii::t('app/models/register-form','This account has been occupied'));
         }
     }
 

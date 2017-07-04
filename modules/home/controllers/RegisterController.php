@@ -72,13 +72,13 @@ class RegisterController extends GController
                 $code =$_POST['PhoneRegisterForm']['code'];
                 $type = Yii::$app->controller->action->id;
                 if(ContactForm::validateSms($type, $code)){
-                    $model->addError('code', '验证码错误');
+                    $model->addError('code', Yii::t('app/index','Verification code error'));
                     return $this->render('phone-index',['model'=>$model]);
                 }
                 if($model->register()){
                     return $this->redirect('/home/login/login')->send();
                 }
-                Yii::$app->getSession()->setFlash('error', '操作失败');
+                Yii::$app->getSession()->setFlash('error', Yii::t('app/index','Operation failed'));
 
             }else{
                 return $this->render('phone-index',['model'=>$model]);
@@ -97,7 +97,7 @@ class RegisterController extends GController
                 $model->register();
                 return $this->render('complete',['model'=>$model]);
             }else{
-                $model->addError('code','验证码输入不正确，请重新输入！3次输入错误，账号将被锁定1年！');
+                $model->addError('code',Yii::t('app/index','Verification code error'));
                 return $this->render('code',['model'=>$model]);
             }
         }
@@ -116,7 +116,7 @@ class RegisterController extends GController
                 $model->register();
                 return $this->render('complete',['model'=>$model]);
             }else{
-                $model->addError('code','验证码输入不正确，请重新输入！3次输入错误，账号将被锁定1年！');
+                $model->addError('code',Yii::t('app/index','Verification code error'));
                 return $this->render('code',['model'=>$model]);
             }
         }

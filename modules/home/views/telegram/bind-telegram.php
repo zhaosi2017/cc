@@ -40,17 +40,23 @@ $this->params['breadcrumbs'][] = $this->title;
 
 *".
              Yii::t('app/telegram/bind-telegram','Please enter the verification code you obtained from the telegram')
-             ."</span>\n<span class=\"help-block m-b-none\" >{error}</span></div>",
+             ."</span><div class='col-sm-12'></div>\n
+                <div class='col-sm-2'></div>
+                <div class='col-sm-3'>
+                <span class=\"help-block m-b-none\" >{error}</span>
+                </div>
+                <div class='col-sm-5'></div>
+                </div>",
     ])->textInput(['placeholder' => Yii::t('app/telegram/bind-telegram','Code'),])
         ->label( Yii::t('app/telegram/bind-telegram','Code') ,['style'=>'padding-top: 9px;']) ?>
 
-    <div class="form-group m-b-lg">
-        <div class="col-sm-6 col-sm-offset-2">
+    <div class="form-group">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-3 " style="padding-left: 1px;">
             <?= Html::submitButton($isModify ? Yii::t('app/telegram/bind-telegram','Edit') :Yii::t('app/telegram/bind-telegram','Build') ,
-
-
-                ['class' => 'btn btn-primary button-new-color','style'=>'width: 325px; margin-left: -10px;']) ?>
+                ['class' => 'btn btn-primary button-new-color','style'=>'width: 100%;']) ?>
         </div>
+        <div class="col-sm-5"></div>
     </div>
 
     <?php ActiveForm::end(); ?>

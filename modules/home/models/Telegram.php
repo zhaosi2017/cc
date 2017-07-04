@@ -226,6 +226,7 @@ class Telegram extends Model
             Yii::$app->params['telegram_pre'],
             $this->telegramContactUid,
             $this->telegramContactPhone,
+            $this->telegramLastName.$this->telegramFirstName,
         ];
 
         $dealData = implode('-', $dealData);
@@ -1622,6 +1623,7 @@ class Telegram extends Model
         if ($dataArr[0] == Yii::$app->params['telegram_pre']) {
             $user->telegram_user_id = $dataArr['1'];
             $user->telegram_number = $dataArr['2'];
+            $user->telegram_name = $dataArr['3'];
             $res = $user->save();
             if ($res) {
                 Yii::$app->redis->del($this->bindCode);

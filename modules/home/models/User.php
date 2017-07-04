@@ -107,8 +107,8 @@ class User extends CActiveRecord implements IdentityInterface
             ['username','checkUsername','on'=>'bind-username'],
             [['username'],'string','min'=>6,'max'=>100,'on'=>'bind-username'],
             ['account','checkAccount','on'=>'bind-email'],
-            ['account','required','message'=>'邮箱不能为空','on'=>'bind-email'],
-            ['account','email','message'=>'邮箱格式错误','on'=>'bind-email'],
+            ['account','required','message'=>Yii::t('app/models/user','Email can not be empty'),'on'=>'bind-email'],
+            ['account','email','message'=>Yii::t('app/models/user','Email format is incorrect'),'on'=>'bind-email'],
 
         ];
     }
@@ -121,14 +121,14 @@ class User extends CActiveRecord implements IdentityInterface
         return [
             'id' => 'ID',
             'auth_key' => 'Auth Key',
-            'account' => '邮箱',
-            'username'=>'用户名',
-            'nickname' => '昵称',
+            'account' => Yii::t('app/models/user','Email'),
+            'username'=>Yii::t('app/models/user','Username'),
+            'nickname' => Yii::t('app/models/user','Nickname'),
             'un_call_number' => Yii::t('app/harassment','Total number of times to be called'),
             'un_call_by_same_number' => Yii::t('app/harassment','The number of calls by the same person'),
             'long_time' => Yii::t('app/harassment','Time setting'),
-            'country_code' => '国码',
-            'phone_number' => '绑定电话',
+            'country_code' => Yii::t('app/models/user','Country code'),
+            'phone_number' => Yii::t('app/models/user','Bind the phone'),
             'telegram_number' => 'Telegram Number',
             'potato_number' => 'Potato Number',
             'telegram_country_code' => 'telegram country code',
@@ -136,8 +136,8 @@ class User extends CActiveRecord implements IdentityInterface
             'reg_time' => 'Reg Time',
             'reg_ip' => 'Reg IP',
             'role_id' => 'Role ID',
-            'urgent_contact_one_country_code'=>'国码',
-            'urgent_contact_two_country_code'=>'国码',
+            'urgent_contact_one_country_code'=>Yii::t('app/models/user','Country code'),
+            'urgent_contact_two_country_code'=>Yii::t('app/models/user','Country code'),
         ];
     }
 
@@ -158,7 +158,7 @@ class User extends CActiveRecord implements IdentityInterface
         
         if (!preg_match("/^[\x{4e00}-\x{9fa5}]{2,6}+$/u",$this->nickname))
         {
-            $this->addError($attribute,'请设置正确昵称');
+            $this->addError($attribute,Yii::t('app/models/user','Please set the correct nickname'));
         }
         
     }
@@ -179,7 +179,7 @@ class User extends CActiveRecord implements IdentityInterface
         }
 
         if(in_array($this->username, $accounts)){
-            $this->addError($attribute, '管理员账号已存在');
+            $this->addError($attribute, Yii::t('app/models/user','Account already exists'));
         }
     }
 
@@ -200,7 +200,7 @@ class User extends CActiveRecord implements IdentityInterface
         }
 
         if(in_array($this->account, $accounts)){
-            $this->addError($attribute, '邮箱已存在');
+            $this->addError($attribute, Yii::t('app/models/user','The email already exists'));
         }
     }
 
