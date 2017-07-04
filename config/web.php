@@ -33,6 +33,13 @@ $config = [
                         'app/user/add-urgent-contact-person'=>'user/add-urgent-contact-person.php',
                         'app/telegram/bind-telegram'=>'telegram/bind-telegram.php',
                         'app/potato/bind-potato'=>'potato/bind-potato.php',
+                        'app/models/BlackListForm'=>'models/BlackListForm.php',
+                        'app/models/CallRecord'=>'models/CallRecord.php',
+                        'app/models/ContactForm'=>'models/ContactForm.php',
+                        'app/models/EmailForm'=>'models/EmailForm.php',
+                        'app/models/LoginForm'=>'models/LoginForm.php',
+                        'app/models/PasswordForm'=>'models/PasswordForm.php',
+
                     ],
                     'on missingTranslation' => ['app\modules\home\controllers\TranslationEventHandler', 'handleMissingTranslation']
                 ],

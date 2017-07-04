@@ -39,7 +39,7 @@ class BlackListForm extends Model
         $res = BlackList::find()->where(['uid'=>$blacklist->uid,'black_uid'=>$blacklist->black_uid])->one();
 
         if(isset($res->id) && $res->id > 0){
-            return $this->addError('account','你已经添加了该账号'.$this->account);
+            return $this->addError('account',Yii::t('app/models/BlackListForm' ,'You have added the account').$this->account);
         }
         return $blacklist->save();
     }
@@ -70,7 +70,7 @@ class BlackListForm extends Model
         foreach ($rows as $i => $v)
         {
             if($this->account == $user['account']){
-                $this->addError($attribute, '用户不能添加自己为白名单');
+                $this->addError($attribute, Yii::t('app/models/BlackListForm' ,'Users can not add themselves to whitelists'));
                 return;
                 break;
             }
@@ -78,7 +78,7 @@ class BlackListForm extends Model
 
         }
         if(!in_array($this->account, $accounts)){
-            $this->addError($attribute, '此账号不存在');
+            $this->addError($attribute, Yii::t('app/models/BlackListForm' ,'This account does not exist'));
             return;
         }
     }

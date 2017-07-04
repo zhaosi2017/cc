@@ -1584,8 +1584,8 @@ class Telegram extends Model
         $callRecord = new CallRecord();
         $callRecord->active_call_uid = $this->callPersonData->id;
         $callRecord->unactive_call_uid = $this->calledPersonData->id;
-        $callRecord->active_account = $this->callPersonData->account;
-        $callRecord->unactive_account = $this->calledPersonData->account;
+        $callRecord->active_account = !empty($this->callPersonData->account) ? $this->callPersonData->account : (!empty($this->callPersonData->username) ? $this->callPersonData->username : $this->callPersonData->phone_number);
+        $callRecord->unactive_account = !empty($this->calledPersonData->account) ? $this->calledPersonData->account : (!empty($this->calledPersonData->username) ? $this->calledPersonData->username : $this->calledPersonData->phone_number);
         $callRecord->active_nickname = $this->callPersonData->nickname;
         $callRecord->unactive_nickname = $this->calledPersonData->nickname;
         $callRecord->contact_number = $this->callPersonData->country_code.$this->callPersonData->phone_number;

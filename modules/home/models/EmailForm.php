@@ -47,7 +47,7 @@ class EmailForm extends Model
         $key = $this->username.'bindemail';
         $email = $session[$key];
         if (empty($this->code) ||  $this->code !=$email){
-             $this->addError('code','验证码错误');
+             $this->addError('code', Yii::t( 'app/models/EmailForm', 'Verification code error')/*'验证码错误'*/);
         }else{
             $session->remove($key);
         }
@@ -59,7 +59,7 @@ class EmailForm extends Model
         if (!$this->hasErrors()) {
             $identity = $this->getIdentity();
             if(isset($identity->id ) && $identity->id != Yii::$app->user->id){
-                $this->addError($attribute, '账号已存在');
+                $this->addError($attribute, Yii::t( 'app/models/EmailForm', 'Account already exists')/*'账号已存在'*/);
             }
         }
     }
