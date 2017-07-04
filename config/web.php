@@ -39,6 +39,13 @@ $config = [
                         'app/models/EmailForm'=>'models/EmailForm.php',
                         'app/models/LoginForm'=>'models/LoginForm.php',
                         'app/models/PasswordForm'=>'models/PasswordForm.php',
+                        'app/models/whitelist'=>'models/WhiteList.php',
+                        'app/models/phone-register-form'=>'models/PhoneRegisterForm.php',
+                        'app/models/register-form'=>'models/RegisterForm.php',
+                        'app/models/user'=>'models/User.php',
+                        'app/models/user-gent-contact'=>'models/UserGentContact.php',
+                        'app/models/user-phone'=>'models/UserPhone.php',
+                        'app/models/white-list-form'=>'models/WhiteListForm.php',
 
                     ],
                     'on missingTranslation' => ['app\modules\home\controllers\TranslationEventHandler', 'handleMissingTranslation']
