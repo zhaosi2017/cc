@@ -27,7 +27,7 @@ class WhiteListForm extends Model
     public function attributeLabels()
     {
         return [
-            'account' => '用户名',
+            'account' => Yii::t('app/models/white-list-form','Account'),
         ];
     }
 
@@ -39,7 +39,7 @@ class WhiteListForm extends Model
         $res = WhiteList::find()->where(['uid'=>$whitelist->uid,'white_uid'=>$whitelist->white_uid])->one();
 
        	if(isset($res->id) && $res->id > 0){
-       		return $this->addError('account','你已经添加了该账号'.$this->account);
+       		return $this->addError('account',Yii::t('app/models/white-list-form','You have added the account').$this->account);
        	}
         return $whitelist->save();
     }
@@ -70,7 +70,7 @@ class WhiteListForm extends Model
         foreach ($rows as $i => $v)
         {
             if($this->account == $user['account']){
-            	$this->addError($attribute, '用户不能添加自己为白名单');
+            	$this->addError($attribute, Yii::t('app/models/white-list-form','User can not add self to whitelists'));
             	return;
             	break;	
             }
@@ -78,7 +78,7 @@ class WhiteListForm extends Model
 
         }
         if(!in_array($this->account, $accounts)){
-            $this->addError($attribute, '此账号不存在');
+            $this->addError($attribute, Yii::t('app/models/white-list-form','This account does not exist'));
             return;
         }
     }

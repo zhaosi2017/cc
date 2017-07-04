@@ -33,7 +33,7 @@ class WhiteList extends \app\models\CActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => '编号',
+            'id' => Yii::t('app/models/whitelist','Number'),
         ];
     }
 

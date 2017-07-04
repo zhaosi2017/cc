@@ -71,11 +71,11 @@ class PhoneRegisterForm extends Model
     public function attributeLabels()
     {
         return [
-            'phone' => '电话号码',
-            'password' => '新密码',
-            'rePassword' => '重复密码输入',
-            'code'     => '验证码',
-            'country_code'=>'国码',
+            'phone' => Yii::t('app/models/phone-register-form','Phone'),
+            'password' => Yii::t('app/models/phone-register-form','New password'),
+            'rePassword' => Yii::t('app/models/phone-register-form','Repeat password'),
+            'code'     => Yii::t('app/models/phone-register-form','Verification code'),
+            'country_code'=>Yii::t('app/models/phone-register-form','Country code'),
         ];
     }
 
@@ -84,7 +84,7 @@ class PhoneRegisterForm extends Model
     {
         $res =  User::findOne(['phone_number'=>$this->phone]);
         if( !empty($res) && $res->id != Yii::$app->user->id){
-            $this->addError('phone','手机号已经存在');
+            $this->addError('phone',Yii::t('app/models/phone-register-form','The phone number already exists'));
         }
     }
 
@@ -94,14 +94,14 @@ class PhoneRegisterForm extends Model
         $user = User::findOne(['phone_number'=>$this->phone]);
         if(!empty($user))
         {
-            $this->addError($attribute, '此电话号码已被占用');
+            $this->addError($attribute, Yii::t('app/models/phone-register-form','This phone number is already occupied'));
             return ;
         }
         $userPhone = UserPhone::findOne(['user_phone_number'=>$this->phone]);
 
 
         if(!empty($userPhone)){
-            $this->addError($attribute, '此电话号码已被占用');
+            $this->addError($attribute, Yii::t('app/models/phone-register-form','This phone number is already occupied'));
         }
     }
 
@@ -139,7 +139,7 @@ class PhoneRegisterForm extends Model
     {
         $res = User::find()->where(['phone_number'=>$this->phone])->one();
         if(empty($res)) {
-            $this->addError('phone', '手机号不存在');
+            $this->addError('phone', Yii::t('app/models/phone-register-form','Phone number does not exist'));
         }
 
     }
