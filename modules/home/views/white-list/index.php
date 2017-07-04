@@ -57,7 +57,9 @@ $actionId = Yii::$app->requestedAction->id;
             }, 'headerOptions'=>['class'=>'text-center']],
             ['header' => 'potato', 'value' => function($model){
                 return !empty($model['white']['potato_number'])?'+'.$model['white']['potato_country_code'].$model['white']['potato_number']:'';
-            }],
+            },
+                'headerOptions'=>['class'=>'text-center']
+            ],
 
            
             [
