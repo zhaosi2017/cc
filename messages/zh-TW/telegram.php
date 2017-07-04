@@ -38,5 +38,5 @@
   'The number of times the call has exceeded the limit set by he.' => '呼叫超出本人設置的限制次數.',
   'The verification code is empty.' => '驗證碼為空.',
   'Verification code error.' => '驗證碼錯誤.',
-  '[<a href=\'https://www.callu.online/home/telegram/bind-telegram\'>Please enter the verification code on the callu platform to complete the binding operation!</a>]' => '[<a href=\'https://www.callu.online/home/telegram/bind-telegram\'>請在callu平台輸入該驗證碼, 完成綁定操作!</a>]',
+    "[<a href='https://www.callu.online/home/telegram/bind-telegram'>Please enter the verification code on the callu platform to complete the binding operation!</a>]"=> "[<a href=\'https://www.callu.online/home/telegram/bind-telegram\'>請在callu平台輸入該驗證碼, 完成綁定操作!</a>]",
 ); 
