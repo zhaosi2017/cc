@@ -44,9 +44,9 @@ $actionId = Yii::$app->requestedAction->id;
 
 
 
-            ['header' => Yii::t('app/harassment','Blacklist users'), 'value' => function($model){
-                return $model['black']['account'];
-            }, 'headerOptions'=>['class'=>'text-center']],
+//            ['header' => Yii::t('app/harassment','Blacklist users'), 'value' => function($model){
+//                return $model['black']['account'];
+//            }, 'headerOptions'=>['class'=>'text-center']],
             //  ['header' => '联系电话', 'value' => function($model){
             //     return $model['black']['phone_number'];
             // }],

@@ -30,7 +30,7 @@ class LoginForm extends Model
 
             ['username', 'validateAccount'],
             ['pwd', 'validatePassword'],
-            ['code', 'captcha', 'message'=>'验证码错误', 'captchaAction'=>'/home/login/captcha'],
+            ['code', 'captcha', 'message'=>Yii::t('app/models/LoginForm' , 'Verification code error')/*'验证码错误'*/, 'captchaAction'=>'/home/login/captcha'],
 //            ['code', 'captcha', 'message'=>'验证码输入不正确，请重新输入！3次输入错误，账号将被锁定1年！', 'captchaAction'=>'/login/default/captcha'],
         ];
     }
@@ -41,9 +41,9 @@ class LoginForm extends Model
     public function attributeLabels()
     {
         return [
-            'username' => '邮箱/电话／用户名',
-            'pwd' => '密码',
-            'code'     => '验证码',
+            'username' => Yii::t('app/models/LoginForm','E-mail / phone / username'),//'邮箱/电话／用户名',
+            'pwd' => Yii::t('app/models/LoginForm','Password'),//'密码',
+            'code'     => Yii::t('app/models/LoginForm','Verification code'),//'验证码',
         ];
     }
 
@@ -53,7 +53,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $identity = $this->getUserInfo();
             if(!$identity){
-                $this->addError($attribute, '账号不存在，请核实');
+                $this->addError($attribute, Yii::t('app/models/LoginForm','Account does not exist, please verify')/*'账号不存在，请核实'*/);
             }
         }
     }
@@ -71,7 +71,7 @@ class LoginForm extends Model
 
             if ( (!isset($identity->user) && !Yii::$app->getSecurity()->validatePassword($this->pwd, $identity->password) )
                 || (isset($identity->user) &&  !Yii::$app->getSecurity()->validatePassword($this->pwd, $identity->user->password))) {
-                $this->addError($attribute, '密码错误。');
+                $this->addError($attribute,  Yii::t('app/models/LoginForm','Wrong password')/*'密码错误。'*/);
             }
         }
     }
@@ -116,8 +116,8 @@ class LoginForm extends Model
         $exprietime = $redis->hget($key,'exprietime'); 
         if( $num > 1 ){
             if(( $flag && $exprietime > time()) ){
-                $flag == 1 &&  $message ='该用户已被冻结30分钟';
-                $flag == 2 &&  $message ='该用户已被冻结24小时';
+                $flag == 1 &&  $message =Yii::t('app/models/LoginForm','The user has been frozen for 30 minutes');//'该用户已被冻结30分钟';
+                $flag == 2 &&  $message =Yii::t('app/models/LoginForm','The user has been frozen for 24 hours');//'该用户已被冻结24小时';
                 $this->addError('username',  $message);
                 return true;
             }   
@@ -132,13 +132,13 @@ class LoginForm extends Model
         $flag = Yii::$app->redis->hget($this->username.'-'.'homenum','flag');
         $num = Yii::$app->redis->hget($this->username.'-'.'homenum','num');
         if($num == 1){
-            $this->addError('username', '用户再错两次账号将被冻结三十分钟');
+            $this->addError('username', Yii::t('app/models/LoginForm','The user will miss the account twice and will be frozen for thirty minutes')/*'用户再错两次账号将被冻结三十分钟'*/);
         }
         if($flag == 1){
-            $this->addError('username', '用户已被冻结30分钟，30分钟后再错将冻结24小时');
+            $this->addError('username', Yii::t('app/models/LoginForm','The user has been frozen for 30 minutes and 30 minutes after the error will freeze for 24 hours')/*'用户已被冻结30分钟，30分钟后再错将冻结24小时'*/);
         }
         if($flag == 2){
-            $this->addError('username', '用户已被冻结24小时');
+            $this->addError('username', Yii::t('app/models/LoginForm','The user has been frozen for 24 hours') /*'用户已被冻结24小时'*/);
         }
     }
 
@@ -181,7 +181,7 @@ class LoginForm extends Model
                     if($count==4){
                         $unlockAdTime = strtotime($v['login_time'])+1800;
                         if($_SERVER['REQUEST_TIME'] < $unlockAdTime){
-                            return ['lock_type' => '账号','unlock_time' => date('Y-m-d H:i:s',$unlockAdTime)];
+                            return ['lock_type' => Yii::t('app/models/LoginForm','Account number')/*'账号'*/,'unlock_time' => date('Y-m-d H:i:s',$unlockAdTime)];
                         }
                     }
                     if($count==5){
@@ -193,7 +193,7 @@ class LoginForm extends Model
                     if($count==6){
                         $unlockAdTime = strtotime('+1 year');
                         if($_SERVER['REQUEST_TIME'] < $unlockAdTime){
-                            return ['lock_type' => '账号','unlock_time' => date('Y-m-d H:i:s',$unlockAdTime)];
+                            return ['lock_type' => Yii::t('app/models/LoginForm','Account number')/*'账号'*/,'unlock_time' => date('Y-m-d H:i:s',$unlockAdTime)];
                         }
                     }
 
@@ -205,7 +205,7 @@ class LoginForm extends Model
                     if($countCode==3){
                         $unlockAdTime = strtotime('+1 year');
                         if($_SERVER['REQUEST_TIME'] < $unlockAdTime){
-                            return ['lock_type' => '账号','unlock_time' => date('Y-m-d H:i:s',$unlockAdTime)];
+                            return ['lock_type' => Yii::t('app/models/LoginForm','Account number')/*'账号'*/,'unlock_time' => date('Y-m-d H:i:s',$unlockAdTime)];
                         }
                     }
 

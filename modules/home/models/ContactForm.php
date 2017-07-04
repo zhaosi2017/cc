@@ -71,7 +71,7 @@ class ContactForm extends Model
                 'telegram_country_code',
             ], 'default', 'value'=>''],
             ['code','required','on'=>['phone','telegram','potato']],
-            ['nickname','string','length'=>[2, 6], 'message'=>'昵称请设置2～6个汉字'],
+            ['nickname','string','length'=>[2, 6], 'message'=>Yii::t('app/models/ContactForm' , 'Please set 2 to 6 Chinese characters for nickname')/*'昵称请设置2～6个汉字'*/],
             ['phone_number','checkPhone','on'=>['phone']],
 
         ];
@@ -94,7 +94,7 @@ class ContactForm extends Model
         $res = UserPhone::findOne(['user_phone_number'=>$this->phone_number]);
         if(!empty($res))
         {
-            $this->addError('phone_number','电话已经存在');
+            $this->addError('phone_number',Yii::t('app/models/ContactForm' , 'The phone already exists')/*'电话已经存在'*/);
         }
     }
 
@@ -104,13 +104,13 @@ class ContactForm extends Model
     public function attributeLabels()
     {
         return [
-            'code' => '验证码',
-            'country_code' => '国码',
-            'potato_country_code' => '国码',
-            'telegram_country_code' => '国码',
-            'phone_number' => '绑定电话',
-            'potato_number' => 'potato号码',
-            'telegram_number' => 'telegram号码',
+            'code' => Yii::t('app/models/ContactForm' ,'Verification code'),//'验证码',
+            'country_code' => Yii::t('app/models/ContactForm' ,'Country code'),//'国码',
+            'potato_country_code' => Yii::t('app/models/ContactForm' ,'Country code'),
+            'telegram_country_code' => Yii::t('app/models/ContactForm' ,'Country code'),
+            'phone_number' => Yii::t('app/models/ContactForm' ,'Bind the phone'),//'绑定电话',
+            'potato_number' => Yii::t('app/models/ContactForm' ,'Potato number'),//'potato号码',
+            'telegram_number' => Yii::t('app/models/ContactForm' ,'Telegram number'),//'telegram号码',
         ];
     }
 
@@ -172,7 +172,7 @@ class ContactForm extends Model
 
         if($smsRateLimit['count'] <= 0 &&  $smsRateLimit['time'] > $time)
         {
-            return ['messages'=>['status'=>1,'message'=>'您好！发送短信不能太平凡,请休息哈！']];
+            return ['messages'=>['status'=>1,'message'=>Yii::t('app/models/ContactForm' ,'Hello! Send text messages can not be too ordinary, please rest!')/*'您好！发送短信不能太平凡,请休息哈！'*/]];
         }else{
             Yii::$app->session[$name] = ['time'=>time(),'count'=>self::SMS_SEND_NUM - 1 ];
         }
