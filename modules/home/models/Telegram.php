@@ -1373,6 +1373,7 @@ class Telegram extends Model
     public function callPersonUrgentPhone($nickname)
     {
         $result = false;
+        $this->language = $this->callPersonData->language;
         $nexmoData = [
             "api_key" => $this->apiKey,
             'api_secret' => $this->apiSecret,
