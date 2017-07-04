@@ -87,6 +87,14 @@ $localLanguage = $identity->language;
         background-color: rgb(73,93,107);
     }
 
+    .second-nav-div-1{
+        min-width: 650px;
+    }
+
+    .second-nav-div-2{
+        min-width: 450px;
+    }
+
 </style>
 <div>
     <div  class="text-right" style="background-color: rgb(96,96,96);height: 40px;line-height: 40px;">
@@ -172,7 +180,7 @@ $localLanguage = $identity->language;
 
 <!-------------------------------------------    二级菜单 -个人中心  ------------------------------>
 
-<div style="<?php if((Yii::$app->controller->id == 'user' && Yii::$app->controller->action->id !='harassment') ||
+<div class="second-nav-div-1" style="<?php if((Yii::$app->controller->id == 'user' && Yii::$app->controller->action->id !='harassment') ||
     Yii::$app->controller->id == 'potato' || Yii::$app->controller->id == 'telegram'
 ){ echo 'display:;';}else{echo 'display:none;';}?>">
     <ul style="
@@ -194,7 +202,7 @@ $localLanguage = $identity->language;
 
 <!-------------------------------------------    二级菜单 -防骚扰  ------------------------------>
 
-<div style="<?php if((Yii::$app->controller->id == 'user' && Yii::$app->controller->action->id =='harassment') ||
+<div class="second-nav-div-2" style="<?php if((Yii::$app->controller->id == 'user' && Yii::$app->controller->action->id =='harassment') ||
     Yii::$app->controller->id == 'white-list' || Yii::$app->controller->id == 'black-list'
 ){ echo 'display:;';}else{echo 'display:none;';}?>">
     <ul style="
