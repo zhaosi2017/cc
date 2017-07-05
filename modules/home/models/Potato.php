@@ -16,7 +16,8 @@ class Potato extends Model
     private $wellcomeText = 'welcome';
     private $keyboardText = 'Share your contact card';
     private $firstText = '/start';
-    private $webhook;
+    private $webhookUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendTextMessage';
+    private $menuWebHookUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendInlineMarkupMessage';
     private $nexmoUrl = "https://api.nexmo.com/tts/json";
     private $translateUrl = "https://translation.googleapis.com/language/translate/v2?key=AIzaSyAV_rXQu5ObaA9_rI7iqL4EDB67oXaH3zk";
     private $apiKey = '85704df7';
@@ -119,9 +120,9 @@ class Potato extends Model
     /**
      * 设置webhook
      */
-    public function setWebhook()
+    public function setWebhook($value)
     {
-        $this->webhook = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendTextMessage';
+        $this->webhookUrl = $value;
     }
 
     /**
@@ -311,6 +312,22 @@ class Potato extends Model
     /**
      * @return string
      */
+    public function getWebhook()
+    {
+        return $this->webhookUrl;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMenuWebHook()
+    {
+        return $this->menuWebHookUrl;
+    }
+
+    /**
+     * @return string
+     */
     public function getCallText()
     {
         return Yii::t('app/model/potato', $this->callText, array(), $this->language);
@@ -362,14 +379,6 @@ class Potato extends Model
     public function getPotatoSendLastName()
     {
         return $this->potatoSendLastName;
-    }
-
-    /**
-     * 获取webhook.
-     */
-    public function getWebhook()
-    {
-        return $this->webhook;
     }
 
     /**
@@ -923,6 +932,7 @@ class Potato extends Model
                 ];
                 $this->sendPotatoData();
                 $bindMenu = [
+                    'type' => 0,
                     'text' => $this->getWhiteText(),
                     'data' => implode('-', array($this->whiteCallbackDataPre, $this->potatoUid, $this->callPersonData->potato_number)),
                 ];
@@ -935,9 +945,8 @@ class Potato extends Model
                     'chat_type' => 1,
                     'chat_id' => $this->potatoContactUid,
                     'text' => $this->getPotatoText(),
-                    'inline_markup' => [
-                        $inlineKeyboard,
-                    ]
+                    'inline_markup' => $inlineKeyboard,
+
                 ];
                 $this->sendPotatoData();
             }
@@ -1184,6 +1193,7 @@ class Potato extends Model
                 'chat_id' => $this->potatoUid,
                 'text' => $this->getMenuShareText(),
             ];
+            return $this->sendPotatoData();
         } elseif (!empty($this->callPersonData) && ($this->potatoUid == $this->potatoContactUid)){
             if ($this->callPersonData->whitelist_switch == 0) {
                 $whiteMenu = [
@@ -1222,8 +1232,9 @@ class Potato extends Model
             }
             $this->language = $this->callPersonData->language;
             $callMenu = [
+                'type' => 0,
                 'text' => $this->getCallText(),
-                'callback_data' => implode('-', array($this->callCallbackDataPre, $this->potatoContactUid, $this->potatoContactPhone, $this->potatoContactLastName.$this->potatoContactFirstName, $this->potatoSendLastName.$this->potatoSendFirstName)),
+                'data' => implode('-', array($this->callCallbackDataPre, $this->potatoContactUid, $this->potatoContactPhone, $this->potatoContactLastName.$this->potatoContactFirstName, $this->potatoSendLastName.$this->potatoSendFirstName)),
             ];
 
             // 检查是否加了呼叫人到自己到白名单.
@@ -1247,13 +1258,13 @@ class Potato extends Model
                 $blackMenu = [
                     'type' => 0,
                     'text' => $this->getUnblackText(),
-                    'callback_data' => implode('-', array($this->unblackCallbackDataPre, $this->potatoContactUid, $this->potatoContactPhone)),
+                    'data' => implode('-', array($this->unblackCallbackDataPre, $this->potatoContactUid, $this->potatoContactPhone)),
                 ];
             } else {
                 $blackMenu = [
                     'type' => 0,
                     'text' => $this->getBlackText(),
-                    'callback_data' => implode('-', array($this->blackCallbackDataPre, $this->potatoContactUid, $this->potatoContactPhone)),
+                    'data' => implode('-', array($this->blackCallbackDataPre, $this->potatoContactUid, $this->potatoContactPhone)),
                 ];
             }
 
@@ -1271,12 +1282,11 @@ class Potato extends Model
                 "chat_type" => 1,
                 'chat_id' => $this->potatoUid,
                 'text' => $this->getPotatoText(),
-                'inline_markup' => [
-                    $inlineKeyboard,
-                ]
+                'inline_markup' => $inlineKeyboard,
             ];
         }
 
+        $this->webhook = $this->menuWebHookUrl;
         return $this->sendPotatoData();
     }
 
@@ -1669,8 +1679,7 @@ class Potato extends Model
             $this->sendData = json_encode($this->sendData, true);
         }
         if (empty($url)) {
-            $this->setWebhook();
-            $url = $this->webhook;
+            $url = $this->getWebhook();
         }
 
         $curl = curl_init();
