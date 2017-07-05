@@ -73,8 +73,7 @@ if(!Yii::$app->user->isGuest){
 
         <?php if (!Yii::$app->user->isGuest){?>
             <div style="display: inline-block;color:white;"><?= Yii::t('app/index','Hello')?>,<?php echo $username;?></div>
-        <div style="display: inline-block;color:white;"><a class="index-button-1" data-method="post" href="<?= Url::to(['/home/login/logout']) ?>"><span style="color: white;"><?= Yii::t('app/index','Logout')?></span></a> &nbsp;&nbsp;|&nbsp;&nbsp; </div>
-        <div style="display: inline-block;color:white; ">
+        <div style="display: inline-block;color:white;"><a class="index-button-1" data-method="post" href="<?= Url::to(['/home/login/logout']) ?>"><span style="color: white;"><?= Yii::t('app/index','Logout')?></span></a> &nbsp;&nbsp;&nbsp;
             <?php echo Yii::t('app/index','Please select language');?>
         </div>
             <div style="display: inline-block;">
@@ -89,8 +88,8 @@ if(!Yii::$app->user->isGuest){
 
             </div>
         <?php }else{?>
-            <div style="display: inline-block;color:white;"><a class="index-button-1" data-method="post" href="<?= Url::to(['/home/login/login']) ?>"><span style="color: white;"><?= Yii::t('app/index','Sign in')?></span></a> |
-                <a class="index-button-1" href="/home/register/register" style="color: white;"><?= Yii::t('app/index','Sign up')?></a> &nbsp;&nbsp;|&nbsp;&nbsp; </div>
+            <div style="display: inline-block;color:white;"><a class="index-button-1" data-method="post" href="<?= Url::to(['/home/login/login']) ?>"><span style="color: white;"><?= Yii::t('app/index','Sign in')?></span></a> &nbsp;
+                <a class="index-button-1" href="/home/register/register" style="color: white;"><?= Yii::t('app/index','Sign up')?></a> &nbsp;&nbsp;&nbsp;&nbsp; </div>
             <div style="display: inline-block;color:white; ">
                 <?php echo Yii::t('app/index','Please select language');?>
             </div>
