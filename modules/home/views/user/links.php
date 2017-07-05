@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <di>
         <div >
             <div class="">
-                <span style=" font-size: 17px;font-weight: 500; padding: 4px 0px"><?= Yii::t('app/user/links', 'Personal contact phone number')?></span>
+                <span style=" font-size: 17px;font-weight: 500; padding: 4px 0px"><?= Yii::t('app/user/links', 'Personal Contact')?></span>
                 <a style="    padding: 4px 18px;
     background-color: rgb(22,155,214);
     border-radius: 5px;
@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             foreach($userPhone as $k => $phone){?>
 
                 <div class="row app-bind-div" style="margin-top: 20px;border-bottom: 1px solid rgb(217,217,217); ">
-                    <div class="col-xs-4 "><?php echo Yii::t('app/user/links','Contact person').($k+1);?> </div>
+                    <div class="col-xs-4 "><?php echo Yii::t('app/user/links','Contact').' '.($k+1);?> </div>
                     <div class="col-xs-4">
                         <?php echo  $phone->phone_country_code.' -- '.$phone->user_phone_number;?>
             </div>
@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div style="margin-top: 50px;">
             <div class="">
                 <span style="    font-size: 17px;
-    font-weight: 500;"><?= Yii::t('app/user/links', 'Emergency contact phone number')?></span>
+    font-weight: 500;"><?= Yii::t('app/user/links', 'Emergency Contact')?></span>
                 <a style="    padding: 4px 18px;
     background-color: rgb(22,155,214);
     border-radius: 5px;
@@ -80,7 +80,7 @@ position: relative;
         foreach($urgentContact as $i => $contact){?>
 
         <div class="row app-bind-div">
-            <div class="col-xs-4 "><?php echo Yii::t('app/user/links','Emergency telephone number').($i+1);?> </div>
+            <div class="col-xs-4 "><?php echo Yii::t('app/user/links','Contact ').' ' .($i+1);?> </div>
             <div class="col-xs-4">
                 <?php echo  $contact->contact_country_code.'--'.$contact->contact_phone_number;?>
 

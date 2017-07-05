@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?php echo $form->field($model, 'contact_phone_number',[
 
-                'template' => "<div>{label}\n<div>&nbsp;{input}<span style=\"margin-left:10px;\">*".
+                'template' => "<div>{label}\n<div>&nbsp;{input}<span style=\"margin-left:15px;\">*".
                     Yii::t('app/user/add-urgent-contact-person','Please enter the phone number of emergency contact.')
 
             ."</span></div>\n<span style=\"height:18px;\" class=\"help-block m-b-none\">{error}</span></div>",
