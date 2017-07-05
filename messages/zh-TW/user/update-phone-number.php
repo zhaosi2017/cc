@@ -8,4 +8,7 @@
   'Send SMS too often, please take a break' => '你好！發送短信太頻繁,請稍微休息哈',
   'Get verification code' => '獲取驗證碼',
   'Submit' => '提交',
+'Country-code'=>'國碼',
+'Phone'=>'電話號碼',
+'Verify code'=>'請輸入驗證碼',
 ); 

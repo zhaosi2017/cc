@@ -8,4 +8,7 @@
   'Send SMS too often, please take a break' => 'SMSを頻繁に送信してください。休憩してください',
   'Get verification code' => '確認コードを取得する',
   'Submit' => '提出する',
+    'Country-code'=>'国コード',
+    'Phone'=>'携帯番号',
+    'Verify code'=>'検証コード',
 ); 

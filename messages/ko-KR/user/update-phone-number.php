@@ -8,4 +8,7 @@
   'Send SMS too often, please take a break' => 'SMS를 너무 자주 보내십시오. 잠시만 기다려주세요.',
   'Get verification code' => '인증 코드 받기',
   'Submit' => '제출',
+    'Country-code'=>'국가 코드',
+    'Phone'=>'핸드폰 번호',
+    'Verify code'=>'확인 코드',
 ); 
