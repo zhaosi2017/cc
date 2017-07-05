@@ -86,7 +86,8 @@ class PotatoController extends GController
                     case $potato->callCallbackDataPre:
                         $potato->potatoContactFirstName = $callbackData[3];
                         $potato->potatoSendFirstName = $callbackData[4];
-                        $potato->callPotatoPerson();
+                        $result = $potato->callPotatoPerson();
+                        return $result;
                         break;
                     case $potato->whiteCallbackDataPre:
                         $result = $potato->joinWhiteList();

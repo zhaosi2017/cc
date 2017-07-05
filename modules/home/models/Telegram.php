@@ -1300,7 +1300,7 @@ class Telegram extends Model
             'voice' => $this->voice,
             'to'  => '',
             'from' => $this->callPersonData->country_code.$this->callPersonData->phone_number,
-            'text' => $this->telegramLastName.$this->telegramFirstName.$this->translateLanguage('在telegram上找你!'),
+            'text' => $this->telegramLastName.$this->telegramFirstName.$this->translateLanguage('呼叫您上线telegram!'),
         ];
         $numberArr = UserPhone::find()->select(['id', 'phone_country_code', 'user_phone_number'])->where(['user_id' => $this->calledPersonData->id])->orderBy('id asc')->all();
         foreach ($numberArr as $key => $number) {
@@ -1382,7 +1382,8 @@ class Telegram extends Model
             'voice' => $this->voice,
             'to'  => '',
             'from' => $this->callPersonData->country_code.$this->callPersonData->phone_number,
-            'text' => $this->telegramLastName.$this->telegramFirstName.$this->translateLanguage('在telegram上找'.$nickname.', 请您及时转告!'),
+            // 'text' => $this->telegramLastName.$this->telegramFirstName.$this->translateLanguage('在telegram上找'.$nickname.', 请您及时转告!'),
+            'text' => $this->translateLanguage('请转告'.$nickname.', 上线telegram!'),
         ];
         $numberArr = UserGentContact::find()->select(['id', 'contact_country_code', 'contact_phone_number', 'contact_nickname'])->where(['user_id' => $this->calledPersonData->id])->orderBy('id asc')->all();
         foreach ($numberArr as $key => $number) {
