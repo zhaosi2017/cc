@@ -20,4 +20,11 @@ return [
     'The number of times the call has exceeded the limit set by he.' => '呼叫超出本人设置的限制次数.',
     'The verification code is empty.' => '验证码为空.',
     'Verification code error.' => '验证码错误.',
+    'Open the whitelist' => '开启白名单',
+    'Close the whitelist' => '关闭白名单',
+    'Operation menu.' =>  '操作菜单.',
+    'Join Whitelist' => '加白名单',
+    'Unlock the whitelist' => '解除白名单',
+    'Join blacklist' => '加黑名单',
+    'Unlock the blacklist' => '解除黑名单',
 ];

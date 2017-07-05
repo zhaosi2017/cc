@@ -75,8 +75,19 @@ class PotatoController extends GController
                 $potato->potatoSendFirstName = isset($message['sender_first_name']) ? $message['sender_first_name'] : "";
                 $potato->potatoSendLastName = isset($message['sender_last_name']) ? $message['sender_last_name'] : "";
                 // 发送操作菜单.
-                $result = $potato->callPotatoPerson();
+                $result = $potato->sendMenulist();
                 return $result;
+            } else if ($message['request_type'] == $potato->callBackRequestType) {
+                // 点击按钮会调.
+                $callbackData = explode('-', $message['data']);
+                $action = $callbackData[0];
+                switch ($action) {
+                    case $potato->callCallbackDataPre:
+                        $potato->callPotatoPerson();
+                        break;
+                    
+                }
+
             }
         } catch (\Exception $e) {
             echo $e->getMessage();

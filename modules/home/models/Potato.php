@@ -11,6 +11,7 @@ class Potato extends Model
 
     const CODE_LENGTH = 5;
 
+    private $potatoText = "Operation menu.";
     private $startText = 'Start the operation, please wait later.';
     private $wellcomeText = 'welcome';
     private $keyboardText = 'Share your contact card';
@@ -31,6 +32,14 @@ class Potato extends Model
     private $bindCode;
     private $potatoUid;
     private $shareRequestType = 4;
+    private $callBackRequestType = 2;
+    private $callCallbackDataPre = 'cc_call';
+    private $whiteCallbackDataPre = 'cc_white';
+    private $unwhiteCallbackDataPre = 'cc_unwhite';
+    private $whitelistSwitchCallbackDataPre = 'cc_whiteswitch';
+    private $unwhitelistSwitchCallbackDataPre = 'cc_unwhiteswitch';
+    private $blackCallbackDataPre = "cc_black";
+    private $unblackCallbackDataPre = "cc_unblack";
     private $potatoContactUid;
     private $potatoContactPhone;
     private $potatoContactFirstName;
@@ -39,9 +48,15 @@ class Potato extends Model
     private $potatoSendLastName;
     private $callPersonData;
     private $calledPersonData;
+    private $whiteText = 'Join Whitelist';
+    private $unwhiteText = 'Unlock the whitelist';
+    private $blackText = "Join blacklist";
+    private $unblackText = "Unlock the blacklist";
     private $successText = 'success';
     private $failureText = 'failure';
     private $callText = "call";
+    private $whiteSwitchText = 'Open the whitelist';
+    private $unwhiteSwitchText = 'Close the whitelist';
     private $bindRecommendText = "[Please enter the verification code on the callu platform to complete the binding operation!]";
     private $menuShareText = "Please share your own contact card to the robot, complete the binding operation.";
     private $completeText = "You have completed the binding operation.";
@@ -49,6 +64,7 @@ class Potato extends Model
     private $exceedText = 'The number of times the call has exceeded the limit set by he.';
     private $codeEmptyText = 'The verification code is empty.';
     private $codeErrorText = 'Verification code error.';
+    private $menuNoMemberText = "He is not a member of our system and you can not perform this operation.";
 
     private $sendData;
     private $errorCode = [
@@ -565,6 +581,70 @@ class Potato extends Model
     }
 
     /**
+     * @return string
+     */
+    public function getWhiteSwitchText()
+    {
+        return Yii::t('app/model/potato', $this->whiteSwitchText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getUnwhiteSwitchText()
+    {
+        return Yii::t('app/model/potato', $this->unwhiteSwitchText, array(), $this->language);
+    }
+
+    /**
+     * @return mixeds
+     */
+    public function getPotatoText()
+    {
+        return Yii::t('app/model/potato', $this->potatoText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getMenuNoMemberText()
+    {
+        return Yii::t('app/model/potato', $this->menuNoMemberText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getWhiteText()
+    {
+        return Yii::t('app/model/potato', $this->whiteText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getUnwhiteText()
+    {
+        return Yii::t('app/model/potato', $this->unwhiteText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlackText()
+    {
+        return Yii::t('app/model/potato', $this->blackText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getUnblackText()
+    {
+        return Yii::t('app/model/potato', $this->unblackText, array(), $this->language);
+    }
+
+    /**
      * 欢迎.
      */
     public function potatoWellcome()
@@ -611,6 +691,119 @@ class Potato extends Model
     }
 
     /**
+     * 发送菜单.
+     */
+    public function sendMenulist()
+    {
+        $this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
+        $this->calledPersonData = User::findOne(['potato_user_id' => $this->potatoContactUid]);
+        // 先检查自己是否完成绑定操作.
+        if (empty($this->callPersonData) && ($this->potatoUid == $this->potatoContactUid)) {
+            // 发送验证码完成绑定.
+            return $this->sendBindCode();
+        } elseif (empty($this->callPersonData) && ($this->potatoUid != $this->potatoContactUid)) {
+            $this->sendData = [
+                'chat_type' => 1,
+                'chat_id' => $this->potatoUid,
+                'text' => $this->getMenuShareText(),
+            ];
+        } elseif (!empty($this->callPersonData) && ($this->potatoUid == $this->potatoContactUid)){
+            if ($this->callPersonData->whitelist_switch == 0) {
+                $whiteMenu = [
+                    'type' => 0,
+                    'text' => $this->getWhiteSwitchText(),
+                    'data' => implode('-', array($this->whitelistSwitchCallbackDataPre, $this->potatoUid, $this->potatoContactPhone)),
+                ];
+            } else {
+                $whiteMenu = [
+                    'type' => 0,
+                    'text' => $this->getUnwhiteSwitchText(),
+                    'data' => implode('-', array($this->unwhitelistSwitchCallbackDataPre, $this->potatoUid, $this->potatoContactPhone)),
+                ];
+            }
+
+            $inlineKeyboard =[
+                [
+                    $whiteMenu
+                ]
+            ];
+            $this->sendData = [
+                "chat_type" => 1,
+                'chat_id' => $this->potatoUid,
+                'text' => $this->getPotatoText(),
+                'inline_markup' => [
+                    $inlineKeyboard,
+                ]
+            ];
+        } else {
+            if (empty($this->calledPersonData)) {
+                $sendData['chat_type'] = 1;
+                $sendData['chat_id'] = $this->potatoUid;
+                $sendData['text'] = $this->getMenuNoMemberText();
+                $this->sendData = $sendData;
+                return $this->sendPotatoData();
+            }
+            $this->language = $this->callPersonData->language;
+            $callMenu = [
+                'text' => $this->getCallText(),
+                'callback_data' => implode('-', array($this->callCallbackDataPre, $this->potatoContactUid, $this->potatoContactPhone, $this->potatoContactLastName.$this->potatoContactFirstName, $this->potatoSendLastName.$this->potatoSendFirstName)),
+            ];
+
+            // 检查是否加了呼叫人到自己到白名单.
+            $whiteRes = WhiteList::findOne(['uid' => $this->callPersonData->id, 'white_uid'=> $this->calledPersonData->id]);
+            $blackRes = BlackList::findOne(['uid' => $this->callPersonData->id, 'black_uid'=> $this->calledPersonData->id]);
+            if ($whiteRes) {
+                $whiteMenu = [
+                    'type' => 0,
+                    'text' => $this->getUnwhiteText(),
+                    'data' => implode('-', array($this->unwhiteCallbackDataPre, $this->potatoContactUid, $this->potatoContactPhone)),
+                ];
+            } else {
+                $whiteMenu = [
+                    'type' => 0,
+                    'text' => $this->getWhiteText(),
+                    'data' => implode('-', array($this->whiteCallbackDataPre, $this->potatoContactUid, $this->potatoContactPhone)),
+                ];
+            }
+            // 黑名单按钮.
+            if ($blackRes) {
+                $blackMenu = [
+                    'type' => 0,
+                    'text' => $this->getUnblackText(),
+                    'callback_data' => implode('-', array($this->unblackCallbackDataPre, $this->potatoContactUid, $this->potatoContactPhone)),
+                ];
+            } else {
+                $blackMenu = [
+                    'type' => 0,
+                    'text' => $this->getBlackText(),
+                    'callback_data' => implode('-', array($this->blackCallbackDataPre, $this->potatoContactUid, $this->potatoContactPhone)),
+                ];
+            }
+
+            $inlineKeyboard =[
+                [
+                    $whiteMenu,
+                    $blackMenu
+                ],
+                [
+                    $callMenu
+                ]
+            ];
+
+            $this->sendData = [
+                "chat_type" => 1,
+                'chat_id' => $this->potatoUid,
+                'text' => $this->getPotatoText(),
+                'inline_markup' => [
+                    $inlineKeyboard,
+                ]
+            ];
+        }
+
+        return $this->sendPotatoData();
+    }
+
+    /**
      * 呼叫本人联系方式.
      *
      * @return mixed
@@ -627,7 +820,7 @@ class Potato extends Model
             'voice' => $this->voice,
             'to'  => '',
             'from' => '',
-            'text' => $this->potatoSendFirstName.$this->translateLanguage('在potato上找你!'),
+            'text' => $this->potatoSendFirstName.$this->translateLanguage('呼叫您上线potato!'),
         ];
         $numberArr = UserPhone::find()->select(['id', 'phone_country_code', 'user_phone_number'])->where(['user_id' => $this->calledPersonData->id])->orderBy('id asc')->all();
         foreach ($numberArr as $key => $number) {
@@ -683,7 +876,7 @@ class Potato extends Model
             'voice' => $this->voice,
             'to'  => '',
             'from' => '',
-            'text' => $this->potatoSendFirstName.$this->translateLanguage('在potato上找'.$nickname.', 请您及时转告!'),
+            'text' => $this->translateLanguage('请转告'.$nickname.', 上线potato!'),
         ];
         $numberArr = UserGentContact::find()->select(['id', 'contact_country_code', 'contact_phone_number', 'contact_nickname'])->where(['user_id' => $this->calledPersonData->id])->orderBy('id asc')->all();
         foreach ($numberArr as $key => $number) {
