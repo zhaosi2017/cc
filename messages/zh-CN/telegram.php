@@ -17,6 +17,7 @@ return [
     'Close whitelist failed.' => '关闭白名单功能失败.',
     'Already in the white list.' => '已经在白名单里.',
     'Join whitelist successfully.' => '加入白名单成功.',
+    'Join whitelist failed.' => '加入白名单失败.',
     'Has already added you to the whitelist, you can also click the button below to add him to your whitelist.' => '已经将您加入白名单, 您也可以点击下面按钮加他到您的白名单.',
     'Cancel the whitelist successfully.' => '解除白名单成功.',
     'Cancel the whitelist failed.' => '解除白名单失败.',

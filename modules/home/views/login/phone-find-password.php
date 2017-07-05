@@ -9,7 +9,10 @@ use yii\helpers\Url;
 use yii\captcha\Captcha;
 $this->title = Yii::t('app/login','Forget password');
 ?>
-<div class="middle-box text-center loginscreen  animated fadeInDown">
+<style>
+
+</style>
+<div class=" text-center loginscreen  animated fadeInDown">
     <div>
         <div>
             <h1 class="logo-name">&nbsp;</h1>
@@ -40,41 +43,53 @@ $this->title = Yii::t('app/login','Forget password');
                     'options'=>['class'=>'m-t text-left'],
                     'fieldConfig' => [
                         'template' => "{label}\n<div>{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
+                        'labelOptions'=>['class'=>'col-sm-8 text-right' ,'style'=>'line-height:34px;'],
                     ],
                 ]); ?>
 
                 <div class="row">
-                    <div class="col-sm-6 " style="margin-left: -12px;">
-                        <?= $forms->field($model, 'country_code')->textInput([
+                    <div class="col-sm-6 " style="">
+                        <?= $forms->field($model, 'country_code',
+                            [
+                                'template' => "{label}\n<div class=\"col-sm-3\">{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
+                                ])->textInput([
                             'autofocus' => true,
                             'placeholder'=>Yii::t('app/login','Country Code'),
-                            'size'=>5,
-                        ])->label(false) ?>
+                            'size'=>8,
+                        ])->label(Yii::t('app/login','Phone')) ?>
                     </div>
-                    <div  class="col-sm-6" style="display: inline-block;margin-left: 10px;">
+                    <div  class="col-sm-6" style="">
+                        <div class="col-sm-4">
                         <?= $forms->field($model, 'phone')->textInput([
                             'autofocus' => true,
-                            'placeholder'=>Yii::t('app/login','Phone number'),
+                            'placeholder'=>Yii::t('app/login','Phone'),
+                            'size'=>'8',
+//                            'style'=>'width:50%;'
                         ])->label(false) ?>
+                        </div>
+                        <div class="col-sm-8">
+                        </div>
                     </div>
+                </div>
 
 
+                    <div class="col-sm-12"></div>
 
-
-                    <div class="row" style="margin-top:73px; ">
-                        <div class="col-sm-6 " style="margin-left: -12px;">
+                    <div class="row" style=" ">
+                        <div class="col-sm-6 " style="">
                             <?php echo $forms->field($model, 'code', [
-                                'template' => "{label}\n<div class='m-l-sm'>{input}\n<span style=\"height:28px;\" class=\"help-block m-b-none\">{error}</span></div>",
+                                'template' => "{label}\n<div class=\"col-sm-3\">{input}\n<span style=\"height:28px;\" class=\"help-block m-b-none\">{error}</span></div>",
                             ])->widget(Captcha::className(),[
                                 'captchaAction'=>'/home/user/captcha',
                                 'template' => '<div class="row"><div class="col-lg-2">{image}</div><div class="col-lg-10">{input}</div></div>',
                             ])
-                                ->textInput(['size' => 18,'placeholder'=>Yii::t('app/login','Please input code')])
-                                ->label(false)
+                                ->textInput(['size' => 8,'placeholder'=>Yii::t('app/login','Verification code')])
+                                ->label(Yii::t('app/login','Verification code'))
                             ?>
                         </div>
-                        <div class="col-sm-6 " style="margin-left: -12px;">
-                            <div class="form-group" style="    ">
+                        <div class="col-sm-6 " style="">
+
+                                <div class="col-sm-4">
                                 <input type="button" id="count-down" class=" btn  block full-width m-b button-new-color" style="color: white;" onclick="
                                         if($('#phoneregisterform-country_code').val() == ''){
                                         alert('<?php echo Yii::t("app/login","Country Code")?>');
@@ -110,14 +125,18 @@ $this->title = Yii::t('app/login','Forget password');
                                         };
                                         var dt = self.setInterval(countDown,1000);
                                         " value='<?php echo Yii::t("app/login","Get verification code")?>'>
+                                </div>
                                 <div class="help-block"></div>
                             </div>
-                        </div>
+
                     </div>
 
 
 
-
+                    <div >
+                       <div class="col-sm-4"></div>
+                        <div class="col-sm-4" style="    padding-left: 4px;
+    padding-right: 4px;">
                     <input type="button" id="phoneregisterButton" class="btn btn-primary block full-width m-b button-new-color"
                            onclick="
 //            var phonepatter = /^[0-9]{2,11}$/;
@@ -135,6 +154,9 @@ $this->title = Yii::t('app/login','Forget password');
                 " value='<?php echo Yii::t("app/login","Next")?>'>
 
                     <?php ActiveForm::end(); ?>
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
 
 
                 </div>
@@ -155,18 +177,7 @@ $this->title = Yii::t('app/login','Forget password');
 
 
 <style>
-    #phoneregisterform-password{
-        width: 314px !important;
-    }
-    #phoneregisterform-repassword{
-        width: 314px !important;
-    }
-
-    #phoneregisterButton{
-        width: 314px !important;
-    }
-
-    #count-down{
-        margin-left: 8px !important;
-    }
+ #phoneregisterButton{
+     margin-top: 20px;
+ }
 </style>

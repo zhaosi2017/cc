@@ -9,17 +9,13 @@ use yii\helpers\Url;
 use yii\captcha\Captcha;
 $this->title =  Yii::t('app/user/update-phone-number','Edit Phone number');
 ?>
-<div class="middle-box text-center loginscreen  animated fadeInDown">
+<div class="text-center   animated fadeInDown">
 
 
 
-        <div style="margin-top: -60px;">
+        <div style="margin-top: 60px;width: 500px;">
           
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist" style="visibility: hidden !important;">
 
-
-            </ul>
 
             <!-- Tab panes -->
 
@@ -33,43 +29,53 @@ $this->title =  Yii::t('app/user/update-phone-number','Edit Phone number');
                     'options'=>['class'=>'m-t text-left'],
                     'fieldConfig' => [
                         'template' => "{label}\n<div>{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
-                    ],
+                        'labelOptions' =>['style'=>'line-height:34px;'],
+                        ],
                 ]); ?>
 
                     <div class="row">
-                        <div class="col-sm-6 " style="margin-left: -12px;">
-                            <?= $forms->field($model, 'country_code')->textInput([
+                        <div class="col-sm-6 " style="">
+                            <?= $forms->field($model, 'country_code',[
+                                'template' => "<div class=\"col-sm-6 text-right\">{label}</div>\n<div class=\"col-sm-6\" style=\"padding: 0px;\">{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
+                                ])->textInput([
                                 'autofocus' => true,
                                 'placeholder'=>Yii::t('app/user/update-phone-number','Country code'),
                                 'size'=>5,
-                                'style'=>'width:125px;',
-                            ])->label(false) ?>
+
+                            ])->label(Yii::t('app/user/update-phone-number','Phone')) ?>
                         </div>
-                        <div  class="col-sm-6" style="display: inline-block;margin-left: 10px;">
-                            <?= $forms->field($model, 'phone')->textInput([
+                        <div  class="col-sm-6" style="display: inline-block;">
+                            <?= $forms->field($model, 'phone',
+                                [
+                                    'template' => "{label}\n<div class=\"col-sm-12\" style=\"padding: 0px;\">{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
+
+                                ])->textInput([
                                 'autofocus' => true,
-                                'placeholder'=>Yii::t('app/user/update-phone-number','CellPhone Number'),
+                                'placeholder'=>Yii::t('app/user/update-phone-number','Phone'),
                             ])->label(false) ?>
                         </div>
                     </div>
 
 
                     <div class="row" style="margin-top:15px; ">
-                        <div class="col-sm-6 " style="margin-left: -23px;">
+                        <div class="col-sm-6 " style="">
                             <?php echo $forms->field($model, 'code', [
-                                'template' => "{label}\n<div class='m-l-sm'>{input}\n
-                                                            <span style=\"height:28px;\" class=\"help-block m-b-none\">{error}</span>
-                                                        </div>",
+//                                'template' => "{label}\n<div class='m-l-sm'>{input}\n
+//                                                            <span style=\"height:28px;\" class=\"help-block m-b-none\">{error}</span>
+//                                                        </div>",
+                                'template' => "<div class=\"col-sm-6 text-right\">{label}</div>\n<div class=\"col-sm-6 \" style=\"padding: 0px\">{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
+
                             ])->widget(Captcha::className(),[
                                 'captchaAction'=>'/home/user/captcha',
                                 'template' => '<div class="row"><div class="col-lg-2">{image}</div><div class="col-lg-10">{input}</div></div>',
                             ])
-                                ->textInput(['size' => 18,'placeholder'=>Yii::t('app/user/update-phone-number' ,'verification code')])
-                                ->label(false)
+                                ->textInput(['size' => 5,'placeholder'=>Yii::t('app/user/update-phone-number' ,'Verify code')])
+                                ->label(Yii::t('app/user/update-phone-number' ,'Verify code'))
                             ?>
                         </div>
-                        <div class="col-sm-6 " style="margin-left: 12px;">
-                            <div class="form-group" style="    ">
+
+                        <div class="col-sm-6 " style="">
+<!--                            <div class="form-group" style="    ">-->
                                 <input type="button" id="count-down" class="form-control"  onclick="
                                     if($('#phoneregisterform-country_code').val() == ''){
                                     alert('<?= Yii::t("app/user/update-phone-number", "Country Code is empty")?>');
@@ -106,15 +112,19 @@ $this->title =  Yii::t('app/user/update-phone-number','Edit Phone number');
                                     var dt = self.setInterval(countDown,1000);
                                     " value='<?= Yii::t("app/user/update-phone-number" ,"Get verification code")?>' style="background-color: #39b5e7;color: white;">
                                 <div class="help-block"></div>
-                            </div>
+<!--                            </div>-->
                         </div>
                     </div>
 
 
                     <div class="row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-9" style="    padding-left: 0px;">
                         <input type="button" id="phoneregisterButton" class="btn btn-primary block full-width m-b button-new-color"
                                onclick="$('#register-phone').submit();"
                                value="<?= Yii::t('app/user/update-phone-number','Submit')?>" />
+                        </div>
+                        <div class="col-sm-6"></div>
                     </div>
                     <?php ActiveForm::end(); ?>
 
@@ -124,18 +134,18 @@ $this->title =  Yii::t('app/user/update-phone-number','Edit Phone number');
 
 
 <style>
-    #phoneregisterform-password{
-        width: 314px !important;
-    }
-    #phoneregisterform-repassword{
-        width: 314px !important;
-    }
+    /*#phoneregisterform-password{*/
+        /*width: 314px !important;*/
+    /*}*/
+    /*#phoneregisterform-repassword{*/
+        /*width: 314px !important;*/
+    /*}*/
 
-    #phoneregisterButton{
-        width: 314px !important;
-    }
+    /*#phoneregisterButton{*/
+        /*width: 314px !important;*/
+    /*}*/
 
-    #count-down{
-        margin-left: 8px !important;
-    }
+    /*#count-down{*/
+        /*margin-left: 8px !important;*/
+    /*}*/
 </style>

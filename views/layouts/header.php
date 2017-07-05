@@ -99,7 +99,7 @@ $localLanguage = $identity->language;
 <div>
     <div  class="text-right" style="background-color: rgb(96,96,96);height: 40px;line-height: 40px;">
         <div style="display: inline-block;color:white;"><?= Yii::t('app/index','Hello')?>,<?php echo $username;?></div>
-        <div style="display: inline-block;color:white;"><a class="index-button-1" data-method="post" href="<?= Url::to(['/home/login/logout']) ?>"><span style="color: white;"><?= Yii::t('app/index','Logout')?></span></a> &nbsp;&nbsp;|&nbsp;&nbsp; </div>
+        <div style="display: inline-block;color:white;"><a class="index-button-1" data-method="post" href="<?= Url::to(['/home/login/logout']) ?>"><span style="color: white;"><?= Yii::t('app/index','Logout')?></span></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </div>
         <div style="display: inline-block;color:white; ">
             <?= Yii::t('app/index','Please select language')?>
         </div>
