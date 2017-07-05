@@ -1411,7 +1411,7 @@ class Potato extends Model
         $user = User::findOne(['potato_user_id' => $this->potatoContactUid]);
         if ($user) {
             $this->calledPersonData = $user;
-            $nickname = $this->potatoContactLastName.$this->potatoContactFirstName;
+            $nickname = $this->potatoContactFirstName;
             if (empty($nickname)) {
                 $nickname = !empty($user->nickname) ? $user->nickname : '他/她';
             }
@@ -1480,7 +1480,7 @@ class Potato extends Model
             $this->sendData = [
                 'chat_type' => 1,
                 'chat_id' => $this->potatoUid,
-                'text' => $this->potatoContactLastName.$this->potatoContactFirstName.$this->getIsNotMemberText(),
+                'text' => $this->potatoContactFirstName.$this->getIsNotMemberText(),
             ];
             $this->sendPotatoData();
         }

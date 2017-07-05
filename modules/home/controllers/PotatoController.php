@@ -80,9 +80,12 @@ class PotatoController extends GController
             } else if ($message['request_type'] == $potato->callBackRequestType) {
                 // 点击按钮会调.
                 $callbackData = explode('-', $message['data']);
+                $potato->potatoContactUid = $callbackData[1];
                 $action = $callbackData[0];
                 switch ($action) {
                     case $potato->callCallbackDataPre:
+                        $potato->potatoContactFirstName = $callbackData[3];
+                        $potato->potatoSendFirstName = $callbackData[4];
                         $potato->callPotatoPerson();
                         break;
                     case $potato->whiteCallbackDataPre:
