@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
             <div >
                 <?= $form->field($model, 'search_type')->dropDownList(
                     [
-                        1 => Yii::t('app/harassment','Blacklist account'),
+                        //1 => Yii::t('app/harassment','Blacklist account'),
                         // 2 => '黑名单电话',
                         2=>'telegram',
                         3=>'potato'

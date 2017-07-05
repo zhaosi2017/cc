@@ -38,18 +38,23 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-sm-10">
 
             <?php echo $form->field($model, 'country_code', [
-                'template' => "{label}\n<div style=\"width:130px;\">&nbsp;&nbsp;&nbsp;{input}\n
-                                            <span style=\"height:18px;\" class=\"help-block m-b-none\">{error}</span>
+                'template' => "{label}\n<div>&nbsp;&nbsp;&nbsp;{input}\n
+                                            <span style=\"height:18px;margin-left: 9px\" class=\"help-block m-b-none\">{error}</span>
                                         </div>",
-            ])->textInput(['size' => 10,'placeholder'=>Yii::t('app/user/set-phone-number' ,'Country code')])->label(false ) ?>
+                'options'=>['class'=>'form-group field-contactform-code required col-sm-2']
+            ])->textInput(['size' => 8,'placeholder'=>Yii::t('app/user/set-phone-number' ,'Country code')])->label(false ) ?>
 
             <?php echo $form->field($model, 'phone_number',[
 
-                 'template' => "{label}\n<div>&nbsp;{input}<span style=\"padding-left:10px\">*".
+                 'template' => "{label}\n<div>&nbsp;{input}<span style=\"padding-left:15px;line-height: 34px;\">*".
                      Yii::t('app/user/set-phone-number' , 'Please enter your country code and enter your mobile number')
                      ."</span>\n<span style=\"height:18px;\" class=\"help-block m-b-none\">{error}</span></div>",
-
-                ])->textInput(['placeholder' => Yii::t('app/user/set-phone-number' ,'CellPhone Number')])->label(false) ?>
+                 'options'=>['class'=>'form-group field-contactform-phone_number required has-success ' ,'style'=>'margin-left: -50px;']
+                ])->textInput(['placeholder' => Yii::t('app/user/set-phone-number' ,'CellPhone Number') ,
+                                'size'=>13,
+                                'class'=>'form-control col-sm-2'
+                                ])
+                ->label(false) ?>
 <!--            <div class="help-block">&nbsp;&nbsp;&nbsp;*请输入您的国码，然后输入您的手机号码</div>-->
         </div>
 
@@ -60,74 +65,74 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
         <div class="col-sm-10">
-            <!--<div class="form-group">
-                &nbsp;&nbsp;
-                <input title="" class="form-control" size="18" type="text" placeholder="填写验证码">
-                <div class="help-block"></div>
-            </div>-->
 
             <?php echo $form->field($model, 'code', [
-                'template' => "{label}\n<div class='m-l-sm'>{input}\n<span style=\"height:28px;\" class=\"help-block m-b-none\">{error}</span></div>",
-            ])->widget(Captcha::className(),[
+                'template' => "{label}\n<div class='m-l-sm'>{input}\n
+                                                <span style=\"height:28px;\" class=\"help-block m-b-none\">{error}</span>
+                                       </div>",
+                'options'=>['class'=>'form-group field-contactform-code required col-sm-2']
+                ]
+                )->widget(Captcha::className(),[
                 'captchaAction'=>'/home/user/captcha',
                 'template' => '<div class="row"><div class="col-lg-2">{image}</div><div class="col-lg-10">{input}</div></div>',
             ])
-                ->textInput(['size' => 18])
+                ->textInput(['size' => 8    ])
                 ->label(false)
             ?>
 
-            <div class="form-group">
-                <input type="button" id="count-down" class="form-control"   onclick="
-                    if($('#contactform-country_code').val() == ''){
-                        alert('<?= Yii::t("app/user/update-phone-number", "Country Code is empty")?>');
-                        return false;
-                    }
-                    if($('#contactform-phone_number').val() == ''){
-                        alert('<?= Yii::t("app/user/update-phone-number", "Cellphone Number is empty")?>');
-                        return false;
-                    }
-
-                    var duration = 59;
-                    $('#count-down').attr('disabled','disabled');
-                    var url = '<?php echo Url::to(['/home/user/send-short-message']); ?>';
-                    var data = {};
-
-                    data.number = '+' + $('#contactform-country_code').val() + $('#contactform-phone_number').val();
-                    data.type   = '<?php echo Yii::$app->controller->action->id; ?>';
-                    $.post(url, data).done(function(r) {
-                        r = eval('('+ r + ')');
-                        if(r.messages.status == 1){
-                            alert('<?= Yii::t("app/user/update-phone-number","Send SMS too often, please take a break")?>');
+            <div class="form-group col-sm-10" style="margin-left: -50px">
+                <div class="col-sm-2" style=" margin-left: -3px">
+                    <input type="button" id="count-down" class="form-control"  onclick="
+                        if($('#contactform-country_code').val() == ''){
+                            alert('<?= Yii::t("app/user/update-phone-number", "Country Code is empty")?>');
+                            return false;
                         }
-                    });
-
-                    var countDown = function() {
-                        if(duration>0){
-                            $('#count-down').val(duration);
-                            duration--;
-                        }else{
-                            window.clearInterval(dt);
-                            $('#count-down').attr('disabled',false).val(
-                                                    '<?= Yii::t("app/user/update-phone-number" ,"Get verification code")?>');
+                        if($('#contactform-phone_number').val() == ''){
+                            alert('<?= Yii::t("app/user/update-phone-number", "Cellphone Number is empty")?>');
+                            return false;
                         }
-                    };
-                    var dt = self.setInterval(countDown,1000);
-                " value='<?= Yii::t("app/user/update-phone-number" ,"Get verification code")?>'
-                       style="background-color: #39b5e7;color: white;margin-top: -29px;"><span style="
-    font-size: 14px;
-    padding-left: 10px;
-    /* padding-top: 0px; */
-    position: relative;
-    top: -12px;
-">*<?= Yii::t("app/user/set-phone-number" , "Please enter your phone verification code")?></span>
+
+                        var duration = 59;
+                        $('#count-down').attr('disabled','disabled');
+                        var url = '<?php echo Url::to(['/home/user/send-short-message']); ?>';
+                        var data = {};
+
+                        data.number = '+' + $('#contactform-country_code').val() + $('#contactform-phone_number').val();
+                        data.type   = '<?php echo Yii::$app->controller->action->id; ?>';
+                        $.post(url, data).done(function(r) {
+                            r = eval('('+ r + ')');
+                            if(r.messages.status == 1){
+                                alert('<?= Yii::t("app/user/update-phone-number","Send SMS too often, please take a break")?>');
+                            }
+                        });
+
+                        var countDown = function() {
+                            if(duration>0){
+                                $('#count-down').val(duration);
+                                duration--;
+                            }else{
+                                window.clearInterval(dt);
+                                $('#count-down').attr('disabled',false).val(
+                                                        '<?= Yii::t("app/user/update-phone-number" ,"Get verification code")?>');
+                            }
+                        };
+                        var dt = self.setInterval(countDown,1000);
+                    " value='<?= Yii::t("app/user/update-phone-number" ,"Get verification code")?>'
+                     style="background-color: #39b5e7;color: white;margin-left: -27px; width: 100% ;padding-left: 0px" />
+                </div>
+                <div class="col-sm-7"  >
+                    <span style="margin-left: -40px;">*<?= Yii::t("app/user/set-phone-number" , "Please enter your phone verification code")?></span>
+                </div>
                 <div class="help-block"></div>
             </div>
+
+        </div>
         </div>
     </div>
 
     <div class="form-group m-b-lg">
         <div class="col-sm-6 col-sm-offset-2">
-            <?= Html::submitButton(Yii::t('app/user/update-phone-number','Submit'), ['class' => 'btn btn-primary button-new-color','style'=>'width: 265px; margin-left: -6px;']) ?>
+            <?= Html::submitButton(Yii::t('app/user/update-phone-number','Submit'), ['class' => 'btn btn-primary button-new-color','style'=>'width: 245px; margin-left: 13px;']) ?>
         </div>
     </div>
 
