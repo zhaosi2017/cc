@@ -23,7 +23,7 @@ return [
     'Cancel the whitelist failed.' => '解除白名单失败.',
     'Not in the white list.' => '不在白名单.',
     'Already in the blacklist.' => '已经在黑名单里.',
-    'Add to Blacklist successfully' => '加入黑名单成功.',
+    'Add to Blacklist successfully.' => '加入黑名单成功.',
     'Add to Blacklist failed.' => '加入黑名单失败.',
     'Unlock the blacklist successfully.' => '解除黑名单成功.',
     'Unlock the blacklist failed.' => '解除黑名单失败.',
