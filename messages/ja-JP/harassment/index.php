@@ -6,7 +6,7 @@
   'Please set the number of times to be called in the fixed time' => '一定時間内に呼び出される回数を設定してください',
   'Please set the number of times a user has been called by the same person within a fixed time' => '一定時間内に同じ人が電話をした回数を設定してください',
   'Please set the fixed time, unit: minutes, this time will affect the number of calls and the same number of calls' => '固定時間、単位：分を設定してください、この時間は通話の数と同じ数の通話に影響します',
-  'Whitelist switch' => 'ホワイトリストスイッチ',
+  'Whitelist status' => 'ホワイトリストスイッチ',
   'On' => '開いた',
   'Off' => '閉まっている',
   'Operating' => 'オペレーティング',
