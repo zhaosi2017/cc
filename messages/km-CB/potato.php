@@ -1,0 +1,15 @@
+<?php return array (
+  'Start the operation, please wait later.' => 'ចាប់ផ្តើមប្រតិបត្ដិការនេះសូមរង់ចាំនៅពេលក្រោយ។',
+  'welcome' => 'ស្វាគមន៍',
+  'Share your contact card' => 'ចែករំលែកកាតទំនាក់ទំនងរបស់អ្នក',
+  '[Please enter the verification code on the callu platform to complete the binding operation!]' => '[សូមបញ្ចូលលេខកូដផ្ទៀងផ្ទាត់នៅលើវេទិកា callu ដើម្បីបំពេញប្រតិបត្ដិការចងបាននោះទេ!]',
+  'Please share your own contact card to the robot, complete the binding operation.' => 'សូមចែករំលែកកាតទំនាក់ទំនងផ្ទាល់ខ្លួនរបស់អ្នកទៅឱ្យមនុស្សយន្តនេះបានបញ្ចប់ប្រតិបត្ដិការចងបាន។',
+  'success' => 'ភាពជោគជ័យ',
+  'failure' => 'ការបរាជ័យ',
+  'call' => 'ការហៅ',
+  'You have completed the binding operation.' => 'អ្នកបានបញ្ចប់ប្រតិបត្ដិការចងបាន។',
+  'is not a member of our system, can not perform the operation.' => 'មិនមែនជាសមាជិកនៃប្រព័ន្ធរបស់យើងមិនអាចអនុវត្តប្រតិបត្តិការនេះ។',
+  'The number of times the call has exceeded the limit set by he.' => 'ចំនួនដងនៃការហៅទូរស័ព្ទបានលើសចំនួនកំណត់ដែលបានកំណត់ដោយគាត់បាន។',
+  'The verification code is empty.' => 'កូដផ្ទៀងផ្ទាត់គឺទទេ។',
+  'Verification code error.' => 'ការផ្ទៀងផ្ទាត់កំហុសកូដ។',
+); 
