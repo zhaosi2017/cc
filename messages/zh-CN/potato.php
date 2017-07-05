@@ -42,7 +42,7 @@ return [
     'Close White List Function successfully.' => '关闭白名单功能成功.',
     'Close whitelist failed.' => '关闭白名单功能失败.',
     'Already in the blacklist.' => '已经在黑名单里.',
-    'Add to Blacklist successfully' => '加入黑名单成功.',
+    'Add to Blacklist successfully.' => '加入黑名单成功.',
     'Add to Blacklist failed.' => '加入黑名单失败.',
     'Unlock the blacklist successfully.' => '解除黑名单成功.',
     'Unlock the blacklist failed.' => '解除黑名单失败.',
