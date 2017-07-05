@@ -63,7 +63,7 @@ class Telegram extends Model
     private $unbindFailureText = "Cancel the whitelist failed.";
     private $unbindNotText = "Not in the white list.";
     private $joinBlackListAreadyText = "Already in the blacklist.";
-    private $joinBlackListSuccessText = "Add to Blacklist Success.";
+    private $joinBlackListSuccessText = "Add to Blacklist successfully.";
     private $joinBlackListFailureText = "Add to Blacklist failed.";
     private $unlockBlackListSuccessText = "Unlock the blacklist successfully.";
     private $unlockBlackListFailureText = "Unlock the blacklist failed.";
