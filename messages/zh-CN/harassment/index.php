@@ -15,8 +15,8 @@ return
     'Whitelist users'  => '白名单用户',
     'No data found'  => '没有找到数据',
     'Blacklist users'  => '黑名单用户',
-    'Blacklist'  => '白名单',
-    'Whitelist'  => '黑名单',
+    'Blacklist'  => '黑名单',
+    'Whitelist'  => '白名单',s
     'Finshed'=>'完成',
     'Whitelist account'=>'白名单账号',
     'Blacklist account'=>'黑名单账号',
