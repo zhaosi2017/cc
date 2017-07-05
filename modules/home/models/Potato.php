@@ -64,7 +64,27 @@ class Potato extends Model
     private $exceedText = 'The number of times the call has exceeded the limit set by he.';
     private $codeEmptyText = 'The verification code is empty.';
     private $codeErrorText = 'Verification code error.';
+    private $enableNoMemberText = "You are not a member of our system and can not perform this operation.";
     private $menuNoMemberText = "He is not a member of our system and you can not perform this operation.";
+    private $joinAlreadyText = "Already in the white list.";
+    private $joinWhiteListSuccess = "Join whitelist successfully.";
+    private $joinWhiteListFailure = "Join whitelist failed.";
+    private $joinRecommendText = "Has already added you to the whitelist, you can also click the button below to add him to your whitelist.";
+    private $unbindSuccessText = "Cancel the whitelist successfully.";
+    private $unbindFailureText = "Cancel the whitelist failed.";
+    private $unbindNotText = "Not in the white list.";
+    private $enableWhiteText = "White List has been turned on.";
+    private $enableWhiteSuccessText = "Open white list function successfully.";
+    private $enableWhiteFailureText = "Open whitelist failed.";
+    private $disableWhiteText = "Has closed the whitelist function.";
+    private $disableWhiteSuccessText = "Close White List Function successfully.";
+    private $disableWhiteFailureText = "Close whitelist failed.";
+    private $joinBlackListAreadyText = "Already in the blacklist.";
+    private $joinBlackListSuccessText = "Add to Blacklist Success.";
+    private $joinBlackListFailureText = "Add to Blacklist failed.";
+    private $unlockBlackListSuccessText = "Unlock the blacklist successfully.";
+    private $unlockBlackListFailureText = "Unlock the blacklist failed.";
+    private $notInBlackList = "Not in blacklist.";
 
     private $sendData;
     private $errorCode = [
@@ -645,6 +665,166 @@ class Potato extends Model
     }
 
     /**
+     * @return string
+     */
+    public function getEnableNoMemberText()
+    {
+        return Yii::t('app/model/potato', $this->enableNoMemberText, array(), $this->language);
+    }
+
+    /**
+     * @return string.
+     */
+    public function getJoinAlreadyText()
+    {
+        return Yii::t('app/model/potato', $this->joinAlreadyText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getJoinWhiteListSuccess()
+    {
+        return Yii::t('app/model/potato', $this->joinWhiteListSuccess, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getJoinWhiteListFailure()
+    {
+        return Yii::t('app/model/potato', $this->joinWhiteListFailure, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getJoinRecommendText()
+    {
+        return Yii::t('app/model/potato', $this->joinRecommendText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getUnbindSuccessText()
+    {
+        return Yii::t('app/model/potato', $this->unbindSuccessText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getUnbindFailureText()
+    {
+        return Yii::t('app/model/potato', $this->unbindFailureText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getUnbindNotText()
+    {
+        return Yii::t('app/model/potato', $this->unbindNotText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnableWhiteText()
+    {
+        return Yii::t('app/model/potato', $this->enableWhiteText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnableWhiteSuccessText()
+    {
+        return Yii::t('app/model/potato', $this->enableWhiteSuccessText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnableWhiteFailureText()
+    {
+        return Yii::t('app/model/potato', $this->enableWhiteFailureText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getDisableWhiteText()
+    {
+        return Yii::t('app/model/potato', $this->disableWhiteText, array(), $this->language);
+    }
+
+    /**
+     * @return string.
+     */
+    public function getDisableWhiteSuccessText()
+    {
+        return Yii::t('app/model/potato', $this->disableWhiteSuccessText, array(), $this->language);
+    }
+
+    /**
+     * @return string.
+     */
+    public function getDisableWhiteFailureText()
+    {
+        return Yii::t('app/model/potato', $this->disableWhiteFailureText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getJoinBlackListAreadyText()
+    {
+        return Yii::t('app/model/potato', $this->joinBlackListAreadyText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getJoinBlackListSuccessText()
+    {
+        return Yii::t('app/model/potato', $this->joinBlackListSuccessText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getJoinBlackListFailureText()
+    {
+        return Yii::t('app/model/potato', $this->joinBlackListFailureText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getUnlockBlackListSuccessText()
+    {
+        return Yii::t('app/model/potato', $this->unlockBlackListSuccessText, array(), $this->language);
+    }
+
+    /**
+     * @return string.
+     */
+    public function getUnlockBlackListFailureText()
+    {
+        return Yii::t('app/model/potato', $this->unlockBlackListFailureText, array(), $this->language);
+    }
+
+    /**
+     * @return string.
+     */
+    public function getNotInBlackList()
+    {
+        return Yii::t('app/model/potato', $this->notInBlackList, array(), $this->language);
+    }
+
+    /**
      * 欢迎.
      */
     public function potatoWellcome()
@@ -688,6 +868,303 @@ class Potato extends Model
 
         $this->sendPotatoData();
         return $this->errorCode['success'];
+    }
+
+    /**
+     * 加入白名单.
+     */
+    public function joinWhiteList()
+    {
+        $sendData = [
+            'chat_type' => 1,
+            'chat_id' => $this->potatoUid,
+            'text' => '',
+        ];
+
+        $this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
+        if (empty($this->callPersonData)) {
+            $sendData['text'] = $this->getEnableNoMemberText();
+            $this->sendData = $sendData;
+            return $this->sendPotatoData();
+        }
+
+        $this->language = $this->callPersonData->language;
+        // 开始操作.
+        $this->sendData = [
+            'chat_type' => 1,
+            'chat_id' => $this->potatoUid,
+            'text' => $this->getStartText(),
+        ];
+        $this->sendPotatoData();
+
+        $this->calledPersonData = User::findOne(['potato_user_id' => $this->potatoContactUid]);
+        if (empty($this->calledPersonData)) {
+            $sendData['text'] = $this->getMenuNoMemberText();
+            $this->sendData = $sendData;
+            return $this->sendPotatoData();
+        }
+
+        $whiteRes = WhiteList::findOne(['uid' => $this->callPersonData->id, 'white_uid'=> $this->calledPersonData->id]);
+        if ($whiteRes) {
+            $sendData['text'] = $this->getJoinAlreadyText();
+        } else {
+            $whiteRes = new WhiteList();
+            $whiteRes->uid = $this->callPersonData->id;
+            $whiteRes->white_uid = $this->calledPersonData->id;
+            $res = $whiteRes->save();
+            $res ? ($sendData['text'] = $this->getJoinWhiteListSuccess()) : ($sendData['text'] = $this->getJoinWhiteListFailure());
+
+            $res = WhiteList::findOne(['uid' => $this->calledPersonData->id, 'white_uid'=> $this->callPersonData->id]);
+            if (empty($res)) {
+                $this->language = $this->calledPersonData->language;
+                $this->sendData = [
+                    'chat_id' => $this->potatoContactUid,
+                    'text' => $this->potatoSendLastName . $this->potatoSendFirstName.$this->getJoinRecommendText(),
+                ];
+                $this->sendPotatoData();
+                $bindMenu = [
+                    'text' => $this->getWhiteText(),
+                    'data' => implode('-', array($this->whiteCallbackDataPre, $this->potatoUid, $this->callPersonData->potato_number)),
+                ];
+                $inlineKeyboard = [
+                    [
+                        $bindMenu
+                    ]
+                ];
+                $this->sendData = [
+                    'chat_type' => 1,
+                    'chat_id' => $this->potatoContactUid,
+                    'text' => $this->getPotatoText(),
+                    'inline_markup' => [
+                        $inlineKeyboard,
+                    ]
+                ];
+                $this->sendPotatoData();
+            }
+        }
+
+        $this->language = $this->callPersonData->language;
+        $this->sendData = $sendData;
+        return $this->sendPotatoData();
+    }
+
+    /**
+     * 解除白名单.
+     */
+    public function unbindWhiteList()
+    {
+        $sendData = [
+            'chat_type' => 1,
+            'chat_id' => $this->potatoUid,
+            'text' => '',
+        ];
+
+        $this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
+        if (empty($this->callPersonData)) {
+            $sendData['text'] = $this->getEnableNoMemberText();
+            $this->sendData = $sendData;
+            return $this->sendPotatoData();
+        }
+
+        $this->language = $this->callPersonData->language;
+        // 开始操作.
+        $this->sendData = [
+            'chat_type' => 1,
+            'chat_id' => $this->potatoUid,
+            'text' => $this->getStartText(),
+        ];
+        $this->sendPotatoData();
+        $this->calledPersonData = User::findOne(['potato_user_id' => $this->potatoContactUid]);
+        if (empty($this->calledPersonData)) {
+            $sendData['text'] = $this->getMenuNoMemberText();
+            $this->sendData = $sendData;
+            return $this->sendPotatoData();
+        }
+
+        $whiteRes = WhiteList::findOne(['uid' => $this->callPersonData->id, 'white_uid' => $this->calledPersonData->id]);
+        if ($whiteRes) {
+            $res = $whiteRes->delete();
+            $res ? ($sendData['text'] = $this->getUnbindSuccessText()) : ($sendData['text'] = $this->getUnbindFailureText());
+        } else {
+            $sendData['text'] = $this->getUnbindNotText();
+        }
+
+
+        $this->sendData = $sendData;
+        return $this->sendPotatoData();
+    }
+
+    /**
+     * 开启白名单功能.
+     */
+    public function enableWhiteSwith()
+    {
+        $sendData = [
+            'chat_type' => 1,
+            'chat_id' => $this->potatoUid,
+            'text' => '',
+        ];
+
+        $this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
+        if (empty($this->callPersonData)) {
+            $sendData['text'] = $this->getEnableNoMemberText();
+            $this->sendData = $sendData;
+            return $this->sendPotatoData();
+        }
+
+
+        $this->language = $this->callPersonData->language;
+        // 开始操作.
+        $this->sendData = [
+            'chat_type' => 1,
+            'chat_id' => $this->potatoUid,
+            'text' => $this->getStartText(),
+        ];
+        $this->sendPotatoData();
+        if ($this->callPersonData->whitelist_switch == 1) {
+            $sendData['text'] = $this->getEnableWhiteText();
+        } else {
+            $this->callPersonData->whitelist_switch=1;
+            $res = $this->callPersonData->save();
+            $res ? ($sendData['text'] = $this->getEnableWhiteSuccessText()) : ($sendData['text'] = $this->getEnableWhiteSuccessText());
+        }
+
+        $this->sendData = $sendData;
+        return $this->sendPotatoData();
+    }
+
+    /**
+     * 关闭白名单功能.
+     */
+    public function disableWhiteSwith()
+    {
+        $sendData = [
+            'chat_type' => 1,
+            'chat_id' => $this->potatoUid,
+            'text' => '',
+        ];
+
+        $this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
+        if (empty($this->callPersonData)) {
+            $sendData['text'] = $this->getEnableNoMemberText();
+            $this->sendData = $sendData;
+            return $this->sendPotatoData();
+        }
+
+
+        $this->language = $this->callPersonData->language;
+        // 开始操作.
+        $this->sendData = [
+            'chat_type' => 1,
+            'chat_id' => $this->potatoUid,
+            'text' => $this->getStartText(),
+        ];
+        $this->sendPotatoData();
+        if ($this->callPersonData->whitelist_switch == 0) {
+            $sendData['text'] = $this->getDisableWhiteText();
+        } else {
+            $this->callPersonData->whitelist_switch=0;
+            $res = $this->callPersonData->save();
+            $res ? ($sendData['text'] = $this->getDisableWhiteSuccessText()) : ($sendData['text'] = $this->getDisableWhiteFailureText());
+        }
+
+        $this->sendData = $sendData;
+        return $this->sendPotatoData();
+    }
+
+    /**
+     * 加入黑名单.
+     */
+    public function joinBlackList()
+    {
+        $sendData = [
+            'chat_type' => 1,
+            'chat_id' => $this->potatoUid,
+            'text' => '',
+        ];
+
+        $this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
+        if (empty($this->callPersonData)) {
+            $sendData['text'] = $this->getEnableNoMemberText();
+            $this->sendData = $sendData;
+            return $this->sendPotatoData();
+        }
+
+        $this->language = $this->callPersonData->language;
+        // 开始操作.
+        $this->sendData = [
+            'chat_type' => 1,
+            'chat_id' => $this->potatoUid,
+            'text' => $this->getStartText(),
+        ];
+        $this->sendPotatoData();
+        $this->calledPersonData = User::findOne(['potato_user_id' => $this->potatoContactUid]);
+        if (empty($this->calledPersonData)) {
+            $sendData['text'] = $this->getMenuNoMemberText();
+            $this->sendData = $sendData;
+            return $this->sendPotatoData();
+        }
+
+        $blackRes = BlackList::findOne(['uid' => $this->callPersonData->id, 'black_uid'=> $this->calledPersonData->id]);
+        if ($blackRes) {
+            $sendData['text'] = $this->getJoinBlackListAreadyText();
+        } else {
+            $blackRes = new BlackList();
+            $blackRes->uid = $this->callPersonData->id;
+            $blackRes->black_uid = $this->calledPersonData->id;
+            $res = $blackRes->save();
+            $res ? ($sendData['text'] = $this->getJoinBlackListSuccessText()) : ($sendData['text'] = $this->getJoinBlackListFailureText());
+        }
+
+
+        $this->sendData = $sendData;
+        return $this->sendPotatoData();
+    }
+
+    /**
+     * 解除白名单.
+     */
+    public function unbindBlackList()
+    {
+        $sendData = [
+            'chat_type' => 1,
+            'chat_id' => $this->potatoUid,
+            'text' => '',
+        ];
+
+        $this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
+        if (empty($this->callPersonData)) {
+            $sendData['text'] = $this->getEnableNoMemberText();
+            $this->sendData = $sendData;
+            return $this->sendPotatoData();
+        }
+
+        $this->language = $this->callPersonData->language;
+        // 开始操作.
+        $this->sendData = [
+            'chat_type' => 1,
+            'chat_id' => $this->potatoUid,
+            'text' => $this->getStartText(),
+        ];
+        $this->sendPotatoData();
+        $this->calledPersonData = User::findOne(['potato_user_id' => $this->potatoContactUid]);
+        if (empty($this->calledPersonData)) {
+            $sendData['text'] = $this->getMenuNoMemberText();
+            $this->sendData = $sendData;
+            return $this->sendPotatoData();
+        }
+
+        $blackRes = BlackList::findOne(['uid' => $this->callPersonData->id, 'black_uid' => $this->calledPersonData->id]);
+        if ($blackRes) {
+            $res = $blackRes->delete();
+            $res ? ($sendData['text'] = $this->getUnlockBlackListSuccessText()) : ($sendData['text'] = $this->getUnlockBlackListFailureText());
+        } else {
+            $sendData['text'] = $this->getNotInBlackList();
+        }
+
+
+        $this->sendData = $sendData;
+        return $this->sendPotatoData();
     }
 
     /**

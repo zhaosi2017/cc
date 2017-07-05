@@ -85,7 +85,31 @@ class PotatoController extends GController
                     case $potato->callCallbackDataPre:
                         $potato->callPotatoPerson();
                         break;
-                    
+                    case $potato->whiteCallbackDataPre:
+                        $result = $potato->joinWhiteList();
+                        return $result;
+                        break;
+                    case $potato->unwhiteCallbackDataPre:
+                        $result = $potato->unbindWhiteList();
+                        return $result;
+                        break;
+                    case $potato->whitelistSwitchCallbackDataPre:
+                        $result = $potato->enableWhiteSwith();
+                        return $result;
+                        break;
+                    case $potato->unwhitelistSwitchCallbackDataPre:
+                        $result = $potato->disableWhiteSwith();
+                        return $result;
+                        break;
+                    case $potato->blackCallbackDataPre:
+                        $result = $potato->joinBlackList();
+                        return $result;
+                    case $potato->unblackCallbackDataPre:
+                        $result = $potato->unbindBlackList();
+                        return $result;
+                    default :
+                        echo 'error_code :'.$potato->errorCode['invalid_operation'];
+                        break;
                 }
 
             }
