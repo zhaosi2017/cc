@@ -342,6 +342,14 @@ class Potato extends Model
     }
 
     /**
+     * @return int
+     */
+    public function getCallBackRequestType()
+    {
+        return $this->callBackRequestType;
+    }
+
+    /**
      * @return mixed
      */
     public function getPotatoUid()
@@ -387,6 +395,53 @@ class Potato extends Model
     public function getNexmoUrl()
     {
         return $this->nexmoUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCallCallbackDataPre()
+    {
+        return $this->callCallbackDataPre;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWhiteCallbackDataPre()
+    {
+        return $this->whiteCallbackDataPre;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUnwhiteCallbackDataPre()
+    {
+        return $this->unwhiteCallbackDataPre;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWhitelistSwitchCallbackDataPre()
+    {
+        return $this->whitelistSwitchCallbackDataPre;
+    }
+
+    public function getUnwhitelistSwitchCallbackDataPre()
+    {
+        return $this->unwhitelistSwitchCallbackDataPre;
+    }
+
+    public function getBlackCallbackDataPre()
+    {
+        return $this->blackCallbackDataPre;
+    }
+
+    public function getUnblackCallbackDataPre()
+    {
+        return $this->unblackCallbackDataPre;
     }
 
     /**
