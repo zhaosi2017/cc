@@ -16,9 +16,15 @@ $this->title = Yii::t('app/login','Registration success');
         <h2><?= Yii::t('app/login','Registration success')?></h2>
 
         <blockquote class="text-left" style="border: 0;">
-            <p><?= Yii::t('app/login','Please keep in mind your email account and password')?>！！！</p>
-            <p><?= Yii::t('app/login','Your email account')?>：<?php echo $model->username ?></p>
-            <p><?= Yii::t('app/login','Your password')?>：<?php echo $model->password ?></p>
+            <p><?= Yii::t('app/login','Please keep in mind your  account and password')?>！！！</p>
+           <?php  if($model instanceof  \app\modules\home\models\RegisterForm) {?>
+                <p><?= Yii::t('app/login','Your email account')?>：<?php echo $model->username ?></p>
+                <p><?= Yii::t('app/login','Your password')?>：<?php echo $model->password ?></p>
+            <?php }else{ ?>
+                <p><?= Yii::t('app/login','Your phone account')?>：<?php echo $model->phone ?></p>
+                <p><?= Yii::t('app/login','Your password')?>：<?php echo $model->password ?></p>
+            <?php } ?>
+
         </blockquote>
         <?php $form = ActiveForm::begin([
             'id' => 'verify-form',
