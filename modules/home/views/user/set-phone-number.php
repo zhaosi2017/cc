@@ -135,7 +135,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="form-group m-b-lg">
         <div class="col-sm-6 col-sm-offset-2">
-            <?= Html::submitButton(Yii::t('app/user/update-phone-number','Submit'), ['class' => 'btn btn-primary button-new-color','style'=>'width: 265px; margin-left: -6px;']) ?>
+            <?= Html::submitButton(Yii::t('app/user/update-phone-number','Submit'), ['class' => 'btn btn-primary button-new-color','style'=>'width: 245px; margin-left: 10px;']) ?>
         </div>
     </div>
 
