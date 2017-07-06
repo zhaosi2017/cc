@@ -22,7 +22,7 @@ return [
     'Verification code error.' => '验证码错误.',
     'Open the whitelist' => '开启白名单',
     'Close the whitelist' => '关闭白名单',
-    'Operation menu.' =>  '操作菜单.',
+    'Operation menu.' =>  '操作菜单',
     'Join Whitelist' => '加白名单',
     'Unlock the whitelist' => '解除白名单',
     'Join blacklist' => '加黑名单',
