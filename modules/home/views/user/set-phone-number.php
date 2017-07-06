@@ -124,7 +124,7 @@ $this->params['breadcrumbs'][] = $this->title;
                      style="background-color: #39b5e7;color: white;margin-left: -27px; width: 100% ;padding-left: 0px" />
                 </div>
                 <div class="col-sm-7"  >
-                    <span >*<?= Yii::t("app/user/set-phone-number" , "Please enter your phone verification code")?></span>
+                    <span style=" line-height: 34px;margin-left: -34px">*<?= Yii::t("app/user/set-phone-number" , "Please enter your phone verification code")?></span>
                 </div>
                 <div class="help-block"></div>
             </div>
