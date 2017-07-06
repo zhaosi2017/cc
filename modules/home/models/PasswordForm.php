@@ -48,8 +48,8 @@ class PasswordForm extends Model
     public function attributeLabels()
     {
         return [
-            'password' => Yii::t('app/models/PasswordForm' ,'old password'),//'原密码',
-            'newPassword' => Yii::t('app/models/PasswordForm' ,'new password'),//'新密码',
+            'password' => Yii::t('app/models/PasswordForm' ,'Old password'),//'原密码',
+            'newPassword' => Yii::t('app/models/PasswordForm' ,'New password'),//'新密码',
             'rePassword' => Yii::t('app/models/PasswordForm' ,'Repeat input'),//'重复输入',
         ];
     }
