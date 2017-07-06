@@ -22,11 +22,17 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 
     <?= $form->field($model, 'account',[
-        'template' => "{label}\n<div class=\"col-sm-3\"> {input}  </div> <span class=\"col-sm-3 \" style='padding-top: 9px'>*".
-
-            Yii::t('app/user/bind-email' , 'Please Entry your Eamil address')
-            ."</span> \n<br><div style=\"height:20px;\"></div><label class = \"col-sm-1 \"></label><div style=\" width: 67%; padding-left: 15px !important;\"><span style=\"\">{error}</span></div>",
-    ])->textInput()->label(Yii::t('app/user/bind-email','Email'),['style'=>'padding-top:5px ;font-size:17px' ,'class'=>'col-sm-1  text-right']) ?>
+        'template' => "{label}\n<div class=\"col-sm-3\"> {input}  </div> 
+                                <span class=\"col-sm-3 \" style='padding-top: 9px'>*".
+                                        Yii::t('app/user/bind-email' , 'Please Entry your Eamil address')
+                                ."</span> \n<br>
+                                <div style=\"height:20px;\"></div>
+                                <label class = \"col-sm-1  text-right\"></label>
+                                <div  style='margin-left: 20px;'  > 
+                                    <span>{error}</span>
+                                </div>",
+    ])->textInput()
+    ->label(Yii::t('app/user/bind-email','Email'),['style'=>'padding-top:5px ;font-size:17px' ,'class'=>'col-sm-1  text-right']) ?>
 
     <div class="col-sm-12"></div>
     <div class="form-group">

@@ -75,8 +75,47 @@ class PotatoController extends GController
                 $potato->potatoSendFirstName = isset($message['sender_first_name']) ? $message['sender_first_name'] : "";
                 $potato->potatoSendLastName = isset($message['sender_last_name']) ? $message['sender_last_name'] : "";
                 // 发送操作菜单.
-                $result = $potato->callPotatoPerson();
+                $result = $potato->sendMenulist();
                 return $result;
+            } else if ($message['request_type'] == $potato->callBackRequestType) {
+                // 点击按钮会调.
+                $callbackData = explode('-', $message['data']);
+                $potato->potatoContactUid = $callbackData[1];
+                $action = $callbackData[0];
+                switch ($action) {
+                    case $potato->callCallbackDataPre:
+                        $potato->potatoContactFirstName = $callbackData[3];
+                        $potato->potatoSendFirstName = $callbackData[4];
+                        $result = $potato->callPotatoPerson();
+                        return $result;
+                        break;
+                    case $potato->whiteCallbackDataPre:
+                        $result = $potato->joinWhiteList();
+                        return $result;
+                        break;
+                    case $potato->unwhiteCallbackDataPre:
+                        $result = $potato->unbindWhiteList();
+                        return $result;
+                        break;
+                    case $potato->whitelistSwitchCallbackDataPre:
+                        $result = $potato->enableWhiteSwith();
+                        return $result;
+                        break;
+                    case $potato->unwhitelistSwitchCallbackDataPre:
+                        $result = $potato->disableWhiteSwith();
+                        return $result;
+                        break;
+                    case $potato->blackCallbackDataPre:
+                        $result = $potato->joinBlackList();
+                        return $result;
+                    case $potato->unblackCallbackDataPre:
+                        $result = $potato->unbindBlackList();
+                        return $result;
+                    default :
+                        echo 'error_code :'.$potato->errorCode['invalid_operation'];
+                        break;
+                }
+
             }
         } catch (\Exception $e) {
             echo $e->getMessage();

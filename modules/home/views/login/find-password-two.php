@@ -17,6 +17,7 @@ $this->title = Yii::t('app/login','Retrieve login password');
         <div class="form-group">
             <div class="col-sm-4">
 
+
             </div>
             <div class="col-sm-8">
                 <h3><?= Yii::t('app/login','Retrieve login password')?></h3>

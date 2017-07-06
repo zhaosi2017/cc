@@ -77,7 +77,8 @@ class RegisterController extends GController
                     return $this->render('phone-index',['model'=>$model]);
                 }
                 if($model->register()){
-                    return $this->redirect('/home/login/login')->send();
+                    return $this->render('complete',['model'=>$model]);
+                    //return $this->redirect('/home/register/complete');
                 }
                 Yii::$app->getSession()->setFlash('error', Yii::t('app/index','Operation failed'));
 
