@@ -1634,8 +1634,8 @@ class Potato extends Model
         $callRecord = new CallRecord();
         $callRecord->active_call_uid = $this->callPersonData->id;
         $callRecord->unactive_call_uid = $this->calledPersonData->id;
-        $callRecord->active_account = $this->potatoContactLastName.$this->potatoContactFirstName;
-        $callRecord->unactive_account = $this->potatoSendLastName.$this->potatoSendFirstName;
+        $callRecord->active_account = $this->potatoSendFirstName;
+        $callRecord->unactive_account = $this->potatoContactFirstName;
         $callRecord->active_nickname = $this->callPersonData->nickname;
         $callRecord->unactive_nickname = $this->calledPersonData->nickname;
         $callRecord->contact_number = $this->callPersonData->country_code.$this->callPersonData->phone_number;
