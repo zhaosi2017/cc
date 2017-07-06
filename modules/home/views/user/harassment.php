@@ -31,8 +31,9 @@ $this->params['breadcrumbs'][] = $this->title ;
                                         <span >&nbsp;&nbsp; *".Yii::t('app/harassment','Please set the number of times to be called in the fixed time')."</span>
                                     </div>
                                 </div>\n
-                                <div>
-                                    <span class=\"help-block m-b-none\">{error}</span>
+                                <label class=\"col-sm-3  text-right\" style=\"margin-top: 7px;\" for=\"user-un_call_number\"></label>
+                                <div class='row'>
+                                    <span class=\"help-block  \">{error}</span>
                                 </div>",
         ])->textInput()->label(null,['class'=>'col-sm-3  text-right' , 'style'=>'margin-top: 7px;']) ?>
 
@@ -43,7 +44,9 @@ $this->params['breadcrumbs'][] = $this->title ;
                                         <span >&nbsp;&nbsp;*".Yii::t('app/harassment','Please set the number of times a user has been called by the same person within a fixed time')."</span>
                                     </div>
                                     </div>\n
-                                    <div>
+                                     <label class=\"col-sm-3  text-right\" style=\"margin-top: 7px;\" for=\"user-un_call_number\"></label>
+                                    <div class='row'>
+                                       
                                         <span class=\"help-block m-b-none\">{error}</span>
                                     </div>",
         ])->textInput()->label(null,['class'=>'col-sm-3  text-right' , 'style'=>'margin-top: 7px;'])  ?>
@@ -56,7 +59,10 @@ $this->params['breadcrumbs'][] = $this->title ;
                                             <span >&nbsp;&nbsp;*".Yii::t('app/harassment','Please set the fixed time, unit: minutes, this time will affect the number of calls and the same number of calls')."</span>
                                         </div>
                                         </div>\n
-                                        <div><span class=\"help-block m-b-none\">{error}</span></div>",
+                                         <label class=\"col-sm-3  text-right\" style=\"margin-top: 7px;\" for=\"user-un_call_number\"></label>
+                                        <div class='row'>
+                                           <span class=\"help-block m-b-none\" >{error}</span>
+                                        </div>",
         ])->textInput()
          ->label(null,['class'=>'col-sm-3  text-right' , 'style'=>'margin-top: 7px;']) ?>
 
