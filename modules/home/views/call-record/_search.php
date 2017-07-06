@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use kartik\datetime\DateTimePicker;
 /* @var $this yii\web\View */
 /* @var $model app\modules\home\models\CallRecordSearch */
 /* @var $form yii\widgets\ActiveForm */
@@ -19,11 +19,38 @@ use yii\widgets\ActiveForm;
             'labelOptions' => [],
         ],
     ]); ?>
+    <div>
+
+    </div>
     <div class="row">
         <div class="col-lg-7">
-            <?= $form->field($model,'call_time_start')->input('date',['prompt'=>Yii::t('app/call-record/index','Start time')])->label(Yii::t('app/call-record/index','Call time').'：') ?>
+
+             <?php    echo DateTimePicker::widget([
+    'name' => 'CallRecordSearch[call_time_start]',
+    'options' => ['placeholder' => ''],
+    //注意，该方法更新的时候你需要指定value值
+    'value' => $model->call_time_start,
+    'id'=>'callrecordsearch-call_time_start',
+    'pluginOptions' => [
+        'autoclose' => true,
+        'format' => 'yyyy-mm-dd HH:ii:ss',
+        'todayHighlight' => true
+    ]
+]);?>
             <?= Yii::t('app/call-record/index','To')?>
-            <?= $form->field($model,'call_time_end')->input('date',['prompt'=>Yii::t('app/call-record/index','End time'),'onchange'=>'timeChange()'])->label(false) ?>
+                        <?php    echo DateTimePicker::widget([
+    'name' => 'CallRecordSearch[call_time_end]',
+    'id'=>'callrecordsearch-call_time_end',
+    'options' => ['placeholder' => ''],
+    //注意，该方法更新的时候你需要指定value值
+    'value' => $model->call_time_end,
+    'pluginOptions' => [
+        'autoclose' => true,
+        'format' => 'yyyy-mm-dd HH:ii:ss',
+        'todayHighlight' => true
+    ]
+]);?>
+
             &nbsp;&nbsp;
             <a class="btn btn-xs btn-danger" onclick="
                 $('#callrecordsearch-call_time_start').val('');

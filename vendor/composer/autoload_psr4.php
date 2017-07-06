@@ -19,6 +19,7 @@ return array(
     'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/type-resolver/src', $vendorDir . '/phpdocumentor/reflection-docblock/src'),
     'linslin\\yii2\\curl\\' => array($vendorDir . '/linslin/yii2-curl'),
     'kartik\\select2\\' => array($vendorDir . '/kartik-v/yii2-widget-select2'),
+    'kartik\\datetime\\' => array($vendorDir . '/kartik-v/yii2-widget-datetimepicker'),
     'kartik\\base\\' => array($vendorDir . '/kartik-v/yii2-krajee-base'),
     'cebe\\markdown\\' => array($vendorDir . '/cebe/markdown'),
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
