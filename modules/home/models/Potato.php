@@ -23,7 +23,7 @@ class Potato extends Model
     private $apiKey = '85704df7';
     private $apiSecret = '755026fdd40f34c2';
     private $tlanguage = 'zh-CN';
-    private $llanguage = 'zh-cn';
+    private $llanguage = 'zh-CN';
     private $repeat = 3;
     private $voice = 'male';
     // 是否是紧急呼叫.
