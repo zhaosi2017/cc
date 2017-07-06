@@ -14,7 +14,7 @@
   'Retrieve login password' => 'ログインパスワードを取得する',
   'Next' => '次',
   'We have sent verification code to your registered mail:' => '私たちはあなたの電子メールを登録しました',
-  'Please  fill in the receive code' => 'あなたと一緒にメッセージを送ったPeaseは受け取った認証コードを記入する',
+  'Please  fill in the received code' => 'あなたと一緒にメッセージを送ったPeaseは受け取った認証コードを記入する',
   'Please input code' => 'コードを入力してください',
   'Setting password' => 'パスワードの設定',
   'New password' => '新しいパスワード',

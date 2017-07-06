@@ -18,6 +18,7 @@ $this->title = Yii::t('app/login','Retrieve login password');
             <div class="col-sm-4">
 
 
+
             </div>
             <div class="col-sm-8">
                 <h3><?= Yii::t('app/login','Retrieve login password')?></h3>
@@ -34,6 +35,7 @@ $this->title = Yii::t('app/login','Retrieve login password');
                 </div>
             </div>
         </div>
+
 
         <?php $form = ActiveForm::begin([
             'id' => 'verify-form',

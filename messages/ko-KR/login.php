@@ -14,7 +14,7 @@
   'Retrieve login password' => '로그인 비밀번호 검색',
   'Next' => '다음 것',
   'We have sent verification code to your registered mail:' => '귀하의 이메일을 등록했습니다.',
-  'Please  fill in the receive code' => '함께 보낸 메시지 Pease가받은 인증 코드를 기입하십시오',
+  'Please  fill in the received code' => '함께 보낸 메시지 Pease가받은 인증 코드를 기입하십시오',
   'Please input code' => '코드를 입력하십시오.',
   'Setting password' => '암호 설정',
   'New password' => '새 비밀번호',

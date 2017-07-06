@@ -14,7 +14,7 @@
   'Retrieve login password' => '找回登錄密碼',
   'Next' => '下一步',
    'We have sent verification code to your registered mail:'=>'我們已經向您的註冊郵箱發送了一封郵件:',
-   'Please  fill in the receive code'=>'請填寫收到的驗證碼。',
+   'Please  fill in the received code'=>'請填寫收到的驗證碼。',
   'Please input code' => '請輸入驗證碼',
   'Setting password' => '設置新密碼',
   'New password' => '新密碼',
