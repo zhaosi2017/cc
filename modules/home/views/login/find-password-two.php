@@ -17,7 +17,7 @@ $this->title = Yii::t('app/login','Retrieve login password');
         <h3><?= Yii::t('app/login','Retrieve login password')?></h3>
 
         <blockquote class="text-center" style="border: 0;font-size: 13px;font-family: "open sans, Helvetica Neue, Helvetica, Arial, sans-serif";>
-           <?= Yii::t('app/login','We have registered your email')?>：<?php echo $model->username ?><?= Yii::t('app/login','With you Sent a message Pease fill in the verification code received')?>
+           <?= Yii::t('app/login','We have sent verification code to your registered mail:')?><?php echo $model->username." " ?><?= Yii::t('app/login','Please  fill in the receive code')?>
         </blockquote>
 
         <?php $form = ActiveForm::begin([
