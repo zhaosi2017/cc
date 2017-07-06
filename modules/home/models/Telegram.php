@@ -889,6 +889,7 @@ class Telegram extends Model
                 'text' => $this->getMenuShareText(),
             ];
         } elseif (!empty($this->callPersonData) && ($this->telegramUid == $this->telegramContactUid)){
+            $this->language = $this->callPersonData->language;
             if ($this->callPersonData->whitelist_switch == 0) {
                 $whiteMenu = [
                     'text' => $this->getWhiteSwitchText(),
