@@ -1614,6 +1614,7 @@ class Telegram extends Model
             return  $this->addError('bindCode', $this->getCodeEmptyText());
         }
         $user = User::findOne(Yii::$app->user->id);
+        $this->language = $user->language;
         if (!Yii::$app->redis->exists($this->bindCode)) {
             $this->addError('bindCode', $this->getCodeErrorText());
         } else {
