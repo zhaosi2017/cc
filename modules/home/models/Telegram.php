@@ -1609,11 +1609,13 @@ class Telegram extends Model
      * 绑定操作.
      */
     public function bindTelegramData()
-    {   
+    {
+        $user = User::findOne(Yii::$app->user->id);
+        $this->language = $user->language;
+        
         if(empty($this->bindCode)){
             return  $this->addError('bindCode', $this->getCodeEmptyText());
         }
-        $user = User::findOne(Yii::$app->user->id);
         if (!Yii::$app->redis->exists($this->bindCode)) {
             $this->addError('bindCode', $this->getCodeErrorText());
         } else {
