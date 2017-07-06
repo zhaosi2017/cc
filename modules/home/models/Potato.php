@@ -1634,8 +1634,8 @@ class Potato extends Model
         $callRecord = new CallRecord();
         $callRecord->active_call_uid = $this->callPersonData->id;
         $callRecord->unactive_call_uid = $this->calledPersonData->id;
-        $callRecord->active_account = $this->potatoContactLastName.$this->potatoContactFirstName;
-        $callRecord->unactive_account = $this->potatoSendLastName.$this->potatoSendFirstName;
+        $callRecord->active_account = $this->potatoSendFirstName;
+        $callRecord->unactive_account = $this->potatoContactFirstName;
         $callRecord->active_nickname = $this->callPersonData->nickname;
         $callRecord->unactive_nickname = $this->calledPersonData->nickname;
         $callRecord->contact_number = $this->callPersonData->country_code.$this->callPersonData->phone_number;
@@ -1643,7 +1643,7 @@ class Potato extends Model
         $callRecord->unactive_contact_number = !empty($personPhone) ? $personPhone : $urgentPhone;
         $callRecord->status = $status ? 0 : 1;
         $callRecord->call_time = time();
-        $callRecord->type = ($urgentPhone) ? 1 : 0;;
+        $callRecord->type = ($urgentPhone) ? 1 : 0;
         $res = $callRecord->save();
 
         return $res ? true : false;
