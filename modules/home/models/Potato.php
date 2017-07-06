@@ -996,6 +996,8 @@ class Potato extends Model
                         $bindMenu
                     ]
                 ];
+
+                $this->webhook = $this->menuWebHookUrl;
                 $this->sendData = [
                     'chat_type' => 1,
                     'chat_id' => $this->potatoContactUid,
