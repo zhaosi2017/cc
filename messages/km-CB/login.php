@@ -14,7 +14,7 @@
   'Retrieve login password' => 'ទៅយកពាក្យសម្ងាត់ចូល',
   'Next' => 'បន្ទាប់',
   'We have sent verification code to your registered mail:' => 'យើងបានចុះឈ្មោះអ៊ីមែលរបស់អ្នក',
-  'Please  fill in the receive code' => 'ជាមួយអ្នកផ្ញើសារមួយ peas បំពេញនៅក្នុងការទទួលបានកូដផ្ទៀងផ្ទាត់',
+  'Please  fill in the received code' => 'ជាមួយអ្នកផ្ញើសារមួយ peas បំពេញនៅក្នុងការទទួលបានកូដផ្ទៀងផ្ទាត់',
   'Please input code' => 'សូមបញ្ចូលលេខកូដ',
   'Setting password' => 'ពាក្យសម្ងាត់ដែលការកំណត់',
   'New password' => 'ពាក្យសម្ងាត់​ថ្មី',
