@@ -1252,6 +1252,7 @@ class Potato extends Model
             ];
             return $this->sendPotatoData();
         } elseif (!empty($this->callPersonData) && ($this->potatoUid == $this->potatoContactUid)){
+            $this->language = $this->callPersonData->language;
             if ($this->callPersonData->whitelist_switch == 0) {
                 $whiteMenu = [
                     'type' => 0,
