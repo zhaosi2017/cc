@@ -15,7 +15,7 @@ return [
     'Retrieve login password'=>'找回登录密码',
     'Next'=>'下一步',
     'We have sent verification code to your registered mail:'=>'我们已经向您的注册邮箱发送了一封邮件:',
-    'Please  fill in the receive code'=>'请填写收到的验证码。',
+    'Please  fill in the received code'=>'请填写收到的验证码。',
     'Please input code'=>'请输入验证码',
     'Setting password'=>'设置新密码',
     'New password'=>'新密码',
@@ -47,6 +47,8 @@ return [
     'Verify email registration'=>'验证邮箱注册',
     'Password contains at least 8 characters, including at least the following two characters: capital letters, lowercase letters, numbers, symbols'=>
     '请输入账户新密码 ,密码至少包含8个字符，至少包括以下2种字符：大写字母、小写字母、数字、符号',
+    'We have sent verification code to your registered mail:'=>'我们已经发送验证码到您的注册邮箱:',
+    'Please  fill in the received code.'=>'请填写收到的验证码。',
 
 
 ];

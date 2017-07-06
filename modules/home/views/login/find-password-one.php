@@ -13,8 +13,12 @@ $this->title = Yii::t('app/login','Retrieve login password');
             <h1 class="logo-name">&nbsp;</h1>
 
         </div>
-        <h3><?= Yii::t('app/login','Retrieve login password')?></h3>
 
+
+        <div class="form-group">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-9"> <h3><?= Yii::t('app/login','Retrieve login password')?></h3></div>
+        </div>
         <?php $form = ActiveForm::begin([
             'id' => 'verify-form',
             'action' => 'find-password-two',
@@ -27,6 +31,7 @@ $this->title = Yii::t('app/login','Retrieve login password');
 
         <?= $form->field($model, 'username')->textInput()->label(Yii::t('app/login','Email')) ?>
 
+        <div class="col-sm-12"></div>
         <div class="form-group">
             <label class="col-sm-3"></label>
             <div class = "col-sm-9">

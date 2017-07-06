@@ -14,7 +14,7 @@
   'Retrieve login password' => '로그인 비밀번호 검색',
   'Next' => '다음 것',
   'We have sent verification code to your registered mail:' => '귀하의 이메일을 등록했습니다.',
-  'Please  fill in the receive code' => '함께 보낸 메시지 Pease가받은 인증 코드를 기입하십시오',
+  'Please  fill in the received code' => '함께 보낸 메시지 Pease가받은 인증 코드를 기입하십시오',
   'Please input code' => '코드를 입력하십시오.',
   'Setting password' => '암호 설정',
   'New password' => '새 비밀번호',
@@ -45,4 +45,7 @@
   'Registration success' => '등록 성공',
   'Verify email registration' => '이메일 등록 확인',
   'Password contains at least 8 characters, including at least the following two characters: capital letters, lowercase letters, numbers, symbols' => '암호에는 대문자, 소문자, 숫자, 기호 등 적어도 두 문자를 포함하여 적어도 8자를 포함해야합니다.',
-); 
+    'We have sent verification code to your registered mail:'=>'우리는 등록 된 이메일로 인증 코드를 전송 한',
+    'Please  fill in the received code.'=>'수신 된 인증 코드를 입력 해주세요。',
+
+);

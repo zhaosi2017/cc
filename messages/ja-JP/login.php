@@ -14,7 +14,7 @@
   'Retrieve login password' => 'ログインパスワードを取得する',
   'Next' => '次',
   'We have sent verification code to your registered mail:' => '私たちはあなたの電子メールを登録しました',
-  'Please  fill in the receive code' => 'あなたと一緒にメッセージを送ったPeaseは受け取った認証コードを記入する',
+  'Please  fill in the received code' => 'あなたと一緒にメッセージを送ったPeaseは受け取った認証コードを記入する',
   'Please input code' => 'コードを入力してください',
   'Setting password' => 'パスワードの設定',
   'New password' => '新しいパスワード',
@@ -45,4 +45,6 @@
   'Registration success' => '登録完了',
   'Verify email registration' => 'メール登録を確認する',
   'Password contains at least 8 characters, including at least the following two characters: capital letters, lowercase letters, numbers, symbols' => 'パスワードには少なくとも8文字（大文字、小文字、数字、記号',
+    'We have sent verification code to your registered mail:'=>'私たちはあなたのメールアドレスに送信された確認コードを持っています:',
+    'Please  fill in the received code.'=>'受信した検証コードを記入してください。.',
 ); 

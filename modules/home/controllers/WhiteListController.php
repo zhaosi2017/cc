@@ -10,7 +10,7 @@ use app\controllers\GController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-
+use app\modules\home\models\User;
 /**
  * CallRecordController implements the CRUD actions for CallRecord model.
  */
@@ -24,7 +24,7 @@ class WhiteListController extends GController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [	'allow' => true,
-                        'actions' => ['delete','index','create'],
+                        'actions' => ['delete','index','create','update'],
                         'roles' => ['@'],
                     ],
 
@@ -69,7 +69,21 @@ class WhiteListController extends GController
 
 	public function actionUpdate()
 	{
-		
+	    if(Yii::$app->request->isPost){
+
+            $status = (int)$_POST['status']=='1'? 1:0;
+            if(in_array($status,[0,1])){
+                $id = Yii::$app->user->id;
+                $user = User::findOne($id);
+                $user->whitelist_switch = $status;
+                if($user->save()){
+                    return json_encode(['status'=>0]);
+                }
+            }
+        }
+        return json_encode(['status'=>'1']);
+
+
 	}
 
 	public function actionDelete($id)
