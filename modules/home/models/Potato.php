@@ -1643,7 +1643,7 @@ class Potato extends Model
         $callRecord->unactive_contact_number = !empty($personPhone) ? $personPhone : $urgentPhone;
         $callRecord->status = $status ? 0 : 1;
         $callRecord->call_time = time();
-        $callRecord->type = ($urgentPhone) ? 1 : 0;;
+        $callRecord->type = ($urgentPhone) ? 1 : 0;
         $res = $callRecord->save();
 
         return $res ? true : false;
