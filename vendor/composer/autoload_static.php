@@ -42,6 +42,7 @@ class ComposerStaticInitb5206e6aa33c5e29c80d8653607e539b
         'k' => 
         array (
             'kartik\\select2\\' => 15,
+            'kartik\\datetime\\' => 16,
             'kartik\\base\\' => 12,
         ),
         'c' => 
@@ -144,6 +145,10 @@ class ComposerStaticInitb5206e6aa33c5e29c80d8653607e539b
         'kartik\\select2\\' => 
         array (
             0 => __DIR__ . '/..' . '/kartik-v/yii2-widget-select2',
+        ),
+        'kartik\\datetime\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-widget-datetimepicker',
         ),
         'kartik\\base\\' => 
         array (

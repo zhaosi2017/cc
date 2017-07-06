@@ -22,7 +22,8 @@
         "yiidoc/yii2-redactor": "*",
         "linslin/yii2-curl": "*",
         "yiisoft/yii2-redis": "^2.0",
-        "xiaogouxo/yii2-ip2region": "dev-master"
+        "xiaogouxo/yii2-ip2region": "dev-master",
+        "kartik-v/yii2-widget-datetimepicker": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
