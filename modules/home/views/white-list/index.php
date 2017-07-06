@@ -10,10 +10,13 @@ use yii\helpers\Url;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 $userModels = \app\modules\home\models\User::findOne(Yii::$app->user->id);
 
-$this->title = isset($userModels->whitelist_switch) && $userModels->whitelist_switch ? Yii::t('app/harassment','Whitelist status').'：'.Yii::t('app/harassment','On'): Yii::t('app/harassment','Whitelist status').'：'.Yii::t('app/harassment','Off');
+$this->title =  Yii::t('app/harassment','Whitelist');
 $this->params['breadcrumbs'][] = $this->title;
 $actionId = Yii::$app->requestedAction->id;
+
+
 ?>
+
 <div class="call-record-index">
     <div class="help-block m-t"></div>
     <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -88,3 +91,4 @@ $actionId = Yii::$app->requestedAction->id;
 <?php Pjax::end(); ?>
 
 </div>
+

@@ -14,11 +14,25 @@ $this->title = Yii::t('app/login','Retrieve login password');
             <h1 class="logo-name">&nbsp;</h1>
 
         </div>
-        <h3><?= Yii::t('app/login','Retrieve login password')?></h3>
+        <div class="form-group">
+            <div class="col-sm-4">
 
-        <blockquote class="text-center" style="border: 0;font-size: 13px;font-family: "open sans, Helvetica Neue, Helvetica, Arial, sans-serif";>
-           <?= Yii::t('app/login','We have registered your email')?>：<?php echo $model->username ?><?= Yii::t('app/login','With you Sent a message Pease fill in the verification code received')?>
-        </blockquote>
+            </div>
+            <div class="col-sm-8">
+                <h3><?= Yii::t('app/login','Retrieve login password')?></h3>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-8" style="padding-left: 0px;">
+                <div class="text-left">
+                <?= Yii::t('app/login','We have sent verification code to your registered mail:')?>：<?php echo $model->username ?>
+                </div>
+                <div class="text-left">
+                    <?= Yii::t('app/login','Please  fill in the received code.')?>
+                </div>
+            </div>
+        </div>
 
         <?php $form = ActiveForm::begin([
             'id' => 'verify-form',

@@ -43,7 +43,8 @@ $this->title = Yii::t('app/login','Forget password');
                     'options'=>['class'=>'m-t text-left'],
                     'fieldConfig' => [
                         'template' => "{label}\n<div>{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
-                        'labelOptions'=>['class'=>'col-sm-8 text-right' ,'style'=>'line-height:34px;'],
+                        'labelOptions'=>['class'=>'col-sm-8 text-right' ,'style'=>'line-height:34px;    position: relative;
+    left: 30px;'],
                     ],
                 ]); ?>
 
@@ -51,20 +52,20 @@ $this->title = Yii::t('app/login','Forget password');
                     <div class="col-sm-6 " style="">
                         <?= $forms->field($model, 'country_code',
                             [
-                                'template' => "{label}\n<div class=\"col-sm-3\">{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
+                                'template' => "{label}\n<div class=\"col-sm-3\" style=\"margin-left: 30px\">{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
                                 ])->textInput([
                             'autofocus' => true,
                             'placeholder'=>Yii::t('app/login','Country Code'),
                             'size'=>8,
                         ])->label(Yii::t('app/login','Phone')) ?>
                     </div>
-                    <div  class="col-sm-6" style="">
-                        <div class="col-sm-4">
+                    <div  class="col-sm-6" style=" padding-left: 0px;">
+                        <div class="col-sm-4" >
                         <?= $forms->field($model, 'phone')->textInput([
                             'autofocus' => true,
                             'placeholder'=>Yii::t('app/login','Phone'),
                             'size'=>'8',
-//                            'style'=>'width:50%;'
+
                         ])->label(false) ?>
                         </div>
                         <div class="col-sm-8">
@@ -78,7 +79,7 @@ $this->title = Yii::t('app/login','Forget password');
                     <div class="row" style=" ">
                         <div class="col-sm-6 " style="">
                             <?php echo $forms->field($model, 'code', [
-                                'template' => "{label}\n<div class=\"col-sm-3\">{input}\n<span style=\"height:28px;\" class=\"help-block m-b-none\">{error}</span></div>",
+                                'template' => "{label}\n<div class=\"col-sm-3\" style=\"margin-left: 30px;\">{input}\n<span style=\"height:28px;\" class=\"help-block m-b-none\">{error}</span></div>",
                             ])->widget(Captcha::className(),[
                                 'captchaAction'=>'/home/user/captcha',
                                 'template' => '<div class="row"><div class="col-lg-2">{image}</div><div class="col-lg-10">{input}</div></div>',
@@ -89,7 +90,7 @@ $this->title = Yii::t('app/login','Forget password');
                         </div>
                         <div class="col-sm-6 " style="">
 
-                                <div class="col-sm-4">
+                                <div class="col-sm-4" style="position: relative;right: 10px;">
                                 <input type="button" id="count-down" class=" btn  block full-width m-b button-new-color" style="color: white;" onclick="
                                         if($('#phoneregisterform-country_code').val() == ''){
                                         alert('<?php echo Yii::t("app/login","Country Code")?>');
@@ -126,7 +127,7 @@ $this->title = Yii::t('app/login','Forget password');
                                         var dt = self.setInterval(countDown,1000);
                                         " value='<?php echo Yii::t("app/login","Get verification code")?>'>
                                 </div>
-                                <div class="help-block"></div>
+                                <div class=" col-sm-8 help-block"></div>
                             </div>
 
                     </div>
@@ -135,8 +136,8 @@ $this->title = Yii::t('app/login','Forget password');
 
                     <div >
                        <div class="col-sm-4"></div>
-                        <div class="col-sm-4" style="    padding-left: 4px;
-    padding-right: 4px;">
+                        <div class="col-sm-4" style="    padding-left: 34px;
+    padding-right: 11px;">
                     <input type="button" id="phoneregisterButton" class="btn btn-primary block full-width m-b button-new-color"
                            onclick="
 //            var phonepatter = /^[0-9]{2,11}$/;

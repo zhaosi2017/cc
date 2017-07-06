@@ -8,7 +8,7 @@
   'Please set the fixed time, unit: minutes, this time will affect the number of calls and the same number of calls' => '固定時間、単位：分を設定してください、この時間は通話の数と同じ数の通話に影響します',
   'Whitelist status' => 'ホワイトリストスイッチ',
   'On' => '開いた',
-  'Off' => '閉まっている',
+  'Off' => 'オフ',
   'Operating' => 'オペレーティング',
   'Whitelist users' => 'ホワイトリストユーザー',
   'No data found' => '何もデータが見つかりませんでした',

@@ -44,4 +44,7 @@
   'Registration success' => 'ភាពជោគជ័យនៃការចុះឈ្មោះ',
   'Verify email registration' => 'ផ្ទៀងផ្ទាត់ការចុះបញ្ជីអ៊ីម៉ែល',
   'Password contains at least 8 characters, including at least the following two characters: capital letters, lowercase letters, numbers, symbols' => 'ពាក្យសម្ងាត់ដែលមានយ៉ាងហោចណាស់ 8 តួអក្សរ, រួមទាំងការយ៉ាងហោចណាស់ដូចខាងក្រោមតួអក្សរពីរ: អក្សរធំ, អក្សរតូចលេខនិមិត្តសញ្ញា',
-); 
+    'We have sent verification code to your registered mail:'=>'យើងបានផ្ញើលេខកូដផ្ទៀងផ្ទាត់ទៅអ៊ីមែលដែលបានចុះឈ្មោះរបស់អ្នក:',
+    'Please  fill in the received code.'=>'សូមបំពេញនៅក្នុងការទទួលបានកូដផ្ទៀងផ្ទាត់。',
+
+    );

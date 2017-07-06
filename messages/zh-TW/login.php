@@ -44,4 +44,7 @@
   'Registration success' => '註冊成功',
   'Verify email registration' => '驗證郵箱註冊',
   'Password contains at least 8 characters, including at least the following two characters: capital letters, lowercase letters, numbers, symbols' => '請輸入賬戶新密碼 ,密碼至少包含8個字符，至少包括以下2種字符：大寫字母、小寫字母、數字、符號',
+  'We have sent verification code to your registered mail:'=>'我們已經發送驗證碼到您的註冊郵箱:',
+    'Please  fill in the received code.'=>'請填寫收到的驗證碼.',
+
 ); 
