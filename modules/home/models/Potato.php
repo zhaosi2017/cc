@@ -1275,9 +1275,7 @@ class Potato extends Model
                 "chat_type" => 1,
                 'chat_id' => $this->potatoUid,
                 'text' => $this->getPotatoText(),
-                'inline_markup' => [
-                    $inlineKeyboard,
-                ]
+                'inline_markup' => $inlineKeyboard,
             ];
         } else {
             if (empty($this->calledPersonData)) {
