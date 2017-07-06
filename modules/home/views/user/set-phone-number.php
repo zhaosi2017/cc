@@ -39,16 +39,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?php echo $form->field($model, 'country_code', [
                 'template' => "{label}\n<div>&nbsp;&nbsp;&nbsp;{input}\n
-                                            <span style=\"height:18px;margin-left: 9px\" class=\"help-block m-b-none\">{error}</span>
+                                            <span style=\"height:18px;margin-left: 9px;width: 100px\" class=\"help-block m-b-none\">{error}</span>
                                         </div>",
                 'options'=>['class'=>'form-group field-contactform-code required col-sm-2']
             ])->textInput(['size' => 8,'placeholder'=>Yii::t('app/user/set-phone-number' ,'Country code')])->label(false ) ?>
 
             <?php echo $form->field($model, 'phone_number',[
 
-                 'template' => "{label}\n<div>&nbsp;{input}<span style=\"padding-left:15px;line-height: 34px;\">*".
-                     Yii::t('app/user/set-phone-number' , 'Please enter your country code and enter your mobile number')
-                     ."</span>\n<span style=\"height:18px;\" class=\"help-block m-b-none\">{error}</span></div>",
+                 'template' => "{label}\n<div>&nbsp;{input}
+                                            <span style=\"padding-left:12px;line-height: 34px \">*".
+                                                Yii::t('app/user/set-phone-number' , 'Please enter your country code and enter your mobile number')
+                                            ."</span>\n
+                                            <span style=\"height:34px; width: 100px\" class=\"help-block m-b-none\">{error}</span>
+                                        </div>",
                  'options'=>['class'=>'form-group field-contactform-phone_number required has-success ' ,'style'=>'margin-left: -50px;']
                 ])->textInput(['placeholder' => Yii::t('app/user/set-phone-number' ,'CellPhone Number') ,
                                 'size'=>13,
@@ -68,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?php echo $form->field($model, 'code', [
                 'template' => "{label}\n<div class='m-l-sm'>{input}\n
-                                                <span style=\"height:28px;\" class=\"help-block m-b-none\">{error}</span>
+                                                <span style=\"height:34px;\" class=\"help-block m-b-none\">{error}</span>
                                        </div>",
                 'options'=>['class'=>'form-group field-contactform-code required col-sm-2']
                 ]
@@ -121,7 +124,7 @@ $this->params['breadcrumbs'][] = $this->title;
                      style="background-color: #39b5e7;color: white;margin-left: -27px; width: 100% ;padding-left: 0px" />
                 </div>
                 <div class="col-sm-7"  >
-                    <span style="margin-left: -40px;">*<?= Yii::t("app/user/set-phone-number" , "Please enter your phone verification code")?></span>
+                    <span >*<?= Yii::t("app/user/set-phone-number" , "Please enter your phone verification code")?></span>
                 </div>
                 <div class="help-block"></div>
             </div>
@@ -132,7 +135,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="form-group m-b-lg">
         <div class="col-sm-6 col-sm-offset-2">
-            <?= Html::submitButton(Yii::t('app/user/update-phone-number','Submit'), ['class' => 'btn btn-primary button-new-color','style'=>'width: 245px; margin-left: 13px;']) ?>
+            <?= Html::submitButton(Yii::t('app/user/update-phone-number','Submit'), ['class' => 'btn btn-primary button-new-color','style'=>'width: 265px; margin-left: -6px;']) ?>
         </div>
     </div>
 
