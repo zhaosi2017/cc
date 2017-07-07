@@ -31,4 +31,5 @@
   'Are you sure you want to remove the blacklist?' => '블랙리스트를 삭제 하시겠습니까?',
   'Remove the whitelist' => '허용 목록 삭제',
   'Are you sure you want to remove the whitelist?' => '허용 목록을 삭제 하시겠습니까?',
+    ' Name'=>'이름',
 ); 

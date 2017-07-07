@@ -27,6 +27,7 @@ $actionId = Yii::$app->requestedAction->id;
         'layout' => "{items}\n  <div><ul class='pagination'><li style='display:inline;'><span>".Yii::t('app/harassment','Total').'&nbsp;&nbsp;'.$dataProvider->getTotalCount().'&nbsp;&nbsp;'.Yii::t('app/harassment','Data') ." <span></li></ul>{pager}  </div>",
         // 'filterModel' => $searchModel,
         'rowOptions' => function($model) {
+
             return ['id' => 'tr_'.$model->id, 'class' => '_tr'];
         },
         'tableOptions'=>['class' => 'table table-striped table-bordered','style'=>'text-align:center;'],
@@ -58,12 +59,20 @@ $actionId = Yii::$app->requestedAction->id;
             ['header' => 'telegram', 'value' => function($model){
                 return !empty($model['white']['telegram_number'])?'+'.$model['white']['telegram_country_code'].$model['white']['telegram_number']:'';
             }, 'headerOptions'=>['class'=>'text-center']],
+
+            [   'header'=>'telegram'.Yii::t('app/harassment',' Name') ,
+                'value'=> function($model){return $model['white']['telegram_name'];} ,
+                'headerOptions'=>['class'=>'text-center']],
+
             ['header' => 'potato', 'value' => function($model){
                 return !empty($model['white']['potato_number'])?'+'.$model['white']['potato_country_code'].$model['white']['potato_number']:'';
             },
                 'headerOptions'=>['class'=>'text-center']
             ],
-
+             [     'header'=>'potato'.Yii::t('app/harassment',' Name') ,
+                    'value'=>function($model){return $model['white']['potato_name'];} ,
+                    'headerOptions'=>['class'=>'text-center']
+             ],
            
             [
                 'class' => 'yii\grid\ActionColumn',
