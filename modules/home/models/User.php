@@ -155,9 +155,8 @@ class User extends CActiveRecord implements IdentityInterface
 
     public function checkName($attribute, $params)
     {
-        
-        if (!preg_match("/^[\x{4e00}-\x{9fa5}]{2,6}+$/u",$this->nickname))
-        {
+        $len = (strlen($this->nickname) + mb_strlen($this->nickname,'UTF8')) / 2;
+        if($len < 6 || $len > 20 ){
             $this->addError($attribute,Yii::t('app/models/user','Please set the correct nickname'));
         }
         

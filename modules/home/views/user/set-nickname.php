@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $form->field($model, 'nickname',[
             'template' => "<span class=\"text-right\">{label}</span>\n<div class=\"col-sm-3\"> {input}  </div> 
                                     <span class=\"col-sm-5 text-left\" style='margin-top: 7px'> 
-                                        * ".Yii::t('app/user/set-nickname' ,'Nickname is 2 to 6 Chinese characters')//."昵称为2到6个汉字
+                                        * ".Yii::t('app/user/set-nickname' ,'Nickname is 6 to 40 characters')//."昵称为2到6个汉字
                                    ."</span> \n<br>
                                     <div class=\"col-sm-12\"></div>
                                     

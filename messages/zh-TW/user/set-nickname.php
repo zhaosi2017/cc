@@ -1,5 +1,5 @@
 <?php return array (
-  'Nickname is 2 to 6 Chinese characters' => '暱稱為2到6個漢字',
+  'Nickname is 6 to 40 characters' => '暱稱是6到40個字符',
   'Nickname' => '暱稱',
   'Save' => '保存',
   'Set nickname' => '設置暱稱',

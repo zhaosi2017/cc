@@ -1,5 +1,5 @@
 <?php return array (
-  'Nickname is 2 to 6 Chinese characters' => 'ឈ្មោះហៅក្រៅគឺ 2 ទៅ 6 អក្សរចិន',
+  'Nickname is 6 to 40 characters' => 'ឈ្មោះហៅក្រៅគឺ 6 ទៅ 40 តួអក្សរ។',
   'Nickname' => 'ឈ្មោះហៅក្រៅ',
   'Save' => 'រក្សាទុក',
   'Set nickname' => 'កំណត់ឈ្មោះហៅក្រៅ',
