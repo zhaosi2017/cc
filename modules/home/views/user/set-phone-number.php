@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template' => "{label}\n<div>&nbsp;&nbsp;&nbsp;{input}\n
                                             <span style=\"height:18px;margin-left: 9px;width: 100px\" class=\"help-block m-b-none\">{error}</span>
                                         </div>",
-                'options'=>['class'=>'form-group field-contactform-code required col-sm-2']
+                'options'=>['class'=>'form-group field-contactform-country_code required col-sm-2']
             ])->textInput(['size' => 8,'placeholder'=>Yii::t('app/user/set-phone-number' ,'Country code')])->label(false ) ?>
 
             <?php echo $form->field($model, 'phone_number',[
