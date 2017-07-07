@@ -977,11 +977,14 @@ class Potato extends Model
             $whiteRes->white_uid = $this->calledPersonData->id;
             $res = $whiteRes->save();
             $res ? ($sendData['text'] = $this->getJoinWhiteListSuccess()) : ($sendData['text'] = $this->getJoinWhiteListFailure());
+            $this->sendData = $sendData;
+            $this->sendPotatoData();
 
             $res = WhiteList::findOne(['uid' => $this->calledPersonData->id, 'white_uid'=> $this->callPersonData->id]);
             if (empty($res)) {
                 $this->language = $this->calledPersonData->language;
                 $this->sendData = [
+                    'chat_type' => 1,
                     'chat_id' => $this->potatoContactUid,
                     'text' => $this->potatoSendLastName . $this->potatoSendFirstName.$this->getJoinRecommendText(),
                 ];
@@ -1009,9 +1012,7 @@ class Potato extends Model
             }
         }
 
-        $this->language = $this->callPersonData->language;
-        $this->sendData = $sendData;
-        return $this->sendPotatoData();
+        return $this->errorCode['success'];
     }
 
     /**
