@@ -8,7 +8,7 @@
 
 return [
 
-    'Nickname is 6 to 40 characters'=>'昵称为6到50个字符',
+    'Nickname is 2 to 20 characters'=>'昵称为2到20个字符',
     'Nickname'=>'昵称',
     'Save'=>'保存',
     'Set nickname'=>'设置昵称',

@@ -56,11 +56,9 @@ class UserController extends GController
     public function actionSetNickname()
     {
         $model = $this->findModel(Yii::$app->user->id);
+        $model->scenario='bind-nickname';
         if($model->load(Yii::$app->request->post())){
-            if(empty($model->nickname)){
-                $model->addError('nickname',Yii::t('app/index','User nickname can not be empty'));
-                return $this->render('set-nickname',['model'=>$model]);
-            }
+            
             if($model->update()){
                 Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
                 return $this->redirect(['index']);

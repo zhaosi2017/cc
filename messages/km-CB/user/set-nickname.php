@@ -1,5 +1,5 @@
 <?php return array (
-  'Nickname is 6 to 40 characters' => 'ឈ្មោះហៅក្រៅគឺ 6 ទៅ 40 តួអក្សរ។',
+  'Nickname is 2 to 20 characters' => 'ឈ្មោះហៅក្រៅគឺ 2 ទៅ 20 តួអក្សរ។',
   'Nickname' => 'ឈ្មោះហៅក្រៅ',
   'Save' => 'រក្សាទុក',
   'Set nickname' => 'កំណត់ឈ្មោះហៅក្រៅ',
