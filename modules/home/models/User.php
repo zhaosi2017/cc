@@ -101,7 +101,7 @@ class User extends CActiveRecord implements IdentityInterface
             [['phone_number', 'telegram_number', 'potato_number'], 'number','max'=> 9999999999999],
             [['auth_key','password'], 'string', 'max' => 64],
             [['login_ip','login_time'],'safe'],
-            ['nickname' ,'checkName'],
+            ['nickname' ,'checkName','on'=>'bind-nickname'],
             [['un_call_number','un_call_by_same_number','long_time'],'required','on'=>'harassment'],
             ['username','required','on'=>'bind-username'],
             ['username','checkUsername','on'=>'bind-username'],
@@ -149,17 +149,17 @@ class User extends CActiveRecord implements IdentityInterface
             'bind-username'=>['username'],
             'bind-email'=>['account'],
             'change-language'=>['language'],
+            'bind-nickname'=>['nickname'],
         ];
         return array_merge($scenarios,$res);
     }
 
     public function checkName($attribute, $params)
     {
-        $len = (strlen($this->nickname) + mb_strlen($this->nickname,'UTF8')) / 2;
-        if($len < 6 || $len > 20 ){
+        $len =mb_strlen($this->nickname,'UTF8');
+        if($len < 2 || $len > 20 ){
             $this->addError($attribute,Yii::t('app/models/user','Please set the correct nickname'));
-        }
-        
+        }   
     }
 
     public function checkUsername($attribute)
