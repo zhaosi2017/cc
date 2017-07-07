@@ -24,6 +24,7 @@ use kartik\datetime\DateTimePicker;
     </div>
     <div class="row">
         <div class="col-lg-7">
+        <?= Yii::t('app/call-record/index','Call time') ?>
 
              <?php    echo DateTimePicker::widget([
     'name' => 'CallRecordSearch[call_time_start]',
