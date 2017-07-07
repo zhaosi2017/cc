@@ -53,10 +53,19 @@ $actionId = Yii::$app->requestedAction->id;
             ['header' => 'telegram', 'value' => function($model){
                 return !empty($model['black']['telegram_number'])?'+'.$model['black']['telegram_country_code'].$model['black']['telegram_number']:'';
             }, 'headerOptions'=>['class'=>'text-center']],
+
+            [   'header'=>'telegram'.Yii::t('app/harassment',' Name') ,
+                'value'=> function($model){return $model['black']['telegram_name'];} ,
+                'headerOptions'=>['class'=>'text-center']],
+
             ['header' => 'potato', 'value' => function($model){
                 return !empty($model['black']['telegram_number'])?'+'.$model['black']['potato_country_code'].$model['black']['potato_number']:'';
             }, 'headerOptions'=>['class'=>'text-center']],
 
+            [     'header'=>'potato'.Yii::t('app/harassment',' Name') ,
+                'value'=>function($model){return $model['black']['potato_name'];} ,
+                'headerOptions'=>['class'=>'text-center']
+            ],
 
             [
                 'class' => 'yii\grid\ActionColumn',

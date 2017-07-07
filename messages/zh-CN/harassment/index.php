@@ -34,5 +34,6 @@ return
     'Are you sure you want to remove the blacklist?'=>'你确定要移出黑名单吗?',
     'Remove the whitelist'=>'移出白名单',
     'Are you sure you want to remove the whitelist?'=>'你确定要移出白名单吗?',
+    ' Name'=>'名称',
 
 ];

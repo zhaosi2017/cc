@@ -31,4 +31,5 @@
   'Are you sure you want to remove the blacklist?' => '你確定要移出黑名單嗎?',
   'Remove the whitelist' => '移出白名單',
   'Are you sure you want to remove the whitelist?' => '你確定要移出白名單嗎?',
+    ' Name'=>'名稱',
 ); 

@@ -31,4 +31,7 @@
   'Are you sure you want to remove the blacklist?' => 'តើអ្នកពិតជាចង់យកបញ្ជីខ្មៅបានដែរឬទេ?',
   'Remove the whitelist' => 'យកបញ្ជីនេះ',
   'Are you sure you want to remove the whitelist?' => 'តើអ្នកពិតជាចង់យកបញ្ជីនេះ?',
+    ' Name'=>'ឈ្មោ',
+
+
 ); 

@@ -31,4 +31,5 @@
   'Are you sure you want to remove the blacklist?' => 'ブラックリストを削除してもよろしいですか？',
   'Remove the whitelist' => 'ホワイトリストを削除する',
   'Are you sure you want to remove the whitelist?' => 'ホワイトリストを削除してもよろしいですか？',
+    ' Name'=>'名前'
 ); 
