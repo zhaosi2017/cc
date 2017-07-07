@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'id' => 'set-username-form',
         'options'=>['class'=>'m-t text-left'],
         'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-sm-5\">{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
+            'template' => "{label}\n<div class=\"col-sm-5\">{input}\n<span class=\"\">{error}</span></div>",
             'labelOptions' => ['class' => 'col-sm-1 text-right'],
         ],
     ]); ?>
@@ -24,17 +24,17 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $form->field($model, 'username',[
         'template' => "{label}\n<div class=\"col-sm-3\" > {input} 
             </div> 
-                <span class=\"col-sm-3 \" style=\" padding-top:9px;\">*".
+                <span class=\"col-sm-8 \" style=\" padding-top:9px;\">*".
                     Yii::t('app/user/bind-username' , 'Please Entry your UserName')
                 ."</span> 
-                \n<br><div style=\"height:20px; \"></div><label class = \"col-sm-1 \"></label><div style=\" width: 67%;padding-left: 31px !important; \">
-                
-                 <span style=\" padding-top:8px;\">{error}</span>
+                \n<div class=\"col-sm-12\"></div>
+                <label class = \"col-sm-1 \"></label>
+                 <span class=\"col-sm-3 help-block text-left\">{error}</span>
+                 <div class=\"col-sm-8\"></div>
                  
             </div>",
     ])->textInput()->label(Yii::t('app/user/bind-username' ,'UserName'),['style'=>'font-size: 17px;padding-top: 5px;padding-right:2px;']) ?>
-
-    <br>
+    <div class="col-sm-12"></div>
     <div class="form-group">
         <div class="col-sm-1"></div>
         <div class="col-sm-3" >
@@ -48,10 +48,3 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php ActiveForm::end(); ?>
 
 </div>
-<?php
-echo '<style type="text/css">
-    .help-block{
-        padding-left: 108px;
-    }'
-?>
-</style>
