@@ -33,9 +33,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 foreach($userPhone as $k => $phone){?>
 
                     <div class="row app-bind-div" style="margin-top: 20px;border-bottom: 1px solid rgb(217,217,217); ">
-                        <div class="col-xs-3 "><?php echo Yii::t('app/user/links','Contact').' '.($k+1);?> </div>
-                        <div class="col-xs-3"></div>
-                        <div class="col-xs-2">
+                        <div class="col-xs-4 "><?php echo Yii::t('app/user/links','Contact').' '.($k+1);?> </div>
+
+                        <div class="col-xs-4">
                             <?php echo  $phone->phone_country_code.' -- '.$phone->user_phone_number;?>
                         </div>
                         <div class="col-xs-4">
