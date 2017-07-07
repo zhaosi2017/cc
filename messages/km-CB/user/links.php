@@ -2,7 +2,7 @@
   'Contact information' => 'ទំនាក់ទំនង',
   'Personal Contact' => 'ទំនាក់ទំនងផ្ទាល់ខ្លួន',
   'Emergency Contact' => 'លេខ​ទំនាក់ទំនង​បន្ទាន់',
-  'Build' => 'Build',
+  'Build' => 'ការបន្',
   'Contact' => 'ទំនក់ទំនង',
   'Edit' => 'កែសម្រួល',
   'Remove' => 'យក',
