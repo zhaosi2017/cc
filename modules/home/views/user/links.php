@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div >
                 <div class="">
                     <span style=" font-size: 17px;font-weight: 500; padding: 4px 0px"><?= Yii::t('app/user/links', 'Personal Contact')?></span>
-                    <a style=" padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 55px" href="/home/user/set-phone-number"><?= Yii::t('app/user/links', 'Build') ?></a>
+                    <a class="index-button-1" style=" padding: 4px 18px;color: white;position: relative;left: 31px" href="/home/user/set-phone-number"><?= Yii::t('app/user/links', 'Build') ?></a>
                 </div>
             </div>
         </div>
@@ -39,13 +39,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?php echo  $phone->phone_country_code.' -- '.$phone->user_phone_number;?>
                         </div>
                         <div class="col-xs-4">
-                            <a href="<?php echo Url::to(['/home/user/set-phone-number' ,'phone_number'=>$phone->user_phone_number]) ?>"
-                               style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px"
+                            <a class="index-button-1"  href="<?php echo Url::to(['/home/user/set-phone-number' ,'phone_number'=>$phone->user_phone_number]) ?>"
+                               style="padding: 4px 18px;color: white;"
                             ><?= Yii::t('app/user/links', 'Edit') ?></a>
-                            <a  href="<?php echo Url::to(['/home/user/delete-number', 'type'=>'phone_number', 'phone_number'=>$phone->user_phone_number , 'country_code'=>$phone->phone_country_code]) ?>" data-method="post"
+                            <a class="index-button-1"   href="<?php echo Url::to(['/home/user/delete-number', 'type'=>'phone_number', 'phone_number'=>$phone->user_phone_number , 'country_code'=>$phone->phone_country_code]) ?>" data-method="post"
 
                                 data-confirm="<?= Yii::t('app/user/links', 'Are you sure you want to delete it?')?>"
-                                style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px"
+                                style="padding: 4px 18px;color: white;"
                             ><?= Yii::t('app/user/links', 'Remove') ?></a>
                         </div>
                     </div>
@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div style="margin-top: 50px;">
                 <div class="">
                     <span style="    font-size: 17px;font-weight: 500;"><?= Yii::t('app/user/links', 'Emergency Contact')?></span>
-                    <a style="    padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px" href="/home/user/add-urgent-contact-person"><?= Yii::t('app/user/links', 'Build') ?></a>
+                    <a  class="index-button-1" style="    padding: 4px 18px;color: white;position: relative;left: 31px" href="/home/user/add-urgent-contact-person"><?= Yii::t('app/user/links', 'Build') ?></a>
                 </div>
             </div>
         </div>
@@ -76,12 +76,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         </div>
                         <div class="col-xs-4">
-                            <a href="<?php echo Url::to(['/home/user/add-urgent-contact-person', 'modify' => '1' , 'id'=>$contact->id]) ?>"
-                               style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px"
+                            <a class="index-button-1"  href="<?php echo Url::to(['/home/user/add-urgent-contact-person', 'modify' => '1' , 'id'=>$contact->id]) ?>"
+                               style="padding: 4px 18px;color: white;"
                             ><?= Yii::t('app/user/links', 'Edit') ?></a>
-                            <a href="<?php echo Url::to(['/home/user/delete-urgent-contact-person', 'type'=>'1' , 'id'=>$contact->id]) ?>" data-method="post"
+                            <a class="index-button-1"  href="<?php echo Url::to(['/home/user/delete-urgent-contact-person', 'type'=>'1' , 'id'=>$contact->id]) ?>" data-method="post"
                                data-confirm="<?= Yii::t('app/user/links', 'Are you sure you want to delete it?')?>"
-                               style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px"
+                               style="padding: 4px 18px;color: white;"
                             ><?= Yii::t('app/user/links', 'Remove') ?></a>
 
                         </div>
