@@ -11,8 +11,10 @@ $identity = Yii::$app->user->identity;
 
 ?>
 <script src="/js/home/jquery.js"></script>
-<script src="/js/global/bootstrap-switch.min.js?v=4.1.0"></script>
-<link rel="stylesheet" href="/css/global/bootstrap-switch.min.css?v=4.1.">
+
+ <link href="/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="/js/home/bootstrap-toggle.min.js"></script>
+
 
 <div class="call-record-search">
 
@@ -22,17 +24,15 @@ $identity = Yii::$app->user->identity;
         'options' => ['class'=>'form-inline'],
     ]); ?>
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <div style="display: inline-block">
                 <?= Yii::t('app/harassment','Whitelist status')?> :
             </div>
             <div  style="display: inline-block">
-                <div class="switch "   data-on="yes" data-off="no">
-                    <input   id="ff" type="checkbox"  <?=   isset($identity->whitelist_switch) && $identity->whitelist_switch ? 'checked':''; ?>  />
-                </div>
+                <input id="toggle-one" data-onstyle="info" data-offstyle="info" <?=  isset($identity->whitelist_switch) && $identity->whitelist_switch ? 'checked':''; ?> type="checkbox" data-on="<?= Yii::t('app/harassment','On')?>" data-off="<?= Yii::t('app/harassment','Off')?>">
             </div>
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm-9">
         <div class="col-lg-6">
             <div >
                  <?= $form->field($model, 'search_type')->dropDownList(
@@ -57,41 +57,27 @@ $identity = Yii::$app->user->identity;
     <?php ActiveForm::end(); ?>
 
 </div>
+
 <script>
 
-    $("#ff").bootstrapSwitch({
+    $('#toggle-one').bootstrapToggle({
+       
+    });
 
-        size:"large",
-        handleWidth:"70",
-        onColor:"success",
-        offColor:"info",
-        animate:"true",
-        onText: "<?= Yii::t('app/harassment','On')?>",
-        offText: "<?= Yii::t('app/harassment','Off')?>",
-
-
-        onSwitchChange:function(event,state){
-            if(state==true)
-            {
-                status = 1;
-            }else{
-                status=0;
-            }
-            data = {};
-            data.status = status;
-            console.log(status);
-            $.post('/home/white-list/update',data).done(function (r) {
-
+     $('#toggle-one').change(function(state) {
+        console.log(state.target.checked);
+        data = {};
+        if(state.target.checked){
+            status = 1;
+        }else{
+            status = 0;
+        }
+        data.status = status;
+        $.post('/home/white-list/update',data).done(function (r) {
                 console.log(r);
-
-            });
-
-
-        },
-
-
-
-    })
-    ;
+           });
+        
+    });
 
 </script>
+
