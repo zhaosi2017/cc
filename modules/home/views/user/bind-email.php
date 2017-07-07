@@ -23,14 +23,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $form->field($model, 'account',[
         'template' => "{label}\n<div class=\"col-sm-3\"> {input}  </div> 
-                                <span class=\"col-sm-3 \" style='padding-top: 9px'>*".
+                                <span class=\"col-sm-8 \" style='padding-top: 9px'>*".
                                         Yii::t('app/user/bind-email' , 'Please Entry your Eamil address')
                                 ."</span> \n<br>
-                                <div style=\"height:20px;\"></div>
-                                <label class = \"col-sm-1  text-right\"></label>
-                                <div  style='margin-left: 20px;'  > 
-                                    <span>{error}</span>
-                                </div>",
+                                <div class=\"col-sm-12\"></div>
+                                <label class = \"col-sm-1  \"></label>
+                                
+                                    <span class=\" col-sm-3 help-block text-left\">{error}</span>
+                              
+                                <div class=\"col-sm-8\"></div>
+                                ",
     ])->textInput()
     ->label(Yii::t('app/user/bind-email','Email'),['style'=>'padding-top:5px ;font-size:17px' ,'class'=>'col-sm-1  text-right']) ?>
 
@@ -50,10 +52,3 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php ActiveForm::end(); ?>
 
 </div>
-<?php
-echo '<style type="text/css">
-    .help-block{
-        padding-left: 108px;
-    }'
-?>
-</style>
