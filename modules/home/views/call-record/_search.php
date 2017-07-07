@@ -53,7 +53,7 @@ use kartik\datetime\DateTimePicker;
 ]);?>
 
             &nbsp;&nbsp;
-            <a class="btn btn-xs btn-danger" onclick="
+            <a class=" btn-danger button-new-1  " style="" onclick="
                 $('#callrecordsearch-call_time_start').val('');
                 $('#callrecordsearch-call_time_end').val('');
             "><?= Yii::t('app/call-record/index','Clear time')?></a>
