@@ -24,35 +24,47 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $form->field($model, 'password',[
          'template' => "{label}\n<div class=\"col-sm-3\">{input}</div> 
+                                <div class=\"col-sm-8\">
                                 <span  style='line-height: 34px;'>*".
                                     Yii::t('app/user/password' , 'Please Enter the old Password')
             
-                                ."</span>\n<br/>
+                                ."</span></div>\n
                                 <div>
-                                    <span class=\"help-block m-b-none \" style=\" margin-left:9.4%;   margin-top: 16px;\">{error}</span>
+                                <div class=\"col-sm-12\"></div>
+                                <label class=\"col-sm-1\"></label>
+                                    <span class=\" col-sm-3 help-block text-left \" \">{error}</span>
+                                    <div class=\"col-sm-8\"></div>
                                 </div>",
     ])->passwordInput()->label(Yii::t('app/user/password' ,'Old Password') ,['style'=>'padding-top:7px']) ?>
 
     <?= $form->field($model, 'newPassword',[
              'template' => "{label}\n<div class=\"col-sm-3\">{input}</div> 
+                                    <div class=\"col-sm-8\">
                                     <span  style='line-height: 34px;'>*".
                                         Yii::t('app/user/password' , 'The password contains at least 8 characters, including at least two characters:Uppercase letters, lowercase letters, numbers, symbols')
-                                    ."</span>\n<br/>
-                                    <div>
-                                        <span class=\"help-block m-b-none \" style=\" margin-left:9.4%;   margin-top: 18px;\">{error}</span>
-                                    </div>",
+                                    ."</span>\n</div>
+                                    <div class=\"col-sm-12\"></div>
+                                    <label class=\"col-sm-1\"></label>
+                                    
+                                       <span class=\"col-sm-3 help-block text-left \" \">{error}</span>
+                                       <div class=\"col-sm-8\"></div>
+                                    ",
     ])->passwordInput()
     ->label(Yii::t('app/user/password' , 'Password'),['style'=>'padding-top:7px'])
     ?>
 
     <?= $form->field($model, 'rePassword',[
              'template' => "{label}\n<div class=\"col-sm-3\">{input}</div>
+                                    <div class=\"col-sm-8\">
                                     <span  style='line-height: 34px;'> *".
                                         Yii::t('app/user/password' ,'The password contains at least 8 characters, including at least two characters:Uppercase letters, lowercase letters, numbers, symbols')
-                                    ."</span>\n<br/>
-                                    <div>
-                                        <span class=\"help-block m-b-none \" style=\" margin-left:9.4%;   margin-top: 18px;\">{error}</span>
-                                    </div>",
+                                    ."</span>\n</div>
+                                    <div class=\"col-sm-12\"></div>
+                                    <label class=\"col-sm-1\"></label>
+                                    
+                                        <span class=\"col-sm-3 help-block text-left \"  \">{error}</span>
+                                        <div class=\"col-sm-8\"></div>
+                                    ",
     ])->passwordInput()
     ->label(Yii::t('app/user/password' , 'Repeat'),['style'=>'padding-top:7px'])
     ?>
