@@ -27,22 +27,16 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="col-xs-4">
                 <?php if ($model->phone_number){?>
-                    <a href="/home/user/update-phone-number" style="    padding: 4px 18px;
-    background-color: rgb(22,155,214);
-    border-radius: 5px;
+                    <a  class="index-button-1" href="/home/user/update-phone-number" style="    padding: 4px 18px;
+   
 color: white;
-position: relative;
-    top: -3px;
-    left: 31px
+
 "><?= Yii::t('app/user/index', 'Edit')?></a>
                 <?php }else{?>
-                    <a href="/home/user/set-phone-number" style="    padding: 4px 18px;
-    background-color: rgb(22,155,214);
-    border-radius: 5px;
+                    <a  class="index-button-1" href="/home/user/set-phone-number" style="    padding: 4px 18px;
+    
 color: white;
-position: relative;
-    top: -3px;
-    left: 31px
+
 "> <?= Yii::t('app/user/index' , 'Build Now')?></a>
                 <?php }?>
             </div>
@@ -59,14 +53,8 @@ position: relative;
 
             </div>
             <div class="col-xs-4">
-                <a  style="    padding: 4px 18px;
-    background-color: rgb(22,155,214);
-    border-radius: 5px;
-color: white;
-position: relative;
-    top: -3px;
-    left: 31px
-"href="/home/user/bind-email"> <?php echo ($model->telegram_country_code.$model->telegram_number)?
+                <a  class="index-button-1" style="    padding: 4px 18px;color: white;
+" href="/home/user/bind-email"> <?php echo ($model->telegram_country_code.$model->telegram_number)?
                                                                         Yii::t('app/user/index', 'Edit')
                                                                         : Yii::t('app/user/index' , 'Build Now');?></a>
             </div>
@@ -82,7 +70,7 @@ position: relative;
 
             </div>
             <div class="col-xs-4">
-                <a href="/home/user/bind-username" style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px">
+                <a class="index-button-1" href="/home/user/bind-username" style="padding: 4px 18px;color: white;">
                     <?php echo ($model->username)? Yii::t('app/user/index', 'Edit'):Yii::t('app/user/index' , 'Build Now');?></a>
             </div>
         </div>
@@ -95,7 +83,7 @@ position: relative;
 
             </div>
             <div class="col-xs-4">
-                <a href="/home/user/password" style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px"> <?= Yii::t('app/user/index', 'Edit')?></a>
+                <a  class="index-button-1" href="/home/user/password" style="padding: 4px 18px;color: white;"> <?= Yii::t('app/user/index', 'Edit')?></a>
             </div>
         </div>
     </div>
@@ -108,7 +96,7 @@ position: relative;
 
             </div>
             <div class="col-xs-4">
-                <a href="/home/user/set-nickname" style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px">
+                <a  class="index-button-1" href="/home/user/set-nickname" style="padding: 4px 18px;color: white;">
                     <?php echo ($model->nickname)? Yii::t('app/user/index', 'Edit'):Yii::t('app/user/index' , 'Build Now');?></a>
             </div>
 

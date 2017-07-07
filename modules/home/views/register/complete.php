@@ -13,7 +13,7 @@ $this->title = Yii::t('app/login','Registration success');
             <h1 class="logo-name">&nbsp;</h1>
 
         </div>
-        <h2><?= Yii::t('app/login','Registration success')?></h2>
+        <h3><?= Yii::t('app/login','Registration success')?></h3>
 
         <blockquote class="text-left" style="border: 0;">
             <p><?= Yii::t('app/login','Please keep in mind your  account and password')?>！！！</p>

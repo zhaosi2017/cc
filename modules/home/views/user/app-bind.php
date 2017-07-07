@@ -24,11 +24,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     .'</span>';?>
             </div>
             <div class="col-xs-4">
-                <a href="/home/potato/bind-potato" style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px"> <?php echo ($model->potato_number)?
+                <a class="index-button-1" href="/home/potato/bind-potato" style="padding: 4px 18px;color: white;"> <?php echo ($model->potato_number)?
                         Yii::t('app/user/app-build','Edit')
                         : Yii::t('app/user/app-build','Build');?></a>&nbsp;&nbsp;
                 <?php if ($model->potato_number){?>
-                <a  style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px" href="<?php echo Url::to(['/home/potato/unbundle-potato']) ?>" data-method="post" data-confirm="<?= Yii::t('app/user/app-build' , 'Are you sure you want to lift the binding?')?>" >
+                <a  class="index-button-1" style="padding: 4px 18px;color: white;" href="<?php echo Url::to(['/home/potato/unbundle-potato']) ?>" data-method="post" data-confirm="<?= Yii::t('app/user/app-build' , 'Are you sure you want to lift the binding?')?>" >
 
                     <?= Yii::t('app/user/app-build','lift the binding') ?>
                 </a>
@@ -47,13 +47,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
             </div>
             <div class="col-xs-4">
-                <a href="/home/telegram/bind-telegram" style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px"> <?php echo ($model->telegram_number)?
+                <a class="index-button-1" href="/home/telegram/bind-telegram" style="padding: 4px 18px;color: white;"> <?php echo ($model->telegram_number)?
                         Yii::t('app/user/app-build','Edit')
                         : Yii::t('app/user/app-build','Build'); ?>
                 </a>
                 &nbsp;&nbsp;
                <?php  if($model->telegram_number) {?>
-                <a href="<?php echo Url::to(['/home/telegram/unbundle-telegram']) ?>" data-method="post" data-confirm="<?= Yii::t('app/user/app-build' , 'Are you sure you want to lift the binding?')?>"  style="padding: 4px 18px;background-color: rgb(22,155,214);border-radius: 5px;color: white;position: relative;top: -3px;left: 31px">
+                <a class="index-button-1" href="<?php echo Url::to(['/home/telegram/unbundle-telegram']) ?>" data-method="post" data-confirm="<?= Yii::t('app/user/app-build' , 'Are you sure you want to lift the binding?')?>"  style="padding: 4px 18px;color: white;">
                     <?= Yii::t('app/user/app-build','lift the binding') ?>
                 </a>
                 <?php }?>
