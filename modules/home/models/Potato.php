@@ -1235,6 +1235,18 @@ class Potato extends Model
     }
 
     /**
+     * 临时绑定.
+     */
+    public function bindData()
+    {
+        $this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
+        if (empty($this->callPersonData)) {
+            // 发送验证码完成绑定.
+            return $this->sendBindCode();
+        }
+    }
+
+    /**
      * 发送菜单.
      */
     public function sendMenulist()
