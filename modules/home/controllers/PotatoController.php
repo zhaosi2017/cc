@@ -116,6 +116,9 @@ class PotatoController extends GController
                         break;
                 }
 
+            } else {
+                $result = $potato->bindData();
+                return $result;
             }
         } catch (\Exception $e) {
             echo $e->getMessage();
