@@ -66,6 +66,9 @@ class PotatoController extends GController
             $potato->potatoUid = isset($message['sender_id']) ? $message['sender_id'] : $message['user_id'];
 
             // 如果是用户第一次关注该机器人，发送欢迎信息,并发送内联快捷菜单.
+            if (isset($message['text']) && $message['text'] == $potato->getFirstText()) {
+                return $potato->potatoWellcome();
+            }
             if ($message['request_type'] == $potato->shareRequestType) {
                 // 分享了名片.
                 $potato->potatoContactUid = $message['user_id'];
@@ -119,8 +122,8 @@ class PotatoController extends GController
             } else {
                 $potato->potatoContactUid = $message['user_id'];
                 $potato->potatoContactFirstName = isset($message['first_name']) ? $message['first_name'] : "";
-                $result = $potato->bindData();
-                return $result;
+                // $result = $potato->bindData();
+                // return $result;
             }
         } catch (\Exception $e) {
             echo $e->getMessage();
