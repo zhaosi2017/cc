@@ -500,7 +500,8 @@ class Telegram extends Model
      */
     public function getFirstText()
     {
-        return Yii::t('app/model/telegram', $this->firstText, array(), $this->language);
+        return $this->firstText;
+        // return Yii::t('app/model/telegram', $this->firstText, array(), $this->language);
     }
 
     /**

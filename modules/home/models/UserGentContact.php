@@ -58,7 +58,12 @@ class UserGentContact extends  CActiveRecord{
                 'contact_country_code',
                 'contact_phone_number',
                 'contact_nickname'
-            ], 'string']
+            ], 'string'],
+            [[
+                'contact_country_code',
+                'contact_phone_number',
+                'contact_nickname'
+            ], 'required']
         ];
     }
 
