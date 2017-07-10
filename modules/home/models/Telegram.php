@@ -590,7 +590,7 @@ class Telegram extends Model
      */
     public function getWellcomeText()
     {
-        return $this->wellcomeText;
+        return Yii::t('app/model/telegram', $this->wellcomeText, array(), $this->language);
     }
 
     /**

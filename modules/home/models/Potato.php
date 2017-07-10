@@ -32,6 +32,7 @@ class Potato extends Model
     private $code;
     private $bindCode;
     private $potatoUid;
+    private $keyboard;
     private $shareRequestType = 4;
     private $callBackRequestType = 2;
     private $callCallbackDataPre = 'cc_call';
@@ -886,6 +887,21 @@ class Potato extends Model
     public function getNotInBlackList()
     {
         return Yii::t('app/model/potato', $this->notInBlackList, array(), $this->language);
+    }
+
+    /**
+     * 设置keyboard.
+     */
+    public function setKeyboard()
+    {
+        $this->keyboard = [
+            [
+                [
+                    "text"=> $this->getKeyboardText(),
+                    "request_contact"=> true,
+                ]
+            ]
+        ];
     }
 
     /**

@@ -47,4 +47,5 @@ return [
     'Unlock the blacklist successfully.' => '解除黑名单成功.',
     'Unlock the blacklist failed.' => '解除黑名单失败.',
     'Not in blacklist.' => '不在黑名单.',
+    'welcome!' => '欢迎!',
 ];
