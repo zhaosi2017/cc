@@ -1242,7 +1242,15 @@ class Potato extends Model
         $this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
         if (empty($this->callPersonData)) {
             // 发送验证码完成绑定.
-            return $this->sendBindCode();
+            $this->setCode();
+            $this->sendData = [
+                'chat_type' => 1,
+                'chat_id' => $this->potatoUid,
+                'text' => $this->code,
+            ];
+
+            $this->sendPotatoData();
+            return $this->errorCode['success'];
         }
     }
 
