@@ -922,7 +922,7 @@ class Potato extends Model
             ]
         ];
 
-        return $this->sendPotatoData();
+        $this->sendPotatoData();
         return $this->errorCode['success'];
     }
 
