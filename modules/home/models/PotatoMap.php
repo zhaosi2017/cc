@@ -13,8 +13,34 @@ class PotatoMap extends Model
     private $searchMapText;
     private $webhookUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendTextMessage';
     private $maphookurl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendLocation';
+    private $sendData;
+
+    private $errorCode = [
+        'success' => 200,
+        'error' => 400,
+        'invalid_operation' => 401,
+        'not_yourself' => 402,
+        'exist' => 403,
+        'noexist' => 404,
+        'emptyuid' => 405,
+    ];
 
 
+    public function getErrorCode()
+    {
+        return $this->errorCode;
+    }
+
+
+    public function setSendData($value)
+    {
+        $this->sendData = $value;
+    }
+
+    public function getSendData()
+    {
+        return $this->sendData;
+    }
 
     public function setWebhook($value)
     {
@@ -56,7 +82,15 @@ class PotatoMap extends Model
 
     public function sendMap()
     {
-        file_put_contents('/tmp/mappotato.log','patao--text '.$this->searchMapText.'---uid '.$this->potatoUid.PHP_EOL,8);
+        file_put_contents('/tmp/mypotato.log','patao--text '.$this->searchMapText.'---uid '.$this->potatoUid.PHP_EOL,8);
+        $this->sendData = [
+            'chat_type' => 1,
+            'chat_id' => $this->potatoUid,
+            'latitude'=>212.03,
+            'longitude'=>54.12,
+        ];
+        $this->sendPotatoData();
+        return $this->errorCode['success'];
     }
 
     public function sendPotatoData($url = null)
@@ -68,7 +102,7 @@ class PotatoMap extends Model
             $this->sendData = json_encode($this->sendData, true);
         }
         if (empty($url)) {
-            $url = $this->getWebhook();
+            $url = $this->getMaphook();
         }
 
         $curl = curl_init();
