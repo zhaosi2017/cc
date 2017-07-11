@@ -118,12 +118,6 @@ class PotatoController extends GController
                         echo 'error_code :'.$potato->errorCode['invalid_operation'];
                         break;
                 }
-
-            } else {
-                $potato->potatoContactUid = $message['user_id'];
-                $potato->potatoContactFirstName = isset($message['first_name']) ? $message['first_name'] : "";
-                // $result = $potato->bindData();
-                // return $result;
             }
         } catch (\Exception $e) {
             echo $e->getMessage();
