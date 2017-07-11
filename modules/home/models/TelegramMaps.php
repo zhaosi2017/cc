@@ -34,7 +34,7 @@ class TelegramMaps extends Model
 
     public function sendLocation(){
         $this->sendData = array(
-                'chat_id'=>$this->telegram_user_id,
+                'chat_id'=>$this->telegramUid,
                 'latitude'=>11.544086,
                 'longitude'=>104.921572,
                 'disable_notification'=>'',
