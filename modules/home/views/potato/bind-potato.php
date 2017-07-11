@@ -32,8 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <p>1、<?= Yii::t('app/potato/bind-potato' , 'Please log in to the personal account on potato')?></p>
         <p>2、<?= Yii::t('app/potato/bind-potato','Add a robot friend')?>：<?php echo Yii::$app->params['potato_name'];?></p>
         <p>3、<?= Yii::t('app/potato/bind-potato' , 'Share your business card to the robot')?></p>
-        <p>4、 <?= Yii::t('app/potato/bind-potato' , 'Select the binding operation')?></p>
-        <p>5、<?= Yii::t('app/potato/bind-potato','Will get the verification code fill in the bottom of the input box for binding operation')?></p>
+        <p>4、<?= Yii::t('app/potato/bind-potato','Will get the verification code fill in the bottom of the input box for binding operation')?></p>
 
     </div>
 

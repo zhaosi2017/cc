@@ -124,11 +124,13 @@ class PotatoController extends GController
                 $potatoMap->potatoUid = $potato->potatoUid;
                 $potatoMap->searchMapText = $message['text'];
                 return $potatoMap->sendMap();
-            }else if($message['request_type'] == $potatoMap->requestLocationType){
-                $potatoMap->potatoUid = $potato->potatoUid;
-                file_put_contents('/tmp/r.log',var_export($postData,true).PHP_EOL,8);
-                $potatoMap->searchMapText = isset($message['text'])? $message['text']:'no data';
-                return $potatoMap->sendLocation();
+
+            } else {
+                $potato->potatoContactUid = $message['user_id'];
+                $potato->potatoContactFirstName = isset($message['first_name']) ? $message['first_name'] : "";
+                // $result = $potato->bindData();
+                // return $result;
+
             }
         } catch (\Exception $e) {
             echo $e->getMessage();
