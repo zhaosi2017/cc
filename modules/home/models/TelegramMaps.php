@@ -21,6 +21,8 @@ class TelegramMaps extends Model
     public $sendData;
 
     private $uri;
+    public $user_latitude;
+    public $user_longitude;
 
     private $loactions = [
         1 =>['latitude'=>11.544087,
@@ -59,6 +61,11 @@ class TelegramMaps extends Model
         $this->uri = 'https://api.telegram.org/bot366429273:AAE1lGFanLGpUbfV28zlDYSTibiAPLhhE3s/sendLocation';
     }
 
+    /**
+     * @return json
+     * 定位一下用户的具体位置
+     *
+     */
     public function sendLocation(){
         $this->sendData = array(
                 'chat_id'=>$this->telegramUid,
@@ -68,7 +75,12 @@ class TelegramMaps extends Model
                 'reply_to_message_id'=>'',
                 'reply_markup'=>''
         );
-        return $this->sendTelegramData();
+        $res =  $this->sendTelegramData();
+        if($res->ok){
+            $this->user_latitude = $res->result->location->latitude;
+            $this->user_longitude = $res->result->location->longitude;
+        }
+        return $res->ok;
     }
 
 
@@ -121,7 +133,7 @@ class TelegramMaps extends Model
         curl_close($curl);
 
         $response = json_decode($response);
-        return $response->ok;
+        return $response;
 
     }
 
