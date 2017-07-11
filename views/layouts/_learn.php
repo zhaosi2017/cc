@@ -11,18 +11,19 @@ use yii\bootstrap\Alert;
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm" >
         <div class="modal-content" >
-            <div class="modal-header">
+            <div class="modal-header index-button-1" >
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
                 </button>
-                <h4 class="modal-title" id="myModalLabel">
-                    <?= Yii::t('app/login','Please do the following')?>
+                <h4 class="modal-title" id="myModalLabel" style="color: white;" >
+                    <?= Yii::t('app/index','Operation guide')?>
                 </h4>
             </div>
             <div class="modal-body text-center" >
                 <?=  $message  ?>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                <a class="btn btn-default index-button-1" href="/"><?= Yii::t('app/index','Jump over')?></a>
+                <button type="button" class="btn btn-default index-button-1" data-dismiss="modal"><?= Yii::t('app/login','Ok')?>
                 </button>
 
             </div>

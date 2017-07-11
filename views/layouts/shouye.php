@@ -180,32 +180,30 @@ if(!Yii::$app->user->isGuest){
             <li data-target="#myCarousel" data-slide-to="2"></li>
         </ol>
         <div class="carousel-inner">
-            <div class="item active">
-                <img src="/img/shouye1.jpg" />
-                <div style="margin: auto;">
-                    <div  class="shouye-img-pos"  >
-                        <div class="first"><?= Yii::t('app/index','Security')?></div>
-                        <div class=" second"> <?= Yii::t('app/index','Private data encryption transmission, user privacy security')?></div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="item">
+
+            <div class="item active">
                 <img src="/img/shouye3.jpg">
-                <div class="shouye-img-pos">
-                    <div class="first"><?= Yii::t('app/index','Convenient')?></div>
-                    <div class=" second "><?= Yii::t('app/index','So that communication is more convenient')?>.</div>
+                <div class="shouye-img-pos  shouye-img-div">
+                    <div class="text-left" style="font-size: 50px";><?= Yii::t('app/index','Product description')?></div>
+                    <div class=" text-left shouye-div-2"><?= Yii::t('app/index','The most secure network voice call platform')?>.</div>
+                    <div class=" text-left shouye-div-2"><?= Yii::t('app/index','Provide intelligent voice call reminder service for emergency matters')?>.</div>
+                    <div class=" text-left shouye-div-2"><?= Yii::t('app/index','In your communication app directly call the other phone, call each other in time to reply to you')?>.</div>
+                    <div class=" text-left shouye-div-2"><?= Yii::t('app/index','Make communication more efficient and convenient')?>.</div>
                 </div>
             </div>
 
             <div class="item ">
                 <img src="/img/shouye2.jpg">
                 <div class="shouye-img-pos shouye-img-div">
-                    <div class="text-left" style="font-size: 66px;"><?= Yii::t('app/index','Product introduction and operation process')?></div>
-                    <div class="text-left"> <?= Yii::t('app/index', 'I. Description:The most secure network voice call platform.In your communication app directly call the other phone, call each other in time to reply to you.Make communication more efficient and convenient.2. Operation flow:1. Use the mailbox or mobile phone number to register the account, and landing.2. Enter the account center to edit the basic information, bind the communication app, add contact information.3. Enter the anti-harassment page to set the anti-harassment parameters.4. Open the communication app, share the other business card to the robot, make a call, the other party can receive incoming calls. But also by sharing the other business card to the robot, add each other to the white list, blacklist, so you from harassment.')?> .
-                    </div>
+                    <div class="text-left shouye-div-2" style="font-size: 50px;"><?= Yii::t('app/index','Operating procedures')?></div>
+                    <div class="text-left shouye-div-2"> <?= Yii::t('app/index', '1. Use the mailbox or mobile phone number to register the account, and landing.')?></div>
+                    <div class="text-left shouye-div-2"> <?= Yii::t('app/index', '2. Enter the account center to edit the basic information, bind the communication app, add contact information.')?></div>
+                    <div class="text-left shouye-div-2"> <?= Yii::t('app/index', '3. Enter the anti-harassment page to set the anti-harassment parameters.')?></div>
+                    <div class="text-left shouye-div-2 "> <?= Yii::t('app/index', '4. Open the communication app, share the other business card to the robot, make a call, the other party can receive incoming calls. But also by sharing the other business card to the robot, add each other to the white list, blacklist, so you from harassment.')?></div>
                 </div>
             </div>
+
         </div>
         <a href="#myCarousel" data-slide="prev" class="carousel-control left">
             <span class="glyphicon glyphicon-chevron-left"></span>
@@ -245,14 +243,16 @@ if(!Yii::$app->user->isGuest){
     {
         position: fixed;
         top:150px;
-        left: 33%;
+        left: 23%;
         /*border: 1px solid;*/
         padding: 22px;
         /*background-color: rgb(247,247,247);*/
         /*opacity: 0.8;*/
+        animation: myfirst 2s;
+        -webkit-animation: myfirst 2s;
     }
     .shouye-img-pos .first{
-        font-size: 66px;
+        font-size: 50px;
     }
     .shouye-img-pos .second{
         font-size: 18px;
@@ -260,8 +260,30 @@ if(!Yii::$app->user->isGuest){
     }
 
     .shouye-img-div{
-        left: 27%;
-        width: 60%;
+        left: 12%;
+        width: 65%;
+    }
+
+
+    .shouye-div-2{
+        font-size: 18px;
+        width: 58%;
+    }
+
+    @keyframes myfirst
+    {
+        0%   {opacity: 0;}
+        /*25%  {opacity: 0.25;}*/
+        50%  {opacity: 0.50;}
+        100% {opacity: 1;}
+    }
+
+    @-webkit-keyframes myfirst /* Safari 与 Chrome */
+    {
+        0%   {opacity: 0;}
+        /*25%  {opacity: 0.25;}*/
+        50%  {opacity: 0.50;}
+        100% {opacity: 1;}
     }
 </style>
 
