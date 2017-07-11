@@ -1,4 +1,8 @@
 <?php
+/***
+ * 此文件不需要翻译
+ * 为中文地图专用
+ */
 namespace app\modules\home\models;
 
 use yii;
@@ -8,9 +12,63 @@ use app\modules\home\models\CallRecord;
 use app\modules\home\models\WhiteList;
 use app\modules\home\models\BlackList;
 use app\modules\home\models\UserPhone;
+use app\models\CActiveRecord;
+use yii\web\IdentityInterface;
 
-class TelegramMaps extends Model
+class TelegramMaps extends CActiveRecord
 {
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return 'telegram_maps';
+    }
+
+
+    public static $orders = [
+        '/maps'=>'地图搜索',
+        '/m/'=>'地图搜索',
+        '/em'=>'地图编辑',
+    ];
+
+    public  function mapOrders(Array $message){
+        $text = $message['text'];
+        $arr = explode(' ' , $text);
+        $this->text = isset($arr[1])?trim($arr[1]):$text;
+
+          foreach(self::$orders as $key=>$value){
+            switch($key){
+                case '/maps':
+                    if(self::checkOrder($text , $key)){
+                       return  $this->sendVenue($message);
+                    }
+                    break;
+                case '/m/':
+                    if(self::checkOrder($text , $key)){
+                        $this->sendVenue($message);
+                    }
+                    break;
+                default:
+                    break;
+            }
+          }
+
+          if(isset($message['reply_to_message']['location'])){
+                $this->saveLocation($message);
+
+          }
+
+    }
+
+    public static function checkOrder($text , $order){
+        if(stripos($text,$order) !== false){   //检测命令
+            return true;
+        }
+        return false;
+    }
+
+
 
 
 
@@ -19,6 +77,7 @@ class TelegramMaps extends Model
     public $bindCode;
     public $telegramUid;
     public $sendData;
+    public $text;
 
     private $uri;
     public $user_latitude;
@@ -52,19 +111,22 @@ class TelegramMaps extends Model
     ];
 
 
-
     /**
-     * 设置webhook
+     *保存一下 用户的上传的位置
      */
-    public function setWebhook()
-    {
-        $this->uri = 'https://api.telegram.org/bot366429273:AAE1lGFanLGpUbfV28zlDYSTibiAPLhhE3s/sendLocation';
+    public function saveLocation(Array $message){
+        $this->latitude  = $message['reply_to_message']['location']['latitude'] ;
+        $this->longitude = $message['reply_to_message']['location']['longitude'];
+        $this->chat_id   = $message['chat']['id'];
+        $this->title     = $message['text'];
+        $this->description = "zheishiyige ceshi de shuju ";
+        $this->save();
     }
+
 
     /**
      * @return json
      * 定位一下用户的具体位置
-     *
      */
     public function sendLocation(){
         $this->sendData = array(
@@ -75,6 +137,7 @@ class TelegramMaps extends Model
                 'reply_to_message_id'=>'',
                 'reply_markup'=>''
         );
+        $this->uri = 'https://api.telegram.org/bot366429273:AAE1lGFanLGpUbfV28zlDYSTibiAPLhhE3s/sendLocation';
         $res =  $this->sendTelegramData();
         if($res->ok){
             $this->user_latitude = $res->result->location->latitude;
@@ -84,17 +147,26 @@ class TelegramMaps extends Model
     }
 
 
+
+
+
     public function sendVenue($number = 1){
         $this->uri = 'https://api.telegram.org/bot366429273:AAE1lGFanLGpUbfV28zlDYSTibiAPLhhE3s/sendVenue';
-        for($i= 1 ; $i<=$number; $i++){
-            $this->sendData = $this->loactions[$i];
-            $this->sendData['chat_id'] = $this->telegramUid;
-            $this->sendData['foursquare_id']='';
-            $this->sendData['disable_notification']='';
-            $this->sendData['reply_to_message_id']='';
-            $this->sendData['reply_markup']='';
-            $this->sendTelegramData();
-        }
+
+        $maps = self::find()->where(['title'=>$this->text])->limit(5)->all();
+            foreach ($maps as $map){
+                $this->sendData = [
+                    'chat_id'=>$this->telegramUid,
+                    'latitude'=>$map->latitude,
+                    'longitude'=>$map->longitude,
+                    'title'=>$map->title,
+                ];
+                $this->sendData['foursquare_id']='';
+                $this->sendData['disable_notification']='';
+                $this->sendData['reply_to_message_id']='';
+                $this->sendData['reply_markup']='';
+                $this->sendTelegramData();
+            }
     }
 
 
