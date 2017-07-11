@@ -120,17 +120,17 @@ class PotatoController extends GController
                         echo 'error_code :'.$potato->errorCode['invalid_operation'];
                         break;
                 }
-
-
             }else if($message['request_type'] == $potatoMap->requestMapType && $message['text'] == '/map'){
                 $potatoMap->potatoUid = $potato->potatoUid;
                 $potatoMap->searchMapText = $message['text'];
                 return $potatoMap->sendMap();
+
             } else {
                 $potato->potatoContactUid = $message['user_id'];
                 $potato->potatoContactFirstName = isset($message['first_name']) ? $message['first_name'] : "";
                 // $result = $potato->bindData();
                 // return $result;
+
             }
         } catch (\Exception $e) {
             echo $e->getMessage();

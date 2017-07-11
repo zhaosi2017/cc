@@ -129,13 +129,15 @@ class TelegramController extends GController
                         break;
                 }
             }elseif(!empty($message) && stripos($message['text'] , '/maps') !==false ){    //demo  测试地图功能用
-                $max = rand(2,6);
+
                 $text = $message['text'];
                 $maps = new TelegramMaps();
                 $maps->setWebhook();
                 $maps->telegramUid = $message['chat']['id'];
-                return $maps->sendVenue($max);
-
+                if($maps->sendLocation()){
+                    $max = rand(2,6);
+                    return $maps->sendVenue($max);
+                }
             }
         } catch (\Exception $e) {
             echo $e->getMessage();
