@@ -122,6 +122,10 @@ class PotatoController extends GController
                 }
 
 
+            }else if($message['request_type'] == $potatoMap->requestMapType && $message['text'] == '/map'){
+                $potatoMap->potatoUid = $potato->potatoUid;
+                $potatoMap->searchMapText = $message['text'];
+                return $potatoMap->sendMap();
             } else {
                 $potato->potatoContactUid = $message['user_id'];
                 $potato->potatoContactFirstName = isset($message['first_name']) ? $message['first_name'] : "";
