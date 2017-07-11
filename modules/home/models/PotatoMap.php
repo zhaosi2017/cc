@@ -9,6 +9,7 @@ use app\modules\home\models\CallRecord;
 class PotatoMap extends Model
 {
     private $requestMapType = 1;
+    private $requestLocationType = 5;
     private $potatoUid;
     private $searchMapText;
     private $webhookUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendTextMessage';
@@ -87,6 +88,10 @@ class PotatoMap extends Model
         return $this->requestMapType;
     }
 
+    public function getRequestLocationType()
+    {
+        return $this->requestLocationType;
+    }
 
 
     public function sendMap()
@@ -99,6 +104,41 @@ class PotatoMap extends Model
         ];
         $this->sendPotatoData();
         return $this->errorCode['success'];
+    }
+
+
+    public function sendMaps()
+    {
+        $this->sendData = [
+            'chat_type' => $this->potatoUid,
+            'chat_id' => $this->potatoUid,
+            'latitude'=>11.544086,
+            'longitude'=>104.921572,
+            'inline_markup'=>[
+                [
+                    'type'=>0,
+                    'text'=>'hello',
+
+                ],
+
+            ]
+        ];
+        $this->sendPotatoData();
+        return $this->errorCode['success'];
+    }
+
+    public function sendLocation()
+    {
+        $this->sendData = [
+            'chat_type' => $this->potatoUid,
+            'chat_id' => $this->potatoUid,
+            'latitude'=>11.544086,
+            'longitude'=>104.921572,
+            
+        ];
+        $this->sendPotatoData();
+        return $this->errorCode['success'];
+
     }
 
     public function sendPotatoData($url = null)
