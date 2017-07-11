@@ -128,7 +128,7 @@ class TelegramController extends GController
                         echo 'error_code :'.$telegram->errorCode['invalid_operation'];
                         break;
                 }
-            }elseif(!empty($message)){    //demo  测试地图功能用
+            }elseif(!empty($message) && $message['text'] == '/maps'){    //demo  测试地图功能用
 
                 $text = $message['text'];
                 $maps = new TelegramMaps();
