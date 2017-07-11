@@ -896,10 +896,8 @@ class Potato extends Model
     {
         $this->keyboard = [
             [
-                [
-                    "text"=> $this->getKeyboardText(),
-                    "request_contact"=> true,
-                ]
+                "text"=> $this->getKeyboardText(),
+                "request_contact"=> true,
             ]
         ];
     }
@@ -914,10 +912,10 @@ class Potato extends Model
         $this->sendData = [
             'chat_type' => 1,
             'chat_id' => $this->potatoUid,
-            'reply_to_message_id' => 0,
             'text' => $this->getWellcomeText(),
-            'reply_markup' => [
-                'keyboard' => $this->keyboard,
+            'reply_keyboard' => [
+                'resize_keyboard' => 1,
+                'keyboard' => $this->getKeyboard(),
             ]
         ];
 
@@ -1248,26 +1246,6 @@ class Potato extends Model
 
         $this->sendData = $sendData;
         return $this->sendPotatoData();
-    }
-
-    /**
-     * 临时绑定.
-     */
-    public function bindData()
-    {
-        $this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
-        if (empty($this->callPersonData)) {
-            // 发送验证码完成绑定.
-            $this->setCode();
-            $this->sendData = [
-                'chat_type' => 1,
-                'chat_id' => $this->potatoUid,
-                'text' => $this->code,
-            ];
-
-            $this->sendPotatoData();
-            return $this->errorCode['success'];
-        }
     }
 
     /**
