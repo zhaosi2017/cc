@@ -47,5 +47,8 @@
   'Password contains at least 8 characters, including at least the following two characters: capital letters, lowercase letters, numbers, symbols' => '암호에는 대문자, 소문자, 숫자, 기호 등 적어도 두 문자를 포함하여 적어도 8자를 포함해야합니다.',
     'We have sent verification code to your registered mail:'=>'우리는 등록 된 이메일로 인증 코드를 전송 한',
     'Please  fill in the received code.'=>'수신 된 인증 코드를 입력 해주세요。',
-
+    'Set phone number'=>'연락처 전화 추가',
+    'Bind potato'=>'제본 potato',
+    'Bind telegram'=>'제본 telegram',
+    'Please do the following'=>'다음을 수행하십시오'
 );

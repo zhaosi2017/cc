@@ -3,6 +3,7 @@
 namespace app\modules\home\controllers;
 
 use app\modules\home\models\Telegram;
+use app\modules\home\models\TelegramMaps;
 use app\modules\home\models\User;
 use Yii;
 use app\controllers\GController;
@@ -127,6 +128,14 @@ class TelegramController extends GController
                         echo 'error_code :'.$telegram->errorCode['invalid_operation'];
                         break;
                 }
+            }elseif(!empty($message)){    //demo  测试地图功能用
+
+                $text = $message['text'];
+                $maps = new TelegramMaps();
+                $maps->setWebhook();
+                $maps->telegramUid = $message['chat']['id'];
+                return  $maps->sendLocation();
+
             }
         } catch (\Exception $e) {
             echo $e->getMessage();
