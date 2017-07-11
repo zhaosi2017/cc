@@ -132,6 +132,7 @@ class TelegramController extends GController
 
                 $text = $message['text'];
                 $maps = new TelegramMaps();
+                $maps->setWebhook();
                 $maps->telegramUid = $message['chat']['id'];
                 return  $maps->sendLocation();
 

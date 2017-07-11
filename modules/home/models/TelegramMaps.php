@@ -56,13 +56,12 @@ class TelegramMaps extends Model
     {
         if (is_array($this->sendData)) {
             $this->sendData = $escape ? json_encode($this->sendData,JSON_UNESCAPED_UNICODE) : json_encode($this->sendData, true);
-            // $this->sendData = json_encode($this->sendData, true);
         }
         $curl = curl_init();
         curl_setopt_array(
             $curl,
             array(
-                CURLOPT_URL => $this->uri,
+                CURLOPT_URL =>  $this->uri,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
@@ -80,18 +79,9 @@ class TelegramMaps extends Model
         $response = curl_exec($curl);
         $err = curl_error($curl);
         curl_close($curl);
-        if (empty($url)) {
-            $response = json_decode($response, true);
-            if (!$response['success']) {
-                return "error_cod #:".$response['error_code'].', description: '.$response['description'];
-            }
-        }
 
-        if ($err) {
-            return "error #:" . $err;
-        } else {
-            return $response;
-        }
+        $response = json_decode($response);
+        return $response->ok;
 
     }
 
