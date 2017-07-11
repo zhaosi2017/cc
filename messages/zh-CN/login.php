@@ -54,4 +54,5 @@ return [
     'Bind telegram'=>'绑定telegram',
     'Please do the following'=>'请做如下操作'
 
+
 ];
