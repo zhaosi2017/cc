@@ -32,6 +32,7 @@ class Potato extends Model
     private $code;
     private $bindCode;
     private $potatoUid;
+    private $keyboard;
     private $shareRequestType = 4;
     private $callBackRequestType = 2;
     private $callCallbackDataPre = 'cc_call';
@@ -889,6 +890,21 @@ class Potato extends Model
     }
 
     /**
+     * 设置keyboard.
+     */
+    public function setKeyboard()
+    {
+        $this->keyboard = [
+            [
+                [
+                    "text"=> $this->getKeyboardText(),
+                    "request_contact"=> true,
+                ]
+            ]
+        ];
+    }
+
+    /**
      * 欢迎.
      */
     public function potatoWellcome()
@@ -1232,6 +1248,26 @@ class Potato extends Model
 
         $this->sendData = $sendData;
         return $this->sendPotatoData();
+    }
+
+    /**
+     * 临时绑定.
+     */
+    public function bindData()
+    {
+        $this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
+        if (empty($this->callPersonData)) {
+            // 发送验证码完成绑定.
+            $this->setCode();
+            $this->sendData = [
+                'chat_type' => 1,
+                'chat_id' => $this->potatoUid,
+                'text' => $this->code,
+            ];
+
+            $this->sendPotatoData();
+            return $this->errorCode['success'];
+        }
     }
 
     /**

@@ -76,6 +76,7 @@ class Telegram extends Model
     private $bindRecommendText = "[<a href='https://www.callu.online/home/telegram/bind-telegram'>Please enter the verification code on the callu platform to complete the binding operation!</a>]";
 
 
+    private $keyboard;
     private $code;
     private $bindCode;
     private $telegramUid;
@@ -500,7 +501,8 @@ class Telegram extends Model
      */
     public function getFirstText()
     {
-        return Yii::t('app/model/telegram', $this->firstText, array(), $this->language);
+        return $this->firstText;
+        // return Yii::t('app/model/telegram', $this->firstText, array(), $this->language);
     }
 
     /**
@@ -519,6 +521,14 @@ class Telegram extends Model
         return $this->bindCode;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getKeyboard()
+    {
+        return $this->keyboard;
+    }
+    
     /**
      * @return string
      */
@@ -580,7 +590,7 @@ class Telegram extends Model
      */
     public function getWellcomeText()
     {
-        return $this->wellcomeText;
+        return Yii::t('app/model/telegram', $this->wellcomeText, array(), $this->language);
     }
 
     /**
@@ -837,6 +847,21 @@ class Telegram extends Model
     public function getBindRecommendText()
     {
         return Yii::t('app/model/telegram', $this->bindRecommendText, array(), $this->language);
+    }
+
+    /**
+     * 设置keyboard.
+     */
+    public function setKeyboard()
+    {
+        $this->keyboard = [
+            [
+                [
+                    "text"=> $this->keyboardText,
+                    "request_contact"=> true,
+                ]
+            ]
+        ];
     }
 
     /**
