@@ -33,6 +33,7 @@ use yii\web\IdentityInterface;
  * @property integer $role_id
  * @property integer $status
  * @property string $language
+ * @property string $step
  */
 class User extends CActiveRecord implements IdentityInterface
 {

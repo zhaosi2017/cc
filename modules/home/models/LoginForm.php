@@ -355,4 +355,52 @@ class LoginForm extends Model
             $redis->del($key);
         }
     }
+
+    public static function checkLearn(){
+        $user = User::findOne(Yii::$app->user->id);
+        $arr= [];
+        if($user->step == 0) {
+
+            if (empty($user->phone_number)) {
+                $tmp = [ 'type'=>'step-phone','url' => '/home/user/set-phone-number', 'message' => Yii::t('app/login', 'Set phone number')];
+                Yii::$app->getSession()->setFlash('step-phone',json_encode($tmp));
+                $arr[] = $tmp;
+            }
+            if (empty($user->potato_number)) {
+                $tmp = ['type'=>'step-potato','url' => '/home/potato/bind-potato','message'=>Yii::t('app/login','Bind potato')];
+                Yii::$app->getSession()->setFlash('step-potato',json_encode($tmp));
+                $arr[] = $tmp;
+            }
+            if (empty($user->telegram_number)) {
+                $tmp = ['type'=>'step-telegram', 'url' => '/home/telegram/bind-telegram','message'=>Yii::t('app/login','Bind telegram')];
+                Yii::$app->getSession()->setFlash('step-telegram',json_encode($tmp));
+                $arr[] = $tmp;
+            }
+            $user->step = 1;
+            $user->save();
+        }
+        return $arr;
+
+    }
+
+    public static function clearFlash()
+    {
+        Yii::$app->getSession()->hasFlash('step-potato') && Yii::$app->getSession()->removeFlash('step-potato');
+        Yii::$app->getSession()->hasFlash('step-telegram') && Yii::$app->getSession()->removeFlash('step-telegram');
+    }
+
+    public static function checkFlash()
+    {
+        $res = Yii::$app->getSession()->getFlash('step-potato');
+        if(!empty($res)){
+            return json_decode($res,true);
+        }
+
+        $res = Yii::$app->getSession()->getFlash('step-telegram');
+        if(!empty($res)){
+            return json_decode($res,true);
+        }
+        return [];
+
+    }
 }

@@ -49,6 +49,9 @@ return [
     '请输入账户新密码 ,密码至少包含8个字符，至少包括以下2种字符：大写字母、小写字母、数字、符号',
     'We have sent verification code to your registered mail:'=>'我们已经发送验证码到您的注册邮箱:',
     'Please  fill in the received code.'=>'请填写收到的验证码。',
-
+    'Set phone number'=>'请添加联系电话',
+    'Bind potato'=>'绑定potato',
+    'Bind telegram'=>'绑定telegram',
+    'Please do the following'=>'请做如下操作'
 
 ];

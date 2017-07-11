@@ -48,8 +48,17 @@ class LoginController extends GController
             if($model->checkLock()){
                 return $this->render('index',['model'=>$model]);
             }
-            if($model->login()){
+            if($model->login()) {
                 $model->recordIp();
+                $user = Yii::$app->user->identity;
+                $res = LoginForm::checkLearn();
+                if($user->step == 0 && !empty($res)){
+                    $url =  array_shift($res);
+                    $type = isset($url['type']) ? $url['type'] : '';
+                    $type && Yii::$app->getSession()->hasFlash($type) && Yii::$app->getSession()->removeFlash($type);
+                    isset($url['message']) && Yii::$app->getSession()->setFlash('step-message',$url['message']);
+                    return $this->redirect($url['url'])->send();
+                }
                 return $this->goBack()->send();
             }
             
@@ -62,8 +71,8 @@ class LoginController extends GController
 
     public function actionLogout()
     {
+        LoginForm::clearFlash();
         Yii::$app->user->logout(false);
-
         return $this->redirect(Url::to(['/home/default/welcome']));
     }
 

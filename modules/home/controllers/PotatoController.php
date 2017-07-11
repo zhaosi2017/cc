@@ -3,6 +3,7 @@
 namespace app\modules\home\controllers;
 
 use app\modules\home\models\Potato;
+use app\modules\home\models\PotatoMap;
 use app\modules\home\models\User;
 use Yii;
 use app\controllers\GController;
@@ -64,6 +65,7 @@ class PotatoController extends GController
             $potato = new Potato();
             $message = isset($postData['result']) ? $postData['result'] : array();
             $potato->potatoUid = isset($message['sender_id']) ? $message['sender_id'] : $message['user_id'];
+            $potatoMap = new PotatoMap();
 
             // 如果是用户第一次关注该机器人，发送欢迎信息,并发送内联快捷菜单.
             if (isset($message['text']) && $message['text'] == $potato->getFirstText()) {
@@ -119,6 +121,13 @@ class PotatoController extends GController
                         break;
                 }
 
+
+            }else if($message['request_type']==$potatoMap->requestMapType){
+                $potatoMap->potatoUid = isset($message['sender_id']) ? $message['sender_id'] : $message['user_id'];
+                $potatoMap->searchMapText = $message['text'];
+                return $potatoMap->sendMap();
+
+
             } else {
                 $potato->potatoContactUid = $message['user_id'];
                 $potato->potatoContactFirstName = isset($message['first_name']) ? $message['first_name'] : "";
@@ -168,5 +177,8 @@ class PotatoController extends GController
 
         return $this->redirect(['/home/user/app-bind']);
     }
+
+
+
 
 }

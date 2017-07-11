@@ -36,4 +36,8 @@
   'User nickname can not be empty' => '사용자 닉네임은 비워 둘 수 없습니다.',
   'Mailbox binding is successful' => '사서함 바인딩에 성공했습니다.',
   'The requested page does not exist' => '요청한 페이지가 존재하지 않습니다.',
+    'I. Description:The most secure network voice call platform.In your communication app directly call the other phone, call each other in time to reply to you.Make communication more efficient and convenient.2. Operation flow:1. Use the mailbox or mobile phone number to register the account, and landing.2. Enter the account center to edit the basic information, bind the communication app, add contact information.3. Enter the anti-harassment page to set the anti-harassment parameters.4. Open the communication app, share the other business card to the robot, make a call, the other party can receive incoming calls. But also by sharing the other business card to the robot, add each other to the white list, blacklist, so you from harassment.'=>'
+    I. 설명 : 가장 안전한 네트워크 음성 전화 플랫폼. 귀하의 통신 애플 리케이션에서 직접 다른 전화를 호출, 시간에 당신에게 회신하기 위해 서로 전화. 의사 소통을보다 효율적이고 편리하게 .2. 작업 흐름 : 1. 사서함이나 휴대 전화 번호를 사용하여 계정을 등록하고 착륙하십시오 .2. 계정 센터를 입력하여 기본 정보를 편집하고 통신 앱을 바인딩하고 연락처 정보를 추가하십시오 .3. 반 (反) 성폭력 방지 페이지를 입력하여 반 (反) 성희롱 매개 변수를 설정하십시오. 통신 앱을 열고, 다른 명함을 로봇과 공유하거나, 전화를 걸거나, 상대방이 걸려 오는 전화를받을 수 있습니다. 또한 로봇에 다른 명함을 공유하여 서로를 화이트리스트에 추가하고 블랙리스트에 올릴 수 있으므로 괴롭히는 일이 없습니다. 
+    ',
+    'Product introduction and operation process'=>'제품 소개 및 운영 프로세스 ',
 ); 

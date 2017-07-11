@@ -189,19 +189,21 @@ if(!Yii::$app->user->isGuest){
                     </div>
                 </div>
             </div>
-            <div class="item">
-                <img src="/img/shouye2.jpg">
-                <div class="shouye-img-pos">
-                    <div class="first" style="font-size: 66px;"><?= Yii::t('app/index','Efficient')?></div>
-                    <div class=" second"> <?= Yii::t('app/index','Make the connection more efficient')?> .
-                </div>
-            </div>
-            </div>
+
             <div class="item">
                 <img src="/img/shouye3.jpg">
                 <div class="shouye-img-pos">
                     <div class="first"><?= Yii::t('app/index','Convenient')?></div>
-                    <div class=" second"><?= Yii::t('app/index','So that communication is more convenient')?>.</div>
+                    <div class=" second "><?= Yii::t('app/index','So that communication is more convenient')?>.</div>
+                </div>
+            </div>
+
+            <div class="item ">
+                <img src="/img/shouye2.jpg">
+                <div class="shouye-img-pos shouye-img-div">
+                    <div class="text-left" style="font-size: 66px;"><?= Yii::t('app/index','Product introduction and operation process')?></div>
+                    <div class="text-left"> <?= Yii::t('app/index', 'I. Description:The most secure network voice call platform.In your communication app directly call the other phone, call each other in time to reply to you.Make communication more efficient and convenient.2. Operation flow:1. Use the mailbox or mobile phone number to register the account, and landing.2. Enter the account center to edit the basic information, bind the communication app, add contact information.3. Enter the anti-harassment page to set the anti-harassment parameters.4. Open the communication app, share the other business card to the robot, make a call, the other party can receive incoming calls. But also by sharing the other business card to the robot, add each other to the white list, blacklist, so you from harassment.')?> .
+                    </div>
                 </div>
             </div>
         </div>
@@ -255,6 +257,11 @@ if(!Yii::$app->user->isGuest){
     .shouye-img-pos .second{
         font-size: 18px;
         font-weight: bold;
+    }
+
+    .shouye-img-div{
+        left: 27%;
+        width: 60%;
     }
 </style>
 
