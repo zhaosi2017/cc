@@ -22,6 +22,33 @@ class TelegramMaps extends Model
 
     private $uri;
 
+    private $loactions = [
+        1 =>['latitude'=>11.544087,
+            'longitude'=>104.921573,
+            'title'=>'毛泽东大道加油站',
+            'address' =>'Mao Tse Toung Boulevard (245)',],
+        2=>['latitude'=>11.544082,
+            'longitude'=>104.921583,
+            'title'=>'莫呢网大道加油站',
+            'address' =>'Mao Tse Toung Boulevard (378）',],
+        3=>['latitude'=>11.541087,
+            'longitude'=>104.921673,
+            'title'=>'永旺加油站',
+            'address' =>'Mao Tse Toung Boulevard (745)',],
+        4=>['latitude'=>11.541077,
+            'longitude'=>104.921693,
+            'title'=>'卢旺达加油站',
+            'address' =>'rouess Tse Toung Boulevard (745)',],
+        5=>['latitude'=>11.541047,
+            'longitude'=>104.921693,
+            'title'=>'卢旺达加油站',
+            'address' =>'rouess Tse Toung Boulevard (945)',],
+        6=>['latitude'=>11.541075,
+            'longitude'=>104.921693,
+            'title'=>'安哥拉斯加油站',
+            'address' =>'makati Tse Toung Boulevard (735)',],
+    ];
+
 
 
     /**
@@ -44,6 +71,19 @@ class TelegramMaps extends Model
         return $this->sendTelegramData();
     }
 
+
+    public function sendVenue($number = 1){
+        $this->uri = 'https://api.telegram.org/bot366429273:AAE1lGFanLGpUbfV28zlDYSTibiAPLhhE3s/sendVenue';
+        for($i= 1 ; $i<=$number; $i++){
+            $this->sendData = $this->loactions[$i];
+            $this->sendData['chat_id'] = $this->telegramUid;
+            $this->sendData['foursquare_id']='';
+            $this->sendData['disable_notification']='';
+            $this->sendData['reply_to_message_id']='';
+            $this->sendData['reply_markup']='';
+            $this->sendTelegramData();
+        }
+    }
 
 
 
