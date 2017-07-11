@@ -128,16 +128,12 @@ class TelegramController extends GController
                         echo 'error_code :'.$telegram->errorCode['invalid_operation'];
                         break;
                 }
-            }elseif(!empty($message) && stripos($message['text'] , '/maps') !==false ){    //demo  测试地图功能用
+            }elseif(!empty($message)){    //demo  测试地图功能用
 
-                $text = $message['text'];
                 $maps = new TelegramMaps();
-                $maps->setWebhook();
                 $maps->telegramUid = $message['chat']['id'];
-                if($maps->sendLocation()){
-                    $max = rand(2,6);
-                    return $maps->sendVenue($max);
-                }
+                return $maps->mapOrders($message);
+
             }
         } catch (\Exception $e) {
             echo $e->getMessage();

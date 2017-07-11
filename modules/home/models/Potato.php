@@ -896,8 +896,11 @@ class Potato extends Model
     {
         $this->keyboard = [
             [
-                "text"=> $this->getKeyboardText(),
-                "request_contact"=> true,
+                [
+                    "type" => 0,
+                    "text"=> $this->getKeyboardText(),
+                    "request_contact"=> true,
+                ]
             ]
         ];
     }
