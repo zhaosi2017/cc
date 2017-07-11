@@ -134,14 +134,7 @@ class PotatoMap extends Model
             'chat_id' => $this->potatoUid,
             'latitude'=>11.544086,
             'longitude'=>104.921572,
-            'inline_markup'=>[
-                [
-                    'type'=>0,
-                    'text'=>'hello',
-
-                ],
-
-            ]
+            
         ];
         $this->sendPotatoData();
         return $this->errorCode['success'];
