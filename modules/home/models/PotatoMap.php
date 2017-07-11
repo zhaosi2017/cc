@@ -91,12 +91,11 @@ class PotatoMap extends Model
 
     public function sendMap()
     {
-        file_put_contents('/tmp/mypotato.log','patao--text '.$this->searchMapText.'---uid '.$this->potatoUid.PHP_EOL,8);
         $this->sendData = [
             'chat_type' => 1,
             'chat_id' => $this->potatoUid,
-            'latitude'=>212.03,
-            'longitude'=>54.12,
+            'latitude'=>11.544086,
+            'longitude'=>104.921572,
         ];
         $this->sendPotatoData();
         return $this->errorCode['success'];
