@@ -36,7 +36,7 @@ class PotatoController extends GController
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index', 'bind-potato', 'unbundle-potato'],
+                        'actions' => ['index', 'bind-potato', 'unbundle-potato','potato-map'],
                         'roles' => ['@'],
                     ],
                 ],
@@ -122,13 +122,6 @@ class PotatoController extends GController
                 }
 
 
-            }else if($message['request_type'] == $potatoMap->requestMapType ){
-
-                $potatoMap->potatoUid = $potato->potatoUid;
-                $potatoMap->searchMapText = $message['text'];
-                return $potatoMap->sendMap();
-
-
             } else {
                 $potato->potatoContactUid = $message['user_id'];
                 $potato->potatoContactFirstName = isset($message['first_name']) ? $message['first_name'] : "";
@@ -179,7 +172,12 @@ class PotatoController extends GController
         return $this->redirect(['/home/user/app-bind']);
     }
 
-
+    public function actionPotatoMap(){
+        $potatoMap = new PotatoMap();
+        $potatoMap->potatoUid = 8009109;
+        $potatoMap->searchMapText = 'tt';
+        return $potatoMap->sendMap();
+    }
 
 
 }
