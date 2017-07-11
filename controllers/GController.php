@@ -6,6 +6,7 @@ use Yii;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use app\modules\home\models\LoginForm;
 
 class GController extends Controller
 {
@@ -66,13 +67,33 @@ class GController extends Controller
         if (!Yii::$app->user->isGuest)
         {
             $identy = Yii::$app->user->identity;
-
             Yii::$app->language = $identy->language;
+            if($url = $this->checkTutoria()){
+                header("Location:". $url);
+                return false;
+            }
         }else{
             Yii::$app->language = isset($_SESSION['language'])? $_SESSION['language']:'zh-CN';
         }
 
         return parent::beforeAction($event);
     }
+
+    private  function checkTutoria()
+    {
+
+        $url = '/'.Yii::$app->request->getPathInfo();
+        $arr = ['/home/user/set-phone-number', '/home/potato/bind-potato', '/home/telegram/bind-telegram'];
+        if( !in_array($url,$arr) && Yii::$app->request->isGet )
+        {
+            $res = LoginForm::checkFlash();
+            $message = isset($res['message']) ? $res['message']:'';
+            $message && Yii::$app->getSession()->setFlash('step-message', $message);
+            return isset($res['url'])? $res['url']:'';
+        }
+
+    }
+
+
 
 }

@@ -134,7 +134,7 @@ class ContactForm extends Model
         
         $session = Yii::$app->session;
         $verifyCode = $session[$type];
-        if(empty($code) ||  empty($verifyCode) || $verifyCode != $code)
+        if(empty($code) ||  empty($verifyCode) || $verifyCode != strtolower($code))
         {
             return true;
         }

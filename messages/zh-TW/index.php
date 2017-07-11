@@ -36,4 +36,7 @@
   'User nickname can not be empty' => '用戶暱稱不能為空',
   'Mailbox binding is successful' => '郵箱綁定成功',
   'The requested page does not exist' => '請求頁不存在',
+    'I. Description:The most secure network voice call platform.In your communication app directly call the other phone, call each other in time to reply to you.Make communication more efficient and convenient.2. Operation flow:1. Use the mailbox or mobile phone number to register the account, and landing.2. Enter the account center to edit the basic information, bind the communication app, add contact information.3. Enter the anti-harassment page to set the anti-harassment parameters.4. Open the communication app, share the other business card to the robot, make a call, the other party can receive incoming calls. But also by sharing the other business card to the robot, add each other to the white list, blacklist, so you from harassment.'
+    =>'一. 描述：最安全的網絡語音呼叫平台。在您的通訊app 上直接撥打對方手機，呼叫對方及時回复您。讓溝通更高效、便捷。二. 操作流程:. 使用郵箱或者手機號碼註冊賬號，並登陸。2. 進入賬戶中心編輯基本資料, 綁定通訊app，添加聯繫方式。3. 進入防騷擾頁面設置防騷擾參數。4. 打開通訊app，分享對方名片給機器人，進行呼叫，對方即可收到來電呼叫。也可通過分享對方名片給機器人，將對方添加至白名單、黑名單，讓您免受騷擾',
+    'Product introduction and operation process'=>'產品介紹及操作流程',
 ); 

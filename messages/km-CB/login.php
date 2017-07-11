@@ -47,5 +47,8 @@
   'Password contains at least 8 characters, including at least the following two characters: capital letters, lowercase letters, numbers, symbols' => 'ពាក្យសម្ងាត់ដែលមានយ៉ាងហោចណាស់ 8 តួអក្សរ, រួមទាំងការយ៉ាងហោចណាស់ដូចខាងក្រោមតួអក្សរពីរ: អក្សរធំ, អក្សរតូចលេខនិមិត្តសញ្ញា',
     'We have sent verification code to your registered mail:'=>'យើងបានផ្ញើលេខកូដផ្ទៀងផ្ទាត់ទៅអ៊ីមែលដែលបានចុះឈ្មោះរបស់អ្នក:',
     'Please  fill in the received code.'=>'សូមបំពេញនៅក្នុងការទទួលបានកូដផ្ទៀងផ្ទាត់。',
-
+    'Set phone number'=>'បន្ថែមទូរស័ព្ទទំនាក់ទំនង',
+    'Bind potato'=>'ការចង potato',
+    'Bind telegram'=>'ការចង telegram',
+    'Please do the following'=>'សូមធ្វើដូចខាងក្រោម'
     );
