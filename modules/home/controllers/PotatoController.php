@@ -122,8 +122,9 @@ class PotatoController extends GController
                 }
 
 
-            }else if($message['request_type']==$potatoMap->requestMapType){
-                $potatoMap->potatoUid = isset($message['sender_id']) ? $message['sender_id'] : $message['user_id'];
+            }else if($message['request_type'] == $potatoMap->requestMapType ){
+
+                $potatoMap->potatoUid = $potato->potatoUid;
                 $potatoMap->searchMapText = $message['text'];
                 return $potatoMap->sendMap();
 

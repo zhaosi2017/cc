@@ -31,6 +31,15 @@ class PotatoMap extends Model
         return $this->errorCode;
     }
 
+    public function setSearchMapText($value)
+    {
+        $this->searchMapText = $value;
+    }
+
+    public function getSearchMapText()
+    {
+        return $this->searchMapText;
+    }
 
     public function setSendData($value)
     {
