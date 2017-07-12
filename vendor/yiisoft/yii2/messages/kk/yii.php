@@ -57,7 +57,7 @@ return [
     'You can upload at most {limit, number} {limit, plural, one{file} other{files}}.' => 'Сіз {limit} файлдан көп жүктей алмайсыз.',
     'the input value' => 'енгізілген мән',
     '{attribute} "{value}" has already been taken.' => '{attribute} «{value}» Бұл бос емес мән.',
-    '{attribute} cannot be blank.' => '«{attribute}» толтыруды қажет етеді.',
+    '{attribute} can not be blank.' => '«{attribute}» толтыруды қажет етеді.',
     '{attribute} is invalid.' => '«{attribute}» мәні жарамсыз.',
     '{attribute} is not a valid URL.' => '«{attribute}» жарамды URL емес.',
     '{attribute} is not a valid email address.' => '«{attribute}» жарамды email адрес емес.',

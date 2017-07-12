@@ -64,7 +64,7 @@ return [
     'in {delta, plural, =1{an hour} other{# hours}}' => 'en {delta, plural, =1{una hora} other{# hores}}',
     'the input value' => 'el valor d\'entrada',
     '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" ja ha sigut utilitzat.',
-    '{attribute} cannot be blank.' => '{attribute} no pot estar buit.',
+    '{attribute} can not be blank.' => '{attribute} no pot estar buit.',
     '{attribute} is invalid.' => '{attribute} és invalid.',
     '{attribute} is not a valid URL.' => '{attribute} no és una URL valida.',
     '{attribute} is not a valid email address.' => '{attribute} no es una direcció de correu valida.',

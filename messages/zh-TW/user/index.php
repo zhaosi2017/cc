@@ -1,5 +1,5 @@
 <?php return array (
-  'Bind CellPhone Number' => '綁定手機',
+  'Bind Phone Number' => '綁定手機',
   'Bind Email' => '綁定郵箱',
   'Build UserName' => '綁定用戶名',
   'Password' => '登錄密碼',

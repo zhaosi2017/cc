@@ -50,7 +50,7 @@
   'just now' => '',
   'the input value' => '',
   '{attribute} "{value}" has already been taken.' => '',
-  '{attribute} cannot be blank.' => '',
+  '{attribute} can not be blank.' => '',
   '{attribute} contains wrong subnet mask.' => '',
   '{attribute} is invalid.' => '',
   '{attribute} is not a valid URL.' => '',

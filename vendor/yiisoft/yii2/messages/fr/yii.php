@@ -69,7 +69,7 @@ return [
     'just now' => 'à l\'instant',
     'the input value' => 'la valeur d\'entrée',
     '{attribute} "{value}" has already been taken.' => '{attribute} « {value} » a déjà été pris.',
-    '{attribute} cannot be blank.' => '{attribute} ne peut être vide.',
+    '{attribute} can not be blank.' => '{attribute} ne peut être vide.',
     '{attribute} contains wrong subnet mask.' => '{attribute} contient un masque de sous-réseau non valide.',
     '{attribute} is invalid.' => '{attribute} est invalide.',
     '{attribute} is not a valid URL.' => '{attribute} n\'est pas une URL valide.',

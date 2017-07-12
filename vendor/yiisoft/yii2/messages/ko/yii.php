@@ -56,7 +56,7 @@ return [
     'You can upload at most {limit, number} {limit, plural, one{file} other{files}}.' => '최대 {limit} 개의 파일을 업로드할 수 있습니다.',
     'the input value' => '입력 값',
     '{attribute} "{value}" has already been taken.' => '{attribute}에 "{value}"이 이미 사용되고 있습니다.',
-    '{attribute} cannot be blank.' => '{attribute}는 공백일 수 없습니다.',
+    '{attribute} can not be blank.' => '{attribute}는 공백일 수 없습니다.',
     '{attribute} is invalid.' => '{attribute}가 잘못되었습니다.',
     '{attribute} is not a valid URL.' => '{attribute}는 올바른 URL 형식이 아닙니다.',
     '{attribute} is not a valid email address.' => '{attribute}는 올바른 이메일 주소 형식이 아닙니다.',

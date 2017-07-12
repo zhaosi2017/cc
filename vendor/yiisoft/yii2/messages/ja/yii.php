@@ -65,7 +65,7 @@ return [
     'just now' => '現在',
     'the input value' => '入力値',
     '{attribute} "{value}" has already been taken.' => '{attribute} で "{value}" は既に使われています。',
-    '{attribute} cannot be blank.' => '{attribute} は空白ではいけません。',
+    '{attribute} can not be blank.' => '{attribute} は空白ではいけません。',
     '{attribute} contains wrong subnet mask.' => '{attribute} は無効なサブネットマスクを含んでいます。',
     '{attribute} is invalid.' => '{attribute} は無効です。',
     '{attribute} is not a valid URL.' => '{attribute} は有効な URL 書式ではありません。',

@@ -68,7 +68,7 @@ return [
     'just now' => 'هم اکنون',
     'the input value' => 'مقدار ورودی',
     '{attribute} "{value}" has already been taken.' => '{attribute} با مقدار "{value}" در حال حاضر گرفته‌شده است.',
-    '{attribute} cannot be blank.' => '{attribute} نمی‌تواند خالی باشد.',
+    '{attribute} can not be blank.' => '{attribute} نمی‌تواند خالی باشد.',
     '{attribute} contains wrong subnet mask.' => '{attribute} شامل فرمت زیرشبکه اشتباه است.',
     '{attribute} is invalid.' => '{attribute} معتبر نیست.',
     '{attribute} is not a valid URL.' => '{attribute} یک URL معتبر نیست.',

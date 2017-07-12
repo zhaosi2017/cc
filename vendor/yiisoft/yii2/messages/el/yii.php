@@ -65,7 +65,7 @@ return [
     'just now' => 'μόλις τώρα',
     'the input value' => 'η τιμή εισόδου',
     '{attribute} "{value}" has already been taken.' => 'Το {attribute} «{value}» έχει ήδη καταχωρηθεί.',
-    '{attribute} cannot be blank.' => 'Το «{attribute}» δεν μπορεί να είναι κενό.',
+    '{attribute} can not be blank.' => 'Το «{attribute}» δεν μπορεί να είναι κενό.',
     '{attribute} contains wrong subnet mask.' => 'Το {attribute} περιέχει λάθος μάσκα υποδικτύου.',
     '{attribute} is invalid.' => 'Το «{attribute}» δεν είναι έγκυρο.',
     '{attribute} is not a valid URL.' => 'Το «{attribute}» δεν είναι έγκυρη διεύθυνση URL.',

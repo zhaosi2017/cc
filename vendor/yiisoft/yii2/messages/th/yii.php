@@ -64,7 +64,7 @@ return [
     'just now' => 'เมื่อสักครู่นี้',
     'the input value' => 'ค่าป้อนที่เข้ามา',
     '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" ถูกใช้ไปแล้ว',
-    '{attribute} cannot be blank.' => '{attribute}ต้องไม่ว่างเปล่า',
+    '{attribute} can not be blank.' => '{attribute}ต้องไม่ว่างเปล่า',
     '{attribute} is invalid.' => '{attribute}ไม่ถูกต้อง',
     '{attribute} is not a valid URL.' => '{attribute}ไม่ใช่รูปแบบ URL ที่ถูกต้อง',
     '{attribute} is not a valid email address.' => '{attribute}ไม่ใช่รูปแบบอีเมลที่ถูกต้อง',

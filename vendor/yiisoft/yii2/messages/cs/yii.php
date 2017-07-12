@@ -66,7 +66,7 @@ return [
     'just now' => 'právě teď',
     'the input value' => 'vstupní hodnota',
     '{attribute} "{value}" has already been taken.' => 'Hodnota "{value}" pro údaj {attribute} již byla dříve použita.',
-    '{attribute} cannot be blank.' => 'Je zapotřebí vyplnit {attribute}.',
+    '{attribute} can not be blank.' => 'Je zapotřebí vyplnit {attribute}.',
     '{attribute} is invalid.' => 'Neplatná hodnota pro {attribute}.',
     '{attribute} is not a valid URL.' => '{attribute} není platná URL.',
     '{attribute} is not a valid email address.' => 'Pro {attribute} nebyla použita platná emailová adresa.',

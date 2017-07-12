@@ -71,7 +71,7 @@ return [
     'just now' => 'baru sahaja',
     'the input value' => 'nilai input',
     '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" telah digunakan.',
-    '{attribute} cannot be blank.' => '{attribute} tidak boleh dibiarkan kosong.',
+    '{attribute} can not be blank.' => '{attribute} tidak boleh dibiarkan kosong.',
     '{attribute} is invalid.' => '{attribute} tidak sah.',
     '{attribute} is not a valid URL.' => '{attribute} alamat URL yang tidak sah.',
     '{attribute} is not a valid email address.' => '{attribute} adalah alamat email yang tidak sah.',

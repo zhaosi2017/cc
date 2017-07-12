@@ -57,7 +57,7 @@ return [
     'You can upload at most {limit, number} {limit, plural, one{file} other{files}}.' => 'تستطيع كأقصى حد تحميل {limit, number} {limit, plural, one{ملف} few{ملفات} many{ملف} other{ملفات}}.',
     'the input value' => 'قيمة المُدخل',
     '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" سبق استعماله',
-    '{attribute} cannot be blank.' => '{attribute} لا يمكن تركه فارغًا.',
+    '{attribute} can not be blank.' => '{attribute} لا يمكن تركه فارغًا.',
     '{attribute} is invalid.' => '{attribute} غير صالح.',
     '{attribute} is not a valid URL.' => '{attribute} ليس بعنوان صحيح.',
     '{attribute} is not a valid email address.' => '{attribute} ليس ببريد إلكتروني صحيح.',

@@ -65,7 +65,7 @@ return array (
   'in {delta, plural, =1{an hour} other{# hours}}' => '{delta, plural, =1{ühe tunni} other{# tunni}} pärast',
   'the input value' => 'sisendväärtus',
   '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" on juba kasutuses.',
-  '{attribute} cannot be blank.' => '{attribute} ei tohi olla tühi.',
+  '{attribute} can not be blank.' => '{attribute} ei tohi olla tühi.',
   '{attribute} is invalid.' => '{attribute} on vigane.',
   '{attribute} is not a valid URL.' => '{attribute} ei ole korrektne URL.',
   '{attribute} is not a valid email address.' => '{attribute} ei ole korrektne e-posti aadress.',

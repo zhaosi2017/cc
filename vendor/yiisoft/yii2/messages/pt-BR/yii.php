@@ -91,7 +91,7 @@ return [
     'You can upload at most {limit, number} {limit, plural, one{file} other{files}}.' => 'Você pode fazer o upload de, no máximo, {limit, number} {limit, plural, one{arquivo} other{arquivos}}.',
     'the input value' => 'o valor de entrada',
     '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" já foi utilizado.',
-    '{attribute} cannot be blank.' => '"{attribute}" não pode ficar em branco.',
+    '{attribute} can not be blank.' => '"{attribute}" não pode ficar em branco.',
     '{attribute} contains wrong subnet mask.' => '{attribute} contém a máscara de sub-rede errado.',
     '{attribute} is invalid.' => '"{attribute}" é inválido.',
     '{attribute} is not a valid URL.' => '"{attribute}" não é uma URL válida.',

@@ -85,7 +85,7 @@ return [
     'in {delta, plural, =1{an hour} other{# hours}}' => 'po {delta, plural, =1{valandos} one{# valandos} other{# valandų}}',
     'the input value' => 'įvesties reikšmė',
     '{attribute} "{value}" has already been taken.' => '{attribute} reikšmė „{value}“ jau naudojama.',
-    '{attribute} cannot be blank.' => '„{attribute}“ negali būti tuščias.',
+    '{attribute} can not be blank.' => '„{attribute}“ negali būti tuščias.',
     '{attribute} is invalid.' => '„{attribute}“ reikšmė netinkama.',
     '{attribute} is not a valid URL.' => '„{attribute}“ įvestas netinkamas URL.',
     '{attribute} is not a valid email address.' => '„{attribute}“ įvestas netinkamas el. pašto adresas.',

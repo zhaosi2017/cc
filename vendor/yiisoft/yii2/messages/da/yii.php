@@ -65,7 +65,7 @@ return array (
   'in {delta, plural, =1{an hour} other{# hours}}' => 'om {delta, plural, =1{en time} other{# timer}}',
   'the input value' => 'inputværdien',
   '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" er allerede i brug.',
-  '{attribute} cannot be blank.' => '{attribute} må ikke være tom.',
+  '{attribute} can not be blank.' => '{attribute} må ikke være tom.',
   '{attribute} is invalid.' => '{attribute} er ugyldig.',
   '{attribute} is not a valid URL.' => '{attribute} er ikke en gyldig URL.',
   '{attribute} is not a valid email address.' => '{attribute} er ikke en gyldig emailadresse.',

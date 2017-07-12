@@ -65,7 +65,7 @@ return array (
   'in {delta, plural, =1{an hour} other{# hours}}' => 'след {delta, plural, =1{час} other{# часа}}',
   'the input value' => 'стойността',
   '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" вече е зает.',
-  '{attribute} cannot be blank.' => 'Попълнете полето "{attribute}".',
+  '{attribute} can not be blank.' => 'Попълнете полето "{attribute}".',
   '{attribute} is invalid.' => 'Полето "{attribute}" е некоректно попълнено.',
   '{attribute} is not a valid URL.' => 'Полето "{attribute}" съдържа невалиден УЕБ адрес.',
   '{attribute} is not a valid email address.' => 'Полето "{attribute}" съдържа невалиден email адрес.',

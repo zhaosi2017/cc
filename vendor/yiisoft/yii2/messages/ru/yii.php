@@ -68,7 +68,7 @@ return [
     'just now' => 'прямо сейчас',
     'the input value' => 'введённое значение',
     '{attribute} "{value}" has already been taken.' => 'Значение «{value}» для «{attribute}» уже занято.',
-    '{attribute} cannot be blank.' => 'Необходимо заполнить «{attribute}».',
+    '{attribute} can not be blank.' => 'Необходимо заполнить «{attribute}».',
     '{attribute} contains wrong subnet mask.' => 'Значение «{attribute}» содержит неверную маску подсети.',
     '{attribute} is invalid.' => 'Значение «{attribute}» неверно.',
     '{attribute} is not a valid URL.' => 'Значение «{attribute}» не является правильным URL.',

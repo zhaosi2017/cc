@@ -72,5 +72,6 @@ return [
     'Please edit : email'=>'请编辑:邮箱',
     'Please edit : username'=>'请编辑:用户名',
     'Jump over'=>'跳过',
+    'Get code'=>'获取验证码',
 
     ];
