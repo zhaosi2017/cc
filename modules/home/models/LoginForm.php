@@ -400,10 +400,29 @@ class LoginForm extends Model
     {
         Yii::$app->getSession()->hasFlash('step-potato') && Yii::$app->getSession()->removeFlash('step-potato');
         Yii::$app->getSession()->hasFlash('step-telegram') && Yii::$app->getSession()->removeFlash('step-telegram');
+        Yii::$app->getSession()->hasFlash('step-email') && Yii::$app->getSession()->removeFlash('step-email');
+        Yii::$app->getSession()->hasFlash('step-username') && Yii::$app->getSession()->removeFlash('step-username');
+        Yii::$app->getSession()->hasFlash('step-phone') && Yii::$app->getSession()->removeFlash('step-phone');
+
     }
 
     public static function checkFlash()
     {
+        $res = Yii::$app->getSession()->getFlash('step-email');
+        if(!empty($res)){
+            return json_decode($res,true);
+        }
+
+        $res = Yii::$app->getSession()->getFlash('step-username');
+        if(!empty($res)){
+            return json_decode($res,true);
+        }
+
+        $res = Yii::$app->getSession()->getFlash('step-phone');
+        if(!empty($res)){
+            return json_decode($res,true);
+        }
+
         $res = Yii::$app->getSession()->getFlash('step-potato');
         if(!empty($res)){
             return json_decode($res,true);

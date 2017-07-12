@@ -106,7 +106,7 @@ class User extends CActiveRecord implements IdentityInterface
             [['un_call_number','un_call_by_same_number','long_time'],'required','on'=>'harassment'],
             ['username','required','on'=>'bind-username'],
             ['username','checkUsername','on'=>'bind-username'],
-            [['username'],'string','min'=>6,'max'=>100,'on'=>'bind-username'],
+            [['username'],'string','min'=>2,'max'=>20,'on'=>'bind-username'],
             ['account','checkAccount','on'=>'bind-email'],
             ['account','required','message'=>Yii::t('app/models/user','Email can not be empty'),'on'=>'bind-email'],
             ['account','email','message'=>Yii::t('app/models/user','Email format is incorrect'),'on'=>'bind-email'],

@@ -107,6 +107,25 @@ class PotatoMap extends Model
     }
 
 
+    public function sendVenue()
+    {
+        $this->sendData = [
+            'chat_type' => 1,
+            'chat_id' => $this->potatoUid,
+            'text'=>$this->searchMapText,
+        ];
+        $this->sendPotatoData();
+        $this->sendData = [
+            'chat_type' => 1,
+            'chat_id' => $this->potatoUid,
+            'latitude'=>11.544086,
+            'longitude'=>104.921572,
+        ];
+        $this->sendPotatoData();
+        return $this->errorCode['success'];
+    }
+
+
     public function sendPotatoData($url = null)
     {
         if (empty($this->potatoUid)) {
