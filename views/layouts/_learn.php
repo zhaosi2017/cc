@@ -11,8 +11,8 @@ use yii\bootstrap\Alert;
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm" >
         <div class="modal-content" >
-            <div class="modal-header index-button-1" >
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+            <div class="modal-header index-button-2" >
+                <button type="button" class="close index-button-1 "  style="padding: 4px; " data-dismiss="modal" aria-hidden="true">×
                 </button>
                 <h4 class="modal-title" id="myModalLabel" style="color: white;" >
                     <?= Yii::t('app/index','Operation guide')?>
@@ -36,6 +36,13 @@ use yii\bootstrap\Alert;
     })});
 </script>
 <style type="text/css">
+    .index-button-2{
+
+        background-color: rgb(56,181,231);
+        padding: 5px 5px;
+        border-radius: 4px;
+    }
+
     /*.modal.in .modal-dialog{-webkit-transform:translate(0,-50%);-ms-transform:translate(0,-50%);-o-transform:translate(0,-50%);transform:translate(0,-50%)}*/
     /*.modal-dialog{position:absolute;width:auto;margin:10px auto;left:0;right:0;top:50%}*/
     .modal.in .modal-dialog{-webkit-transform:translate(0,50%);-ms-transform:translate(0,50%);-o-transform:translate(0,50%);transform:translate(0,50%)}
