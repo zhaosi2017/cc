@@ -62,11 +62,13 @@ class RegisterForm extends Model
 
     public function register()
     {
+        $session = Yii::$app->session ;
         $user = new User();
         $user->account = $this->username;
         $user->password = $this->password;
         $user->login_time = time();
         $user->login_ip = Yii::$app->request->getUserIP();
+        $user->language = $session['language'] ? $session['language'] :'zh-CN';
         return $user->save();
     }
 

@@ -569,6 +569,8 @@ class UserController extends GController
                 $user = User::findOne($id);
                 $user->language = $language;
                 if ($user->save()){
+                    $session = Yii::$app->session ;
+                    $session['language'] = $language;
                     return json_encode(['status'=>0]);
                 }
             }
