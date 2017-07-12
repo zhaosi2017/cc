@@ -57,5 +57,8 @@
     'Please edit : contact' => 'កែសម្រួល: ទំនាក់ទំនង',
     'Please edit : basic information' => 'កែសម្រួល: ពមូលដ្ឋាន',
     'Please set : anti harassment' => 'កំណត់: ប្រឆាំងនឹងការយាយី',
+    'Please edit : contact number'=>'កែសម្រួល: ទូរ',
     'Jump over' => 'រំលង',
+    'Please edit : email'=>'កែសម្រួល: ប្រអប់',
+    'Please edit : username'=>'កែសម្រួល: ឈ្មោះអ្',
 ); 

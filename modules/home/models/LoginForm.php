@@ -360,12 +360,25 @@ class LoginForm extends Model
         $user = User::findOne(Yii::$app->user->id);
         $arr= [];
         if($user->step == 0) {
+            if(empty($user->account)){
+                $tmp = [ 'type'=>'step-email','url' => '/home/user/bind-email', 'message' => Yii::t('app/index', 'Please edit : email')];
+                Yii::$app->getSession()->setFlash('step-email',json_encode($tmp));
+                $arr[] = $tmp;
+            }
+
+            if(empty($user->username)){
+                $tmp = [ 'type'=>'step-username','url' => '/home/user/bind-username', 'message' => Yii::t('app/index', 'Please edit : username')];
+                Yii::$app->getSession()->setFlash('step-username',json_encode($tmp));
+                $arr[] = $tmp;
+            }
 
             if (empty($user->phone_number)) {
-                $tmp = [ 'type'=>'step-phone','url' => '/home/user/set-phone-number', 'message' => Yii::t('app/index', 'Please edit : contact')];
+                $tmp = [ 'type'=>'step-phone','url' => '/home/user/set-phone-number', 'message' => Yii::t('app/index', 'Please edit : contact number')];
                 Yii::$app->getSession()->setFlash('step-phone',json_encode($tmp));
                 $arr[] = $tmp;
             }
+
+
             if (empty($user->potato_number)) {
                 $tmp = ['type'=>'step-potato','url' => '/home/potato/bind-potato','message'=>Yii::t('app/index','Please bind the communication app : potato')];
                 Yii::$app->getSession()->setFlash('step-potato',json_encode($tmp));

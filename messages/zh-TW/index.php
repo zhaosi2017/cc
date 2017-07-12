@@ -50,7 +50,7 @@
     '1. Use the mailbox or mobile phone number to register the account, and landing.' => '1. 使用郵箱或者手機號碼註冊賬號，並登陸',
     '2. Enter the account center to edit the basic information, bind the communication app, add contact information.' => '2. 進入賬戶中心編輯基本資料, 綁定通訊app，添加聯繫方式。',
     '3. Enter the anti-harassment page to set the anti-harassment parameters.' => '3. 進入防騷擾頁面設置防騷擾參數。',
-    '4. Open the communication app, share the other business card to the robot, make a call, the other party can receive incoming calls. But also by sharing the other business card to the robot, add each other to the white list, blacklist, so you from harassment.' => '4. 打開通訊app，分享對方名片給機器人，進行呼叫，對方即可收到來電呼叫。也可通過分享對方名片給機器人，將對方添加至白名單、黑名單，讓您免受騷擾。',
+    '4. Open the communication app, share the other business card to the robot, make a call, the other party can receive incoming calls. But also by sharing the other business card to the robot, add each other to the white list, blacklist, so you from harassment.' => '4. 打開通訊app，分享對方名片給機器人，進行呼叫，對方即可收到來電呼叫。也可以分享對方名片給機器人，將對方添加至白名單、黑名單，讓您免受騷擾。',
     'Operation guide' => '操作引導',
     'Please bind the communication app : potato' => '請綁定通訊app：potato',
     'Please bind the communication app : tetegram' => '請綁定通訊app：tetegram',
@@ -58,4 +58,7 @@
     'Please edit : basic information' => '請編輯:基本資料',
     'Please set : anti harassment' => '請設置:防騷擾',
     'Jump over' => '跳過',
+    'Please edit : contact number'=>'請編輯:聯繫電話',
+    'Please edit : email'=>'請編輯:郵箱',
+    'Please edit : username'=>'請編輯:用戶名',
 ); 

@@ -58,5 +58,8 @@
     'Please edit : contact' => '편집 : 연락',
     'Please edit : basic information' => '편집 : 기본 정보',
     'Please set : anti harassment' => '설정 : 안티 괴롭힘을',
+    'Please edit : contact number'=>'편집 : 전화',
     'Jump over' => '건너 뛰기',
+    'Please edit : email'=>'편집 : 사서함',
+    'Please edit : username'=>'편집 : 사용자 이름',
 ); 

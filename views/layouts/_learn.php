@@ -19,10 +19,10 @@ use yii\bootstrap\Alert;
                 </h4>
             </div>
             <div class="modal-body text-center" >
-                <?=  $message  ?>
+                <span> <?=  $message  ?></span>
             </div>
-            <div class="modal-footer">
-                <a class="btn btn-default index-button-1" href="/"><?= Yii::t('app/index','Jump over')?></a>
+            <div class="modal-footer" style="border-top: 0px;">
+                <a class="btn btn-default index-button-1" href="/home/user/index"><?= Yii::t('app/index','Jump over')?></a>
                 <button type="button" class="btn btn-default index-button-1" data-dismiss="modal"><?= Yii::t('app/login','Ok')?>
                 </button>
 
@@ -40,7 +40,21 @@ use yii\bootstrap\Alert;
 
         background-color: rgb(56,181,231);
         padding: 5px 5px;
-        border-radius: 4px;
+        border-radius: 6px 6px 0px 0px;
+    }
+    .modal-content{
+
+        border-radius: 7px;
+    }
+
+    .modal-body span{
+        line-height: 32px;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.42857143;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
     }
 
     /*.modal.in .modal-dialog{-webkit-transform:translate(0,-50%);-ms-transform:translate(0,-50%);-o-transform:translate(0,-50%);transform:translate(0,-50%)}*/
