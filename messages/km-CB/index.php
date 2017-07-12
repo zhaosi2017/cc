@@ -61,4 +61,5 @@
     'Jump over' => 'រំលង',
     'Please edit : email'=>'កែសម្រួល: ប្រអប់',
     'Please edit : username'=>'កែសម្រួល: ឈ្មោះអ្',
+    'Get code'=>'ទទួលបានកូដផ្ទៀ',
 ); 

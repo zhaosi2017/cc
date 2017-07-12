@@ -1,5 +1,5 @@
 <?php return array (
-  'Bind CellPhone Number' => '셀폰 번호 바인딩',
+  'Bind Phone Number' => '셀폰 번호 바인딩',
   'Bind Email' => '이메일 바인드',
   'Build UserName' => '사용자 이름 작성',
   'Password' => '암호',

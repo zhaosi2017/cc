@@ -91,7 +91,7 @@ return [
     '{delta, plural, =1{a month} other{# months}} ago' => '{delta} моҳи қабл',
     '{delta, plural, =1{a year} other{# years}} ago' => '{delta} сол пеш',
     '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" машғул аст.',
-    '{attribute} cannot be blank.' => '{attribute} набояд холи бошад.',
+    '{attribute} can not be blank.' => '{attribute} набояд холи бошад.',
     '{attribute} is invalid.' => '{attribute} ғалат аст.',
     '{attribute} is not a valid URL.' => '{attribute} URL ғалат аст.',
     '{attribute} is not a valid email address.' => '{attribute} E-mail одреси ғалат аст.',

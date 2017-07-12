@@ -1,5 +1,5 @@
 <?php return array (
-  'Bind CellPhone Number' => 'លេខទូរស័ព្ទដៃចង',
+  'Bind Phone Number' => 'លេខទូរស័ព្ទដៃចង',
   'Bind Email' => 'ចងអ៊ីមែល',
   'Build UserName' => 'Build ឈ្មោះអ្នកប្រើ',
   'Password' => 'ការពាក្យសម្ងាត់',

@@ -88,7 +88,7 @@ return [
     'just now' => 'xoziroq',
     'the input value' => 'kiritilgan qiymat',
     '{attribute} "{value}" has already been taken.' => '{attribute} «{value}» avvalroq band qilingan.',
-    '{attribute} cannot be blank.' => '«{attribute}» to`ldirish shart.',
+    '{attribute} can not be blank.' => '«{attribute}» to`ldirish shart.',
     '{attribute} is invalid.' => '«{attribute}» qiymati noto`g`ri.',
     '{attribute} is not a valid URL.' => '«{attribute}» qiymati to`g`ri URL emas.',
     '{attribute} is not a valid email address.' => '«{attribute}» qiymati to`g`ri email manzil emas.',

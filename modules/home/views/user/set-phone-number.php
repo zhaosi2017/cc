@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-sm-2 text-right">
             <div class="form-group">
                 <label for="task-customer-category" class="col-sm-12 control-label" style="padding-top: 7px;">
-                   <?= Yii::t('app/user/set-phone-number' ,'CellPhone Number');?>
+                   <?= Yii::t('app/user/set-phone-number' ,'Phone Number');?>
                 </label>
             </div>
         </div>
@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <span style=\"height:34px; width: 100px\" class=\"help-block m-b-none\">{error}</span>
                                         </div>",
                  'options'=>['class'=>'form-group field-contactform-phone_number required has-success ' ,'style'=>'margin-left: -50px;']
-                ])->textInput(['placeholder' => Yii::t('app/user/set-phone-number' ,'CellPhone Number') ,
+                ])->textInput(['placeholder' => Yii::t('app/user/set-phone-number' ,'Phone Number') ,
                                 'size'=>13,
                                 'class'=>'form-control col-sm-2'
                                 ])
@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-sm-2 text-right">
             <div class="form-group">
                 <label for="task-customer-category" class="col-sm-12 control-label" style="padding-top: 7px;">
-                    <?= Yii::t('app/user/set-phone-number' ,'Verification code');?>
+                    <?= Yii::t('app/index' ,'Get code');?>
             </div>
         </div>
         <div class="col-sm-10">
@@ -91,7 +91,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             return false;
                         }
                         if($('#contactform-phone_number').val() == ''){
-                            alert('<?= Yii::t("app/user/update-phone-number", "Cellphone Number is empty")?>');
+                            alert('<?= Yii::t("app/user/update-phone-number", "Phone Number is empty")?>');
                             return false;
                         }
 
@@ -116,11 +116,11 @@ $this->params['breadcrumbs'][] = $this->title;
                             }else{
                                 window.clearInterval(dt);
                                 $('#count-down').attr('disabled',false).val(
-                                                        '<?= Yii::t("app/user/update-phone-number" ,"Get verification code")?>');
+                                                        '<?= Yii::t("app/index" ,"Get code")?>');
                             }
                         };
                         var dt = self.setInterval(countDown,1000);
-                    " value='<?= Yii::t("app/user/update-phone-number" ,"Get verification code")?>'
+                    " value='<?= Yii::t("app/index" ,"Get code")?>'
                      style="background-color: #39b5e7;color: white;margin-left: -27px; width: 100% ;padding-left: 0px" />
                 </div>
                 <div class="col-sm-7"  >

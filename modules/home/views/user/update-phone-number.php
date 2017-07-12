@@ -82,7 +82,7 @@ $this->title =  Yii::t('app/user/update-phone-number','Edit Phone number');
                                     return false;
                                     }
                                     if($('#phoneregisterform-phone').val() == ''){
-                                    alert('<?= Yii::t("app/user/update-phone-number", "Cellphone Number is empty")?>');
+                                    alert('<?= Yii::t("app/user/update-phone-number", "Phone Number is empty")?>');
                                     return false;
                                     }
 
@@ -106,11 +106,11 @@ $this->title =  Yii::t('app/user/update-phone-number','Edit Phone number');
                                     duration--;
                                     }else{
                                     window.clearInterval(dt);
-                                    $('#count-down').attr('disabled',false).val('<?= Yii::t("" ,"Get verification code")?>');
+                                    $('#count-down').attr('disabled',false).val('<?= Yii::t("app/index" ,"Get code")?>');
                                     }
                                     };
                                     var dt = self.setInterval(countDown,1000);
-                                    " value='<?= Yii::t("app/user/update-phone-number" ,"Get verification code")?>' style="background-color: #39b5e7;color: white;">
+                                    " value='<?= Yii::t("app/user/update-phone-number" ,"Get code")?>' style="background-color: #39b5e7;color: white;">
                                 <div class="help-block"></div>
 <!--                            </div>-->
                         </div>

@@ -1,5 +1,5 @@
 <?php return array (
-  'Bind CellPhone Number' => 'バインドセル電話番号',
+  'Bind Phone Number' => 'バインドセル電話番号',
   'Bind Email' => '電子メールをバインドする',
   'Build UserName' => 'ユーザー名を作成する',
   'Password' => 'パスワード',

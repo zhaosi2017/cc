@@ -89,7 +89,7 @@ return [
     'just now' => 'proprio ora',
     'the input value' => 'il valore del campo',
     '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" è già presente.',
-    '{attribute} cannot be blank.' => '{attribute} non può essere vuoto.',
+    '{attribute} can not be blank.' => '{attribute} non può essere vuoto.',
     '{attribute} is invalid.' => '{attribute} non è valido.',
     '{attribute} is not a valid URL.' => '{attribute} non è un URL valido.',
     '{attribute} is not a valid email address.' => '{attribute} non è un indirizzo email valido.',

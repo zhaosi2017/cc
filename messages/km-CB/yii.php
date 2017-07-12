@@ -50,7 +50,7 @@
   'just now' => 'គ្រាន់តែឥឡូវនេះ',
   'the input value' => 'តម្លៃបញ្ចូល',
   '{attribute} "{value}" has already been taken.' => '{គុណលក្ខណៈ} "{តម្លៃ}" ត្រូវបានគេយករួចហើយ។',
-  '{attribute} cannot be blank.' => '{គុណលក្ខណៈ} មិនអាចទទេ។',
+  '{attribute} can not be blank.' => '{គុណលក្ខណៈ} មិនអាចទទេ។',
   '{attribute} contains wrong subnet mask.' => '{} មានរបាំងគុណលក្ខណៈខុសបណ្ដាញរង។',
   '{attribute} is invalid.' => '{គុណលក្ខណៈ} មិនត្រឹមត្រូវ។',
   '{attribute} is not a valid URL.' => '{គុណលក្ខណៈ} គឺមិនមែនជា URL ត្រឹមត្រូវ។',

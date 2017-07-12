@@ -65,7 +65,7 @@ return array (
   'in {delta, plural, =1{an hour} other{# hours}}' => '{delta} órán belül',
   'the input value' => 'a beviteli érték',
   '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" már használatban van.',
-  '{attribute} cannot be blank.' => '{attribute} nem lehet üres.',
+  '{attribute} can not be blank.' => '{attribute} nem lehet üres.',
   '{attribute} is invalid.' => '{attribute} érvénytelen.',
   '{attribute} is not a valid URL.' => '{attribute} nem valódi URL.',
   '{attribute} is not a valid email address.' => '{attribute} nem valódi e-mail cím.',

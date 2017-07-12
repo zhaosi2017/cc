@@ -9,7 +9,7 @@
 
 return [
 
-    'Bind CellPhone Number'=>'绑定手机',
+    'Bind Phone Number'=>'绑定手机',
     'Bind Email'=>'绑定邮箱',
     'Build UserName'=>'绑定用户名',
     'Password'=>'登录密码',

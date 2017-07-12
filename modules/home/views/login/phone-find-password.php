@@ -121,11 +121,11 @@ $this->title = Yii::t('app/login','Forget password');
                                         duration--;
                                         }else{
                                         window.clearInterval(dt);
-                                        $('#count-down').attr('disabled',false).val('<?php echo Yii::t("app/login","Get verification code")?>');
+                                        $('#count-down').attr('disabled',false).val('<?php echo Yii::t("app/index","Get code")?>');
                                         }
                                         };
                                         var dt = self.setInterval(countDown,1000);
-                                        " value='<?php echo Yii::t("app/login","Get verification code")?>'>
+                                        " value='<?php echo Yii::t("app/index","Get code")?>'>
                                 </div>
                                 <div class=" col-sm-8 help-block"></div>
                             </div>

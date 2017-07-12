@@ -50,7 +50,7 @@
   'just now' => '방금',
   'the input value' => '입력 값',
   '{attribute} "{value}" has already been taken.' => '{attribute} "{value}"은 이미 사용되었습니다.',
-  '{attribute} cannot be blank.' => '{attribute}은 비워 둘 수 없습니다.',
+  '{attribute} can not be blank.' => '{attribute}은 비워 둘 수 없습니다.',
   '{attribute} contains wrong subnet mask.' => '{attribute}에 잘못된 서브넷 마스크가 있습니다.',
   '{attribute} is invalid.' => '{속성}이 (가) 잘못되었습니다.',
   '{attribute} is not a valid URL.' => '{attribute}은 (는) 유효한 URL이 아닙니다.',

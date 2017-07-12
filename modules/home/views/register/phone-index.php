@@ -109,11 +109,11 @@ $this->title = Yii::t('app/login','Register');
                             duration--;
                         }else{
                             window.clearInterval(dt);
-                            $('#count-down').attr('disabled',false).val('<?=Yii::t("app/login","Get verification code")?>');
+                            $('#count-down').attr('disabled',false).val('<?=Yii::t("app/index","Get code")?>');
                         }
                     };
                     var dt = self.setInterval(countDown,1000);
-                " value='<?=Yii::t("app/login","Get verification code")?>'>
+                " value='<?=Yii::t("app/index","Get code")?>'>
                 <div class="help-block"></div>
             </div>
             </div>

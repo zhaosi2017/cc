@@ -63,7 +63,7 @@ return [
     'just now' => 'just nu',
     'the input value' => 'inmatningsvärdet',
     '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" används redan.',
-    '{attribute} cannot be blank.' => 'Värdet för {attribute} får inte vara tomt.',
+    '{attribute} can not be blank.' => 'Värdet för {attribute} får inte vara tomt.',
     '{attribute} is invalid.' => 'Värdet för {attribute} är ogiltigt.',
     '{attribute} is not a valid URL.' => '{attribute} är inte en giltig URL.',
     '{attribute} is not a valid email address.' => '{attribute} är inte en giltig emailadress.',

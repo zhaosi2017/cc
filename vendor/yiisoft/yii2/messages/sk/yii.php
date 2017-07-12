@@ -68,7 +68,7 @@ return [
     'just now' => 'práve teraz',
     'the input value' => 'vstupná hodnota',
     '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" je už použité.',
-    '{attribute} cannot be blank.' => 'Pole {attribute} nesmie byť prázdne.',
+    '{attribute} can not be blank.' => 'Pole {attribute} nesmie byť prázdne.',
     '{attribute} contains wrong subnet mask.' => '{attribute} obsahuje neplatnú masku podsiete.',
     '{attribute} is invalid.' => 'Pole {attribute} je neplatné.',
     '{attribute} is not a valid URL.' => '{attribute} nie je platná URL.',

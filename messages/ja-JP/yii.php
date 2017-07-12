@@ -50,7 +50,7 @@
   'just now' => 'ちょうど今',
   'the input value' => '入力値',
   '{attribute} "{value}" has already been taken.' => '{属性} "{値}"は既に使用されています。',
-  '{attribute} cannot be blank.' => '{属性}は空白にすることはできません。',
+  '{attribute} can not be blank.' => '{属性}は空白にすることはできません。',
   '{attribute} contains wrong subnet mask.' => '{属性}に間違ったサブネットマスクが含まれています。',
   '{attribute} is invalid.' => '{属性}は無効です。',
   '{attribute} is not a valid URL.' => '{属性}は有効なURLではありません。',
