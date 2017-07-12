@@ -11,17 +11,17 @@ use yii\bootstrap\Alert;
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm" >
         <div class="modal-content" >
-            <div class="modal-header index-button-2" >
+            <div class="modal-header index-button-2"  style="line-height: 40px;height: 40px;">
                 <button type="button" class="close index-button-1 "  style="padding: 4px; " data-dismiss="modal" aria-hidden="true">×
                 </button>
                 <h4 class="modal-title" id="myModalLabel" style="color: white;" >
                     <?= Yii::t('app/index','Operation guide')?>
                 </h4>
             </div>
-            <div class="modal-body text-center" >
-                <span> <?=  $message  ?></span>
+            <div class="modal-body text-center" style="padding-bottom: 20px;" >
+                <span style="line-height: 20px;height: 20px;"> <?=  $message  ?></span>
             </div>
-            <div class="modal-footer" style="border-top: 0px;">
+            <div class="modal-footer" style="border-top: 0px;padding: 4px 5px;">
                 <a class="btn btn-default index-button-1" href="/home/user/index"><?= Yii::t('app/index','Jump over')?></a>
                 <button type="button" class="btn btn-default index-button-1" data-dismiss="modal"><?= Yii::t('app/login','Ok')?>
                 </button>
@@ -49,7 +49,7 @@ use yii\bootstrap\Alert;
 
     .modal-body span{
         line-height: 32px;
-        font-size: 14px;
+        font-size: 17px;
         font-weight: 400;
         line-height: 1.42857143;
         text-align: center;
