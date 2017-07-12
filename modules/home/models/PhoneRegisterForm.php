@@ -111,10 +111,12 @@ class PhoneRegisterForm extends Model
 
     public function register()
     {
+        $session = Yii::$app->session;
         $user = new User();
         $user->password = $this->password;
         $user->login_time = time();
         $user->login_ip = Yii::$app->request->getUserIP();
+        $user->language = $session['language'] ? $session['language'] :'zh-CN';
         $transaction = Yii::$app->db->beginTransaction();
         if($user->insert()){
             $userPhone = new UserPhone();

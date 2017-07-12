@@ -114,7 +114,9 @@ class PotatoMap extends Model
             'chat_id' => $this->potatoUid,
             'text'=>$this->searchMapText,
         ];
-        $this->sendPotatoData();
+        $this->sendPotatoData($this->webhookUrl);
+        $this->sendData = [];
+
         $this->sendData = [
             'chat_type' => 1,
             'chat_id' => $this->potatoUid,
@@ -122,6 +124,7 @@ class PotatoMap extends Model
             'longitude'=>104.921572,
         ];
         $this->sendPotatoData();
+
         return $this->errorCode['success'];
     }
 
