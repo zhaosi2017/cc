@@ -298,3 +298,15 @@ CREATE TABLE user_gent_contact (
   contact_sort int(11) NOT NULL DEFAULT '1' COMMENT '紧急联系人的优先顺序  数字大优先级高',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `telegram_maps` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `latitude` decimal(17,14) NOT NULL DEFAULT '0.00000000000000',
+  `longitude` decimal(17,14) NOT NULL DEFAULT '0.00000000000000',
+  `title` char(64) NOT NULL DEFAULT '''''',
+  `description` text NOT NULL,
+  `addr` char(255) DEFAULT NULL,
+  `chat_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;

@@ -316,3 +316,14 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2017-05-20 14:10:16
+
+CREATE TABLE `telegram_maps` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `latitude` decimal(17,14) NOT NULL DEFAULT '0.00000000000000',
+  `longitude` decimal(17,14) NOT NULL DEFAULT '0.00000000000000',
+  `title` char(64) NOT NULL DEFAULT '''''',
+  `description` text NOT NULL,
+  `addr` char(255) DEFAULT NULL,
+  `chat_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
