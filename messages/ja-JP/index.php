@@ -57,5 +57,8 @@
     'Please edit : contact' => '編集：連絡先',
     'Please edit : basic information' => '編集：基本情報',
     'Please set : anti harassment' => 'セット：アンチハラスメント',
+    'Please edit : contact number'=>'編集：電話',
     'Jump over' => 'スキップ',
+    'Please edit : email'=>'編集：メールボックス',
+    'Please edit : username'=>'編集：ユーザー名',
 ); 

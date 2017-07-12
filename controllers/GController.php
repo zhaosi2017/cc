@@ -83,7 +83,7 @@ class GController extends Controller
     {
 
         $url = '/'.Yii::$app->request->getPathInfo();
-        $arr = ['/home/user/set-phone-number', '/home/potato/bind-potato', '/home/telegram/bind-telegram'];
+        $arr = ['/home/user/set-phone-number', '/home/potato/bind-potato', '/home/telegram/bind-telegram','/home/user/bind-username','/home/user/bind-email'];
         if( !in_array($url,$arr) && Yii::$app->request->isGet )
         {
             $res = LoginForm::checkFlash();
