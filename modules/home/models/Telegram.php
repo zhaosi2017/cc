@@ -1519,7 +1519,7 @@ class Telegram extends Model
             if (!$res) {
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
-                    'text' => $this->translateLanguage('抱歉本次呼叫' . $nickname . '失败，请稍后再试, 或尝试其他方式联系' . $user->nickname . '!'),
+                    'text' => $this->translateLanguage('抱歉本次呼叫' . $nickname . '失败，请稍后再试, 或尝试其他方式联系' . $nickname . '!'),
                 ];
                 $this->sendTelegramData();
             }
