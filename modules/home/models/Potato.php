@@ -1554,7 +1554,7 @@ class Potato extends Model
                 $this->sendData = [
                     'chat_type' => 1,
                     'chat_id' => $this->potatoUid,
-                    'text' => $this->translateLanguage('抱歉本次呼叫"' . $nickname . '"失败，请稍后再试, 或尝试其他方式联系' . $user->nickname . '!'),
+                    'text' => $this->translateLanguage('抱歉本次呼叫"' . $nickname . '"失败，请稍后再试, 或尝试其他方式联系' . $nickname . '!'),
                 ];
                 $this->sendPotatoData();
             }
