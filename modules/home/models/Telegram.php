@@ -8,6 +8,7 @@ use app\modules\home\models\CallRecord;
 use app\modules\home\models\WhiteList;
 use app\modules\home\models\BlackList;
 use app\modules\home\models\UserPhone;
+use app\modules\home\models\Nexmo;
 
 class Telegram extends Model
 {
@@ -1505,6 +1506,19 @@ class Telegram extends Model
                 return $this->errorCode['success'];
             }
 
+            // 呼叫.
+            /*
+            try {
+                $nexmo = new Nexmo();
+                $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->telegramContactFirstName, $this->telegramLastName.$this->telegramFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code.$this->callPersonData->phone_number, 1);
+            } catch (\Exception $e) {
+                $this->sendData = [
+                    'chat_id' => $this->telegramUid,
+                    'text' => $this->translateLanguage('发送异常, 请稍后再试, 异常: '.$e->getMessage()),
+                ];
+                $this->sendTelegramData();
+            }
+            */
             $res = $this->callPersonPhone($nickname);
             // 本人联系方式呼叫失败，尝试呼叫本人的紧急联系方式.
             if (!$res) {
@@ -1519,7 +1533,7 @@ class Telegram extends Model
             if (!$res) {
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
-                    'text' => $this->translateLanguage('抱歉本次呼叫' . $nickname . '失败，请稍后再试, 或尝试其他方式联系' . $user->nickname . '!'),
+                    'text' => $this->translateLanguage('抱歉本次呼叫' . $nickname . '失败，请稍后再试, 或尝试其他方式联系' . $nickname . '!'),
                 ];
                 $this->sendTelegramData();
             }
