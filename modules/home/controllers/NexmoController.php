@@ -47,6 +47,7 @@ class NexmoController extends GController
      */
     public function actionConference()
     {
+        header("content-type:application/json;charset=utf-8");
         $cachKey = Yii::$app->request->get('key');
         $nexmo = new Nexmo();
         $nexmo->setAnswerKey($cachKey);
