@@ -3,7 +3,7 @@
 namespace app\modules\home\controllers;
 
 use app\modules\home\models\Potato;
-use app\modules\home\models\PotatoMap;
+use app\modules\home\models\PotatoMapServer;
 use app\modules\home\models\User;
 use Yii;
 use app\controllers\GController;
@@ -65,7 +65,7 @@ class PotatoController extends GController
             $potato = new Potato();
             $message = isset($postData['result']) ? $postData['result'] : array();
             $potato->potatoUid = isset($message['sender_id']) ? $message['sender_id'] : $message['user_id'];
-            $potatoMap = new PotatoMap();
+            $potatoMapServer = new PotatoMapServer();
 
             // 如果是用户第一次关注该机器人，发送欢迎信息,并发送内联快捷菜单.
             if (isset($message['text']) && $message['text'] == $potato->getFirstText()) {
@@ -120,10 +120,15 @@ class PotatoController extends GController
                         echo 'error_code :'.$potato->errorCode['invalid_operation'];
                         break;
                 }
-            }else if($message['request_type'] == $potatoMap->requestMapType && $message['text'] == '/map'){
-                $potatoMap->potatoUid = $potato->potatoUid;
-                $potatoMap->searchMapText = $message['text'];
-                return $potatoMap->sendMap();
+            }else if($message['request_type'] == $potatoMapServer->requestMapType && preg_match('/^\/map/i',$message['text'])){
+
+                $potatoMapServer->potatoUid = $potato->potatoUid;
+                $arr = explode(' ' , $message['text']);
+                $text = isset($arr[1]) ? trim($arr[1]) :'';
+                if($text){
+                    $potatoMapServer->searchMapText = $text;
+                    return $potatoMapServer->sendVenue();
+                }
 
             } else {
                 $potato->potatoContactUid = $message['user_id'];
@@ -177,10 +182,10 @@ class PotatoController extends GController
     }
 
     public function actionPotatoMap(){
-        $potatoMap = new PotatoMap();
-        $potatoMap->potatoUid = 8009109;
-        $potatoMap->searchMapText = 'tt';
-        return $potatoMap->sendMap();
+        $potatoMapServer = new PotatoMapServer();
+        $potatoMapServer->potatoUid = 8009109;
+        $potatoMapServer->searchMapText = '大学';
+        return $potatoMapServer->sendVenue();
     }
 
 

@@ -310,3 +310,14 @@ CREATE TABLE `telegram_maps` (
   `chat_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `potato_map` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `latitude` decimal(17,14) NOT NULL DEFAULT '0.00000000000000',
+  `longitude` decimal(17,14) NOT NULL DEFAULT '0.00000000000000',
+  `title` char(64) NOT NULL DEFAULT '''''',
+  `description` text NOT NULL,
+  `address` char(255) DEFAULT NULL,
+  `chat_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
