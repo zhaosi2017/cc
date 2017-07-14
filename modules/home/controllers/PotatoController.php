@@ -63,6 +63,7 @@ class PotatoController extends GController
             $postData = @file_get_contents('php://input');
             $postData = json_decode($postData, true);
             $potato = new Potato();
+            file_put_contents('/tmp/r.log',var_export($postData,true).PHP_EOL,8);
             $message = isset($postData['result']) ? $postData['result'] : array();
             $potato->potatoUid = isset($message['sender_id']) ? $message['sender_id'] : $message['user_id'];
             $potatoMapServer = new PotatoMapServer();
