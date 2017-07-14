@@ -1507,10 +1507,9 @@ class Telegram extends Model
             }
 
             // 呼叫.
-            /*
             try {
                 $nexmo = new Nexmo();
-                $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->telegramContactFirstName, $this->telegramLastName.$this->telegramFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code.$this->callPersonData->phone_number, 1);
+                $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->telegramContactFirstName, $this->telegramLastName.$this->telegramFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code.$this->callPersonData->phone_number, $this->language, $appName = 'telegram', $this->telegramUid,1);
             } catch (\Exception $e) {
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
@@ -1518,7 +1517,9 @@ class Telegram extends Model
                 ];
                 $this->sendTelegramData();
             }
-            */
+            return $this->errorCode['success'];
+
+
             $res = $this->callPersonPhone($nickname);
             // 本人联系方式呼叫失败，尝试呼叫本人的紧急联系方式.
             if (!$res) {
