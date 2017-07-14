@@ -62,4 +62,5 @@
     'Please edit : email'=>'編集：メールボックス',
     'Please edit : username'=>'編集：ユーザー名',
     'Get code'=>'確認コードを取得します',
+    'Contact Phone'=>'電話',
 ); 

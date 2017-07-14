@@ -194,7 +194,7 @@ $localLanguage = $identity->language;
         ){ echo 'active';}?>" style="display: inline-block;"><a class="second-nav-a" href="/home/user/app-bind"><?= Yii::t('app/index','Communication app binding')?></a></li>
 
         <li class="second-nav-li <?php if((Yii::$app->controller->action->id == 'set-phone-number' || Yii::$app->controller->action->id == 'links' || Yii::$app->controller->action->id == 'add-urgent-contact-person')
-        ){ echo 'active';}?>" style="display: inline-block;"><a class="second-nav-a" href="/home/user/links"><?= Yii::t('app/index','Contact information')?></a></li>
+        ){ echo 'active';}?>" style="display: inline-block;"><a class="second-nav-a" href="/home/user/links"><?= Yii::t('app/index','Contact Phone')?></a></li>
     </ul>
 </div>
 

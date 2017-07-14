@@ -63,4 +63,5 @@
     'Please edit : email'=>'편집 : 사서함',
     'Please edit : username'=>'편집 : 사용자 이름',
     'Get code'=>'인증 코드 받기',
+    'Contact Phone'=>'전화',
 ); 
