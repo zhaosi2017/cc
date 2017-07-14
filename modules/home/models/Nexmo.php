@@ -174,7 +174,7 @@ class Nexmo extends Model
             if (!empty($urgent)) {
                 foreach ($urgent as $key => $value) {
                     $tmp = [];
-                    $tmp['phone_number'] = $value->contact_country_code . $this->contact_phone_number;
+                    $tmp['phone_number'] = $value->contact_country_code . $value->contact_phone_number;
                     $tmp['nickname'] = $value->contact_nickname;
                     $urgentArr[] = $tmp;
                 }
