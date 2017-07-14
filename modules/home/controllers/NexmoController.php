@@ -47,10 +47,10 @@ class NexmoController extends GController
      */
     public function actionConference()
     {
-        header("content-type:application/json;charset=utf-8");
         $cachKey = Yii::$app->request->get('key');
         $nexmo = new Nexmo();
         $nexmo->setAnswerKey($cachKey);
+        header("content-type:application/json;charset=utf-8");
         $data = $nexmo->answer();
 
         // 输出json数据.
@@ -62,10 +62,11 @@ class NexmoController extends GController
      */
     public function actionEvent()
     {
-        $cachKey = Yii::$app->request->get('key');
-        if (!empty($cachKey)) {
+        $postData = @file_get_contents('php://input');
+        $postData = json_decode($postData, true);
+        if (!empty($postData)) {
             $nexmo = new Nexmo();
-            $nexmo->setEventKey($cachKey);
+            $nexmo->setEventData($postData);
             return $nexmo->event();
         }
     }

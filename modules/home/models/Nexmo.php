@@ -25,11 +25,11 @@ class Nexmo extends Model
     private $_webhook;
     private $_sendData;
     private $_answerKey;
-    private $_eventKey;
+    private $_eventData;
     private $_tlanguage;
     private $_enventUrl;
     private $_answerUrl = 'https://www.callu.online/home/nexmo/conference?key=';
-    private $_eventUrl = 'https://www.callu.online/home/nexmo/event?key=';
+    private $_eventUrl = 'https://www.callu.online/home/nexmo/event';
     private $translateUrl = 'https://translation.googleapis.com/language/translate/v2?key=AIzaSyAV_rXQu5ObaA9_rI7iqL4EDB67oXaH3zk';
     private $_resultUrl = 'https://api.nexmo.com/v1/calls';
     private $loop = 3;
@@ -63,9 +63,9 @@ class Nexmo extends Model
     /**
      * @param $value
      */
-    public function setEventKey($value)
+    public function setEventData($value)
     {
-        $this->_eventKey = $value;
+        $this->_eventData = $value;
     }
 
     /**
@@ -111,9 +111,9 @@ class Nexmo extends Model
     /**
      * @return mixed
      */
-    public function getEventKey()
+    public function getEventData()
     {
-        return $this->_eventKey;
+        return $this->_eventData;
     }
 
     /**
@@ -216,44 +216,22 @@ class Nexmo extends Model
         }
 
         // 给机器人发消息提示操作.
-        switch ($appName) {
-            case 'telegram':
-                $this->setWebhook($this->telegramUrl);
-                $this->sendData = [
-                    'chat_id' => $appUid,
-                    'text' => $text,
-                ];
-                $this->sendRequest();
-                break;
-            case 'potato':
-                $this->setWebhook($this->potatoUrl);
-                $this->sendData = [
-                    'chat_type' => 1,
-                    'chat_id' => $appUid,
-                    'text' => $text,
-                ];
-                $this->sendRequest();
-                break;
-        }
-
+        $this->sendMessageToRobot($appName, $appUid, $text);
         if ($failureStatus) {
             return $data;
         }
         $cacheKey = $callUserId.time();
-        $tmp = [
+        $conference = [
             'action' => 'talk',
             'loop' => $this->loop,
             'lg' => $this->getTlanguage(),
-            'voice' => $this->voice,
+            'voiceName' => $this->voice,
             'text' => $nexmoText,
         ];
 
-        $conference = [
-            json_encode($tmp, JSON_UNESCAPED_UNICODE),
-        ];
         $conferenceCacheKey = $cacheKey.'_pre';
         Yii::$app->redis->set($conferenceCacheKey, json_encode($conference, JSON_UNESCAPED_UNICODE));
-        Yii::$app->redis->expire($conferenceCacheKey, 10*60);
+        Yii::$app->redis->expire($conferenceCacheKey, 5*60);
         $anserUrl = $this->getAnswerUrl();
         $eventUrl = $this->getEnventUrl();
         $call = $client->calls()->create([
@@ -269,7 +247,7 @@ class Nexmo extends Model
                 $anserUrl.$conferenceCacheKey,
             ],
             'event_url' => [
-                $eventUrl.$cacheKey,
+                $eventUrl,
             ]
         ]);
 
@@ -278,12 +256,12 @@ class Nexmo extends Model
         $uuid = isset($call['uuid']) ? $call['uuid'] : '';
 
         if (!empty($uuid)) {
+            $cacheKey = $uuid;
             Yii::$app->redis->hset($cacheKey, 'time', time());
-            Yii::$app->redis->hset($cacheKey, 'uuid', $uuid);
             Yii::$app->redis->hset($cacheKey, 'number', $number);
             Yii::$app->redis->hset($cacheKey, 'appName', $appName);
             Yii::$app->redis->hset($cacheKey, 'language', $language);
-            Yii::$app->redis->hset($cacheKey, 'language', $appUid);
+            Yii::$app->redis->hset($cacheKey, 'appUid', $appUid);
             Yii::$app->redis->hset($cacheKey, 'isUrgent', $isUrgent);
             Yii::$app->redis->hset($cacheKey, 'calledUserId', $calledUserId);
             Yii::$app->redis->hset($cacheKey, 'callUserId', $callUserId);
@@ -307,9 +285,13 @@ class Nexmo extends Model
      */
     public function answer()
     {
-        $data = Yii::$app->redis->get($this->getAnswerKey());
-        if (!empty($data)) {
-            $data = json_decode($data, true);
+        $cacheData = Yii::$app->redis->get($this->getAnswerKey());
+        if (!empty($cacheData)) {
+            $tmp = json_decode($cacheData, true);
+            $tmp = json_encode($tmp, JSON_UNESCAPED_UNICODE);
+            $data = [
+                $tmp
+            ];
         } else {
             $data = [];
         }
@@ -370,10 +352,21 @@ class Nexmo extends Model
      */
     public function event()
     {
-        $cacheKey = $this->getEventKey();
-        $uuid = Yii::$app->redis->hget($cacheKey, 'uuid');
-        sleep(4);
+
+        $postData = $this->getEventKey();
+        $uuid = isset($postData['uuid']) ? $postData['uuid'] : '';
+        $cacheKey = $uuid;
+        Yii::$app->redis->zincrby($cacheKey, 1, 'times');
+        $times = Yii::$app->redis->hget($cacheKey, 'times');
+        $status = 0;
+        if (isset($postData['duration']) && $postData['duration'] > 0) {
+            $status = 1;
+        } elseif ($times < 4) {
+            return;
+        }
+
         if (!empty($uuid)) {
+            /*
             $base_url = $this->getResultUrl();
             $url = $base_url.'/'.$uuid;
             $application_id = $this->applicationId;
@@ -385,51 +378,38 @@ class Nexmo extends Model
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', "Authorization: Bearer " . $jwt ));
             $response = curl_exec($ch);
             $response = json_decode($response, true);
+            */
 
-            $calledUserId = Yii::$app->redis->hget($cacheKey, 'calledUserId');
-            $callUserId = Yii::$app->redis->hget($cacheKey, 'callUserId');
-            $calledAppName = Yii::$app->redis->hget($cacheKey, 'calledAppName');
-            $callAppName = Yii::$app->redis->hget($cacheKey, 'callAppName');
-            $calledNickname = Yii::$app->redis->hget($cacheKey, 'calledNickname');
-            $callNickname = Yii::$app->redis->hget($cacheKey, 'callNickname');
-            $contactPhoneNumber = Yii::$app->redis->hget($cacheKey, 'contactPhoneNumber');
-            $calledNumberArr = Yii::$app->redis->hget($cacheKey, 'calledNumberArr');
-            $calledUrgentArr = Yii::$app->redis->hget($cacheKey, 'calledUrgentArr');
-            $number = Yii::$app->redis->hget($cacheKey, 'number');
-            $isUrgent = Yii::$app->redis->hget($cacheKey, 'isUrgent');
-            $language = Yii::$app->redis->hget($cacheKey, 'language');
-            $appName = Yii::$app->redis->hget($cacheKey, 'appName');
-            $appUid = Yii::$app->redis->hget($cacheKey, 'appUid');
-            $calledNumberArr = json_decode($calledNumberArr, true);
-            $calledUrgentArr = json_decode($calledUrgentArr, true);
-            $status = 0;
+            if ($status) {
+                $appUid = Yii::$app->redis->hget($cacheKey, 'appUid');
+                $calledAppName = Yii::$app->redis->hget($cacheKey, 'calledAppName');
+            } else {
+                $calledUserId = Yii::$app->redis->hget($cacheKey, 'calledUserId');
+                $callUserId = Yii::$app->redis->hget($cacheKey, 'callUserId');
+                $calledAppName = Yii::$app->redis->hget($cacheKey, 'calledAppName');
+                $callAppName = Yii::$app->redis->hget($cacheKey, 'callAppName');
+                $calledNickname = Yii::$app->redis->hget($cacheKey, 'calledNickname');
+                $callNickname = Yii::$app->redis->hget($cacheKey, 'callNickname');
+                $contactPhoneNumber = Yii::$app->redis->hget($cacheKey, 'contactPhoneNumber');
+                $calledNumberArr = Yii::$app->redis->hget($cacheKey, 'calledNumberArr');
+                $calledUrgentArr = Yii::$app->redis->hget($cacheKey, 'calledUrgentArr');
+                $number = Yii::$app->redis->hget($cacheKey, 'number');
+                $isUrgent = Yii::$app->redis->hget($cacheKey, 'isUrgent');
+                $language = Yii::$app->redis->hget($cacheKey, 'language');
+                $appName = Yii::$app->redis->hget($cacheKey, 'appName');
+                $appUid = Yii::$app->redis->hget($cacheKey, 'appUid');
+                $calledNumberArr = json_decode($calledNumberArr, true);
+                $calledUrgentArr = json_decode($calledUrgentArr, true);
+            }
             // 呼叫成功，产生费用.
-            if ($response['price'] > 0 && $response['duration'] > 0) {
-                $status = 1;
+            if ($status) {
                 $text = $this->translateLanguage('呼叫'.$calledAppName.'成功!');
             } else {
                 $text = $this->translateLanguage('呼叫'.$calledAppName.'失败!');
             }
 
-            switch ($appName) {
-                case 'telegram':
-                    $this->setWebhook($this->telegramUrl);
-                    $this->sendData = [
-                        'chat_id' => $appUid,
-                        'text' => $text,
-                    ];
-                    $this->sendRequest();
-                    break;
-                case 'potato':
-                    $this->setWebhook($this->potatoUrl);
-                    $this->sendData = [
-                        'chat_type' => 1,
-                        'chat_id' => $appUid,
-                        'text' => $text,
-                    ];
-                    $this->sendRequest();
-                    break;
-            }
+            // 发消息到机器人.
+            $this->sendMessageToRobot($appName, $appUid, $text);
 
             // 保存通话记录.
             $res = $this->saveCallRecordData($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $number, $status, $isUrgent);
@@ -438,6 +418,34 @@ class Nexmo extends Model
             if (!$status) {
                 $this->callPerson($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $language, $appName, $appUid,0, $calledNumberArr, $calledUrgentArr);
             }
+        }
+    }
+
+    /**
+     * @param $appName
+     * @param $appUid
+     * @param $text
+     */
+    private function sendMessageToRobot($appName, $appUid, $text)
+    {
+        switch ($appName) {
+            case 'telegram':
+                $this->setWebhook($this->telegramUrl);
+                $this->sendData = [
+                    'chat_id' => $appUid,
+                    'text' => $text,
+                ];
+                $this->sendRequest();
+                break;
+            case 'potato':
+                $this->setWebhook($this->potatoUrl);
+                $this->sendData = [
+                    'chat_type' => 1,
+                    'chat_id' => $appUid,
+                    'text' => $text,
+                ];
+                $this->sendRequest();
+                break;
         }
     }
 
