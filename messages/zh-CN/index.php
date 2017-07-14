@@ -73,5 +73,6 @@ return [
     'Please edit : username'=>'请编辑:用户名',
     'Jump over'=>'跳过',
     'Get code'=>'获取验证码',
+    'Contact Phone'=>'联系电话',
 
     ];

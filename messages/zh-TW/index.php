@@ -62,4 +62,5 @@
     'Please edit : email'=>'請編輯:郵箱',
     'Please edit : username'=>'請編輯:用戶名',
     'Get code'=>'獲取驗證碼',
+    'Contact Phone'=>'聯繫電話',
 ); 
