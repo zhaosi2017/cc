@@ -359,12 +359,11 @@ class Nexmo extends Model
             return false;
         }
 
-        $status = 0;
-        Yii::$app->redis->zincrby($cacheKey, 1, 'times');
-        $times = Yii::$app->redis->hget($cacheKey, 'times');
-        if (isset($postData['duration']) && $postData['duration'] > 0) {
-            $status = 1;
-        } elseif ($times < 4) {
+        // Yii::$app->redis->zincrby($cacheKey, 1, 'times');
+        // $times = Yii::$app->redis->hget($cacheKey, 'times');
+        if (isset($postData['duration'])) {
+            $postData['duration'] > 0 ? ($status = 1) : ($status = 0);
+        } else {
             return;
         }
 
