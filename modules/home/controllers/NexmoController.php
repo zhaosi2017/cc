@@ -29,12 +29,12 @@ class NexmoController extends GController
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index'],
+                        'actions' => ['index', 'event', 'conference'],
                         'roles' => ['?'],
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index',],
+                        'actions' => ['index'],
                         'roles' => ['@'],
                     ],
                 ],
@@ -47,9 +47,12 @@ class NexmoController extends GController
      */
     public function actionConference()
     {
+        $cachKey = Yii::$app->request->get('key');
         $nexmo = new Nexmo();
+        $nexmo->setAnswerKey($cachKey);
         $data = $nexmo->answer();
 
+        // 输出json数据.
         echo $data;
     }
 
@@ -58,8 +61,12 @@ class NexmoController extends GController
      */
     public function actionEvent()
     {
-        $nexmo = new Nexmo();
-        $nexmo->event();
+        $cachKey = Yii::$app->request->get('key');
+        if (!empty($cachKey)) {
+            $nexmo = new Nexmo();
+            $nexmo->setEventKey($cachKey);
+            return $nexmo->event();
+        }
     }
 
 }
