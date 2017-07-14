@@ -252,7 +252,7 @@ class Nexmo extends Model
             json_encode($tmp, JSON_UNESCAPED_UNICODE),
         ];
         $conferenceCacheKey = $cacheKey.'_pre';
-        Yii::$app->redis->expire($conferenceCacheKey, json_encode($conference, JSON_UNESCAPED_UNICODE));
+        Yii::$app->redis->set($conferenceCacheKey, json_encode($conference, JSON_UNESCAPED_UNICODE));
         Yii::$app->redis->expire($conferenceCacheKey, 10*60);
         $anserUrl = $this->getAnswerUrl();
         $eventUrl = $this->getEnventUrl();
