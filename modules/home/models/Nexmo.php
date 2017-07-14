@@ -280,7 +280,7 @@ class Nexmo extends Model
             Yii::$app->redis->hset($cacheKey, 'number', $number);
             Yii::$app->redis->hset($cacheKey, 'appName', $appName);
             Yii::$app->redis->hset($cacheKey, 'language', $language);
-            Yii::$app->redis->hset($cacheKey, 'language', $appUid);
+            Yii::$app->redis->hset($cacheKey, 'appUid', $appUid);
             Yii::$app->redis->hset($cacheKey, 'isUrgent', $isUrgent);
             Yii::$app->redis->hset($cacheKey, 'calledUserId', $calledUserId);
             Yii::$app->redis->hset($cacheKey, 'callUserId', $callUserId);
