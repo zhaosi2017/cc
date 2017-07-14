@@ -6,175 +6,26 @@ use yii\base\Model;
 use app\modules\home\models\User;
 use app\modules\home\models\CallRecord;
 
-class PotatoMap extends Model
+class PotatoMap extends \app\models\CActiveRecord
 {
-    private $requestMapType = 1;
-    private $requestLocationType = 5;
-    private $potatoUid;
-    private $searchMapText;
-    private $webhookUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendTextMessage';
-    private $maphookurl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendLocation';
-    private $sendData;
-
-    private $errorCode = [
-        'success' => 200,
-        'error' => 400,
-        'invalid_operation' => 401,
-        'not_yourself' => 402,
-        'exist' => 403,
-        'noexist' => 404,
-        'emptyuid' => 405,
-    ];
-
-
-    public function getErrorCode()
+/**
+ * This is the model class for table "potato_map".
+ *
+ * @property integer $id
+ * @property string  $title;
+ * @property string  $description;
+ * @property string  $address;
+ * @property integer $chat_id;
+ * @property string  $latitude;
+ * @property string  $longitude;
+*/
+    public static function tableName()
     {
-        return $this->errorCode;
-    }
-
-    public function setSearchMapText($value)
-    {
-        $this->searchMapText = $value;
-    }
-
-    public function getSearchMapText()
-    {
-        return $this->searchMapText;
-    }
-
-    public function setSendData($value)
-    {
-        $this->sendData = $value;
-    }
-
-    public function getSendData()
-    {
-        return $this->sendData;
-    }
-
-    public function setWebhook($value)
-    {
-        $this->webhookUrl = $value;
-    }
-
-    public function getWebhook()
-    {
-        return $this->webhookUrl;
+        return 'potato_map';
     }
 
 
-    public function setMaphook($value)
-    {
-        $this->maphookurl = $value;
-    }
-
-    public function getMaphook()
-    {
-        return $this->maphookurl;
-    }
-
-    public function setPotatoUid($value)
-    {
-        $this->potatoUid = $value;
-    }
-
-    public function getPotatoUid()
-    {
-        return $this->potatoUid;
-    }
-
-    public function getRequestMapType()
-    {
-        return $this->requestMapType;
-    }
-
-    public function getRequestLocationType()
-    {
-        return $this->requestLocationType;
-    }
 
 
-    public function sendMap()
-    {
-        $this->sendData = [
-            'chat_type' => 1,
-            'chat_id' => $this->potatoUid,
-            'latitude'=>11.544086,
-            'longitude'=>104.921572,
-        ];
-        $this->sendPotatoData();
-        return $this->errorCode['success'];
-    }
 
-
-    public function sendVenue()
-    {
-        $this->sendData = [
-            'chat_type' => 1,
-            'chat_id' => $this->potatoUid,
-            'text'=>$this->searchMapText,
-        ];
-        $this->sendPotatoData($this->webhookUrl);
-        $this->sendData = [];
-
-        $this->sendData = [
-            'chat_type' => 1,
-            'chat_id' => $this->potatoUid,
-            'latitude'=>11.544086,
-            'longitude'=>104.921572,
-        ];
-        $this->sendPotatoData();
-
-        return $this->errorCode['success'];
-    }
-
-
-    public function sendPotatoData($url = null)
-    {
-        if (empty($this->potatoUid)) {
-            return "error #:";
-        }
-        if (is_array($this->sendData)) {
-            $this->sendData = json_encode($this->sendData, true);
-        }
-        if (empty($url)) {
-            $url = $this->getMaphook();
-        }
-
-        $curl = curl_init();
-        curl_setopt_array(
-            $curl,
-            array(
-                CURLOPT_URL => $url,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => "",
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 30,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_POSTFIELDS => $this->sendData,
-                CURLOPT_HTTPHEADER => array(
-                    "cache-control: no-cache",
-                    "content-type: application/json",
-                ),
-            )
-        );
-
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-        curl_close($curl);
-        if (empty($url)) {
-            $response = json_decode($response, true);
-            if (!$response['ok']) {
-                return "error_cod #:".$response['error_code'].', description: '.$response['description'];
-            }
-        }
-
-        if ($err) {
-            return "error #:" . $err;
-        } else {
-            return $response;
-        }
-
-    }
 }
