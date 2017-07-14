@@ -62,10 +62,11 @@ class NexmoController extends GController
      */
     public function actionEvent()
     {
-        $cachKey = Yii::$app->request->get('key');
-        if (!empty($cachKey)) {
+        $postData = @file_get_contents('php://input');
+        $postData = json_decode($postData, true);
+        if (!empty($postData)) {
             $nexmo = new Nexmo();
-            $nexmo->setEventKey($cachKey);
+            $nexmo->setEventData($postData);
             return $nexmo->event();
         }
     }
