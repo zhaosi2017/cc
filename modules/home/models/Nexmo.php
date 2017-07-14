@@ -353,19 +353,22 @@ class Nexmo extends Model
     public function event()
     {
 
-        $postData = $this->getEventKey();
-        $uuid = isset($postData['uuid']) ? $postData['uuid'] : '';
-        $cacheKey = $uuid;
+        $postData = $this->getEventData();
+        $cacheKey = isset($postData['uuid']) ? $postData['uuid'] : '';
+        if (empty($cacheKey)) {
+            return false;
+        }
+
+        $status = 0;
         Yii::$app->redis->zincrby($cacheKey, 1, 'times');
         $times = Yii::$app->redis->hget($cacheKey, 'times');
-        $status = 0;
         if (isset($postData['duration']) && $postData['duration'] > 0) {
             $status = 1;
         } elseif ($times < 4) {
             return;
         }
 
-        if (!empty($uuid)) {
+        if (!empty($cacheKey)) {
             /*
             $base_url = $this->getResultUrl();
             $url = $base_url.'/'.$uuid;
@@ -412,7 +415,7 @@ class Nexmo extends Model
             $this->sendMessageToRobot($appName, $appUid, $text);
 
             // 保存通话记录.
-            $res = $this->saveCallRecordData($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $number, $status, $isUrgent);
+            $this->saveCallRecordData($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $number, $status, $isUrgent);
 
             // 呼叫失败, 呼叫下一联系人.
             if (!$status) {
