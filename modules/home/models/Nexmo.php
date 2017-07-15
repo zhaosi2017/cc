@@ -275,7 +275,7 @@ class Nexmo extends Model
             Yii::$app->redis->hset($cacheKey, 'contactPhoneNumber', $contactPhoneNumber);
             Yii::$app->redis->hset($cacheKey, 'calledNumberArr', json_encode($calledNumberArr));
             Yii::$app->redis->hset($cacheKey, 'calledUrgentArr', json_encode($calledUrgentArr));
-            Yii::$app->redis->expire($cacheKey, 10*60);
+            Yii::$app->redis->expire($cacheKey, 30*60);
         }
 
         return $uuid;
