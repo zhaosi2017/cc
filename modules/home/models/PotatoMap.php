@@ -25,6 +25,19 @@ class PotatoMap extends \app\models\CActiveRecord
     }
 
 
+    public function rules()
+    {
+        return [
+                [['title','description','address'],'string'],
+                [['chat_id'],'integer'],
+                [['latitude','longitude'],'required'],
+            ];
+    }
+
+
+
+
+
 
 
 

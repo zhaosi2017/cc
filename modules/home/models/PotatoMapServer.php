@@ -11,8 +11,9 @@ class PotatoMapServer extends Model
 {
 
 
-    private $requestMapType = 1;
+    private $requestMapType = 6;
     private $requestLocationType = 5;
+    private $requestTextType = 1;
     private $potatoUid;
     private $searchMapText;
     private $webHookUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendTextMessage';
@@ -20,6 +21,7 @@ class PotatoMapServer extends Model
     private $venueHookUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendVenue';
     private $sendData;
     private $maxRequestNum = 5;
+    private $key;
 
 
     private $errorCode = [
@@ -33,6 +35,19 @@ class PotatoMapServer extends Model
     ];
 
 
+    public function setKey($value)
+    {
+        $this->key = $value;
+    }
+
+    public function getKey()
+    {
+        return $this->key;
+    }
+    public  function getRequestTextType()
+    {
+        return $this->requestTextType;
+    }
     public function getErrorCode()
     {
         return $this->errorCode;
@@ -137,22 +152,30 @@ class PotatoMapServer extends Model
 
     public function sendVenue()
     {
-        $maps = $this->searchMap();
+        file_put_contents('/tmp/rs.log',$this->searchMapText.PHP_EOL,8);
+        return $this->errorCode['success'];
 
+        $maps = $this->searchMap();
         if(!empty($maps)){
             foreach ($maps as $key=>$map)
             {
                 $this->sendData = [
                     'chat_type' => 1,
                     'chat_id' => $this->potatoUid,
-                    'latitude' => (float)$map->latitude,
-                    'longitude' => (float)$map->longitude,
+                    'latitude' => (double)$map->latitude,
+                    'longitude' =>(double)$map->longitude,
                     'title'=>$map->title,
                     'address'=>$map->address?$map->address:'',
                 ];
                 $this->sendPotatoData($this->venueHookUrl);
             }
         }
+        return $this->errorCode['success'];
+    }
+
+    public function addMap()
+    {
+        Yii::$app->redis->setex($this->key, 5*60, $this->searchMapText);
         return $this->errorCode['success'];
     }
 
