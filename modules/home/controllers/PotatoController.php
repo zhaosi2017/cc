@@ -3,6 +3,7 @@
 namespace app\modules\home\controllers;
 
 use app\modules\home\models\Potato;
+use app\modules\home\models\PotatoMap;
 use app\modules\home\models\PotatoMapServer;
 use app\modules\home\models\User;
 use Yii;
@@ -63,7 +64,6 @@ class PotatoController extends GController
             $postData = @file_get_contents('php://input');
             $postData = json_decode($postData, true);
             $potato = new Potato();
-            file_put_contents('/tmp/r.log',var_export($postData,true).PHP_EOL,8);
             $message = isset($postData['result']) ? $postData['result'] : array();
             $potato->potatoUid = isset($message['sender_id']) ? $message['sender_id'] : $message['user_id'];
             $potatoMapServer = new PotatoMapServer();
@@ -121,16 +121,16 @@ class PotatoController extends GController
                         echo 'error_code :'.$potato->errorCode['invalid_operation'];
                         break;
                 }
-            }else if($message['request_type'] == $potatoMapServer->requestMapType && preg_match('/^\/map/i',$message['text'])){
-
-                $potatoMapServer->potatoUid = $potato->potatoUid;
-                $arr = explode(' ' , $message['text']);
-                $text = isset($arr[1]) ? trim($arr[1]) :'';
-                if($text){
-                    $potatoMapServer->searchMapText = $text;
+            }else if($message['request_type'] == $potatoMapServer->requestTextType && preg_match('/^\/map/i',$message['text'])){
+                    $potatoMapServer->potatoUid = $potato->potatoUid;
+                    $potatoMapServer->key = $potato->potatoUid.'-potato';
+                    $potatoMapServer->searchMapText = json_encode($postData);
                     return $potatoMapServer->sendVenue();
-                }
-
+            }else if($message['request_type'] == $potatoMapServer->requestLocationType || $message['request_type'] == $potatoMapServer->requestMapType){
+                $potatoMapServer->potatoUid = $potato->potatoUid;
+                $potatoMapServer->key = $potato->potatoUid.'-potato';
+                $potatoMapServer->searchMapText = json_encode($postData);
+                return $potatoMapServer->addMap();
             } else {
                 $potato->potatoContactUid = $message['user_id'];
                 $potato->potatoContactFirstName = isset($message['first_name']) ? $message['first_name'] : "";
