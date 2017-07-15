@@ -124,12 +124,12 @@ class PotatoController extends GController
             }else if($message['request_type'] == $potatoMapServer->requestTextType && preg_match('/^\/map/i',$message['text'])){
                     $potatoMapServer->potatoUid = $potato->potatoUid;
                     $potatoMapServer->key = $potato->potatoUid.'-potato';
-                    $potatoMapServer->searchMapText = json_encode($postData);
+                    $potatoMapServer->searchMapText = json_encode($message);
                     return $potatoMapServer->sendVenue();
             }else if($message['request_type'] == $potatoMapServer->requestLocationType || $message['request_type'] == $potatoMapServer->requestMapType){
                 $potatoMapServer->potatoUid = $potato->potatoUid;
                 $potatoMapServer->key = $potato->potatoUid.'-potato';
-                $potatoMapServer->searchMapText = json_encode($postData);
+                $potatoMapServer->searchMapText = json_encode($message);
                 return $potatoMapServer->addMap();
             } else {
                 $potato->potatoContactUid = $message['user_id'];
@@ -185,7 +185,7 @@ class PotatoController extends GController
     public function actionPotatoMap(){
         $potatoMapServer = new PotatoMapServer();
         $potatoMapServer->potatoUid = 8009109;
-        $potatoMapServer->searchMapText = '大学';
+        $potatoMapServer->searchMapText = json_encode(['text'=>'/map -a 大学']);
         return $potatoMapServer->sendVenue();
     }
 
