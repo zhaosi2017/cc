@@ -52,7 +52,9 @@ class NexmoController extends GController
         $nexmo->setAnswerKey($cachKey);
         header("content-type:application/json;charset=utf-8");
 
-        return $nexmo->answer();
+        $data = $nexmo->answer();
+        echo $data;
+        die();
     }
 
     /**
