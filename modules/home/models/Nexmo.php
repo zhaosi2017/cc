@@ -203,8 +203,7 @@ class Nexmo extends Model
             $number = array_shift($calledNumberArr);
             $calledName = $calledAppName;
             $text = $isFirst ? $this->translateLanguage('正在呼叫'.$calledAppName.', 请稍后!') : $this->translateLanguage('正在尝试呼叫'.$calledAppName.'的另外联系电话, 请稍后!');
-            $this->setTlanguage('en');
-            $nexmoText = $callAppName.$this->translateLanguage(' 呼叫您上线'.$appName);
+            $nexmoText = $callAppName.$this->translateLanguage(' 呼叫您上线'.$appName, '', 'en');
         } else {
             $isUrgent = 1;
             $urgentArr = array_shift($calledUrgentArr);
@@ -215,8 +214,7 @@ class Nexmo extends Model
                 $number = $urgentArr['phone_number'];
                 $text = $this->translateLanguage('正在呼叫' . $calledAppName . '的紧急联系人:' . $urgentArr['nickname'] . ', 请稍后!');
                 $calledName = $urgentArr['nickname'];
-                $this->setTlanguage('en');
-                $nexmoText = $this->translateLanguage('请转告' . $calledAppName . ', 上线' . $appName);
+                $nexmoText = $this->translateLanguage('请转告' . $calledAppName . ', 上线' . $appName, '', 'en');
             }
         }
 
@@ -350,13 +348,13 @@ class Nexmo extends Model
     /**
      * 翻译语言.
      */
-    private function translateLanguage($text, $source = null)
+    private function translateLanguage($text, $source = null, $language = '')
     {
 
         $textArr = [
             "q" => $text,
             "format" => "text",
-            "target" => $this->getTlanguage(),
+            "target" => (empty($language)) ? $this->getTlanguage() : $language,
         ];
 
         $data = $text;
@@ -414,6 +412,7 @@ class Nexmo extends Model
             $appUid = Yii::$app->redis->hget($cacheKey, 'appUid');
             $calledNumberArr = json_decode($calledNumberArr, true);
             $calledUrgentArr = json_decode($calledUrgentArr, true);
+            $this->setTlanguage($language);
 
             // 呼叫成功，产生费用.
             if ($status) {
@@ -460,6 +459,8 @@ class Nexmo extends Model
                     'text' => $text,
                 ];
                 $this->sendRequest();
+                break;
+            default :
                 break;
         }
     }
