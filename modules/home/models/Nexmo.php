@@ -202,8 +202,9 @@ class Nexmo extends Model
             $isUrgent = 0;
             $number = array_shift($calledNumberArr);
             $calledName = $calledAppName;
-            $nexmoText = $callAppName.$this->translateLanguage('呼叫您上线'.$appName);
             $text = $isFirst ? $this->translateLanguage('正在呼叫'.$calledAppName.', 请稍后!') : $this->translateLanguage('正在尝试呼叫'.$calledAppName.'的另外联系电话, 请稍后!');
+            $this->setTlanguage('en');
+            $nexmoText = $callAppName.$this->translateLanguage('呼叫您上线'.$appName);
         } else {
             $isUrgent = 1;
             $urgentArr = array_shift($calledUrgentArr);
@@ -212,9 +213,10 @@ class Nexmo extends Model
                 $text = $this->translateLanguage('抱歉本次呼叫'.$calledAppName.'失败，请稍后再试, 或尝试其他方式联系'.$calledAppName.'!');
             } else {
                 $number = $urgentArr['phone_number'];
-                $nexmoText = $this->translateLanguage('请转告' . $calledAppName . ', 上线' . $appName);
                 $text = $this->translateLanguage('正在呼叫' . $calledAppName . '的紧急联系人:' . $urgentArr['nickname'] . ', 请稍后!');
                 $calledName = $urgentArr['nickname'];
+                $this->setTlanguage('en');
+                $nexmoText = $this->translateLanguage('请转告' . $calledAppName . ', 上线' . $appName);
             }
         }
 
@@ -225,7 +227,6 @@ class Nexmo extends Model
         }
 
         $cacheKey = $callUserId.time();
-        $this->setTlanguage('en');
         $tmp = [
             'action' => 'talk',
             'loop' => $this->loop,
