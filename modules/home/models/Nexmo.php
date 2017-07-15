@@ -35,7 +35,7 @@ class Nexmo extends Model
     private $loop = 3;
     private $voice = 'Joey';
     private $cacheKeyPre = 'nexmo_';
-    private $failureStatus = array('unanswered', 'busy', 'timeout');
+    private $failureStatus = ['unanswered', 'busy', 'timeout', 'failed'];
 
 
     /**
