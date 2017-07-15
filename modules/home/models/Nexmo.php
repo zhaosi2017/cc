@@ -200,6 +200,7 @@ class Nexmo extends Model
         if (!empty($calledNumberArr)) {
             $isUrgent = 0;
             $number = array_shift($calledNumberArr);
+            $calledName = $calledAppName;
             $nexmoText = $callAppName.$this->translateLanguage('呼叫您上线'.$appName);
             $text = $isFirst ? $this->translateLanguage('正在呼叫'.$calledAppName.', 请稍后!') : $this->translateLanguage('正在尝试呼叫'.$calledAppName.'的另外联系电话, 请稍后!');
         } else {
@@ -212,6 +213,7 @@ class Nexmo extends Model
                 $number = $urgentArr['phone_number'];
                 $nexmoText = $this->translateLanguage('请转告' . $calledAppName . ', 上线' . $appName);
                 $text = $this->translateLanguage('正在呼叫' . $calledAppName . '的紧急联系人:' . $urgentArr['nickname'] . ', 请稍后!');
+                $calledName = $urgentArr['nickname'];
             }
         }
 
@@ -266,6 +268,7 @@ class Nexmo extends Model
             Yii::$app->redis->hset($cacheKey, 'calledUserId', $calledUserId);
             Yii::$app->redis->hset($cacheKey, 'callUserId', $callUserId);
             Yii::$app->redis->hset($cacheKey, 'calledAppName', $calledAppName);
+            Yii::$app->redis->hset($cacheKey, 'calledName', $calledName);
             Yii::$app->redis->hset($cacheKey, 'callAppName', $callAppName);
             Yii::$app->redis->hset($cacheKey, 'calledNickname', $calledNickname);
             Yii::$app->redis->hset($cacheKey, 'callNickname', $callNickname);
@@ -382,32 +385,29 @@ class Nexmo extends Model
             $response = json_decode($response, true);
             */
 
-            if ($status) {
-                $appUid = Yii::$app->redis->hget($cacheKey, 'appUid');
-                $calledAppName = Yii::$app->redis->hget($cacheKey, 'calledAppName');
-            } else {
-                $calledUserId = Yii::$app->redis->hget($cacheKey, 'calledUserId');
-                $callUserId = Yii::$app->redis->hget($cacheKey, 'callUserId');
-                $calledAppName = Yii::$app->redis->hget($cacheKey, 'calledAppName');
-                $callAppName = Yii::$app->redis->hget($cacheKey, 'callAppName');
-                $calledNickname = Yii::$app->redis->hget($cacheKey, 'calledNickname');
-                $callNickname = Yii::$app->redis->hget($cacheKey, 'callNickname');
-                $contactPhoneNumber = Yii::$app->redis->hget($cacheKey, 'contactPhoneNumber');
-                $calledNumberArr = Yii::$app->redis->hget($cacheKey, 'calledNumberArr');
-                $calledUrgentArr = Yii::$app->redis->hget($cacheKey, 'calledUrgentArr');
-                $number = Yii::$app->redis->hget($cacheKey, 'number');
-                $isUrgent = Yii::$app->redis->hget($cacheKey, 'isUrgent');
-                $language = Yii::$app->redis->hget($cacheKey, 'language');
-                $appName = Yii::$app->redis->hget($cacheKey, 'appName');
-                $appUid = Yii::$app->redis->hget($cacheKey, 'appUid');
-                $calledNumberArr = json_decode($calledNumberArr, true);
-                $calledUrgentArr = json_decode($calledUrgentArr, true);
-            }
+            $calledUserId = Yii::$app->redis->hget($cacheKey, 'calledUserId');
+            $callUserId = Yii::$app->redis->hget($cacheKey, 'callUserId');
+            $calledName = Yii::$app->redis->hget($cacheKey, 'calledName');
+            $calledAppName = Yii::$app->redis->hget($cacheKey, 'calledAppName');
+            $callAppName = Yii::$app->redis->hget($cacheKey, 'callAppName');
+            $calledNickname = Yii::$app->redis->hget($cacheKey, 'calledNickname');
+            $callNickname = Yii::$app->redis->hget($cacheKey, 'callNickname');
+            $contactPhoneNumber = Yii::$app->redis->hget($cacheKey, 'contactPhoneNumber');
+            $calledNumberArr = Yii::$app->redis->hget($cacheKey, 'calledNumberArr');
+            $calledUrgentArr = Yii::$app->redis->hget($cacheKey, 'calledUrgentArr');
+            $number = Yii::$app->redis->hget($cacheKey, 'number');
+            $isUrgent = Yii::$app->redis->hget($cacheKey, 'isUrgent');
+            $language = Yii::$app->redis->hget($cacheKey, 'language');
+            $appName = Yii::$app->redis->hget($cacheKey, 'appName');
+            $appUid = Yii::$app->redis->hget($cacheKey, 'appUid');
+            $calledNumberArr = json_decode($calledNumberArr, true);
+            $calledUrgentArr = json_decode($calledUrgentArr, true);
+
             // 呼叫成功，产生费用.
             if ($status) {
-                $text = $this->translateLanguage('呼叫'.$calledAppName.'成功!');
+                $text = $this->translateLanguage('呼叫'.$calledName.'成功!');
             } else {
-                $text = $this->translateLanguage('呼叫'.$calledAppName.'失败!');
+                $text = $this->translateLanguage('呼叫'.$calledName.'失败!');
             }
 
             // 发消息到机器人.
