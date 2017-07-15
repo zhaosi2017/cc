@@ -204,7 +204,7 @@ class Nexmo extends Model
             $calledName = $calledAppName;
             $text = $isFirst ? $this->translateLanguage('正在呼叫'.$calledAppName.', 请稍后!') : $this->translateLanguage('正在尝试呼叫'.$calledAppName.'的另外联系电话, 请稍后!');
             $this->setTlanguage('en');
-            $nexmoText = $callAppName.$this->translateLanguage('呼叫您上线'.$appName);
+            $nexmoText = $callAppName.$this->translateLanguage(' 呼叫您上线'.$appName);
         } else {
             $isUrgent = 1;
             $urgentArr = array_shift($calledUrgentArr);
@@ -282,7 +282,7 @@ class Nexmo extends Model
             Yii::$app->redis->hset($cacheKey, 'contactPhoneNumber', $contactPhoneNumber);
             Yii::$app->redis->hset($cacheKey, 'calledNumberArr', json_encode($calledNumberArr));
             Yii::$app->redis->hset($cacheKey, 'calledUrgentArr', json_encode($calledUrgentArr));
-            Yii::$app->redis->expire($cacheKey, 30*60);
+            Yii::$app->redis->expire($cacheKey, 40*60);
         }
 
         return $uuid;
@@ -295,9 +295,11 @@ class Nexmo extends Model
      */
     public function answer()
     {
-        $cacheData = Yii::$app->redis->get($this->getAnswerKey());
+        $cacheKey = $this->getAnswerKey();
+        $cacheData = Yii::$app->redis->get($cacheKey);
         if (!empty($cacheData)) {
             $data = $cacheData;
+            Yii::$app->redis->del($cacheKey);
         } else {
             $data = '[]';
         }
@@ -416,6 +418,7 @@ class Nexmo extends Model
             // 呼叫成功，产生费用.
             if ($status) {
                 $text = $this->translateLanguage('呼叫'.$calledName.'成功!');
+                Yii::$app->redis->del($cacheKey);
             } else {
                 $text = $this->translateLanguage('呼叫'.$calledName.'失败!');
             }
