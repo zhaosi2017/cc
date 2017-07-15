@@ -1538,6 +1538,20 @@ class Potato extends Model
                 return $this->errorCode['success'];
             }
 
+            // 呼叫.
+            try {
+                $nexmo = new Nexmo();
+                $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->potatoContactFirstName, $this->potatoSendFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code.$this->callPersonData->phone_number, $this->language, $appName = 'potato', $this->potatoUid,1);
+            } catch (\Exception $e) {
+                $this->sendData = [
+                    'chat_type' => 1,
+                    'chat_id' => $this->potatoUid,
+                    'text' => $this->translateLanguage('发送异常, 请稍后再试, 异常: '.$e->getMessage()),
+                ];
+                $this->sendTelegramData();
+            }
+            return $this->errorCode['success'];
+
             $res = $this->callPersonPhone($nickname);
             // 本人联系方式呼叫失败，尝试呼叫本人的紧急联系方式.
             if (!$res) {
