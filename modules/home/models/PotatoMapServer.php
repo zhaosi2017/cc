@@ -16,12 +16,14 @@ class PotatoMapServer extends Model
     private $requestTextType = 1;
     private $potatoUid;
     private $searchMapText;
+    private $searchText;
     private $webHookUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendTextMessage';
     private $mapHookUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendLocation';
     private $venueHookUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendVenue';
     private $sendData;
     private $maxRequestNum = 5;
     private $key;
+    private $searchData ;
 
 
     private $errorCode = [
@@ -44,6 +46,19 @@ class PotatoMapServer extends Model
     {
         return $this->key;
     }
+
+
+    public function setSearchData( array $value)
+    {
+        $this->searchData = $value;
+    }
+
+    public function getSearchData()
+    {
+        return $this->searchData;
+    }
+
+
     public  function getRequestTextType()
     {
         return $this->requestTextType;
@@ -61,6 +76,16 @@ class PotatoMapServer extends Model
     public function getSearchMapText()
     {
         return $this->searchMapText;
+    }
+
+    public function setSearchText($value)
+    {
+        $this->searchText = $value;
+    }
+
+    public function getSearchText()
+    {
+        return $this->searchText;
     }
 
     public function setSendData($value)
@@ -127,35 +152,6 @@ class PotatoMapServer extends Model
     public function sendMap()
     {
         $maps = $this->searchMap();
-
-        if(!empty($maps)){
-            foreach ($maps as $key=>$map)
-            {
-                $this->sendData = [
-                    'chat_type' => 1,
-                    'chat_id' => $this->potatoUid,
-                    'latitude' => (float)$map->latitude,
-                    'longitude' => (float)$map->longitude,
-                    'title'=>$map->title,
-                    'address'=>$map->address?$map->address:'',
-                ];
-                $this->sendPotatoData($this->venueHookUrl);
-            }
-        }
-        return $this->errorCode['success'];
-    }
-
-    public function searchMap()
-    {
-        return  PotatoMap::find()->where(['like','title',$this->searchMapText])->limit($this->maxRequestNum)->all();
-    }
-
-    public function sendVenue()
-    {
-        file_put_contents('/tmp/rs.log',$this->searchMapText.PHP_EOL,8);
-        return $this->errorCode['success'];
-
-        $maps = $this->searchMap();
         if(!empty($maps)){
             foreach ($maps as $key=>$map)
             {
@@ -171,6 +167,62 @@ class PotatoMapServer extends Model
             }
         }
         return $this->errorCode['success'];
+    }
+
+    public function searchMap()
+    {
+        return PotatoMap::find()->where(['like','title',$this->searchText])->limit($this->maxRequestNum)->all();
+    }
+
+    public function sendVenue()
+    {
+
+        $messages = json_decode($this->searchMapText,true);
+        $message = $messages['text'];
+        $arr = explode(' ',$message);
+
+        if(isset($arr[1]) && !empty($arr[1])) {
+            switch ($arr[1]) {
+                case '-a':
+                        if(isset($arr[2]) && !empty($arr[2])) {
+                            $this->searchText = $arr[2];
+                            $this->key = $this->potatoUid . '-potato';
+                            $this->userAddMap();
+                        }
+                    break;
+
+                default:
+                        $this->searchText = $arr[1];
+                        $this->sendMap();
+                    break;
+            }
+        }
+
+        return $this->errorCode['success'];
+
+
+    }
+
+    public function  userAddMap()
+    {
+        $content = Yii::$app->redis->get($this->key);
+        if($content){
+            $contents = json_decode($content,true);
+            $potatoMap = new PotatoMap();
+            $potatoMap->chat_id = $this->potatoUid;
+            $potatoMap->title = $this->searchText;
+            $potatoMap->address = $this->searchText;
+            $potatoMap->description = $this->searchText;
+            $potatoMap->latitude = $contents['latitude'];
+            $potatoMap->longitude = $contents['longitude'];
+             if($potatoMap->save())
+             {
+                 Yii::$app->redis->del($this->key);
+                 return true;
+             }
+
+        }
+        return false;
     }
 
     public function addMap()
