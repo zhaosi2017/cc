@@ -459,7 +459,9 @@ class Nexmo extends Model
                     'chat_id' => $appUid,
                     'text' => $text,
                 ];
-                $this->sendRequest();
+                $this->sendRequest($this->webhook, true);
+                break;
+            default :
                 break;
         }
     }
