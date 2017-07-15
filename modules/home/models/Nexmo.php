@@ -35,7 +35,7 @@ class Nexmo extends Model
     private $loop = 3;
     private $voice = 'Joey';
     private $cacheKeyPre = 'nexmo_';
-    private $failureStatus = array('unanswered', 'busy');
+    private $failureStatus = ['unanswered', 'busy', 'timeout', 'failed'];
 
 
     /**
@@ -390,8 +390,8 @@ class Nexmo extends Model
 
         // Yii::$app->redis->zincrby($cacheKey, 1, 'times');
         // $times = Yii::$app->redis->hget($cacheKey, 'times');
-        if (isset($postData['duration'])) {
-            $postData['duration'] > 0 ? ($status = 1) : ($status = 0);
+        if (isset($postData['duration']) && $postData['duration'] > 0) {
+            $status = 1;
         } elseif (in_array($status, $this->failureStatus)) {
             $status = 0;
         } else {
