@@ -412,6 +412,7 @@ class Nexmo extends Model
             $appUid = Yii::$app->redis->hget($cacheKey, 'appUid');
             $calledNumberArr = json_decode($calledNumberArr, true);
             $calledUrgentArr = json_decode($calledUrgentArr, true);
+            $this->setTlanguage($language);
 
             // 呼叫成功，产生费用.
             if ($status) {
