@@ -1513,7 +1513,7 @@ class Telegram extends Model
             } catch (\Exception $e) {
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
-                    'text' => $this->translateLanguage('发送异常, 请稍后再试, 异常: '.$e->getMessage()),
+                    'text' => $this->translateLanguage('网络异常, 请稍后再试!'),
                 ];
                 $this->sendTelegramData();
             }
