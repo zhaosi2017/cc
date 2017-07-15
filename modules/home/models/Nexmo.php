@@ -33,7 +33,7 @@ class Nexmo extends Model
     private $translateUrl = 'https://translation.googleapis.com/language/translate/v2?key=AIzaSyAV_rXQu5ObaA9_rI7iqL4EDB67oXaH3zk';
     private $_resultUrl = 'https://api.nexmo.com/v1/calls';
     private $loop = 3;
-    private $voice = 'male';
+    private $voice = 'Joey';
     private $cacheKeyPre = 'nexmo_';
 
 
@@ -223,11 +223,13 @@ class Nexmo extends Model
         if ($failureStatus) {
             return $data;
         }
+
         $cacheKey = $callUserId.time();
+        $this->setTlanguage('en');
         $conference = [
             'action' => 'talk',
             'loop' => $this->loop,
-            'lg' => $this->getTlanguage(),
+            // 'lg' => $this->getTlanguage(),
             'voiceName' => $this->voice,
             'text' => $nexmoText,
         ];
