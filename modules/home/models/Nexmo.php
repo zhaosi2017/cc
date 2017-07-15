@@ -412,8 +412,9 @@ class Nexmo extends Model
             $appUid = Yii::$app->redis->hget($cacheKey, 'appUid');
             $calledNumberArr = json_decode($calledNumberArr, true);
             $calledUrgentArr = json_decode($calledUrgentArr, true);
-            $this->setTlanguage($language);
 
+            $this->setTlanguage($language);
+            $appUid = intval($appUid);
             // 呼叫成功，产生费用.
             if ($status) {
                 $text = $this->translateLanguage('呼叫'.$calledName.'成功!');
@@ -458,7 +459,7 @@ class Nexmo extends Model
                     'chat_id' => $appUid,
                     'text' => $text,
                 ];
-                $this->sendRequest();
+                $this->sendRequest($this->webhook, true);
                 break;
             default :
                 break;
