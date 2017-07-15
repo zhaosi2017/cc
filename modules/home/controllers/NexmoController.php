@@ -55,6 +55,7 @@ class NexmoController extends GController
 
         // 输出json数据.
         echo $data;
+        die();
     }
 
     /**
