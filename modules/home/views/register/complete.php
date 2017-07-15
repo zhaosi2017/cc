@@ -4,7 +4,7 @@
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
-$this->title = '注册成功';
+$this->title = Yii::t('app/login','Registration success');
 ?>
 <div class="middle-box text-center loginscreen  animated fadeInDown">
     <div>
@@ -13,12 +13,18 @@ $this->title = '注册成功';
             <h1 class="logo-name">&nbsp;</h1>
 
         </div>
-        <h3>注册成功</h3>
+        <h3><?= Yii::t('app/login','Registration success')?></h3>
 
-        <blockquote class="text-left">
-            <p>请您牢记您的邮箱账号和密码！！！</p>
-            <p>你的邮箱账号：<?php echo $model->username ?></p>
-            <p>您的密码：<?php echo $model->password ?></p>
+        <blockquote class="text-left" style="border: 0;">
+            <p><?= Yii::t('app/login','Please keep in mind your  account and password')?>！！！</p>
+           <?php  if($model instanceof  \app\modules\home\models\RegisterForm) {?>
+                <p><?= Yii::t('app/login','Your email account')?>：<?php echo $model->username ?></p>
+                <p><?= Yii::t('app/login','Your password')?>：<?php echo $model->password ?></p>
+            <?php }else{ ?>
+                <p><?= Yii::t('app/login','Your phone account')?>：<?php echo $model->phone ?></p>
+                <p><?= Yii::t('app/login','Your password')?>：<?php echo $model->password ?></p>
+            <?php } ?>
+
         </blockquote>
         <?php $form = ActiveForm::begin([
             'id' => 'verify-form',
@@ -26,7 +32,7 @@ $this->title = '注册成功';
             'options'=>['class'=>'m-t text-left'],
         ]); ?>
 
-        <?= Html::submitButton('确定', ['class' => 'btn btn-primary block full-width m-b']) ?>
+        <?= Html::submitButton(Yii::t('app/login','Ok'), ['class' => 'btn btn-primary block full-width m-b button-new-color']) ?>
 
         <?php ActiveForm::end(); ?>
 

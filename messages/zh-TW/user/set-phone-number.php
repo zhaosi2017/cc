@@ -1,0 +1,16 @@
+<?php return array (
+  'Edit Phone number' => '修改聯繫電話',
+  'Build Phone number' => '綁定聯繫電話',
+  'Country code' => '國碼',
+  'Phone Number' => '電話號碼',
+    'Phone Number' => '電話號碼',
+  'verification code' => '請輸入驗證碼',
+  'Country Code is empty' => '國碼不能為空',
+  'Phone Number is empty' => '電話不能為空',
+  'Send SMS too often, please take a break' => '你好！發送短信太頻繁,請稍微休息哈',
+  'Get verification code' => '獲取驗證碼',
+  'Submit' => '提交',
+  'Please enter your country code and enter your mobile number' => '請輸入您的國碼，然後輸入您的手機號碼',
+  'Please enter your phone verification code' => '請輸入手機驗證碼',
+  'Verification code' => '驗證碼',
+); 

@@ -63,7 +63,7 @@ return [
     'just now' => 'zojuist',
     'the input value' => 'de invoerwaarde',
     '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" is reeds in gebruik.',
-    '{attribute} cannot be blank.' => '{attribute} mag niet leeg zijn.',
+    '{attribute} can not be blank.' => '{attribute} mag niet leeg zijn.',
     '{attribute} is invalid.' => '{attribute} is ongeldig.',
     '{attribute} is not a valid URL.' => '{attribute} is geen geldige URL.',
     '{attribute} is not a valid email address.' => '{attribute} is geen geldig emailadres.',

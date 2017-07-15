@@ -1,0 +1,15 @@
+<?php return array (
+  'Start the operation, please wait later.' => '操作を開始してください。後でお待ちください。',
+  'welcome' => 'ようこそ',
+  'Share your contact card' => '連絡先カードを共有する',
+  '[Please enter the verification code on the callu platform to complete the binding operation!]' => '[製本作業を完了するには、calluプラットフォームに確認コードを入力してください！]',
+  'Please share your own contact card to the robot, complete the binding operation.' => '自分の連絡先カードをロボットと共有して、製本作業を完了してください。',
+  'success' => '成功',
+  'failure' => '失敗',
+  'call' => 'コール',
+  'You have completed the binding operation.' => 'これでバインド操作が完了しました。',
+  'is not a member of our system, can not perform the operation.' => '私たちのシステムのメンバーではない、操作を実行することはできません。',
+  'The number of times the call has exceeded the limit set by he.' => '通話が彼が設定した制限を超えた回数。',
+  'The verification code is empty.' => '確認コードは空です。',
+  'Verification code error.' => '確認コードのエラーです。',
+); 

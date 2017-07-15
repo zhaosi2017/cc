@@ -69,7 +69,7 @@ return [
     'just now' => 'саме зараз',
     'the input value' => 'введене значення',
     '{attribute} "{value}" has already been taken.' => 'Значення «{value}» для «{attribute}» вже зайнято.',
-    '{attribute} cannot be blank.' => 'Необхідно заповнити "{attribute}".',
+    '{attribute} can not be blank.' => 'Необхідно заповнити "{attribute}".',
     '{attribute} contains wrong subnet mask.' => 'Значення «{attribute}» містить неправильну маску підмережі.',
     '{attribute} is invalid.' => 'Значення "{attribute}" не вірне.',
     '{attribute} is not a valid URL.' => 'Значення "{attribute}" не є правильним URL.',

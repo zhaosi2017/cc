@@ -1,0 +1,15 @@
+<?php return array (
+  'Bind Phone Number' => 'លេខទូរស័ព្ទដៃចង',
+  'Bind Email' => 'ចងអ៊ីមែល',
+  'Build UserName' => 'Build ឈ្មោះអ្នកប្រើ',
+  'Password' => 'ការពាក្យសម្ងាត់',
+  'Base Info' => 'ព័តមានមូលដ្ឋាន',
+  'No Phone NUmber' => 'គ្មានលេខទូរស័ព្ទ',
+  'No Email' => 'គ្មានអ៊ីម៉ែល',
+  'No UserName' => 'គ្មានឈ្មោះអ្នកប្រើ',
+  'Edit' => 'កែសម្រួល',
+  'Build Now' => 'កសាងឥឡូវនេះ',
+  'Create UserName' => 'បង្កើត​ឈ្មោះ​អ្នក​ប្រើ',
+  'Language' => 'ភាសា',
+  'NickName' => 'ឈ្មោះហៅក្រៅ',
+); 

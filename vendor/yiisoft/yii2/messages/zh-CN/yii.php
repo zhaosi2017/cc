@@ -64,7 +64,7 @@ return [
     'You can upload at most {limit, number} {limit, plural, one{file} other{files}}.' => '您最多上传{limit, number}个文件。',
     'the input value' => '该输入',
     '{attribute} "{value}" has already been taken.' => '{attribute}的值"{value}"已经被占用了。',
-    '{attribute} cannot be blank.' => '{attribute}不能为空。',
+    '{attribute} can not be blank.' => '{attribute}不能为空。',
     '{attribute} contains wrong subnet mask.' => '{attribute} 属性包含错误的子网掩码。',
     '{attribute} is invalid.' => '{attribute}是无效的。',
     '{attribute} is not a valid URL.' => '{attribute}不是一条有效的URL。',

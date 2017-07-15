@@ -3,11 +3,17 @@
 namespace app\modules\home\controllers;
 
 use app\modules\home\models\ContactForm;
+use app\modules\home\models\EmailForm;
+use app\modules\home\models\LoginForm;
 use app\modules\home\models\PasswordForm;
+use app\modules\home\models\PhoneRegisterForm;
+use app\modules\home\models\UserGentContact;
+use app\modules\home\models\UserPhone;
 use Yii;
 use app\modules\home\models\User;
 use app\controllers\GController;
 use yii\web\NotFoundHttpException;
+use app\modules\home\servers\MailClient;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -41,16 +47,23 @@ class UserController extends GController
      */
     public function actionIndex()
     {
-        $this->layout = '@app/views/layouts/container';
         $model = $this->findModel(Yii::$app->user->id);
-        return $this->render('index',['model'=>$model]);
+        $user_phone_numbers = UserPhone::findAll(array('user_id'=>Yii::$app->user->id));  //取用户的全部绑定电话
+        $user_gent_contacts  =  UserGentContact::findAll(array('user_id'=>Yii::$app->user->id));   //取全部的紧急联系人
+        return $this->render('index',['model'=>$model , 'user_phone_numbers'=>$user_phone_numbers , 'user_gent_contents'=>$user_gent_contacts]);
     }
 
     public function actionSetNickname()
     {
         $model = $this->findModel(Yii::$app->user->id);
-        if($model->load(Yii::$app->request->post()) && $model->update()){
-            return $this->redirect(['index']);
+        $model->scenario='bind-nickname';
+        if($model->load(Yii::$app->request->post())){
+            
+            if($model->update()){
+                Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
+                return $this->redirect(['index']);
+            }
+            
         }
         return $this->render('set-nickname',['model'=>$model]);
     }
@@ -60,62 +73,124 @@ class UserController extends GController
         $id = Yii::$app->user->id;
         $model = (new ContactForm())->findModel($id);
         $user_model = $this->findModel($id);
-        if($model->load(Yii::$app->request->post()) && $model->validate(['country_code','phone_number','code'])){
-            $user_model->country_code = $model->country_code;
-            $user_model->phone_number = $model->phone_number;
-            if($user_model->update()){
-                Yii::$app->getSession()->setFlash('success', '操作成功');
-                return $this->redirect(['index']);
-            }else{
-                Yii::$app->getSession()->setFlash('error', '操作失败');
+        $model->scenario='phone';
+        $isModify = false;
+        $phone_number = $this->getUserPhoneNumber(Yii::$app->request->get('phone_number'));
+        if(!empty($phone_number->user_phone_number)){    //已经有电话号码的  显示电话号码
+            $isModify = true;
+        }
+        $model->phone_number = $phone_number->user_phone_number;
+        $model->country_code = $phone_number->phone_country_code;
+        if( $model->load(Yii::$app->request->post()) && $model->validate(['country_code','phone_number']) ){
+            $code = $model->code;
+            $user_phone_number = $model->phone_number;
+            $phone_country_code = $model->country_code;
+            $type = Yii::$app->controller->action->id;
+            if($model->validateSms($type, $code)){
+                $model->addError('code', Yii::t('app/index','Verification code error'));
+                return $this->render('set-phone-number',['model'=>$model,'isModify'=>$isModify]);
+            }
+            $phone_number->user_phone_number = $user_phone_number;
+            $phone_number->phone_country_code = $phone_country_code;
+            $phone_number->user_id = Yii::$app->user->id;
+            if($phone_number->save()){
+                Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
+                return $this->redirect(['/home/user/links']);
+            }else {
+                Yii::$app->getSession()->setFlash('error', Yii::t('app/index','Operation failed'));
                 return $this->redirect('set-phone-number');
             }
         }
-        return $this->render('set-phone-number',['model'=>$model]);
+        return $this->render('set-phone-number',['model'=>$model, 'isModify' => $isModify]);
     }
 
-    public function actionDeleteNumber($id)
+    /**
+     * @param null $phone_number 电话号码
+     * 根据已有的电话号码选择号码的详细信息
+     */
+    private function getUserPhoneNumber($phone_number = null){
+        $res = array();
+        if(empty($phone_number)){
+            $phone_number = new UserPhone();
+            $phone_number->user_phone_number ='';
+            $phone_number->phone_country_code ='';
+         }else{
+            $phone_number =  UserPhone::findOne(array('user_phone_number'=>$phone_number , 'user_id'=>Yii::$app->user->id));
+        }
+        return $phone_number;
+    }
+
+
+
+    public function actionDeleteNumber()
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel(Yii::$app->user->id);
         if(Yii::$app->request->isPost){
             $get = Yii::$app->request->get();
             switch ($get['type']){
                 case 'phone_number':
-                    $model->phone_number = '';
-                    $model->country_code = null;
+                    $this->deletePhoneNumber($get['phone_number'] , $get['country_code']);
+                    $url = '/home/user/links';
                     break;
                 case 'potato_number':
                     $model->potato_number = '';
                     $model->potato_country_code = null;
+                    $url = '/home/user/app-bind';
                     break;
                 case 'telegram_number':
                     $model->telegram_number = '';
-                    $model->potato_country_code = null;
+                    $model->telegram_country_code = null;
+                    $url = '/home/user/app-bind';
                     break;
             }
             if($model->update()){
-                Yii::$app->getSession()->setFlash('success', '操作成功');
+                Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
             }else{
-                Yii::$app->getSession()->setFlash('error', '操作失败');
+                Yii::$app->getSession()->setFlash('error', Yii::t('app/index','Operation failed'));
             }
-            $this->redirect(['index']);
+            $this->redirect([$url]);
         }
         return false;
     }
+
+    /**
+     * @param $phone_number
+     * 删除电话号码
+     */
+    private function deletePhoneNumber($phone_number , $country_code)
+    {
+        $model =  UserPhone::findOne(array('user_phone_number'=>$phone_number , 'user_id'=>Yii::$app->user->id , 'phone_country_code'=>$country_code));
+        if($model->delete()){
+            Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
+        }else{
+            Yii::$app->getSession()->setFlash('error', Yii::t('app/index','Operation failed'));
+        }
+        $this->redirect(['index']);
+    }
+
 
     public function actionBindPotato()
     {
         $id = Yii::$app->user->id;
         $model = (new ContactForm())->findModel($id);
         $user_model = $this->findModel($id);
-        if($model->load(Yii::$app->request->post()) && $model->validate(['potato_country_code','potato_number','code'])){
+        $model->scenario='potato';
+
+        if($model->load(Yii::$app->request->post()) && $model->validate(['potato_country_code','potato_number'])){
+            $code = $_POST['ContactForm']['code'];
+            $type = Yii::$app->controller->action->id;
+            if($model->validateSms($type, $code)){
+                $model->addError('code', Yii::t('app/index','Verification code error'));
+                return $this->render('bind-potato',['model'=>$model]);
+            }
+
             $user_model->potato_country_code = $model->potato_country_code;
             $user_model->potato_number = $model->potato_number;
             if($user_model->update()){
-                Yii::$app->getSession()->setFlash('success', '操作成功');
+                Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
                 return $this->redirect(['index']);
             }else{
-                Yii::$app->getSession()->setFlash('error', '操作失败');
+                Yii::$app->getSession()->setFlash('error', Yii::t('app/index','Operation failed'));
                 return $this->redirect('bind-potato');
             }
         }
@@ -127,14 +202,23 @@ class UserController extends GController
         $id = Yii::$app->user->id;
         $model = (new ContactForm())->findModel($id);
         $user_model = $this->findModel($id);
-        if($model->load(Yii::$app->request->post()) && $model->validate(['telegram_country_code','telegram_number','code'])){
+        $model->scenario='telegram';
+
+        if($model->load(Yii::$app->request->post()) && $model->validate(['telegram_country_code','telegram_number'])){
+            
+            $code = $_POST['ContactForm']['code'];
+            $type = Yii::$app->controller->action->id;
+            if($model->validateSms($type,$code)){
+                $model->addError('code', Yii::t('app/index','Verification code error'));
+                return $this->render('bind-telegram',['model'=>$model]);
+            }
             $user_model->telegram_country_code = $model->telegram_country_code;
             $user_model->telegram_number = $model->telegram_number;
             if($user_model->update()){
-                Yii::$app->getSession()->setFlash('success', '操作成功');
+                Yii::$app->getSession()->setFlash('success',  Yii::t('app/index','Successful operation'));
                 return $this->redirect(['index']);
             }else{
-                Yii::$app->getSession()->setFlash('error', '操作失败');
+                Yii::$app->getSession()->setFlash('error',  Yii::t('app/index','Operation failed'));
                 return $this->redirect('bind-telegram',['model'=>$model]);
             }
         }
@@ -207,7 +291,8 @@ class UserController extends GController
     {
         $model = new PasswordForm();
         if($model->load(Yii::$app->request->post()) && $model->updateSave()){
-            Yii::$app->getSession()->setFlash('success', '密码修改成功');
+            Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Password reset complete'));
+            return $this->redirect('/home/user/index');
         }
         return $this->render('password',['model' => $model]);
     }
@@ -224,7 +309,7 @@ class UserController extends GController
         if (($model = User::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('app/index','The requested page does not exist'));
         }
     }
 
@@ -232,23 +317,29 @@ class UserController extends GController
     {
         if(Yii::$app->request->isAjax){
             $number = Yii::$app->request->post('number');
-            if($number){
-                $captcha = $this->createAction('captcha');
-                $verifyCode = $captcha->getVerifyCode(true);
-
+            $type = Yii::$app->request->post('type');
+            if($number && $type ){
+                if( $response = ContactForm::smsRateLimit($type)){
+                    exit(json_encode($response));
+                }
+                $session = Yii::$app->session;
+                $verifyCode = $session[$type] = ContactForm::makeCode();
                 $url = 'https://rest.nexmo.com/sms/json?' . http_build_query(
                     [
                         'api_key' =>  Yii::$app->params['nexmo_api_key'],
                         'api_secret' => Yii::$app->params['nexmo_api_secret'],
                         'to' => $number,
                         'from' => Yii::$app->params['nexmo_account_number'],
-                        'text' => $verifyCode
+                        'text' => $verifyCode.' : ( From callu code )'
                     ]
                 );
 
                 $ch = curl_init($url);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                 $response = curl_exec($ch);
+                $response = json_decode($response, true);
+                $response['code'] = $verifyCode;
+                $response = json_encode($response);
                 echo $response;
             }
         }
@@ -264,49 +355,56 @@ class UserController extends GController
     {
         $model = $this->findModel(Yii::$app->user->id);
         $request = Yii::$app->request->get();
-        $firstPersonNoExists = empty($model->urgent_contact_person_one) ? true : false;
-        $secondPersonNoExists = empty($model->urgent_contact_person_two) ? true : false;
-        $modifyOne = isset($request['modify']) && ($request['modify'] == '1') ? true : false;
-        $modifyTwo = isset($request['modify']) && ($request['modify'] == '2') ? true : false;
-        if ($model->load(Yii::$app->request->post())) {
-            if (($modifyOne || $firstPersonNoExists) && !$model->validate(['urgent_contact_person_one', 'urgent_contact_one_country_code', 'urgent_contact_number_one'])) {
-                return $this->render('add-urgent-contact-person-one', ['model' => $model]);
-            }
+        if (!empty(Yii::$app->request->post('UserGentContact'))) {
 
-            if (($modifyTwo || $secondPersonNoExists) && !$model->validate(['urgent_contact_person_two', 'urgent_contact_two_country_code', 'urgent_contact_number_two'])) {
-                return $this->render('add-urgent-contact-person-two', ['model' => $model]);
-            }
+            $contact_id = isset($request['id'])?$request['id'] :'';
 
-            $updateRes = $model->update();
-            if (!$updateRes && $firstPersonNoExists) {
-                return $this->render('add-urgent-contact-person-one', ['model' => $model]);
-            }
-            if (!$updateRes && $secondPersonNoExists) {
-                return $this->render('add-urgent-contact-person-two', ['model' => $model]);
-            }
+            if(empty($contact_id)){
+                $contact = new UserGentContact();
+                $contact->attributes = Yii::$app->request->post('UserGentContact');
+                if(empty(Yii::$app->request->post('UserGentContact')['contact_nickname'])){
+                    Yii::$app->getSession()->setFlash('error',  Yii::t('app/index','Operation failed'));
+                    return $this->redirect(['/home/user/links']);
 
-            return $this->redirect(['index']);
+                }
+                if(empty(Yii::$app->request->post('UserGentContact')['contact_country_code'])){
+                    Yii::$app->getSession()->setFlash('error',  Yii::t('app/index','Operation failed'));
+                    return $this->redirect(['/home/user/links']);
+
+                }
+                if(empty(Yii::$app->request->post('UserGentContact')['contact_phone_number'])){
+                    Yii::$app->getSession()->setFlash('error',  Yii::t('app/index','Operation failed'));
+                    return $this->redirect(['/home/user/links']);
+
+                }
+
+            }else{
+                $contact = UserGentContact::findOne($contact_id);
+            }
+            $contact->contact_nickname      = Yii::$app->request->post('UserGentContact')['contact_nickname'];
+            $contact->contact_country_code  = Yii::$app->request->post('UserGentContact')['contact_country_code'];
+            $contact->contact_phone_number  = Yii::$app->request->post('UserGentContact')['contact_phone_number'];
+            if($contact->save()){
+                Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
+                return $this->redirect(['/home/user/links']);
+            }
+            Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
+            return $this->redirect(['/home/user/links']);
+
         } else {
             $isModify = false;
             // 修改紧急联系人.
-            if (isset($request['modify'])) {
-                $isModify = true;
-                if ($modifyOne) {
-                    return $this->render('add-urgent-contact-person-one', ['model' => $model, 'isModify' => $isModify]);
-                } elseif ($modifyTwo) {
-                    return $this->render('add-urgent-contact-person-two', ['model' => $model, 'isModify' => $isModify]);
-                }
-            } else {
-                // 判断用户添加几位紧急联系人, 当两位联系人没有满, 才能继续添加联系人.
-                if ($firstPersonNoExists) {
-                    return $this->render('add-urgent-contact-person-one', ['model' => $model, 'isModify' => $isModify]);
-                } elseif ($secondPersonNoExists) {
-                    return $this->render('add-urgent-contact-person-two', ['model' => $model, 'isModify' => $isModify]);
-                } else {
-                    Yii::$app->getSession()->setFlash('error', '只能添加两位紧急联系人!');
-                    return $this->redirect(['index']);
-                }
+            $contact_id = isset($request['id'])?$request['id'] :'';      //紧急联系人的id
+            $contact = UserGentContact::findOne($contact_id);
+            if(empty($contact)){
+                $contact = new UserGentContact();
+                $contact->contact_nickname="";
+                $contact->contact_phone_number ='';
+                $contact->contact_country_code ='';
+                return $this->render('add-urgent-contact-person', ['model' =>$contact , 'isModify' => $isModify]);
             }
+            $isModify = true;
+            return $this->render('add-urgent-contact-person', ['model' =>$contact , 'isModify' => $isModify]);
         }
     }
 
@@ -318,19 +416,166 @@ class UserController extends GController
     public function actionDeleteUrgentContactPerson()
     {
         $request = Yii::$app->request->get();
-        $model = $this->findModel(Yii::$app->user->id);
-        if ($request['type'] == '1') {
-            $model->urgent_contact_person_one = '';
-            $model->urgent_contact_one_country_code = '';
-            $model->urgent_contact_number_one = '';
-        } elseif ($request['type'] == '2') {
-            $model->urgent_contact_person_two = '';
-            $model->urgent_contact_two_country_code = '';
-            $model->urgent_contact_number_two = '';
+        $contact_id = $request['id'];
+        $contact = UserGentContact::findOne($contact_id);
+        if($contact->delete()){
+            Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
+        }else{
+            Yii::$app->getSession()->setFlash('error',  Yii::t('app/index','Operation failed'));
         }
 
-        $model->update();
-        return $this->redirect(['index']);
+        return $this->redirect(['/home/user/links']);
+    }
+
+
+    public function actionHarassment()
+    {   
+        $id = Yii::$app->user->id;
+        $model = $this->findModel($id);
+        $model->scenario = 'harassment';
+        if($model->load(Yii::$app->request->post()) && $model->validate()){
+
+            if($model->save()){
+                Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
+            }else{
+                Yii::$app->getSession()->setFlash('error',  Yii::t('app/index','Operation failed'));
+            }
+            return $this->redirect(['/home/user/harassment']);
+        }
+        return $this->render('harassment', [
+            'model' => $model,
+        ]);
+    }
+
+
+    public function actionBindUsername()
+    {
+        $id = Yii::$app->user->id;
+        $model = $this->findModel($id);
+        $model->scenario = 'bind-username';
+        if($model->load(Yii::$app->request->post()) && $model->validate('username')){
+            if($model->save()){
+                Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
+            }else{
+                Yii::$app->getSession()->setFlash('error',  Yii::t('app/index','Operation failed'));
+            }
+            return $this->redirect(['index']);
+        }
+        return $this->render('bind-username', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionBindEmail()
+    {
+        $id = Yii::$app->user->id;
+        $model = $this->findModel($id);
+        $model->scenario = 'bind-email';//邮箱
+        if($model->load(Yii::$app->request->post()) && $model->validate('account')){
+            $emailModel = new EmailForm();
+            $key = $model->account.'bindemail';
+            $session = Yii::$app->session;
+            $session[$key]   =  $verifyCode = ContactForm::makeCode();
+            $email = $emailModel->username =$model->account;
+            $data = ['email' => $email, 'verifyCode' => $verifyCode];
+            $client = new MailClient();
+            $client->connect();
+            $res = $client->send($data);
+            $client->close();
+            return $this->render('bind-email-code',['model'=>$emailModel]);
+        }
+        return $this->render('bind-email', [
+            'model' => $model,
+        ]);
+    }
+
+    public  function actionBindEmailCode()
+    {
+        $model = new EmailForm();
+        if($model->load(Yii::$app->request->post())){
+            if($model->validate(['username','code'])){
+                $id = Yii::$app->user->id;
+                $userModel = $this->findModel($id);
+                $userModel->account = $model->username;
+                $userModel->save();
+                Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Mailbox binding is successful'));
+                return $this->redirect('/home/user/index')->send();
+
+            }else{
+                return $this->render('bind-email-code',['model'=>$model]);
+            }
+
+        }
+        return false;
+    }
+
+
+    public function actionAppBind()
+    {
+        $id = Yii::$app->user->id;
+        $model = User::findOne($id);
+        return $this->render('app-bind', ['model' => $model]);
+    }
+
+    public function actionLinks()
+    {
+        $id = Yii::$app->user->id;
+        $userPhone = UserPhone::findAll(['user_id'=>$id]);
+        $urgentContact = UserGentContact::findAll(['user_id'=>$id]);
+        return $this->render('links', ['userPhone' => $userPhone,'urgentContact'=>$urgentContact]);
+    }
+
+
+    public function actionUpdatePhoneNumber()
+    {
+        $id = Yii::$app->user->id;
+        $userModel = $this->findModel($id);
+        $model = new PhoneRegisterForm();
+        $model->phone = $userModel->phone_number;
+        $model->country_code = $userModel->country_code;
+        $model->setScenario('update-phone');
+        if(Yii::$app->request->isPost){
+
+            if($model->load(Yii::$app->request->post()) )
+            {
+
+                if( $model->load(Yii::$app->request->post()) && $model->validate('country_code','phone','code')){
+
+                    $code =$_POST['PhoneRegisterForm']['code'];
+                    $type = Yii::$app->controller->action->id;
+                    if(ContactForm::validateSms($type, $code)){
+                        $model->addError('code', Yii::t('app/index','Verification code error'));
+                        return $this->render('update-phone-number',['model'=>$model]);
+                    }
+                    $userModel->phone_number = $model->phone;
+                    $userModel->country_code = $model->country_code;
+                    $userModel->save();
+                    Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
+                    return $this->redirect('/home/user/index')->send();
+                }
+            }
+        }
+
+        return $this->render('update-phone-number',['model'=>$model]);
+    }
+
+
+    public function actionChangeLanguage(){
+        if (Yii::$app->request->isPost) {
+            $language = $_POST['language'];
+            $languages = Yii::$app->params['languages'];
+            if(isset($languages[$language])){
+                $id = Yii::$app->user->id;
+                $user = User::findOne($id);
+                $user->language = $language;
+                if ($user->save()){
+                    $session = Yii::$app->session ;
+                    $session['language'] = $language;
+                    return json_encode(['status'=>0]);
+                }
+            }
+        }
+        return json_encode(['status'=>1]);
     }
 
 }

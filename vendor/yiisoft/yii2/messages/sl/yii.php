@@ -66,7 +66,7 @@ return [
     'in {delta, plural, =1{an hour} other{# hours}}' => 'v {delta, plural, one{# uri} other{# urah}}',
     'the input value' => 'vhodna vrednost',
     '{attribute} "{value}" has already been taken.' => 'Atribut {attribute} "{value}" je že nastavljen.',
-    '{attribute} cannot be blank.' => 'Atribut {attribute} ne more biti prazen',
+    '{attribute} can not be blank.' => 'Atribut {attribute} ne more biti prazen',
     '{attribute} is invalid.' => 'Atribut {attribute} je neveljaven.',
     '{attribute} is not a valid URL.' => 'Atribut {attribute} ni veljaven URL.',
     '{attribute} is not a valid email address.' => 'Atribut {attribute} ni veljaven e-poštni naslov.',

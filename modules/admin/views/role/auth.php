@@ -6,6 +6,11 @@ use yii\helpers\Html;
 
 $this->title = '权限设置角色: ' . $model->name ;
 
+
+$this->title = '防骚扰';
+$this->params['breadcrumbs'][] = ['label' => '管理员角色', 'url' => ['index']];
+$this->params['breadcrumbs'][] = '权限授权' ;
+
 $actionId = Yii::$app->requestedAction->id;
 $auth = Yii::$app->authManager;
 $permissions = $auth->getPermissionsByRole($model->id);
@@ -27,7 +32,7 @@ $data = [
         'items' => [
             [
                 'page_name' => '首页',
-                'permission' => ['admin/login/index', 7=>'admin/manager/password'],//注意顺序
+                'permission' => ['admin/default/index', 7=>'admin/default/password'],//注意顺序
             ],
         ],
 
@@ -37,7 +42,14 @@ $data = [
         'items' => [
             [
                 'page_name' => '用户列表',
-                'permission' => ['admin/user/index', 6=>'admin/user/harassment'],
+                'permission' => [
+                'admin/user/index', 
+                // 6=>'admin/user/harassment'
+                ],
+            ],
+            [
+                'page_name' => '用户登陆日志',
+                'permission' => ['admin/user/login-logs'],
             ],
         ],
 
@@ -57,7 +69,11 @@ $data = [
         'items' => [
             [
                 'page_name' => '管理员角色',
-                'permission' => ['admin/role/index',2=>'admin/role/create',3=>'admin/role/update',5=>'admin/role/delete'],
+                'permission' => ['admin/role/index',2=>'admin/role/create',3=>'admin/role/update',5=>'admin/role/delete',],
+            ],
+            [
+                'page_name'=>'权限授权',
+                'permission'=>['admin/role/auth'],
             ],
             [
                 'page_name' => '管理员角色-垃圾桶',
@@ -73,7 +89,7 @@ $data = [
             ],
             [
                 'page_name' => '登录日志',
-                'permission' => ['admin/login-logs/index',4=>'admin/login-logs/recover'],
+                'permission' => ['admin/login-logs/index',],
             ],
         ],
 

@@ -1,0 +1,16 @@
+<?php return array (
+  'Edit Phone number' => '電話番号を編集',
+  'Build Phone number' => '電話番号を作成する',
+  'Country code' => '国コード',
+  'Phone Number' => '携帯番号',
+    'Phone Number' => '携帯番号',
+  'verification code' => '検証コード',
+  'Country Code is empty' => '国コードが空です',
+  'Phone Number is empty' => '携帯電話の番号が空です',
+  'Send SMS too often, please take a break' => 'SMSを頻繁に送信してください。休憩してください',
+  'Get verification code' => '確認コードを取得する',
+  'Submit' => '提出する',
+  'Please enter your country code and enter your mobile number' => 'あなたの国コードを入力し、あなたの携帯電話番号を入力してください',
+  'Please enter your phone verification code' => '電話番号の確認コードを入力してください',
+  'Verification code' => '検証コード',
+); 

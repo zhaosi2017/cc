@@ -35,16 +35,13 @@ use yii\widgets\ActiveForm;
                     3 => '账号',
                     4 => '昵称',
                     5 => '联系电话',
-                    /*6 => '紧急联系人',
-                    7 => '紧急联系人电话',*/
-                ])->label(false) ?>
+                    6 => '紧急联系人',
+                    7 => '紧急联系人电话',
+                ],['prompt' => '全部','onChange'=>'clearDate()'])->label(false) ?>
                 <?= $form->field($model, 'search_keywords')->textInput(['placeholder' => '请输入关键字查询'])->label(false) ?>
                 <div class="form-group">
                     <?= Html::submitButton('search', ['class' => 'hide','id'=>'search_hide']) ?>
-                    <?= Html::submitButton('搜索', ['class' => 'btn btn-primary m-t-n-xs','id'=>'search','onclick'=>'
-                        $("#usersearch-start_date").val("");
-                        $("#usersearch-end_date").val("");
-                    ']) ?>
+                    <button onclick = "return searchClick();" id="search" class = 'btn btn-primary m-t-n-xs'>搜索</button>
                 </div>
             </div>
         </div>
@@ -53,3 +50,40 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<script type="text/javascript">
+
+
+    function searchClick(){
+        var start = $('#usersearch-start_date').val(); 
+        var end =  $('#usersearch-end_date').val(); 
+        if (start == "" && end != ""){
+            alert('请同时选择开始时间和结束时间进行查询！');
+            return false;
+        }
+        if(start != "" && end == ""){
+            alert('请同时选择开始时间和结束时间进行查询！');
+            return false;
+        }
+        return true;
+    }
+
+    function timeChange(){
+    
+        var start = $('#usersearch-start_date').val(); 
+        var end =  $('#usersearch-end_date').val(); 
+        if(start == '' || end ==''){
+            alert('请同时选择开始时间和结束时间进行查询！');
+            return false;
+        }
+        
+    }
+
+    function clearDate(){
+        $('#usersearch-start_date').val('');
+        $('#usersearch-end_date').val('');
+    }
+
+
+</script>
+

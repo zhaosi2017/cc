@@ -13,8 +13,8 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin([
         'options'=>['class'=>'form-horizontal m-t'],
         'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-sm-8\">{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
-            'labelOptions' => ['class' => 'col-sm-2 control-label'],
+            'template' => "{label}\n<div class=\"col-sm-3\">{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
+            'labelOptions' => ['class' => 'col-sm-1 ','style'=>['width'=>'100px']],
         ],
     ]); ?>
 
@@ -23,14 +23,10 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'remark')->textInput() ?>
 
     <div class="form-group">
-        <div class="col-sm-6 col-sm-offset-2">
+        <div class="col-sm-6 col-sm-offset-1">
             <?= Html::submitButton($model->isNewRecord ? '创建角色' : '保存修改', ['class'=>'btn btn-primary']) ?>
 
-            <?php
-                if(!$model->isNewRecord){
-                    echo Html::a('权限配置',\yii\helpers\Url::to(['/admin/role/auth','id'=>$model->id]),['class'=>'btn btn-primary']);
-                }
-            ?>
+
         </div>
     </div>
 

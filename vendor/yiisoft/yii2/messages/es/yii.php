@@ -107,7 +107,7 @@ return [
     'in {delta, plural, =1{an hour} other{# hours}}' => 'en {delta, plural, =1{una hora} other{# horas}}',
     'the input value' => 'el valor de entrada',
     '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" ya ha sido utilizado.',
-    '{attribute} cannot be blank.' => '{attribute} no puede estar vacío.',
+    '{attribute} can not be blank.' => '{attribute} no puede estar vacío.',
     '{attribute} is invalid.' => '{attribute} es inválido.',
     '{attribute} is not a valid URL.' => '{attribute} no es una URL válida.',
     '{attribute} is not a valid email address.' => '{attribute} no es una dirección de correo válida.',

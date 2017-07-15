@@ -20,13 +20,15 @@ class CActiveRecord extends ActiveRecord
         return $this::getDb()->createCommand()->update($this::tableName(), $params, $condition)->execute();
     }
 
-    public function sendSuccess($str='操作成功')
-    {
+    public function sendSuccess($str='操作成功', $min=3)
+    {   
+        Yii::$app->getSession()->setFlash('pageMessTime', $min);
         Yii::$app->getSession()->setFlash('success', $str);
     }
 
-    public function sendError($str='操作失败')
-    {
+    public function sendError($str='操作失败', $min=3)
+    {   
+        Yii::$app->getSession()->setFlash('pageMessTime', $min);
         Yii::$app->getSession()->setFlash('error', $str);
     }
 

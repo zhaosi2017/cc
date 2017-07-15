@@ -63,7 +63,7 @@ return [
     'just now' => 'upravo sada',
     'the input value' => 'ulazna vrijednost',
     '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" je već zauzet.',
-    '{attribute} cannot be blank.' => '{attribute} ne smije biti prazan.',
+    '{attribute} can not be blank.' => '{attribute} ne smije biti prazan.',
     '{attribute} is invalid.' => '{attribute} je neispravan.',
     '{attribute} is not a valid URL.' => '{attribute} ne sadrži ispravan URL.',
     '{attribute} is not a valid email address.' => '{attribute} ne sadrži ispravnu email adresu.',

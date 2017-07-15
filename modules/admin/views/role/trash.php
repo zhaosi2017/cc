@@ -22,6 +22,7 @@ $actionId = Yii::$app->requestedAction->id;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
 //        'filterModel' => $searchModel,
+        'layout' => "{items}\n  <div><ul class='pagination'><li style='display:inline;'><span>共".$dataProvider->getTotalCount(). "条数据 <span></li></ul>{pager}  </div>",
         'columns' => [
             ['class' => 'yii\grid\SerialColumn','header' => '序号'],
             'name:ntext',
@@ -45,16 +46,28 @@ $actionId = Yii::$app->requestedAction->id;
                 },
             ],
 
+           
+
             [
+                
                 'class' => 'yii\grid\ActionColumn',
                 'header' => '操作',
                 'template' => '{recover}',
                 'buttons' => [
                     'recover' => function($url){
-                        return Html::a('恢复',$url,[
+                        if(Yii::$app->user->can('admin/role/recover')){
+                            return Html::a('恢复',$url,[
                             'data-method' => 'post',
                             'data' => ['confirm' => '你确定要恢复吗?']
                         ]);
+                        }else{
+                            $url = 'trash';
+                            return Html::a('恢复',$url,[
+                            'data-method' => 'get',
+                            'data' => ['confirm' => '你没有该权限']
+                            ]);
+                        }
+                        
                     },
                 ],
             ],

@@ -65,7 +65,7 @@ return [
     'just now' => 'przed chwilą',
     'the input value' => 'wartość wejściowa',
     '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" jest już w użyciu.',
-    '{attribute} cannot be blank.' => '{attribute} nie może pozostać bez wartości.',
+    '{attribute} can not be blank.' => '{attribute} nie może pozostać bez wartości.',
     '{attribute} contains wrong subnet mask.' => '{attribute} posiada złą maskę podsieci.',
     '{attribute} is invalid.' => '{attribute} zawiera nieprawidłową wartość.',
     '{attribute} is not a valid URL.' => '{attribute} nie zawiera prawidłowego adresu URL.',

@@ -5,7 +5,7 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\captcha\Captcha;
 
-$this->title = '登录';
+$this->title = Yii::t('app/login','Verify email registration');
 ?>
 <div class="middle-box text-center loginscreen  animated fadeInDown">
     <div>
@@ -14,10 +14,10 @@ $this->title = '登录';
             <h1 class="logo-name">&nbsp;</h1>
 
         </div>
-        <h3>验证注册邮箱</h3>
+        <h3><?= Yii::t('app/login','Verify email registration')?></h3>
 
-        <blockquote class="text-left">
-            我们已经向您的注册邮箱：<?php echo $model->username ?>发送了一封邮件,请填写收到的验证码。
+        <blockquote class="text-left" style="border: 0;">
+            <?= Yii::t('app/login','We have registered your email')?>：<?php echo $model->username ?><?= Yii::t('app/login','With you Sent a message Pease fill in the verification code received')?>。
         </blockquote>
         <?php $form = ActiveForm::begin([
             'id' => 'verify-form',
@@ -34,12 +34,12 @@ $this->title = '登录';
             'captchaAction'=>'/home/register/captcha',
             'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-9">{input}</div></div>',
         ])
-            ->textInput(['autofocus' => true,'placeholder'=>'请输入验证码'])
+            ->textInput(['autofocus' => true,'placeholder'=>Yii::t('app/login','Please input code')])
             ->label(false)
         ?>
 
 
-        <?= Html::submitButton('确定', ['class' => 'btn btn-primary block full-width m-b']) ?>
+        <?= Html::submitButton(Yii::t('app/login','Ok'), ['class' => 'btn btn-primary block full-width m-b button-new-color']) ?>
 
         <?php ActiveForm::end(); ?>
 

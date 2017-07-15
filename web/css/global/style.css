@@ -1148,6 +1148,27 @@ button.btn-danger.dim:active {
     box-shadow: inset 0px 0px 0px #ea394c, 0px 2px 0px 0px #ea394c, 0px 5px 3px #999999;
 }
 
+.button-new-color{
+    background-color:rgb(56,181,231);
+}
+.button-new-color:hover{
+    background-color:rgb(22,155,214);
+}
+.button-new-color:active{
+    background-color:rgb(56,181,231);
+}
+.button-new-color:focus{
+    background-color:rgb(56,181,231);
+}
+.button-new-color{
+    border-color: #38b5e7;
+}
+
+.button-new-1{
+    padding: 8px;
+    border-radius: 3px;
+}
+
 button.dim:before {
     font-size: 50px;
     line-height: 1em;
@@ -7889,4 +7910,18 @@ body.skin-3 {
         width: 12.5%;
         font-size: 12px
     }
+}
+
+
+.index-button-1{
+    background-color: rgb(56,181,231);
+    padding: 5px 7px;
+    border-radius: 4px;
+}
+
+.index-button-1:hover{
+    background-color: rgb(46,83,112);
+}
+.index-button-1:active{
+    background-color: rgb(46,83,112);
 }

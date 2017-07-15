@@ -65,7 +65,7 @@ return [
     'in {delta, plural, =1{an hour} other{# hours}}' => 'trong {delta} giờ',
     'the input value' => 'giá trị đã nhập',
     '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" đã bị sử dụng.',
-    '{attribute} cannot be blank.' => '{attribute} không được để trống.',
+    '{attribute} can not be blank.' => '{attribute} không được để trống.',
     '{attribute} is invalid.' => '{attribute} không hợp lệ.',
     '{attribute} is not a valid URL.' => '{attribute} không phải là URL hợp lệ.',
     '{attribute} is not a valid email address.' => '{attribute} không phải là địa chỉ email hợp lệ.',

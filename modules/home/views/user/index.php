@@ -1,136 +1,126 @@
 <?php
 
-use yii\helpers\Url;
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model app\modules\home\models\User */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-
-$this->title = 'Users';
+$this->title = Yii::t('app/user/index','Base Info');
 $this->params['breadcrumbs'][] = $this->title;
-
+/* @var $this yii\web\View */
+/* @var $model app\modules\home\models\ContactForm */
+/* @var $form yii\widgets\ActiveForm */
 ?>
-<div class="user-index">
-    <div class="row">
-        <div class="col-sm-4">
-            <div class="ibox float-e-margins">
-                <div class="ibox-content text-center p-md">
-                    <h4 class="m-b-lg">个人中心</h4>
-                    <div class="text-left">
-                        <p class="m-t-lg">管理个人昵称、联系电话</p>
-                        <p class="m-t-lg">账号：<?php echo $model->account; ?></p>
-                        <p class="m-t-lg">昵称：<?php echo $model->nickname; ?><a href="<?php echo Url::to(['/home/user/set-nickname']) ?>" class="btn btn-primary btn-sm pull-right"><?php echo $model->nickname ? '修改' : '去设置'?></a></p>
-                        <div class="m-t-lg">联系电话：<?php echo $model->phone_number ? '+' . $model->country_code . $model->phone_number : '无'; ?>
-                            <?php if(!$model->phone_number){ ?>
-                                <a href="<?php echo Url::to(['/home/user/set-phone-number']) ?>" class="btn btn-primary btn-sm pull-right">去绑定</a>
-                            <?php }else{ ?>
-                                <div class="pull-right btn-group">
-                                    <a href="<?php echo Url::to(['/home/user/set-phone-number']) ?>" class="btn btn-primary btn-sm">修改</a>
-                                    <a href="<?php echo Url::to(['/home/user/delete-number','id'=>$model->id, 'type'=>'phone_number']) ?>" data-method="post" data-confirm="你确定要删除吗?" class="btn btn-danger btn-sm">删除</a>
-                                </div>
-                            <?php } ?>
-                        </div>
-                        <a class="btn btn-primary full-width m-t-lg" href="<?php echo Url::to(['/home/user/password'])?>">修改密码</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="ibox float-e-margins">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-content text-center p-md">
-                        <h4 class="m-b-lg">账号绑定</h4>
-                        <div class="text-left">
-                            <p class="m-t-lg">绑定telegram或potato，正式启用离线呼叫提醒功能，让人可以找到您，同时也能让您找到别人！</p>
-                            <div class="m-t-lg">Potato：<?php echo $model->potato_number ? '+' . $model->potato_country_code . $model->potato_number : '无'; ?>
-                                <?php if(!$model->potato_number){ ?>
-                                <a href="<?php echo Url::to(['/home/user/bind-potato']) ?>" class="btn btn-primary btn-sm pull-right">立即绑定</a>
-                                <?php }else{ ?>
-                                    <div class="pull-right btn-group">
-                                        <a href="<?php echo Url::to(['/home/user/bind-potato']) ?>" class="btn btn-primary btn-sm">修改</a>
-                                        <a href="<?php echo Url::to(['/home/user/delete-number','id'=>$model->id, 'type'=>'potato_number']) ?>" data-method="post" data-confirm="你确定要删除吗?" class="btn btn-danger btn-sm">删除</a>
-                                    </div>
-                                <?php } ?>
-                            </div>
-                            <div class="m-t-lg">Telegram：<?php echo $model->telegram_number ? '+' . $model->telegram_country_code . $model->telegram_number : '无'; ?>
-                                <?php if(!$model->telegram_number){ ?>
-                                <a href="<?php echo Url::to(['/home/user/bind-telegram']) ?>" class="btn btn-primary btn-sm pull-right">立即绑定</a>
-                                <?php }else{ ?>
-                                    <div class="pull-right btn-group">
-                                        <a href="<?php echo Url::to(['/home/user/bind-telegram']) ?>" class="btn btn-primary btn-sm">修改</a>
-                                        <a href="<?php echo Url::to(['/home/user/delete-number','id'=>$model->id, 'type'=>'telegram_number']) ?>" data-method="post" data-confirm="你确定要删除吗?" class="btn btn-danger btn-sm">删除</a>
-                                    </div>
-                                <?php } ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="ibox float-e-margins">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-content text-center p-md">
-                        <h4 class="m-b-lg">紧急联系人</h4>
-                        <div class="text-left">
-                            <p class="m-t-lg">为账号设置2个紧急联系人，便于自己联系电话无法使用时其他人可以联系到自己</p>
-                            <?php
-                                if ($model->urgent_contact_person_one) {
-                            ?>
-                                <div class="fa-border p-sm">
-                                    <p class="m-t-sm">联系人一：<?php echo $model->urgent_contact_person_one; ?></p>
-                                    <div class="m-t-sm">
-                                        <span>联系电话：<?php echo $model->urgent_contact_one_country_code.' '.$model->urgent_contact_number_one; ?></span>
-                                        <div class="pull-right btn-group m-t-n-xs">
-                                            <a href="<?php echo Url::to(['/home/user/add-urgent-contact-person', 'modify' => '1']) ?>" class="btn btn-primary btn-sm">修改</a>
-                                            <a href="<?php echo Url::to(['/home/user/delete-urgent-contact-person', 'type'=>'1']) ?>" class="btn btn-danger btn-sm">删除</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="help-block"></div>
-                            <?php
-                                } else {
-                            ?>
-                                    <div class="fa-border p-sm">
-                                        <p class="m-t-sm">联系人一：无</p>
-                                        <p class="m-t-sm">联系电话：无</p>
-                                    </div>
-                                    <div class="help-block"></div>
-                            <?php
-                                }
-                            ?>
-                            <?php
-                                if ($model->urgent_contact_person_two) {
-                            ?>
-                                <div class="fa-border p-sm">
-                                    <p class="m-t-sm">联系人二：<?php echo $model->urgent_contact_person_two; ?></p>
-                                    <div class="m-t-sm">
-                                        <span>联系电话：<?php echo $model->urgent_contact_two_country_code.' '.$model->urgent_contact_number_two; ?></span>
-                                        <div class="pull-right btn-group m-t-n-xs">
-                                            <a href="<?php echo Url::to(['/home/user/add-urgent-contact-person', 'modify'=>'2']) ?>" class="btn btn-primary btn-sm"">修改</a>
-                                            <a href="<?php echo Url::to(['/home/user/delete-urgent-contact-person/', 'type'=>'2']) ?>" class="btn btn-danger btn-sm">删除</a>
-                                        </div>
 
-                                    </div>
-                                </div>
-                            <?php
-                                } else {
-                            ?>
-                                <div class="fa-border p-sm">
-                                    <p class="m-t-sm">联系人二：无</p>
-                                    <p class="m-t-sm">联系电话：无</p>
-                                </div>
-                            <?php
-                                }
-                            ?>
-                            <div class="text-right">
-                                <a class="btn btn-primary m-t-md" href="<?php echo Url::to(['/home/user/add-urgent-contact-person'])?>">立即添加</a>
-                            </div>
-                        </div>
 
-                    </div>
-                </div>
+<div class="user-form">
+    <div class="text-center" >
+
+
+    </div>
+    <div>
+        <div class="row app-bind-div" style="margin-top: 20px;border-bottom: 1px solid rgb(217,217,217); ">
+            <div class="col-xs-4 app-bind-1"><?= Yii::t('app/user/index' ,'Bind Phone Number')?></div>
+            <div class="col-xs-4">
+
+                <?php echo  ($model->country_code.$model->phone_number) ? $model->country_code.'--'.$model->phone_number: '<span style="color:rgb(255,102,0);">'.
+                Yii::t('app/user/index','No Phone NUmber').'</span>';?>
+
+            </div>
+            <div class="col-xs-4">
+                <?php if ($model->phone_number){?>
+                    <a  class="index-button-1" href="/home/user/update-phone-number" style="    padding: 4px 18px;
+   
+color: white;
+
+"><?= Yii::t('app/user/index', 'Edit')?></a>
+                <?php }else{?>
+                    <a  class="index-button-1" href="/home/user/set-phone-number" style="    padding: 4px 18px;
+    
+color: white;
+
+"> <?= Yii::t('app/user/index' , 'Build Now')?></a>
+                <?php }?>
             </div>
         </div>
     </div>
+    <div>
+        <div class="row app-bind-div">
+            <div class="col-xs-4 app-bind-1"><?= Yii::t('app/user/index', 'Bind Email') ?></div>
+            <div class="col-xs-4">
+                <?php echo  ($model->account) ? $model->account: '<span style="color:rgb(255,102,0);">'.
+                    Yii::t('app/user/index','No Email')
+
+                    .'</span>';?>
+
+            </div>
+            <div class="col-xs-4">
+                <a  class="index-button-1" style="    padding: 4px 18px;color: white;
+" href="/home/user/bind-email"> <?php echo ($model->telegram_country_code.$model->telegram_number)?
+                                                                        Yii::t('app/user/index', 'Edit')
+                                                                        : Yii::t('app/user/index' , 'Build Now');?></a>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="row app-bind-div">
+            <div class="col-xs-4 app-bind-1"><?= Yii::t('app/user/index' , 'Create UserName') ?></div>
+            <div class="col-xs-4">
+                <?php echo  ($model->username) ? $model->username: '<span style="color:rgb(255,102,0);">'.
+                    Yii::t('app/user/index','No UserName')
+                .'</span>';?>
+
+            </div>
+            <div class="col-xs-4">
+                <a class="index-button-1" href="/home/user/bind-username" style="padding: 4px 18px;color: white;">
+                    <?php echo ($model->username)? Yii::t('app/user/index', 'Edit'):Yii::t('app/user/index' , 'Build Now');?></a>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="row app-bind-div">
+            <div class="col-xs-4 app-bind-1"><?= Yii::t('app/user/index', 'Password') ?></div>
+            <div class="col-xs-4">
+               <spn>***************</spn>
+
+            </div>
+            <div class="col-xs-4">
+                <a  class="index-button-1" href="/home/user/password" style="padding: 4px 18px;color: white;"> <?= Yii::t('app/user/index', 'Edit')?></a>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row app-bind-div">
+            <div class="col-xs-4 app-bind-1"><?= Yii::t('app/user/index', 'NickName') ?></div>
+            <div class="col-xs-4">
+                <?php echo  ($model->nickname);?>
+
+            </div>
+            <div class="col-xs-4">
+                <a  class="index-button-1" href="/home/user/set-nickname" style="padding: 4px 18px;color: white;">
+                    <?php echo ($model->nickname)? Yii::t('app/user/index', 'Edit'):Yii::t('app/user/index' , 'Build Now');?></a>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
 </div>
+
+
+<style>
+    .app-bind-1{
+        font-size: 17px; !important;
+        font-weight: 500;!important;
+    }
+
+    .app-bind-div{
+        margin-top: 20px;
+        border-bottom: 1px solid rgb(217,217,217);
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        text-align: center;
+    }
+</style>

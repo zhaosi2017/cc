@@ -2,7 +2,8 @@
 
 namespace app\modules\admin\models;
 
-use Yii;
+//use Yii;
+use app\models\CActiveRecord;
 
 /**
  * This is the model class for table "login_logs".
@@ -15,7 +16,7 @@ use Yii;
  * @property string $unlock_time
  * @property integer $unlock_uid
  */
-class LoginLogs extends \app\models\CActiveRecord
+class LoginLogs extends CActiveRecord
 {
     /**
      * @inheritdoc
@@ -33,7 +34,7 @@ class LoginLogs extends \app\models\CActiveRecord
         return [
             [['uid'], 'required'],
             [['uid', 'status', 'unlock_uid'], 'integer'],
-            [['login_time', 'unlock_time'], 'safe'],
+            [['login_time'], 'safe'],
             [['login_ip'], 'string', 'max' => 15],
         ];
     }
@@ -49,8 +50,6 @@ class LoginLogs extends \app\models\CActiveRecord
             'status' => 'Status',
             'login_time' => 'Login Time',
             'login_ip' => 'Login Ip',
-            'unlock_time' => 'Unlock Time',
-            'unlock_uid' => 'Unlock Uid',
         ];
     }
 
@@ -62,4 +61,25 @@ class LoginLogs extends \app\models\CActiveRecord
     {
         return new LoginLogsQuery(get_called_class());
     }
+
+    public function getStatuses()
+    {
+        return [
+            0 => '登录成功',
+            1 => '已解锁',
+            2 => '密码错误',
+            3 => '验证错误',
+            4 => 'IP锁定中',
+        ];
+    }
+
+    /*public function getUser()
+    {
+        return $this->hasOne(User::className(),['id'=>'uid']);
+    }
+
+    public function getOperator()
+    {
+        return $this->hasOne(User::className(),['id'=>'unlock_uid']);
+    }*/
 }

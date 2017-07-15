@@ -1,5 +1,5 @@
-<?php
 
+<?php
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
@@ -8,7 +8,7 @@ use yii\helpers\Url;
 /* @var $searchModel app\modules\home\models\CallRecordSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '呼叫记录';
+$this->title =   Yii::t('app/call-record/index','Account center  Personal call records');
 $this->params['breadcrumbs'][] = $this->title;
 $actionId = Yii::$app->requestedAction->id;
 ?>
@@ -19,39 +19,34 @@ $actionId = Yii::$app->requestedAction->id;
 <?php Pjax::begin(); ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'layout' => "{items}\n  <div><ul class='pagination'><li style='display:inline;'><span> ".Yii::t('app/call-record/index','Total').' '.$dataProvider->getTotalCount().  Yii::t('app/call-record/index','Data')." <span></li></ul>{pager}  </div>",
         // 'filterModel' => $searchModel,
         'rowOptions' => function($model) {
             return ['id' => 'tr_'.$model->id, 'class' => '_tr'];
         },
+        'headerRowOptions'=>['class'=>'text-center'],
+        'tableOptions'=>['class' => 'table table-striped table-bordered','style'=>'text-align:center;'],
         'pager'=>[
-            'firstPageLabel'=>"首页",
-            'prevPageLabel'=>'上一页',
-            'nextPageLabel'=>'下一页',
-            'lastPageLabel'=>'末页',
+            'firstPageLabel'=>Yii::t('app/call-record/index','Frist'),
+            'prevPageLabel'=>Yii::t('app/call-record/index','Previous'),
+            'nextPageLabel'=>Yii::t('app/call-record/index','Next'),
+            'lastPageLabel'=>Yii::t('app/call-record/index','Last page'),
             'maxButtonCount' => 9,
         ],
         'columns' => [
-            [
-                'class' => 'yii\grid\CheckboxColumn',
-                // 'footer' =>'<a href="javascript:;" class="_delete_all" data-url="'.Url::to(['/user/delete-all']).'"></a>',
-                // 'footerOptions' => ['colspan' => 13],
-            ],
-            'id',
-            'active_account',
-            'active_nickname',
-            'contact_number',
-            'unactive_account',
-            'unactive_nickname',
-            'type',
-            'unactive_contact_number',
-            'status',
+            ['class' => 'yii\grid\SerialColumn', 'header' => Yii::t('app/call-record/index','Serial number'), 'headerOptions'=>['class'=>'text-center']],
+            ['attribute' =>'active_account' , 'headerOptions'=>['class'=>'text-center']],
+            ['attribute' =>'active_nickname' , 'headerOptions'=>['class'=>'text-center']],
+            // ['attribute' =>'contact_number' , 'headerOptions'=>['class'=>'text-center']],
+            ['attribute' =>'unactive_account' , 'headerOptions'=>['class'=>'text-center']],
+            ['attribute' =>'unactive_nickname' , 'headerOptions'=>['class'=>'text-center']],
+            ['attribute' =>'typeData' , 'headerOptions'=>['class'=>'text-center']],
+            // ['attribute' =>'unactive_contact_number' , 'headerOptions'=>['class'=>'text-center']],
+            ['attribute' =>'statusData' , 'headerOptions'=>['class'=>'text-center']],
             [
                 'attribute' => 'call_time',
                 'format'=>['date', 'php:Y-m-d H:i:s'],
-            ],
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'template' => '{view}&nbsp;&nbsp;&nbsp;&nbsp;{delete}',
+                'headerOptions'=>['class'=>'text-center']
             ],
         ],
     ]);

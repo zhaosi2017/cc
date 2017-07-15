@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
                     2 => '备注',
                     3 => '添加人',
                     4 => '修改人',
-                ])->label(false) ?>
+                ],['prompt' => '全部'])->label(false) ?>
                 <?= $form->field($model, 'search_keywords')->textInput()->label(false) ?>
                 <div class="form-group">
                     <?= Html::submitButton('search', ['class' => 'hide','id'=>'search_hide']) ?>

@@ -8,34 +8,26 @@ use app\modules\admin\models\Manager;
 use app\modules\admin\models\ManagerSearch;
 use app\controllers\PController;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * ManagerController implements the CRUD actions for Manager model.
  */
 class ManagerController extends PController
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
 
     public function actionPassword()
     {
         $model = new PasswordForm();
-        if($model->load(Yii::$app->request->post()) && $model->updateSave()){
-            Yii::$app->getSession()->setFlash('success', '密码修改成功');
-        }
+        if($model->load(Yii::$app->request->post()) ){
+            if($res = $model->updateSave()){
+                Yii::$app->getSession()->setFlash('success', '密码修改成功');
+                return $this->redirect(['default/index'])->send();
+            }else{
+                Yii::$app->getSession()->setFlash('error', '密码修改失败');
+                return $this->render('password',['model' => $model]);
+            }
+            
+        }   
         return $this->render('password',['model' => $model]);
     }
 
@@ -85,7 +77,7 @@ class ManagerController extends PController
     public function actionCreate()
     {
         $model = new Manager();
-
+        $model->scenario = 'addadmin';
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             //权限逻辑
             $auth = Yii::$app->authManager;
@@ -114,8 +106,19 @@ class ManagerController extends PController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->save() ? $model->sendSuccess() : $model->sendError();
-            return $this->redirect(['index']);
+            $model->scenario = 'updateadmin';
+            $model->deleteLoginNum();
+            if($model->save()) {
+                $auth = Yii::$app->authManager;
+                $auth->updateAssignment($model->role_id,$model->id);
+                $model->sendSuccess();
+                return $this->redirect(['index']);
+            } else{ 
+                return $this->render('update', [
+                'model' => $model,
+                ]);
+            }
+            
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -132,14 +135,14 @@ class ManagerController extends PController
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $model->updateAttributes(['status'=>1]) ? $model->sendSuccess() : $model->sendError();
+        $model->updateAttributes(['update_at'=>time(),'update_id'=>Yii::$app->user->id,'status'=>1]) ? $model->sendSuccess() : $model->sendError();
         return $this->redirect(['index']);
     }
 
     public function actionRecover($id)
     {
         $model = $this->findModel($id);
-        $model->updateAttributes(['status'=>0]) ? $model->sendSuccess() : $model->sendError();
+        $model->updateAttributes(['update_at'=>time(),'update_id'=>Yii::$app->user->id,'status'=>0]) ? $model->sendSuccess() : $model->sendError();
         return $this->redirect(['index']);
     }
 

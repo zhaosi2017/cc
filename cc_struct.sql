@@ -94,22 +94,22 @@ DROP TABLE IF EXISTS `call_record`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `call_record` (
- `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
- `active_call_uid` int(10) unsigned NOT NULL DEFAULT '0',
- `unactive_call_uid` int(10) unsigned NOT NULL DEFAULT '0',
- `active_account` varchar(100) NOT NULL COMMENT '主叫账号',
- `unactive_account` varchar(100) NOT NULL COMMENT '被叫账号',
- `active_nickname` varchar(50) NOT NULL DEFAULT '*' COMMENT '主叫昵称',
- `unactive_nickname` varchar(50) NOT NULL DEFAULT '*' COMMENT '被叫昵称',
- `call_by_same_times` int(10) unsigned NOT NULL DEFAULT '0',
- `type` int(10) unsigned NOT NULL DEFAULT '0',
- `contact_number` varchar(64) NOT NULL DEFAULT '',
- `unactive_contact_number` char(15) NOT NULL COMMENT '被叫电话',
- `status` int(10) unsigned NOT NULL DEFAULT '0',
- `record_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '记录状态(1:正常, 2:黑名单, 3:垃圾桶)',
- `call_time` int(11) NOT NULL DEFAULT '0',
- PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `active_call_uid` int(10) unsigned NOT NULL DEFAULT '0',
+  `unactive_call_uid` int(10) unsigned NOT NULL DEFAULT '0',
+  `active_account` varchar(100) NOT NULL COMMENT '主叫账号',
+  `unactive_nickname` varchar(50) NOT NULL DEFAULT '*' COMMENT '被叫昵称',
+  `unactive_account` varchar(100) NOT NULL COMMENT '被叫账号',
+  `active_nickname` varchar(50) NOT NULL DEFAULT '*' COMMENT '主叫昵称',
+  `call_by_same_times` int(10) unsigned NOT NULL DEFAULT '0',
+  `type` int(10) unsigned NOT NULL DEFAULT '0',
+  `contact_number` varchar(64) NOT NULL DEFAULT '',
+  `unactive_contact_number` char(15) NOT NULL COMMENT '被叫电话',
+  `status` int(10) unsigned NOT NULL DEFAULT '0',
+  `record_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '记录状态(1:正常, 2:黑名单, 3:垃圾桶)',
+  `call_time` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,8 +127,9 @@ CREATE TABLE `login_logs` (
   `login_ip` char(15) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '0',
   `unlock_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `unlock_uid` int(10) unsigned NOT NULL DEFAULT '0',
+  `address` varchar(100)   DEFAULT NULL COMMENT '登录地址',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=121 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=124 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,7 +154,25 @@ CREATE TABLE `manager` (
   `create_at` int(11) DEFAULT '0',
   `update_at` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `manager_login_logs`
+--
+
+DROP TABLE IF EXISTS `manager_login_logs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `manager_login_logs` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` int(10) unsigned NOT NULL,
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '1成功,2密码错误,3验证错误,4账号错误',
+  `login_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `login_ip` char(15) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '0',
+  `address` varchar(100)   DEFAULT NULL COMMENT '登录地址',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -204,14 +223,34 @@ CREATE TABLE `user` (
   `telegram_number` varchar(64) NOT NULL DEFAULT '',
   `telegram_user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `telegram_country_code` int(10) unsigned DEFAULT NULL,
+  `telegram_name` varchar(64) NOT NULL DEFAULT '',
   `potato_number` varchar(64) NOT NULL DEFAULT '',
   `potato_user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `potato_country_code` int(10) unsigned DEFAULT NULL,
+  `potato_name` varchar(64) NOT NULL DEFAULT '',
   `reg_time` int(10) unsigned NOT NULL DEFAULT '0',
   `role_id` int(10) unsigned NOT NULL DEFAULT '0',
   `reg_ip` varchar(64) NOT NULL DEFAULT '',
+  `whitelist_switch` tinyint(1) NOT NULL DEFAULT '0',
+  `language` VARCHAR(40) NOT NULL DEFAULT 'zh-CN',
+  `step` TINYINT(1) NOT NULL DEFAULT '0'
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `white_list`
+--
+
+DROP TABLE IF EXISTS `white_list`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `white_list` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` int(10) unsigned NOT NULL DEFAULT '0',
+  `white_uid` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -223,4 +262,62 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-02 13:42:56
+-- Dump completed on 2017-06-07 16:44:03
+
+CREATE TABLE `user_phone` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户id',
+  `user_phone_sort` int(11) NOT NULL DEFAULT '1' COMMENT '号码在用户下的顺序',
+  `phone_country_code` char(8) NOT NULL DEFAULT '+86' COMMENT '电话号码的国际编码',
+  `reg_time` int(11) NOT NULL DEFAULT '0' COMMENT '绑定时间',
+  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '修改时间',
+  `user_phone_number` char(16) NOT NULL DEFAULT '' COMMENT '电话号码',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `black_list`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `black_list` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` int(10) unsigned NOT NULL DEFAULT '0',
+  `black_uid` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE user_gent_contact (
+  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  user_id int(11) NOT NULL DEFAULT '0' COMMENT '用户id',
+  contact_country_code char(32) NOT NULL DEFAULT '86' COMMENT '国际编码',
+  contact_phone_number char(32) NOT NULL DEFAULT '0' COMMENT '电话号码',
+  contact_nickname char(64) NOT NULL DEFAULT '' COMMENT '联系人昵称',
+  reg_time int(11) NOT NULL DEFAULT '0' COMMENT '添加时间',
+  update_time int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
+  contact_sort int(11) NOT NULL DEFAULT '1' COMMENT '紧急联系人的优先顺序  数字大优先级高',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `telegram_maps` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `latitude` decimal(17,14) NOT NULL DEFAULT '0.00000000000000',
+  `longitude` decimal(17,14) NOT NULL DEFAULT '0.00000000000000',
+  `title` char(64) NOT NULL DEFAULT '''''',
+  `description` text NOT NULL,
+  `addr` char(255) DEFAULT NULL,
+  `chat_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `potato_map` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `latitude` decimal(17,14) NOT NULL DEFAULT '0.00000000000000',
+  `longitude` decimal(17,14) NOT NULL DEFAULT '0.00000000000000',
+  `title` char(64) NOT NULL DEFAULT '''''',
+  `description` text NOT NULL,
+  `address` char(255) DEFAULT NULL,
+  `chat_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
