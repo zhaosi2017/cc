@@ -226,7 +226,7 @@ class Nexmo extends Model
 
         $cacheKey = $callUserId.time();
         $this->setTlanguage('en');
-        $conference = [
+        $tmp = [
             'action' => 'talk',
             'loop' => $this->loop,
             // 'lg' => $this->getTlanguage(),
@@ -234,6 +234,9 @@ class Nexmo extends Model
             'text' => $nexmoText,
         ];
 
+        $conference = [
+            $tmp,
+        ];
         $conferenceCacheKey = $cacheKey.'_pre';
         Yii::$app->redis->set($conferenceCacheKey, json_encode($conference, JSON_UNESCAPED_UNICODE));
         Yii::$app->redis->expire($conferenceCacheKey, 5*60);
@@ -293,13 +296,9 @@ class Nexmo extends Model
     {
         $cacheData = Yii::$app->redis->get($this->getAnswerKey());
         if (!empty($cacheData)) {
-            $tmp = json_decode($cacheData, true);
-            $tmp = json_encode($tmp, JSON_UNESCAPED_UNICODE);
-            $data = [
-                $tmp
-            ];
+            $data = $cacheData;
         } else {
-            $data = [];
+            $data = '[]';
         }
 
         return $data;
