@@ -309,18 +309,37 @@ class Nexmo extends Model
      */
     private function generate_jwt($application_id, $keyfile) {
 
-        date_default_timezone_set('UTC');    //Set the time for UTC + 0
-        $key = file_get_contents($keyfile);  //Retrieve your private key
+        date_default_timezone_set('UTC');               //Set the time for UTC + 0
+        $key = file_get_contents($keyfile);                             //Retrieve your private key
         $signer = new Sha256();
         $privateKey = new Key($key);
 
-        $jwt = (new Builder())->setIssuedAt(time() - date('Z')) // Time token was generated in UTC+0
-        ->set('application_id', $application_id) // ID for the application you are working with
-        ->setId( base64_encode( mt_rand (  )), true)
-            ->sign($signer,  $privateKey) // Create a signature using your private key
-            ->getToken(); // Retrieves the JWT
+        $jwt = (new Builder())->setIssuedAt(time() - date('Z'))  // Time token was generated in UTC+0
+                ->set('application_id', $application_id)                // ID for the application you are working with
+                ->setId( base64_encode( mt_rand (  )), true)
+                ->sign($signer,  $privateKey)                           // Create a signature using your private key
+                ->getToken();                                           // Retrieves the JWT
 
         return $jwt;
+    }
+
+    /**
+     * 主动获取通话结果.
+     */
+    public function getCallResult($uuid)
+    {
+        $base_url = $this->getResultUrl();
+        $url = $base_url.'/'.$uuid;
+        $application_id = $this->applicationId;
+        $privatePath = Yii::getAlias('@app').'/config/'.'private.key';
+        $jwt = $this->generate_jwt($application_id, $privatePath);
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', "Authorization: Bearer " . $jwt ));
+        $response = curl_exec($ch);
+        $response = json_decode($response, true);
+        return $response;
     }
 
     /**
@@ -371,20 +390,6 @@ class Nexmo extends Model
         }
 
         if (!empty($cacheKey)) {
-            /*
-            $base_url = $this->getResultUrl();
-            $url = $base_url.'/'.$uuid;
-            $application_id = $this->applicationId;
-            $privatePath = Yii::getAlias('@app').'/config/'.'private.key';
-            $jwt = $this->generate_jwt($application_id, $privatePath);
-
-            $ch = curl_init($url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', "Authorization: Bearer " . $jwt ));
-            $response = curl_exec($ch);
-            $response = json_decode($response, true);
-            */
-
             $calledUserId = Yii::$app->redis->hget($cacheKey, 'calledUserId');
             $callUserId = Yii::$app->redis->hget($cacheKey, 'callUserId');
             $calledName = Yii::$app->redis->hget($cacheKey, 'calledName');
