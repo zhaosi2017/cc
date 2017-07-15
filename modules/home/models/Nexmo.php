@@ -34,6 +34,7 @@ class Nexmo extends Model
     private $_resultUrl = 'https://api.nexmo.com/v1/calls';
     private $loop = 3;
     private $voice = 'male';
+    private $cacheKeyPre = 'nexmo_';
 
 
     /**
@@ -258,7 +259,7 @@ class Nexmo extends Model
         $uuid = isset($call['uuid']) ? $call['uuid'] : '';
 
         if (!empty($uuid)) {
-            $cacheKey = $uuid;
+            $cacheKey = $this->cacheKeyPre.$uuid;
             Yii::$app->redis->hset($cacheKey, 'time', time());
             Yii::$app->redis->hset($cacheKey, 'number', $number);
             Yii::$app->redis->hset($cacheKey, 'appName', $appName);
@@ -379,6 +380,8 @@ class Nexmo extends Model
         $cacheKey = isset($postData['uuid']) ? $postData['uuid'] : '';
         if (empty($cacheKey)) {
             return false;
+        } else {
+            $cacheKey = $this->cacheKeyPre.$cacheKey;
         }
 
         // Yii::$app->redis->zincrby($cacheKey, 1, 'times');
