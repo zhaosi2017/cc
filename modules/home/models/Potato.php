@@ -934,7 +934,7 @@ class Potato extends Model
         } else {
             Yii::$app->redis->set($cacheKey, 1);
             Yii::$app->redis->expire($cacheKey, $this->rateExpireTime);
-            return false;
+            $data = false;
         }
 
         return $data;
