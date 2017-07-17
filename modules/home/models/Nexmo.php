@@ -381,7 +381,7 @@ class Nexmo extends Model
 
         $postData = $this->getEventData();
         $cacheKey = isset($postData['uuid']) ? $postData['uuid'] : '';
-        $status = isset($postData['status']) ? $postData['status'] : '';
+        $statusName = isset($postData['status']) ? $postData['status'] : '';
         if (empty($cacheKey)) {
             return false;
         } else {
@@ -392,7 +392,7 @@ class Nexmo extends Model
         // $times = Yii::$app->redis->hget($cacheKey, 'times');
         if (isset($postData['duration']) && $postData['duration'] > 0) {
             $status = 1;
-        } elseif (in_array($status, $this->failureStatus)) {
+        } elseif (in_array($statusName, $this->failureStatus)) {
             $status = 0;
         } else {
             return;
@@ -424,7 +424,21 @@ class Nexmo extends Model
                 $text = $this->translateLanguage('呼叫'.$calledName.'成功!');
                 Yii::$app->redis->del($cacheKey);
             } else {
-                $text = $this->translateLanguage('呼叫'.$calledName.'失败!');
+                switch ($statusName) {
+                    case 'busy':
+                        $text = $this->translateLanguage('呼叫的用户忙!');
+                        break;
+                    case 'timeout':
+                        $text = $this->translateLanguage('呼叫'.$calledName.'失败, 暂时无人接听!');
+                        break;
+                    case 'unanswered':
+                        $text = $this->translateLanguage('呼叫'.$calledName.'失败, 暂时无人接听!');
+                        break;
+                    default:
+                        $text = $this->translateLanguage('呼叫'.$calledName.'失败!');
+                        break;
+                }
+
             }
 
             // 发消息到机器人.

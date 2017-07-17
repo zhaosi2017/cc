@@ -30,6 +30,9 @@ class Telegram extends Model
     private $tlanguage = 'zh-CN';
     private $repeat = 3;
     private $voice = 'male';
+    private $rateKey = 'rateKey_telegram_';
+    private $rateExpireTime = 10;
+    private $rateText = 'Operation too fast, please try again later!';
     // 是否是紧急呼叫.
     private $successText = 'success';
     private $failureText = 'failure';
@@ -851,6 +854,14 @@ class Telegram extends Model
     }
 
     /**
+     * @return string
+     */
+    public function getRateText()
+    {
+        return Yii::t('app/model/potato', $this->rateText, array(), $this->language);
+    }
+
+    /**
      * 设置keyboard.
      */
     public function setKeyboard()
@@ -863,6 +874,29 @@ class Telegram extends Model
                 ]
             ]
         ];
+    }
+
+    /**
+     * 检查频率.
+     */
+    public function checkRate()
+    {
+        $data = true;
+        $cacheKey = $this->rateKey.$this->telegramUid;
+        if (Yii::$app->redis->exists($cacheKey)) {
+            $this->sendData = [
+                'chat_id' => $this->telegramUid,
+                'text' => $this->getRateText(),
+            ];
+
+            $this->sendTelegramData();
+        } else {
+            Yii::$app->redis->set($cacheKey, 1);
+            Yii::$app->redis->expire($cacheKey, $this->rateExpireTime);
+            return false;
+        }
+
+        return $data;
     }
 
     /**

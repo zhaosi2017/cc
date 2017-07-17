@@ -46,5 +46,6 @@ return [
     'The number of times the call has exceeded the limit set by he.' => '呼叫超出本人设置的限制次数.',
     'The verification code is empty.' => '验证码为空.',
     'Verification code error.' => '验证码错误.',
+    'Operation too fast, please try again later!' => '操作过快，请稍后再试!',
     "[<a href='https://www.callu.online/home/telegram/bind-telegram'>Please enter the verification code on the callu platform to complete the binding operation!</a>]" => "[<a href='https://www.callu.online/home/telegram/bind-telegram'>请在callu平台输入该验证码, 完成绑定操作!</a>]",
 ];
