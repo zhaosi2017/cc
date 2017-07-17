@@ -130,6 +130,8 @@ class PotatoController extends GController
                     $potatoMapServer->potatoUid = $potato->potatoUid;
                     $replyMessageId = isset($message['reply_to_message'])? $message['reply_to_message']: '';
                     $potatoMapServer->key = $potato->potatoUid.'-'.$replyMessageId.'-potatoMap';
+                    file_put_contents('/tmp/r.log','--00-'.$potatoMapServer->key.PHP_EOL,8);
+                file_put_contents('/tmp/r.log','--00-'.json_encode($message).PHP_EOL,8);
                     $potatoMapServer->searchMapText = json_encode($message);
                     return $potatoMapServer->sendVenue();
             }else if($message['request_type'] == $potatoMapServer->requestLocationType || $message['request_type'] == $potatoMapServer->requestMapType){
