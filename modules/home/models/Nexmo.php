@@ -191,7 +191,7 @@ class Nexmo extends Model
     /**
      * 呼叫.
      */
-    public function callPerson($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $language, $appName, $appUid, $isFirst = 0, $calledNumberArr = array(), $calledUrgentArr = array())
+    public function callPerson($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $language, $appName, $appUid, $appCalledUid, $isFirst = 0, $calledNumberArr = array(), $calledUrgentArr = array())
     {
         $data = array(
             'status' => 0,
@@ -308,6 +308,7 @@ class Nexmo extends Model
             Yii::$app->redis->hset($cacheKey, 'appName', $appName);
             Yii::$app->redis->hset($cacheKey, 'language', $language);
             Yii::$app->redis->hset($cacheKey, 'appUid', $appUid);
+            Yii::$app->redis->hset($cacheKey, 'appCalledUid', $appCalledUid);
             Yii::$app->redis->hset($cacheKey, 'isUrgent', $isUrgent);
             Yii::$app->redis->hset($cacheKey, 'calledUserId', $calledUserId);
             Yii::$app->redis->hset($cacheKey, 'callUserId', $callUserId);
@@ -453,6 +454,7 @@ class Nexmo extends Model
             $language = Yii::$app->redis->hget($cacheKey, 'language');
             $appName = Yii::$app->redis->hget($cacheKey, 'appName');
             $appUid = Yii::$app->redis->hget($cacheKey, 'appUid');
+            $appCalledUid = Yii::$app->redis->hget($cacheKey, 'appCalledUid');
             $calledNumberArr = json_decode($calledNumberArr, true);
             $calledUrgentArr = json_decode($calledUrgentArr, true);
 
@@ -493,7 +495,7 @@ class Nexmo extends Model
                     case 'telegram':
                         $callback = [
                             $this->callUrgentCallbackDataPre,
-                            $appUid,
+                            $appCalledUid,
                             $calledUserId,
                             $callAppName,
                             $calledAppName
@@ -511,7 +513,7 @@ class Nexmo extends Model
                     case 'potato':
                         $callback = [
                             $this->callUrgentCallbackDataPre,
-                            $appUid,
+                            $appCalledUid,
                             $calledUserId,
                             $calledAppName
                         ];
@@ -534,7 +536,7 @@ class Nexmo extends Model
                     case 'telegram':
                         $callback = [
                             $this->callCallbackDataPre,
-                            $this->appUid,
+                            $appCalledUid,
                             $callAppName,
                             $calledAppName
                         ];
@@ -551,7 +553,7 @@ class Nexmo extends Model
                     case 'potato':
                         $callback = [
                             $this->callCallbackDataPre,
-                            $this->appUid,
+                            $appCalledUid,
                             $calledUserId,
                             $calledAppName
                         ];
