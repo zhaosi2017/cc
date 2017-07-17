@@ -110,7 +110,7 @@ $this->title =  Yii::t('app/user/update-phone-number','Edit Phone number');
                                     }
                                     };
                                     var dt = self.setInterval(countDown,1000);
-                                    " value='<?= Yii::t("app/user/update-phone-number" ,"Get code")?>' style="background-color: #39b5e7;color: white;">
+                                    " value='<?= Yii::t("app/index" ,"Get code")?>' style="background-color: #39b5e7;color: white;">
                                 <div class="help-block"></div>
 <!--                            </div>-->
                         </div>
