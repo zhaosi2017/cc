@@ -102,9 +102,17 @@ class TelegramController extends GController
                 $telegram->telegramLastName = isset($postData['callback_query']['message']['chat']['last_name']) ? $postData['callback_query']['message']['chat']['last_name'] : "";
                 $action = $telegram->callbackQuery[0];
                 switch ($action) {
-                    case $telegram->callCallbackDataPre;
+                    case $telegram->callCallbackDataPre:
                         $telegram->telegramContactFirstName = array_pop($callbackData);
+                        $telegram->telegramFirstName = isset($telegram->callbackQuery[2]) ? $telegram->callbackQuery[2] : '';
                         $result = $telegram->callTelegramPerson();
+                        return $result;
+                        break;
+                    case $telegram->callUrgentCallbackDataPre:
+                        $telegram->telegramContactFirstName = array_pop($callbackData);
+                        $telegram->telegramFirstName = $telegram->callbackQuery[3];
+                        $calledId = $telegram->callbackQuery[2];
+                        $result = $telegram->callTelegramPerson($calledId);
                         return $result;
                         break;
                     case $telegram->whiteCallbackDataPre:

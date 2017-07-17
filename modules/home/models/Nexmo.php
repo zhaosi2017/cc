@@ -26,7 +26,7 @@ class Nexmo extends Model
     private $_sendData;
     private $_answerKey;
     private $_eventData;
-    private $_tlanguage;
+    private $_tlanguage = 'zh-CN';
     private $_enventUrl;
     private $_answerUrl = 'https://www.callu.online/home/nexmo/conference?key=';
     private $_eventUrl = 'https://www.callu.online/home/nexmo/event';
@@ -35,7 +35,13 @@ class Nexmo extends Model
     private $loop = 3;
     private $voice = 'Joey';
     private $cacheKeyPre = 'nexmo_';
+    private $callUrgentCallbackDataPre = 'cc_call_urgent';
+    private $callCallbackDataPre = 'cc_call';
     private $failureStatus = ['unanswered', 'busy', 'timeout', 'failed'];
+    private $callUrgentText = 'Whether to call an emergency contact.';
+    private $callUrgentButtonText = 'Call emergency contact';
+    private $againText = "Whether to call again.";
+    private $againButtonText = 'Re-call';
 
 
     /**
@@ -148,6 +154,38 @@ class Nexmo extends Model
     public function getResultUrl()
     {
         return $this->_resultUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCallUrgentText()
+    {
+        return Yii::t('app/model/nexmo', $this->callUrgentText, array(), $this->_tlanguage);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCallUrgentButtonText()
+    {
+        return Yii::t('app/model/nexmo', $this->callUrgentButtonText, array(), $this->_tlanguage);
+    }
+
+    /**
+     * @return string
+     */
+    public function getAgainText()
+    {
+        return Yii::t('app/model/nexmo', $this->againText, array(), $this->_tlanguage);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAgainButtonText()
+    {
+        return Yii::t('app/model/nexmo', $this->againButtonText, array(), $this->_tlanguage);
     }
 
     /**
@@ -265,7 +303,7 @@ class Nexmo extends Model
 
         if (!empty($uuid)) {
             $cacheKey = $this->cacheKeyPre.$uuid;
-            Yii::$app->redis->hset($cacheKey, 'time', time());
+            Yii::$app->redis->hset($cacheKey, 'conferenceCacheKey', $conferenceCacheKey);
             Yii::$app->redis->hset($cacheKey, 'number', $number);
             Yii::$app->redis->hset($cacheKey, 'appName', $appName);
             Yii::$app->redis->hset($cacheKey, 'language', $language);
@@ -399,6 +437,7 @@ class Nexmo extends Model
         }
 
         if (!empty($cacheKey)) {
+            $conferenceCacheKey = Yii::$app->redis->hget($cacheKey, 'conferenceCacheKey');
             $calledUserId = Yii::$app->redis->hget($cacheKey, 'calledUserId');
             $callUserId = Yii::$app->redis->hget($cacheKey, 'callUserId');
             $calledName = Yii::$app->redis->hget($cacheKey, 'calledName');
@@ -423,6 +462,7 @@ class Nexmo extends Model
             if ($status) {
                 $text = $this->translateLanguage('呼叫'.$calledName.'成功!');
                 Yii::$app->redis->del($cacheKey);
+                Yii::$app->redis->del($conferenceCacheKey);
             } else {
                 switch ($statusName) {
                     case 'busy':
@@ -447,9 +487,81 @@ class Nexmo extends Model
             // 保存通话记录.
             $this->saveCallRecordData($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $number, $status, $isUrgent);
 
-            // 呼叫失败, 呼叫下一联系人.
-            if (!$status) {
-                $this->callPerson($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $language, $appName, $appUid,0, $calledNumberArr, $calledUrgentArr);
+            // 如果是呼叫紧急联系人，需要推送按钮.
+            if (empty($calledNumberArr) && !empty($calledUrgentArr)) {
+                switch ($appName) {
+                    case 'telegram':
+                        $callback = [
+                            $this->callUrgentCallbackDataPre,
+                            $this->appUid,
+                            $calledUserId,
+                            $callAppName,
+                            $calledAppName
+                        ];
+                        $text = $this->getCallUrgentText();
+                        $keyBoard = [
+                            'text' => $this->getCallUrgentButtonText(),
+                            'callback_data' => implode('-', $callback),
+                        ];
+                        break;
+                    case 'potato':
+                        $callback = [
+                            $this->callUrgentCallbackDataPre,
+                            $this->appUid,
+                            $calledUserId,
+                            $calledAppName
+                        ];
+                        $text = $this->getCallUrgentText();
+                        $keyBoard = [
+                            'type' => 0,
+                            'text' => $this->getCallUrgentButtonText(),
+                            'data' => implode('-', $callback),
+                        ];
+                        break;
+                    default :
+                        break;
+                }
+
+                $this->sendMessageToRobot($appName, $appUid, $text, $keyBoard);
+            } elseif (empty($calledNumberArr) && empty($calledUrgentArr)) {
+                switch ($appName) {
+                    case 'telegram':
+                        $callback = [
+                            $this->callCallbackDataPre,
+                            $this->appUid,
+                            $callAppName,
+                            $calledAppName
+                        ];
+                        $text = $this->getAgainText();
+                        $keyBoard = [
+                            'text' => $this->getAgainButtonText(),
+                            'callback_data' => implode('-', $callback),
+                        ];
+                        break;
+                    case 'potato':
+                        $callback = [
+                            $this->callCallbackDataPre,
+                            $this->appUid,
+                            $calledUserId,
+                            $calledAppName
+                        ];
+                        $text = $this->getAgainText();
+                        $keyBoard = [
+                            'type' => 0,
+                            'text' => $this->getAgainButtonText(),
+                            'data' => implode('-', $callback),
+                        ];
+                        break;
+                    default :
+                        break;
+                }
+
+                $this->sendMessageToRobot($appName, $appUid, $text, $keyBoard);
+            } else {
+                // 呼叫失败, 呼叫下一联系人.
+                if (!$status) {
+                    $this->callPerson($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $language, $appName, $appUid,0, $calledNumberArr, $calledUrgentArr);
+                }
             }
         }
     }
@@ -459,24 +571,44 @@ class Nexmo extends Model
      * @param $appUid
      * @param $text
      */
-    private function sendMessageToRobot($appName, $appUid, $text)
+    private function sendMessageToRobot($appName, $appUid, $text, $keyBoard = '')
     {
         switch ($appName) {
             case 'telegram':
                 $this->setWebhook($this->telegramUrl);
-                $this->sendData = [
-                    'chat_id' => $appUid,
-                    'text' => $text,
-                ];
+                if (empty($keyBoard)) {
+                    $this->sendData = [
+                        'chat_id' => $appUid,
+                        'text' => $text,
+                    ];
+                } else {
+                    $this->sendData = [
+                        'chat_id' => $appUid,
+                        'text' => $text,
+                        'reply_markup' => [
+                            'inline_keyboard' => $keyBoard,
+                        ],
+                    ];
+                }
+
                 $this->sendRequest();
                 break;
             case 'potato':
                 $this->setWebhook($this->potatoUrl);
-                $this->sendData = [
-                    'chat_type' => 1,
-                    'chat_id' => $appUid,
-                    'text' => $text,
-                ];
+                if (empty($keyBoard)) {
+                    $this->sendData = [
+                        'chat_type' => 1,
+                        'chat_id' => $appUid,
+                        'text' => $text,
+                    ];
+                } else {
+                    $this->sendData = [
+                        'chat_type' => 1,
+                        'chat_id' => $appUid,
+                        'text' => $text,
+                        'inline_markup' => $keyBoard,
+                    ];
+                }
                 $this->sendRequest($this->webhook, true);
                 break;
             default :
