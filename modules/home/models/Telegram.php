@@ -854,6 +854,14 @@ class Telegram extends Model
     }
 
     /**
+     * @return string
+     */
+    public function getRateText()
+    {
+        return Yii::t('app/model/potato', $this->rateText, array(), $this->language);
+    }
+
+    /**
      * 设置keyboard.
      */
     public function setKeyboard()
@@ -878,7 +886,7 @@ class Telegram extends Model
         if (Yii::$app->redis->exists($cacheKey)) {
             $this->sendData = [
                 'chat_id' => $this->telegramUid,
-                'text' => $this->rateText,
+                'text' => $this->getRateText(),
             ];
 
             $this->sendTelegramData();
