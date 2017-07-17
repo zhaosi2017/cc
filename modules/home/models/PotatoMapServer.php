@@ -187,6 +187,7 @@ class PotatoMapServer extends Model
 
     public function sendVenue()
     {
+        file_put_contents('/tmp/r.log','---111---'.PHP_EOL,8);
         $messages = json_decode($this->searchMapText,true);
         $message = $messages['text'];
 
@@ -221,10 +222,11 @@ class PotatoMapServer extends Model
 
     private function  userAddMap()
     {
+        file_put_contents('/tmp/r.log','---222---'.PHP_EOL,8);
         $content = Yii::$app->redis->get($this->key);
-        file_put_contents('/tmp/r.log',$this->potatoUid.$content.PHP_EOL,8);
+        file_put_contents('/tmp/r.log','---333---redis-content '.$content.PHP_EOL,8);
         if($content){
-            file_put_contents('/tmp/r.log','---useraddmap--2 ---'.PHP_EOL,8);
+            file_put_contents('/tmp/r.log','---44444 ---'.PHP_EOL,8);
             $contents = json_decode($content,true);
             $potatoMap = new PotatoMap();
             $potatoMap->chat_id = $this->potatoUid;
@@ -235,6 +237,7 @@ class PotatoMapServer extends Model
             $potatoMap->longitude = $contents['longitude'];
              if($potatoMap->save())
              {
+                 file_put_contents('/tmp/r.log','---5555 ---'.PHP_EOL,8);
                  Yii::$app->redis->del($this->key);
                  return true;
              }
@@ -244,7 +247,8 @@ class PotatoMapServer extends Model
 
     public function addMap()
     {
-        file_put_contents('/tmp/r.log','key'.$this->key.PHP_EOL,8);
+        file_put_contents('/tmp/rs.log','11--reids - key'.$this->key.PHP_EOL,8);
+        file_put_contents('/tmp/rs.log','redis-content'.$this->key.PHP_EOL,8);
         Yii::$app->redis->setex($this->key, 5*60, $this->searchMapText);
         return $this->errorCode['success'];
     }
