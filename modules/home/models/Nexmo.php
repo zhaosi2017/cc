@@ -493,29 +493,33 @@ class Nexmo extends Model
                     case 'telegram':
                         $callback = [
                             $this->callUrgentCallbackDataPre,
-                            $this->appUid,
+                            $appUid,
                             $calledUserId,
                             $callAppName,
                             $calledAppName
                         ];
                         $text = $this->getCallUrgentText();
                         $keyBoard = [
-                            'text' => $this->getCallUrgentButtonText(),
-                            'callback_data' => implode('-', $callback),
+                            [
+                                'text' => $this->getCallUrgentButtonText(),
+                                'callback_data' => implode('-', $callback),
+                            ]
                         ];
                         break;
                     case 'potato':
                         $callback = [
                             $this->callUrgentCallbackDataPre,
-                            $this->appUid,
+                            $appUid,
                             $calledUserId,
                             $calledAppName
                         ];
                         $text = $this->getCallUrgentText();
                         $keyBoard = [
-                            'type' => 0,
-                            'text' => $this->getCallUrgentButtonText(),
-                            'data' => implode('-', $callback),
+                            [
+                                'type' => 0,
+                                'text' => $this->getCallUrgentButtonText(),
+                                'data' => implode('-', $callback),
+                            ]
                         ];
                         break;
                     default :
@@ -534,8 +538,10 @@ class Nexmo extends Model
                         ];
                         $text = $this->getAgainText();
                         $keyBoard = [
-                            'text' => $this->getAgainButtonText(),
-                            'callback_data' => implode('-', $callback),
+                            [
+                                'text' => $this->getAgainButtonText(),
+                                'callback_data' => implode('-', $callback),
+                            ]
                         ];
                         break;
                     case 'potato':
@@ -547,9 +553,11 @@ class Nexmo extends Model
                         ];
                         $text = $this->getAgainText();
                         $keyBoard = [
-                            'type' => 0,
-                            'text' => $this->getAgainButtonText(),
-                            'data' => implode('-', $callback),
+                            [
+                                'type' => 0,
+                                'text' => $this->getAgainButtonText(),
+                                'data' => implode('-', $callback),
+                            ]
                         ];
                         break;
                     default :
