@@ -29,7 +29,7 @@ $identity = Yii::$app->user->identity;
                 <?= Yii::t('app/harassment','Whitelist status')?> :
             </div>
             <div  style="display: inline-block">
-                <input id="toggle-one" data-onstyle="info" data-offstyle="info" <?=  isset($identity->whitelist_switch) && $identity->whitelist_switch ? 'checked':''; ?> type="checkbox" data-on="<?= Yii::t('app/harassment','On')?>" data-off="<?= Yii::t('app/harassment','Off')?>">
+                <input id="toggle-one" data-onstyle="info" data-offstyle="success" <?=  isset($identity->whitelist_switch) && $identity->whitelist_switch ? 'checked':''; ?> type="checkbox" data-on=" " /* data-on="<?= Yii::t('app/harassment','On')?>" */ data-off="<?= Yii::t('app/harassment','Off')?>">
             </div>
         </div>
         <div class="col-sm-9">
@@ -47,7 +47,7 @@ $identity = Yii::$app->user->identity;
                 <?= $form->field($model, 'search_keywords')->textInput()->label(false) ?>
                 <div class="form-group">
                     <?= Html::submitButton('search', ['class' => 'hide','id'=>'search_hide']) ?>
-                    <?= Html::submitButton(Yii::t('app/harassment','Search'), ['class' => 'btn btn-primary m-t-n-xs button-new-color','id'=>'search']) ?>
+                    <?= Html::submitButton(Yii::t('app/harassment','Search'), ['class' => 'btn btn-primary m-t-n-xs button-new-color','id'=>'search','style'=>'    margin-bottom: 5px;']) ?>
                 </div>
             </div>
         </div>
