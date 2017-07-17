@@ -985,7 +985,7 @@ class Telegram extends Model
             $this->language = $this->callPersonData->language;
             $callMenu = [
                 'text' => $this->getCallText(),
-                'callback_data' => implode('-', array($this->callCallbackDataPre, $this->telegramContactUid, $this->telegramContactPhone, $this->telegramContactLastName.$this->telegramContactFirstName)),
+                'callback_data' => implode('-', array($this->callCallbackDataPre, $this->telegramContactUid, $this->telegramFirstName.$this->telegramLastName, $this->telegramContactLastName.$this->telegramContactFirstName)),
             ];
 
             // 检查是否加了呼叫人到自己到白名单.
