@@ -893,6 +893,14 @@ class Potato extends Model
     }
 
     /**
+     * @return string
+     */
+    public function getRateText()
+    {
+        return Yii::t('app/model/potato', $this->rateText, array(), $this->language);
+    }
+
+    /**
      * 设置keyboard.
      */
     public function setKeyboard()
@@ -914,15 +922,15 @@ class Potato extends Model
     public function checkRate()
     {
         $data = true;
-        $cacheKey = $this->rateKey.$this->telegramUid;
+        $cacheKey = $this->rateKey.$this->potatoUid;
         if (Yii::$app->redis->exists($cacheKey)) {
             $this->sendData = [
                 'chat_type' => 1,
                 'chat_id' => $this->potatoUid,
-                'text' => $this->rateText,
+                'text' => $this->getRateText(),
             ];
 
-            $this->sendTelegramData();
+            $this->sendPotatoData();
         } else {
             Yii::$app->redis->set($cacheKey, 1);
             Yii::$app->redis->expire($cacheKey, $this->rateExpireTime);
