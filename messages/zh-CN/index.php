@@ -74,5 +74,6 @@ return [
     'Jump over'=>'跳过',
     'Get code'=>'获取验证码',
     'Contact Phone'=>'联系电话',
+    'Phone or country code changes'=>'电话或国码存在变更'
 
     ];

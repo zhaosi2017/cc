@@ -94,7 +94,7 @@ class ContactForm extends Model
         $res = UserPhone::findOne(['user_phone_number'=>$this->phone_number]);
         if(!empty($res))
         {
-            $this->addError('phone_number',Yii::t('app/models/ContactForm' , 'The phone already exists')/*'电话已经存在'*/);
+            $this->addError('phone_number',Yii::t('app/models/ContactForm' , 'The phone already exists'));
         }
     }
 
@@ -129,17 +129,23 @@ class ContactForm extends Model
     /**
      * 短信验证 
      */
-    public static function validateSms($type, $code)
+    public static function validateSms($type, $code, $phone_number)
     {
         
         $session = Yii::$app->session;
         $verifyCode = $session[$type];
+        if(!empty($session['phone_number']) && $phone_number != $session['phone_number'])
+        {
+            return -1;
+        }
         if(empty($code) ||  empty($verifyCode) || $verifyCode != strtolower($code))
         {
-            return true;
+            return 1;
         }
         $session->remove($type);
-        return false;
+        $session->remove('phone_number');
+
+        return ;
     }
 
 
@@ -157,6 +163,11 @@ class ContactForm extends Model
             }
         }
         return $code;
+    }
+
+    public static function makeVerifyCode()
+    {
+       return rand(1000,9999);
     }
 
     /**

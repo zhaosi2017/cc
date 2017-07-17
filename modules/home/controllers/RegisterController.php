@@ -71,7 +71,14 @@ class RegisterController extends GController
                 //发送验证码到邮箱 todo 使用swoole 异步发提高性能
                 $code =$_POST['PhoneRegisterForm']['code'];
                 $type = Yii::$app->controller->action->id;
-                if(ContactForm::validateSms($type, $code)){
+                $phone_number = $model->country_code.$model->phone;
+                $res = ContactForm::validateSms($type, $code,$phone_number);
+                if($res === -1)
+                {
+                    $model->addError('phone', Yii::t('app/index','Phone or country code changes'));
+                    return $this->render('phone-index',['model'=>$model]);
+                }
+                if($res === 1 ){
                     $model->addError('code', Yii::t('app/index','Verification code error'));
                     return $this->render('phone-index',['model'=>$model]);
                 }
@@ -136,15 +143,15 @@ class RegisterController extends GController
                     exit(json_encode($response));
                 }
                 $session = Yii::$app->session;
-                $verifyCode = $session[$type] = ContactForm::makeCode();
-
+                $verifyCode = $session[$type] = ContactForm::makeVerifyCode();
+                $session['phone_number'] = $number;
                  $url = 'https://rest.nexmo.com/sms/json?' . http_build_query(
                      [
                          'api_key' =>  Yii::$app->params['nexmo_api_key'],
                          'api_secret' => Yii::$app->params['nexmo_api_secret'],
                          'to' => $number,
                          'from' => Yii::$app->params['nexmo_account_number'],
-                         'text' => $verifyCode.' : ( From callu code )'
+                         'text' => 'Your Verification Code '.$verifyCode
                      ]
                  );
 

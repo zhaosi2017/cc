@@ -158,7 +158,13 @@ class LoginController extends GController
             if($model->validate('country_code','phone','code')){
                 $code =$_POST['PhoneRegisterForm']['code'];
                 $type = Yii::$app->controller->action->id;
-                if(ContactForm::validateSms($type, $code)){
+                $phone_number = $model->country_code.$model->phone;
+                $res = ContactForm::validateSms($type, $code, $phone_number);
+                if($res === -1){
+                    $model->addError('phone', Yii::t('app/index','Phone or country code changes'));
+                    return $this->render('phone-find-password',['model'=>$model]);
+                }
+                if($res === 1){
                     $model->addError('code', Yii::t('app/index','Verification code error'));
                     return $this->render('phone-find-password',['model'=>$model]);
                 }
