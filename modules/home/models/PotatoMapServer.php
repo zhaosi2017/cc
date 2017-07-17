@@ -176,34 +176,25 @@ class PotatoMapServer extends Model
 
     public function sendVenue()
     {
-
         $messages = json_decode($this->searchMapText,true);
         $message = $messages['text'];
-        $arr = explode(' ',$message);
 
-        if(isset($arr[1]) && !empty($arr[1])) {
-            switch ($arr[1]) {
-                case '-a':
-                        if(isset($arr[2]) && !empty($arr[2])) {
-                            $this->searchText = $arr[2];
-                            $this->key = $this->potatoUid . '-potato';
-                            $this->userAddMap();
-                        }
-                    break;
-
-                default:
-                        $this->searchText = $arr[1];
-                        $this->sendMap();
-                    break;
+        if(preg_match('/^\/map/i',$message)){
+            $arr = explode(' ',$message);
+            if(isset($arr[1]) && !empty($arr[1])) {
+                $this->searchText = $arr[1];
+                $this->sendMap();
+                return $this->errorCode['success'];
             }
         }
 
+        $this->searchText = $message;
+        $this->userAddMap();
         return $this->errorCode['success'];
-
 
     }
 
-    public function  userAddMap()
+    private function  userAddMap()
     {
         $content = Yii::$app->redis->get($this->key);
         if($content){
@@ -220,7 +211,6 @@ class PotatoMapServer extends Model
                  Yii::$app->redis->del($this->key);
                  return true;
              }
-
         }
         return false;
     }
