@@ -356,6 +356,14 @@ class Potato extends Model
     /**
      * @return mixed
      */
+    public function getCallUrgentCallbackDataPre()
+    {
+        return $this->callUrgentCallbackDataPre;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getPotatoUid()
     {
         return $this->potatoUid;

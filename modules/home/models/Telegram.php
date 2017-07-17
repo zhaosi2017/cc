@@ -463,6 +463,11 @@ class Telegram extends Model
         return $this->unblackCallbackDataPre;
     }
 
+    public function getCallUrgentCallbackDataPre()
+    {
+        return $this->callUrgentCallbackDataPre;
+    }
+
     public function getWhiteText()
     {
         return Yii::t('app/model/telegram', $this->whiteText, array(), $this->language);
