@@ -63,4 +63,5 @@
     'Please edit : username'=>'請編輯:用戶名',
     'Get code'=>'獲取驗證碼',
     'Contact Phone'=>'聯繫電話',
+    'Phone or country code changes'=>'電話或國碼存在變更'
 ); 

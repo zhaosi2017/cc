@@ -63,4 +63,5 @@
     'Please edit : username'=>'កែសម្រួល: ឈ្មោះអ្',
     'Get code'=>'ទទួលបានកូដផ្ទៀ',
     'Contact Phone'=>'ទូរស័',
+    'Phone or country code changes'=>'ឬលេខកូដប្រទេសតាមទូរស័ព្ទគឺជាប្រធានបទដ'
 ); 

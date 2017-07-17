@@ -114,6 +114,11 @@ class UserPhone extends CActiveRecord
 
     private function updateUserPhoneNumber(){
         $row = User::findOne(array($this->user_id));
+        $res = User::findOne(['phone_number'=>$this->user_phone_number]);
+
+        if(!empty($res) && $res['id'] != $this->user_id){
+            return true;
+        }
         if(empty($row)){
             return false;
         }

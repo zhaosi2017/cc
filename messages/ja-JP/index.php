@@ -63,4 +63,5 @@
     'Please edit : username'=>'編集：ユーザー名',
     'Get code'=>'確認コードを取得します',
     'Contact Phone'=>'電話',
+    'Phone or country code changes'=>'または電話国コードが変更されることがあります'
 ); 

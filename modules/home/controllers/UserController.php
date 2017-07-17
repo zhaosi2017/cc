@@ -86,7 +86,15 @@ class UserController extends GController
             $user_phone_number = $model->phone_number;
             $phone_country_code = $model->country_code;
             $type = Yii::$app->controller->action->id;
-            if($model->validateSms($type, $code)){
+            $phone_numbers = $model->country_code.$model->phone_number;
+            $res = ContactForm::validateSms($type, $code, $phone_numbers);
+
+            if($res === -1){
+                 $model->addError('phone_number', Yii::t('app/index', 'Phone or country code changes'));
+                return $this->render('set-phone-number',['model'=>$model,'isModify'=>$isModify]);
+            }
+
+            if($res === 1){
                 $model->addError('code', Yii::t('app/index','Verification code error'));
                 return $this->render('set-phone-number',['model'=>$model,'isModify'=>$isModify]);
             }
@@ -179,7 +187,14 @@ class UserController extends GController
         if($model->load(Yii::$app->request->post()) && $model->validate(['potato_country_code','potato_number'])){
             $code = $_POST['ContactForm']['code'];
             $type = Yii::$app->controller->action->id;
-            if($model->validateSms($type, $code)){
+            $phone_number  = $model->potato_country_code.$potato_number;
+            $res = $model->validateSms($type, $code,$phone_number);
+
+            if($res === -1){
+                $model->addError('phone_number', Yii::t('app/index','Phone or country code changes'));
+                return $this->render('bind-potato',['model'=>$model]);
+            }
+            if($res === 1){
                 $model->addError('code', Yii::t('app/index','Verification code error'));
                 return $this->render('bind-potato',['model'=>$model]);
             }
@@ -208,7 +223,14 @@ class UserController extends GController
             
             $code = $_POST['ContactForm']['code'];
             $type = Yii::$app->controller->action->id;
-            if($model->validateSms($type,$code)){
+            $phone_number = $model->telegram_country_code.$model->telegram_number;
+            $res = $model->validateSms($type,$code, $phone_number);
+            if($res === -1)
+            {
+                $model->addError('telegram_number', Yii::t('app/index','Phone or country code changes'));
+                return $this->render('bind-telegram',['model'=>$model]);
+            }
+            if($res === 1){
                 $model->addError('code', Yii::t('app/index','Verification code error'));
                 return $this->render('bind-telegram',['model'=>$model]);
             }
@@ -323,14 +345,15 @@ class UserController extends GController
                     exit(json_encode($response));
                 }
                 $session = Yii::$app->session;
-                $verifyCode = $session[$type] = ContactForm::makeCode();
+                $verifyCode = $session[$type] = ContactForm::makeVerifyCode();
+                $session['phone_number'] = $number;
                 $url = 'https://rest.nexmo.com/sms/json?' . http_build_query(
                     [
                         'api_key' =>  Yii::$app->params['nexmo_api_key'],
                         'api_secret' => Yii::$app->params['nexmo_api_secret'],
                         'to' => $number,
                         'from' => Yii::$app->params['nexmo_account_number'],
-                        'text' => $verifyCode.' : ( From callu code )'
+                        'text' => 'Your Verification Code : '.$verifyCode
                     ]
                 );
 
@@ -543,7 +566,13 @@ class UserController extends GController
 
                     $code =$_POST['PhoneRegisterForm']['code'];
                     $type = Yii::$app->controller->action->id;
-                    if(ContactForm::validateSms($type, $code)){
+                    $phone_number = $model->country_code.$model->phone;
+                    $res = ContactForm::validateSms($type, $code,$phone_number);
+                    if($res === -1){
+                        $model->addError('phone', Yii::t('app/index','Phone or country code changes'));
+                        return $this->render('update-phone-number',['model'=>$model]);
+                    }
+                    if($res === 1){
                         $model->addError('code', Yii::t('app/index','Verification code error'));
                         return $this->render('update-phone-number',['model'=>$model]);
                     }
