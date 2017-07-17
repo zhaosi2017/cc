@@ -222,7 +222,7 @@ class PotatoMapServer extends Model
     private function  userAddMap()
     {
         $content = Yii::$app->redis->get($this->key);
-        file_put_contents('/tmp/r.log','---useraddmap--11 ---'.PHP_EOL,8);
+        file_put_contents('/tmp/r.log',$this->potatoUid.'content'.$content.PHP_EOL,8);
         if($content){
             file_put_contents('/tmp/r.log','---useraddmap--2 ---'.PHP_EOL,8);
             $contents = json_decode($content,true);
