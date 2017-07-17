@@ -77,6 +77,11 @@ class TelegramController extends GController
                 return $telegram->telegramWellcome();
             }
 
+            $result = $telegram->checkRate();
+            if ($result) {
+                $telegram->errorCode['error'];
+            }
+
             if (!empty($message) && isset($message['contact'])) {
                 // 分享了名片.
                 $telegram->telegramContactUid = $message['contact']['user_id'];
