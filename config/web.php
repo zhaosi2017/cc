@@ -23,6 +23,7 @@ $config = [
                         'app/login'=>'login.php',
                         'app/model/telegram' => 'telegram.php',
                         'app/model/potato' => 'potato.php',
+                        'app/model/nexmo' => 'nexmo.php',
                         'app/user/index'=>'user/index.php',
                         'app/user/app-build'=>'user/app-build.php',
                         'app/user/links'=>'user/links.php',
