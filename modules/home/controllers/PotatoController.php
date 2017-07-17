@@ -75,7 +75,7 @@ class PotatoController extends GController
 
             $result = $potato->checkRate();
             if ($result) {
-                $potato->errorCode['error'];
+                return $potato->errorCode['error'];
             }
 
             if ($message['request_type'] == $potato->shareRequestType) {
