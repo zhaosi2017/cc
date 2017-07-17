@@ -38,6 +38,7 @@ class Telegram extends Model
     private $failureText = 'failure';
     private $isUrgentCall = 0;
     private $callCallbackDataPre = 'cc_call';
+    private $callUrgentCallbackDataPre = 'cc_call_urgent';
     private $whiteCallbackDataPre = 'cc_white';
     private $unwhiteCallbackDataPre = 'cc_unwhite';
     private $whitelistSwitchCallbackDataPre = 'cc_whiteswitch';
@@ -1473,7 +1474,7 @@ class Telegram extends Model
     /**
      * 呼叫telegram账号.
      */
-    public function callTelegramPerson()
+    public function callTelegramPerson($calledId='')
     {
         $res = User::findOne(['telegram_user_id' => $this->telegramUid]);
         if (!$res) {
@@ -1542,8 +1543,23 @@ class Telegram extends Model
 
             // 呼叫.
             try {
-                $nexmo = new Nexmo();
-                $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->telegramContactFirstName, $this->telegramLastName.$this->telegramFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code.$this->callPersonData->phone_number, $this->language, $appName = 'telegram', $this->telegramUid,1);
+                if (!empty($calledId)) {
+                    $urgent = UserGentContact::find()->select(['id', 'contact_country_code', 'contact_phone_number', 'contact_nickname'])->where(['user_id' => $calledId])->orderBy('id asc')->all();
+                    $urgentArr = [];
+                    if (!empty($urgent)) {
+                        foreach ($urgent as $key => $value) {
+                            $tmp = [];
+                            $tmp['phone_number'] = $value->contact_country_code . $value->contact_phone_number;
+                            $tmp['nickname'] = $value->contact_nickname;
+                            $urgentArr[] = $tmp;
+                        }
+                    }
+                    $nexmo = new Nexmo();
+                    $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->telegramContactFirstName, $this->telegramLastName . $this->telegramFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code . $this->callPersonData->phone_number, $this->language, $appName = 'telegram', $this->telegramUid, 1, array(), $urgentArr);
+                } else {
+                    $nexmo = new Nexmo();
+                    $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->telegramContactFirstName, $this->telegramLastName . $this->telegramFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code . $this->callPersonData->phone_number, $this->language, $appName = 'telegram', $this->telegramUid, 1);
+                }
             } catch (\Exception $e) {
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
