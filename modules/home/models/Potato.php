@@ -1546,7 +1546,7 @@ class Potato extends Model
                 $this->sendData = [
                     'chat_type' => 1,
                     'chat_id' => $this->potatoUid,
-                    'text' => $this->translateLanguage('发送异常, 请稍后再试, 异常: '.$e->getMessage()),
+                    'text' => $this->translateLanguage('网络异常, 请稍后再试!'),
                 ];
                 $this->sendPotatoData();
             }
