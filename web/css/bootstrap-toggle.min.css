@@ -35,10 +35,18 @@
     border-color: #38b5e7 !important; 
 }
 .toggle-off{
-     background-color: #38b5e7 !important; 
+     background-color: white !important;
       border-color: #38b5e7 !important; 
 }
 .toggle-group{
     background-color: #38b5e7;
-     border-color: #38b5e7 !important; 
+    border-color: #38b5e7 !important;
+}
+
+.float-e-margins .btn{
+     margin-bottom: 0px;
+}
+
+.btn-info{
+    border-color: #38b5e7 !important;
 }
