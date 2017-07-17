@@ -426,7 +426,7 @@ class Nexmo extends Model
             } else {
                 switch ($statusName) {
                     case 'busy':
-                        $text = $this->translateLanguage('呼叫'.$calledName.'的用户忙!');
+                        $text = $this->translateLanguage('呼叫的用户忙!');
                         break;
                     case 'timeout':
                         $text = $this->translateLanguage('呼叫'.$calledName.'失败, 暂时无人接听!');
