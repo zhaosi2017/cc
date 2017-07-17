@@ -248,7 +248,7 @@ class PotatoMapServer extends Model
     public function addMap()
     {
         file_put_contents('/tmp/rs.log','11--reids - key'.$this->key.PHP_EOL,8);
-        file_put_contents('/tmp/rs.log','redis-content'.$this->key.PHP_EOL,8);
+        file_put_contents('/tmp/rs.log','redis-content'.$this->searchMapText.PHP_EOL,8);
         Yii::$app->redis->setex($this->key, 5*60, $this->searchMapText);
         return $this->errorCode['success'];
     }
