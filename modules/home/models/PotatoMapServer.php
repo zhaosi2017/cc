@@ -24,6 +24,7 @@ class PotatoMapServer extends Model
     private $maxRequestNum = 5;
     private $key;
     private $searchData ;
+    private $message;
 
 
     private $errorCode = [
@@ -47,6 +48,16 @@ class PotatoMapServer extends Model
         return $this->key;
     }
 
+
+    public function setMessage($value)
+    {
+        $this->message = $value;
+    }
+
+    public function getMessage()
+    {
+        return $this->message;
+    }
 
     public function setSearchData( array $value)
     {
@@ -189,15 +200,31 @@ class PotatoMapServer extends Model
         }
 
         $this->searchText = $message;
-        $this->userAddMap();
+        if($this->userAddMap()){
+            $this->message = '恭喜您发布成功！';
+            $this->sendMessage();
+        }
         return $this->errorCode['success'];
 
+    }
+
+
+    private function sendMessage()
+    {
+        $this->sendData = [
+            'chat_type' => 1,
+            'chat_id' => $this->potatoUid,
+            "text"=> $this->message
+        ];
+        $this->sendPotatoData($this->webHookUrl);
     }
 
     private function  userAddMap()
     {
         $content = Yii::$app->redis->get($this->key);
+        file_put_contents('/tmp/r.log','---useraddmap--11 ---'.PHP_EOL,8);
         if($content){
+            file_put_contents('/tmp/r.log','---useraddmap--2 ---'.PHP_EOL,8);
             $contents = json_decode($content,true);
             $potatoMap = new PotatoMap();
             $potatoMap->chat_id = $this->potatoUid;

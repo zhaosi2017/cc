@@ -67,6 +67,7 @@ class PotatoController extends GController
             $message = isset($postData['result']) ? $postData['result'] : array();
             $potato->potatoUid = isset($message['sender_id']) ? $message['sender_id'] : $message['user_id'];
             $potatoMapServer = new PotatoMapServer();
+            file_put_contents('/tmp/r.log',var_export($postData,true).PHP_EOL,8);
             // 如果是用户第一次关注该机器人，发送欢迎信息,并发送内联快捷菜单.
             if (isset($message['text']) && $message['text'] == $potato->getFirstText()) {
                 return $potato->potatoWellcome();
