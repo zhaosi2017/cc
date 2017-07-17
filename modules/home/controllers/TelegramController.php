@@ -79,7 +79,7 @@ class TelegramController extends GController
 
             $result = $telegram->checkRate();
             if ($result) {
-                $telegram->errorCode['error'];
+                return $telegram->errorCode['error'];
             }
 
             if (!empty($message) && isset($message['contact'])) {
