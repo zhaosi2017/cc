@@ -501,8 +501,10 @@ class Nexmo extends Model
                         $text = $this->getCallUrgentText();
                         $keyBoard = [
                             [
-                                'text' => $this->getCallUrgentButtonText(),
-                                'callback_data' => implode('-', $callback),
+                                [
+                                    'text' => $this->getCallUrgentButtonText(),
+                                    'callback_data' => implode('-', $callback),
+                                ]
                             ]
                         ];
                         break;
@@ -539,8 +541,10 @@ class Nexmo extends Model
                         $text = $this->getAgainText();
                         $keyBoard = [
                             [
-                                'text' => $this->getAgainButtonText(),
-                                'callback_data' => implode('-', $callback),
+                                [
+                                    'text' => $this->getAgainButtonText(),
+                                    'callback_data' => implode('-', $callback),
+                                ]
                             ]
                         ];
                         break;
