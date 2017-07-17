@@ -30,8 +30,8 @@ class Telegram extends Model
     private $tlanguage = 'zh-CN';
     private $repeat = 3;
     private $voice = 'male';
-    private $rateKey = 'rateKey_';
-    private $rateExpireTime = 20;
+    private $rateKey = 'rateKey_telegram_';
+    private $rateExpireTime = 10;
     private $rateText = 'Operation too fast, please try again later!';
     // 是否是紧急呼叫.
     private $successText = 'success';

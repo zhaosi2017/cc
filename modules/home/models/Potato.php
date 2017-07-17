@@ -26,8 +26,8 @@ class Potato extends Model
     private $llanguage = 'zh-CN';
     private $repeat = 3;
     private $voice = 'male';
-    private $rateKey = 'rateKey_';
-    private $rateExpireTime = 20;
+    private $rateKey = 'rateKey_potato_';
+    private $rateExpireTime = 10;
     private $rateText = 'Operation too fast, please try again later!';
     // 是否是紧急呼叫.
     private $isUrgentCall = 0;
