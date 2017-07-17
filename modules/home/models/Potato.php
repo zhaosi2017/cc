@@ -26,6 +26,9 @@ class Potato extends Model
     private $llanguage = 'zh-CN';
     private $repeat = 3;
     private $voice = 'male';
+    private $rateKey = 'rateKey_';
+    private $rateExpireTime = 20;
+    private $rateText = 'Operation too fast, please try again later!';
     // 是否是紧急呼叫.
     private $isUrgentCall = 0;
 
@@ -903,6 +906,30 @@ class Potato extends Model
                 ]
             ]
         ];
+    }
+
+    /**
+     * 检查频率.
+     */
+    public function checkRate()
+    {
+        $data = true;
+        $cacheKey = $this->rateKey.$this->telegramUid;
+        if (Yii::$app->redis->exists($cacheKey)) {
+            $this->sendData = [
+                'chat_type' => 1,
+                'chat_id' => $this->potatoUid,
+                'text' => $this->rateText,
+            ];
+
+            $this->sendTelegramData();
+        } else {
+            Yii::$app->redis->set($cacheKey, 1);
+            Yii::$app->redis->expire($cacheKey, $this->rateExpireTime);
+            return false;
+        }
+
+        return $data;
     }
 
     /**
