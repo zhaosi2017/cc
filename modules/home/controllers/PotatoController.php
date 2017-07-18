@@ -107,8 +107,8 @@ class PotatoController extends GController
                         break;
                         // 呼叫紧急联系人.
                     case $potato->callUrgentCallbackDataPre:
-                        $calledId = $potato->callbackQuery[2];
-                        $potato->potatoSendFirstName = $potato->callbackQuery[3];
+                        $calledId = $callbackData[2];
+                        $potato->potatoSendFirstName = $callbackData[3];
                         $potato->potatoContactFirstName = $callbackData[4];
                         $result = $potato->callPotatoPerson($calledId);
                         return $result;
