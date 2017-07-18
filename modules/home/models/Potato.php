@@ -48,11 +48,11 @@ class Potato extends Model
     private $blackCallbackDataPre = "cc_black";
     private $unblackCallbackDataPre = "cc_unblack";
     private $potatoContactUid;
-    private $potatoContactPhone;
-    private $potatoContactFirstName;
-    private $potatoContactLastName = null;
-    private $potatoSendFirstName;
-    private $potatoSendLastName;
+    private $potatoContactPhone = '';
+    private $potatoContactFirstName = '';
+    private $potatoContactLastName = '';
+    private $potatoSendFirstName = '';
+    private $potatoSendLastName = '';
     private $callPersonData;
     private $calledPersonData;
     private $whiteText = 'Join Whitelist';
@@ -1369,7 +1369,7 @@ class Potato extends Model
             $callMenu = [
                 'type' => 0,
                 'text' => $this->getCallText(),
-                'data' => implode('-', array($this->callCallbackDataPre, $this->potatoContactUid, $this->potatoContactPhone, $this->potatoContactLastName.$this->potatoContactFirstName, $this->potatoSendLastName.$this->potatoSendFirstName)),
+                'data' => implode('-', array($this->callCallbackDataPre, $this->potatoContactUid, $this->potatoSendLastName.$this->potatoSendFirstName, $this->potatoContactLastName.$this->potatoContactFirstName)),
             ];
 
             // 检查是否加了呼叫人到自己到白名单.
@@ -1528,7 +1528,7 @@ class Potato extends Model
     /**
      * 呼叫potato账号.
      */
-    public function callPotatoPerson()
+    public function callPotatoPerson($calledId)
     {
         $res = User::findOne(['potato_user_id' => $this->potatoUid]);
         if (!$res) {
@@ -1601,8 +1601,23 @@ class Potato extends Model
 
             // 呼叫.
             try {
-                $nexmo = new Nexmo();
-                $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->potatoContactFirstName, $this->potatoSendFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code.$this->callPersonData->phone_number, $this->language, $appName = 'potato', $this->potatoUid,1);
+                if (!empty($calledId)) {
+                    $urgent = UserGentContact::find()->select(['id', 'contact_country_code', 'contact_phone_number', 'contact_nickname'])->where(['user_id' => $calledId])->orderBy('id asc')->all();
+                    $urgentArr = [];
+                    if (!empty($urgent)) {
+                        foreach ($urgent as $key => $value) {
+                            $tmp = [];
+                            $tmp['phone_number'] = $value->contact_country_code . $value->contact_phone_number;
+                            $tmp['nickname'] = $value->contact_nickname;
+                            $urgentArr[] = $tmp;
+                        }
+                    }
+                    $nexmo = new Nexmo();
+                    $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->potatoContactFirstName, $this->potatoSendFirstName . $this->telegramFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code . $this->callPersonData->phone_number, $this->language, $appName = 'potato', $this->potatoUid, $this->potatoContactUid, 0, array(), $urgentArr, 1);
+                } else {
+                    $nexmo = new Nexmo();
+                    $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->potatoContactFirstName, $this->potatoSendFirstName . $this->telegramFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code . $this->callPersonData->phone_number, $this->language, $appName = 'potato', $this->potatoUid, $this->potatoContactUid,1);
+                }
             } catch (\Exception $e) {
                 $this->sendData = [
                     'chat_type' => 1,

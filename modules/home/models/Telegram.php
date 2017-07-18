@@ -85,12 +85,12 @@ class Telegram extends Model
     private $code;
     private $bindCode;
     private $telegramUid;
-    private $telegramFirstName;
-    private $telegramLastName;
+    private $telegramFirstName = '';
+    private $telegramLastName = '';
     private $telegramContactUid;
-    private $telegramContactPhone;
-    private $telegramContactFirstName;
-    private $telegramContactLastName;
+    private $telegramContactPhone = '';
+    private $telegramContactFirstName = '';
+    private $telegramContactLastName = '';
     private $callbackQuery;
     private $callPersonData;
     private $calledPersonData;

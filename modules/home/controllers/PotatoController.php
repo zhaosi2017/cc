@@ -93,35 +93,51 @@ class PotatoController extends GController
                 if ($result) {
                     return $potato->errorCode['error'];
                 }
+
                 $callbackData = explode('-', $message['data']);
                 $potato->potatoContactUid = $callbackData[1];
                 $action = $callbackData[0];
                 switch ($action) {
+                        // 正常呼叫.
                     case $potato->callCallbackDataPre:
-                        $potato->potatoContactFirstName = $callbackData[3];
-                        $potato->potatoSendFirstName = $callbackData[4];
+                        $potato->potatoContactFirstName = $callbackData[2];
+                        $potato->potatoSendFirstName = $callbackData[3];
                         $result = $potato->callPotatoPerson();
                         return $result;
                         break;
+                        // 呼叫紧急联系人.
+                    case $potato->callUrgentCallbackDataPre:
+                        $calledId = $potato->callbackQuery[2];
+                        $potato->potatoSendFirstName = $potato->callbackQuery[3];
+                        $potato->potatoContactFirstName = $callbackData[4];
+                        $result = $potato->callPotatoPerson($calledId);
+                        return $result;
+                        break;
+                        // 加白名单.
                     case $potato->whiteCallbackDataPre:
                         $result = $potato->joinWhiteList();
                         return $result;
                         break;
+                        // 从白名单中剔除.
                     case $potato->unwhiteCallbackDataPre:
                         $result = $potato->unbindWhiteList();
                         return $result;
                         break;
+                        // 开起白名单功能.
                     case $potato->whitelistSwitchCallbackDataPre:
                         $result = $potato->enableWhiteSwith();
                         return $result;
                         break;
+                        // 关闭白名单功能.
                     case $potato->unwhitelistSwitchCallbackDataPre:
                         $result = $potato->disableWhiteSwith();
                         return $result;
                         break;
+                        // 加入黑名单.
                     case $potato->blackCallbackDataPre:
                         $result = $potato->joinBlackList();
                         return $result;
+                        // 从黑名单中剔除.
                     case $potato->unblackCallbackDataPre:
                         $result = $potato->unbindBlackList();
                         return $result;
