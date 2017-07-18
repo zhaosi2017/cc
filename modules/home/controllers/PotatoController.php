@@ -66,6 +66,8 @@ class PotatoController extends GController
             $potato = new Potato();
             $message = isset($postData['result']) ? $postData['result'] : array();
             $potato->potatoUid = isset($message['sender_id']) ? $message['sender_id'] : $message['user_id'];
+            $inlineMessageId = isset($message['inline_message_id']) ? $message['inline_message_id'] : '';
+            $userId = isset($message['user_id']) ? $message['user_id'] : '';
             $potatoMapServer = new PotatoMapServer();
 
             // 如果是用户第一次关注该机器人，发送欢迎信息,并发送内联快捷菜单.
@@ -136,12 +138,10 @@ class PotatoController extends GController
                 $potatoMapServer->key = $potato->potatoUid.'-potato';
                 $potatoMapServer->searchMapText = json_encode($message);
                 return $potatoMapServer->addMap();
-            } else {
-                $potato->potatoContactUid = $message['user_id'];
-                $potato->potatoContactFirstName = isset($message['first_name']) ? $message['first_name'] : "";
-                // $result = $potato->bindData();
-                // return $result;
+            }
 
+            if (!empty($inlineMessageId) && !empty($userId)) {
+                return $potato->sendCallbackAnswer($userId, $inlineMessageId);
             }
         } catch (\Exception $e) {
             echo $e->getMessage();
