@@ -97,7 +97,8 @@ class PotatoController extends GController
                 $callBackTime = array_pop($callbackData);
                 $diffTime = $time - $callBackTime;
                 if ($diffTime > 60) {
-                    file_put_contents('/tmp/potato1.txt', var_export($postData, true).PHP_EOL, 8);
+                    $file = 'potato_'.date('Y-m-d', time()).'.txt';
+                    file_put_contents('/tmp/'.$file, var_export($postData, true).PHP_EOL, 8);
                     return $potato->errorCode['error'];
                 }
 
@@ -109,7 +110,6 @@ class PotatoController extends GController
                         $potato->potatoSendFirstName = $callbackData[2];
                         $potato->potatoContactFirstName = $callbackData[3];
                         $result = $potato->callPotatoPerson();
-                        return $result;
                         break;
                         // 呼叫紧急联系人.
                     case $potato->callUrgentCallbackDataPre:
@@ -117,41 +117,43 @@ class PotatoController extends GController
                         $potato->potatoSendFirstName = $callbackData[3];
                         $potato->potatoContactFirstName = $callbackData[4];
                         $result = $potato->callPotatoPerson($calledId);
-                        return $result;
                         break;
                         // 加白名单.
                     case $potato->whiteCallbackDataPre:
                         $result = $potato->joinWhiteList();
-                        return $result;
                         break;
                         // 从白名单中剔除.
                     case $potato->unwhiteCallbackDataPre:
                         $result = $potato->unbindWhiteList();
-                        return $result;
                         break;
                         // 开起白名单功能.
                     case $potato->whitelistSwitchCallbackDataPre:
                         $result = $potato->enableWhiteSwith();
-                        return $result;
                         break;
                         // 关闭白名单功能.
                     case $potato->unwhitelistSwitchCallbackDataPre:
                         $result = $potato->disableWhiteSwith();
-                        return $result;
                         break;
                         // 加入黑名单.
                     case $potato->blackCallbackDataPre:
                         $result = $potato->joinBlackList();
-                        return $result;
+                        break;
                         // 从黑名单中剔除.
                     case $potato->unblackCallbackDataPre:
                         $result = $potato->unbindBlackList();
-                        return $result;
                     default :
                         echo 'error_code :'.$potato->errorCode['invalid_operation'];
                         break;
                 }
-            }else if($message['request_type'] == $potatoMapServer->requestTextType){
+
+
+                // 应答.
+                if (!empty($inlineMessageId) && !empty($userId)) {
+                    return $potato->sendCallbackAnswer($userId, $inlineMessageId);
+                }
+
+                return $result;
+            }else if($message['request_type'] == $potatoMapServer->requestTextType && preg_match('/^\/map/i',$message['text'])){
                     $potatoMapServer->potatoUid = $potato->potatoUid;
                     $replyMessageId = isset($message['reply_to_message'])? $message['reply_to_message']: '';
                     $potatoMapServer->key = $potato->potatoUid.'-'.$replyMessageId.'-potatoMap';
@@ -164,9 +166,6 @@ class PotatoController extends GController
                 return $potatoMapServer->addMap();
             }
 
-            if (!empty($inlineMessageId) && !empty($userId)) {
-                return $potato->sendCallbackAnswer($userId, $inlineMessageId);
-            }
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
