@@ -1366,10 +1366,11 @@ class Potato extends Model
                 return $this->sendPotatoData();
             }
             $this->language = $this->callPersonData->language;
+            $time = time();
             $callMenu = [
                 'type' => 0,
                 'text' => $this->getCallText(),
-                'data' => implode('-', array($this->callCallbackDataPre, $this->potatoContactUid, $this->potatoSendLastName.$this->potatoSendFirstName, $this->potatoContactLastName.$this->potatoContactFirstName)),
+                'data' => implode('-', array($this->callCallbackDataPre, $this->potatoContactUid, $this->potatoSendLastName.$this->potatoSendFirstName, $this->potatoContactLastName.$this->potatoContactFirstName, $time)),
             ];
 
             // 检查是否加了呼叫人到自己到白名单.
