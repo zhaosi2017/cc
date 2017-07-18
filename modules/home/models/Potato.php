@@ -942,7 +942,7 @@ class Potato extends Model
             $this->sendData = [
                 'chat_type' => 1,
                 'chat_id' => $this->potatoUid,
-                'text' => $this->getRateText().time(),
+                'text' => $this->getRateText(),
             ];
 
             $this->sendPotatoData();
