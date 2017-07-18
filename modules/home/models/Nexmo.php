@@ -38,9 +38,9 @@ class Nexmo extends Model
     private $callUrgentCallbackDataPre = 'cc_call_urgent';
     private $callCallbackDataPre = 'cc_call';
     private $failureStatus = ['unanswered', 'busy', 'timeout', 'failed'];
-    private $callUrgentText = 'Whether to call an emergency contact?';
+    private $callUrgentText = 'Whether to call an emergency contact ?';
     private $callUrgentButtonText = 'Yes';
-    private $againText = "Whether to call again.";
+    private $againText = "Whether to call again ?";
     private $againButtonText = 'Re-call';
 
 
@@ -533,7 +533,7 @@ class Nexmo extends Model
                 }
 
                 $this->sendMessageToRobot($appName, $appUid, $text, $keyBoard);
-            } elseif (empty($calledNumberArr) && empty($calledUrgentArr)) {
+            } elseif (empty($calledNumberArr) && empty($calledUrgentArr) && empty($status)) {
                 switch ($appName) {
                     case 'telegram':
                         $callback = [
