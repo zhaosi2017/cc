@@ -17,6 +17,7 @@ class Potato extends Model
     private $keyboardText = 'Share your contact card';
     private $firstText = '/start';
     private $webhookUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendTextMessage';
+    private $callbackAnswerUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendCallbackAnswer';
     private $menuWebHookUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendInlineMarkupMessage';
     private $nexmoUrl = "https://api.nexmo.com/tts/json";
     private $translateUrl = "https://translation.googleapis.com/language/translate/v2?key=AIzaSyAV_rXQu5ObaA9_rI7iqL4EDB67oXaH3zk";
@@ -196,6 +197,22 @@ class Potato extends Model
     public function setPotatoSendLastName($value)
     {
         $this->potatoSendLastName = $value;
+    }
+
+    /**
+     * @param $userId
+     * @param $inlineMessageId
+     *
+     * @return json
+     */
+    public function sendCallbackAnswer($userId, $inlineMessageId)
+    {
+        $this->sendData = [
+            'user_id' => $userId,
+            'inline_message_id' => $inlineMessageId,
+        ];
+
+        return $this->sendPotatoData($this->callbackAnswerUrl);
     }
 
     /**
