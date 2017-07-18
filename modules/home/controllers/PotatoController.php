@@ -100,8 +100,8 @@ class PotatoController extends GController
                 switch ($action) {
                         // 正常呼叫.
                     case $potato->callCallbackDataPre:
-                        $potato->potatoContactFirstName = $callbackData[2];
-                        $potato->potatoSendFirstName = $callbackData[3];
+                        $potato->potatoSendFirstName = $callbackData[2];
+                        $potato->potatoContactFirstName = $callbackData[3];
                         $result = $potato->callPotatoPerson();
                         return $result;
                         break;
