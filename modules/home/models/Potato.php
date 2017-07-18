@@ -1528,7 +1528,7 @@ class Potato extends Model
     /**
      * 呼叫potato账号.
      */
-    public function callPotatoPerson($calledId)
+    public function callPotatoPerson($calledId = '')
     {
         $res = User::findOne(['potato_user_id' => $this->potatoUid]);
         if (!$res) {
