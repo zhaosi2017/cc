@@ -29,7 +29,7 @@ return [
     'Unlock the blacklist failed.' => '解除黑名单失败.',
     'Not in blacklist.' => '不在黑名单.',
     'Operation menu.' =>  '操作菜单.',
-    'Start the operation, please wait later.' => '开始操作, 请稍后.',
+    'Start the operation, please wait later.' => '开始操作, 请稍候.',
     'welcome!' => '欢迎!',
     'Share your contact card' => '分享自己名片',
     'Join Whitelist' => '加白名单',
