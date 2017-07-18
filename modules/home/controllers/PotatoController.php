@@ -63,7 +63,6 @@ class PotatoController extends GController
             // $postData = Yii::$app->request->bodyParams;
             $postData = @file_get_contents('php://input');
             $postData = json_decode($postData, true);
-            file_put_contents('/tmp/potato.txt', var_export($postData, true).PHP_EOL, 8);
             $potato = new Potato();
             $message = isset($postData['result']) ? $postData['result'] : array();
             $potato->potatoUid = isset($message['sender_id']) ? $message['sender_id'] : $message['user_id'];
@@ -94,6 +93,14 @@ class PotatoController extends GController
                 }
 
                 $callbackData = explode('-', $message['data']);
+                $time = time();
+                $callBackTime = array_pop($callbackData);
+                $diffTime = $time - $callBackTime;
+                if ($diffTime > 60) {
+                    file_put_contents('/tmp/potato1.txt', var_export($postData, true).PHP_EOL, 8);
+                    return $potato->errorCode['error'];
+                }
+
                 $potato->potatoContactUid = $callbackData[1];
                 $action = $callbackData[0];
                 switch ($action) {
