@@ -72,11 +72,6 @@ class PotatoController extends GController
                 return $potato->potatoWellcome();
             }
 
-            $result = $potato->checkRate();
-            if ($result) {
-                return $potato->errorCode['error'];
-            }
-
             if ($message['request_type'] == $potato->shareRequestType) {
                 // 分享了名片.
                 $potato->potatoContactUid = $message['user_id'];
@@ -90,6 +85,10 @@ class PotatoController extends GController
                 return $result;
             } else if ($message['request_type'] == $potato->callBackRequestType) {
                 // 点击按钮会调.
+                $result = $potato->checkRate();
+                if ($result) {
+                    return $potato->errorCode['error'];
+                }
                 $callbackData = explode('-', $message['data']);
                 $potato->potatoContactUid = $callbackData[1];
                 $action = $callbackData[0];
@@ -97,7 +96,7 @@ class PotatoController extends GController
                     case $potato->callCallbackDataPre:
                         $potato->potatoContactFirstName = $callbackData[3];
                         $potato->potatoSendFirstName = $callbackData[4];
-                        // $result = $potato->callPotatoPerson();
+                        $result = $potato->callPotatoPerson();
                         return $result;
                         break;
                     case $potato->whiteCallbackDataPre:

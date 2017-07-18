@@ -77,11 +77,6 @@ class TelegramController extends GController
                 return $telegram->telegramWellcome();
             }
 
-            $result = $telegram->checkRate();
-            if ($result) {
-                return $telegram->errorCode['error'];
-            }
-
             if (!empty($message) && isset($message['contact'])) {
                 // 分享了名片.
                 $telegram->telegramContactUid = $message['contact']['user_id'];
@@ -95,6 +90,10 @@ class TelegramController extends GController
                 return $telegram->sendMenulist();
             } elseif (isset($postData['callback_query'])) {
                 // 点击菜单回调操作.
+                $result = $telegram->checkRate();
+                if ($result) {
+                    return $telegram->errorCode['error'];
+                }
                 $callbackData = explode('-', $postData['callback_query']['data']);
                 $telegram->callbackQuery = $callbackData;
                 $telegram->telegramContactUid = $telegram->callbackQuery[1];

@@ -38,6 +38,7 @@ class Potato extends Model
     private $keyboard;
     private $shareRequestType = 4;
     private $callBackRequestType = 2;
+    private $callUrgentCallbackDataPre = 'cc_call_urgent';
     private $callCallbackDataPre = 'cc_call';
     private $whiteCallbackDataPre = 'cc_white';
     private $unwhiteCallbackDataPre = 'cc_unwhite';
@@ -340,6 +341,14 @@ class Potato extends Model
     public function getCallBackRequestType()
     {
         return $this->callBackRequestType;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCallUrgentCallbackDataPre()
+    {
+        return $this->callUrgentCallbackDataPre;
     }
 
     /**
@@ -916,7 +925,7 @@ class Potato extends Model
             $this->sendData = [
                 'chat_type' => 1,
                 'chat_id' => $this->potatoUid,
-                'text' => $this->getRateText(),
+                'text' => $this->getRateText().time(),
             ];
 
             $this->sendPotatoData();

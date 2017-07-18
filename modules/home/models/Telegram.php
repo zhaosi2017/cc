@@ -452,6 +452,11 @@ class Telegram extends Model
         return $this->unblackCallbackDataPre;
     }
 
+    public function getCallUrgentCallbackDataPre()
+    {
+        return $this->callUrgentCallbackDataPre;
+    }
+
     public function getWhiteText()
     {
         return Yii::t('app/model/telegram', $this->whiteText, array(), $this->language);
@@ -1544,10 +1549,10 @@ class Telegram extends Model
                         }
                     }
                     $nexmo = new Nexmo();
-                    $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->telegramContactFirstName, $this->telegramLastName . $this->telegramFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code . $this->callPersonData->phone_number, $this->language, $appName = 'telegram', $this->telegramUid, 1, array(), $urgentArr);
+                    $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->telegramContactFirstName, $this->telegramLastName . $this->telegramFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code . $this->callPersonData->phone_number, $this->language, $appName = 'telegram', $this->telegramUid, $this->telegramContactUid, 0, array(), $urgentArr);
                 } else {
                     $nexmo = new Nexmo();
-                    $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->telegramContactFirstName, $this->telegramLastName . $this->telegramFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code . $this->callPersonData->phone_number, $this->language, $appName = 'telegram', $this->telegramUid, 1);
+                    $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->telegramContactFirstName, $this->telegramLastName . $this->telegramFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code . $this->callPersonData->phone_number, $this->language, $appName = 'telegram', $this->telegramUid, $this->telegramContactUid,1);
                 }
             } catch (\Exception $e) {
                 $this->sendData = [
