@@ -116,12 +116,13 @@ class UserPhone extends CActiveRecord
         $row = User::findOne(array($this->user_id));
         $res = User::findOne(['phone_number'=>$this->user_phone_number]);
 
-        if(!empty($res) && $res['id'] != $this->user_id){
+        if(!empty($res)){
             return true;
         }
-        if(empty($row)){
+        if(empty($row) ){
             return false;
         }
+
         $row->phone_number = $this->user_phone_number;
         $row->country_code = $this->phone_country_code;
         return $row->save();
