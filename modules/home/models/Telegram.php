@@ -1560,7 +1560,7 @@ class Telegram extends Model
                         }
                     }
                     $nexmo = new Nexmo();
-                    $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->telegramContactFirstName, $this->telegramLastName . $this->telegramFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code . $this->callPersonData->phone_number, $this->language, $appName = 'telegram', $this->telegramUid, $this->telegramContactUid, 0, array(), $urgentArr);
+                    $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->telegramContactFirstName, $this->telegramLastName . $this->telegramFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code . $this->callPersonData->phone_number, $this->language, $appName = 'telegram', $this->telegramUid, $this->telegramContactUid, 0, array(), $urgentArr, 1);
                 } else {
                     $nexmo = new Nexmo();
                     $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->telegramContactFirstName, $this->telegramLastName . $this->telegramFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code . $this->callPersonData->phone_number, $this->language, $appName = 'telegram', $this->telegramUid, $this->telegramContactUid,1);

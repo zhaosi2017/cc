@@ -191,7 +191,7 @@ class Nexmo extends Model
     /**
      * 呼叫.
      */
-    public function callPerson($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $language, $appName, $appUid, $appCalledUid, $isFirst = 0, $calledNumberArr = array(), $calledUrgentArr = array())
+    public function callPerson($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $language, $appName, $appUid, $appCalledUid, $isFirst = 0, $calledNumberArr = array(), $calledUrgentArr = array(), $isUrgentMenu = 0)
     {
         $data = array(
             'status' => 0,
@@ -310,6 +310,7 @@ class Nexmo extends Model
             Yii::$app->redis->hset($cacheKey, 'appUid', $appUid);
             Yii::$app->redis->hset($cacheKey, 'appCalledUid', $appCalledUid);
             Yii::$app->redis->hset($cacheKey, 'isUrgent', $isUrgent);
+            Yii::$app->redis->hset($cacheKey, 'isUrgentMenu', $isUrgentMenu);
             Yii::$app->redis->hset($cacheKey, 'calledUserId', $calledUserId);
             Yii::$app->redis->hset($cacheKey, 'callUserId', $callUserId);
             Yii::$app->redis->hset($cacheKey, 'calledAppName', $calledAppName);
@@ -451,6 +452,7 @@ class Nexmo extends Model
             $calledUrgentArr = Yii::$app->redis->hget($cacheKey, 'calledUrgentArr');
             $number = Yii::$app->redis->hget($cacheKey, 'number');
             $isUrgent = Yii::$app->redis->hget($cacheKey, 'isUrgent');
+            $isUrgentMenu = Yii::$app->redis->hget($cacheKey, 'isUrgentMenu');
             $language = Yii::$app->redis->hget($cacheKey, 'language');
             $appName = Yii::$app->redis->hget($cacheKey, 'appName');
             $appUid = Yii::$app->redis->hget($cacheKey, 'appUid');
@@ -490,7 +492,7 @@ class Nexmo extends Model
             $this->saveCallRecordData($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $number, $status, $isUrgent);
 
             // 如果是呼叫紧急联系人，需要推送按钮.
-            if (empty($calledNumberArr) && !empty($calledUrgentArr)) {
+            if (empty($calledNumberArr) && !empty($calledUrgentArr) && empty($isUrgentMenu)) {
                 switch ($appName) {
                     case 'telegram':
                         $callback = [
@@ -574,7 +576,7 @@ class Nexmo extends Model
             } else {
                 // 呼叫失败, 呼叫下一联系人.
                 if (!$status) {
-                    $this->callPerson($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $language, $appName, $appUid, $appCalledUid,0, $calledNumberArr, $calledUrgentArr);
+                    $this->callPerson($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $language, $appName, $appUid, $appCalledUid,0, $calledNumberArr, $calledUrgentArr, $isUrgentMenu);
                 }
             }
         }
