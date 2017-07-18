@@ -97,7 +97,8 @@ class PotatoController extends GController
                 $callBackTime = array_pop($callbackData);
                 $diffTime = $time - $callBackTime;
                 if ($diffTime > 60) {
-                    file_put_contents('/tmp/potato.txt', var_export($postData, true).PHP_EOL, 8);
+                    $file = 'potato_'.date('Y-m-d', time()).'.txt';
+                    file_put_contents('/tmp/'.$file, var_export($postData, true).PHP_EOL, 8);
                     return $potato->errorCode['error'];
                 }
 
