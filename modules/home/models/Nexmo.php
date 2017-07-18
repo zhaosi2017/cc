@@ -492,6 +492,7 @@ class Nexmo extends Model
             // 保存通话记录.
             $this->saveCallRecordData($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $number, $status, $isUrgent);
 
+            $time = time();
             // 如果是呼叫紧急联系人，需要推送按钮.
             if (empty($calledNumberArr) && !empty($calledUrgentArr) && empty($isUrgentMenu) && empty($status)) {
                 switch ($appName) {
@@ -519,7 +520,8 @@ class Nexmo extends Model
                             $appCalledUid,
                             $calledUserId,
                             $callAppName,
-                            $calledAppName
+                            $calledAppName,
+                            $time
                         ];
                         $text = $this->getCallUrgentText();
                         $keyBoard = [
@@ -561,7 +563,8 @@ class Nexmo extends Model
                             $this->callCallbackDataPre,
                             $appCalledUid,
                             $callAppName,
-                            $calledAppName
+                            $calledAppName,
+                            $time
                         ];
                         $text = $this->getAgainText();
                         $keyBoard = [
