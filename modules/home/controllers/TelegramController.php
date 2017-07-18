@@ -94,25 +94,29 @@ class TelegramController extends GController
                 if ($result) {
                     return $telegram->errorCode['error'];
                 }
+
+                if (isset($postData['callback_query']['message']['chat']['first_name'])) {
+                    $telegram->telegramFirstName = $postData['callback_query']['message']['chat']['first_name'];
+                }
+                if (isset($postData['callback_query']['message']['chat']['last_name'])) {
+                    $telegram->telegramLastName = $postData['callback_query']['message']['chat']['last_name'];
+                }
+
                 $callbackData = explode('-', $postData['callback_query']['data']);
                 $telegram->callbackQuery = $callbackData;
-                $telegram->telegramContactUid = $telegram->callbackQuery[1];
-                $telegram->telegramFirstName = isset($postData['callback_query']['message']['chat']['first_name']) ? $postData['callback_query']['message']['chat']['first_name'] : "";
-                $telegram->telegramLastName = isset($postData['callback_query']['message']['chat']['last_name']) ? $postData['callback_query']['message']['chat']['last_name'] : "";
-                $action = $telegram->callbackQuery[0];
+                $telegram->telegramContactUid = $callbackData[1];
+                $action = $callbackData[0];
                 switch ($action) {
                     case $telegram->callCallbackDataPre:
-                        $telegram->telegramContactFirstName = array_pop($callbackData);
-                        if (empty($telegram->telegramFirstName)) {
-                            $telegram->telegramFirstName = isset($telegram->callbackQuery[2]) ? $telegram->callbackQuery[2] : '';
-                        }
+                        $telegram->telegramFirstName = $callbackData[2];
+                        $telegram->telegramContactFirstName = $callbackData[3];
                         $result = $telegram->callTelegramPerson();
                         return $result;
                         break;
                     case $telegram->callUrgentCallbackDataPre:
-                        $telegram->telegramContactFirstName = array_pop($callbackData);
-                        $telegram->telegramFirstName = $telegram->callbackQuery[3];
-                        $calledId = $telegram->callbackQuery[2];
+                        $calledId = $callbackData[2];
+                        $telegram->telegramFirstName = $callbackData[3];
+                        $telegram->telegramContactFirstName = $callbackData[4];
                         $result = $telegram->callTelegramPerson($calledId);
                         return $result;
                         break;

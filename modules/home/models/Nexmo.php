@@ -21,6 +21,7 @@ class Nexmo extends Model
     private $apiScret = '755026fdd40f34c2';
     private $applicationId = '570db7b5-09cb-45b3-a097-e0b8e0bcec65';
     private $telegramUrl = 'https://api.telegram.org/bot366429273:AAE1lGFanLGpUbfV28zlDYSTibiAPLhhE3s/sendMessage';
+    private $potatoMenuWebHookUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendInlineMarkupMessage';
     private $potatoUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendTextMessage';
     private $_webhook;
     private $_sendData;
@@ -517,14 +518,17 @@ class Nexmo extends Model
                             $this->callUrgentCallbackDataPre,
                             $appCalledUid,
                             $calledUserId,
+                            $callAppName,
                             $calledAppName
                         ];
                         $text = $this->getCallUrgentText();
                         $keyBoard = [
                             [
-                                'type' => 0,
-                                'text' => $this->getCallUrgentButtonText(),
-                                'data' => implode('-', $callback),
+                                [
+                                    'type' => 0,
+                                    'text' => $this->getCallUrgentButtonText(),
+                                    'data' => implode('-', $callback),
+                                ]
                             ]
                         ];
                         break;
@@ -556,15 +560,17 @@ class Nexmo extends Model
                         $callback = [
                             $this->callCallbackDataPre,
                             $appCalledUid,
-                            $calledUserId,
+                            $callAppName,
                             $calledAppName
                         ];
                         $text = $this->getAgainText();
                         $keyBoard = [
                             [
-                                'type' => 0,
-                                'text' => $this->getAgainButtonText(),
-                                'data' => implode('-', $callback),
+                                [
+                                    'type' => 0,
+                                    'text' => $this->getAgainButtonText(),
+                                    'data' => implode('-', $callback),
+                                ]
                             ]
                         ];
                         break;
@@ -618,6 +624,7 @@ class Nexmo extends Model
                         'text' => $text,
                     ];
                 } else {
+                    $this->setWebhook($this->potatoMenuWebHookUrl);
                     $this->sendData = [
                         'chat_type' => 1,
                         'chat_id' => $appUid,
