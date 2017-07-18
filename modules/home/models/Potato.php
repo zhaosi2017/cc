@@ -38,6 +38,7 @@ class Potato extends Model
     private $keyboard;
     private $shareRequestType = 4;
     private $callBackRequestType = 2;
+    private $callUrgentCallbackDataPre = 'cc_call_urgent';
     private $callCallbackDataPre = 'cc_call';
     private $whiteCallbackDataPre = 'cc_white';
     private $unwhiteCallbackDataPre = 'cc_unwhite';

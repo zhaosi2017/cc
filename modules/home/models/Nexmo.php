@@ -574,7 +574,7 @@ class Nexmo extends Model
             } else {
                 // 呼叫失败, 呼叫下一联系人.
                 if (!$status) {
-                    $this->callPerson($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $language, $appName, $appUid,0, $calledNumberArr, $calledUrgentArr);
+                    $this->callPerson($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $language, $appName, $appUid, $appCalledUid,0, $calledNumberArr, $calledUrgentArr);
                 }
             }
         }
