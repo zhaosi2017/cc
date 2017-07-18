@@ -26,6 +26,18 @@ class CallRecord extends \app\models\CActiveRecord
     public $total_nums;
     public $long_time;
 
+
+    CONST Record_Status_Success = 0;         //通话成功
+    CONST Record_Status_Fail    = 1;         //通话失败
+    /**
+     * @var int 正常呼叫
+     */
+    CONST Record_Type_none      = 0;         //正常呼叫
+    /**
+     * @var int 紧急联系人呼叫
+     */
+    CONST Record_Type_emergency = 1;         //紧急联系人呼叫
+
     /**
      * @inheritdoc
      */
