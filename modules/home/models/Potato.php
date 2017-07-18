@@ -1012,6 +1012,7 @@ class Potato extends Model
             'text' => '',
         ];
 
+        $time = time();
         $this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
         if (empty($this->callPersonData)) {
             $sendData['text'] = $this->getEnableNoMemberText();
@@ -1059,7 +1060,7 @@ class Potato extends Model
                 $bindMenu = [
                     'type' => 0,
                     'text' => $this->getWhiteText(),
-                    'data' => implode('-', array($this->whiteCallbackDataPre, $this->potatoUid, $this->callPersonData->potato_number)),
+                    'data' => implode('-', array($this->whiteCallbackDataPre, $this->potatoUid, $this->callPersonData->potato_number, $time)),
                 ];
                 $inlineKeyboard = [
                     [
@@ -1308,6 +1309,7 @@ class Potato extends Model
     {
         $this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
         $this->calledPersonData = User::findOne(['potato_user_id' => $this->potatoContactUid]);
+        $time = time();
         // 先检查自己是否完成绑定操作.
         if (empty($this->callPersonData) && ($this->potatoUid == $this->potatoContactUid)) {
             // 发送验证码完成绑定.
@@ -1325,13 +1327,13 @@ class Potato extends Model
                 $whiteMenu = [
                     'type' => 0,
                     'text' => $this->getWhiteSwitchText(),
-                    'data' => implode('-', array($this->whitelistSwitchCallbackDataPre, $this->potatoUid, $this->potatoContactPhone)),
+                    'data' => implode('-', array($this->whitelistSwitchCallbackDataPre, $this->potatoUid, $this->potatoContactPhone, $time)),
                 ];
             } else {
                 $whiteMenu = [
                     'type' => 0,
                     'text' => $this->getUnwhiteSwitchText(),
-                    'data' => implode('-', array($this->unwhitelistSwitchCallbackDataPre, $this->potatoUid, $this->potatoContactPhone)),
+                    'data' => implode('-', array($this->unwhitelistSwitchCallbackDataPre, $this->potatoUid, $this->potatoContactPhone, $time)),
                 ];
             }
 
@@ -1355,7 +1357,6 @@ class Potato extends Model
                 return $this->sendPotatoData();
             }
             $this->language = $this->callPersonData->language;
-            $time = time();
             $callMenu = [
                 'type' => 0,
                 'text' => $this->getCallText(),
@@ -1369,13 +1370,13 @@ class Potato extends Model
                 $whiteMenu = [
                     'type' => 0,
                     'text' => $this->getUnwhiteText(),
-                    'data' => implode('-', array($this->unwhiteCallbackDataPre, $this->potatoContactUid, $this->potatoContactPhone)),
+                    'data' => implode('-', array($this->unwhiteCallbackDataPre, $this->potatoContactUid, $this->potatoContactPhone, $time)),
                 ];
             } else {
                 $whiteMenu = [
                     'type' => 0,
                     'text' => $this->getWhiteText(),
-                    'data' => implode('-', array($this->whiteCallbackDataPre, $this->potatoContactUid, $this->potatoContactPhone)),
+                    'data' => implode('-', array($this->whiteCallbackDataPre, $this->potatoContactUid, $this->potatoContactPhone, $time)),
                 ];
             }
             // 黑名单按钮.
@@ -1383,13 +1384,13 @@ class Potato extends Model
                 $blackMenu = [
                     'type' => 0,
                     'text' => $this->getUnblackText(),
-                    'data' => implode('-', array($this->unblackCallbackDataPre, $this->potatoContactUid, $this->potatoContactPhone)),
+                    'data' => implode('-', array($this->unblackCallbackDataPre, $this->potatoContactUid, $this->potatoContactPhone, $time)),
                 ];
             } else {
                 $blackMenu = [
                     'type' => 0,
                     'text' => $this->getBlackText(),
-                    'data' => implode('-', array($this->blackCallbackDataPre, $this->potatoContactUid, $this->potatoContactPhone)),
+                    'data' => implode('-', array($this->blackCallbackDataPre, $this->potatoContactUid, $this->potatoContactPhone, $time)),
                 ];
             }
 
