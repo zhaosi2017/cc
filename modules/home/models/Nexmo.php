@@ -493,7 +493,7 @@ class Nexmo extends Model
             $this->saveCallRecordData($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $number, $status, $isUrgent);
 
             // 如果是呼叫紧急联系人，需要推送按钮.
-            if (empty($calledNumberArr) && !empty($calledUrgentArr) && empty($isUrgentMenu)) {
+            if (empty($calledNumberArr) && !empty($calledUrgentArr) && empty($isUrgentMenu) && empty($status)) {
                 switch ($appName) {
                     case 'telegram':
                         $callback = [
