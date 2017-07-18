@@ -59,6 +59,10 @@ class LoginController extends GController
                     isset($url['message']) && Yii::$app->getSession()->setFlash('step-message',$url['message']);
                     return $this->redirect($url['url'])->send();
                 }
+                if(Yii::$app->getUser()->getReturnUrl() == '/')
+                {
+                    return $this->redirect('/home/user/index')->send();
+                }
                 return $this->goBack()->send();
             }
             
