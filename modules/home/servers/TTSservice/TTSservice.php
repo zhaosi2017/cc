@@ -2,6 +2,7 @@
 
 namespace app\modules\home\servers\TTSservice;
 use app\modules\home\models\CallRecord;
+use app\modules\home\models\Potato;
 use app\modules\home\models\Telegram;
 use app\modules\home\models\User;
 use app\modules\home\models\UserGentContact;
@@ -32,6 +33,7 @@ class TTSservice{
     public $app_account_key;        //app类型
     public $call_num;               //除开本次呼叫，呼叫队列还剩余的呼叫次数
     public $call_type;              //本次呼叫的类型  联系电话  紧急联系人
+    public $app_obj;                //调用app对象
 
 
     private function __construct()
@@ -70,7 +72,7 @@ class TTSservice{
 
         $from_user = User::findOne($this->from_user_id)->toArray();                   //主叫人
         $to_user   = User::findOne($this->to_user_id)->toArray();                     //被叫人
-        $sends     = $this->_getCallNumbers($call_type);
+        $sends     = $this->_getCallNumbers($call_type, $to_user);
         $this->third->to = $sends[0]['to'];
         $this->call_type = $sends[0]['call_type'];
         $result = $this->third->sendMessage();
@@ -96,7 +98,7 @@ class TTSservice{
      * @return array
      * 根据呼叫类型 取得呼叫的联系电话集
      */
-    private function _getCallNumbers($call_type){
+    private function _getCallNumbers($call_type , $to_user){
         $sends = [];
         $send_data = [
             'text'=>$this->third->messageText,
@@ -110,6 +112,7 @@ class TTSservice{
             foreach($to_phones as $phone){
                 $send_data['to'] = '+'.$phone->phone_country_code.$phone->user_phone_number;
                 $send_data['call_type'] = CallRecord::Record_Type_none;
+                $send_data['nickname']  = $to_user['nickname'];
                 $sends[] = $send_data;
             }
         }elseif($call_type == CallRecord::Record_Type_emergency){                         //紧急联系人呼叫
@@ -117,6 +120,7 @@ class TTSservice{
             foreach($to_phones as $phone){
                 $send_data['to'] = '+'.$phone->contact_country_code.$phone->contact_phone_number;
                 $send_data['call_type'] = CallRecord::Record_Type_emergency ;
+                $send_data['nickname']  = $phone['contact_nickname'];
                 $sends[] = $send_data;
             }
 
@@ -130,20 +134,22 @@ class TTSservice{
      * @param $to_user   User
      *
      */
-    private function _saveCallBackToRedis($list_key,$from_user , $to_user){
+    private function _saveCallBackToRedis($list_key,$from_user , $to_user , $send){
        echo $call_key = get_class($this->third).'_callid_'.$this->third->messageId;
 
-        Yii::$app->redis->hset($call_key, 'time', time());
-        Yii::$app->redis->hset($call_key, 'from_id', $this->from_user_id);                      //发起者的用户id
+        Yii::$app->redis->hset($call_key , 'time', time());
+        Yii::$app->redis->hset($call_key , 'from_id', $this->from_user_id);                     //发起者的用户id
         Yii::$app->redis->hset($call_key , 'to_id' , $this->to_user_id);                        //被叫者的id
         Yii::$app->redis->hset($call_key , 'from_account' ,$from_user[$this->app_account_key]); //主叫的app账号
         Yii::$app->redis->hset($call_key , 'to_account' ,  $to_user[$this->app_account_key]);   //被叫的app账号
-        Yii::$app->redis->hset($call_key , 'from_nickname' ,$from_user['nickname']);            //主叫的app账号
-        Yii::$app->redis->hset($call_key , 'to_nickname' , $to_user['nickname']);               //被叫的app账号
+        Yii::$app->redis->hset($call_key , 'from_nickname' ,$from_user['nickname']);            //主叫的昵称
+        Yii::$app->redis->hset($call_key , 'to_nickname' , $to_user['nickname']);               //被叫的昵称
         Yii::$app->redis->hset($call_key , 'from_number' , $from_user['phone_number']);         //主叫号码
         Yii::$app->redis->hset($call_key , 'to_number' , $this->third->to);                     //被叫号码
-        Yii::$app->redis->hset($call_key , 'type' ,       $this->call_type);             //呼叫的类型
+        Yii::$app->redis->hset($call_key , 'type' ,       $this->call_type);                    //呼叫号码的类型  联系号码 紧急联系人号码
         Yii::$app->redis->hset($call_key , 'app_acount_key' ,$this->app_account_key);           //呼叫发起的app账号昵称  字段名
+        Yii::$app->redis->hset($call_key , 'nickname' ,$send['nickname']);                      //被叫的昵称
+        Yii::$app->redis->hset($call_key , 'language' ,$from_user['language']);                 //呼叫的语言
 
         Yii::$app->redis->hset($call_key , 'list_key' , $list_key);                             //记录队列的key
         Yii::$app->redis->expire($call_key, 30*60);
@@ -162,13 +168,13 @@ class TTSservice{
         $list_key               = $call_array['list_key'];
         $this->call_type        = $call_array['type'];
         $this->app_account_key  = $call_array['app_acount_key'];
-        $this->sendMessageToRobot($this->app_account_key , $call_array['from_id'] , '呼叫失败'  );
         if( $this->call_num = Yii::$app->redis->llen($list_key) <= 0 ){         //队列空
-            if($call_array['type'] == CallRecord::Record_Type_emergency){       //紧急联系人呼叫完
-
-            }else{                                                              //联系电话呼叫完成
-
-            }
+            $this->app_obj->sendCallButton($this->call_type,
+                                           $call_array['to_account'] ,
+                                           $call_array['from_id'] ,
+                                           $call_array['from_nickname'],
+                                           $call_array['to_nickname']
+                            ); //发送继续呼叫按钮
             return true;
         }
         $send = Yii::$app->redis->lpop($list_key);
@@ -191,6 +197,9 @@ class TTSservice{
         foreach($call_array as $key=>$item){
             if($key == 'to_number' ){
                 $item = $this->third->to ;
+            }
+            if($key == 'nickname'){
+                $item = $send['nickname'];
             }
             Yii::$app->redis->hset($cacheKey , $key ,$item);
         }
@@ -215,10 +224,13 @@ class TTSservice{
         $result =  $this->third->event($event_data);
         $cacheKey = get_class($this->third).'_callid_'.$this->third->messageId;
         $catch_call = $this->redisGetVByK($cacheKey);
+        $this->_Create_app($catch_call);
         if($this->third->messageStatus == CallRecord::Record_Status_Success){   //呼叫成功 回复一条消息 终止任务
+            $this->app_obj->sendCallSuccess($catch_call['nickname']);
             $list_key = $catch_call['list_key'];
             Yii::$app->redis->del($list_key);
         }else{                                                                  //呼叫失败 继续
+            $this->app_obj->sendCallFailed($catch_call['type'] , $catch_call['nickname'] , $this->third->messageAnwser);
             $this->_moreSendMessage($catch_call);
         }
         $this->_saveRecord($catch_call);
@@ -227,6 +239,21 @@ class TTSservice{
         return $result;   //回应数据 跟业务无关
     }
 
+    private function  _Create_app(Array $data){
+
+        if($data['app_acount_key'] == 'telegram_name'){
+            $this->app_obj = new Telegram();
+            $this->app_obj->telegramUid = $data['from_id'];
+            $this->app_obj->language    =  $data['language'];
+        }elseif($data['app_acount_key'] == 'potato_name'){
+            $this->app_obj = new Potato();
+            $this->app_obj->potatoUid   = $data['from_id'];
+            $this->app_obj->language    =  $data['language'];
+        }else{
+            return false;
+        }
+        return true;
+    }
     /**
      * @param array $data
      * 保存通话记录
@@ -249,97 +276,7 @@ class TTSservice{
         $callRecord->save();
     }
 
-    /**
-     * @param $appName
-     * @param $appUid
-     * @param $text
-     *
-     */
-    private function sendMessageToRobot($appName, $uid, $text, $keyBoard = '')
-    {
-        $user = User::findOne($uid);
-        switch ($appName) {
-            case 'telegram_name':
-                $uri = 'https://api.telegram.org/bot366429273:AAE1lGFanLGpUbfV28zlDYSTibiAPLhhE3s/sendMessage';
-                if (empty($keyBoard)) {
-                    $sendData = [
-                        'chat_id' => $user->telegram_user_id,
-                        'text' => $text,
-                    ];
-                } else {
-                    $sendData = [
-                        'chat_id' => $user->telegram_user_id,
-                        'text' => $text,
-                        'reply_markup' => [
-                            'inline_keyboard' => $keyBoard,
-                        ],
-                    ];
-                }
-                break;
-            case 'potato_name':
-                $uri ='http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendTextMessage';
-                if (empty($keyBoard)) {
-                    $sendData = [
-                        'chat_type' => 1,
-                        'chat_id' => $user->potato_user_id,
-                        'text' => $text,
-                    ];
-                } else {
-                    $sendData = [
-                        'chat_type' => 1,
-                        'chat_id' => $user->potato_user_id,
-                        'text' => $text,
-                        'inline_markup' => $keyBoard,
-                    ];
-                }
-                break;
-            default :
-                break;
-        }
-        $this->sendRequest($uri, $sendData);
-    }
 
-    private function sendRequest($url = null, $sendData)
-    {
-        if (is_array($this->sendData)) {
-            $sendData =  json_encode($this->sendData,JSON_UNESCAPED_UNICODE) ;
-        }
-        $curl = curl_init();
-        curl_setopt_array(
-            $curl,
-            array(
-                CURLOPT_URL => $url,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => "",
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 30,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_POSTFIELDS => $sendData,
-                CURLOPT_HTTPHEADER => array(
-                    "cache-control: no-cache",
-                    "content-type: application/json",
-                ),
-            )
-        );
-
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-        curl_close($curl);
-        if (empty($url)) {
-            $response = json_decode($response, true);
-            if (!$response['ok']) {
-                return "error_cod #:".$response['error_code'].', description: '.$response['description'];
-            }
-        }
-
-        if ($err) {
-            return "error #:" . $err;
-        } else {
-            return $response;
-        }
-
-    }
 
 
 }

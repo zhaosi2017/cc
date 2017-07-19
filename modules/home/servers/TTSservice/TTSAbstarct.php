@@ -19,9 +19,11 @@ abstract  class TTSAbstarct{
     public $messageId;        //发送的消息的id
     public $messageStatus;    //发送状态
     public $messageAnwser;    //消息应答
+
+
+
+
     public $duration;         //通话时长
-
-
     public $to;
     public $from;
 
