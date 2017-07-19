@@ -503,16 +503,16 @@ class Nexmo extends Model
             $cacheKey = $this->cacheKeyPre.$cacheKey;
         }
 
-        $isSend = Yii::$app->redis->hget($cacheKey, 'isSend');
+        // $isSend = Yii::$app->redis->hget($cacheKey, 'isSend');
         if (isset($postData['duration']) && $postData['duration'] > 0) {
             $status = 1;
         } elseif (in_array($statusName, $this->failureStatus)) {
-            Yii::$app->redis->hset($cacheKey, 'isSend', 1);
+            // Yii::$app->redis->hset($cacheKey, 'isSend', 1);
             $status = 0;
         } elseif(in_array($statusName, $this->successStatus)) {
             $status = 1;
-        } elseif(empty($isSend) && isset($postData['duration']) && (in_array($postData['status'], $this->completeStatus))) {
-            $status = 0;
+        // } elseif(empty($isSend) && isset($postData['duration']) && (in_array($postData['status'], $this->completeStatus))) {
+        //     $status = 0;
         } else {
             // 返回无效的状态，比如started,ringing等状态.
             return false;
