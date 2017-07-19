@@ -23,6 +23,36 @@ class TtsController extends GController{
 
 
     /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index' ,'sinch-event' , 'nexmo-anwser' , 'nexmo-event'],
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index'],
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'index' => ['post'],
+                ],
+            ],
+        ];
+    }
+    /**
      *sinch 的回调
      */
     public function actionSinchEvent(){
