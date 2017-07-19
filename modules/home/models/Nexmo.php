@@ -259,6 +259,12 @@ class Nexmo extends Model
             return $data;
         }
 
+        // 第一次呼叫，用户没有设置紧急联系人, 推送是否发送紧急联系人按钮.
+        if ($isFirst && empty($calledNumberArr) && !empty($calledUrgentArr)) {
+            $res = $this->sendUrgentButtonToRobot($appName, $appCalledUid, $appUid, $calledAppName, $callAppName, $calledUserId);
+            return $res;
+        }
+
         $basic = new \Nexmo\Client\Credentials\Basic($this->apiKey, $this->apiScret);
         $privatePath = Yii::getAlias('@app').'/config/'.'private.key';
         $keypair = new \Nexmo\Client\Credentials\Keypair(file_get_contents($privatePath), $this->applicationId);
@@ -304,6 +310,9 @@ class Nexmo extends Model
             $tmp,
         ];
         $conferenceCacheKey = $cacheKey.'_pre';
+        $file = 'nexmo_'.date('Y-m-d', time()).'.txt';
+        file_put_contents('/tmp/'.$file, var_export($conferenceCacheKey, true).PHP_EOL, 8);
+        file_put_contents('/tmp/'.$file, var_export($conference, true).PHP_EOL, 8);
         Yii::$app->redis->set($conferenceCacheKey, json_encode($conference, JSON_UNESCAPED_UNICODE));
         Yii::$app->redis->expire($conferenceCacheKey, 5*60);
         $anserUrl = $this->getAnswerUrl();
@@ -496,6 +505,7 @@ class Nexmo extends Model
 
             $this->setTlanguage($language);
             $appUid = intval($appUid);
+            $isUrgentMenu = intval($isUrgentMenu);
             // 呼叫成功，产生费用.
             if ($status) {
                 $text = $this->translateLanguage('呼叫'.$calledName.'成功!');
@@ -528,93 +538,9 @@ class Nexmo extends Model
             $time = time();
             // 如果是呼叫紧急联系人，需要推送按钮.
             if (empty($calledNumberArr) && !empty($calledUrgentArr) && empty($isUrgentMenu) && empty($status)) {
-                switch ($appName) {
-                    case 'telegram':
-                        $callback = [
-                            $this->callUrgentCallbackDataPre,
-                            $appCalledUid,
-                            $calledUserId,
-                            $callAppName,
-                            $calledAppName
-                        ];
-                        $text = $this->getCallUrgentText();
-                        $keyBoard = [
-                            [
-                                [
-                                    'text' => $this->getCallUrgentButtonText(),
-                                    'callback_data' => implode('-', $callback),
-                                ]
-                            ]
-                        ];
-                        break;
-                    case 'potato':
-                        $callback = [
-                            $this->callUrgentCallbackDataPre,
-                            $appCalledUid,
-                            $calledUserId,
-                            $callAppName,
-                            $calledAppName,
-                            $time
-                        ];
-                        $text = $this->getCallUrgentText();
-                        $keyBoard = [
-                            [
-                                [
-                                    'type' => 0,
-                                    'text' => $this->getCallUrgentButtonText(),
-                                    'data' => implode('-', $callback),
-                                ]
-                            ]
-                        ];
-                        break;
-                    default :
-                        break;
-                }
-
-                $this->sendMessageToRobot($appName, $appUid, $text, $keyBoard);
+                $res = $this->sendUrgentButtonToRobot($appName, $appCalledUid, $appUid, $calledAppName, $callAppName, $calledUserId);
             } elseif (empty($calledNumberArr) && empty($calledUrgentArr) && empty($status)) {
-                switch ($appName) {
-                    case 'telegram':
-                        $callback = [
-                            $this->callCallbackDataPre,
-                            $appCalledUid,
-                            $callAppName,
-                            $calledAppName
-                        ];
-                        $text = $this->getAgainText();
-                        $keyBoard = [
-                            [
-                                [
-                                    'text' => $this->getAgainButtonText(),
-                                    'callback_data' => implode('-', $callback),
-                                ]
-                            ]
-                        ];
-                        break;
-                    case 'potato':
-                        $callback = [
-                            $this->callCallbackDataPre,
-                            $appCalledUid,
-                            $callAppName,
-                            $calledAppName,
-                            $time
-                        ];
-                        $text = $this->getAgainText();
-                        $keyBoard = [
-                            [
-                                [
-                                    'type' => 0,
-                                    'text' => $this->getAgainButtonText(),
-                                    'data' => implode('-', $callback),
-                                ]
-                            ]
-                        ];
-                        break;
-                    default :
-                        break;
-                }
-
-                $this->sendMessageToRobot($appName, $appUid, $text, $keyBoard);
+                $res = $this->sendRecallButtonToRobot($appName, $appCalledUid, $appUid, $calledAppName, $callAppName);
             } else {
                 // 呼叫失败, 呼叫下一联系人.
                 if (!$status) {
@@ -622,6 +548,127 @@ class Nexmo extends Model
                 }
             }
         }
+    }
+
+
+    /**
+     * 发送是否是否发送紧急联系人的按钮.
+     *
+     * @param $appName
+     * @param $appCalledUid
+     * @param $appUid
+     * @param $calledAppName
+     * @param $callAppName
+     * @param $calledUserId
+     *
+     */
+    private function sendUrgentButtonToRobot($appName, $appCalledUid, $appUid, $calledAppName, $callAppName, $calledUserId)
+    {
+        $time = time();
+        switch ($appName) {
+            case 'telegram':
+                $callback = [
+                    $this->callUrgentCallbackDataPre,
+                    $appCalledUid,
+                    $calledUserId,
+                    $callAppName,
+                    $calledAppName
+                ];
+                $text = $this->getCallUrgentText();
+                $keyBoard = [
+                    [
+                        [
+                            'text' => $this->getCallUrgentButtonText(),
+                            'callback_data' => implode('-', $callback),
+                        ]
+                    ]
+                ];
+                break;
+            case 'potato':
+                $callback = [
+                    $this->callUrgentCallbackDataPre,
+                    $appCalledUid,
+                    $calledUserId,
+                    $callAppName,
+                    $calledAppName,
+                    $time
+                ];
+                $text = $this->getCallUrgentText();
+                $keyBoard = [
+                    [
+                        [
+                            'type' => 0,
+                            'text' => $this->getCallUrgentButtonText(),
+                            'data' => implode('-', $callback),
+                        ]
+                    ]
+                ];
+                break;
+            default :
+                break;
+        }
+
+        $result  = $this->sendMessageToRobot($appName, $appUid, $text, $keyBoard);
+
+        return $result;
+    }
+
+    /**
+     * 是否推送重新呼叫按钮.
+     *
+     * @param $appName
+     * @param $appCalledUid
+     * @param $appUid
+     * @param $calledAppName
+     * @param $callAppName
+     */
+    public function sendRecallButtonToRobot($appName, $appCalledUid, $appUid, $calledAppName, $callAppName)
+    {
+        $time = time();
+        switch ($appName) {
+            case 'telegram':
+                $callback = [
+                    $this->callCallbackDataPre,
+                    $appCalledUid,
+                    $callAppName,
+                    $calledAppName
+                ];
+                $text = $this->getAgainText();
+                $keyBoard = [
+                    [
+                        [
+                            'text' => $this->getAgainButtonText(),
+                            'callback_data' => implode('-', $callback),
+                        ]
+                    ]
+                ];
+                break;
+            case 'potato':
+                $callback = [
+                    $this->callCallbackDataPre,
+                    $appCalledUid,
+                    $callAppName,
+                    $calledAppName,
+                    $time
+                ];
+                $text = $this->getAgainText();
+                $keyBoard = [
+                    [
+                        [
+                            'type' => 0,
+                            'text' => $this->getAgainButtonText(),
+                            'data' => implode('-', $callback),
+                        ]
+                    ]
+                ];
+                break;
+            default :
+                break;
+        }
+
+        $result = $this->sendMessageToRobot($appName, $appUid, $text, $keyBoard);
+
+        return $result;
     }
 
     /**
