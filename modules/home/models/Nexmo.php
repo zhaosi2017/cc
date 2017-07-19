@@ -45,6 +45,8 @@ class Nexmo extends Model
     private $callUrgentButtonText = 'Yes';
     private $againText = "Whether to call again ?";
     private $againButtonText = 'Re-call';
+    private $failureText = "Call failed, please try again later!";
+    private $firstFailureText = "Called user does not set contact phone, call failed!";
 
 
     /**
@@ -217,6 +219,22 @@ class Nexmo extends Model
     }
 
     /**
+     * @return string
+     */
+    public function getFailureText()
+    {
+        return Yii::t('app/model/nexmo', $this->failureText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstFailureText()
+    {
+        return Yii::t('app/model/nexmo', $this->firstFailureText, array(), $this->language);
+    }
+
+    /**
      * 呼叫.
      */
     public function callPerson($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $language, $appName, $appUid, $appCalledUid, $isFirst = 0, $calledNumberArr = array(), $calledUrgentArr = array(), $isUrgentMenu = 0)
@@ -255,8 +273,10 @@ class Nexmo extends Model
 
         // 呼叫人没有设置联系方式, 不能完成呼叫.
         if (empty($calledNumberArr) && empty($calledUrgentArr)) {
-            $data['status'] = 1;
-            return $data;
+            $isFirst ? ($text = $this->getFirstFailureText()) : ($text = $this->getFailureText());
+            // 发消息到机器人.
+            $res = $this->sendMessageToRobot($appName, $appUid, $text);
+            return $res;
         }
 
         // 第一次呼叫，用户没有设置紧急联系人, 推送是否发送紧急联系人按钮.
