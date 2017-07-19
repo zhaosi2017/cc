@@ -11,8 +11,8 @@ use yii\db\Exception;
  */
 class Sinch extends TTSAbstarct {
 
-    private $auth_id = '893b8449-294a-4ee7-8f5f-0248d76588b7';
-    private $auth_key = 'oV94O5CvBUClPO9x1EIg3Q==';
+    private $auth_id = '0221f92e-7fbf-4df2-9eb1-c4a965b14fc4';
+    private $auth_key = 'D64MIM3RJ0ijv1r5K7fcsQ==';
 
     private $body;          //提交数据
     private $authorization; //数据验证
