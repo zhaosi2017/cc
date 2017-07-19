@@ -110,7 +110,7 @@ class TTSservice{
         if($call_type == CallRecord::Record_Type_none){                                   //正常呼叫
             $to_phones = UserPhone::findAll(array('user_id'=>$this->to_user_id));         //被呼叫者的电话集合
             foreach($to_phones as $phone){
-                $send_data['to'] = '+'.$phone->phone_country_code.$phone->user_phone_number;
+                $send_data['to'] = $phone->phone_country_code.$phone->user_phone_number;
                 $send_data['call_type'] = CallRecord::Record_Type_none;
                 $send_data['nickname']  = $to_user['nickname'];
                 $sends[] = $send_data;
@@ -118,7 +118,7 @@ class TTSservice{
         }elseif($call_type == CallRecord::Record_Type_emergency){                         //紧急联系人呼叫
             $to_phones = UserGentContact::findAll(array('user_id'=>$this->to_user_id));   //被呼叫者的紧急联系人集合
             foreach($to_phones as $phone){
-                $send_data['to'] = '+'.$phone->contact_country_code.$phone->contact_phone_number;
+                $send_data['to'] = $phone->contact_country_code.$phone->contact_phone_number;
                 $send_data['call_type'] = CallRecord::Record_Type_emergency ;
                 $send_data['nickname']  = $phone['contact_nickname'];
                 $sends[] = $send_data;
