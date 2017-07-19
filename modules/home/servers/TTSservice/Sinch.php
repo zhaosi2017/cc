@@ -33,11 +33,9 @@ class Sinch extends TTSAbstarct {
 
     public function sendMessage()
     {
-        file_put_contents('/tmp/test_telegram.log' , var_export($this->messageType.PHP_EOL,true));
        if($this->messageType == 'SMS'){
            return $this->sendSMS();
        }elseif($this->messageType == 'TTS'){
-           file_put_contents('/tmp/test_telegram.log' , var_export('TTS',true));
            return $this->sendTTS();
        }
        return false;
@@ -120,9 +118,9 @@ class Sinch extends TTSAbstarct {
                     'enabledice' => true,
                 ],
             ]);
-        file_put_contents('/tmp/test_telegram.log' , var_export($this->body,true));
             $this->signature();
             $response = $this->_curl();
+            file_put_contents('/tmp/test_telegram.log' , var_export($response,true));
             $response  =json_decode($response);
             file_put_contents('/tmp/test_telegram.log' , var_export($response , true) ,8);
             if(!empty($response) && isset($response->callId) && !empty($response->callId)){
