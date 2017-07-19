@@ -1,6 +1,7 @@
 <?php
 namespace app\modules\home\models;
 
+use app\modules\home\servers\TTSservice\TTSservice;
 use yii;
 use yii\base\Model;
 use app\modules\home\models\User;
@@ -12,7 +13,7 @@ use app\modules\home\models\Nexmo;
 
 class Telegram extends Model
 {
-
+    use  app\modules\home\servers\appService\TraitTelegram;
     const CODE_LENGTH = 5;
 
     private $telegramText = 'Operation menu.';
@@ -130,7 +131,8 @@ class Telegram extends Model
      */
     public function setWebhook()
     {
-        $this->webhook = 'https://api.telegram.org/bot366429273:AAE1lGFanLGpUbfV28zlDYSTibiAPLhhE3s/sendMessage';
+        //$this->webhook = 'https://api.telegram.org/bot366429273:AAE1lGFanLGpUbfV28zlDYSTibiAPLhhE3s/sendMessage';
+        $this->webhook = 'https://api.telegram.org/bot445351636:AAG4wnw7jI048KBKlb0P0BwoU08Dm6811j8/sendMessage';
     }
 
     /**
@@ -1435,34 +1437,19 @@ class Telegram extends Model
                 $this->sendTelegramData();
                 return $this->errorCode['success'];
             }
-
-            // 呼叫.
-            try {
-                if (!empty($calledId)) {
-                    $urgent = UserGentContact::find()->select(['id', 'contact_country_code', 'contact_phone_number', 'contact_nickname'])->where(['user_id' => $calledId])->orderBy('id asc')->all();
-                    $urgentArr = [];
-                    if (!empty($urgent)) {
-                        foreach ($urgent as $key => $value) {
-                            $tmp = [];
-                            $tmp['phone_number'] = $value->contact_country_code . $value->contact_phone_number;
-                            $tmp['nickname'] = $value->contact_nickname;
-                            $urgentArr[] = $tmp;
-                        }
-                    }
-                    $nexmo = new Nexmo();
-                    $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->telegramContactFirstName, $this->telegramLastName . $this->telegramFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code . $this->callPersonData->phone_number, $this->language, $appName = 'telegram', $this->telegramUid, $this->telegramContactUid, 0, array(), $urgentArr, 1);
-                } else {
-                    $nexmo = new Nexmo();
-                    $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->telegramContactFirstName, $this->telegramLastName . $this->telegramFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code . $this->callPersonData->phone_number, $this->language, $appName = 'telegram', $this->telegramUid, $this->telegramContactUid,1);
-                }
-            } catch (\Exception $e) {
-                $this->sendData = [
-                    'chat_id' => $this->telegramUid,
-                    'text' => $this->translateLanguage('网络异常, 请稍后再试!'),
-                ];
+            $service = TTSservice::init(\app\modules\home\servers\TTSservice\Sinch::class);
+            $service->app_account_key='telegram_name';
+            $service->from_user_id = $this->callPersonData->id;
+            $service->to_user_id = $this->calledPersonData->id;
+            $service->messageText = '这只是一个测试代码';
+            $service->messageText_more = '这个测试用于第二次呼叫电话';
+            $service->luangage = $this->llanguage;
+            if($service->sendMessage(CallRecord::Record_Type_none)){
+                    $this->sendData = [
+                        'chat_id' => $this->telegramUid,
+                        'text' => $this->translateLanguage('网络异常, 请稍后再试!'),
+                    ];
                 $this->sendTelegramData();
-                $file = 'tnexmo_'.date('Y-m-d', time()).'.txt';
-                file_put_contents('/tmp/'.$file, var_export($e->getMessage(), true).PHP_EOL, 8);
             }
 
             return $this->errorCode['success'];

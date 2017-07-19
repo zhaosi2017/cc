@@ -27,40 +27,10 @@ class TtsController extends GController{
      */
     public function actionSinchEvent(){
 
-        $arr = array (
-            'event' => 'dice',
-            'callid' => '94897162-b66d-4857-a014-147e48fdcf18',
-            'timestamp' => '2017-07-15T03:07:17Z',
-            'reason' => 'MANAGERHANGUP',
-            'result' => 'NOANSWERED',
-            'version' => 1,
-            'custom' => 'customData',
-            'user' => '',
-            'debit' =>
-                array (
-                    'currencyId' => 'USD',
-                    'amount' => 0.076200000000000004,
-                ),
-            'userRate' =>
-                array (
-                    'currencyId' => 'USD',
-                    'amount' => 0.076200000000000004,
-                ),
-            'to' =>
-                array (
-                    'type' => 'number',
-                    'endpoint' => '85586564836',
-                ),
-            'applicationKey' => '893b8449-294a-4ee7-8f5f-0248d76588b7',
-            'duration' => 2,
-            'from' => '',
-        );
 
-
-echo "<pre>";
-        //$callback_data = Yii::$app->request->post();
+        $callback_data = Yii::$app->request->post();
         $service = TTSservice::init(Sinch::class);
-        $rest = $service->event($arr);
+        $rest = $service->event($callback_data);
         echo $rest;
     }
 

@@ -15,8 +15,8 @@ trait  TraitTelegram {
     /**
      *拨打电话失败 消息推送
      * @param  int $type
-     * @param string $telegram_name  用户app名称
-     * @param string $anwser         应答状态
+     * @param  string $telegram_name  用户app名称
+     * @param  string $anwser         应答状态
      * @return bool
      */
     public function sendCallFailed($type, $telegram_name,$anwser){
@@ -31,7 +31,6 @@ trait  TraitTelegram {
                 'chat_id' =>$this->telegramUid,
                 'text' => $this->_CallAnwserText($anwser , $telegram_name),
             ];
-
         }else{
             return true;
         }
