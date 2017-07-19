@@ -40,6 +40,7 @@ class Nexmo extends Model
     private $callUrgentCallbackDataPre = 'cc_call_urgent';
     private $callCallbackDataPre = 'cc_call';
     private $failureStatus = ['unanswered', 'busy', 'timeout', 'failed'];
+    private $successStatus = ['answered'];
     private $callUrgentText = 'Whether to call an emergency contact ?';
     private $callUrgentButtonText = 'Yes';
     private $againText = "Whether to call again ?";
@@ -461,6 +462,8 @@ class Nexmo extends Model
             $status = 1;
         } elseif (in_array($statusName, $this->failureStatus)) {
             $status = 0;
+        } elseif(in_array($statusName, $this->successStatus)) {
+            $status = 1;
         } else {
             return;
         }
