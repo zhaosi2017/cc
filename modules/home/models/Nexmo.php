@@ -39,12 +39,13 @@ class Nexmo extends Model
     private $cacheKeyPre = 'nexmo_';
     private $callUrgentCallbackDataPre = 'cc_call_urgent';
     private $callCallbackDataPre = 'cc_call';
-    private $failureStatus = ['unanswered', 'busy', 'timeout', 'failed'];
-    private $successStatus = ['answered'];
-    private $callUrgentText = 'Whether to call an emergency contact ?';
     private $callUrgentButtonText = 'Yes';
-    private $againText = "Whether to call again ?";
     private $againButtonText = 'Re-call';
+    private $failureStatus = ['unanswered', 'busy', 'timeout', 'failed', 'rejected'];
+    private $successStatus = ['answered'];
+    private $completeStatus = ['completed'];
+    private $callUrgentText = 'Whether to call an emergency contact ?';
+    private $againText = "Whether to call again ?";
     private $failureText = "Call failed, please try again later!";
     private $firstFailureText = "Called user does not set contact phone, call failed!";
 
@@ -471,6 +472,19 @@ class Nexmo extends Model
 
     /**
      * 异步消息通知.
+     *
+     * started - 平台盯着电话.
+     * ringing - 用户的手机响了.
+     * answered - 用户已经接听了您的来电.
+     * machine - 平台检测到应答机.
+     * complete - 平台已终止此呼叫.
+     * timeout- 您的用户ringing_timer几秒钟内没有接听电话.
+     * failed - 呼叫未能完成.
+     * rejected - 电话被拒绝.
+     * unanswered - 电话没有回答.
+     * busy - 被叫的人正在接通电.
+     *
+     * return mixed.
      */
     public function event()
     {
@@ -489,85 +503,91 @@ class Nexmo extends Model
             $cacheKey = $this->cacheKeyPre.$cacheKey;
         }
 
-        // Yii::$app->redis->zincrby($cacheKey, 1, 'times');
-        // $times = Yii::$app->redis->hget($cacheKey, 'times');
+        $isSend = Yii::$app->redis->hget($cacheKey, 'isSend');
         if (isset($postData['duration']) && $postData['duration'] > 0) {
             $status = 1;
         } elseif (in_array($statusName, $this->failureStatus)) {
+            Yii::$app->redis->zincrby($cacheKey, 1, 'isSend');
             $status = 0;
         } elseif(in_array($statusName, $this->successStatus)) {
             $status = 1;
+        } elseif(empty($isSend) && isset($postData['duration']) && (in_array($postData['status'], $this->completeStatus))) {
+            $status = 0;
         } else {
-            return;
+            // 返回无效的状态，比如started,ringing等状态.
+            return false;
         }
 
-        if (!empty($cacheKey)) {
-            $conferenceCacheKey = Yii::$app->redis->hget($cacheKey, 'conferenceCacheKey');
-            $calledUserId = Yii::$app->redis->hget($cacheKey, 'calledUserId');
-            $callUserId = Yii::$app->redis->hget($cacheKey, 'callUserId');
-            $calledName = Yii::$app->redis->hget($cacheKey, 'calledName');
-            $calledAppName = Yii::$app->redis->hget($cacheKey, 'calledAppName');
-            $callAppName = Yii::$app->redis->hget($cacheKey, 'callAppName');
-            $calledNickname = Yii::$app->redis->hget($cacheKey, 'calledNickname');
-            $callNickname = Yii::$app->redis->hget($cacheKey, 'callNickname');
-            $contactPhoneNumber = Yii::$app->redis->hget($cacheKey, 'contactPhoneNumber');
-            $calledNumberArr = Yii::$app->redis->hget($cacheKey, 'calledNumberArr');
-            $calledUrgentArr = Yii::$app->redis->hget($cacheKey, 'calledUrgentArr');
-            $number = Yii::$app->redis->hget($cacheKey, 'number');
-            $isUrgent = Yii::$app->redis->hget($cacheKey, 'isUrgent');
-            $isUrgentMenu = Yii::$app->redis->hget($cacheKey, 'isUrgentMenu');
-            $language = Yii::$app->redis->hget($cacheKey, 'language');
-            $appName = Yii::$app->redis->hget($cacheKey, 'appName');
-            $appUid = Yii::$app->redis->hget($cacheKey, 'appUid');
-            $appCalledUid = Yii::$app->redis->hget($cacheKey, 'appCalledUid');
-            $calledNumberArr = json_decode($calledNumberArr, true);
-            $calledUrgentArr = json_decode($calledUrgentArr, true);
+        $conferenceCacheKey = Yii::$app->redis->hget($cacheKey, 'conferenceCacheKey');
+        $calledUserId = Yii::$app->redis->hget($cacheKey, 'calledUserId');
+        $callUserId = Yii::$app->redis->hget($cacheKey, 'callUserId');
+        $calledName = Yii::$app->redis->hget($cacheKey, 'calledName');
+        $calledAppName = Yii::$app->redis->hget($cacheKey, 'calledAppName');
+        $callAppName = Yii::$app->redis->hget($cacheKey, 'callAppName');
+        $calledNickname = Yii::$app->redis->hget($cacheKey, 'calledNickname');
+        $callNickname = Yii::$app->redis->hget($cacheKey, 'callNickname');
+        $contactPhoneNumber = Yii::$app->redis->hget($cacheKey, 'contactPhoneNumber');
+        $calledNumberArr = Yii::$app->redis->hget($cacheKey, 'calledNumberArr');
+        $calledUrgentArr = Yii::$app->redis->hget($cacheKey, 'calledUrgentArr');
+        $number = Yii::$app->redis->hget($cacheKey, 'number');
+        $isUrgent = Yii::$app->redis->hget($cacheKey, 'isUrgent');
+        $isUrgentMenu = Yii::$app->redis->hget($cacheKey, 'isUrgentMenu');
+        $language = Yii::$app->redis->hget($cacheKey, 'language');
+        $appName = Yii::$app->redis->hget($cacheKey, 'appName');
+        $appUid = Yii::$app->redis->hget($cacheKey, 'appUid');
+        $appCalledUid = Yii::$app->redis->hget($cacheKey, 'appCalledUid');
+        $calledNumberArr = json_decode($calledNumberArr, true);
+        $calledUrgentArr = json_decode($calledUrgentArr, true);
 
-            $this->setTlanguage($language);
-            $appUid = intval($appUid);
-            $isUrgentMenu = intval($isUrgentMenu);
-            // 呼叫成功，产生费用.
-            if ($status) {
-                $text = $this->translateLanguage('呼叫'.$calledName.'成功!');
-                Yii::$app->redis->del($cacheKey);
-                Yii::$app->redis->del($conferenceCacheKey);
-            } else {
-                switch ($statusName) {
-                    case 'busy':
-                        $text = $this->translateLanguage('呼叫的用户忙!');
-                        break;
-                    case 'timeout':
-                        $text = $this->translateLanguage('呼叫'.$calledName.'失败, 暂时无人接听!');
-                        break;
-                    case 'unanswered':
-                        $text = $this->translateLanguage('呼叫'.$calledName.'失败, 暂时无人接听!');
-                        break;
-                    default:
-                        $text = $this->translateLanguage('呼叫'.$calledName.'失败!');
-                        break;
-                }
+        $this->setTlanguage($language);
+        $appUid = intval($appUid);
+        $isUrgentMenu = intval($isUrgentMenu);
 
+        // 呼叫成功，产生费用.
+        if ($status) {
+            Yii::$app->redis->del($cacheKey);
+            Yii::$app->redis->del($conferenceCacheKey);
+            $text = $this->translateLanguage('呼叫'.$calledName.'成功!');
+        } else {
+            switch ($statusName) {
+                case 'busy':
+                    $text = $this->translateLanguage('呼叫的用户忙!');
+                    break;
+                case 'timeout':
+                    $text = $this->translateLanguage('呼叫'.$calledName.'失败, 暂时无人接听!');
+                    break;
+                case 'unanswered':
+                    $text = $this->translateLanguage('呼叫'.$calledName.'失败, 暂时无人接听!');
+                    break;
+                case 'failed':
+                    $text = $this->translateLanguage('呼叫'.$calledName.'未能完成, 请稍后再试!');
+                    break;
+                case 'rejected':
+                    $text = $this->translateLanguage('呼叫'.$calledName.'失败, 被拒绝!');
+                    break;
+                default:
+                    $text = $this->translateLanguage('呼叫'.$calledName.'失败!');
+                    break;
             }
 
-            // 发消息到机器人.
-            $this->sendMessageToRobot($appName, $appUid, $text);
-
-            // 保存通话记录.
-            $this->saveCallRecordData($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $number, $status, $isUrgent);
-
-            $time = time();
-            // 如果是呼叫紧急联系人，需要推送按钮.
-            if (empty($calledNumberArr) && !empty($calledUrgentArr) && empty($isUrgentMenu) && empty($status)) {
-                $res = $this->sendUrgentButtonToRobot($appName, $appCalledUid, $appUid, $calledAppName, $callAppName, $calledUserId);
-            } elseif (empty($calledNumberArr) && empty($calledUrgentArr) && empty($status)) {
-                $res = $this->sendRecallButtonToRobot($appName, $appCalledUid, $appUid, $calledAppName, $callAppName);
-            } else {
-                // 呼叫失败, 呼叫下一联系人.
-                if (!$status) {
-                    $this->callPerson($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $language, $appName, $appUid, $appCalledUid,0, $calledNumberArr, $calledUrgentArr, $isUrgentMenu);
-                }
-            }
         }
+
+        // 发消息到机器人.
+        $this->sendMessageToRobot($appName, $appUid, $text);
+        // 保存通话记录.
+        $this->saveCallRecordData($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $number, $status, $isUrgent);
+
+        // 如果是呼叫紧急联系人，需要推送按钮.
+        if (empty($calledNumberArr) && !empty($calledUrgentArr) && empty($isUrgentMenu) && empty($status)) {
+            $res = $this->sendUrgentButtonToRobot($appName, $appCalledUid, $appUid, $calledAppName, $callAppName, $calledUserId);
+        } elseif (empty($calledNumberArr) && empty($calledUrgentArr) && empty($status)) {
+            $res = $this->sendRecallButtonToRobot($appName, $appCalledUid, $appUid, $calledAppName, $callAppName);
+        } elseif (empty($status)) {
+            // 呼叫失败, 呼叫下一联系人.
+            $res = $this->callPerson($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $language, $appName, $appUid, $appCalledUid,0, $calledNumberArr, $calledUrgentArr, $isUrgentMenu);
+        }
+
+        return $res;
     }
 
 
