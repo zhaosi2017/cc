@@ -1,6 +1,7 @@
 <?php
 namespace app\modules\home\models;
 
+use app\modules\home\servers\appService\TraitTelegram;
 use app\modules\home\servers\TTSservice\TTSservice;
 use yii;
 use yii\base\Model;
@@ -13,7 +14,7 @@ use app\modules\home\models\Nexmo;
 
 class Telegram extends Model
 {
-    use  app\modules\home\servers\appService\TraitTelegram;
+    use TraitTelegram;
     const CODE_LENGTH = 5;
 
     private $telegramText = 'Operation menu.';
@@ -1438,11 +1439,11 @@ class Telegram extends Model
                 return $this->errorCode['success'];
             }
             $service = TTSservice::init(\app\modules\home\servers\TTSservice\Sinch::class);
-            $service->app_account_key='telegram_name';
+            $service->app_account_key = 'telegram_name';
             $service->from_user_id = $this->callPersonData->id;
             $service->to_user_id = $this->calledPersonData->id;
-            $service->messageText = '这只是一个测试代码';
-            $service->messageText_more = '这个测试用于第二次呼叫电话';
+            $service->messageText = $this->translateLanguage('这只是一个测试代码');
+            $service->messageText_more =  $this->translateLanguage('这个测试用于第二次呼叫电话');
             $service->luangage = $this->llanguage;
             if($service->sendMessage(CallRecord::Record_Type_none)){
                     $this->sendData = [
@@ -1451,7 +1452,6 @@ class Telegram extends Model
                     ];
                 $this->sendTelegramData();
             }
-
             return $this->errorCode['success'];
         } else {
             $this->sendData = [
