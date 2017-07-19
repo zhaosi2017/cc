@@ -507,7 +507,7 @@ class Nexmo extends Model
         if (isset($postData['duration']) && $postData['duration'] > 0) {
             $status = 1;
         } elseif (in_array($statusName, $this->failureStatus)) {
-            Yii::$app->redis->zincrby($cacheKey, 1, 'isSend');
+            Yii::$app->redis->hset($cacheKey, 'isSend', 1);
             $status = 0;
         } elseif(in_array($statusName, $this->successStatus)) {
             $status = 1;
