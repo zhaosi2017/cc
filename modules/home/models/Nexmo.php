@@ -448,11 +448,16 @@ class Nexmo extends Model
     {
 
         $postData = $this->getEventData();
+        $time = time();
+        $file = 'event_'.date('Y-m-d', $time).'.txt';
+        file_put_contents('/tmp/'.$file, var_export($postData, true).PHP_EOL, 8);
         $cacheKey = isset($postData['uuid']) ? $postData['uuid'] : '';
         $statusName = isset($postData['status']) ? $postData['status'] : '';
         if (empty($cacheKey)) {
             return false;
         } else {
+            $file = 'eventt_'.date('Y-m-d', $time).'.txt';
+            file_put_contents('/tmp/'.$file, var_export($postData, true).PHP_EOL, 8);
             $cacheKey = $this->cacheKeyPre.$cacheKey;
         }
 
@@ -730,16 +735,15 @@ class Nexmo extends Model
         $response = curl_exec($curl);
         $err = curl_error($curl);
         curl_close($curl);
-        if (empty($url)) {
-            $response = json_decode($response, true);
-            if (!$response['ok']) {
-                return "error_cod #:".$response['error_code'].', description: '.$response['description'];
-            }
-        }
 
         if ($err) {
+            $file = 'curl_error_'.date('Y-m-d', time()).'.txt';
+            file_put_contents('/tmp/'.$file, var_export($err, true).PHP_EOL, 8);
             return "error #:" . $err;
         } else {
+            $response = json_decode($response, true);
+            $file = 'curl_response_'.date('Y-m-d', time()).'.txt';
+            file_put_contents('/tmp/'.$file, var_export($response, true).PHP_EOL, 8);
             return $response;
         }
 
