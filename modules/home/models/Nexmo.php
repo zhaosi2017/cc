@@ -28,6 +28,7 @@ class Nexmo extends Model
     private $_answerKey;
     private $_eventData;
     private $_tlanguage = 'zh-CN';
+    private $_language = 'zh-CN';
     private $_enventUrl;
     private $_answerUrl = 'https://www.callu.online/home/nexmo/conference?key=';
     private $_eventUrl = 'https://www.callu.online/home/nexmo/event';
@@ -82,7 +83,24 @@ class Nexmo extends Model
      */
     public function setTlanguage($value)
     {
-        $this->_tlanguage = $value;
+        if (!stripos($value, '-')) {
+            switch ($value) {
+                case 'zh';
+                    $this->_language = 'zh-CN';
+                default;
+                    break;
+            }
+        } else {
+            $this->_language = $value;
+        }
+
+        // tlanguage语言设置.
+        if (!stripos($value, 'zh')) {
+            $language = explode('-', $value);
+            $this->_tlanguage = $language[0];
+        } else {
+            $this->_tlanguage = $value;
+        }
     }
 
     /**
@@ -158,11 +176,19 @@ class Nexmo extends Model
     }
 
     /**
+     * @return mixed
+     */
+    public function getLanguage()
+    {
+        return $this->_language;
+    }
+
+    /**
      * @return string
      */
     public function getCallUrgentText()
     {
-        return Yii::t('app/model/nexmo', $this->callUrgentText, array(), $this->_tlanguage);
+        return Yii::t('app/model/nexmo', $this->callUrgentText, array(), $this->language);
     }
 
     /**
@@ -170,7 +196,7 @@ class Nexmo extends Model
      */
     public function getCallUrgentButtonText()
     {
-        return Yii::t('app/model/nexmo', $this->callUrgentButtonText, array(), $this->_tlanguage);
+        return Yii::t('app/model/nexmo', $this->callUrgentButtonText, array(), $this->language);
     }
 
     /**
@@ -178,7 +204,7 @@ class Nexmo extends Model
      */
     public function getAgainText()
     {
-        return Yii::t('app/model/nexmo', $this->againText, array(), $this->_tlanguage);
+        return Yii::t('app/model/nexmo', $this->againText, array(), $this->language);
     }
 
     /**
@@ -186,7 +212,7 @@ class Nexmo extends Model
      */
     public function getAgainButtonText()
     {
-        return Yii::t('app/model/nexmo', $this->againButtonText, array(), $this->_tlanguage);
+        return Yii::t('app/model/nexmo', $this->againButtonText, array(), $this->language);
     }
 
     /**
