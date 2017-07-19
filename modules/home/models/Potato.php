@@ -1428,106 +1428,6 @@ class Potato extends Model
     }
 
     /**
-     * 呼叫本人联系方式.
-     *
-     * @return mixed
-     */
-    public function callPersonPhone($nickname)
-    {
-        $result = false;
-        $this->language = $this->callPersonData->language;
-        $nexmoData = [
-            "api_key" => $this->apiKey,
-            'api_secret' => $this->apiSecret,
-            'lg' => $this->language,
-            'repeat' => $this->repeat,
-            'voice' => $this->voice,
-            'to'  => '',
-            'from' => '',
-            'text' => $this->potatoSendFirstName.$this->translateLanguage('呼叫您上线potato!'),
-        ];
-        $numberArr = UserPhone::find()->select(['id', 'phone_country_code', 'user_phone_number'])->where(['user_id' => $this->calledPersonData->id])->orderBy('id asc')->all();
-        foreach ($numberArr as $key => $number) {
-            if (empty($this->callPersonData->country_code) || empty($this->callPersonData->phone_number)) {
-                $this->callPersonData->country_code = $number->phone_country_code;
-                $this->callPersonData->phone_number = $number->user_phone_number;
-            }
-            // 呼叫本人设置的联系方式.
-            $nexmoData['to'] = $number->phone_country_code.$number->user_phone_number;
-            if (empty($number->phone_country_code) || empty($number->user_phone_number)) {
-                continue;
-            }
-
-            $res = $this->callPerson($nexmoData);
-            if ($res['status']) {
-                $this->sendData = [
-                    'chat_type' => 1,
-                    'chat_id' => $this->potatoUid,
-                    'text' => $this->getCallText().$nickname.$this->getSuccessText(),
-                ];
-                $this->sendPotatoData();
-                // 保存通话记录.
-                $this->saveCallRecordData($res['status'], $nexmoData['to']);
-                $result = true;
-                break;
-            }
-
-            $this->sendData = [
-                'chat_type' => 1,
-                'chat_id' => $this->potatoUid,
-                'text' => $this->getCallText().$nickname.$this->getFailureText().' '.$this->translateLanguage($res['message']),
-            ];
-            $this->sendPotatoData();
-        }
-
-        return $result;
-    }
-
-    /**
-     * 呼叫本人的紧急联系方式.
-     *
-     * @return mixed
-     */
-    public function callPersonUrgentPhone($nickname)
-    {
-        $result = false;
-        $this->language = $this->callPersonData->language;
-        $nexmoData = [
-            "api_key" => $this->apiKey,
-            'api_secret' => $this->apiSecret,
-            'lg' => $this->language,
-            'repeat' => $this->repeat,
-            'voice' => $this->voice,
-            'to'  => '',
-            'from' => '',
-            'text' => $this->translateLanguage('请转告'.$nickname.', 上线potato!'),
-        ];
-        $numberArr = UserGentContact::find()->select(['id', 'contact_country_code', 'contact_phone_number', 'contact_nickname'])->where(['user_id' => $this->calledPersonData->id])->orderBy('id asc')->all();
-        foreach ($numberArr as $key => $number) {
-            $nexmoData['to'] = $number->contact_country_code.$number->contact_phone_number;
-            if (empty($number->contact_country_code) || empty($number->contact_phone_number)) {
-                continue;
-            }
-
-            $res = $this->callPerson($nexmoData);
-            if ($res['status']) {
-                $this->sendData = [
-                    'chat_type' => 1,
-                    'chat_id' => $this->potatoUid,
-                    'text' => $this->translateLanguage('呼叫"'.$nickname.'"的紧急联系人"'.$number->contact_nickname.'", 成功!'),
-                ];
-                $this->sendPotatoData();
-                // 保存通话记录.
-                $this->saveCallRecordData($res['status'], '', $nexmoData['to'] );
-                $result = true;
-                break;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
      * 呼叫potato账号.
      */
     public function callPotatoPerson($calledId = '')
@@ -1628,28 +1528,6 @@ class Potato extends Model
                 ];
                 $this->sendPotatoData();
             }
-            return $this->errorCode['success'];
-
-            $res = $this->callPersonPhone($nickname);
-            // 本人联系方式呼叫失败，尝试呼叫本人的紧急联系方式.
-            if (!$res) {
-                $this->sendData = [
-                    'chat_type' => 1,
-                    'chat_id' => $this->potatoUid,
-                    'text' => $this->translateLanguage('呼叫"'.$nickname.'"失败, 尝试呼叫"'.$nickname.'"的紧急联系人, 请稍后!'),
-                ];
-                $this->sendPotatoData();
-                $res = $this->callPersonUrgentPhone($nickname);
-            }
-
-            if (!$res) {
-                $this->sendData = [
-                    'chat_type' => 1,
-                    'chat_id' => $this->potatoUid,
-                    'text' => $this->translateLanguage('抱歉本次呼叫"' . $nickname . '"失败，请稍后再试, 或尝试其他方式联系' . $nickname . '!'),
-                ];
-                $this->sendPotatoData();
-            }
 
             return $this->errorCode['success'];
         } else {
@@ -1733,29 +1611,6 @@ class Potato extends Model
         }
 
         return $result;
-    }
-
-    /**
-     * 保存通话记录.
-     */
-    public function saveCallRecordData($status, $personPhone = '', $urgentPhone = '')
-    {
-        $callRecord = new CallRecord();
-        $callRecord->active_call_uid = $this->callPersonData->id;
-        $callRecord->unactive_call_uid = $this->calledPersonData->id;
-        $callRecord->active_account = $this->potatoSendFirstName;
-        $callRecord->unactive_account = $this->potatoContactFirstName;
-        $callRecord->active_nickname = $this->callPersonData->nickname;
-        $callRecord->unactive_nickname = $this->calledPersonData->nickname;
-        $callRecord->contact_number = $this->callPersonData->country_code.$this->callPersonData->phone_number;
-
-        $callRecord->unactive_contact_number = !empty($personPhone) ? $personPhone : $urgentPhone;
-        $callRecord->status = $status ? 0 : 1;
-        $callRecord->call_time = time();
-        $callRecord->type = ($urgentPhone) ? 1 : 0;
-        $res = $callRecord->save();
-
-        return $res ? true : false;
     }
 
     /**
