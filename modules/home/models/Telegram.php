@@ -1438,20 +1438,25 @@ class Telegram extends Model
                 $this->sendTelegramData();
                 return $this->errorCode['success'];
             }
+            file_put_contents('/tmp/test_telegram.log' , var_export(1111,true),8);
             $service = TTSservice::init(\app\modules\home\servers\TTSservice\Sinch::class);
+            file_put_contents('/tmp/test_telegram.log' , var_export(2222,true),8);
             $service->app_account_key = 'telegram_name';
             $service->from_user_id = $this->callPersonData->id;
             $service->to_user_id = $this->calledPersonData->id;
             $service->messageText = $this->translateLanguage('这只是一个测试代码');
             $service->messageText_more =  $this->translateLanguage('这个测试用于第二次呼叫电话');
             $service->luangage = $this->llanguage;
+            file_put_contents('/tmp/test_telegram.log' , var_export(3333,true),8);
             if($service->sendMessage(CallRecord::Record_Type_none)){
+                file_put_contents('/tmp/test_telegram.log' , var_export(6666,true),8);
                     $this->sendData = [
                         'chat_id' => $this->telegramUid,
                         'text' => $this->translateLanguage('网络异常, 请稍后再试!'),
                     ];
                 $this->sendTelegramData();
             }
+            file_put_contents('/tmp/test_telegram.log' , var_export(55555,true),8);
             return $this->errorCode['success'];
         } else {
             $this->sendData = [
