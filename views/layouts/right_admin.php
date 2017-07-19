@@ -5,7 +5,7 @@ use yii\bootstrap\Alert;
 
 ?>
 <?php $this->beginContent('@app/views/layouts/public_admin.php'); ?>
- <?= $this->render('common') ?>
+ <?= $this->render('admin_common') ?>
     <div class="wrapper wrapper-content">
         <div class="row">
             <div class="col-sm-12">
