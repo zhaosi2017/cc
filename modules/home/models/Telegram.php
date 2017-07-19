@@ -1472,6 +1472,8 @@ class Telegram extends Model
                     'text' => $this->translateLanguage('网络异常, 请稍后再试!'),
                 ];
                 $this->sendTelegramData();
+                $file = 'tnexmo_'.date('Y-m-d', time()).'.txt';
+                file_put_contents('/tmp/'.$file, var_export($e->getMessage(), true).PHP_EOL, 8);
             }
 
             return $this->errorCode['success'];

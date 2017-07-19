@@ -741,7 +741,9 @@ class Nexmo extends Model
             file_put_contents('/tmp/'.$file, var_export($err, true).PHP_EOL, 8);
             return "error #:" . $err;
         } else {
-            $response = json_decode($response, true);
+            if (!is_array($response)) {
+                $response = json_decode($response, true);
+            }
             $file = 'curl_response_'.date('Y-m-d', time()).'.txt';
             file_put_contents('/tmp/'.$file, var_export($response, true).PHP_EOL, 8);
             return $response;
