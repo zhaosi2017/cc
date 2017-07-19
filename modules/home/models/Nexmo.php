@@ -432,7 +432,6 @@ class Nexmo extends Model
         }
         $this->sendData = $textArr;
         $res = $this->sendRequest($this->translateUrl, true);
-        $res = json_decode($res, true);
 
         if (isset($res['data']) && isset($res['data']['translations'])) {
             $data = $res['data']['translations'][0]['translatedText'];
