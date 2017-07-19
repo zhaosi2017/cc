@@ -157,7 +157,7 @@ class PotatoController extends GController
                 }
 
                 return $result;
-            }else if($message['request_type'] == $potatoMapServer->requestTextType && preg_match('/^\/map/i',$message['text'])){
+            }else if($message['request_type'] == $potatoMapServer->requestTextType ){
                     $potatoMapServer->potatoUid = $potato->potatoUid;
                     $replyMessageId = isset($message['reply_to_message'])? $message['reply_to_message']: '';
                     $potatoMapServer->key = $potato->potatoUid.'-'.$replyMessageId.'-potatoMap';
