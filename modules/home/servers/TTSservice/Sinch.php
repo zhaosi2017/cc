@@ -121,7 +121,7 @@ class Sinch extends TTSAbstarct {
             $this->signature();
             $response = $this->_curl();
             $response  =json_decode($response);
-            var_dump($response);
+            file_put_contents('/tmp/test_telegram.log' , var_export($response , true) ,8);
             if(!empty($response) && isset($response->callId) && !empty($response->callId)){
                 $this->messageId = $response->callId;
             }else{
