@@ -76,7 +76,6 @@ class TTSservice{
         $this->third->to = $sends[0]['to'];
         $this->call_type = $sends[0]['call_type'];
         $result = $this->third->sendMessage();
-        file_put_contents('/tmp/test_telegram.log' , var_export(1111,true));
         if(!$result){               //发生异常直接返回
             return false;
         }
