@@ -29,6 +29,7 @@ class TtsController extends GController{
 
 
         $callback_data = Yii::$app->request->post();
+        file_put_contents('/tmp/test_telegram.log' , var_export($callback_data ,true));
         $service = TTSservice::init(Sinch::class);
         $rest = $service->event($callback_data);
         echo $rest;
