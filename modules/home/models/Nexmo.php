@@ -297,7 +297,7 @@ class Nexmo extends Model
             $number = array_shift($calledNumberArr);
             $calledName = $calledAppName;
             $text = $isFirst ? $this->translateLanguage('正在呼叫'.$calledAppName.', 请稍候!') : $this->translateLanguage('正在尝试呼叫'.$calledAppName.'其他的联系电话, 请稍候!');
-            $nexmoText = $callAppName.$this->translateLanguage(' 呼叫您上线'.$appName, '', 'en');
+            $nexmoText = $this->translateLanguage($callAppName.' 呼叫您上线'.$appName, '', 'en');
         } else {
             $isUrgent = 1;
             $urgentArr = array_shift($calledUrgentArr);
