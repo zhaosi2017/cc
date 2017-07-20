@@ -11,6 +11,7 @@ namespace app\modules\home\servers\appService;
 use app\modules\home\models\CallRecord;
 use Yii;
 use yii\db\Exception;
+use app\modules\home\models\User;
 
 trait  TraitTelegram {
 
