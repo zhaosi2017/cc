@@ -224,7 +224,10 @@ class TTSservice{
         $result =  $this->third->event($event_data);
         $cacheKey = get_class($this->third).'_callid_'.$this->third->messageId;
         $catch_call = $this->redisGetVByK($cacheKey);
-        $this->_Create_app($catch_call);
+        $res = $this->_Create_app($catch_call);
+
+            file_put_contents('/tmp/test_telegram.log' ,var_export($res , true) );
+        
         if($this->third->messageStatus == CallRecord::Record_Status_Success){   //呼叫成功 回复一条消息 终止任务
             $this->app_obj->sendCallSuccess($catch_call['nickname']);
             $list_key = $catch_call['list_key'];
