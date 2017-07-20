@@ -564,9 +564,9 @@ class Nexmo extends Model
                 case 'unanswered':
                     $text = $this->translateLanguage('呼叫'.$calledName.'失败, 暂时无人接听!');
                     break;
-                case 'failed':
-                    $text = $this->translateLanguage('呼叫'.$calledName.'未能完成, 请稍后再试!');
-                    break;
+                // case 'failed':
+                //    $text = $this->translateLanguage('呼叫'.$calledName.'未能完成, 请稍后再试!');
+                //    break;
                 case 'rejected':
                     $text = $this->translateLanguage('呼叫'.$calledName.'失败, 被拒绝!');
                     break;
