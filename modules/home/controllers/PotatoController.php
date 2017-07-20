@@ -104,7 +104,7 @@ class PotatoController extends GController
                     if (!empty($inlineMessageId) && !empty($userId)) {
                         return $potato->sendCallbackAnswer($userId, $inlineMessageId);
                     }
-                    return $potato->errorCode['error'];
+                    // return $potato->errorCode['error'];
                 }
 
                 $potato->potatoContactUid = $callbackData[1];
