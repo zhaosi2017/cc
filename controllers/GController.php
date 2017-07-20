@@ -31,7 +31,7 @@ class GController extends Controller
                         'allow' => true,
 //                       'controllers' => ['/home/login'],
                         'actions' => ['home','welcome','login','register','change-language','captcha','code','complete','find-password-one','find-password-two','find-password-three','find-password-complete',
-                            'phone-index','mobile-code','forget-password','phone-find-password','phone-password-complete' ,'sinch-event' , 'nexmo-anwser' , 'nexmo-event'],
+                            'phone-index','mobile-code','forget-password','phone-find-password','phone-password-complete' ],
                         'roles' => ['?'],
                     ],
                     [

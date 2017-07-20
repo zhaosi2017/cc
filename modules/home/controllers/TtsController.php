@@ -21,6 +21,7 @@ use yii\filters\VerbFilter;
 
 class TtsController extends GController{
 
+    public $enableCsrfValidation = false;
 
     /**
      * @inheritdoc
@@ -34,7 +35,7 @@ class TtsController extends GController{
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index' ,'sinch-event' , 'nexmo-anwser' , 'nexmo-event'],
+                        'actions' => ['index' , 'sinch-event' ,'nexmo-anwser' , 'nexmo-event'],
                         'roles' => ['?'],
                     ],
                     [
