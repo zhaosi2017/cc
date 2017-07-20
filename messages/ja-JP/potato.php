@@ -41,4 +41,5 @@
   'Not in blacklist.' => 'ないブラックリストインチ',
   'welcome!' => 'ようこそ！',
   'Operation too fast, please try again later!' => 'あまりにも速く動作し、後でもう一度試してみてください！',
+    'Your verification code is'=>'確認コードです',
 ); 

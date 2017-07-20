@@ -41,4 +41,5 @@
   'Verification code error.' => '확인 코드 오류입니다.',
   'Operation too fast, please try again later!' => '너무 빨리 작동 나중에 다시 시도하십시오!',
   '[<a href="https://www.callu.online/home/telegram/bind-telegram">Please enter the verification code on the callu platform to complete the binding operation!</a>]' => '[<a href="https://www.callu.online/home/telegram/bind-telegram">는 바인딩 작업을 완료, callu 인터넷에서 인증 코드를 입력하세요! </a>에]',
-); 
+    'Your verification code is'=>'인증 코드는',
+    );

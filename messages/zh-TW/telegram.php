@@ -41,4 +41,5 @@
   'Verification code error.' => '驗證碼錯誤.',
   'Operation too fast, please try again later!' => '操作過快，請稍後再試!',
   '[<a href="https://www.callu.online/home/telegram/bind-telegram">Please enter the verification code on the callu platform to complete the binding operation!</a>]' => '[<a href="https://www.callu.online/home/telegram/bind-telegram">請在callu平台輸入該驗證碼, 完成綁定操作!</a>]',
-); 
+    'Your verification code is'=>'您的驗證碼為',
+    );

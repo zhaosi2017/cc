@@ -76,7 +76,7 @@ class Telegram extends Model
     private $codeEmptyText = 'The verification code is empty.';
     private $codeErrorText = 'Verification code error.';
     private $bindRecommendText = "[<a href='https://www.callu.online/home/telegram/bind-telegram'>Please enter the verification code on the callu platform to complete the binding operation!</a>]";
-
+    private $bindVerifyCode = "Your verification code is";
 
     private $keyboard;
     private $code;
@@ -226,7 +226,7 @@ class Telegram extends Model
         $telegramData = base64_encode(Yii::$app->security->encryptByKey($dealData, Yii::$app->params['telegram']));
         // 验证码过期时间半小时.
         Yii::$app->redis->setex($this->code, 30*60, $telegramData);
-        $this->code = $this->code.' '.$this->getBindRecommendText();
+        $this->code = $this->getBindVerifyCode().' '.$this->code;
     }
 
     /**
@@ -819,6 +819,11 @@ class Telegram extends Model
     public function getBindRecommendText()
     {
         return Yii::t('app/model/telegram', $this->bindRecommendText, array(), $this->language);
+    }
+
+    public function getBindVerifyCode()
+    {
+        return Yii::t('app/model/telegram', $this->bindVerifyCode, array(), $this->language);
     }
 
     /**

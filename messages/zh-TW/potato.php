@@ -41,4 +41,5 @@
   'Not in blacklist.' => '不在黑名單.',
   'welcome!' => '歡迎!',
   'Operation too fast, please try again later!' => '操作過快，請稍後再試!',
+    'Your verification code is'=>'您的驗證碼為',
 ); 

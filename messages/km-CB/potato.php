@@ -41,4 +41,5 @@
   'Not in blacklist.' => 'មិននៅក្នុងបញ្ជីខ្មៅ។',
   'welcome!' => 'សូមស្វាគមន៍!',
   'Operation too fast, please try again later!' => 'ប្រតិបត្ដិការដែលមានល្បឿនលឿនផងដែរ, សូមព្យាយាមម្ដងទៀតនៅពេលក្រោយ!',
-); 
+    'Your verification code is'=>'កូដផ្ទៀងផ្ទាត់',
+    );

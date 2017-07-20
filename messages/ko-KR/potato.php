@@ -41,4 +41,5 @@
   'Not in blacklist.' => '아니 블랙리스트이다.',
   'welcome!' => '에 오신 것을 환영합니다!',
   'Operation too fast, please try again later!' => '너무 빨리 작동 나중에 다시 시도하십시오!',
+    'Your verification code is'=>'인증 코드는',
 ); 

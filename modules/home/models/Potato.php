@@ -89,6 +89,7 @@ class Potato extends Model
     private $unlockBlackListSuccessText = "Unlock the blacklist successfully.";
     private $unlockBlackListFailureText = "Unlock the blacklist failed.";
     private $notInBlackList = "Not in blacklist.";
+    private $bindVerifyCode = "Your verification code is";
 
     private $sendData;
     private $errorCode = [
@@ -239,7 +240,7 @@ class Potato extends Model
         $potatoData = base64_encode(Yii::$app->security->encryptByKey($dealData, Yii::$app->params['potato']));
         // 验证码过期时间半小时.
         Yii::$app->redis->setex($this->code, 30*60, $potatoData);
-        $this->code = $this->code.' '.$this->getBindRecommendText();
+        $this->code = $this->getBindVerifyCode().' '.$this->code;
     }
 
     /**
@@ -590,6 +591,11 @@ class Potato extends Model
     public function getBindRecommendText()
     {
         return Yii::t('app/model/potato', $this->bindRecommendText, array(), $this->language);
+    }
+
+    public function getBindVerifyCode()
+    {
+        return Yii::t('app/model/potato', $this->bindVerifyCode, array(), $this->language);
     }
 
     /**
