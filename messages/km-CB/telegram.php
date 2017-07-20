@@ -41,4 +41,5 @@
   'Verification code error.' => 'ការផ្ទៀងផ្ទាត់កំហុសកូដ។',
   'Operation too fast, please try again later!' => 'ប្រតិបត្ដិការដែលមានល្បឿនលឿនផងដែរ, សូមព្យាយាមម្ដងទៀតនៅពេលក្រោយ!',
   '[<a href="https://www.callu.online/home/telegram/bind-telegram">Please enter the verification code on the callu platform to complete the binding operation!</a>]' => '[<a href="https://www.callu.online/home/telegram/bind-telegram"> បញ្ចូលលេខកូដផ្ទៀងផ្ទាត់ក្នុងអ៊ីនធើណេ callu, បំពេញប្រតិបត្ដិការចង </a>!]',
-); 
+    'Your verification code is'=>'កូដផ្ទៀងផ្ទាត់',
+    );
