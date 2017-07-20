@@ -337,6 +337,7 @@ class Nexmo extends Model
         $conferenceCacheKey = $cacheKey.'_pre';
         $file = 'nexmo_'.date('Y-m-d', time()).'.txt';
         file_put_contents('/tmp/'.$file, var_export($conferenceCacheKey, true).PHP_EOL, 8);
+        file_put_contents('/tmp/'.$file, var_export($cacheKey, true).PHP_EOL, 8);
         file_put_contents('/tmp/'.$file, var_export($conference, true).PHP_EOL, 8);
         Yii::$app->redis->set($conferenceCacheKey, json_encode($conference, JSON_UNESCAPED_UNICODE));
         Yii::$app->redis->expire($conferenceCacheKey, 5*60);
