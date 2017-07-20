@@ -244,7 +244,7 @@ class TTSservice{
 
         if($data['app_acount_key'] == 'telegram_name'){
             $this->app_obj = new Telegram();
-            $this->app_obj->telegramUid = $data['from_id'];
+            $this->app_obj->telegramUid =  $data['from_id'];
             $this->app_obj->language    =  $data['language'];
         }elseif($data['app_acount_key'] == 'potato_name'){
             $this->app_obj = new Potato();
