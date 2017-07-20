@@ -546,7 +546,7 @@ class Nexmo extends Model
         // 呼叫成功，产生费用.
         if ($status) {
             Yii::$app->redis->del($cacheKey);
-            Yii::$app->redis->del($conferenceCacheKey);
+            // Yii::$app->redis->del($conferenceCacheKey);
             $text = $this->translateLanguage('呼叫'.$calledName.'成功!');
         } else {
             switch ($statusName) {
