@@ -19,7 +19,7 @@ class Nexmo extends Model
 
     private $apiKey = '85704df7';
     private $apiScret = '755026fdd40f34c2';
-    private $applicationId = '570db7b5-09cb-45b3-a097-e0b8e0bcec65';
+    private $applicationId = '454eb4c4-1fdd-4b4b-9423-937c80f01bb8';
     private $telegramUrl = 'https://api.telegram.org/bot366429273:AAE1lGFanLGpUbfV28zlDYSTibiAPLhhE3s/sendMessage';
     private $potatoMenuWebHookUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendInlineMarkupMessage';
     private $potatoUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendTextMessage';
