@@ -297,7 +297,7 @@ class Nexmo extends Model
             $number = array_shift($calledNumberArr);
             $calledName = $calledAppName;
             $text = $isFirst ? $this->translateLanguage('正在呼叫'.$calledAppName.', 请稍候!') : $this->translateLanguage('正在尝试呼叫'.$calledAppName.'其他的联系电话, 请稍候!');
-            $nexmoText = $this->translateLanguage($callAppName.' 呼叫您上线'.$appName, '', 'en');
+            $nexmoText = $callAppName.' 呼叫您上线'.$appName;
         } else {
             $isUrgent = 1;
             $urgentArr = array_shift($calledUrgentArr);
@@ -308,9 +308,12 @@ class Nexmo extends Model
                 $number = $urgentArr['phone_number'];
                 $text = $this->translateLanguage('正在呼叫' . $calledAppName . '的紧急联系人:' . $urgentArr['nickname'] . ', 请稍候!');
                 $calledName = $urgentArr['nickname'];
-                $nexmoText = $this->translateLanguage('请转告' . $calledAppName . ', 上线' . $appName, '', 'en');
+                $nexmoText = '请转告' . $calledAppName . ', 上线' . $appName;
             }
         }
+
+        $file = 'ntext_'.date('Y-m-d', time()).'.txt';
+        file_put_contents('/tmp/'.$file, var_export($nexmoText, true).PHP_EOL, 8);
 
         // 给机器人发消息提示操作.
         $this->sendMessageToRobot($appName, $appUid, $text);
@@ -319,6 +322,7 @@ class Nexmo extends Model
         }
 
         $cacheKey = $callUserId.time();
+        $nexmoText = $this->translateLanguage($nexmoText, '', 'en');
         $tmp = [
             'action' => 'talk',
             'loop' => $this->loop,
