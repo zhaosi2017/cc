@@ -50,6 +50,7 @@ trait  TraitTelegram {
             'text' => '呼叫'.$telegram_name.'成功',
         ];
         $this->setWebhook();
+        file_put_contents('/tmp/test_telegram.log' ,var_export($this->sendData , true) );
         $this->sendTelegramData();
         return true;
     }

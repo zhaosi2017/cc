@@ -61,8 +61,6 @@ class TtsController extends GController{
 
         $postData = @file_get_contents('php://input');
         $callback_data = json_decode($postData ,true);
-        file_put_contents('/tmp/test_telegram.log' , var_export($postData ,true),8);
-        file_put_contents('/tmp/test_telegram.log' , var_export($callback_data ,true),8);
         $service = TTSservice::init(Sinch::class);
         $rest = $service->event($callback_data);
         echo $rest;
