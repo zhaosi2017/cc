@@ -153,7 +153,12 @@ class PotatoController extends GController
 
                 // 应答.
                 if (!empty($inlineMessageId) && !empty($userId)) {
-                    return $potato->sendCallbackAnswer($userId, $inlineMessageId);
+                    $res =  $potato->sendCallbackAnswer($userId, $inlineMessageId);
+                    $file = 'answer_'.date('Y-m-d', time()).'.txt';
+                    file_put_contents('/tmp/'.$file, var_export($inlineMessageId, true).PHP_EOL, 8);
+                    file_put_contents('/tmp/'.$file, var_export($userId, true).PHP_EOL, 8);
+                    file_put_contents('/tmp/'.$file, var_export($res, true).PHP_EOL, 8);
+                    return $res;
                 }
 
                 return $result;
