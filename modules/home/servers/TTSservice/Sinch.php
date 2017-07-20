@@ -90,9 +90,9 @@ class Sinch extends TTSAbstarct {
         $this->messageId = $event_data['callid'];     //通话id
         $this->messageStatus = $event_data['result'] == 'ANSWERED' ?CallRecord::Record_Status_Success:CallRecord::Record_Status_Fail; //通话 结果
         $this->duration = isset($event_data['duration'])?$event_data['duration']:0;    //通话时间
+        $this->messageAnwser = $this->messageAnwser_arr[$event_data['result']];
         return 'OK';
     }
-
     /**
      *短信
      *

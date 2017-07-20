@@ -1438,20 +1438,32 @@ class Telegram extends Model
                 $this->sendTelegramData();
                 return $this->errorCode['success'];
             }
-            $service = TTSservice::init(\app\modules\home\servers\TTSservice\Sinch::class);
-            $service->app_account_key = 'telegram_name';
-            $service->from_user_id = $this->callPersonData->id;
-            $service->to_user_id = $this->calledPersonData->id;
-            $service->messageText = $this->translateLanguage('这只是一个测试代码');
-            $service->messageType = 'TTS';
-            $service->messageText_more =  $this->translateLanguage('这个测试用于第二次呼叫电话');
-            $service->luangage = $this->llanguage;
-            if($service->sendMessage(CallRecord::Record_Type_none)){
-                    $this->sendData = [
-                        'chat_id' => $this->telegramUid,
-                        'text' => $this->translateLanguage('网络异常, 请稍后再试!'),
-                    ];
-                $this->sendTelegramData();
+            // 呼叫.
+            try {
+                if (!empty($calledId)) {
+                    $urgent = UserGentContact::find()->select(['id', 'contact_country_code', 'contact_phone_number', 'contact_nickname'])->where(['user_id' => $calledId])->orderBy('id asc')->all();
+                    $urgentArr = [];
+                    if (!empty($urgent)) {
+                        foreach ($urgent as $key => $value) {
+                            $tmp = [];
+                            $tmp['phone_number'] = $value->contact_country_code . $value->contact_phone_number;
+                            $tmp['nickname'] = $value->contact_nickname;
+                            $urgentArr[] = $tmp;
+                        }
+                    }
+                    $nexmo = new Nexmo();
+                    $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->potatoContactFirstName, $this->potatoSendFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code . $this->callPersonData->phone_number, $this->language, $appName = 'potato', $this->potatoUid, $this->potatoContactUid, 0, array(), $urgentArr, 1);
+                } else {
+                    $nexmo = new Nexmo();
+                    $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->potatoContactFirstName, $this->potatoSendFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code . $this->callPersonData->phone_number, $this->language, $appName = 'potato', $this->potatoUid, $this->potatoContactUid,1);
+                }
+            } catch (\Exception $e) {
+                $this->sendData = [
+                    'chat_type' => 1,
+                    'chat_id' => $this->potatoUid,
+                    'text' => $this->translateLanguage('网络异常, 请稍后再试!'),
+                ];
+                $this->sendPotatoData();
             }
             return $this->errorCode['success'];
         } else {

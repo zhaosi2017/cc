@@ -9,6 +9,8 @@ namespace app\modules\home\servers\appService;
 
 
 use app\modules\home\models\CallRecord;
+use Yii;
+use yii\db\Exception;
 
 trait  TraitTelegram {
 
@@ -38,6 +40,51 @@ trait  TraitTelegram {
         return true;
     }
 
+
+    /**
+     * 每次呼叫开始提示
+     * @param $type
+     * @param array $data
+     * @return bool
+     */
+    public function continueCall($type , Array $data = []){
+        if($type == CallRecord::Record_Type_none){
+            $this->sendData = [
+                'chat_id' =>$this->telegramUid,
+                'text' => '正在尝试呼叫'.$data['from_account'].'的其他电话，请稍后！',
+            ];
+        }elseif($type == CallRecord::Record_Type_emergency){
+            $this->sendData = [
+                'chat_id' =>$this->telegramUid,
+                'text' => '正在尝试呼叫'.$data['from_account'].'的紧急联系人:'.$data['nickname'].'，请稍后！',
+            ];
+        }
+        $this->sendTelegramData();
+        return true;
+    }
+
+    /**
+     *呼叫流程开始提示
+     */
+    public function startCall(){
+        $this->sendData = [
+            'chat_id' =>$this->telegramUid,
+            'text' => '呼叫开始，请稍后！',
+        ];
+        $this->sendTelegramData();
+    }
+
+    /**
+     *呼叫异常 提示
+     */
+    public function exceptionCall(){
+        $this->sendData = [
+            'chat_id' =>$this->telegramUid,
+            'text' => '呼叫异常，请稍后再试!'
+        ];
+        $this->sendTelegramData();
+    }
+
     /**
      * @param $type
      * 打电话成功 消息推送
@@ -50,15 +97,14 @@ trait  TraitTelegram {
             'text' => '呼叫'.$telegram_name.'成功',
         ];
         $this->setWebhook();
-        file_put_contents('/tmp/test_telegram.log' ,var_export($this->sendData , true) );
         $this->sendTelegramData();
         return true;
     }
 
     /**
      * @param $type
-     * @param $appCalledUid   主叫id
-     * @param $calledUserId   被叫id
+     * @param $appCalledUid   主叫 tg_id
+     * @param $calledUserId   被叫 user_id
      * @param $callAppName    主叫昵称
      * @param $calledAppName  被叫昵称
      * @return bool
@@ -116,6 +162,7 @@ trait  TraitTelegram {
                 ],
             ];
         }
+
         $this->sendTelegramData();
         return true;
     }
@@ -131,6 +178,98 @@ trait  TraitTelegram {
     }
 
 
+    /**
+     * 呼叫telegram账号.
+     */
+    public function call($call_type)
+    {
+        $res = User::findOne(['telegram_user_id' => $this->telegramUid]);
+        if (!$res) {
+            // 发送验证码，完成绑定.
+            return $this->sendBindCode();
+        } elseif ($this->telegramUid == $this->telegramContactUid) {
+            $this->language = $res->language;
+            $this->sendData = [
+                'chat_id' => $this->telegramUid,
+                'text' => $this->getCompleteText(),
+            ];
+            $this->sendTelegramData();
+            return $this->errorCode['success'];
+        }
+
+        $this->callPersonData = $res;
+        $this->language = $this->callPersonData->language;
+        // 开始操作.
+        $this->sendData = [
+            'chat_id' => $this->telegramUid,
+            'text' => $this->getStartText(),
+        ];
+        $this->sendTelegramData();
+        $user = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
+        if ($user) {
+            $this->calledPersonData = $user;
+            $nickname = $this->telegramContactFirstName;
+            if (empty($nickname)) {
+                $nickname = !empty($user->nickname) ? $user->nickname : '他/她';
+            }
+
+            // 黑名单检查.
+            $res = $this->blackList();
+            if ($res) {
+                $this->sendData = [
+                    'chat_id' => $this->telegramUid,
+                    'text' => $this->translateLanguage('您在'.$nickname.'的黑名单列表内, 不能呼叫!'),
+                ];
+                $this->sendTelegramData();
+                return $this->errorCode['success'];
+            }
+
+            // 白名单检查.
+            if ($this->calledPersonData->whitelist_switch == 1) {
+                $res = $this->whiteList();
+                if (!$res) {
+                    $this->sendData = [
+                        'chat_id' => $this->telegramUid,
+                        'text' => $this->translateLanguage('您不在'.$nickname.'的白名单列表内, 不能呼叫!'),
+                    ];
+                    $this->sendTelegramData();
+                    return $this->errorCode['success'];
+                }
+            }
+            // 呼叫限制检查.
+            $res = $this->callLimit();
+            if (!$res['status']) {
+                $this->sendData = [
+                    'chat_id' => $this->telegramUid,
+                    'text' => $this->translateLanguage('呼叫'.$nickname.'失败! '.$res['message']),
+                ];
+                $this->sendTelegramData();
+                return $this->errorCode['success'];
+            }
+            $service = TTSservice::init(\app\modules\home\servers\TTSservice\Sinch::class);
+            $service->app_account_key = 'telegram_name';
+            $service->from_user_id = $this->callPersonData->id;
+            $service->to_user_id = $this->calledPersonData->id;
+            if($call_type == CallRecord::Record_Type_none){
+                $service->messageText = $this->translateLanguage('呼叫您上线telegram');
+            }else{
+                $service->messageText = $this->translateLanguage('请转告'.$this->callPersonData->telgram_name.'上线telegram');
+
+            }
+            $service->messageType = 'TTS';
+
+            $service->Language = $this->llanguage;
+            $service->sendMessage($call_type , $this);
+            return $this->errorCode['success'];
+        } else {
+            $this->sendData = [
+                'chat_id' => $this->telegramUid,
+                'text' => $this->telegramContactLastName.$this->telegramContactFirstName.$this->getIsNotMemberText(),
+            ];
+            $this->sendTelegramData();
+            return $this->errorCode['success'];
+        }
+    }
 
 
 }

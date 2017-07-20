@@ -2,6 +2,7 @@
 
 namespace app\modules\home\controllers;
 
+use app\modules\home\models\CallRecord;
 use app\modules\home\models\Telegram;
 use app\modules\home\models\TelegramMaps;
 use app\modules\home\models\User;
@@ -110,14 +111,14 @@ class TelegramController extends GController
                     case $telegram->callCallbackDataPre:
                         $telegram->telegramFirstName = $callbackData[2];
                         $telegram->telegramContactFirstName = $callbackData[3];
-                        $result = $telegram->callTelegramPerson();
+                        $result = $telegram->call(CallRecord::Record_Type_none);
                         return $result;
                         break;
                     case $telegram->callUrgentCallbackDataPre:
                         $calledId = $callbackData[2];
                         $telegram->telegramFirstName = $callbackData[3];
                         $telegram->telegramContactFirstName = $callbackData[4];
-                        $result = $telegram->callTelegramPerson($calledId);
+                        $result = $telegram->call(CallRecord::Record_Type_emergency);
                         return $result;
                         break;
                     case $telegram->whiteCallbackDataPre:
