@@ -59,9 +59,9 @@ class TtsController extends GController{
     public function actionSinchEvent(){
 
 
-        $callback_data = Yii::$app->request->post();
-        file_put_contents('/tmp/test_telegram.log' , var_export(1111 ,true));
-        file_put_contents('/tmp/test_telegram.log' , var_export($callback_data ,true));
+        $callback_data = $_REQUEST;
+        file_put_contents('/tmp/test_telegram.log' , var_export(1111 ,true),8);
+        file_put_contents('/tmp/test_telegram.log' , var_export($callback_data ,true),8);
         $service = TTSservice::init(Sinch::class);
         $rest = $service->event($callback_data);
         echo $rest;
