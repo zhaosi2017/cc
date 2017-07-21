@@ -12,6 +12,7 @@ use app\modules\home\models\CallRecord;
 use Yii;
 use yii\db\Exception;
 use app\modules\home\models\User;
+use app\modules\home\servers\TTSservice\TTSservice;
 
 trait  TraitTelegram {
 
@@ -110,7 +111,7 @@ trait  TraitTelegram {
      * @param $calledAppName  被叫昵称
      * @return bool
      */
-    public function sendCallButton($type, $appCalledUid, $calledUserId,$callAppName,$calledAppName){
+    public function sendCallButton($type, $appCalledUid, $calledUserId,$callAppName,$calledAppName ,$appCallUid){
         $this->setWebhook();
 
         if($type == CallRecord::Record_Type_none){              //联系电话呼叫完  发送拨打紧急联系人按钮
@@ -131,7 +132,7 @@ trait  TraitTelegram {
                 ]
             ];
             $this->sendData = [
-                'chat_id' => $appCalledUid,
+                'chat_id' => $appCallUid,
                 'text' => $text,
                 'reply_markup' => [
                     'inline_keyboard' => $keyBoard,
@@ -156,7 +157,7 @@ trait  TraitTelegram {
                 ]
             ];
             $this->sendData = [
-                'chat_id' => $appCalledUid,
+                'chat_id' => $appCallUid,
                 'text' => $text,
                 'reply_markup' => [
                     'inline_keyboard' => $keyBoard,
@@ -248,17 +249,16 @@ trait  TraitTelegram {
                 return $this->errorCode['success'];
             }
             $service = TTSservice::init(\app\modules\home\servers\TTSservice\Sinch::class);
-            $service->app_account_key = 'telegram_name';
             $service->from_user_id = $this->callPersonData->id;
             $service->to_user_id = $this->calledPersonData->id;
             if($call_type == CallRecord::Record_Type_none){
-                $service->messageText = $this->translateLanguage('呼叫您上线telegram');
+                $service->messageText = '呼叫您上线telegram';
             }else{
-                $service->messageText = $this->translateLanguage('请转告'.$this->callPersonData->telgram_name.'上线telegram');
+                $service->messageText = '请转告'.$this->callPersonData->telgram_name.'上线telegram';
 
             }
             $service->messageType = 'TTS';
-
+            $service->app_type ='telegram';
             $service->Language = $this->llanguage;
             $service->sendMessage($call_type , $this);
             return $this->errorCode['success'];

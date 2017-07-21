@@ -75,7 +75,7 @@ class Telegram extends Model
     private $unlockBlackListSuccessText = "Unlock the blacklist successfully.";
     private $unlockBlackListFailureText = "Unlock the blacklist failed.";
     private $notInBlackList = "Not in blacklist.";
-    private $isNotMemberText = 'is not a member of our system, can not perform the operation.';
+    private $isNotMemberText = 'is not a member of our system, can not perform the operation';
     private $completeText = 'You have completed the binding operation.';
     private $exceedText = 'The number of times the call has exceeded the limit set by he.';
     private $codeEmptyText = 'The verification code is empty.';

@@ -174,37 +174,7 @@ class TTSservice{
     }
 
 
-    /**
-     * @param $call_array
-     * 发送操作菜单
-     */
-    private function _sendAppMune($call_array){
-        $this->to_user_id = $call_array['to_id'];
-        if($this->call_type == CallRecord::Record_Type_none){    //联系电话呼叫完
-            if(empty($this->_getCallNumbers(CallRecord::Record_Type_emergency ,[]))){
-                $this->call_type  = CallRecord::Record_Type_emergency;
-            }
-        }
-        $this->app_obj->sendCallButton($this->call_type,
-            $call_array['app_from_account_id'] ,
-            $call_array['to_id'] ,
-            $call_array['from_nickname'],
-            $call_array['to_nickname']
-        ); //发送继续呼叫按钮
-    }
 
-    /**
-     * @param $cacheKey
-     * @return array
-     * 获取redis 键值对
-     */
-    private function _redisGetVByK($cacheKey){
-
-        $cache_keys = Yii::$app->redis->hkeys($cacheKey);
-        $catch_vals = Yii::$app->redis->hvals($cacheKey);
-        return array_combine($cache_keys , $catch_vals);
-
-    }
 
     /**
      *消息的回调处理
@@ -253,7 +223,38 @@ class TTSservice{
         return true;
     }
 
+    /**
+     * @param $call_array
+     * 发送操作菜单
+     */
+    private function _sendAppMune($call_array){
+        $this->to_user_id = $call_array['to_id'];
+        if($this->call_type == CallRecord::Record_Type_none){    //联系电话呼叫完
+            if(empty($this->_getCallNumbers(CallRecord::Record_Type_emergency ,[]))){
+                $this->call_type  = CallRecord::Record_Type_emergency;
+            }
+        }
+        $this->app_obj->sendCallButton($this->call_type,
+            $call_array['app_to_account_id'],
+            $call_array['to_id'] ,
+            $call_array['from_nickname'],
+            $call_array['to_nickname'],
+            $call_array['app_from_account_id']
+        ); //发送继续呼叫按钮
+    }
 
+    /**
+     * @param $cacheKey
+     * @return array
+     * 获取redis 键值对
+     */
+    private function _redisGetVByK($cacheKey){
+
+        $cache_keys = Yii::$app->redis->hkeys($cacheKey);
+        $catch_vals = Yii::$app->redis->hvals($cacheKey);
+        return array_combine($cache_keys , $catch_vals);
+
+    }
 
 
     /**

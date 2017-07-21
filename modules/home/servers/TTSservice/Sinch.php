@@ -106,6 +106,9 @@ class Sinch extends TTSAbstarct {
      * 语音电话
      */
     public function sendTTS(){
+        if(strpos($this->to , '+') !== false){
+            $this->to = '+'.trim($this->to ,'+');
+        }
         $this->body = json_encode(
             ['method'=>'ttsCallout',
                 "ttsCallout"=>[
