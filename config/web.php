@@ -116,7 +116,13 @@ $config = [
         ],
         'db' => require(__DIR__ . '/db.php'),
         'redis' => require(__DIR__.'/redis.php'),
-
+        'beanstalk'=>[
+            'class' => 'udokmeci\yii2beanstalk\Beanstalk',
+            'host'=> "127.0.0.1", // default host
+            'port'=>11300, //default port
+            'connectTimeout'=> 1,
+            'sleep' => false, // or int for usleep after every job
+        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
