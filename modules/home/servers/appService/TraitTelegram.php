@@ -53,12 +53,12 @@ trait  TraitTelegram {
         if($type == CallRecord::Record_Type_none){
             $this->sendData = [
                 'chat_id' =>$this->telegramUid,
-                'text' => '正在尝试呼叫'.$data['from_account'].'的其他电话，请稍后！',
+                'text' => '正在尝试呼叫'.$data['to_account'].'的其他电话，请稍后！',
             ];
         }elseif($type == CallRecord::Record_Type_emergency){
             $this->sendData = [
                 'chat_id' =>$this->telegramUid,
-                'text' => '正在尝试呼叫'.$data['from_account'].'的紧急联系人:'.$data['nickname'].'，请稍后！',
+                'text' => '正在尝试呼叫'.$data['to_account'].'的紧急联系人:'.$data['nickname'].'，请稍后！',
             ];
         }
         $this->sendTelegramData();
@@ -254,7 +254,7 @@ trait  TraitTelegram {
             if($call_type == CallRecord::Record_Type_none){
                 $service->messageText = '呼叫您上线telegram';
             }else{
-                $service->messageText = '请转告'.$this->callPersonData->telgram_name.'上线telegram';
+                $service->messageText = '请转告'.$this->calledPersonData->telegram_name.'上线telegram';
 
             }
             $service->messageType = 'TTS';

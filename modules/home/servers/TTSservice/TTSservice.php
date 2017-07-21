@@ -78,7 +78,7 @@ class TTSservice{
         $this->app_obj = $app_obj;
         $this->app_obj->startCall();
         if(!$this->third->sendMessage()){                               //发生异常直接返回 提示呼叫失败
-            $this->app_obj->startCall();
+            $this->app_obj->exceptionCall();
             return false;
         }
         $send_ = array_shift($sends);
