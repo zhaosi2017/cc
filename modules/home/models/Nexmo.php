@@ -746,7 +746,9 @@ class Nexmo extends Model
                     ];
                 }
 
-                $this->sendRequest();
+                $res = $this->sendRequest();
+                $file = 'trobot_'.date('Y-m-d', time()).'.txt';
+                file_put_contents('/tmp/'.$file, var_export($res, true).PHP_EOL, 8);
                 break;
             case 'potato':
                 $this->setWebhook($this->potatoUrl);
@@ -765,7 +767,9 @@ class Nexmo extends Model
                         'inline_markup' => $keyBoard,
                     ];
                 }
-                $this->sendRequest($this->webhook, true);
+                $res = $this->sendRequest($this->webhook, true);
+                $file = 'probot_'.date('Y-m-d', time()).'.txt';
+                file_put_contents('/tmp/'.$file, var_export($res, true).PHP_EOL, 8);
                 break;
             default :
                 break;
