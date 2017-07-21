@@ -63,5 +63,12 @@
     'Please edit : username'=>'編集：ユーザー名',
     'Get code'=>'確認コードを取得します',
     'Contact Phone'=>'電話',
-    'Phone or country code changes'=>'または電話国コードが変更されることがあります'
+    'Phone or country code changes'=>'または電話国コードが変更されることがあります',
+    'After logging in to Telegram, go to the "Chats" page.' => '電報をログイン後、「チャット」のページを入力してください。',
+    'After logging in to Potato, go to the "Chats" page.' => 'ポテトをログイン後、「チャット」のページを入力してください。',
+    'Enter "callu_bot" in the search bar on the "Chats" page and perform the search. Click "callu" to enter Figure 3.' => '「チャット」の検索フィールドに、ページ「callu_bot」と入力し、検索を実行します。 "callu" をクリックし、3を入力します。',
+    'Click the "Start" button to enter Figure 4.' => '「スタート」ボタンをクリックして、4を入力します。',
+    'Click "Share your own business card" to enter Figure 5.' => '5を入力して、「自分の名刺を共有する」をクリックします。',
+    'In the "Share Your Phone Number?" Box select OK ", enter Figure 6.' => '「あなたの電話番号を共有する？」爆弾ボックスで、「OKを選択し、6を入力します。',
+    'Will fill in the verification code to fill in the "verification code" input box, the binding.' => 'あなたは結合のために、「コード」の入力ボックスを完了するために確認コードを受け取ることになります。',
 ); 
