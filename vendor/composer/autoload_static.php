@@ -76,6 +76,7 @@ class ComposerStaticInitb5206e6aa33c5e29c80d8653607e539b
         array (
             'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
+            'Pheanstalk\\' => 11,
         ),
         'N' => 
         array (
@@ -236,6 +237,10 @@ class ComposerStaticInitb5206e6aa33c5e29c80d8653607e539b
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
+        'Pheanstalk\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/pda/pheanstalk/src',
+        ),
         'Nexmo\\' => 
         array (
             0 => __DIR__ . '/..' . '/nexmo/client/src',
@@ -291,6 +296,13 @@ class ComposerStaticInitb5206e6aa33c5e29c80d8653607e539b
     );
 
     public static $prefixesPsr0 = array (
+        'u' => 
+        array (
+            'udokmeci\\yii2beanstalk' => 
+            array (
+                0 => __DIR__ . '/..' . '/udokmeci/yii2-beanstalk/src',
+            ),
+        ),
         'P' => 
         array (
             'Prophecy\\' => 

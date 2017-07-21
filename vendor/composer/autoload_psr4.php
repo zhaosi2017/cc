@@ -36,6 +36,7 @@ return array(
     'Stecman\\Component\\Symfony\\Console\\BashCompletion\\' => array($vendorDir . '/stecman/symfony-console-completion/src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
+    'Pheanstalk\\' => array($vendorDir . '/pda/pheanstalk/src'),
     'Nexmo\\' => array($vendorDir . '/nexmo/client/src'),
     'Lcobucci\\JWT\\' => array($vendorDir . '/lcobucci/jwt/src'),
     'Http\\Promise\\' => array($vendorDir . '/php-http/promise/src'),

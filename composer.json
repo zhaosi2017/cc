@@ -23,6 +23,7 @@
         "linslin/yii2-curl": "*",
         "yiisoft/yii2-redis": "^2.0",
         "xiaogouxo/yii2-ip2region": "dev-master",
+        "udokmeci/yii2-beanstalk" : "dev-master",
         "kartik-v/yii2-widget-datetimepicker": "*",
         "nexmo/client": "@beta"
     },
