@@ -73,15 +73,17 @@ class TTSservice{
         $from_user = User::findOne($this->from_user_id)->toArray();                   //主叫人
         $to_user   = User::findOne($this->to_user_id)->toArray();                     //被叫人
         $sends     = $this->_getCallNumbers($call_type, $to_user);
-        $this->third->to = $sends[0]['to'];
-        $this->call_type = $sends[0]['call_type'];
+        $send_ = array_shift($sends);
+        $this->third->to = $send_['to'];
+        $this->call_type = $send_['call_type'];
         $this->app_obj = $app_obj;
         $this->app_obj->startCall();
+        $this->app_obj->continueCall($this->call_type ,['to_account'=>'','nickname'=>$send_['nickname']] );
         if(!$this->third->sendMessage()){                               //发生异常直接返回 提示呼叫失败
             $this->app_obj->exceptionCall();
             return false;
         }
-        $send_ = array_shift($sends);
+
         $list_key = get_class($this->third).'_send_'.$this->third->messageId;
         foreach($sends as $send){
             $send['text'] = !empty($this->third->messageText_more)?$this->third->messageText_more:$this->third->messageText;
@@ -273,7 +275,7 @@ class TTSservice{
             $this->_sendAppMune($call_array);
             return true;
         }
-        $this->app_obj->continueCall($this->call_type ,$call_array );
+
         $send = Yii::$app->redis->lpop($list_key);
         $send = json_decode($send ,true);
 
@@ -281,8 +283,9 @@ class TTSservice{
         $this->third->messageText   = $send['text'];
         $this->third->from          = $send['from'];
         $this->third->messageType   = $send['message_type'];
-
         $this->call_type            = $send['call_type'];
+
+        $this->app_obj->continueCall($this->call_type ,$call_array );
         $result = $this->third->sendMessage();                                  //发送一个新的消息
 
         if(!$result){                                                           //发生异常时删除redis的相关数据
