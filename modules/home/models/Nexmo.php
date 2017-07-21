@@ -564,9 +564,9 @@ class Nexmo extends Model
                 case 'unanswered':
                     $text = $this->translateLanguage('呼叫'.$calledName.'失败, 暂时无人接听!');
                     break;
-                // case 'failed':
-                //    $text = $this->translateLanguage('呼叫'.$calledName.'未能完成, 请稍后再试!');
-                //    break;
+                case 'failed':
+                    $text = $this->translateLanguage('呼叫'.$calledName.'失败, 请稍后再试!');
+                    break;
                 case 'rejected':
                     $text = $this->translateLanguage('呼叫'.$calledName.'失败, 被拒绝!');
                     break;
@@ -582,11 +582,16 @@ class Nexmo extends Model
         // 保存通话记录.
         $this->saveCallRecordData($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $number, $status, $isUrgent);
 
-        // 如果是呼叫紧急联系人，需要推送按钮.
         if (empty($calledNumberArr) && !empty($calledUrgentArr) && empty($isUrgentMenu) && empty($status)) {
+            // 如果是呼叫紧急联系人，需要推送按钮.
             $res = $this->sendUrgentButtonToRobot($appName, $appCalledUid, $appUid, $calledAppName, $callAppName, $calledUserId);
+            Yii::$app->redis->del($cacheKey);
+            Yii::$app->redis->del($conferenceCacheKey);
         } elseif (empty($calledNumberArr) && empty($calledUrgentArr) && empty($status)) {
+            // 推送重拨按钮.
             $res = $this->sendRecallButtonToRobot($appName, $appCalledUid, $appUid, $calledAppName, $callAppName);
+            Yii::$app->redis->del($cacheKey);
+            Yii::$app->redis->del($conferenceCacheKey);
         } elseif (empty($status)) {
             // 呼叫失败, 呼叫下一联系人.
             $res = $this->callPerson($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $language, $appName, $appUid, $appCalledUid,0, $calledNumberArr, $calledUrgentArr, $isUrgentMenu);
