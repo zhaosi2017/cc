@@ -17,12 +17,9 @@ class Potato extends Model
     private $keyboardText = 'Share your contact card';
     private $firstText = '/start';
     private $webhookUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendTextMessage';
-    private $callbackAnswerUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendCallbackAnswer';
-    private $menuWebHookUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendInlineMarkupMessage';
-    private $nexmoUrl = "https://api.nexmo.com/tts/json";
+    private $callbackAnswerUrl = 'https://bot.potato.im:5423/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendCallbackAnswer';
+    private $menuWebHookUrl = 'https://bot.potato.im:5423/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendInlineMarkupMessage';
     private $translateUrl = "https://translation.googleapis.com/language/translate/v2?key=AIzaSyAV_rXQu5ObaA9_rI7iqL4EDB67oXaH3zk";
-    private $apiKey = '85704df7';
-    private $apiSecret = '755026fdd40f34c2';
     private $tlanguage = 'zh-CN';
     private $llanguage = 'zh-CN';
     private $repeat = 3;
@@ -92,6 +89,7 @@ class Potato extends Model
     private $unlockBlackListSuccessText = "Unlock the blacklist successfully.";
     private $unlockBlackListFailureText = "Unlock the blacklist failed.";
     private $notInBlackList = "Not in blacklist.";
+    private $bindVerifyCode = "Your verification code is";
 
     private $sendData;
     private $errorCode = [
@@ -242,7 +240,7 @@ class Potato extends Model
         $potatoData = base64_encode(Yii::$app->security->encryptByKey($dealData, Yii::$app->params['potato']));
         // 验证码过期时间半小时.
         Yii::$app->redis->setex($this->code, 30*60, $potatoData);
-        $this->code = $this->code.' '.$this->getBindRecommendText();
+        $this->code = $this->getBindVerifyCode().' '.$this->code;
     }
 
     /**
@@ -409,14 +407,6 @@ class Potato extends Model
     }
 
     /**
-     * @return nexmo.
-     */
-    public function getNexmoUrl()
-    {
-        return $this->nexmoUrl;
-    }
-
-    /**
      * @return string
      */
     public function getCallCallbackDataPre()
@@ -461,22 +451,6 @@ class Potato extends Model
     public function getUnblackCallbackDataPre()
     {
         return $this->unblackCallbackDataPre;
-    }
-
-    /**
-     * 获取apikey.
-     */
-    public function getApiKey()
-    {
-        return $this->apiKey;
-    }
-
-    /**
-     * 获取apiSecret.
-     */
-    public function getApiSecret()
-    {
-        return $this->apiSecret;
     }
 
     /**
@@ -617,6 +591,11 @@ class Potato extends Model
     public function getBindRecommendText()
     {
         return Yii::t('app/model/potato', $this->bindRecommendText, array(), $this->language);
+    }
+
+    public function getBindVerifyCode()
+    {
+        return Yii::t('app/model/potato', $this->bindVerifyCode, array(), $this->language);
     }
 
     /**
@@ -1417,106 +1396,6 @@ class Potato extends Model
     }
 
     /**
-     * 呼叫本人联系方式.
-     *
-     * @return mixed
-     */
-    public function callPersonPhone($nickname)
-    {
-        $result = false;
-        $this->language = $this->callPersonData->language;
-        $nexmoData = [
-            "api_key" => $this->apiKey,
-            'api_secret' => $this->apiSecret,
-            'lg' => $this->language,
-            'repeat' => $this->repeat,
-            'voice' => $this->voice,
-            'to'  => '',
-            'from' => '',
-            'text' => $this->potatoSendFirstName.$this->translateLanguage('呼叫您上线potato!'),
-        ];
-        $numberArr = UserPhone::find()->select(['id', 'phone_country_code', 'user_phone_number'])->where(['user_id' => $this->calledPersonData->id])->orderBy('id asc')->all();
-        foreach ($numberArr as $key => $number) {
-            if (empty($this->callPersonData->country_code) || empty($this->callPersonData->phone_number)) {
-                $this->callPersonData->country_code = $number->phone_country_code;
-                $this->callPersonData->phone_number = $number->user_phone_number;
-            }
-            // 呼叫本人设置的联系方式.
-            $nexmoData['to'] = $number->phone_country_code.$number->user_phone_number;
-            if (empty($number->phone_country_code) || empty($number->user_phone_number)) {
-                continue;
-            }
-
-            $res = $this->callPerson($nexmoData);
-            if ($res['status']) {
-                $this->sendData = [
-                    'chat_type' => 1,
-                    'chat_id' => $this->potatoUid,
-                    'text' => $this->getCallText().$nickname.$this->getSuccessText(),
-                ];
-                $this->sendPotatoData();
-                // 保存通话记录.
-                $this->saveCallRecordData($res['status'], $nexmoData['to']);
-                $result = true;
-                break;
-            }
-
-            $this->sendData = [
-                'chat_type' => 1,
-                'chat_id' => $this->potatoUid,
-                'text' => $this->getCallText().$nickname.$this->getFailureText().' '.$this->translateLanguage($res['message']),
-            ];
-            $this->sendPotatoData();
-        }
-
-        return $result;
-    }
-
-    /**
-     * 呼叫本人的紧急联系方式.
-     *
-     * @return mixed
-     */
-    public function callPersonUrgentPhone($nickname)
-    {
-        $result = false;
-        $this->language = $this->callPersonData->language;
-        $nexmoData = [
-            "api_key" => $this->apiKey,
-            'api_secret' => $this->apiSecret,
-            'lg' => $this->language,
-            'repeat' => $this->repeat,
-            'voice' => $this->voice,
-            'to'  => '',
-            'from' => '',
-            'text' => $this->translateLanguage('请转告'.$nickname.', 上线potato!'),
-        ];
-        $numberArr = UserGentContact::find()->select(['id', 'contact_country_code', 'contact_phone_number', 'contact_nickname'])->where(['user_id' => $this->calledPersonData->id])->orderBy('id asc')->all();
-        foreach ($numberArr as $key => $number) {
-            $nexmoData['to'] = $number->contact_country_code.$number->contact_phone_number;
-            if (empty($number->contact_country_code) || empty($number->contact_phone_number)) {
-                continue;
-            }
-
-            $res = $this->callPerson($nexmoData);
-            if ($res['status']) {
-                $this->sendData = [
-                    'chat_type' => 1,
-                    'chat_id' => $this->potatoUid,
-                    'text' => $this->translateLanguage('呼叫"'.$nickname.'"的紧急联系人"'.$number->contact_nickname.'", 成功!'),
-                ];
-                $this->sendPotatoData();
-                // 保存通话记录.
-                $this->saveCallRecordData($res['status'], '', $nexmoData['to'] );
-                $result = true;
-                break;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
      * 呼叫potato账号.
      */
     public function callPotatoPerson($calledId = '')
@@ -1616,28 +1495,8 @@ class Potato extends Model
                     'text' => $this->translateLanguage('网络异常, 请稍后再试!'),
                 ];
                 $this->sendPotatoData();
-            }
-            return $this->errorCode['success'];
-
-            $res = $this->callPersonPhone($nickname);
-            // 本人联系方式呼叫失败，尝试呼叫本人的紧急联系方式.
-            if (!$res) {
-                $this->sendData = [
-                    'chat_type' => 1,
-                    'chat_id' => $this->potatoUid,
-                    'text' => $this->translateLanguage('呼叫"'.$nickname.'"失败, 尝试呼叫"'.$nickname.'"的紧急联系人, 请稍后!'),
-                ];
-                $this->sendPotatoData();
-                $res = $this->callPersonUrgentPhone($nickname);
-            }
-
-            if (!$res) {
-                $this->sendData = [
-                    'chat_type' => 1,
-                    'chat_id' => $this->potatoUid,
-                    'text' => $this->translateLanguage('抱歉本次呼叫"' . $nickname . '"失败，请稍后再试, 或尝试其他方式联系' . $nickname . '!'),
-                ];
-                $this->sendPotatoData();
+                $file = 'pnexmo_'.date('Y-m-d', time()).'.txt';
+                file_put_contents('/tmp/'.$file, var_export($e->getMessage(), true).PHP_EOL, 8);
             }
 
             return $this->errorCode['success'];
@@ -1698,53 +1557,6 @@ class Potato extends Model
     public function blackList()
     {
         return BlackList::findOne(['uid' => $this->calledPersonData->id, 'black_uid'=> $this->callPersonData->id]);
-    }
-
-    /**
-     * @param string $nickname 呼叫人.
-     * @param arra   $data     数据.
-     *
-     * @return boolean
-     */
-    public function callPerson($data)
-    {
-        $result = [
-            'status' => true,
-            'message' => '',
-        ];
-
-        $this->sendData = $data;
-        $res = $this->sendPotatoData($this->nexmoUrl);
-        $res = json_decode($res, true);
-        // 保存通话记录.
-        if ($res['status'] != 0) {
-            $result['status'] = false;
-        }
-
-        return $result;
-    }
-
-    /**
-     * 保存通话记录.
-     */
-    public function saveCallRecordData($status, $personPhone = '', $urgentPhone = '')
-    {
-        $callRecord = new CallRecord();
-        $callRecord->active_call_uid = $this->callPersonData->id;
-        $callRecord->unactive_call_uid = $this->calledPersonData->id;
-        $callRecord->active_account = $this->potatoSendFirstName;
-        $callRecord->unactive_account = $this->potatoContactFirstName;
-        $callRecord->active_nickname = $this->callPersonData->nickname;
-        $callRecord->unactive_nickname = $this->calledPersonData->nickname;
-        $callRecord->contact_number = $this->callPersonData->country_code.$this->callPersonData->phone_number;
-
-        $callRecord->unactive_contact_number = !empty($personPhone) ? $personPhone : $urgentPhone;
-        $callRecord->status = $status ? 0 : 1;
-        $callRecord->call_time = time();
-        $callRecord->type = ($urgentPhone) ? 1 : 0;
-        $res = $callRecord->save();
-
-        return $res ? true : false;
     }
 
     /**

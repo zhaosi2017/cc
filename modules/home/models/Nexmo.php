@@ -19,10 +19,10 @@ class Nexmo extends Model
 
     private $apiKey = '85704df7';
     private $apiScret = '755026fdd40f34c2';
-    private $applicationId = '570db7b5-09cb-45b3-a097-e0b8e0bcec65';
+    private $applicationId = '454eb4c4-1fdd-4b4b-9423-937c80f01bb8';
     private $telegramUrl = 'https://api.telegram.org/bot366429273:AAE1lGFanLGpUbfV28zlDYSTibiAPLhhE3s/sendMessage';
-    private $potatoMenuWebHookUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendInlineMarkupMessage';
-    private $potatoUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendTextMessage';
+    private $potatoMenuWebHookUrl = 'https://bot.potato.im:5423/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendInlineMarkupMessage';
+    private $potatoUrl = 'https://bot.potato.im:5423/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendTextMessage';
     private $_webhook;
     private $_sendData;
     private $_answerKey;
@@ -39,11 +39,15 @@ class Nexmo extends Model
     private $cacheKeyPre = 'nexmo_';
     private $callUrgentCallbackDataPre = 'cc_call_urgent';
     private $callCallbackDataPre = 'cc_call';
-    private $failureStatus = ['unanswered', 'busy', 'timeout', 'failed'];
-    private $callUrgentText = 'Whether to call an emergency contact ?';
     private $callUrgentButtonText = 'Yes';
-    private $againText = "Whether to call again ?";
     private $againButtonText = 'Re-call';
+    private $failureStatus = ['unanswered', 'busy', 'timeout', 'failed', 'rejected'];
+    private $successStatus = ['answered'];
+    private $completeStatus = ['completed'];
+    private $callUrgentText = 'Whether to call an emergency contact ?';
+    private $againText = "Whether to call again ?";
+    private $failureText = "Call failed, please try again later!";
+    private $firstFailureText = "Called user does not set contact phone, call failed!";
 
 
     /**
@@ -216,6 +220,22 @@ class Nexmo extends Model
     }
 
     /**
+     * @return string
+     */
+    public function getFailureText()
+    {
+        return Yii::t('app/model/nexmo', $this->failureText, array(), $this->language);
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstFailureText()
+    {
+        return Yii::t('app/model/nexmo', $this->firstFailureText, array(), $this->language);
+    }
+
+    /**
      * 呼叫.
      */
     public function callPerson($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $language, $appName, $appUid, $appCalledUid, $isFirst = 0, $calledNumberArr = array(), $calledUrgentArr = array(), $isUrgentMenu = 0)
@@ -254,8 +274,16 @@ class Nexmo extends Model
 
         // 呼叫人没有设置联系方式, 不能完成呼叫.
         if (empty($calledNumberArr) && empty($calledUrgentArr)) {
-            $data['status'] = 1;
-            return $data;
+            $isFirst ? ($text = $this->getFirstFailureText()) : ($text = $this->getFailureText());
+            // 发消息到机器人.
+            $res = $this->sendMessageToRobot($appName, $appUid, $text);
+            return $res;
+        }
+
+        // 第一次呼叫，用户没有设置紧急联系人, 推送是否发送紧急联系人按钮.
+        if ($isFirst && empty($calledNumberArr) && !empty($calledUrgentArr)) {
+            $res = $this->sendUrgentButtonToRobot($appName, $appCalledUid, $appUid, $calledAppName, $callAppName, $calledUserId);
+            return $res;
         }
 
         $basic = new \Nexmo\Client\Credentials\Basic($this->apiKey, $this->apiScret);
@@ -269,7 +297,7 @@ class Nexmo extends Model
             $number = array_shift($calledNumberArr);
             $calledName = $calledAppName;
             $text = $isFirst ? $this->translateLanguage('正在呼叫'.$calledAppName.', 请稍候!') : $this->translateLanguage('正在尝试呼叫'.$calledAppName.'其他的联系电话, 请稍候!');
-            $nexmoText = $callAppName.$this->translateLanguage(' 呼叫您上线'.$appName, '', 'en');
+            $nexmoText = $callAppName.' 呼叫您上线'.$appName;
         } else {
             $isUrgent = 1;
             $urgentArr = array_shift($calledUrgentArr);
@@ -280,9 +308,12 @@ class Nexmo extends Model
                 $number = $urgentArr['phone_number'];
                 $text = $this->translateLanguage('正在呼叫' . $calledAppName . '的紧急联系人:' . $urgentArr['nickname'] . ', 请稍候!');
                 $calledName = $urgentArr['nickname'];
-                $nexmoText = $this->translateLanguage('请转告' . $calledAppName . ', 上线' . $appName, '', 'en');
+                $nexmoText = '请转告' . $calledAppName . ', 上线' . $appName;
             }
         }
+
+        $file = 'ntext_'.date('Y-m-d', time()).'.txt';
+        file_put_contents('/tmp/'.$file, var_export($nexmoText, true).PHP_EOL, 8);
 
         // 给机器人发消息提示操作.
         $this->sendMessageToRobot($appName, $appUid, $text);
@@ -291,6 +322,7 @@ class Nexmo extends Model
         }
 
         $cacheKey = $callUserId.time();
+        $nexmoText = $this->translateLanguage($nexmoText, '', 'en');
         $tmp = [
             'action' => 'talk',
             'loop' => $this->loop,
@@ -303,6 +335,10 @@ class Nexmo extends Model
             $tmp,
         ];
         $conferenceCacheKey = $cacheKey.'_pre';
+        $file = 'nexmo_'.date('Y-m-d', time()).'.txt';
+        file_put_contents('/tmp/'.$file, var_export($conferenceCacheKey, true).PHP_EOL, 8);
+        file_put_contents('/tmp/'.$file, var_export($cacheKey, true).PHP_EOL, 8);
+        file_put_contents('/tmp/'.$file, var_export($conference, true).PHP_EOL, 8);
         Yii::$app->redis->set($conferenceCacheKey, json_encode($conference, JSON_UNESCAPED_UNICODE));
         Yii::$app->redis->expire($conferenceCacheKey, 5*60);
         $anserUrl = $this->getAnswerUrl();
@@ -431,7 +467,6 @@ class Nexmo extends Model
         }
         $this->sendData = $textArr;
         $res = $this->sendRequest($this->translateUrl, true);
-        $res = json_decode($res, true);
 
         if (isset($res['data']) && isset($res['data']['translations'])) {
             $data = $res['data']['translations'][0]['translatedText'];
@@ -442,179 +477,248 @@ class Nexmo extends Model
 
     /**
      * 异步消息通知.
+     *
+     * started - 平台盯着电话.
+     * ringing - 用户的手机响了.
+     * answered - 用户已经接听了您的来电.
+     * machine - 平台检测到应答机.
+     * complete - 平台已终止此呼叫.
+     * timeout- 您的用户ringing_timer几秒钟内没有接听电话.
+     * failed - 呼叫未能完成.
+     * rejected - 电话被拒绝.
+     * unanswered - 电话没有回答.
+     * busy - 被叫的人正在接通电.
+     *
+     * return mixed.
      */
     public function event()
     {
 
         $postData = $this->getEventData();
+        $time = time();
+        $file = 'event_'.date('Y-m-d', $time).'.txt';
+        file_put_contents('/tmp/'.$file, var_export($postData, true).PHP_EOL, 8);
         $cacheKey = isset($postData['uuid']) ? $postData['uuid'] : '';
         $statusName = isset($postData['status']) ? $postData['status'] : '';
         if (empty($cacheKey)) {
             return false;
         } else {
+            $file = 'eventt_'.date('Y-m-d', $time).'.txt';
+            file_put_contents('/tmp/'.$file, var_export($postData, true).PHP_EOL, 8);
             $cacheKey = $this->cacheKeyPre.$cacheKey;
         }
 
-        // Yii::$app->redis->zincrby($cacheKey, 1, 'times');
-        // $times = Yii::$app->redis->hget($cacheKey, 'times');
+        // $isSend = Yii::$app->redis->hget($cacheKey, 'isSend');
         if (isset($postData['duration']) && $postData['duration'] > 0) {
             $status = 1;
         } elseif (in_array($statusName, $this->failureStatus)) {
+            // Yii::$app->redis->hset($cacheKey, 'isSend', 1);
             $status = 0;
+        } elseif(in_array($statusName, $this->successStatus)) {
+            $status = 1;
+        // } elseif(empty($isSend) && isset($postData['duration']) && (in_array($postData['status'], $this->completeStatus))) {
+        //     $status = 0;
         } else {
-            return;
+            // 返回无效的状态，比如started,ringing等状态.
+            return false;
         }
 
-        if (!empty($cacheKey)) {
-            $conferenceCacheKey = Yii::$app->redis->hget($cacheKey, 'conferenceCacheKey');
-            $calledUserId = Yii::$app->redis->hget($cacheKey, 'calledUserId');
-            $callUserId = Yii::$app->redis->hget($cacheKey, 'callUserId');
-            $calledName = Yii::$app->redis->hget($cacheKey, 'calledName');
-            $calledAppName = Yii::$app->redis->hget($cacheKey, 'calledAppName');
-            $callAppName = Yii::$app->redis->hget($cacheKey, 'callAppName');
-            $calledNickname = Yii::$app->redis->hget($cacheKey, 'calledNickname');
-            $callNickname = Yii::$app->redis->hget($cacheKey, 'callNickname');
-            $contactPhoneNumber = Yii::$app->redis->hget($cacheKey, 'contactPhoneNumber');
-            $calledNumberArr = Yii::$app->redis->hget($cacheKey, 'calledNumberArr');
-            $calledUrgentArr = Yii::$app->redis->hget($cacheKey, 'calledUrgentArr');
-            $number = Yii::$app->redis->hget($cacheKey, 'number');
-            $isUrgent = Yii::$app->redis->hget($cacheKey, 'isUrgent');
-            $isUrgentMenu = Yii::$app->redis->hget($cacheKey, 'isUrgentMenu');
-            $language = Yii::$app->redis->hget($cacheKey, 'language');
-            $appName = Yii::$app->redis->hget($cacheKey, 'appName');
-            $appUid = Yii::$app->redis->hget($cacheKey, 'appUid');
-            $appCalledUid = Yii::$app->redis->hget($cacheKey, 'appCalledUid');
-            $calledNumberArr = json_decode($calledNumberArr, true);
-            $calledUrgentArr = json_decode($calledUrgentArr, true);
+        $conferenceCacheKey = Yii::$app->redis->hget($cacheKey, 'conferenceCacheKey');
+        $calledUserId = Yii::$app->redis->hget($cacheKey, 'calledUserId');
+        $callUserId = Yii::$app->redis->hget($cacheKey, 'callUserId');
+        $calledName = Yii::$app->redis->hget($cacheKey, 'calledName');
+        $calledAppName = Yii::$app->redis->hget($cacheKey, 'calledAppName');
+        $callAppName = Yii::$app->redis->hget($cacheKey, 'callAppName');
+        $calledNickname = Yii::$app->redis->hget($cacheKey, 'calledNickname');
+        $callNickname = Yii::$app->redis->hget($cacheKey, 'callNickname');
+        $contactPhoneNumber = Yii::$app->redis->hget($cacheKey, 'contactPhoneNumber');
+        $calledNumberArr = Yii::$app->redis->hget($cacheKey, 'calledNumberArr');
+        $calledUrgentArr = Yii::$app->redis->hget($cacheKey, 'calledUrgentArr');
+        $number = Yii::$app->redis->hget($cacheKey, 'number');
+        $isUrgent = Yii::$app->redis->hget($cacheKey, 'isUrgent');
+        $isUrgentMenu = Yii::$app->redis->hget($cacheKey, 'isUrgentMenu');
+        $language = Yii::$app->redis->hget($cacheKey, 'language');
+        $appName = Yii::$app->redis->hget($cacheKey, 'appName');
+        $appUid = Yii::$app->redis->hget($cacheKey, 'appUid');
+        $appCalledUid = Yii::$app->redis->hget($cacheKey, 'appCalledUid');
+        $calledNumberArr = json_decode($calledNumberArr, true);
+        $calledUrgentArr = json_decode($calledUrgentArr, true);
 
-            $this->setTlanguage($language);
-            $appUid = intval($appUid);
-            // 呼叫成功，产生费用.
-            if ($status) {
-                $text = $this->translateLanguage('呼叫'.$calledName.'成功!');
-                Yii::$app->redis->del($cacheKey);
-                Yii::$app->redis->del($conferenceCacheKey);
-            } else {
-                switch ($statusName) {
-                    case 'busy':
-                        $text = $this->translateLanguage('呼叫的用户忙!');
-                        break;
-                    case 'timeout':
-                        $text = $this->translateLanguage('呼叫'.$calledName.'失败, 暂时无人接听!');
-                        break;
-                    case 'unanswered':
-                        $text = $this->translateLanguage('呼叫'.$calledName.'失败, 暂时无人接听!');
-                        break;
-                    default:
-                        $text = $this->translateLanguage('呼叫'.$calledName.'失败!');
-                        break;
-                }
+        $this->setTlanguage($language);
+        $appUid = intval($appUid);
+        $isUrgentMenu = intval($isUrgentMenu);
 
+        // 呼叫成功，产生费用.
+        if ($status) {
+            Yii::$app->redis->del($cacheKey);
+            // Yii::$app->redis->del($conferenceCacheKey);
+            $text = $this->translateLanguage('呼叫'.$calledName.'成功!');
+        } else {
+            switch ($statusName) {
+                case 'busy':
+                    $text = $this->translateLanguage('呼叫的用户忙!');
+                    break;
+                case 'timeout':
+                    $text = $this->translateLanguage('呼叫'.$calledName.'失败, 暂时无人接听!');
+                    break;
+                case 'unanswered':
+                    $text = $this->translateLanguage('呼叫'.$calledName.'失败, 暂时无人接听!');
+                    break;
+                case 'failed':
+                    $text = $this->translateLanguage('呼叫'.$calledName.'失败, 请稍后再试!');
+                    break;
+                case 'rejected':
+                    $text = $this->translateLanguage('呼叫'.$calledName.'失败, 被拒绝!');
+                    break;
+                default:
+                    $text = $this->translateLanguage('呼叫'.$calledName.'失败!');
+                    break;
             }
 
-            // 发消息到机器人.
-            $this->sendMessageToRobot($appName, $appUid, $text);
+        }
 
-            // 保存通话记录.
-            $this->saveCallRecordData($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $number, $status, $isUrgent);
+        // 发消息到机器人.
+        $this->sendMessageToRobot($appName, $appUid, $text);
+        // 保存通话记录.
+        $this->saveCallRecordData($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $number, $status, $isUrgent);
 
-            $time = time();
+        if (empty($calledNumberArr) && !empty($calledUrgentArr) && empty($isUrgentMenu) && empty($status)) {
             // 如果是呼叫紧急联系人，需要推送按钮.
-            if (empty($calledNumberArr) && !empty($calledUrgentArr) && empty($isUrgentMenu) && empty($status)) {
-                switch ($appName) {
-                    case 'telegram':
-                        $callback = [
-                            $this->callUrgentCallbackDataPre,
-                            $appCalledUid,
-                            $calledUserId,
-                            $callAppName,
-                            $calledAppName
-                        ];
-                        $text = $this->getCallUrgentText();
-                        $keyBoard = [
-                            [
-                                [
-                                    'text' => $this->getCallUrgentButtonText(),
-                                    'callback_data' => implode('-', $callback),
-                                ]
-                            ]
-                        ];
-                        break;
-                    case 'potato':
-                        $callback = [
-                            $this->callUrgentCallbackDataPre,
-                            $appCalledUid,
-                            $calledUserId,
-                            $callAppName,
-                            $calledAppName,
-                            $time
-                        ];
-                        $text = $this->getCallUrgentText();
-                        $keyBoard = [
-                            [
-                                [
-                                    'type' => 0,
-                                    'text' => $this->getCallUrgentButtonText(),
-                                    'data' => implode('-', $callback),
-                                ]
-                            ]
-                        ];
-                        break;
-                    default :
-                        break;
-                }
-
-                $this->sendMessageToRobot($appName, $appUid, $text, $keyBoard);
-            } elseif (empty($calledNumberArr) && empty($calledUrgentArr) && empty($status)) {
-                switch ($appName) {
-                    case 'telegram':
-                        $callback = [
-                            $this->callCallbackDataPre,
-                            $appCalledUid,
-                            $callAppName,
-                            $calledAppName
-                        ];
-                        $text = $this->getAgainText();
-                        $keyBoard = [
-                            [
-                                [
-                                    'text' => $this->getAgainButtonText(),
-                                    'callback_data' => implode('-', $callback),
-                                ]
-                            ]
-                        ];
-                        break;
-                    case 'potato':
-                        $callback = [
-                            $this->callCallbackDataPre,
-                            $appCalledUid,
-                            $callAppName,
-                            $calledAppName,
-                            $time
-                        ];
-                        $text = $this->getAgainText();
-                        $keyBoard = [
-                            [
-                                [
-                                    'type' => 0,
-                                    'text' => $this->getAgainButtonText(),
-                                    'data' => implode('-', $callback),
-                                ]
-                            ]
-                        ];
-                        break;
-                    default :
-                        break;
-                }
-
-                $this->sendMessageToRobot($appName, $appUid, $text, $keyBoard);
-            } else {
-                // 呼叫失败, 呼叫下一联系人.
-                if (!$status) {
-                    $this->callPerson($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $language, $appName, $appUid, $appCalledUid,0, $calledNumberArr, $calledUrgentArr, $isUrgentMenu);
-                }
-            }
+            $res = $this->sendUrgentButtonToRobot($appName, $appCalledUid, $appUid, $calledAppName, $callAppName, $calledUserId);
+            Yii::$app->redis->del($cacheKey);
+            Yii::$app->redis->del($conferenceCacheKey);
+        } elseif (empty($calledNumberArr) && empty($calledUrgentArr) && empty($status)) {
+            // 推送重拨按钮.
+            $res = $this->sendRecallButtonToRobot($appName, $appCalledUid, $appUid, $calledAppName, $callAppName);
+            Yii::$app->redis->del($cacheKey);
+            Yii::$app->redis->del($conferenceCacheKey);
+        } elseif (empty($status)) {
+            // 呼叫失败, 呼叫下一联系人.
+            $res = $this->callPerson($calledUserId, $callUserId, $calledAppName, $callAppName, $calledNickname, $callNickname, $contactPhoneNumber, $language, $appName, $appUid, $appCalledUid,0, $calledNumberArr, $calledUrgentArr, $isUrgentMenu);
         }
+
+        return $res;
+    }
+
+
+    /**
+     * 发送是否是否发送紧急联系人的按钮.
+     *
+     * @param $appName
+     * @param $appCalledUid
+     * @param $appUid
+     * @param $calledAppName
+     * @param $callAppName
+     * @param $calledUserId
+     *
+     */
+    private function sendUrgentButtonToRobot($appName, $appCalledUid, $appUid, $calledAppName, $callAppName, $calledUserId)
+    {
+        $time = time();
+        switch ($appName) {
+            case 'telegram':
+                $callback = [
+                    $this->callUrgentCallbackDataPre,
+                    $appCalledUid,
+                    $calledUserId,
+                    $callAppName,
+                    $calledAppName
+                ];
+                $text = $this->getCallUrgentText();
+                $keyBoard = [
+                    [
+                        [
+                            'text' => $this->getCallUrgentButtonText(),
+                            'callback_data' => implode('-', $callback),
+                        ]
+                    ]
+                ];
+                break;
+            case 'potato':
+                $callback = [
+                    $this->callUrgentCallbackDataPre,
+                    $appCalledUid,
+                    $calledUserId,
+                    $callAppName,
+                    $calledAppName,
+                    $time
+                ];
+                $text = $this->getCallUrgentText();
+                $keyBoard = [
+                    [
+                        [
+                            'type' => 0,
+                            'text' => $this->getCallUrgentButtonText(),
+                            'data' => implode('-', $callback),
+                        ]
+                    ]
+                ];
+                break;
+            default :
+                break;
+        }
+
+        $result  = $this->sendMessageToRobot($appName, $appUid, $text, $keyBoard);
+
+        return $result;
+    }
+
+    /**
+     * 是否推送重新呼叫按钮.
+     *
+     * @param $appName
+     * @param $appCalledUid
+     * @param $appUid
+     * @param $calledAppName
+     * @param $callAppName
+     */
+    public function sendRecallButtonToRobot($appName, $appCalledUid, $appUid, $calledAppName, $callAppName)
+    {
+        $time = time();
+        switch ($appName) {
+            case 'telegram':
+                $callback = [
+                    $this->callCallbackDataPre,
+                    $appCalledUid,
+                    $callAppName,
+                    $calledAppName
+                ];
+                $text = $this->getAgainText();
+                $keyBoard = [
+                    [
+                        [
+                            'text' => $this->getAgainButtonText(),
+                            'callback_data' => implode('-', $callback),
+                        ]
+                    ]
+                ];
+                break;
+            case 'potato':
+                $callback = [
+                    $this->callCallbackDataPre,
+                    $appCalledUid,
+                    $callAppName,
+                    $calledAppName,
+                    $time
+                ];
+                $text = $this->getAgainText();
+                $keyBoard = [
+                    [
+                        [
+                            'type' => 0,
+                            'text' => $this->getAgainButtonText(),
+                            'data' => implode('-', $callback),
+                        ]
+                    ]
+                ];
+                break;
+            default :
+                break;
+        }
+
+        $result = $this->sendMessageToRobot($appName, $appUid, $text, $keyBoard);
+
+        return $result;
     }
 
     /**
@@ -642,7 +746,9 @@ class Nexmo extends Model
                     ];
                 }
 
-                $this->sendRequest();
+                $res = $this->sendRequest();
+                $file = 'trobot_'.date('Y-m-d', time()).'.txt';
+                file_put_contents('/tmp/'.$file, var_export($res, true).PHP_EOL, 8);
                 break;
             case 'potato':
                 $this->setWebhook($this->potatoUrl);
@@ -661,7 +767,9 @@ class Nexmo extends Model
                         'inline_markup' => $keyBoard,
                     ];
                 }
-                $this->sendRequest($this->webhook, true);
+                $res = $this->sendRequest($this->webhook, true);
+                $file = 'probot_'.date('Y-m-d', time()).'.txt';
+                file_put_contents('/tmp/'.$file, var_export($res, true).PHP_EOL, 8);
                 break;
             default :
                 break;
@@ -727,16 +835,17 @@ class Nexmo extends Model
         $response = curl_exec($curl);
         $err = curl_error($curl);
         curl_close($curl);
-        if (empty($url)) {
-            $response = json_decode($response, true);
-            if (!$response['ok']) {
-                return "error_cod #:".$response['error_code'].', description: '.$response['description'];
-            }
-        }
 
         if ($err) {
+            $file = 'curl_error_'.date('Y-m-d', time()).'.txt';
+            file_put_contents('/tmp/'.$file, var_export($err, true).PHP_EOL, 8);
             return "error #:" . $err;
         } else {
+            if (!is_array($response)) {
+                $response = json_decode($response, true);
+            }
+            $file = 'curl_response_'.date('Y-m-d', time()).'.txt';
+            file_put_contents('/tmp/'.$file, var_export($response, true).PHP_EOL, 8);
             return $response;
         }
 

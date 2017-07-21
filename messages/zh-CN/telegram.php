@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nengliu
- * Date: 2017/7/1
- * Time: 上午11:25
- */
+
 return [
     'He is not a member of our system and you can not perform this operation.' => '他/她不是我们系统会员，不能执行该操作.',
     'Please share your own contact card to the robot, complete the binding operation.' => '请先分享自己的名片到机器人，完成绑定操作.',
@@ -48,4 +43,5 @@ return [
     'Verification code error.' => '验证码错误.',
     'Operation too fast, please try again later!' => '操作过快，请稍后再试!',
     "[<a href='https://www.callu.online/home/telegram/bind-telegram'>Please enter the verification code on the callu platform to complete the binding operation!</a>]" => "[<a href='https://www.callu.online/home/telegram/bind-telegram'>请在callu平台输入该验证码, 完成绑定操作!</a>]",
-];
+    'Your verification code is'=>'您的验证码为',
+    ];
