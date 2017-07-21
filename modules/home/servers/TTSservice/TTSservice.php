@@ -77,8 +77,7 @@ class TTSservice{
         $this->third->to = $send_['to'];
         $this->call_type = $send_['call_type'];
         $this->app_obj = $app_obj;
-        $this->app_obj->startCall();
-        $this->app_obj->continueCall($this->call_type ,['to_account'=>'','nickname'=>$send_['nickname']] );
+        $this->app_obj->startCall($this->call_type ,['to_account'=>'','nickname'=>$send_['nickname']] );
         if(!$this->third->sendMessage()){                               //发生异常直接返回 提示呼叫失败
             $this->app_obj->exceptionCall();
             return false;
