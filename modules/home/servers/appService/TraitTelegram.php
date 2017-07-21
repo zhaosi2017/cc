@@ -71,12 +71,23 @@ trait  TraitTelegram {
     /**
      *呼叫流程开始提示
      */
-    public function startCall(){
-        $this->sendData = [
-            'chat_id' =>$this->telegramUid,
-            'text' => '呼叫开始，请稍后！',
-        ];
+    public function startCall($type , Array $data = []){
+        if(empty($data['to_account'])){
+            $data['to_account'] = $this->telegramContactLastName.$this->telegramContactFirstName;
+        }
+        if($type == CallRecord::Record_Type_none){
+            $this->sendData = [
+                'chat_id' =>$this->telegramUid,
+                'text' => '正在尝试呼叫'.$data['to_account'].'，请稍后！',
+            ];
+        }elseif($type == CallRecord::Record_Type_emergency){
+            $this->sendData = [
+                'chat_id' =>$this->telegramUid,
+                'text' => '正在尝试呼叫'.$data['to_account'].'的紧急联系人:'.$data['nickname'].'，请稍后！',
+            ];
+        }
         $this->sendTelegramData();
+        return true;
     }
 
     /**
