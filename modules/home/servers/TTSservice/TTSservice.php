@@ -194,7 +194,7 @@ class TTSservice{
             $list_key = $catch_call['list_key'];
             Yii::$app->redis->del($list_key);
         }else{                                                                  //呼叫失败 继续
-            $this->app_obj->sendCallFailed($catch_call['type'] , $catch_call['to_account'] , $this->third->messageAnwser);
+            $this->app_obj->sendCallFailed($catch_call['type'] , $catch_call['nickname'] , $this->third->messageAnwser);
             $this->_moreSendMessage($catch_call);
         }
         $this->_saveRecord($catch_call);
@@ -284,6 +284,7 @@ class TTSservice{
         $this->third->messageType   = $send['message_type'];
         $this->call_type            = $send['call_type'];
 
+        $call_array['nickname'] = $send['nickname'];
         $this->app_obj->continueCall($this->call_type ,$call_array );
         $result = $this->third->sendMessage();                                  //发送一个新的消息
 
@@ -296,9 +297,6 @@ class TTSservice{
         foreach($call_array as $key=>$item){
             if($key == 'to_number' ){
                 $item = $this->third->to ;
-            }
-            if($key == 'nickname'){
-                $item = $send['nickname'];
             }
             Yii::$app->redis->hset($cacheKey , $key ,$item);
         }
