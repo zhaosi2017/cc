@@ -17,12 +17,9 @@ class Potato extends Model
     private $keyboardText = 'Share your contact card';
     private $firstText = '/start';
     private $webhookUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendTextMessage';
-    private $callbackAnswerUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendCallbackAnswer';
-    private $menuWebHookUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendInlineMarkupMessage';
-    private $nexmoUrl = "https://api.nexmo.com/tts/json";
+    private $callbackAnswerUrl = 'https://bot.potato.im:5423/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendCallbackAnswer';
+    private $menuWebHookUrl = 'https://bot.potato.im:5423/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendInlineMarkupMessage';
     private $translateUrl = "https://translation.googleapis.com/language/translate/v2?key=AIzaSyAV_rXQu5ObaA9_rI7iqL4EDB67oXaH3zk";
-    private $apiKey = '85704df7';
-    private $apiSecret = '755026fdd40f34c2';
     private $tlanguage = 'zh-CN';
     private $llanguage = 'zh-CN';
     private $repeat = 3;
@@ -92,6 +89,7 @@ class Potato extends Model
     private $unlockBlackListSuccessText = "Unlock the blacklist successfully.";
     private $unlockBlackListFailureText = "Unlock the blacklist failed.";
     private $notInBlackList = "Not in blacklist.";
+    private $bindVerifyCode = "Your verification code is";
 
     private $sendData;
     private $errorCode = [
@@ -242,7 +240,7 @@ class Potato extends Model
         $potatoData = base64_encode(Yii::$app->security->encryptByKey($dealData, Yii::$app->params['potato']));
         // 验证码过期时间半小时.
         Yii::$app->redis->setex($this->code, 30*60, $potatoData);
-        $this->code = $this->code.' '.$this->getBindRecommendText();
+        $this->code = $this->getBindVerifyCode().' '.$this->code;
     }
 
     /**
@@ -409,14 +407,6 @@ class Potato extends Model
     }
 
     /**
-     * @return nexmo.
-     */
-    public function getNexmoUrl()
-    {
-        return $this->nexmoUrl;
-    }
-
-    /**
      * @return string
      */
     public function getCallCallbackDataPre()
@@ -461,22 +451,6 @@ class Potato extends Model
     public function getUnblackCallbackDataPre()
     {
         return $this->unblackCallbackDataPre;
-    }
-
-    /**
-     * 获取apikey.
-     */
-    public function getApiKey()
-    {
-        return $this->apiKey;
-    }
-
-    /**
-     * 获取apiSecret.
-     */
-    public function getApiSecret()
-    {
-        return $this->apiSecret;
     }
 
     /**
@@ -617,6 +591,11 @@ class Potato extends Model
     public function getBindRecommendText()
     {
         return Yii::t('app/model/potato', $this->bindRecommendText, array(), $this->language);
+    }
+
+    public function getBindVerifyCode()
+    {
+        return Yii::t('app/model/potato', $this->bindVerifyCode, array(), $this->language);
     }
 
     /**
@@ -1578,30 +1557,6 @@ class Potato extends Model
     public function blackList()
     {
         return BlackList::findOne(['uid' => $this->calledPersonData->id, 'black_uid'=> $this->callPersonData->id]);
-    }
-
-    /**
-     * @param string $nickname 呼叫人.
-     * @param arra   $data     数据.
-     *
-     * @return boolean
-     */
-    public function callPerson($data)
-    {
-        $result = [
-            'status' => true,
-            'message' => '',
-        ];
-
-        $this->sendData = $data;
-        $res = $this->sendPotatoData($this->nexmoUrl);
-        $res = json_decode($res, true);
-        // 保存通话记录.
-        if ($res['status'] != 0) {
-            $result['status'] = false;
-        }
-
-        return $result;
     }
 
     /**

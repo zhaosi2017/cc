@@ -18,7 +18,7 @@ GlobalAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
 
-    <title>H+ 后台主题UI框架 - 主页</title>
+    <title><?= Yii::t('app/index','Call support center')?></title>
 
     <meta name="keywords" content="<?= Yii::t('app/index','Call support center')?>">
     <meta name="description" content="<?= Yii::t('app/index','The most secure network voice call platform')?>">
