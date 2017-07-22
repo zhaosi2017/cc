@@ -16,8 +16,8 @@ use app\modules\home\servers\TTSservice\TTSservice;
 
 trait  TraitTelegram {
 
-    public $first_name;
-    public $last_name;
+    public $first_contact_name;
+    public $last_contact_name;
 
     public function call_set_name(){
         $this->first_contact_name = $this->telegramContactFirstName;
