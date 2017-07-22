@@ -243,8 +243,8 @@ class TTSservice{
         $this->app_obj->sendCallButton($this->call_type,
             $call_array['app_to_account_id'],
             $call_array['to_id'] ,
-            $this->app_obj->first_contact_name,//$call_array['from_nickname'],
             $this->app_obj->last_contact_name,//$call_array['to_nickname'],
+            $this->app_obj->first_contact_name,//$call_array['from_nickname'],
             $call_array['app_from_account_id']
         ); //发送继续呼叫按钮
     }
