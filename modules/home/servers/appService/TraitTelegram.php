@@ -23,6 +23,10 @@ trait  TraitTelegram {
         $this->first_contact_name = $this->telegramContactFirstName;
         $this->last_contact_name = $this->telegramContactLastName;
     }
+    public function call_set_contact_name(){
+        $this->telegramContactFirstName = $this->first_contact_name;
+        $this->telegramContactLastName  = $this->last_contact_name;
+    }
     /**
      *拨打电话失败 消息推送
      * @param  int $type

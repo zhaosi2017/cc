@@ -169,6 +169,9 @@ class TTSservice{
         Yii::$app->redis->hset($call_key , 'language' ,$from_user['language']);                 //呼叫的语言
         Yii::$app->redis->hset($call_key , 'app_from_account_id' , $from_app_account_id);       //主叫的app id
         Yii::$app->redis->hset($call_key , 'app_to_account_id' , $to_app_account_id);           //被叫的app id
+        Yii::$app->redis->hset($call_key , 'app_to_account_first' , $this->app_obj->first_contact_name);//被叫的app first_name
+        Yii::$app->redis->hset($call_key , 'app_to_account_last' , $this->app_obj->last_contact_name); //被叫的app last_name
+
 
         Yii::$app->redis->hset($call_key , 'list_key' , $list_key);                             //记录队列的key
         Yii::$app->redis->expire($call_key, 30*60);
@@ -213,15 +216,16 @@ class TTSservice{
         if($data['app_type'] == 'telegram'){
             $this->app_obj = new Telegram();
             $this->app_obj->telegramUid =  $data['app_from_account_id'];
-            $this->app_obj->language    =  $data['language'];
         }elseif($data['app_type'] == 'potato'){
             $this->app_obj = new Potato();
-            $this->app_obj->potatoUid   = $data['app_from_account_id'];
-            $this->app_obj->language    =  $data['language'];
+            $this->app_obj->potatoUid   =  $data['app_from_account_id'];
         }else{
             return false;
         }
-        $this->app_obj->call_set_name();
+        $this->app_obj->language    =  $data['language'];
+        $this->app_obj->first_contact_name = $data['app_to_account_first'];
+        $this->app_obj->last_contact_name  =  $data['app_to_account_last'];
+        $this->app_obj->call_set_contact_name();
         return true;
     }
 
@@ -271,7 +275,7 @@ class TTSservice{
         $list_key               = $call_array['list_key'];
         $this->call_type        = $call_array['type'];
         $this->app_type         = $call_array['app_type'];
-        if( $this->call_num = Yii::$app->redis->llen($list_key) <= 0 ){         //队列空
+        if( $this->call_num = Yii::$app->redis->llen($list_key) <= 0 ){         //队列空 发送重新呼叫按钮
             $this->_sendAppMune($call_array);
             return true;
         }
