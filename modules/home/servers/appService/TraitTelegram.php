@@ -184,11 +184,13 @@ trait  TraitTelegram {
      * 呼叫应答 对应的文字消息
      */
     private function _CallAnwserText(  $anwser , $calledName){
+
             if($anwser == 'timeout') return '呼叫'.$calledName.'失败, 暂时无人接听!';
             if($anwser == 'answered') return '呼叫'.$calledName.'成功!';
-            if($anwser == 'failed') return '呼叫'.$calledName.'无法接通!';
-            if($anwser == 'unanwsered') return '呼叫'.$calledName.'暂时无人接听!';
+            if($anwser == 'failed') return '呼叫'.$calledName.'失败!';
+            if($anwser == 'unanwsered') return '呼叫'.$calledName.'失败,暂时无人接听!';
             if($anwser == 'busy') return '呼叫的用户忙!';
+
     }
 
 
