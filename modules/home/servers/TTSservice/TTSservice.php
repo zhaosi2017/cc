@@ -163,7 +163,7 @@ class TTSservice{
         Yii::$app->redis->hset($call_key , 'to_nickname' , $to_user['nickname']);               //被叫的昵称
         Yii::$app->redis->hset($call_key , 'from_number' , $from_user['phone_number']);         //主叫号码
         Yii::$app->redis->hset($call_key , 'to_number' , $this->third->to);                     //被叫号码
-        Yii::$app->redis->hset($call_key , 'type' ,       $this->call_type);                    //呼叫号码的类型  联系号码 紧急联系人号码
+        Yii::$app->redis->hset($call_key , 'call_type' ,       $this->call_type);               //呼叫号码的类型  联系号码 紧急联系人号码
         Yii::$app->redis->hset($call_key , 'app_type' ,$this->app_type);                        //呼叫发起的app类型
         Yii::$app->redis->hset($call_key , 'nickname' ,$send['nickname']);                      //被叫的昵称
         Yii::$app->redis->hset($call_key , 'language' ,$to_user['language']);                   //呼叫的语言
@@ -274,7 +274,7 @@ class TTSservice{
     private function _moreSendMessage($call_array){
 
         $list_key               = $call_array['list_key'];
-        $this->call_type        = $call_array['type'];
+        $this->call_type        = $call_array['call_type'];
         $this->app_type         = $call_array['app_type'];
         if( $this->call_num = Yii::$app->redis->llen($list_key) <= 0 ){         //队列空 发送重新呼叫按钮
             $this->_sendAppMune($call_array);
@@ -288,8 +288,9 @@ class TTSservice{
         $this->third->messageText   = $send['text'];
         $this->third->from          = $send['from'];
         $this->third->messageType   = $send['message_type'];
+        $this->third->Language      = $this->app_obj->language;
+
         $this->call_type            = $send['call_type'];
-        $this->call_type            = $this->app_obj->language;
 
         $call_array['nickname'] =  $send['nickname'];
         $this->app_obj->continueCall($this->call_type ,$call_array );
