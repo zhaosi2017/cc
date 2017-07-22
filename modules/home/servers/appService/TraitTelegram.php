@@ -132,7 +132,7 @@ trait  TraitTelegram {
      * @param $appCalledUid   主叫 tg_id
      * @param $calledUserId   被叫 user_id
      * @param $callAppName    被叫第一个名
-     * @param $calledAppName    被叫姓
+     * @param $calledAppName  被叫姓
      * @return bool
      */
     public function sendCallButton($type, $appCalledUid, $calledUserId,$callAppName,$calledAppName ,$appCallUid){
@@ -267,7 +267,7 @@ trait  TraitTelegram {
             $service->from_user_id = $this->callPersonData->id;
             $service->to_user_id = $this->calledPersonData->id;
             if($call_type == CallRecord::Record_Type_none){
-                $service->messageText = '呼叫您上线telegram';
+                $service->messageText = $this->telegramFirstName.'呼叫您上线telegram';
             }else{
                 $service->messageText = '请转告'.$this->calledPersonData->telegram_name.'上线telegram';
 
