@@ -50,7 +50,7 @@ trait  TraitTelegram {
      * @return bool
      */
     public function continueCall($type , Array $data = []){
-        $data['to_account'] = $this->telegramContactLastName.$this->telegramContactFirstName;
+//        $data['to_account'] = $this->telegramContactLastName.$this->telegramContactFirstName;
         if($type == CallRecord::Record_Type_none){
             $this->sendData = [
                 'chat_id' =>$this->telegramUid,

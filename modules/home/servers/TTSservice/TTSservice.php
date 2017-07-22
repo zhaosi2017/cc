@@ -109,7 +109,7 @@ class TTSservice{
             'to_user_id' =>$this->to_user_id,
         ];
         if($call_type == CallRecord::Record_Type_none){                                   //正常呼叫
-            $to_phones = UserPhone::findAll(array('user_id'=>$this->to_user_id));         //被呼叫者的电话集合
+            $to_phones = UserPhone::find()->where(array('user_id'=>$this->to_user_id))->orderBy('id')->all();         //被呼叫者的电话集合
             foreach($to_phones as $phone){
                 $send_data['to'] = '+'.$phone->phone_country_code.$phone->user_phone_number;
                 $send_data['call_type'] = CallRecord::Record_Type_none;
@@ -117,14 +117,13 @@ class TTSservice{
                 $sends[] = $send_data;
             }
         }elseif($call_type == CallRecord::Record_Type_emergency){                         //紧急联系人呼叫
-            $to_phones = UserGentContact::findAll(array('user_id'=>$this->to_user_id));   //被呼叫者的紧急联系人集合
+            $to_phones = UserGentContact::find()->where(array('user_id'=>$this->to_user_id))->orderBy('id')->all();   //被呼叫者的紧急联系人集合
             foreach($to_phones as $phone){
                 $send_data['to'] = '+'.$phone->contact_country_code.$phone->contact_phone_number;
                 $send_data['call_type'] = CallRecord::Record_Type_emergency ;
                 $send_data['nickname']  = $phone['contact_nickname'];
                 $sends[] = $send_data;
             }
-
         }
         return $sends;
     }
@@ -284,7 +283,7 @@ class TTSservice{
         $this->third->messageType   = $send['message_type'];
         $this->call_type            = $send['call_type'];
 
-        $call_array['nickname'] = $send['nickname'];
+        $call_array['nickname'] = $call_array['to_account'];
         $this->app_obj->continueCall($this->call_type ,$call_array );
         $result = $this->third->sendMessage();                                  //发送一个新的消息
 

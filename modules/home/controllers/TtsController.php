@@ -94,22 +94,5 @@ class TtsController extends GController{
         echo $result;
     }
 
-    public function actionTestSinch(){
-
-        $service = TTSservice::init(\app\modules\home\servers\TTSservice\Sinch::class);
-        $service->app_type = 'telegram';
-        $service->from_user_id = 1;
-        $service->to_user_id = 31;
-        $service->messageText = '这只是一个测试代码';
-        $service->messageType = 'TTS';
-        $service->messageText_more =  '这个测试用于第二次呼叫电话';
-        $service->Language = 'zh-CN';
-        $app_obj = new Telegram();
-        $app_obj->telegramUid = 425944718;
-        $service->sendMessage(CallRecord::Record_Type_none , $app_obj);
-        echo "<pre>";
-        print_r($service);
-    }
-
 
 }
