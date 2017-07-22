@@ -221,6 +221,7 @@ class TTSservice{
         }else{
             return false;
         }
+        $this->app_obj->call_set_name();
         return true;
     }
 
