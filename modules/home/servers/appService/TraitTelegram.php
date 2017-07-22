@@ -23,25 +23,26 @@ trait  TraitTelegram {
      * @param  string $anwser         应答状态
      * @return bool
      */
-    public function sendCallFailed($type, $telegram_name,$anwser){
-
-        if($type == CallRecord::Record_Type_none){              //联系电话呼叫失败
+    public function sendCallFailed($telegram_name,$anwser){
             $this->sendData = [
                 'chat_id' =>$this->telegramUid,
                 'text' => $this->_CallAnwserText($anwser , $telegram_name),
             ];
-        }elseif($type == CallRecord::Record_Type_emergency){    //紧急联系人呼叫失败
-            $this->sendData = [
-                'chat_id' =>$this->telegramUid,
-                'text' => $this->_CallAnwserText($anwser , $telegram_name),
-            ];
-        }else{
-            return true;
-        }
         $this->sendTelegramData();
         return true;
     }
+    /**
+     * 呼叫应答 对应的文字消息
+     */
+    private function _CallAnwserText(  $anwser , $calledName){
 
+        if($anwser == 'timeout') return '呼叫'.$calledName.'失败, 暂时无人接听!';
+        if($anwser == 'answered') return '呼叫'.$calledName.'成功!';
+        if($anwser == 'failed') return '呼叫'.$calledName.'失败!';
+        if($anwser == 'unanwsered') return '呼叫'.$calledName.'失败,暂时无人接听!';
+        if($anwser == 'busy') return '呼叫的用户忙!';
+
+    }
 
     /**
      * 每次呼叫开始提示
@@ -180,18 +181,7 @@ trait  TraitTelegram {
         $this->sendTelegramData();
         return true;
     }
-    /**
-     * 呼叫应答 对应的文字消息
-     */
-    private function _CallAnwserText(  $anwser , $calledName){
 
-            if($anwser == 'timeout') return '呼叫'.$calledName.'失败, 暂时无人接听!';
-            if($anwser == 'answered') return '呼叫'.$calledName.'成功!';
-            if($anwser == 'failed') return '呼叫'.$calledName.'失败!';
-            if($anwser == 'unanwsered') return '呼叫'.$calledName.'失败,暂时无人接听!';
-            if($anwser == 'busy') return '呼叫的用户忙!';
-
-    }
 
 
     /**
