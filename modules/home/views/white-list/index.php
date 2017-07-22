@@ -16,7 +16,11 @@ $actionId = Yii::$app->requestedAction->id;
 
 
 ?>
-
+<style>
+    #content-main{
+        overflow-y: scroll !important;
+    }
+</style>
 <div class="call-record-index">
     <div class="help-block m-t"></div>
     <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
