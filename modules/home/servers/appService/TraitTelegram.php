@@ -16,6 +16,13 @@ use app\modules\home\servers\TTSservice\TTSservice;
 
 trait  TraitTelegram {
 
+    public $first_name;
+    public $last_name;
+
+    public function call_set_name(){
+        $this->first_contact_name = $this->telegramContactFirstName;
+        $this->last_contact_name = $this->telegramContactLastName;
+    }
     /**
      *拨打电话失败 消息推送
      * @param  int $type
@@ -120,8 +127,8 @@ trait  TraitTelegram {
      * @param $type
      * @param $appCalledUid   主叫 tg_id
      * @param $calledUserId   被叫 user_id
-     * @param $callAppName    主叫昵称
-     * @param $calledAppName  被叫昵称
+     * @param $callAppName    被叫第一个名
+     * @param $calledAppName    被叫姓
      * @return bool
      */
     public function sendCallButton($type, $appCalledUid, $calledUserId,$callAppName,$calledAppName ,$appCallUid){

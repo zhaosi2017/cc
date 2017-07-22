@@ -77,7 +77,8 @@ class TTSservice{
         $this->third->to = $send_['to'];
         $this->call_type = $send_['call_type'];
         $this->app_obj = $app_obj;
-        $this->app_obj->startCall($this->call_type ,['to_account'=>'','nickname'=>$send_['nickname']] );
+        $this->app_obj->call_set_name();
+        $this->app_obj->startCall($this->call_type ,['to_account'=>$this->app_obj->last_contact_name.$this->app_obj->first_contact_name,'nickname'=>$send_['nickname']] );
         if(!$this->third->sendMessage()){                               //发生异常直接返回 提示呼叫失败
             $this->app_obj->exceptionCall();
             return false;
@@ -237,8 +238,8 @@ class TTSservice{
         $this->app_obj->sendCallButton($this->call_type,
             $call_array['app_to_account_id'],
             $call_array['to_id'] ,
-            $call_array['from_nickname'],
-            $call_array['to_nickname'],
+            $this->app_obj->first_contact_name,//$call_array['from_nickname'],
+            $this->app_obj->last_contact_name,//$call_array['to_nickname'],
             $call_array['app_from_account_id']
         ); //发送继续呼叫按钮
     }
