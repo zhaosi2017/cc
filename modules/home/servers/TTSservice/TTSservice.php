@@ -166,7 +166,7 @@ class TTSservice{
         Yii::$app->redis->hset($call_key , 'type' ,       $this->call_type);                    //呼叫号码的类型  联系号码 紧急联系人号码
         Yii::$app->redis->hset($call_key , 'app_type' ,$this->app_type);                        //呼叫发起的app类型
         Yii::$app->redis->hset($call_key , 'nickname' ,$send['nickname']);                      //被叫的昵称
-        Yii::$app->redis->hset($call_key , 'language' ,$from_user['language']);                 //呼叫的语言
+        Yii::$app->redis->hset($call_key , 'language' ,$this->third->Language);                 //呼叫的语言
         Yii::$app->redis->hset($call_key , 'app_from_account_id' , $from_app_account_id);       //主叫的app id
         Yii::$app->redis->hset($call_key , 'app_to_account_id' , $to_app_account_id);           //被叫的app id
         Yii::$app->redis->hset($call_key , 'app_to_account_first' , $this->app_obj->first_contact_name);//被叫的app first_name
@@ -289,6 +289,7 @@ class TTSservice{
         $this->third->from          = $send['from'];
         $this->third->messageType   = $send['message_type'];
         $this->call_type            = $send['call_type'];
+        $this->call_type            = $this->app_obj->language;
 
         $call_array['nickname'] =  $send['nickname'];
         $this->app_obj->continueCall($this->call_type ,$call_array );
