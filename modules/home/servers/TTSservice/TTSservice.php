@@ -86,7 +86,7 @@ class TTSservice{
 
         $list_key = get_class($this->third).'_send_'.$this->third->messageId;
         foreach($sends as $send){
-            $send['text'] = !empty($this->third->messageText_more)?$this->third->messageText_more:$this->third->messageText;
+            $send['text'] = $this->third->messageText;
             $tmp = json_encode($send);
             Yii::$app->redis->lpush($list_key , $tmp);
             $this->call_num++;
