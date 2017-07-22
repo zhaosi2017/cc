@@ -283,7 +283,7 @@ class TTSservice{
         $this->third->messageType   = $send['message_type'];
         $this->call_type            = $send['call_type'];
 
-        $call_array['nickname'] = $call_array['to_account'];
+        $call_array['nickname'] = $call_array['nickname'];
         $this->app_obj->continueCall($this->call_type ,$call_array );
         $result = $this->third->sendMessage();                                  //发送一个新的消息
 
