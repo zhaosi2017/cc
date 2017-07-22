@@ -108,7 +108,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-sm-2 bindpotato-div">
         <img class="img-responsive center-block bindpotato-img" src="/img/telegram/telegram-index-5.jpg" alt="">
         <div class="text-center">(5)</div>
-        <div class="bindpotato-div-1 text-center"><?= Yii::t('app/index','In the "Share Your Phone Number?" Box select OK ", enter Figure 6.')?></div>
+        <div class="bindpotato-div-1 text-center"><?= Yii::t('app/index','In the "Share Your Phone Number?" Box select "OK", enter Figure 6.')?></div>
     </div>
     <div class="col-sm-2 bindpotato-div">
         <img class="img-responsive center-block bindpotato-img" src="/img/telegram/telegram-index-6.jpg" alt="">
