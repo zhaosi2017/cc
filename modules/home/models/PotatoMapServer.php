@@ -163,7 +163,7 @@ class PotatoMapServer extends Model
     public function sendMap()
     {
         $maps = $this->searchMap();
-        file_put_contents('/tmp/r.log','5555'.var_export($maps).PHP_EOL,8);
+        file_put_contents('/tmp/r.log','5555'.var_export($maps,true).PHP_EOL,8);
         if(!empty($maps)){
             foreach ($maps as $key=>$map)
             {
