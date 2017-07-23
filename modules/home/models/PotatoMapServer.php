@@ -17,9 +17,9 @@ class PotatoMapServer extends Model
     private $potatoUid;
     private $searchMapText;
     private $searchText;
-    private $webHookUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendTextMessage';
-    private $mapHookUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendLocation';
-    private $venueHookUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendVenue';
+    private $webHookUrl = 'https://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendTextMessage';
+    private $mapHookUrl = 'https://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendLocation';
+    private $venueHookUrl = 'https://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendVenue';
     private $sendData;
     private $maxRequestNum = 5;
     private $key;
@@ -163,6 +163,7 @@ class PotatoMapServer extends Model
     public function sendMap()
     {
         $maps = $this->searchMap();
+        file_put_contents('/tmp/r.log','5555'.var_export($maps).PHP_EOL,8);
         if(!empty($maps)){
             foreach ($maps as $key=>$map)
             {
@@ -189,11 +190,12 @@ class PotatoMapServer extends Model
     {
         $messages = json_decode($this->searchMapText,true);
         $message = $messages['text'];
-
+        file_put_contents('/tmp/r.log','3333'.$message.PHP_EOL,8);
         if(preg_match('/^\/map/i',$message)){
             $arr = explode(' ',$message);
             if(isset($arr[1]) && !empty($arr[1])) {
                 $this->searchText = $arr[1];
+                file_put_contents('/tmp/r.log','4444'.$arr[1].PHP_EOL,8);
                 $this->sendMap();
                 return $this->errorCode['success'];
             }
