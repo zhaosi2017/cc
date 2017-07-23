@@ -69,7 +69,6 @@ class PotatoController extends GController
             $inlineMessageId = isset($message['inline_message_id']) ? $message['inline_message_id'] : '';
             $userId = isset($message['user_id']) ? $message['user_id'] : '';
             $potatoMapServer = new PotatoMapServer();
-            file_put_contents('/tmp/r.log',var_export($postData,true).PHP_EOL,8);
             // 如果是用户第一次关注该机器人，发送欢迎信息,并发送内联快捷菜单.
             if (isset($message['text']) && $message['text'] == $potato->getFirstText()) {
                 return $potato->potatoWellcome();
@@ -99,7 +98,6 @@ class PotatoController extends GController
                 $diffTime = $time - $callBackTime;
                 if ($diffTime > 120) {
                     $file = 'potato_'.date('Y-m-d', time()).'.txt';
-                    file_put_contents('/tmp/'.$file, var_export($postData, true).PHP_EOL, 8);
                     // 应答.
                     if (!empty($inlineMessageId) && !empty($userId)) {
                         $potato->sendCallbackAnswer($userId, $inlineMessageId);
@@ -164,12 +162,10 @@ class PotatoController extends GController
 
                 return $result;
             }else if($message['request_type'] == $potatoMapServer->requestTextType ){
-                file_put_contents('/tmp/r.log','1111'.PHP_EOL,8);
                     $potatoMapServer->potatoUid = $potato->potatoUid;
                     $replyMessageId = isset($message['reply_to_message'])? $message['reply_to_message']: '';
                     $potatoMapServer->key = $potato->potatoUid.'-'.$replyMessageId.'-potatoMap';
                     $potatoMapServer->searchMapText = json_encode($message);
-                file_put_contents('/tmp/r.log','222'.json_encode($message).PHP_EOL,8);
                     return $potatoMapServer->sendVenue();
             }else if($message['request_type'] == $potatoMapServer->requestLocationType || $message['request_type'] == $potatoMapServer->requestMapType){
                 $potatoMapServer->potatoUid = $potato->potatoUid;

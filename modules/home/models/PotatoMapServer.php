@@ -163,7 +163,6 @@ class PotatoMapServer extends Model
     public function sendMap()
     {
         $maps = $this->searchMap();
-        file_put_contents('/tmp/r.log','5555'.var_export($maps,true).PHP_EOL,8);
         if(!empty($maps)){
             foreach ($maps as $key=>$map)
             {
@@ -190,12 +189,10 @@ class PotatoMapServer extends Model
     {
         $messages = json_decode($this->searchMapText,true);
         $message = $messages['text'];
-        file_put_contents('/tmp/r.log','3333'.$message.PHP_EOL,8);
         if(preg_match('/^\/map/i',$message)){
             $arr = explode(' ',$message);
             if(isset($arr[1]) && !empty($arr[1])) {
                 $this->searchText = $arr[1];
-                file_put_contents('/tmp/r.log','4444'.$arr[1].PHP_EOL,8);
                 $this->sendMap();
                 return $this->errorCode['success'];
             }
