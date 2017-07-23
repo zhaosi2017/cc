@@ -18,8 +18,8 @@ class PotatoMapServer extends Model
     private $searchMapText;
     private $searchText;
     private $webHookUrl = 'https://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendTextMessage';
-    private $mapHookUrl = 'https://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendLocation';
-    private $venueHookUrl = 'https://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendVenue';
+    private $mapHookUrl = 'https://bot.potato.im:5423/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendLocation';
+    private $venueHookUrl = 'https://bot.potato.im:5423/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendVenue';
     private $sendData;
     private $maxRequestNum = 5;
     private $key;
