@@ -269,11 +269,18 @@ trait  TraitTelegram {
             $service = TTSservice::init(\app\modules\home\servers\TTSservice\Sinch::class);
             $service->from_user_id = $this->callPersonData->id;
             $service->to_user_id = $this->calledPersonData->id;
+
+            $tmp_tlanguage = $this->tlanguage  ;
+            $tmp_llanguage = $this->llanguag;
+            $this->setLanguage($this->calledPersonData->language);
             if($call_type == CallRecord::Record_Type_none){
                 $service->messageText = $this->translateLanguage($this->telegramFirstName.'呼叫您上线telegram');
             }else{
                 $service->messageText = $this->translateLanguage('请转告'.$this->calledPersonData->telegram_name.'上线telegram');
             }
+            $this->tlanguage = $tmp_tlanguage;
+            $this->llanguag  = $tmp_llanguage;
+            
             $service->messageType = 'TTS';
             $service->app_type ='telegram';
             $service->Language = $this->llanguage;
