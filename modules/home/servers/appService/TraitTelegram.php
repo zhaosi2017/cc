@@ -145,8 +145,8 @@ trait  TraitTelegram {
                 $this->callUrgentCallbackDataPre,
                 $appCalledUid,
                 $calledUserId,
+                $calledAppName,
                 $callAppName,
-                $calledAppName
             ];
             $text = Yii::t('app/model/nexmo', 'Whether to call an emergency contact ?', array(), $this->language);
             $keyBoard = [
