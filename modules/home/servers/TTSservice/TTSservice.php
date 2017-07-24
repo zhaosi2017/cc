@@ -198,7 +198,7 @@ class TTSservice{
             $list_key = $catch_call['list_key'];
             Yii::$app->redis->del($list_key);
         }else{                                                                  //呼叫失败 继续
-            $tmp_call_name = $this->app_obj->first_contact_name;
+            $tmp_call_name = (CallRecord::Record_Type_emergency == $catch_call['call_type'])?$catch_call['nickname']: $this->app_obj->first_contact_name;
             $this->app_obj->sendCallFailed( $tmp_call_name , $this->third->messageAnwser);
             $this->_moreSendMessage($catch_call);
         }
