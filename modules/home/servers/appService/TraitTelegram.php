@@ -72,7 +72,7 @@ trait  TraitTelegram {
         }elseif($type == CallRecord::Record_Type_emergency){
             $this->sendData = [
                 'chat_id' =>$this->telegramUid,
-                'text' => $this->translateLanguage('正在尝试呼叫'.$this->first_contact_name.'的紧急联系人:'.$data['nickname'].'，请稍候！'),
+                'text' => $this->translateLanguage('正在尝试呼叫'.$this->last_contact_name.'的紧急联系人:'.$data['nickname'].'，请稍候！'),
             ];
         }
         $this->sendTelegramData();
