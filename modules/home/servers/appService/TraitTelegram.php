@@ -51,8 +51,7 @@ trait  TraitTelegram {
         if($anwser == 'answered') return '呼叫'.$calledName.'成功!';
         if($anwser == 'failed') return '呼叫'.$calledName.'失败!';
         if($anwser == 'unanwsered') return '呼叫'.$calledName.'失败,暂时无人接听!';
-        if($anwser == 'busy') return '呼叫的用户忙!';
-
+        if($anwser == 'busy') return '呼叫'.$calledName.'用户忙!';
     }
 
     /**
@@ -122,7 +121,6 @@ trait  TraitTelegram {
             'chat_id' =>$this->telegramUid,
             'text' => '呼叫'.$telegram_name.'成功',
         ];
-        $this->setWebhook();
         $this->sendTelegramData();
         return true;
     }

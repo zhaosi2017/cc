@@ -188,7 +188,9 @@ class TTSservice{
         $result =  $this->third->event($event_data);
         $cacheKey = get_class($this->third).'_callid_'.$this->third->messageId;
         $catch_call = $this->_redisGetVByK($cacheKey);
-
+        if(empty($catch_call)){
+            return ;
+        }
         $this->_Create_app($catch_call);
         if($this->third->messageStatus == CallRecord::Record_Status_Success){   //呼叫成功 回复一条消息 终止任务
 
