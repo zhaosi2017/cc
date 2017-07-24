@@ -74,6 +74,7 @@ class TTSservice{
         $to_user   = User::findOne($this->to_user_id)->toArray();                     //被叫人
         $sends     = $this->_getCallNumbers($call_type, $to_user);
         $send_ = array_shift($sends);
+        reset($sends);
         $this->third->to = $send_['to'];
         $this->call_type = $send_['call_type'];
         $this->app_obj = $app_obj;
@@ -118,7 +119,7 @@ class TTSservice{
                 $sends[] = $send_data;
             }
         }elseif($call_type == CallRecord::Record_Type_emergency){                         //紧急联系人呼叫
-            $to_phones = UserGentContact::find()->where(array('user_id'=>$this->to_user_id))->orderBy('id')->all();   //被呼叫者的紧急联系人集合
+            $to_phones = UserGentContact::find()->where(array('user_id'=>$this->to_user_id))->orderBy(' id ')->all();   //被呼叫者的紧急联系人集合
             foreach($to_phones as $phone){
                 $send_data['to'] = '+'.$phone->contact_country_code.$phone->contact_phone_number;
                 $send_data['call_type'] = CallRecord::Record_Type_emergency ;
@@ -133,7 +134,6 @@ class TTSservice{
      * @param $list_key
      * @param $from_user User
      * @param $to_user   User
-     *
      */
     private function _saveCallBackToRedis($list_key,$from_user , $to_user , $send){
         $call_key = get_class($this->third).'_callid_'.$this->third->messageId;
