@@ -166,6 +166,7 @@ class TTSservice{
         Yii::$app->redis->hset($call_key , 'app_type' ,$this->app_type);                        //呼叫发起的app类型
         Yii::$app->redis->hset($call_key , 'nickname' ,$send['nickname']);                      //被叫的昵称
         Yii::$app->redis->hset($call_key , 'language' ,$to_user['language']);                   //呼叫的语言
+        Yii::$app->redis->hset($call_key , 'app_language' ,$this->app_obj->llanguage);                   //呼叫的语言
         Yii::$app->redis->hset($call_key , 'app_from_account_id' , $from_app_account_id);       //主叫的app id
         Yii::$app->redis->hset($call_key , 'app_to_account_id' , $to_app_account_id);           //被叫的app id
         Yii::$app->redis->hset($call_key , 'app_to_account_first' , $this->app_obj->first_contact_name);//主叫叫的app name
@@ -224,7 +225,7 @@ class TTSservice{
         }else{
             return false;
         }
-        $this->app_obj->language    =  $data['language'];
+        $this->app_obj->language    =  $data['app_language'];
         $this->app_obj->first_contact_name = $data['app_to_account_first'];
         $this->app_obj->last_contact_name  =  $data['app_to_account_last'];
         $this->app_obj->call_set_contact_name();
@@ -290,7 +291,7 @@ class TTSservice{
         $this->third->messageText   = $send['text'];
         $this->third->from          = $send['from'];
         $this->third->messageType   = $send['message_type'];
-        $this->third->Language      = $this->app_obj->language;
+        $this->third->Language      = $call_array['language'];
 
         $this->call_type            = $send['call_type'];
 
