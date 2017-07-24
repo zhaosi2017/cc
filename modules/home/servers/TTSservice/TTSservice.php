@@ -189,7 +189,7 @@ class TTSservice{
         $cacheKey = get_class($this->third).'_callid_'.$this->third->messageId;
         $catch_call = $this->_redisGetVByK($cacheKey);
         if(empty($catch_call)){
-            return ;
+            return;
         }
         $this->_Create_app($catch_call);
         if($this->third->messageStatus == CallRecord::Record_Status_Success){   //呼叫成功 回复一条消息 终止任务
@@ -204,7 +204,6 @@ class TTSservice{
             $this->_moreSendMessage($catch_call);
         }
         $this->_saveRecord($catch_call);
-        Yii::$app->redis->del($cacheKey);
 
         return $result;   //回应数据 跟业务无关
     }
@@ -261,6 +260,7 @@ class TTSservice{
 
         $cache_keys = Yii::$app->redis->hkeys($cacheKey);
         $catch_vals = Yii::$app->redis->hvals($cacheKey);
+        Yii::$app->redis->del($cacheKey);
         return array_combine($cache_keys , $catch_vals);
 
     }
