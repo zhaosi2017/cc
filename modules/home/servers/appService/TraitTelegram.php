@@ -170,8 +170,9 @@ trait  TraitTelegram {
             $callback = [
                 $this->callCallbackDataPre,
                 $appCalledUid,
-                $callAppName,
                 $calledAppName,
+                $callAppName,
+
             ];
             $text = Yii::t('app/model/nexmo', 'Whether to call again ?', array(), $this->language);
             $keyBoard = [
