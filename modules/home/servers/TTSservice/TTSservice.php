@@ -74,7 +74,6 @@ class TTSservice{
         $to_user   = User::findOne($this->to_user_id)->toArray();                     //被叫人
         $sends     = $this->_getCallNumbers($call_type, $to_user);
         $send_ = array_shift($sends);
-        reset($sends);
         $this->third->to = $send_['to'];
         $this->call_type = $send_['call_type'];
         $this->app_obj = $app_obj;
@@ -283,7 +282,7 @@ class TTSservice{
             return true;
         }
 
-        $send = Yii::$app->redis->lpop($list_key);
+        $send = Yii::$app->redis->rpop($list_key);
         $send = json_decode($send ,true);
 
         $this->third->to            = $send['to'];
