@@ -52,7 +52,7 @@ trait  TraitPotato {
         if($anwser == 'answered') return $this->translateLanguage('呼叫'.$calledName.'成功!');
         if($anwser == 'failed') return $this->translateLanguage('呼叫'.$calledName.'失败!');
         if($anwser == 'unanwsered') return $this->translateLanguage('呼叫'.$calledName.'失败,暂时无人接听!');
-        if($anwser == 'busy') return $this->translateLanguage('呼叫'.$calledName.'用户忙!');
+        if($anwser == 'busy') return $this->translateLanguage('呼叫的用户忙!');
     }
 
     /**
