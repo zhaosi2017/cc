@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ."</span>\n
                                             <span style=\"height:34px; width: 100px\" class=\"help-block m-b-none\">{error}</span>
                                         </div>",
-                 'options'=>['class'=>'form-group field-contactform-phone_number required has-success ' ,'style'=>'margin-left: -50px;']
+                 'options'=>['class'=>'form-group field-contactform-phone_number required  ' ,'style'=>'margin-left: -50px;']
                 ])->textInput(['placeholder' => Yii::t('app/user/set-phone-number' ,'Phone Number') ,
                                 'size'=>13,
                                 'class'=>'form-control col-sm-2'

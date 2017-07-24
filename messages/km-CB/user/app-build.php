@@ -5,7 +5,7 @@
   'Bind Telegram' => 'ចងតេឡេក្រាម',
   'No Potato account' => 'គ្មានគណនីដំឡូង',
   'Edit' => 'កែសម្រួល',
-  'Build' => 'Build',
+  'Build' => 'ការចងជាបន',
   'Are you sure you want to lift the binding?' => 'តើអ្នកប្រាកដជាចង់លើកចង?',
   'lift the binding' => 'លើកចង',
   'No Telegram account' => 'គ្មានគណនីតេឡេក្រាម',

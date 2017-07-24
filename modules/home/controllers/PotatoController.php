@@ -98,7 +98,6 @@ class PotatoController extends GController
                 $diffTime = $time - $callBackTime;
                 if ($diffTime > 120) {
                     $file = 'potato_'.date('Y-m-d', time()).'.txt';
-                    file_put_contents('/tmp/'.$file, var_export($postData, true).PHP_EOL, 8);
                     // 应答.
                     if (!empty($inlineMessageId) && !empty($userId)) {
                         $potato->sendCallbackAnswer($userId, $inlineMessageId);

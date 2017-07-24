@@ -63,5 +63,12 @@
     'Please edit : username'=>'請編輯:用戶名',
     'Get code'=>'獲取驗證碼',
     'Contact Phone'=>'聯繫電話',
-    'Phone or country code changes'=>'電話或國碼存在變更'
+    'Phone or country code changes'=>'電話或國碼存在變更',
+    'After logging in to Telegram, go to the "Chats" page.' => '登錄Telegram後，進入“Chats”頁面。',
+    'After logging in to Potato, go to the "Chats" page.' => '登錄Potato後，進入“Chats”頁面。',
+    'Enter "callu_bot" in the search bar on the "Chats" page and perform the search. Click "callu" to enter Figure 3.' => '在“Chats”頁面的搜索欄輸入“callu_bot”，並執行搜索。點擊“callu”，進入圖3。',
+    'Click the "Start" button to enter Figure 4.' => '點擊“Start”按鈕，進入圖4。',
+    'Click "Share your own business card" to enter Figure 5.' => '點擊“分享自己名片”，進入圖5。',
+    'In the "Share Your Phone Number?" Box select "OK", enter Figure 6.' => '在“Share Your Phone Number？”彈框中選擇"OK"，進入圖6。',
+    'Will fill in the verification code to fill in the "verification code" input box, the binding.' => '將收到的驗證碼填寫到“驗證碼”輸入框，進行綁定。',
 ); 
