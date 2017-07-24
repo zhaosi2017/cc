@@ -278,13 +278,11 @@ trait  TraitTelegram {
             }else{
                 $service->messageText = $this->translateLanguage('请转告'.$this->calledPersonData->telegram_name.'上线telegram');
             }
-            $service->Language = $this->llanguage;
             $this->tlanguage = $tmp_tlanguage;
             $this->llanguag  = $tmp_llanguage;
 
             $service->messageType = 'TTS';
             $service->app_type ='telegram';
-            //$service->Language = $this->llanguage;
             $service->sendMessage($call_type , $this);
             return $this->errorCode['success'];
         } else {

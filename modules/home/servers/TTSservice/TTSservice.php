@@ -75,6 +75,7 @@ class TTSservice{
         $sends     = $this->_getCallNumbers($call_type, $to_user);
         $send_ = array_shift($sends);
         $this->third->to = $send_['to'];
+        $this->third->Language = $to_user['language'];
         $this->call_type = $send_['call_type'];
         $this->app_obj = $app_obj;
         $this->app_obj->call_set_name();
