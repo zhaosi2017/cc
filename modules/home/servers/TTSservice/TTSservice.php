@@ -332,7 +332,7 @@ class TTSservice{
         $callRecord->unactive_contact_number = $data['to_number'];//被叫号码
 
         $callRecord->status = $this->third->messageStatus;        //呼叫状态
-        $callRecord->call_time = $data['time'];                   //呼叫发起时间
+        $callRecord->call_time = time();                          //呼叫发起时间
         $callRecord->type = $data['call_type'];                        //呼叫的类型 紧急联系人呼叫 ？ 正常呼叫？
         $callRecord->save();
     }
