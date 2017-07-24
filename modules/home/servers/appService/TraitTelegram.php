@@ -20,12 +20,12 @@ trait  TraitTelegram {
     public $last_contact_name;
 
     public function call_set_name(){
-        $this->first_contact_name = $this->telegramContactFirstName;
-        $this->last_contact_name = $this->telegramContactLastName;
+        $this->first_contact_name = $this->telegramFirstName;
+        $this->last_contact_name = $this->telegramContactFirstName;
     }
     public function call_set_contact_name(){
-        $this->telegramContactFirstName = $this->first_contact_name;
-        $this->telegramContactLastName  = $this->last_contact_name;
+        $this->telegramFirstName = $this->first_contact_name;
+        $this->telegramContactFirstName  = $this->last_contact_name;
     }
     /**
      *拨打电话失败 消息推送
@@ -123,7 +123,7 @@ trait  TraitTelegram {
         $this->tlanguage = $this->language;
         $this->sendData = [
             'chat_id' =>$this->telegramUid,
-            'text' => $this->translateLanguage('呼叫'.$telegram_name.'成功'),
+            'text' => $this->translateLanguage('呼叫'.$telegram_name.'成功!'),
         ];
         $this->sendTelegramData();
         return true;
@@ -170,8 +170,8 @@ trait  TraitTelegram {
             $callback = [
                 $this->callCallbackDataPre,
                 $appCalledUid,
-                $calledAppName,
                 $callAppName,
+                $calledAppName,
             ];
             $text = Yii::t('app/model/nexmo', 'Whether to call again ?', array(), $this->language);
             $keyBoard = [
