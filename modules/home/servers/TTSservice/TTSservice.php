@@ -191,14 +191,15 @@ class TTSservice{
             return;
         }
         $this->_Create_app($catch_call);
+        $tmp_call_name = (CallRecord::Record_Type_emergency == $catch_call['call_type'])?$catch_call['nickname']: $this->app_obj->first_contact_name;
         if($this->third->messageStatus == CallRecord::Record_Status_Success){   //呼叫成功 回复一条消息 终止任务
 
-            $this->app_obj->sendCallSuccess($catch_call['to_account']);
+            $this->app_obj->sendCallSuccess($tmp_call_name);
 
             $list_key = $catch_call['list_key'];
             Yii::$app->redis->del($list_key);
         }else{                                                                  //呼叫失败 继续
-            $tmp_call_name = (CallRecord::Record_Type_emergency == $catch_call['call_type'])?$catch_call['nickname']: $this->app_obj->first_contact_name;
+
             $this->app_obj->sendCallFailed( $tmp_call_name , $this->third->messageAnwser);
             $this->_moreSendMessage($catch_call);
         }
