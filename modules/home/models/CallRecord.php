@@ -104,10 +104,10 @@ class CallRecord extends \app\models\CActiveRecord
     {
         return [
             '0' => Yii::t('app/call-record/index','Success'),
-            '1' => Yii::t('app/call-record/index','Time out'),
+            '1' => Yii::t('app/call-record/index','Failure'),
             '2' => Yii::t('app/call-record/index','Refuse'),
             '3' => Yii::t('app/call-record/index','Busy'),
-            '4' => Yii::t('app/call-record/index','Failure'),
+            '4' => Yii::t('app/call-record/index','Time out'),
             '5' => Yii::t('app/call-record/index','No answer'),
         ];
     }
