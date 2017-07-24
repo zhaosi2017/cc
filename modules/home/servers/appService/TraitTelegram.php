@@ -270,8 +270,8 @@ trait  TraitTelegram {
             $service->from_user_id = $this->callPersonData->id;
             $service->to_user_id = $this->calledPersonData->id;
 
-            $tmp_tlanguage = $this->tlanguage  ;
-            $tmp_llanguage = $this->llanguag;
+            $tmp_tlanguage = $this->tlanguage;
+            $tmp_llanguage = $this->llanguage;
             $this->setLanguage($this->calledPersonData->language);
             if($call_type == CallRecord::Record_Type_none){
                 $service->messageText = $this->translateLanguage($this->telegramFirstName.'呼叫您上线telegram');
