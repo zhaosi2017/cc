@@ -35,6 +35,7 @@ trait  TraitTelegram {
      * @return bool
      */
     public function sendCallFailed($telegram_name,$anwser){
+        $this->tlanguage = $this->language;
             $this->sendData = [
                 'chat_id' =>$this->telegramUid,
                 'text' => $this->_CallAnwserText($anwser , $telegram_name),
@@ -47,11 +48,11 @@ trait  TraitTelegram {
      */
     private function _CallAnwserText(  $anwser , $calledName){
 
-        if($anwser == 'timeout') return '呼叫'.$calledName.'失败, 暂时无人接听!';
-        if($anwser == 'answered') return '呼叫'.$calledName.'成功!';
-        if($anwser == 'failed') return '呼叫'.$calledName.'失败!';
-        if($anwser == 'unanwsered') return '呼叫'.$calledName.'失败,暂时无人接听!';
-        if($anwser == 'busy') return '呼叫'.$calledName.'用户忙!';
+        if($anwser == 'timeout') return $this->translateLanguage('呼叫'.$calledName.'失败, 暂时无人接听!');
+        if($anwser == 'answered') return $this->translateLanguage('呼叫'.$calledName.'成功!');
+        if($anwser == 'failed') return $this->translateLanguage('呼叫'.$calledName.'失败!');
+        if($anwser == 'unanwsered') return $this->translateLanguage('呼叫'.$calledName.'失败,暂时无人接听!');
+        if($anwser == 'busy') return $this->translateLanguage('呼叫'.$calledName.'用户忙!');
     }
 
     /**
@@ -62,15 +63,16 @@ trait  TraitTelegram {
      */
     public function continueCall($type , Array $data = []){
 //        $data['to_account'] = $this->telegramContactLastName.$this->telegramContactFirstName;
+        $this->tlanguage = $this->language;
         if($type == CallRecord::Record_Type_none){
             $this->sendData = [
                 'chat_id' =>$this->telegramUid,
-                'text' => '正在尝试呼叫'.$data['to_account'].'的其他电话，请稍后！',
+                'text' => $this->translateLanguage('正在尝试呼叫'.$data['to_account'].'的其他电话，请稍候！'),
             ];
         }elseif($type == CallRecord::Record_Type_emergency){
             $this->sendData = [
                 'chat_id' =>$this->telegramUid,
-                'text' => '正在尝试呼叫'.$this->first_contact_name.'的紧急联系人:'.$data['nickname'].'，请稍后！',
+                'text' => $this->translateLanguage('正在尝试呼叫'.$this->first_contact_name.'的紧急联系人:'.$data['nickname'].'，请稍候！'),
             ];
         }
         $this->sendTelegramData();
@@ -81,18 +83,19 @@ trait  TraitTelegram {
      *呼叫流程开始提示
      */
     public function startCall($type , Array $data = []){
+        $this->tlanguage = $this->language;
         if(empty($data['to_account'])){
             $data['to_account'] = $this->telegramContactLastName.$this->telegramContactFirstName;
         }
         if($type == CallRecord::Record_Type_none){
             $this->sendData = [
                 'chat_id' =>$this->telegramUid,
-                'text' => '正在尝试呼叫'.$data['to_account'].'，请稍后！',
+                'text' => $this->translateLanguage('正在尝试呼叫'.$data['to_account'].'，请稍后！'),
             ];
         }elseif($type == CallRecord::Record_Type_emergency){
             $this->sendData = [
                 'chat_id' =>$this->telegramUid,
-                'text' => '正在尝试呼叫'.$data['to_account'].'的紧急联系人:'.$data['nickname'].'，请稍后！',
+                'text' => $this->translateLanguage('正在尝试呼叫'.$data['to_account'].'的紧急联系人:'.$data['nickname'].'，请稍后！')
             ];
         }
         $this->sendTelegramData();
@@ -103,9 +106,10 @@ trait  TraitTelegram {
      *呼叫异常 提示
      */
     public function exceptionCall(){
+        $this->tlanguage = $this->language;
         $this->sendData = [
             'chat_id' =>$this->telegramUid,
-            'text' => '呼叫异常，请稍后再试!'
+            'text' => $this->translateLanguage('呼叫异常，请稍后再试!')
         ];
         $this->sendTelegramData();
     }
@@ -116,10 +120,10 @@ trait  TraitTelegram {
      * @return bool
      */
     public function sendCallSuccess($telegram_name){
-
+        $this->tlanguage = $this->language;
         $this->sendData = [
             'chat_id' =>$this->telegramUid,
-            'text' => '呼叫'.$telegram_name.'成功',
+            'text' => $this->translateLanguage('呼叫'.$telegram_name.'成功'),
         ];
         $this->sendTelegramData();
         return true;
@@ -166,8 +170,8 @@ trait  TraitTelegram {
             $callback = [
                 $this->callCallbackDataPre,
                 $appCalledUid,
-                $callAppName,
-                $calledAppName
+                $calledAppName,
+                $callAppName
             ];
             $text = Yii::t('app/model/nexmo', 'Whether to call again ?', array(), $this->language);
             $keyBoard = [
@@ -265,10 +269,9 @@ trait  TraitTelegram {
             $service->from_user_id = $this->callPersonData->id;
             $service->to_user_id = $this->calledPersonData->id;
             if($call_type == CallRecord::Record_Type_none){
-                $service->messageText = $this->telegramFirstName.'呼叫您上线telegram';
+                $service->messageText = $this->translateLanguage($this->telegramFirstName.'呼叫您上线telegram');
             }else{
-                $service->messageText = '请转告'.$this->calledPersonData->telegram_name.'上线telegram';
-
+                $service->messageText = $this->translateLanguage('请转告'.$this->calledPersonData->telegram_name.'上线telegram');
             }
             $service->messageType = 'TTS';
             $service->app_type ='telegram';
