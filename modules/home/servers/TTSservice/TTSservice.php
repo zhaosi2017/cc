@@ -168,8 +168,8 @@ class TTSservice{
         Yii::$app->redis->hset($call_key , 'language' ,$to_user['language']);                   //呼叫的语言
         Yii::$app->redis->hset($call_key , 'app_from_account_id' , $from_app_account_id);       //主叫的app id
         Yii::$app->redis->hset($call_key , 'app_to_account_id' , $to_app_account_id);           //被叫的app id
-        Yii::$app->redis->hset($call_key , 'app_to_account_first' , $this->app_obj->first_contact_name);//被叫的app first_name
-        Yii::$app->redis->hset($call_key , 'app_to_account_last' , $this->app_obj->last_contact_name); //被叫的app last_name
+        Yii::$app->redis->hset($call_key , 'app_to_account_first' , $this->app_obj->first_contact_name);//主叫叫的app name
+        Yii::$app->redis->hset($call_key , 'app_to_account_last' , $this->app_obj->last_contact_name);  //被叫的app name
 
 
         Yii::$app->redis->hset($call_key , 'list_key' , $list_key);                             //记录队列的key
