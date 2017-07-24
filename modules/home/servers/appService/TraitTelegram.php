@@ -90,12 +90,12 @@ trait  TraitTelegram {
         if($type == CallRecord::Record_Type_none){
             $this->sendData = [
                 'chat_id' =>$this->telegramUid,
-                'text' => $this->translateLanguage('正在尝试呼叫'.$data['to_account'].'，请稍后！'),
+                'text' => $this->translateLanguage('正在尝试呼叫'.$data['to_account'].'，请稍候！'),
             ];
         }elseif($type == CallRecord::Record_Type_emergency){
             $this->sendData = [
                 'chat_id' =>$this->telegramUid,
-                'text' => $this->translateLanguage('正在尝试呼叫'.$data['to_account'].'的紧急联系人:'.$data['nickname'].'，请稍后！')
+                'text' => $this->translateLanguage('正在尝试呼叫'.$data['to_account'].'的紧急联系人:'.$data['nickname'].'，请稍候！')
             ];
         }
         $this->sendTelegramData();
@@ -170,8 +170,9 @@ trait  TraitTelegram {
             $callback = [
                 $this->callCallbackDataPre,
                 $appCalledUid,
+                $callAppName,
                 $calledAppName,
-                $callAppName
+
             ];
             $text = Yii::t('app/model/nexmo', 'Whether to call again ?', array(), $this->language);
             $keyBoard = [
