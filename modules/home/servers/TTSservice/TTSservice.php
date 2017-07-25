@@ -154,7 +154,6 @@ class TTSservice{
             $from_app_account_id   = 0;
             $to_app_account_id     = 0;
         }
-    file_put_contents('/tmp/test_telegram.log' ,1111 , 8);
         Yii::$app->redis->hset($call_key , 'time', time());
         Yii::$app->redis->hset($call_key , 'from_id', $this->from_user_id);                     //发起者的用户id
         Yii::$app->redis->hset($call_key , 'to_id' , $this->to_user_id);                        //被叫者的id
