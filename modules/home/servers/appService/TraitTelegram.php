@@ -35,7 +35,7 @@ trait  TraitTelegram {
      * @return bool
      */
     public function sendCallFailed($telegram_name,$anwser){
-        $this->tlanguage = $this->language;
+        //$this->tlanguage = $this->language;
             $this->sendData = [
                 'chat_id' =>$this->telegramUid,
                 'text' => $this->_CallAnwserText($anwser , $telegram_name),
@@ -63,7 +63,7 @@ trait  TraitTelegram {
      */
     public function continueCall($type , Array $data = []){
 //        $data['to_account'] = $this->telegramContactLastName.$this->telegramContactFirstName;
-        $this->tlanguage = $this->language;
+        //$this->tlanguage = $this->language;
         if($type == CallRecord::Record_Type_none){
             $this->sendData = [
                 'chat_id' =>$this->telegramUid,
@@ -83,7 +83,7 @@ trait  TraitTelegram {
      *呼叫流程开始提示
      */
     public function startCall($type , Array $data = []){
-        $this->tlanguage = $this->language;
+        //$this->tlanguage = $this->language;
         if(empty($data['to_account'])){
             $data['to_account'] = $this->telegramContactLastName.$this->telegramContactFirstName;
         }
@@ -106,7 +106,7 @@ trait  TraitTelegram {
      *呼叫异常 提示
      */
     public function exceptionCall(){
-        $this->tlanguage = $this->language;
+        //$this->tlanguage = $this->language;
         $this->sendData = [
             'chat_id' =>$this->telegramUid,
             'text' => $this->translateLanguage('呼叫异常，请稍后再试!')
@@ -120,7 +120,7 @@ trait  TraitTelegram {
      * @return bool
      */
     public function sendCallSuccess($telegram_name){
-        $this->tlanguage = $this->language;
+        //$this->tlanguage = $this->language;
         $this->sendData = [
             'chat_id' =>$this->telegramUid,
             'text' => $this->translateLanguage('呼叫'.$telegram_name.'成功!'),
