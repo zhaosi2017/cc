@@ -2,6 +2,7 @@
 
 namespace app\modules\home\controllers;
 
+use app\modules\home\models\CallRecord;
 use app\modules\home\models\Potato;
 use app\modules\home\models\PotatoMap;
 use app\modules\home\models\PotatoMapServer;
@@ -112,14 +113,14 @@ class PotatoController extends GController
                     case $potato->callCallbackDataPre:
                         $potato->potatoSendFirstName = $callbackData[2];
                         $potato->potatoContactFirstName = $callbackData[3];
-                        $result = $potato->callPotatoPerson();
+                        $result = $potato->call(CallRecord::Record_Type_none);
                         break;
                         // 呼叫紧急联系人.
                     case $potato->callUrgentCallbackDataPre:
                         $calledId = $callbackData[2];
                         $potato->potatoSendFirstName = $callbackData[3];
                         $potato->potatoContactFirstName = $callbackData[4];
-                        $result = $potato->callPotatoPerson($calledId);
+                        $result = $potato->call(CallRecord::Record_Type_emergency);
                         break;
                         // 加白名单.
                     case $potato->whiteCallbackDataPre:
