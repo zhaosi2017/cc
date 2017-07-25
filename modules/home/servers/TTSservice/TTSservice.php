@@ -78,6 +78,7 @@ class TTSservice{
         $this->third->Language = $to_user['language'];
         $this->call_type = $send_['call_type'];
         $this->app_obj = $app_obj;
+        $this->app_obj->language = $from_user['language'];
         $this->app_obj->call_set_name();
         $this->app_obj->startCall($this->call_type ,['to_account'=>$this->app_obj->last_contact_name,'nickname'=>$send_['nickname']] );
         if(!$this->third->sendMessage()){                               //发生异常直接返回 提示呼叫失败
