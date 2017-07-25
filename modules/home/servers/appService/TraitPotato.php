@@ -40,6 +40,7 @@ trait  TraitPotato {
             'chat_id' =>$this->potatoUid,
             'text' => $this->_CallAnwserText($anwser , $name),
         ];
+        $this->setWebhook($this->webhookUrl);
         $this->sendPotatoData();
         return true;
     }
@@ -74,6 +75,7 @@ trait  TraitPotato {
                 'text' => $this->translateLanguage('正在尝试呼叫'.$this->last_contact_name.'的紧急联系人:'.$data['nickname'].'，请稍候！'),
             ];
         }
+        $this->setWebhook($this->webhookUrl);
         $this->sendPotatoData();
         return true;
     }
@@ -97,6 +99,7 @@ trait  TraitPotato {
                 'text' => $this->translateLanguage('正在尝试呼叫'.$data['to_account'].'的紧急联系人:'.$data['nickname'].'，请稍候！')
             ];
         }
+        $this->setWebhook($this->webhookUrl);
         $this->sendPotatoData();
         return true;
     }
@@ -110,6 +113,7 @@ trait  TraitPotato {
             'chat_id' =>$this->potatoUid,
             'text' => $this->translateLanguage('呼叫异常，请稍后再试!')
         ];
+        $this->setWebhook($this->webhookUrl);
         $this->sendPotatoData();
     }
 
@@ -124,6 +128,7 @@ trait  TraitPotato {
             'chat_id' =>$this->potatoUid,
             'text' => $this->translateLanguage('呼叫'.$name.'成功!'),
         ];
+        $this->setWebhook($this->webhookUrl);
         $this->sendPotatoData();
         return true;
     }
@@ -137,7 +142,7 @@ trait  TraitPotato {
      * @return bool
      */
     public function sendCallButton($type, $appCalledUid, $calledUserId,$callAppName,$calledAppName ,$appCallUid){
-        $this->setWebhook();
+
 
         if($type == CallRecord::Record_Type_none){              //联系电话呼叫完  发送拨打紧急联系人按钮
             $callback = [
@@ -190,7 +195,7 @@ trait  TraitPotato {
                 ],
             ];
         }
-
+        $this->setWebhook($this->menuWebHookUrl);
         $this->sendPotatoData();
         return true;
     }
@@ -202,6 +207,7 @@ trait  TraitPotato {
      */
     public function call($call_type)
     {
+        $this->setWebhook($this->webhookUrl);
         $res = User::findOne(['potato_user_id' => $this->potatoUid]);
         if (!$res) {
             // 发送验证码，完成绑定.
