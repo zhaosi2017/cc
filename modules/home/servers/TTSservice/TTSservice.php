@@ -146,7 +146,7 @@ class TTSservice{
         }elseif($this->app_type == 'potato'){
             $from_app_account_name = $from_user['potato_name'];
             $from_app_account_id   = $from_user['potato_user_id'];
-            $to_app_account_id     = $from_user['potato_user_id'];
+            $to_app_account_id     = $to_user['potato_user_id'];
             $to_app_account_name   = $to_user['potato_name'];
         }else{
             $from_app_account_name = '';
