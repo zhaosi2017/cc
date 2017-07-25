@@ -38,7 +38,7 @@ trait  TraitPotato {
         //$this->tlanguage = $this->language;
         $this->sendData = [
             'chat_type'=>1,
-            'chat_id' =>$this->potatoUid,
+            'chat_id' =>(int)$this->potatoUid,
             'text' => $this->_CallAnwserText($anwser , $name),
         ];
         $this->setWebhook($this->webhookUrl);
@@ -68,13 +68,13 @@ trait  TraitPotato {
         if($type == CallRecord::Record_Type_none){
             $this->sendData = [
                 'chat_type'=>1,
-                'chat_id' =>$this->potatoUid,
+                'chat_id' =>(int)$this->potatoUid,
                 'text' => $this->translateLanguage('正在尝试呼叫'.$data['to_account'].'的其他电话，请稍候！'),
             ];
         }elseif($type == CallRecord::Record_Type_emergency){
             $this->sendData = [
                 'chat_type'=>1,
-                'chat_id' =>$this->potatoUid,
+                'chat_id' =>(int)$this->potatoUid,
                 'text' => $this->translateLanguage('正在尝试呼叫'.$this->last_contact_name.'的紧急联系人:'.$data['nickname'].'，请稍候！'),
             ];
         }
@@ -94,13 +94,13 @@ trait  TraitPotato {
         if($type == CallRecord::Record_Type_none){
             $this->sendData = [
                 'chat_type'=>1,
-                'chat_id' =>$this->potatoUid,
+                'chat_id' =>(int)$this->potatoUid,
                 'text' => $this->translateLanguage('正在尝试呼叫'.$data['to_account'].'，请稍候！'),
             ];
         }elseif($type == CallRecord::Record_Type_emergency){
             $this->sendData = [
                 'chat_type'=>1,
-                'chat_id' =>$this->potatoUid,
+                'chat_id' =>(int)$this->potatoUid,
                 'text' => $this->translateLanguage('正在尝试呼叫'.$data['to_account'].'的紧急联系人:'.$data['nickname'].'，请稍候！')
             ];
         }
@@ -116,7 +116,7 @@ trait  TraitPotato {
        // $this->tlanguage = $this->language;
         $this->sendData = [
             'chat_type'=>1,
-            'chat_id' =>$this->potatoUid,
+            'chat_id' =>(int)$this->potatoUid,
             'text' => $this->translateLanguage('呼叫异常，请稍后再试!')
         ];
         $this->setWebhook($this->webhookUrl);
@@ -132,7 +132,7 @@ trait  TraitPotato {
        // $this->tlanguage = $this->language;
         $this->sendData = [
             'chat_type'=>1,
-            'chat_id' =>$this->potatoUid,
+            'chat_id' =>(int)$this->potatoUid,
             'text' => $this->translateLanguage('呼叫'.$name.'成功!'),
         ];
         $this->setWebhook($this->webhookUrl);
@@ -172,7 +172,7 @@ trait  TraitPotato {
             ];
             $this->sendData = [
                 'chat_type' => 1,
-                'chat_id' => $appCallUid,
+                'chat_id' => (int)$appCallUid,
                 'text' => $text,
                 'inline_markup' => $keyBoard,
             ];
@@ -198,7 +198,7 @@ trait  TraitPotato {
             ];
             $this->sendData = [
                 'chat_type' => 1,
-                'chat_id' => $appCallUid,
+                'chat_id' => (int)$appCallUid,
                 'text' => $text,
                 'inline_markup' => $keyBoard,
             ];
@@ -224,7 +224,7 @@ trait  TraitPotato {
             $this->language = $res->language;
             $this->sendData = [
                 'chat_type'=>1,
-                'chat_id' => $this->potatoUid,
+                'chat_id' => (int)$this->potatoUid,
                 'text' => $this->getCompleteText(),
             ];
             $this->sendPotatoData();
@@ -236,7 +236,7 @@ trait  TraitPotato {
         // 开始操作.
         $this->sendData = [
             'chat_type'=>1,
-            'chat_id' => $this->potatoUid,
+            'chat_id' => (int)$this->potatoUid,
             'text' => $this->getStartText(),
         ];
         $this->sendPotatoData();
@@ -253,7 +253,7 @@ trait  TraitPotato {
             if ($res) {
                 $this->sendData = [
                     'chat_type'=>1,
-                    'chat_id' => $this->potatoUid,
+                    'chat_id' => (int)$this->potatoUid,
                     'text' => $this->translateLanguage('您在'.$nickname.'的黑名单列表内, 不能呼叫!'),
                 ];
                 $this->sendPotatoData();
@@ -266,7 +266,7 @@ trait  TraitPotato {
                 if (!$res) {
                     $this->sendData = [
                         'chat_type'=>1,
-                        'chat_id' => $this->potatoUid,
+                        'chat_id' =>(int)$this->potatoUid,
                         'text' => $this->translateLanguage('您不在'.$nickname.'的白名单列表内, 不能呼叫!'),
                     ];
                     $this->sendPotatoData();
@@ -278,7 +278,7 @@ trait  TraitPotato {
             if (!$res['status']) {
                 $this->sendData = [
                     'chat_type'=>1,
-                    'chat_id' => $this->potatoUid,
+                    'chat_id' => (int)$this->potatoUid,
                     'text' => $this->translateLanguage('呼叫'.$nickname.'失败! '.$res['message']),
                 ];
                 $this->sendPotatoData();
@@ -300,7 +300,7 @@ trait  TraitPotato {
         } else {
             $this->sendData = [
                 'chat_type'=>1,
-                'chat_id' => $this->potatoUid,
+                'chat_id' => (int)$this->potatoUid,
                 'text' => $this->potatoContactFirstName.$this->getIsNotMemberText(),
             ];
             $this->sendPotatoData();
