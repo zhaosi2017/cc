@@ -158,23 +158,23 @@ trait  TraitPotato {
                 $calledUserId,
                 $calledAppName,
                 $callAppName,
+                time()
             ];
             $text = Yii::t('app/model/nexmo', 'Whether to call an emergency contact ?', array(), $this->language);
             $keyBoard = [
                 [
                     [
+                        'type' => 0,
                         'text' => Yii::t('app/model/nexmo', 'Yes', array(), $this->language),
-                        'callback_data' => implode('-', $callback),
+                        'data' => implode('-', $callback),
                     ]
                 ]
             ];
             $this->sendData = [
-                'chat_type'=>1,
+                'chat_type' => 1,
                 'chat_id' => $appCallUid,
                 'text' => $text,
-                'reply_markup' => [
-                    'inline_keyboard' => $keyBoard,
-                ],
+                'inline_markup' => $keyBoard,
             ];
 
         }elseif($type == CallRecord::Record_Type_emergency){    //紧急联系人呼叫完  发送重新拨打按钮
@@ -184,24 +184,23 @@ trait  TraitPotato {
                 $appCalledUid,
                 $calledAppName,
                 $callAppName,
-
+                time()
             ];
             $text = Yii::t('app/model/nexmo', 'Whether to call again ?', array(), $this->language);
             $keyBoard = [
                 [
                     [
+                        'type' => 0,
                         'text' => Yii::t('app/model/nexmo', 'Re-call', array(), $this->language),
-                        'callback_data' => implode('-', $callback),
+                        'data' => implode('-', $callback),
                     ]
                 ]
             ];
             $this->sendData = [
-                'chat_type'=>1,
+                'chat_type' => 1,
                 'chat_id' => $appCallUid,
                 'text' => $text,
-                'reply_markup' => [
-                    'inline_keyboard' => $keyBoard,
-                ],
+                'inline_markup' => $keyBoard,
             ];
         }
         $this->setWebhook($this->menuWebHookUrl);
@@ -224,6 +223,7 @@ trait  TraitPotato {
         } elseif ($this->potatoUid == $this->potatoContactUid) {
             $this->language = $res->language;
             $this->sendData = [
+                'chat_type'=>1,
                 'chat_id' => $this->potatoUid,
                 'text' => $this->getCompleteText(),
             ];
