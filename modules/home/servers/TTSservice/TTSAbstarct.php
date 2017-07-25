@@ -11,7 +11,7 @@ abstract  class TTSAbstarct{
 
     public $voice  ;          //语音播报声音
     public $Language;         //使用的语言
-    public $loop;             //重复播报次数
+    public $loop = 3;         //重复播报次数
 
     public $messageText;      //消息内容
     public $messageText_more; //第二次发送的消息 当有更多的联系电话时 消息可以设置
