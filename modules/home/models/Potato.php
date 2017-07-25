@@ -1,6 +1,7 @@
 <?php
 namespace app\modules\home\models;
 
+use app\modules\home\servers\appService\TraitPotato;
 use yii;
 use yii\base\Model;
 use app\modules\home\models\User;
@@ -8,6 +9,7 @@ use app\modules\home\models\CallRecord;
 
 class Potato extends Model
 {
+    use TraitPotato;
 
     const CODE_LENGTH = 5;
 
