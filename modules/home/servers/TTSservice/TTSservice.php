@@ -153,7 +153,7 @@ class TTSservice{
             $from_app_account_id   = 0;
             $to_app_account_id     = 0;
         }
-
+    file_put_contents('/tmp/test_telegram.log' ,1111 , 8);
         Yii::$app->redis->hset($call_key , 'time', time());
         Yii::$app->redis->hset($call_key , 'from_id', $this->from_user_id);                     //发起者的用户id
         Yii::$app->redis->hset($call_key , 'to_id' , $this->to_user_id);                        //被叫者的id
@@ -167,7 +167,7 @@ class TTSservice{
         Yii::$app->redis->hset($call_key , 'app_type' ,$this->app_type);                        //呼叫发起的app类型
         Yii::$app->redis->hset($call_key , 'nickname' ,$send['nickname']);                      //被叫的昵称
         Yii::$app->redis->hset($call_key , 'language' ,$to_user['language']);                   //呼叫的语言
-        Yii::$app->redis->hset($call_key , 'app_language' ,$this->app_obj->llanguage);                   //呼叫的语言
+        Yii::$app->redis->hset($call_key , 'app_language' ,$this->app_obj->getLanguage());      //呼叫的语言
         Yii::$app->redis->hset($call_key , 'app_from_account_id' , $from_app_account_id);       //主叫的app id
         Yii::$app->redis->hset($call_key , 'app_to_account_id' , $to_app_account_id);           //被叫的app id
         Yii::$app->redis->hset($call_key , 'app_to_account_first' , $this->app_obj->first_contact_name);//主叫叫的app name
