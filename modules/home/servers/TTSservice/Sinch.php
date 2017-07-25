@@ -127,7 +127,7 @@ class Sinch extends TTSAbstarct {
             $this->to = '+'.trim($this->to ,'+');
         }
         $text = '';
-        for($i=1; $i++ ; $i<=$this->loop){
+        for($i=1; $i <= $this->loop ; $i++){
             $text .= $this->messageText;
         }
         $this->body = json_encode(
