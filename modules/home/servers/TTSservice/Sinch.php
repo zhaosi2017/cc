@@ -88,7 +88,24 @@ class Sinch extends TTSAbstarct {
     private function Event_DICE($event_data){
 
         $this->messageId = $event_data['callid'];     //通话id
-        $this->messageStatus = $event_data['result'] == 'ANSWERED' ?CallRecord::Record_Status_Success:CallRecord::Record_Status_Fail; //通话 结果
+        //$this->messageStatus = $event_data['result'] == 'ANSWERED' ?CallRecord::Record_Status_Success:CallRecord::Record_Status_Fail; //通话 结果
+        switch ($event_data['result']){
+            case 'ANSWERED':
+                $this->messageStatus =  CallRecord::Record_Status_Success;
+                break;
+            case 'FAILED':
+                $this->messageStatus =  CallRecord::Record_Status_Fail;
+                break;
+            case 'NOANSWER':
+                $this->messageStatus =  CallRecord::Record_Status_NoAnwser;
+                break;
+            case 'BUSY':
+                $this->messageStatus =  CallRecord::Record_Status_Busy;
+                break;
+            default:
+                $this->messageStatus =  CallRecord::Record_Status_Fail;
+                break;
+        }
         $this->duration = isset($event_data['duration'])?$event_data['duration']:0;    //通话时间
         $this->messageAnwser = $this->messageAnwser_arr[$event_data['result']];
         return 'OK';
@@ -109,6 +126,10 @@ class Sinch extends TTSAbstarct {
         if(strpos($this->to , '+') !== false){
             $this->to = '+'.trim($this->to ,'+');
         }
+        $text = '';
+        for($i=1; $i++ ; $i<=$this->loop){
+            $text .= $this->messageText;
+        }
         $this->body = json_encode(
             ['method'=>'ttsCallout',
                 "ttsCallout"=>[
@@ -117,7 +138,7 @@ class Sinch extends TTSAbstarct {
                     "domain" => "pstn",
                     "custom" =>"customData",
                     "locale" => $this->Language,
-                    "prompts" =>'#tts['.$this->messageText.'];myprerecordedfile',
+                    "prompts" =>'#tts['.$text.'];myprerecordedfile',
                     'enabledice' => true,
                 ],
             ]);
