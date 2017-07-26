@@ -220,9 +220,11 @@ class TTSservice{
         if($data['app_type'] == 'telegram'){
             $this->app_obj = new Telegram();
             $this->app_obj->telegramUid =  $data['app_from_account_id'];
+            $this->app_obj->setTelegramContactUid($data['app_to_account_id']);
         }elseif($data['app_type'] == 'potato'){
             $this->app_obj = new Potato();
             $this->app_obj->potatoUid   =  $data['app_from_account_id'];
+            $this->app_obj->setPotatoContactUid($data['app_to_account_id']);
         }else{
             return false;
         }
@@ -302,6 +304,7 @@ class TTSservice{
 
         if(!$result){                                                           //发生异常时删除redis的相关数据
             Yii::$app->redis->del($list_key);
+            $this->app_obj->exceptionCall();
             return false;
         }
         $cacheKey = get_class($this->third).'_callid_'.$this->third->messageId;

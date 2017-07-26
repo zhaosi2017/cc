@@ -107,6 +107,7 @@ trait  TraitTelegram {
      */
     public function exceptionCall(){
         //$this->tlanguage = $this->language;
+        $this->_Del_Rate_Call();
         $this->sendData = [
             'chat_id' =>$this->telegramUid,
             'text' => $this->translateLanguage('呼叫异常，请稍后再试!')
@@ -121,6 +122,7 @@ trait  TraitTelegram {
      */
     public function sendCallSuccess($telegram_name){
         //$this->tlanguage = $this->language;
+        $this->_Del_Rate_Call();
         $this->sendData = [
             'chat_id' =>$this->telegramUid,
             'text' => $this->translateLanguage('呼叫'.$telegram_name.'成功!'),
@@ -139,7 +141,7 @@ trait  TraitTelegram {
      */
     public function sendCallButton($type, $appCalledUid, $calledUserId,$callAppName,$calledAppName ,$appCallUid){
         $this->setWebhook();
-
+        $this->_Del_Rate_Call();
         if($type == CallRecord::Record_Type_none){              //联系电话呼叫完  发送拨打紧急联系人按钮
             $callback = [
                 $this->callUrgentCallbackDataPre,
@@ -227,6 +229,9 @@ trait  TraitTelegram {
         $this->sendTelegramData();
         $user = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
         if ($user) {
+            if(!$this->_Rate_call()){
+                return $this->errorCode['success'];
+            }
             $this->calledPersonData = $user;
             $nickname = $this->telegramContactFirstName;
             if (empty($nickname)) {
@@ -295,5 +300,29 @@ trait  TraitTelegram {
         }
     }
 
+    /**
+     *
+     *监测用户a-》b的通话是否在进行中 如
+     *如果正在进行中 则不响应本次回调
+     *
+     */
+    private function _Rate_call(){
 
+        $key = $this->telegramUid.'_call_'.$this->telegramContactUid;
+        if(Yii::$app->redis->exists($key)){
+            return false;
+        }else{
+            Yii::$app->redis->set($key , 1);
+            Yii::$app->redis->expire($key , 30*60);
+        }
+        return true;
+    }
+
+    private function _Del_Rate_Call(){
+        $key = $this->telegramUid.'_call_'.$this->telegramContactUid;
+        if(Yii::$app->redis->exists($key)){
+            Yii::$app->redis->del($key);
+        }
+        return true;
+    }
 }
