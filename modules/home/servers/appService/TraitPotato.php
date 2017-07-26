@@ -235,19 +235,21 @@ trait  TraitPotato {
 
         $this->callPersonData = $res;
         $this->language = $this->callPersonData->language;
-        // 开始操作.
-        $this->sendData = [
-            'chat_type'=>1,
-            'chat_id' => (int)$this->potatoUid,
-            'text' => $this->getStartText(),
-        ];
-        $this->sendPotatoData();
+
+
         $user = User::findOne(['potato_user_id' => $this->potatoContactUid]);
         if ($user) {
             if(!$this->_Rate_call()){
 
                 return $this->errorCode['success'];
             }
+            // 开始操作.
+            $this->sendData = [
+                'chat_type'=>1,
+                'chat_id' => (int)$this->potatoUid,
+                'text' => $this->getStartText(),
+            ];
+            $this->sendPotatoData();
             $this->calledPersonData = $user;
             $nickname = $this->potatoContactFirstName;
             if (empty($nickname)) {

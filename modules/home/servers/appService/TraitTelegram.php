@@ -221,17 +221,19 @@ trait  TraitTelegram {
 
         $this->callPersonData = $res;
         $this->language = $this->callPersonData->language;
-        // 开始操作.
-        $this->sendData = [
-            'chat_id' => $this->telegramUid,
-            'text' => $this->getStartText(),
-        ];
-        $this->sendTelegramData();
+
         $user = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
         if ($user) {
             if(!$this->_Rate_call()){
                 return $this->errorCode['success'];
             }
+            // 开始操作.
+            $this->sendData = [
+                'chat_id' => $this->telegramUid,
+                'text' => $this->getStartText(),
+            ];
+            $this->sendTelegramData();
+
             $this->calledPersonData = $user;
             $nickname = $this->telegramContactFirstName;
             if (empty($nickname)) {
