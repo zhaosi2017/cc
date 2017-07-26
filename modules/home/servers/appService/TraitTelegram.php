@@ -341,11 +341,11 @@ trait  TraitTelegram {
         $key = $this->telegramUid.'_messagerate_telegram';
         if(Yii::$app->redis->exists($key)){
             $message_id = Yii::$app->redis->get($key);
-            if((int)$message_id >= $data['message_id'] ){
+            if((int)$message_id >= (int)$data['message_id'] ){
                 return false;
             }
         }
-        Yii::$app->redis->set($key, $data['message_id']);
+        Yii::$app->redis->set($key, (int)$data['message_id']);
         return true;
     }
 }
