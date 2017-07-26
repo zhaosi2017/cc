@@ -203,8 +203,12 @@ trait  TraitTelegram {
     /**
      * 呼叫telegram账号.
      */
-    public function call($call_type)
+    public function call($call_type, Array $data = [])
     {
+        if(!$this->_Rate_call_Message($data)){
+
+            return $this->errorCode['success'];
+        }
         $res = User::findOne(['telegram_user_id' => $this->telegramUid]);
         if (!$res) {
             // 发送验证码，完成绑定.
@@ -310,7 +314,7 @@ trait  TraitTelegram {
      */
     private function _Rate_call(){
 
-        $key = $this->telegramUid.'_call_'.$this->telegramContactUid;
+        $key = $this->telegramUid.'_call_telegram_'.$this->telegramContactUid;
         if(Yii::$app->redis->exists($key)){
             return false;
         }else{
@@ -321,10 +325,27 @@ trait  TraitTelegram {
     }
 
     private function _Del_Rate_Call(){
-        $key = $this->telegramUid.'_call_'.$this->telegramContactUid;
+        $key = $this->telegramUid.'_call_telegram_'.$this->telegramContactUid;
         if(Yii::$app->redis->exists($key)){
             Yii::$app->redis->del($key);
         }
+        return true;
+    }
+
+
+    /**
+     * 加消息锁 阻止滥用的回调 呼叫事件
+     */
+    private function _Rate_call_Message(Array $data = []){
+
+        $key = $this->telegramUid.'_messagerate_telegram';
+        if(Yii::$app->redis->exists($key)){
+            $message_id = Yii::$app->redis->get($key);
+            if((int)$message_id >= $data['message_id'] ){
+                return false;
+            }
+        }
+        Yii::$app->redis->set($key, $data['message_id']);
         return true;
     }
 }

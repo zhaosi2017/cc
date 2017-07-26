@@ -215,8 +215,12 @@ trait  TraitPotato {
     /**
      * 呼叫potato账号.
      */
-    public function call($call_type)
+    public function call($call_type , Array $data = [])
     {
+        if(!$this->_Rate_call_Message($data)){
+
+            return $this->errorCode['success'];
+        }
         $this->setWebhook($this->webhookUrl);
         $res = User::findOne(['potato_user_id' => $this->potatoUid]);
         if (!$res) {
@@ -319,11 +323,11 @@ trait  TraitPotato {
      *
      *监测用户a-》b的通话是否在进行中 如
      *如果正在进行中 则不响应本次回调
-     *
+     *检测锁
      */
     private function _Rate_call(){
 
-        $key = $this->potatoUid.'_call_'.$this->potatoContactUid;
+        $key = $this->potatoUid.'_call_potato_'.$this->potatoContactUid;
         if(Yii::$app->redis->exists($key)){
             return false;
         }else{
@@ -333,11 +337,31 @@ trait  TraitPotato {
         return true;
     }
 
+    /**
+     * @return bool
+     * 删除锁
+     */
     private function _Del_Rate_Call(){
-        $key = $this->potatoUid.'_call_'.$this->potatoContactUid;
+        $key = $this->potatoUid.'_call_potato_'.$this->potatoContactUid;
         if(Yii::$app->redis->exists($key)){
             Yii::$app->redis->del($key);
         }
+        return true;
+    }
+
+    /**
+     * 加消息锁 阻止滥用的回调 呼叫事件
+     */
+    private function _Rate_call_Message(Array $data = []){
+
+        $key = $this->potatoUid.'_messagerate_potato';
+        if(Yii::$app->redis->exists($key)){
+            $message_id = Yii::$app->redis->get($key);
+            if((int)$message_id >= $data['message_id'] ){
+                return false;
+            }
+        }
+        Yii::$app->redis->set($key, $data['message_id']);
         return true;
     }
 
