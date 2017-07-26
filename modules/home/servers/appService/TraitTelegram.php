@@ -107,7 +107,7 @@ trait  TraitTelegram {
      */
     public function exceptionCall(){
         //$this->tlanguage = $this->language;
-        $this->_Del_Rate_Call();
+        
         $this->sendData = [
             'chat_id' =>$this->telegramUid,
             'text' => $this->translateLanguage('呼叫异常，请稍后再试!')
@@ -122,7 +122,7 @@ trait  TraitTelegram {
      */
     public function sendCallSuccess($telegram_name){
         //$this->tlanguage = $this->language;
-        $this->_Del_Rate_Call();
+
         $this->sendData = [
             'chat_id' =>$this->telegramUid,
             'text' => $this->translateLanguage('呼叫'.$telegram_name.'成功!'),
@@ -141,7 +141,7 @@ trait  TraitTelegram {
      */
     public function sendCallButton($type, $appCalledUid, $calledUserId,$callAppName,$calledAppName ,$appCallUid){
         $this->setWebhook();
-        $this->_Del_Rate_Call();
+
         if($type == CallRecord::Record_Type_none){              //联系电话呼叫完  发送拨打紧急联系人按钮
             $callback = [
                 $this->callUrgentCallbackDataPre,
@@ -205,10 +205,6 @@ trait  TraitTelegram {
      */
     public function call($call_type, Array $data = [])
     {
-        if(!$this->_Rate_call_Message($data)){
-
-            return $this->errorCode['success'];
-        }
         $res = User::findOne(['telegram_user_id' => $this->telegramUid]);
         if (!$res) {
             // 发送验证码，完成绑定.
@@ -228,9 +224,6 @@ trait  TraitTelegram {
 
         $user = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
         if ($user) {
-            if(!$this->_Rate_call()){
-                return $this->errorCode['success'];
-            }
             // 开始操作.
             $this->sendData = [
                 'chat_id' => $this->telegramUid,
@@ -306,46 +299,6 @@ trait  TraitTelegram {
         }
     }
 
-    /**
-     *
-     *监测用户a-》b的通话是否在进行中 如
-     *如果正在进行中 则不响应本次回调
-     *
-     */
-    private function _Rate_call(){
-
-        $key = $this->telegramUid.'_call_telegram_'.$this->telegramContactUid;
-        if(Yii::$app->redis->exists($key)){
-            return false;
-        }else{
-            Yii::$app->redis->set($key , 1);
-            Yii::$app->redis->expire($key , 30*60);
-        }
-        return true;
-    }
-
-    private function _Del_Rate_Call(){
-        $key = $this->telegramUid.'_call_telegram_'.$this->telegramContactUid;
-        if(Yii::$app->redis->exists($key)){
-            Yii::$app->redis->del($key);
-        }
-        return true;
-    }
 
 
-    /**
-     * 加消息锁 阻止滥用的回调 呼叫事件
-     */
-    private function _Rate_call_Message(Array $data = []){
-
-        $key = $this->telegramUid.'_messagerate_telegram';
-        if(Yii::$app->redis->exists($key)){
-            $message_id = Yii::$app->redis->get($key);
-            if((int)$message_id >= (int)$data['message_id'] ){
-                return false;
-            }
-        }
-        Yii::$app->redis->set($key, (int)$data['message_id']);
-        return true;
-    }
 }
