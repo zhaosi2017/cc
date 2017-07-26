@@ -114,7 +114,7 @@ trait  TraitPotato {
      */
     public function exceptionCall(){
        // $this->tlanguage = $this->language;
-        $this->_Del_Rate_Call();
+        //$this->_Del_Rate_Call();
         $this->sendData = [
             'chat_type'=>1,
             'chat_id' =>(int)$this->potatoUid,
@@ -131,7 +131,7 @@ trait  TraitPotato {
      */
     public function sendCallSuccess($name){
        // $this->tlanguage = $this->language;
-        $this->_Del_Rate_Call();
+       // $this->_Del_Rate_Call();
         $this->sendData = [
             'chat_type'=>1,
             'chat_id' =>(int)$this->potatoUid,
@@ -152,7 +152,7 @@ trait  TraitPotato {
      */
     public function sendCallButton($type, $appCalledUid, $calledUserId,$callAppName,$calledAppName ,$appCallUid){
 
-        $this->_Del_Rate_Call();
+       // $this->_Del_Rate_Call();
         if($type == CallRecord::Record_Type_none){              //联系电话呼叫完  发送拨打紧急联系人按钮
             $callback = [
                 $this->callUrgentCallbackDataPre,
@@ -243,10 +243,10 @@ trait  TraitPotato {
 
         $user = User::findOne(['potato_user_id' => $this->potatoContactUid]);
         if ($user) {
-            if(!$this->_Rate_call()){
-
-                return $this->errorCode['success'];
-            }
+//            if(!$this->_Rate_call()){
+//
+//                return $this->errorCode['success'];
+//            }
             // 开始操作.
             $this->sendData = [
                 'chat_type'=>1,
@@ -362,6 +362,7 @@ trait  TraitPotato {
             }
         }
         Yii::$app->redis->set($key, (int)$data['message_id']);
+        Yii::$app->redis->expire($key , 24*60*60);
         return true;
     }
 
