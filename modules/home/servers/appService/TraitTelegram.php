@@ -13,6 +13,8 @@ use Yii;
 use yii\db\Exception;
 use app\modules\home\models\User;
 use app\modules\home\servers\TTSservice\TTSservice;
+use app\modules\home\models\UserGentContact;
+use app\modules\home\models\UserPhone;
 
 trait  TraitTelegram {
 
@@ -107,7 +109,7 @@ trait  TraitTelegram {
      */
     public function exceptionCall(){
         //$this->tlanguage = $this->language;
-        
+
         $this->sendData = [
             'chat_id' =>$this->telegramUid,
             'text' => $this->translateLanguage('呼叫异常，请稍后再试!')
@@ -131,6 +133,21 @@ trait  TraitTelegram {
         return true;
     }
 
+    /**
+     * 没有可用的联系电话号码
+     * @param $name
+     * @return bool
+     */
+    public function sendCallNoNumber($name){
+        $this->sendData = [
+            'chat_type'=>1,
+            'chat_id' =>(int)$this->potatoUid,
+            'text' => $this->translateLanguage($name.'没有可用的联系电话!'),
+        ];
+        $this->setWebhook($this->webhookUrl);
+        $this->sendPotatoData();
+        return true;
+    }
     /**
      * @param $type
      * @param $appCalledUid   主叫 tg_id
@@ -270,6 +287,9 @@ trait  TraitTelegram {
                 $this->sendTelegramData();
                 return $this->errorCode['success'];
             }
+            if(!$this->_check_Phone()){
+                return $this->errorCode['success'];
+            }
             $service = TTSservice::init(\app\modules\home\servers\TTSservice\Sinch::class);
             $service->from_user_id = $this->callPersonData->id;
             $service->to_user_id = $this->calledPersonData->id;
@@ -300,5 +320,23 @@ trait  TraitTelegram {
     }
 
 
+    private function _check_Phone(){
+        $phone_numbers = UserPhone::findAll(['user_id'=>$this->callPersonData->id]);
+        $contact_numbers = UserGentContact::findAll(['user_id'=>$this->callPersonData->id]);
+        if(empty($phone_numbers) && empty($contact_numbers)){   //无可用的联系方式
+            $this->sendCallNoNumber($this->potatoContactFirstName);
+            return false;
+        }
+        if(empty($phone_numbers) && !empty($contact_numbers)){       //没有联系电话
+            $this->sendCallButton(  CallRecord::Record_Type_none,
+                $this->potatoContactUid,
+                $this->calledPersonData->id,
+                $this->potatoSendFirstName,
+                $this->potatoContactFirstName ,
+                $this->potatoUid);
+            return false;
+        }
+
+    }
 
 }

@@ -9,6 +9,8 @@ namespace app\modules\home\servers\appService;
 
 
 use app\modules\home\models\CallRecord;
+use app\modules\home\models\UserGentContact;
+use app\modules\home\models\UserPhone;
 use Yii;
 use yii\db\Exception;
 use app\modules\home\models\User;
@@ -143,6 +145,22 @@ trait  TraitPotato {
     }
 
     /**
+     * 没有可用的联系电话号码
+     * @param $name
+     * @return bool
+     */
+    public function sendCallNoNumber($name){
+        $this->sendData = [
+            'chat_type'=>1,
+            'chat_id' =>(int)$this->potatoUid,
+            'text' => $this->translateLanguage($name.'没有可用的联系电话!'),
+        ];
+        $this->setWebhook($this->webhookUrl);
+        $this->sendPotatoData();
+        return true;
+    }
+
+    /**
      * @param $type
      * @param $appCalledUid   主叫 tg_id
      * @param $calledUserId   被叫 user_id
@@ -243,10 +261,6 @@ trait  TraitPotato {
 
         $user = User::findOne(['potato_user_id' => $this->potatoContactUid]);
         if ($user) {
-//            if(!$this->_Rate_call()){
-//
-//                return $this->errorCode['success'];
-//            }
             // 开始操作.
             $this->sendData = [
                 'chat_type'=>1,
@@ -296,6 +310,9 @@ trait  TraitPotato {
                 $this->sendPotatoData();
                 return $this->errorCode['success'];
             }
+            if(!$this->_check_Phone()){
+                return $this->errorCode['success'];
+            }
             $service = TTSservice::init(\app\modules\home\servers\TTSservice\Sinch::class);
             $service->from_user_id = $this->callPersonData->id;
             $service->to_user_id = $this->calledPersonData->id;
@@ -319,6 +336,28 @@ trait  TraitPotato {
             return $this->errorCode['success'];
         }
     }
+
+
+    private function _check_Phone(){
+            $phone_numbers = UserPhone::findAll(['user_id'=>$this->callPersonData->id]);
+            $contact_numbers = UserGentContact::findAll(['user_id'=>$this->callPersonData->id]);
+            if(empty($phone_numbers) && empty($contact_numbers)){   //无可用的联系方式
+                $this->sendCallNoNumber($this->potatoContactFirstName);
+                return false;
+            }
+            if(empty($phone_numbers) && !empty($contact_numbers)){       //没有联系电话
+                $this->sendCallButton(  CallRecord::Record_Type_none,
+                                        $this->potatoContactUid,
+                                        $this->calledPersonData->id,
+                                        $this->potatoSendFirstName,
+                                        $this->potatoContactFirstName ,
+                                        $this->potatoUid);
+                return false;
+            }
+
+    }
+
+
     /**
      *
      *监测用户a-》b的通话是否在进行中 如
