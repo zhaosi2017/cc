@@ -321,7 +321,7 @@ trait  TraitPotato {
      */
     private function _Rate_call(){
 
-        $key = $this->telegramUid.'_call_'.$this->telegramContactUid;
+        $key = $this->potatoUid.'_call_'.$this->potatoContactUid;
         if(Yii::$app->redis->exists($key)){
             return false;
         }else{
@@ -332,7 +332,7 @@ trait  TraitPotato {
     }
 
     private function _Del_Rate_Call(){
-        $key = $this->telegramUid.'_call_'.$this->telegramContactUid;
+        $key = $this->potatoUid.'_call_'.$this->potatoContactUid;
         if(Yii::$app->redis->exists($key)){
             Yii::$app->redis->del($key);
         }
