@@ -32,8 +32,8 @@ class Nexmo extends Model
     private $_tlanguage = 'zh-CN';
     private $_language = 'zh-CN';
     private $_enventUrl;
-    private $_answerUrl = 'https://www.callu.online/home/nexmo/conference?key=';
-    private $_eventUrl = 'https://www.callu.online/home/nexmo/event';
+    private $_answerUrl = 'https://test.callu.online/home/nexmo/conference?key=';
+    private $_eventUrl = 'https://test.callu.online/home/nexmo/event';
     private $translateUrl = 'https://translation.googleapis.com/language/translate/v2?key=AIzaSyAV_rXQu5ObaA9_rI7iqL4EDB67oXaH3zk';
     private $_resultUrl = 'https://api.nexmo.com/v1/calls';
     private $loop = 3;
