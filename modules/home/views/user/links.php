@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <div class="col-xs-4 "><?php echo Yii::t('app/user/links','Contact').' '.($k+1);?> </div>
 
                         <div class="col-xs-4">
-                            <?php echo  $phone->phone_country_code.' -- '.$phone->user_phone_number;?>
+                            <?php $t = $phone->phone_country_code ; if (isset($t[0])){ $t[0]=='+'? $t :$t = '+'.$t;}  echo  $t.'-'.$phone->user_phone_number;?>
                         </div>
                         <div class="col-xs-4">
                             <a class="index-button-1"  href="<?php echo Url::to(['/home/user/set-phone-number' ,'phone_number'=>$phone->user_phone_number]) ?>"
@@ -72,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <div class="col-xs-3"><?php  echo $contact->contact_nickname; ?></div>
 
                         <div class="col-xs-2">
-                            <?php echo  $contact->contact_country_code.'--'.$contact->contact_phone_number;?>
+                            <?php $p = $contact->contact_country_code ; if (isset($p[0])){ $p[0]=='+'? $p :$p = '+'.$p;} echo  $p.'-'.$contact->contact_phone_number;?>
 
                         </div>
                         <div class="col-xs-4">
