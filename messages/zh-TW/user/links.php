@@ -8,4 +8,5 @@
   'Remove' => '刪除',
   'Contact ' => '緊急聯繫電話',
   'Are you sure you want to delete it?' => '你確定要刪除嗎?',
+    'My contact information'=>'我的聯繫方式',
 ); 

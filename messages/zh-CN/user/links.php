@@ -16,7 +16,8 @@ return [
     'Edit'=>'修改',
     'Remove'=>'删除',
     'Contact '=>'紧急联系电话',
-    'Are you sure you want to delete it?'=>'你确定要删除吗?'
+    'Are you sure you want to delete it?'=>'你确定要删除吗?',
+    'My contact information'=>'我的联系方式',
 
 
 
