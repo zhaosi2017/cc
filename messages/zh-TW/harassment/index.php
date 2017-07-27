@@ -7,8 +7,8 @@
   'Please set the number of times a user has been called by the same person within a fixed time' => '請設置用戶固定時間內被同一人呼叫次數',
   'Please set the fixed time, unit: minutes, this time will affect the number of calls and the same number of calls' => '請設置固定時間,單位：分，此時間將影響被叫次數和被同一呼叫次數',
   'Whitelist status' => '白名單開啟狀態',
-  'On' => '開',
-  'Off' => '關',
+  'On' => '開啟',
+  'Off' => '關閉',
   'Operating' => '操作',
   'Whitelist users' => '白名單用戶',
   'No data found' => '沒有找到數據',
@@ -32,4 +32,5 @@
   'Remove the whitelist' => '移出白名單',
   'Are you sure you want to remove the whitelist?' => '你確定要移出白名單嗎?',
     ' Name'=>'名稱',
+    'Current status'=>'當前狀態',
 ); 
