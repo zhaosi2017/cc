@@ -95,7 +95,10 @@ class WhiteListSearch extends WhiteList
 
             foreach ($res as $key =>$val)
             {
-                !empty($val->potato_name) && !empty($val->potato_number) && !empty($val->telegram_number) && !empty($val->telegram_name) && $query[$val->id] = $val->id;
+                if( (!empty($val->potato_name) && !empty($val->potato_number)) || ( !empty($val->telegram_number) && !empty($val->telegram_name)))
+                {
+                    $query[$val->id] = $val->id;
+                }
             }
         }
 
