@@ -222,9 +222,6 @@ trait  TraitTelegram {
      */
     public function call($call_type, Array $data = [])
     {
-        if(!$this->_check_Phone($call_type)){
-            return $this->errorCode['success'];
-        }
         $res = User::findOne(['telegram_user_id' => $this->telegramUid]);
         if (!$res) {
             // 发送验证码，完成绑定.
@@ -244,6 +241,9 @@ trait  TraitTelegram {
 
         $user = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
         if ($user) {
+            if(!$this->_check_Phone($call_type)){
+                return $this->errorCode['success'];
+            }
             // 开始操作.
             $this->sendData = [
                 'chat_id' => $this->telegramUid,

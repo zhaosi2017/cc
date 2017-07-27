@@ -240,9 +240,6 @@ trait  TraitPotato {
 
             return $this->errorCode['success'];
         }
-        if(!$this->_check_Phone($call_type)){
-            return $this->errorCode['success'];
-        }
         $this->setWebhook($this->webhookUrl);
         $res = User::findOne(['potato_user_id' => $this->potatoUid]);
         if (!$res) {
@@ -265,6 +262,10 @@ trait  TraitPotato {
 
         $user = User::findOne(['potato_user_id' => $this->potatoContactUid]);
         if ($user) {
+            
+            if(!$this->_check_Phone($call_type)){
+                return $this->errorCode['success'];
+            }
             // 开始操作.
             $this->sendData = [
                 'chat_type'=>1,
