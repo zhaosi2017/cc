@@ -287,7 +287,7 @@ trait  TraitTelegram {
                 $this->sendTelegramData();
                 return $this->errorCode['success'];
             }
-            if(!$this->_check_Phone()){
+            if(!$this->_check_Phone($call_type)){
                 return $this->errorCode['success'];
             }
             $service = TTSservice::init(\app\modules\home\servers\TTSservice\Sinch::class);
@@ -320,14 +320,14 @@ trait  TraitTelegram {
     }
 
 
-    private function _check_Phone(){
+    private function _check_Phone($call_type){
         $phone_numbers = UserPhone::findAll(['user_id'=>$this->calledPersonData->id]);
         $contact_numbers = UserGentContact::findAll(['user_id'=>$this->calledPersonData->id]);
         if(empty($phone_numbers) && empty($contact_numbers)){   //无可用的联系方式
             $this->sendCallNoNumber($this->telegramContactFirstName);
             return false;
         }
-        if(empty($phone_numbers) && !empty($contact_numbers)){       //没有联系电话
+        if(empty($phone_numbers) && !empty($contact_numbers) && $call_type == CallRecord::Record_Type_none){       //没有联系电话
             $this->sendCallButton(  CallRecord::Record_Type_none,
                 $this->telegramContactUid,
                 $this->calledPersonData->id,
@@ -336,7 +336,7 @@ trait  TraitTelegram {
                 $this->telegramUid);
             return false;
         }
-
+        return true;
     }
 
 }
