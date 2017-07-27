@@ -67,7 +67,7 @@ $actionId = Yii::$app->requestedAction->id;
                 'headerOptions'=>['class'=>'text-center']],
 
             ['header' => 'potato', 'value' => function($model){
-                return !empty($model['black']['telegram_number'])?'+'.$model['black']['potato_country_code'].$model['black']['potato_number']:'';
+                return !empty($model['black']['potato_number'])?'+'.$model['black']['potato_country_code'].$model['black']['potato_number']:'';
             }, 'headerOptions'=>['class'=>'text-center']],
 
             [     'header'=>'potato'.Yii::t('app/harassment',' Name') ,
