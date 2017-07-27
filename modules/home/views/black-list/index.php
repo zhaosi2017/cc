@@ -55,7 +55,7 @@ $actionId = Yii::$app->requestedAction->id;
             //  ['header' => '联系电话', 'value' => function($model){
             //     return $model['black']['phone_number'];
             // }],
-            ['header'=>'昵称' ,'value'=>function($model){
+            ['header'=>Yii::t('app/models/user','Nickname') ,'value'=>function($model){
                 return $model['black']['nickname'];
             },'headerOptions'=>['class'=>'text-center']],
             ['header' => 'telegram', 'value' => function($model){
