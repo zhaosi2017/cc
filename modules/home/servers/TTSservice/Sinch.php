@@ -11,8 +11,8 @@ use yii\db\Exception;
  */
 class Sinch extends TTSAbstarct {
 
-    private $auth_id = '893b8449-294a-4ee7-8f5f-0248d76588b7';
-    private $auth_key = 'oV94O5CvBUClPO9x1EIg3Q==';
+    private $auth_id = '0221f92e-7fbf-4df2-9eb1-c4a965b14fc4';
+    private $auth_key = 'D64MIM3RJ0ijv1r5K7fcsQ==';
 
     private $body;          //提交数据
     private $authorization; //数据验证
@@ -88,11 +88,28 @@ class Sinch extends TTSAbstarct {
     private function Event_DICE($event_data){
 
         $this->messageId = $event_data['callid'];     //通话id
-        $this->messageStatus = $event_data['result'] == 'ANSWERED' ?CallRecord::Record_Status_Success:CallRecord::Record_Status_Fail; //通话 结果
-        $this->duration = $event_data['duration'];    //通话时间
+        //$this->messageStatus = $event_data['result'] == 'ANSWERED' ?CallRecord::Record_Status_Success:CallRecord::Record_Status_Fail; //通话 结果
+        switch ($event_data['result']){
+            case 'ANSWERED':
+                $this->messageStatus =  CallRecord::Record_Status_Success;
+                break;
+            case 'FAILED':
+                $this->messageStatus =  CallRecord::Record_Status_Fail;
+                break;
+            case 'NOANSWER':
+                $this->messageStatus =  CallRecord::Record_Status_NoAnwser;
+                break;
+            case 'BUSY':
+                $this->messageStatus =  CallRecord::Record_Status_Busy;
+                break;
+            default:
+                $this->messageStatus =  CallRecord::Record_Status_Fail;
+                break;
+        }
+        $this->duration = isset($event_data['duration'])?$event_data['duration']:0;    //通话时间
+        $this->messageAnwser = $this->messageAnwser_arr[$event_data['result']];
         return 'OK';
     }
-
     /**
      *短信
      *
@@ -106,6 +123,13 @@ class Sinch extends TTSAbstarct {
      * 语音电话
      */
     public function sendTTS(){
+        if(strpos($this->to , '+') !== false){
+            $this->to = '+'.trim($this->to ,'+');
+        }
+        $text = '';
+        for($i=1; $i <= $this->loop ; $i++){
+            $text .= $this->messageText;
+        }
         $this->body = json_encode(
             ['method'=>'ttsCallout',
                 "ttsCallout"=>[
@@ -114,14 +138,13 @@ class Sinch extends TTSAbstarct {
                     "domain" => "pstn",
                     "custom" =>"customData",
                     "locale" => $this->Language,
-                    "prompts" =>'#tts['.$this->messageText.'];myprerecordedfile',
+                    "prompts" =>'#tts['.$text.'];myprerecordedfile',
                     'enabledice' => true,
                 ],
             ]);
             $this->signature();
             $response = $this->_curl();
             $response  =json_decode($response);
-            var_dump($response);
             if(!empty($response) && isset($response->callId) && !empty($response->callId)){
                 $this->messageId = $response->callId;
             }else{

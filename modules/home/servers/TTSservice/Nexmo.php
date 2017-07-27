@@ -16,8 +16,8 @@ use yii\db\Exception;
 
 class Nexmo extends  TTSAbstarct{
 
-    private $_answerUrl = '/home/telegram/anwser';
-    private $_eventUrl = '/home/telegram/index';
+    private $_answerUrl = '/home/tts/nexmo-anwser';
+    private $_eventUrl = '/home/tts/nexmo-event';
 
     private $apiKey = '85704df7';
     private $apiScret = '755026fdd40f34c2';
@@ -39,6 +39,7 @@ class Nexmo extends  TTSAbstarct{
         $base_uri = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'];
         $this->_eventUrl = $base_uri.$this->_eventUrl;
         $this->_answerUrl = $base_uri.$this->_answerUrl;
+        $this->voice = 'Joey';
     }
 
     public function sendMessage()

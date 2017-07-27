@@ -7,8 +7,8 @@
   'Please set the number of times a user has been called by the same person within a fixed time' => '一定時間内に同じ人が電話をした回数を設定してください',
   'Please set the fixed time, unit: minutes, this time will affect the number of calls and the same number of calls' => '固定時間、単位：分を設定してください、この時間は通話の数と同じ数の通話に影響します',
   'Whitelist status' => 'ホワイトリストスイッチ',
-  'On' => '開いた',
-  'Off' => 'オフ',
+  'On' => 'オープン',
+  'Off' => '近いです',
   'Operating' => 'オペレーティング',
   'Whitelist users' => 'ホワイトリストユーザー',
   'No data found' => '何もデータが見つかりませんでした',
@@ -31,5 +31,6 @@
   'Are you sure you want to remove the blacklist?' => 'ブラックリストを削除してもよろしいですか？',
   'Remove the whitelist' => 'ホワイトリストを削除する',
   'Are you sure you want to remove the whitelist?' => 'ホワイトリストを削除してもよろしいですか？',
-    ' Name'=>'名前'
+    ' Name'=>'名前',
+    'Current status'=>'現在の状態',
 ); 

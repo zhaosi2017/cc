@@ -29,7 +29,7 @@ $identity = Yii::$app->user->identity;
                 <?= Yii::t('app/harassment','Whitelist status')?> :
             </div>
             <div  style="display: inline-block">
-                <input id="toggle-one" data-onstyle="info" data-offstyle="success" <?=  isset($identity->whitelist_switch) && $identity->whitelist_switch ? 'checked':''; ?> type="checkbox" data-on=" " /* data-on="<?= Yii::t('app/harassment','On')?>" */ data-off="<?= Yii::t('app/harassment','Off')?>">
+                <input id="toggle-one" data-onstyle="info" data-offstyle="success" <?=  isset($identity->whitelist_switch) && $identity->whitelist_switch ? 'checked':''; ?> type="checkbox" data-on=" " /* data-on="<?= Yii::t('app/harassment','On')?>" */ data-off="<?= Yii::t('app/harassment','Off')?>"> <?= Yii::t('app/harassment','Current status')?>:<span id = "whiteswitch_status"><?=  isset($identity->whitelist_switch) && $identity->whitelist_switch ? Yii::t('app/harassment','On'):Yii::t('app/harassment','Off');?></span>
             </div>
         </div>
         <div class="col-sm-9">
@@ -65,16 +65,19 @@ $identity = Yii::$app->user->identity;
     });
 
      $('#toggle-one').change(function(state) {
-        console.log(state.target.checked);
+//        var t = state.target.checked;
         data = {};
         if(state.target.checked){
             status = 1;
+            p = "<?= Yii::t('app/harassment','On')?>";
         }else{
+            p= "<?=  Yii::t('app/harassment','Off')?>";
             status = 0;
         }
         data.status = status;
         $.post('/home/white-list/update',data).done(function (r) {
-                console.log(r);
+
+            $('#whiteswitch_status').text(p);
            });
         
     });
