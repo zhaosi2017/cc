@@ -150,6 +150,7 @@ trait  TraitPotato {
      * @return bool
      */
     public function sendCallNoNumber($name){
+
         $this->sendData = [
             'chat_type'=>1,
             'chat_id' =>(int)$this->potatoUid,
@@ -339,8 +340,8 @@ trait  TraitPotato {
 
 
     private function _check_Phone(){
-            $phone_numbers = UserPhone::findAll(['user_id'=>$this->callPersonData->id]);
-            $contact_numbers = UserGentContact::findAll(['user_id'=>$this->callPersonData->id]);
+            $phone_numbers = UserPhone::findAll(['user_id'=>$this->calledPersonData->id]);
+            $contact_numbers = UserGentContact::findAll(['user_id'=>$this->calledPersonData->id]);
             if(empty($phone_numbers) && empty($contact_numbers)){   //无可用的联系方式
                 $this->sendCallNoNumber($this->potatoContactFirstName);
                 return false;
