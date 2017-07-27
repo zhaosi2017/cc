@@ -241,6 +241,7 @@ trait  TraitTelegram {
 
         $user = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
         if ($user) {
+            $this->calledPersonData = $user;
             if(!$this->_check_Phone($call_type)){
                 return $this->errorCode['success'];
             }
@@ -251,7 +252,7 @@ trait  TraitTelegram {
             ];
             $this->sendTelegramData();
 
-            $this->calledPersonData = $user;
+
             $nickname = $this->telegramContactFirstName;
             if (empty($nickname)) {
                 $nickname = !empty($user->nickname) ? $user->nickname : '他/她';

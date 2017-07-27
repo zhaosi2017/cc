@@ -262,7 +262,7 @@ trait  TraitPotato {
 
         $user = User::findOne(['potato_user_id' => $this->potatoContactUid]);
         if ($user) {
-            
+            $this->calledPersonData = $user;
             if(!$this->_check_Phone($call_type)){
                 return $this->errorCode['success'];
             }
@@ -273,7 +273,7 @@ trait  TraitPotato {
                 'text' => $this->getStartText(),
             ];
             $this->sendPotatoData();
-            $this->calledPersonData = $user;
+
             $nickname = $this->potatoContactFirstName;
             if (empty($nickname)) {
                 $nickname = !empty($user->nickname) ? $user->nickname : '他/她';
