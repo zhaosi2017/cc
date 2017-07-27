@@ -7,8 +7,8 @@
   'Please set the number of times a user has been called by the same person within a fixed time' => 'សូមកំណត់ចំនួនដងដែលអ្នកប្រើត្រូវបានហៅដោយមនុស្សដូចគ្នាក្នុងរយៈពេលថេរមួយ',
   'Please set the fixed time, unit: minutes, this time will affect the number of calls and the same number of calls' => 'សូមកំណត់ពេលថេរអង្គភាព: នាទីពេលនេះនឹងប៉ះពាល់ដល់ចំនួននៃការហៅទូរស័ព្ទនិងចំនួនដូចគ្នានៃការហៅទូរស័ព្ទ',
   'Whitelist status' => 'ស្ថានភាពបញ្ជីស',
-  'On' => 'នៅថ្ងៃទី',
-  'Off' => 'បិទ',
+  'On' => 'បើកទូលាយ',
+  'Off' => 'បិ',
   'Operating' => 'ប្រតិបត្តិការ',
   'Whitelist users' => 'អ្នកប្រើប្រាស់បញ្ជីស',
   'No data found' => 'រកមិនឃើញទិន្នន័យ',
@@ -32,6 +32,6 @@
   'Remove the whitelist' => 'យកបញ្ជីនេះ',
   'Are you sure you want to remove the whitelist?' => 'តើអ្នកពិតជាចង់យកបញ្ជីនេះ?',
     ' Name'=>'ឈ្មោ',
-
+    'Current status'=>'ស្ថានភាពបច',
 
 ); 
