@@ -331,8 +331,8 @@ trait  TraitTelegram {
             $this->sendCallButton(  CallRecord::Record_Type_none,
                 $this->telegramContactUid,
                 $this->calledPersonData->id,
-                $this->telegramFirstName,
                 $this->telegramContactFirstName ,
+                $this->telegramFirstName,
                 $this->telegramUid);
             return false;
         }

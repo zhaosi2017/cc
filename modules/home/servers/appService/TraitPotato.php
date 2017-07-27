@@ -350,8 +350,8 @@ trait  TraitPotato {
                 $this->sendCallButton(  CallRecord::Record_Type_none,
                                         $this->potatoContactUid,
                                         $this->calledPersonData->id,
-                                        $this->potatoSendFirstName,
                                         $this->potatoContactFirstName ,
+                                        $this->potatoSendFirstName,
                                         $this->potatoUid);
                 return false;
             }
