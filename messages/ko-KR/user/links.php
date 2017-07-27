@@ -8,4 +8,5 @@
   'Remove' => '풀다',
   'Contact ' => '긴급 전화 번호',
   'Are you sure you want to delete it?' => '삭제 하시겠습니까?',
+    'My contact information'=>'저에게 연락',
 ); 

@@ -10,6 +10,7 @@ namespace app\modules\home\controllers;
 
 
 use app\modules\home\models\CallRecord;
+use app\modules\home\models\Telegram;
 use app\modules\home\servers\TTSservice\Nexmo;
 use app\modules\home\servers\TTSservice\TTSservice;
 use app\modules\home\servers\TTSservice\Sinch;
@@ -21,46 +22,48 @@ use yii\filters\VerbFilter;
 
 class TtsController extends GController{
 
+    public $enableCsrfValidation = false;
 
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index' , 'sinch-event' ,'nexmo-anwser' , 'nexmo-event' ,'test-sinch'],
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index'],
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'index' => ['post'],
+                ],
+            ],
+        ];
+    }
     /**
      *sinch 的回调
      */
     public function actionSinchEvent(){
 
-        $arr = array (
-            'event' => 'dice',
-            'callid' => '94897162-b66d-4857-a014-147e48fdcf18',
-            'timestamp' => '2017-07-15T03:07:17Z',
-            'reason' => 'MANAGERHANGUP',
-            'result' => 'NOANSWERED',
-            'version' => 1,
-            'custom' => 'customData',
-            'user' => '',
-            'debit' =>
-                array (
-                    'currencyId' => 'USD',
-                    'amount' => 0.076200000000000004,
-                ),
-            'userRate' =>
-                array (
-                    'currencyId' => 'USD',
-                    'amount' => 0.076200000000000004,
-                ),
-            'to' =>
-                array (
-                    'type' => 'number',
-                    'endpoint' => '85586564836',
-                ),
-            'applicationKey' => '893b8449-294a-4ee7-8f5f-0248d76588b7',
-            'duration' => 2,
-            'from' => '',
-        );
 
-
-echo "<pre>";
-        //$callback_data = Yii::$app->request->post();
+        $postData = @file_get_contents('php://input');
+        $callback_data = json_decode($postData ,true);
         $service = TTSservice::init(Sinch::class);
-        $rest = $service->event($arr);
+        $rest = $service->event($callback_data);
         echo $rest;
     }
 
@@ -90,5 +93,6 @@ echo "<pre>";
         $result =  $service->event($postData);
         echo $result;
     }
+
 
 }

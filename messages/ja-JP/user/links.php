@@ -8,4 +8,5 @@
   'Remove' => '削除する',
   'Contact ' => '緊急電話番号',
   'Are you sure you want to delete it?' => '削除してもよろしいですか？',
+    'My contact information'=>'私に連絡',
 ); 
