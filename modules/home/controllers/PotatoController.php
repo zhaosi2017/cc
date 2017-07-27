@@ -87,11 +87,7 @@ class PotatoController extends GController
                 $result = $potato->sendMenulist();
                 return $result;
             } else if ($message['request_type'] == $potato->callBackRequestType) {
-                // 点击按钮会调.
-                $result = $potato->checkRate();
-                if ($result) {
-                    return $potato->errorCode['error'];
-                }
+
 
                 $callbackData = explode('-', $message['data']);
                 $time = time();
@@ -108,6 +104,11 @@ class PotatoController extends GController
 
                 $potato->potatoContactUid = $callbackData[1];
                 $action = $callbackData[0];
+                // 点击按钮会调.
+
+                if (($action!=$potato->callCallbackDataPre && $action!=$potato->callUrgentCallbackDataPre) && $potato->checkRate()) {
+                    return $potato->errorCode['error'];
+                }
                 switch ($action) {
                         // 正常呼叫.
                     case $potato->callCallbackDataPre:
