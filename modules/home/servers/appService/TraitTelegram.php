@@ -321,19 +321,19 @@ trait  TraitTelegram {
 
 
     private function _check_Phone(){
-        $phone_numbers = UserPhone::findAll(['user_id'=>$this->callPersonData->id]);
-        $contact_numbers = UserGentContact::findAll(['user_id'=>$this->callPersonData->id]);
+        $phone_numbers = UserPhone::findAll(['user_id'=>$this->calledPersonData->id]);
+        $contact_numbers = UserGentContact::findAll(['user_id'=>$this->calledPersonData->id]);
         if(empty($phone_numbers) && empty($contact_numbers)){   //无可用的联系方式
-            $this->sendCallNoNumber($this->potatoContactFirstName);
+            $this->sendCallNoNumber($this->telegramContactFirstName);
             return false;
         }
         if(empty($phone_numbers) && !empty($contact_numbers)){       //没有联系电话
             $this->sendCallButton(  CallRecord::Record_Type_none,
-                $this->potatoContactUid,
+                $this->telegramContactUid,
                 $this->calledPersonData->id,
-                $this->potatoSendFirstName,
-                $this->potatoContactFirstName ,
-                $this->potatoUid);
+                $this->telegramFirstName,
+                $this->telegramContactFirstName ,
+                $this->telegramUid);
             return false;
         }
 
