@@ -240,6 +240,9 @@ trait  TraitPotato {
 
             return $this->errorCode['success'];
         }
+        if(!$this->_check_Phone($call_type)){
+            return $this->errorCode['success'];
+        }
         $this->setWebhook($this->webhookUrl);
         $res = User::findOne(['potato_user_id' => $this->potatoUid]);
         if (!$res) {
@@ -309,9 +312,6 @@ trait  TraitPotato {
                     'text' => $this->translateLanguage('呼叫'.$nickname.'失败! '.$res['message']),
                 ];
                 $this->sendPotatoData();
-                return $this->errorCode['success'];
-            }
-            if(!$this->_check_Phone($call_type)){
                 return $this->errorCode['success'];
             }
             $service = TTSservice::init(\app\modules\home\servers\TTSservice\Sinch::class);

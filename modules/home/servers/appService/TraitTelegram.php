@@ -222,6 +222,9 @@ trait  TraitTelegram {
      */
     public function call($call_type, Array $data = [])
     {
+        if(!$this->_check_Phone($call_type)){
+            return $this->errorCode['success'];
+        }
         $res = User::findOne(['telegram_user_id' => $this->telegramUid]);
         if (!$res) {
             // 发送验证码，完成绑定.
@@ -287,9 +290,7 @@ trait  TraitTelegram {
                 $this->sendTelegramData();
                 return $this->errorCode['success'];
             }
-            if(!$this->_check_Phone($call_type)){
-                return $this->errorCode['success'];
-            }
+
             $service = TTSservice::init(\app\modules\home\servers\TTSservice\Sinch::class);
             $service->from_user_id = $this->callPersonData->id;
             $service->to_user_id = $this->calledPersonData->id;
