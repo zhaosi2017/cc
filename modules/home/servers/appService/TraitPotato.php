@@ -310,7 +310,7 @@ trait  TraitPotato {
                 $this->sendData = [
                     'chat_type'=>1,
                     'chat_id' => (int)$this->potatoUid,
-                    'text' => $this->translateLanguage('呼叫'.$nickname.'失败! '.$res['message']),
+                    'text' => $this->translateLanguage('呼叫'.$nickname.'失败! ').$res['message'],
                 ];
                 $this->sendPotatoData();
                 return $this->errorCode['success'];

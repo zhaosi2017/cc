@@ -286,7 +286,7 @@ trait  TraitTelegram {
             if (!$res['status']) {
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
-                    'text' => $this->translateLanguage('呼叫'.$nickname.'失败! '.$res['message']),
+                    'text' => $this->translateLanguage('呼叫'.$nickname.'失败! ').$res['message'],
                 ];
                 $this->sendTelegramData();
                 return $this->errorCode['success'];
