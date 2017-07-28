@@ -21,10 +21,10 @@ class Nexmo extends Model
     private $apiScret = '755026fdd40f34c2';
     private $applicationId = '454eb4c4-1fdd-4b4b-9423-937c80f01bb8';
     private $telegramUrl = 'https://api.telegram.org/bot366429273:AAE1lGFanLGpUbfV28zlDYSTibiAPLhhE3s/sendMessage';
-   // private $potatoMenuWebHookUrl = 'https://bot.potato.im:5423/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendInlineMarkupMessage';
-    private $potatoMenuWebHookUrl = 'https://bot.potato.im:5423/8013511:mCpb1avXHD74NLb7K6YT9AJd/sendInlineMarkupMessage';
-    //private $potatoUrl = 'https://bot.potato.im:5423/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendTextMessage';
-    private $potatoUrl = 'https://bot.potato.im:5423/8013511:mCpb1avXHD74NLb7K6YT9AJd/sendTextMessage';
+    private $potatoMenuWebHookUrl = 'https://bot.potato.im:5423/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendInlineMarkupMessage';
+    //private $potatoMenuWebHookUrl = 'https://bot.potato.im:5423/8013511:mCpb1avXHD74NLb7K6YT9AJd/sendInlineMarkupMessage';
+    private $potatoUrl = 'https://bot.potato.im:5423/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendTextMessage';
+    //private $potatoUrl = 'https://bot.potato.im:5423/8013511:mCpb1avXHD74NLb7K6YT9AJd/sendTextMessage';
     private $_webhook;
     private $_sendData;
     private $_answerKey;

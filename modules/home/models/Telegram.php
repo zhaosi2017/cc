@@ -24,7 +24,7 @@ class Telegram extends Model
     private $callText = "call";
     private $firstText = '/start';
     private $webhook;
-    private $nexmoUrl = "https://api.nexmo.com/tts/json";
+    private $nexmoUrl = 'https://api.nexmo.com/v1/calls';
     private $translateUrl = "https://translation.googleapis.com/language/translate/v2?key=AIzaSyAV_rXQu5ObaA9_rI7iqL4EDB67oXaH3zk";
     private $apiKey = '85704df7';
     private $apiSecret = '755026fdd40f34c2';
@@ -132,8 +132,7 @@ class Telegram extends Model
      */
     public function setWebhook()
     {
-        //$this->webhook = 'https://api.telegram.org/bot366429273:AAE1lGFanLGpUbfV28zlDYSTibiAPLhhE3s/sendMessage';
-        $this->webhook = 'https://api.telegram.org/bot445351636:AAG4wnw7jI048KBKlb0P0BwoU08Dm6811j8/sendMessage';
+        $this->webhook = 'https://api.telegram.org/bot366429273:AAE1lGFanLGpUbfV28zlDYSTibiAPLhhE3s/sendMessage';
     }
 
     /**
