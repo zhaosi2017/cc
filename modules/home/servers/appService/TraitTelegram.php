@@ -286,7 +286,7 @@ trait  TraitTelegram {
             if (!$res['status']) {
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
-                    'text' => $this->translateLanguage('呼叫'.$nickname.'失败! ').$res['message'],
+                    'text' => $this->translateLanguage('呼叫'.$nickname.'失败! ').' '.$res['message'],
                 ];
                 $this->sendTelegramData();
                 return $this->errorCode['success'];
@@ -300,9 +300,9 @@ trait  TraitTelegram {
             $tmp_llanguage = $this->llanguage;
             $this->setLanguage($this->calledPersonData->language);
             if($call_type == CallRecord::Record_Type_none){
-                $service->messageText = $this->translateLanguage($this->telegramFirstName.'呼叫您上线').'telegram';
+                $service->messageText = $this->translateLanguage($this->telegramFirstName.'呼叫您上线').' telegram';
             }else{
-                $service->messageText = $this->translateLanguage('请转告'.$this->telegramContactFirstName.'上线').'telegram';
+                $service->messageText = $this->translateLanguage('请转告'.$this->telegramContactFirstName.'上线').' telegram';
             }
             $this->tlanguage = $tmp_tlanguage;
             $this->llanguage = $tmp_llanguage;
