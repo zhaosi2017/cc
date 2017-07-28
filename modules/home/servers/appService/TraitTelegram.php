@@ -144,7 +144,7 @@ trait  TraitTelegram {
             'chat_id' =>(int)$this->telegramUid,
             'text' => $this->translateLanguage($name.'没有可用的联系电话!'),
         ];
-        $this->setWebhook($this->webhookUrl);
+        $this->setWebhook();
         $this->sendTelegramData();
         return true;
     }
