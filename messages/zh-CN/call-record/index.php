@@ -32,7 +32,7 @@ return [
     'Time out'=>'超时',
     'Refuse'=>'拒绝',
     'Busy' => '忙',
-    'No answer' => '没有回答',
+    'No answer' => '无人接听',
     'Failure'=>'失败',
     'Please also select the start time and the end time to query'=>'请同时选择开始时间和结束时间进行查询',
     'Called emergency call' => '被叫紧急联系电话',
