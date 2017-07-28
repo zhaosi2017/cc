@@ -141,7 +141,7 @@ trait  TraitTelegram {
     public function sendCallNoNumber($name){
         $this->sendData = [
             'chat_type'=>1,
-            'chat_id' =>(int)$this->potatoUid,
+            'chat_id' =>(int)$this->telegramUid,
             'text' => $this->translateLanguage($name.'没有可用的联系电话!'),
         ];
         $this->setWebhook($this->webhookUrl);
