@@ -29,7 +29,7 @@
   'Time out' => '超時',
   'Refuse' => '拒絕',
   'Busy' => '忙',
-  'No answer' => '沒有回答',
+  'No answer' => '無人接聽',
   'Failure' => '失敗',
   'Please also select the start time and the end time to query' => '請同時選擇開始時間和結束時間進行查詢',
   'Called emergency call' => '被叫緊急聯繫電話',

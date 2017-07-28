@@ -29,7 +29,7 @@
   'Time out' => 'ដល់​ម៉ោង',
   'Refuse' => 'បដិសេធការ',
   'Busy' => 'រវល់',
-  'No answer' => 'គ្មាន​ចម្លើយ',
+  'No answer' => 'គ្មាននរណាម្នាក',
   'Failure' => 'ការបរាជ័យ',
   'Please also select the start time and the end time to query' => 'សូមជ្រើសពេលចាប់ផ្ដើមនិងពេលបញ្ចប់ដើម្បីសួរ',
   'Called emergency call' => 'ការហៅសង្គ្រោះបន្ទាន់បានគេហៅថា',
