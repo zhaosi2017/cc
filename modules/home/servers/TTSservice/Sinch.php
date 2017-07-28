@@ -118,6 +118,42 @@ class Sinch extends TTSAbstarct {
 
     }
 
+    public function getNumbers(){
+
+        $this->timestamp = date("c");
+        $path                  = "/v1/configuration/numbers/";
+        $content_type          = "application/json";
+        $canonicalized_headers = "x-timestamp:" . $this->timestamp;
+
+        $content_md5 = base64_encode( md5( utf8_encode('{}'), true ));
+        $string_to_sign =
+            "GET\n".
+            $content_md5."\n".
+            $content_type."\n".
+            $canonicalized_headers."\n".
+            $path;
+        $signature = base64_encode(hash_hmac("sha256", utf8_encode($string_to_sign), base64_decode($this->auth_key), true));
+        $this->authorization = "Application " . $this->auth_id . ":" . $signature;
+
+        $curl = curl_init('https://callingapi.sinch.com/v1/configuration/numbers/');
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [ 'content-type: '."application/json",
+                                                        'x-timestamp:' . $this->timestamp,
+                                                        'authorization:' . $this->authorization]
+        );
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_POST, false);
+        curl_setopt($curl , CURLOPT_TIMEOUT, 20);
+        try{
+            $curl_response = curl_exec($curl);
+
+        }catch (Exception $e){
+            $this->error('Curl error: '. curl_error($curl));
+        }
+        curl_close($curl);
+
+        return $curl_response;
+    }
 
     /**
      * 语音电话
@@ -128,12 +164,13 @@ class Sinch extends TTSAbstarct {
         }
         $text = '';
         for($i=1; $i <= $this->loop ; $i++){
-            $text .= $this->messageText;
+            $text .=' '.$this->messageText;
         }
         $this->body = json_encode(
             ['method'=>'ttsCallout',
                 "ttsCallout"=>[
                     "cli" => "46000000000",
+                    //"cli" => "+62 279451",
                     "destination" =>[ "type" => "number", "endpoint" =>$this->to ],
                     "domain" => "pstn",
                     "custom" =>"customData",

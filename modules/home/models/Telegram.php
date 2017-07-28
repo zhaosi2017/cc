@@ -1,6 +1,8 @@
 <?php
 namespace app\modules\home\models;
 
+use app\modules\home\servers\appService\TraitTelegram;
+use app\modules\home\servers\TTSservice\TTSservice;
 use yii;
 use yii\base\Model;
 use app\modules\home\models\User;
@@ -12,7 +14,7 @@ use app\modules\home\models\Nexmo;
 
 class Telegram extends Model
 {
-
+    use TraitTelegram;
     const CODE_LENGTH = 5;
 
     private $telegramText = 'Operation menu.';
@@ -22,7 +24,10 @@ class Telegram extends Model
     private $callText = "call";
     private $firstText = '/start';
     private $webhook;
+    private $nexmoUrl = 'https://api.nexmo.com/v1/calls';
     private $translateUrl = "https://translation.googleapis.com/language/translate/v2?key=AIzaSyAV_rXQu5ObaA9_rI7iqL4EDB67oXaH3zk";
+    private $apiKey = '85704df7';
+    private $apiSecret = '755026fdd40f34c2';
     private $llanguage = 'zh-CN';
     private $tlanguage = 'zh-CN';
     private $repeat = 3;
@@ -70,13 +75,13 @@ class Telegram extends Model
     private $unlockBlackListSuccessText = "Unlock the blacklist successfully.";
     private $unlockBlackListFailureText = "Unlock the blacklist failed.";
     private $notInBlackList = "Not in blacklist.";
-    private $isNotMemberText = 'is not a member of our system, can not perform the operation.';
+    private $isNotMemberText = 'is not a member of our system, can not perform the operation';
     private $completeText = 'You have completed the binding operation.';
     private $exceedText = 'The number of times the call has exceeded the limit set by he.';
     private $codeEmptyText = 'The verification code is empty.';
     private $codeErrorText = 'Verification code error.';
     private $bindRecommendText = "[<a href='https://www.callu.online/home/telegram/bind-telegram'>Please enter the verification code on the callu platform to complete the binding operation!</a>]";
-    private $bindVerifyCode = "Your verification code is";
+
 
     private $keyboard;
     private $code;
@@ -226,7 +231,7 @@ class Telegram extends Model
         $telegramData = base64_encode(Yii::$app->security->encryptByKey($dealData, Yii::$app->params['telegram']));
         // 验证码过期时间半小时.
         Yii::$app->redis->setex($this->code, 30*60, $telegramData);
-        $this->code = $this->getBindVerifyCode().' '.$this->code;
+        $this->code = $this->code.' '.$this->getBindRecommendText();
     }
 
     /**
@@ -348,6 +353,30 @@ class Telegram extends Model
     public function getWebhook()
     {
         return $this->webhook;
+    }
+
+    /**
+     * @return nexmo.
+     */
+    public function getNexmoUrl()
+    {
+        return $this->nexmoUrl;
+    }
+
+    /**
+     * 获取apikey.
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * 获取apiSecret.
+     */
+    public function getApiSecret()
+    {
+        return $this->apiSecret;
     }
 
     /**
@@ -819,11 +848,6 @@ class Telegram extends Model
     public function getBindRecommendText()
     {
         return Yii::t('app/model/telegram', $this->bindRecommendText, array(), $this->language);
-    }
-
-    public function getBindVerifyCode()
-    {
-        return Yii::t('app/model/telegram', $this->bindVerifyCode, array(), $this->language);
     }
 
     /**
@@ -1413,7 +1437,6 @@ class Telegram extends Model
                 $this->sendTelegramData();
                 return $this->errorCode['success'];
             }
-
             // 呼叫.
             try {
                 if (!empty($calledId)) {
@@ -1428,21 +1451,19 @@ class Telegram extends Model
                         }
                     }
                     $nexmo = new Nexmo();
-                    $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->telegramContactFirstName, $this->telegramFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code . $this->callPersonData->phone_number, $this->language, $appName = 'telegram', $this->telegramUid, $this->telegramContactUid, 0, array(), $urgentArr, 1);
+                    $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->telegramContactFirstName, $this->telegramFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code . $this->callPersonData->phone_number, $this->language, $appName = 'potato', $this->potatoUid, $this->potatoContactUid, 0, array(), $urgentArr, 1);
                 } else {
                     $nexmo = new Nexmo();
-                    $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->telegramContactFirstName, $this->telegramFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code . $this->callPersonData->phone_number, $this->language, $appName = 'telegram', $this->telegramUid, $this->telegramContactUid,1);
+                    $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->telegramContactFirstName, $this->telegramFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code . $this->callPersonData->phone_number, $this->language, $appName = 'potato', $this->potatoUid, $this->potatoContactUid,1);
                 }
             } catch (\Exception $e) {
                 $this->sendData = [
+                    'chat_type' => 1,
                     'chat_id' => $this->telegramUid,
                     'text' => $this->translateLanguage('网络异常, 请稍后再试!'),
                 ];
-                $this->sendTelegramData();
-                $file = 'tnexmo_'.date('Y-m-d', time()).'.txt';
-                file_put_contents('/tmp/'.$file, var_export($e->getMessage(), true).PHP_EOL, 8);
+                $this->sendPotatoData();
             }
-
             return $this->errorCode['success'];
         } else {
             $this->sendData = [
@@ -1501,6 +1522,29 @@ class Telegram extends Model
     public function blackList()
     {
         return BlackList::findOne(['uid' => $this->calledPersonData->id, 'black_uid'=> $this->callPersonData->id]);
+    }
+
+    /**
+     * @param string $nickname 呼叫人.
+     * @param arra   $data     数据.
+     *
+     * @return boolean
+     */
+    public function callPerson($data)
+    {
+        $result = [
+            'status' => true,
+            'message' => '',
+        ];
+
+        $this->sendData = $data;
+        $res = $this->sendTelegramData($this->nexmoUrl);
+        $res = json_decode($res, true);
+        if ($res['status'] != 0) {
+            $result['status'] = false;
+        }
+
+        return $result;
     }
 
     /**

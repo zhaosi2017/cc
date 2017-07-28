@@ -29,7 +29,7 @@
   'Time out' => 'タイムアウト',
   'Refuse' => 'ごみ',
   'Busy' => '忙しい',
-  'No answer' => '誰も答えていません',
+  'No answer' => '無回答',
   'Failure' => '失敗',
   'Please also select the start time and the end time to query' => '照会する開始時刻と終了時刻も選択してください',
   'Called emergency call' => '呼び出された緊急電話',

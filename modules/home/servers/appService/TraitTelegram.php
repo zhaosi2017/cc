@@ -141,11 +141,11 @@ trait  TraitTelegram {
     public function sendCallNoNumber($name){
         $this->sendData = [
             'chat_type'=>1,
-            'chat_id' =>(int)$this->potatoUid,
+            'chat_id' =>(int)$this->telegramUid,
             'text' => $this->translateLanguage($name.'没有可用的联系电话!'),
         ];
-        $this->setWebhook($this->webhookUrl);
-        $this->sendPotatoData();
+        $this->setWebhook();
+        $this->sendTelegramData();
         return true;
     }
     /**
@@ -241,6 +241,10 @@ trait  TraitTelegram {
 
         $user = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
         if ($user) {
+            $this->calledPersonData = $user;
+            if(!$this->_check_Phone($call_type)){
+                return $this->errorCode['success'];
+            }
             // 开始操作.
             $this->sendData = [
                 'chat_id' => $this->telegramUid,
@@ -248,7 +252,7 @@ trait  TraitTelegram {
             ];
             $this->sendTelegramData();
 
-            $this->calledPersonData = $user;
+
             $nickname = $this->telegramContactFirstName;
             if (empty($nickname)) {
                 $nickname = !empty($user->nickname) ? $user->nickname : '他/她';
@@ -282,14 +286,12 @@ trait  TraitTelegram {
             if (!$res['status']) {
                 $this->sendData = [
                     'chat_id' => $this->telegramUid,
-                    'text' => $this->translateLanguage('呼叫'.$nickname.'失败! '.$res['message']),
+                    'text' => $this->translateLanguage('呼叫'.$nickname.'失败! ').' '.$res['message'],
                 ];
                 $this->sendTelegramData();
                 return $this->errorCode['success'];
             }
-            if(!$this->_check_Phone($call_type)){
-                return $this->errorCode['success'];
-            }
+
             $service = TTSservice::init(\app\modules\home\servers\TTSservice\Sinch::class);
             $service->from_user_id = $this->callPersonData->id;
             $service->to_user_id = $this->calledPersonData->id;
@@ -298,9 +300,9 @@ trait  TraitTelegram {
             $tmp_llanguage = $this->llanguage;
             $this->setLanguage($this->calledPersonData->language);
             if($call_type == CallRecord::Record_Type_none){
-                $service->messageText = $this->translateLanguage($this->telegramFirstName.'呼叫您上线').'telegram';
+                $service->messageText = $this->translateLanguage($this->telegramFirstName.'呼叫您上线').' telegram';
             }else{
-                $service->messageText = $this->translateLanguage('请转告'.$this->calledPersonData->telegram_name.'上线').'telegram';
+                $service->messageText = $this->translateLanguage('请转告'.$this->telegramContactFirstName.'上线').' telegram';
             }
             $this->tlanguage = $tmp_tlanguage;
             $this->llanguage = $tmp_llanguage;

@@ -262,6 +262,10 @@ trait  TraitPotato {
 
         $user = User::findOne(['potato_user_id' => $this->potatoContactUid]);
         if ($user) {
+            $this->calledPersonData = $user;
+            if(!$this->_check_Phone($call_type)){
+                return $this->errorCode['success'];
+            }
             // 开始操作.
             $this->sendData = [
                 'chat_type'=>1,
@@ -269,7 +273,7 @@ trait  TraitPotato {
                 'text' => $this->getStartText(),
             ];
             $this->sendPotatoData();
-            $this->calledPersonData = $user;
+
             $nickname = $this->potatoContactFirstName;
             if (empty($nickname)) {
                 $nickname = !empty($user->nickname) ? $user->nickname : '他/她';
@@ -306,21 +310,18 @@ trait  TraitPotato {
                 $this->sendData = [
                     'chat_type'=>1,
                     'chat_id' => (int)$this->potatoUid,
-                    'text' => $this->translateLanguage('呼叫'.$nickname.'失败! '.$res['message']),
+                    'text' => $this->translateLanguage('呼叫'.$nickname.'失败! ').' '.$res['message'],
                 ];
                 $this->sendPotatoData();
-                return $this->errorCode['success'];
-            }
-            if(!$this->_check_Phone($call_type)){
                 return $this->errorCode['success'];
             }
             $service = TTSservice::init(\app\modules\home\servers\TTSservice\Sinch::class);
             $service->from_user_id = $this->callPersonData->id;
             $service->to_user_id = $this->calledPersonData->id;
             if($call_type == CallRecord::Record_Type_none){
-                $service->messageText = $this->translateLanguage($this->potatoSendFirstName.'呼叫您上线').'potato';
+                $service->messageText = $this->translateLanguage($this->potatoSendFirstName.'呼叫您上线').' potato';
             }else{
-                $service->messageText = $this->translateLanguage('请转告'.$this->potatoContactFirstName.'上线').'potato';
+                $service->messageText = $this->translateLanguage('请转告'.$this->potatoContactFirstName.'上线').' potato';
             }
             $service->messageType = 'TTS';
             $service->app_type ='potato';

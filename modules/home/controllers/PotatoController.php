@@ -2,6 +2,7 @@
 
 namespace app\modules\home\controllers;
 
+use app\modules\home\models\CallRecord;
 use app\modules\home\models\Potato;
 use app\modules\home\models\PotatoMap;
 use app\modules\home\models\PotatoMapServer;
@@ -86,11 +87,7 @@ class PotatoController extends GController
                 $result = $potato->sendMenulist();
                 return $result;
             } else if ($message['request_type'] == $potato->callBackRequestType) {
-                // 点击按钮会调.
-                $result = $potato->checkRate();
-                if ($result) {
-                    return $potato->errorCode['error'];
-                }
+
 
                 $callbackData = explode('-', $message['data']);
                 $time = time();
@@ -108,19 +105,24 @@ class PotatoController extends GController
 
                 $potato->potatoContactUid = $callbackData[1];
                 $action = $callbackData[0];
+                // 点击按钮会调.
+
+                if (($action!=$potato->callCallbackDataPre && $action!=$potato->callUrgentCallbackDataPre) && $potato->checkRate()) {
+                    return $potato->errorCode['error'];
+                }
                 switch ($action) {
                         // 正常呼叫.
                     case $potato->callCallbackDataPre:
                         $potato->potatoSendFirstName = $callbackData[2];
                         $potato->potatoContactFirstName = $callbackData[3];
-                        $result = $potato->callPotatoPerson();
+                        $result = $potato->call(CallRecord::Record_Type_none , $message);
                         break;
                         // 呼叫紧急联系人.
                     case $potato->callUrgentCallbackDataPre:
                         $calledId = $callbackData[2];
                         $potato->potatoSendFirstName = $callbackData[3];
                         $potato->potatoContactFirstName = $callbackData[4];
-                        $result = $potato->callPotatoPerson($calledId);
+                        $result = $potato->call(CallRecord::Record_Type_emergency,$message);
                         break;
                         // 加白名单.
                     case $potato->whiteCallbackDataPre:

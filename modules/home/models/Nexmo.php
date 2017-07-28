@@ -22,7 +22,9 @@ class Nexmo extends Model
     private $applicationId = '454eb4c4-1fdd-4b4b-9423-937c80f01bb8';
     private $telegramUrl = 'https://api.telegram.org/bot366429273:AAE1lGFanLGpUbfV28zlDYSTibiAPLhhE3s/sendMessage';
     private $potatoMenuWebHookUrl = 'https://bot.potato.im:5423/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendInlineMarkupMessage';
+    //private $potatoMenuWebHookUrl = 'https://bot.potato.im:5423/8013511:mCpb1avXHD74NLb7K6YT9AJd/sendInlineMarkupMessage';
     private $potatoUrl = 'https://bot.potato.im:5423/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendTextMessage';
+    //private $potatoUrl = 'https://bot.potato.im:5423/8013511:mCpb1avXHD74NLb7K6YT9AJd/sendTextMessage';
     private $_webhook;
     private $_sendData;
     private $_answerKey;
@@ -30,8 +32,8 @@ class Nexmo extends Model
     private $_tlanguage = 'zh-CN';
     private $_language = 'zh-CN';
     private $_enventUrl;
-    private $_answerUrl = 'https://www.callu.online/home/nexmo/conference?key=';
-    private $_eventUrl = 'https://www.callu.online/home/nexmo/event';
+    private $_answerUrl = 'https://test.callu.online/home/nexmo/conference?key=';
+    private $_eventUrl = 'https://test.callu.online/home/nexmo/event';
     private $translateUrl = 'https://translation.googleapis.com/language/translate/v2?key=AIzaSyAV_rXQu5ObaA9_rI7iqL4EDB67oXaH3zk';
     private $_resultUrl = 'https://api.nexmo.com/v1/calls';
     private $loop = 3;
