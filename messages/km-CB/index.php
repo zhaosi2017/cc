@@ -30,6 +30,7 @@
   'Contact information' => 'ទំនាក់ទំនង',
   'Successful operation' => 'ប្រតិបត្ដិការដែលទទួលបានជោគជ័យ',
   'Operation failed' => 'ប្រតិបត្តិការបានបរាជ័យ',
+    'delete failed , Keep at least one contact number'=>'ប្រតិបត្ដិការបរាជ័យសូមចាកចេញពីទូរស័ព្ទទំនាក់ទំនងយ៉ាងហោចណាស់មួយ',
   'Password reset complete' => 'ពាក្យសម្ងាត់ដែលបានកំណត់ឡើងវិញពេញលេញ',
   'Verification code error' => 'កំហុសកូដផ្ទៀងផ្ទាត់',
   'Verification code' => 'កូដ​ផ្ទៀង​ផ្ទាត់',

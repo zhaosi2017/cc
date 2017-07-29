@@ -32,6 +32,7 @@ return [
     'Contact information'=>'联系方式',
     'Successful operation'=>'操作成功',
     'Operation failed'=>'操作失败',
+    'delete failed , Keep at least one contact number'=>'操作失败 ，请至少保留一个联系电话',
     'Password reset complete'=>'密码修改成功',
     'Verification code error'=>'验证码错误',
     'Verification code'=>'验证码',

@@ -30,6 +30,7 @@
   'Contact information' => '聯繫方式',
   'Successful operation' => '操作成功',
   'Operation failed' => '操作失敗',
+    'delete failed , Keep at least one contact number'=>'操作失敗 ，請至少保留一個聯繫電話',
   'Password reset complete' => '密碼修改成功',
   'Verification code error' => '驗證碼錯誤',
   'Verification code' => '驗證碼',

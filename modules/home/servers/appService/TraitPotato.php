@@ -319,9 +319,9 @@ trait  TraitPotato {
             $service->from_user_id = $this->callPersonData->id;
             $service->to_user_id = $this->calledPersonData->id;
             if($call_type == CallRecord::Record_Type_none){
-                $service->messageText = $this->translateLanguage($this->potatoSendFirstName.'呼叫您上线').' potato';
+                $service->messageText = $this->translateLanguage($this->potatoSendFirstName.' 呼叫您上线').' potato';
             }else{
-                $service->messageText = $this->translateLanguage('请转告'.$this->potatoContactFirstName.'上线').' potato';
+                $service->messageText = $this->translateLanguage('请转告 '.$this->potatoContactFirstName.' 上线').' potato';
             }
             $service->messageType = 'TTS';
             $service->app_type ='potato';

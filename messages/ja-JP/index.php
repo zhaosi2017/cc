@@ -30,6 +30,7 @@
   'Contact information' => '連絡先',
   'Successful operation' => '成功した操作',
   'Operation failed' => '操作に失敗しました',
+    'delete failed , Keep at least one contact number'=>'操作は、少なくとも一つの連絡先電話番号を残してください、失敗しました',
   'Password reset complete' => 'パスワードリセット完了',
   'Verification code error' => '確認コードエラー',
   'Verification code' => '検証コード',

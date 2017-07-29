@@ -30,6 +30,7 @@
   'Contact information' => '연락처 정보',
   'Successful operation' => '성공적인 운영',
   'Operation failed' => '작업 실패',
+    'delete failed , Keep at least one contact number'=>'작동은 적어도 하나의 연락처 전화를 남겨주세요 실패',
   'Password reset complete' => '비밀번호 재설정 완료',
   'Verification code error' => '인증 코드 오류',
   'Verification code' => '확인 코드',
