@@ -233,7 +233,8 @@ CREATE TABLE `user` (
   `reg_ip` varchar(64) NOT NULL DEFAULT '',
   `whitelist_switch` tinyint(1) NOT NULL DEFAULT '0',
   `language` VARCHAR(40) NOT NULL DEFAULT 'zh-CN',
-  `step` TINYINT(1) NOT NULL DEFAULT '0'
+  `step` TINYINT(1) NOT NULL DEFAULT '0',
+   `amount` decimal(14,4) NOT NULL DEFAULT '0.0000' COMMENT '账户余额',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -321,3 +322,26 @@ CREATE TABLE `potato_map` (
   `chat_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+/**   用户资金变动明细表*/
+CREATE TABLE `final_change_log` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `change_type` int(11) NOT NULL COMMENT '帐变类型',
+  `amount` decimal(14,4) NOT NULL DEFAULT '0.0000' COMMENT '帐变金额',
+  `time` int(11) NOT NULL COMMENT '帐变时间',
+  `user_id` int(11) NOT NULL COMMENT '帐变发生人',
+  `comment` char(255) DEFAULT '' COMMENT '说明',
+  `before` decimal(14,4) NOT NULL DEFAULT '0.0000' COMMENT '帐变之前金额',
+  `after` decimal(14,4) NOT NULL DEFAULT '0.0000' COMMENT '帐变之后金额',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+／** 充值接口日志表 *／
+CREATE TABLE `final_mutual_log` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `interface_name` char(16) DEFAULT '' COMMENT '接口名',
+  `data` text COMMENT '交互数据',
+  `time` int(11) NOT NULL COMMENT '发生时间',
+  `type` int(11) NOT NULL DEFAULT '1' COMMENT '交互类型',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
