@@ -358,6 +358,7 @@ CREATE TABLE `call_number` (
   `rent_status` int(11) NOT NULL DEFAULT '0' COMMENT '可租状态',
   `begin_time` int(11) NOT NULL COMMENT '启用时间',
   `end_time` int(11) DEFAULT NULL COMMENT '结束时间',
+  `price` decimal(14,4) NOT NULL DEFAULT '0.0000' COMMENT '租金／每天',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
