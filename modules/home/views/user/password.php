@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 
 $this->title = Yii::t('app/user/password' , 'Edit The Password');
-$this->params['breadcrumbs'][] = ['label'=>Yii::t('app/user/password', 'User'),'url'=>''];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app/nav','User center'), 'url' => ['user/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

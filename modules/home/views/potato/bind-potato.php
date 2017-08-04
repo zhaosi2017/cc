@@ -8,6 +8,7 @@ if ($isModify) {
 } else {
     $this->title = Yii::t('app/potato/bind-potato','Bind potato account');;
 }
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app/nav','User center'), 'url' => ['user/index']];
 $this->params['breadcrumbs'][] = $this->title;
 /* @var $this yii\web\View */
 /* @var $model app\modules\home\models\ContactForm */
