@@ -345,3 +345,33 @@ CREATE TABLE `final_mutual_log` (
   `type` int(11) NOT NULL DEFAULT '1' COMMENT '交互类型',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**
+  号码池
+ */
+CREATE TABLE `call_number` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `number` int(11) NOT NULL COMMENT '电话号码',
+  `status` int(11) NOT NULL COMMENT '可使用状态',
+  `time` int(11) NOT NULL COMMENT '录入时间',
+  `comment` char(255) DEFAULT NULL COMMENT '说明',
+  `rent_status` int(11) NOT NULL DEFAULT '0' COMMENT '可租状态',
+  `begin_time` int(11) NOT NULL COMMENT '启用时间',
+  `end_time` int(11) DEFAULT NULL COMMENT '结束时间',
+  `price` decimal(14,4) NOT NULL DEFAULT '0.0000' COMMENT '租金／每天',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**
+  用户号码池
+ */
+
+CREATE TABLE `user_number` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `number_id` int(11) NOT NULL COMMENT '电话号码',
+  `time` int(11) NOT NULL COMMENT '记录时间',
+  `end_time` int(11) NOT NULL COMMENT '到期时间',
+  `begin_time` int(11) NOT NULL COMMENT '起租时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
