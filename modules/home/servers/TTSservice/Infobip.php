@@ -37,7 +37,7 @@ class Infobip extends TTSAbstarct {
          "text": "Test Voice message.",
          "language": "en",
          "speechRate": 1,
-         "notifyUrl": "http://www.cc.com:8080/home/tts/test-sinch",
+         "notifyUrl": "https://test.callu.online/home/tts/test-sinch",
          "notifyContentType": "application/json",
          "callbackData":"DLR callback data",
          "validityPeriod": 720,
