@@ -11,6 +11,7 @@ namespace app\modules\home\controllers;
 
 use app\modules\home\models\CallRecord;
 use app\modules\home\models\Telegram;
+use app\modules\home\servers\TTSservice\Infobip;
 use app\modules\home\servers\TTSservice\Nexmo;
 use app\modules\home\servers\TTSservice\TTSservice;
 use app\modules\home\servers\TTSservice\Sinch;
@@ -94,5 +95,11 @@ class TtsController extends GController{
         echo $result;
     }
 
+
+    public function actionTestSinch(){
+        $test = new Infobip();
+        $test->sendMessage();
+
+    }
 
 }
