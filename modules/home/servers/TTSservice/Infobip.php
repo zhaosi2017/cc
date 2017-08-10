@@ -63,12 +63,12 @@ class Infobip extends TTSAbstarct {
 
     public function sendMessage(){
         $this->send_data['bulkId'] = $this->uuid_v4();
-        $this->send_data['messages']['from'] = $this->from;
-        $this->send_data['messages']['from']['destinations']['to'] = $this->to;
-        $this->send_data['messages']['from']['destinations']['messageId'] = $this->uuid_v4();
-        $this->send_data['messages']['text'] = $this->messageText;
-        $this->send_data['messages']['language'] = strtolower($this->Language);
-        $this->send_data['messages']['sendAt'] = date("c");
+        $this->send_data['messages'][0]['from'] = $this->from;
+        $this->send_data['messages'][0]['from']['destinations']['to'] = $this->to;
+        $this->send_data['messages'][0]['from']['destinations']['messageId'] = $this->uuid_v4();
+        $this->send_data['messages'][0]['text'] = $this->messageText;
+        $this->send_data['messages'][0]['language'] = strtolower($this->Language);
+        $this->send_data['messages'][0]['sendAt'] = date("c");
         $body = json_encode( $this->send_data , true);
 
 
