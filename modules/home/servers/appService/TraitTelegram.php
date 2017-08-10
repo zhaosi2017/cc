@@ -10,6 +10,7 @@ namespace app\modules\home\servers\appService;
 
 use app\modules\home\models\CallRecord;
 use app\modules\home\servers\TTSservice\Infobip;
+use app\modules\home\servers\TTSservice\Sinch;
 use Yii;
 use yii\db\Exception;
 use app\modules\home\models\User;

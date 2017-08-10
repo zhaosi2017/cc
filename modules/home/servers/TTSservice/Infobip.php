@@ -9,6 +9,7 @@
 
 namespace app\modules\home\servers\TTSservice;
 use app\modules\home\models\CallRecord;
+use app\modules\home\servers\Translate\TranslateGoogle;
 use yii\db\Exception;
 
 
@@ -21,7 +22,7 @@ class Infobip extends TTSAbstarct {
         'bulkId'=>'',
         'messages'=>[
             ['from'=>'',
-              'destinations'=>[
+             'destinations'=>[
                   'to'=>'',
                   'messageId'=>''
               ],
@@ -59,19 +60,27 @@ class Infobip extends TTSAbstarct {
         '5002'=>'busy'
     ];
 
+    private $Language_map = [
+        'zh-CN' =>'zh-cn',
+        'zh-TW' =>'zh-tw',
+        'en-US' =>'en',
+        'ko-KR' =>'ko',
+        'ja-JP' =>'ja'
+    ];
 
 
     public function sendMessage(){
+
         $this->send_data['bulkId'] = $this->uuid_v4();
         $this->send_data['messages'][0]['from'] = $this->from;
-        $this->send_data['messages'][0]['from']['destinations']['to'] = $this->to;
-        $this->send_data['messages'][0]['from']['destinations']['messageId'] = $this->uuid_v4();
-        $this->send_data['messages'][0]['text'] = $this->messageText;
-        $this->send_data['messages'][0]['language'] = strtolower($this->Language);
+        $this->send_data['messages'][0]['destinations']['to'] = $this->to;
+        $this->send_data['messages'][0]['destinations']['messageId'] = $this->uuid_v4();
+        $this->send_data['messages'][0]['text'] = $this->translateText();
+        $this->send_data['messages'][0]['language'] = 'en';//strtolower($this->Language);
         $this->send_data['messages'][0]['sendAt'] = date("c");
         $body = json_encode( $this->send_data , true);
-
-
+        echo "<pre>";
+        print_r($body);
 
 
         $header = ['Accept'=>'application/json' , 'Content-type'=>'application/json' ,'Authorization'=>$this->authorization];
@@ -88,6 +97,9 @@ class Infobip extends TTSAbstarct {
         }
         return false;
     }
+
+
+
 
     public function event($event_data){
         $this->messageId = $event_data['bulkId'];
@@ -116,6 +128,13 @@ class Infobip extends TTSAbstarct {
     }
 
 
+    private function translateText(){
+            $translate = new TranslateGoogle();
+            $translate->deration_Language = 'en-US';
+            $translate->Source_Language = $this->Language;
+            $translate->text = $this->messageText;
+            return $translate->Translate();
+    }
 
     private function uuid_v4()
     {
