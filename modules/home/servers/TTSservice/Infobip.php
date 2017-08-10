@@ -25,19 +25,19 @@ class Infobip extends TTSAbstarct {
                   'to'=>'',
                   'messageId'=>''
               ],
-             "text"=>" 你好啊",
+             "text"=>"",
              "language"=> "zh-cn",
              "speechRate"=> 1,
-             "notifyUrl"=> "https://103.235.171.147/home/tts/sinch-event",
+             "notifyUrl"=> "https://103.235.171.147/home/tts/infobip-event",
              "notifyContentType"=> "application/json",
              "callbackData"=>"DLR callback data",
              "validityPeriod"=> 720,
-             "sendAt"=> "2016-07-07T17:00:00.000+01:00",
+             "sendAt"=> "",
              "record"=>false,
              "repeatDtmf"=> "123#",
              "ringTimeout"=> 45,
-             "dtmfTimeout"=> 10,
-             "callTimeout"=> 130,
+             "dtmfTimeout"=> 3,
+             "callTimeout"=> 50,
              "machineDetection"=> "DISABLE"
 
             ]
@@ -68,7 +68,7 @@ class Infobip extends TTSAbstarct {
         $this->send_data['messages']['from']['destinations']['messageId'] = $this->uuid_v4();
         $this->send_data['messages']['text'] = $this->messageText;
         $this->send_data['messages']['language'] = strtolower($this->Language);
-
+        $this->send_data['messages']['sendAt'] = date("c");
         $body = json_encode( $this->send_data , true);
 
 

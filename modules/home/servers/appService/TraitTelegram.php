@@ -9,6 +9,7 @@ namespace app\modules\home\servers\appService;
 
 
 use app\modules\home\models\CallRecord;
+use app\modules\home\servers\TTSservice\Infobip;
 use Yii;
 use yii\db\Exception;
 use app\modules\home\models\User;
@@ -292,7 +293,7 @@ trait  TraitTelegram {
                 return $this->errorCode['success'];
             }
 
-            $service = TTSservice::init(\app\modules\home\servers\TTSservice\Sinch::class);
+            $service = TTSservice::init(Infobip::class);
             $service->from_user_id = $this->callPersonData->id;
             $service->to_user_id = $this->calledPersonData->id;
 

@@ -37,7 +37,7 @@ class TtsController extends GController{
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index' , 'sinch-event' ,'nexmo-anwser' , 'nexmo-event' ,'test-sinch'],
+                        'actions' => ['index' , 'sinch-event' ,'nexmo-anwser' , 'nexmo-event' ,'test-sinch', 'infobip-event'],
                         'roles' => ['?'],
                     ],
                     [
@@ -95,10 +95,16 @@ class TtsController extends GController{
         echo $result;
     }
 
+    public function actionInfobipEvent(){
 
-    public function actionTestSinch(){
-        $test = new Infobip();
-        $test->sendMessage();
+
+        $postData = @file_get_contents('php://input');
+        file_put_contents('/tmp/test_infobip.log' , var_export($postData , true) , 8);
+        $callback_data = json_decode($postData ,true);
+        $service = TTSservice::init(Infobip::class);
+        $rest = $service->event($callback_data);
+        echo $rest;
+
 
     }
 
