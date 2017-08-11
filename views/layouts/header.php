@@ -274,7 +274,8 @@ if(!Yii::$app->user->isGuest) {
                                                 <li><a href="/home/user/links"><?= Yii::t('app/nav','My contact information')?></a></li>
                                                 <li class="dropdown">
                                                     <a href="/home/user/harassment" class="dropdown-toggle" data-toggle="dropdown"><?= Yii::t('app/nav','Anti harassment')?></a>
-                                                    <ul class="dropdown-menu animated">
+<!--                                                    <ul class="dropdown-menu animated">-->
+                                                        <ul class="dropdown-menu multi-dropdown animated fadeOutUp">
                                                         <li><a href="/home/user/harassment"><?= Yii::t('app/nav','Parameter settings')?></a></li>
                                                         <li><a href="/home/white-list/index"><?= Yii::t('app/nav','Whitelist')?></a></li>
 
