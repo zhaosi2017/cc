@@ -8,6 +8,7 @@
 namespace app\commands;
 
 use yii\console\Controller;
+use app\commands\CustomerService;
 
 /**
  * This command echoes the first argument that you have entered.
@@ -25,6 +26,8 @@ class HelloController extends Controller
      */
     public function actionIndex($message = 'hello world')
     {
+        $customer = new CustomerService();
+        $customer->run;
         echo $message . "\n";
     }
 }
