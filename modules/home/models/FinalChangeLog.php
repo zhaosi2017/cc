@@ -8,6 +8,8 @@
  */
 namespace app\modules\home\models;
 use \app\models\CActiveRecord;
+
+
 class FinalChangeLog extends CActiveRecord{
 
     const FINAL_CHANGE_TYPE_RECHARGE = 1; //充值

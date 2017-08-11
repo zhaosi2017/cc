@@ -323,6 +323,8 @@ CREATE TABLE `potato_map` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+
+／*****************************************账务相关*********************************************／
 /**   用户资金变动明细表*/
 CREATE TABLE `final_change_log` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -335,6 +337,34 @@ CREATE TABLE `final_change_log` (
   `after` decimal(14,4) NOT NULL DEFAULT '0.0000' COMMENT '帐变之后金额',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/**
+  用户充值下单表
+ */
+CREATE TABLE `final_order` (
+  `order_id` char(32) NOT NULL DEFAULT '',
+  `user_id` int(11) NOT NULL COMMENT '充值用户',
+  `merchant_id` int(11) NOT NULL COMMENT '使用的充值账号',
+  `amount` decimal(14,4) NOT NULL COMMENT '金额',
+  `time` int(11) NOT NULL COMMENT '下单时间',
+  `comment` char(32) DEFAULT NULL COMMENT '描述',
+  `status` int(11) NOT NULL DEFAULT '0' COMMENT '订单状态',
+  PRIMARY KEY (`order_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**
+ * 充值账号 记录表
+ */
+CREATE TABLE `final_merchant_info` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `merchant_id` char(255) NOT NULL DEFAULT '' COMMENT '账号',
+  `recharge_type` int(11) NOT NULL DEFAULT '0' COMMENT '支持的支付类型',
+  `sign_type` int(11) NOT NULL COMMENT '签名的类型',
+  `certificate` text NOT NULL COMMENT '签名的凭证。可能是字符串，也可能是凭证的地址',
+  `time` int(11) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '1' COMMENT '账号的状态',
+  `amount` decimal(14,4) NOT NULL DEFAULT '0.0000' COMMENT '余额',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ／** 充值接口日志表 *／
 CREATE TABLE `final_mutual_log` (
@@ -345,7 +375,10 @@ CREATE TABLE `final_mutual_log` (
   `type` int(11) NOT NULL DEFAULT '1' COMMENT '交互类型',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+／******************************************------end--------********************************************／
 
+
+／*******************************************号码超级相关*******************************************／
 /**
   号码池
  */
@@ -359,6 +392,7 @@ CREATE TABLE `call_number` (
   `begin_time` int(11) NOT NULL COMMENT '启用时间',
   `end_time` int(11) DEFAULT NULL COMMENT '结束时间',
   `price` decimal(14,4) NOT NULL DEFAULT '0.0000' COMMENT '租金／每天',
+  `interface` char(16) NOT NULL DEFAULT '' COMMENT '号码对应的语音提供商',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -375,3 +409,4 @@ CREATE TABLE `user_number` (
   `begin_time` int(11) NOT NULL COMMENT '起租时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+／********************************************------end------******************************************／
