@@ -307,7 +307,7 @@ if(!Yii::$app->user->isGuest) {
                                         <li><a href="/home/help/guide"><?= Yii::t('app/nav','Use boot')?></a></li>
                                         <li><a href="/home/help/software"><?= Yii::t('app/nav','Introduction to the software')?></a></li>
 <!--                                        <li><a href="/home/help/qustion-answer">--><?//= Yii::t('app/nav','Q&A')?><!--</a></li>-->
-                                        <li><a href="/home/help/online-service"><?= Yii::t('app/nav','Online service')?></a></li>
+                                        <!-- <li><a href="/home/help/online-service"><?= Yii::t('app/nav','Online service')?></a></li> -->
                                     </ul>
                                 </li>
 
