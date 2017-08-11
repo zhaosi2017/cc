@@ -76,13 +76,9 @@ class Infobip extends TTSAbstarct {
         $this->send_data['messages'][0]['destinations']['to'] = $this->to;
         $this->send_data['messages'][0]['destinations']['messageId'] = $this->uuid_v4();
         $this->send_data['messages'][0]['text'] = $this->translateText();
-        $this->send_data['messages'][0]['language'] = 'en';//strtolower($this->Language);
+        $this->send_data['messages'][0]['language'] = isset($this->Language_map[$this->Language])?$this->Language_map[$this->Language]:'zh-cn';
         $this->send_data['messages'][0]['sendAt'] = date("c");
         $body = json_encode( $this->send_data , true);
-        echo "<pre>";
-        print_r($body);
-
-
         $header = ['Accept'=>'application/json' , 'Content-type'=>'application/json' ,'Authorization'=>$this->authorization];
         $client = new \GuzzleHttp\Client();
         $request  = new \GuzzleHttp\Psr7\Request('POST' , $this->uri , $header , $body);
