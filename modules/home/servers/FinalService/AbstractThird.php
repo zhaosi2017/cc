@@ -19,6 +19,10 @@ abstract  class AbstractThird{
      */
     public $Merchant;
 
+    /**
+     * @var 支付地址
+     */
+    public $pay_uri;
 
     /**
      * @var string 请求类型
@@ -32,7 +36,8 @@ abstract  class AbstractThird{
      */
     public $request_data = [
         'order_id'=>'',        //订单id
-        'order_amount'=>''     //订单金额
+        'order_amount'=>'',    //订单金额
+        'order_type'=>'',       //支付类型
     ];
     /**
      * @var array 回调数据组装

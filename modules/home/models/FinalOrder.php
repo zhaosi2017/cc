@@ -22,17 +22,17 @@ use \app\models\CActiveRecord;
  */
 class FinalOrder extends  CActiveRecord{
 
-    const ORDER_STATUS_START    = 0;
-    const ORDER_STATUS_SUBMIT   = 1;
-    const ORDER_STATUS_EVENT    = 2;
-    const ORDER_STATUS_SUCCESS  = 4;
-    const ORDER_STATUS_FAIL     = 8;
+    const ORDER_STATUS_START    = 0;    //下单
+    const ORDER_STATUS_SUBMIT   = 1;    //提交
+    const ORDER_STATUS_EVENT    = 2;    //回调
+    const ORDER_STATUS_SUCCESS  = 4;    //成功
+    const ORDER_STATUS_FAIL     = 8;    //失败
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'final_merchant_info';
+        return 'final_order';
     }
 
     /**
@@ -57,18 +57,17 @@ class FinalOrder extends  CActiveRecord{
     public function rules()
     {
         return [
-            [['id', 'sign_type', 'time','status','recharge_type'], 'integer'],
-            [['certificate' ,'merchant_id'], 'string','max'=>255],
-            [['amount'],'decimal'],
+            [['time','status','user_id','merchant_id'], 'integer'],
+            [['order_id'], 'string','max'=>255],
         ];
     }
 
 
 
 
-    private function uuid()
+    public static function uuid()
     {
-        return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+        $res =  sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
             // 32 bits for "time_low"
             mt_rand(0, 0xffff), mt_rand(0, 0xffff),
             // 16 bits for "time_mid"
@@ -83,17 +82,9 @@ class FinalOrder extends  CActiveRecord{
             // 48 bits for "node"
             mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
         );
+
+        return md5($res);
     }
 
-
-
-    public function beforeSave($insert)
-    {
-        return parent::beforeSave($insert);
-        if($this->isNewRecord){
-            $this->order_id = $this->uuid();
-        }
-        return true;
-    }
 
 }

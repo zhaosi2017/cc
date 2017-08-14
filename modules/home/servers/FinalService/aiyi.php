@@ -12,31 +12,54 @@ use app\modules\home\models\FinalOrder;
 class aiyi extends  AbstractThird{
 
 
-    public  $service_map = [
+    public static $service_map = [
         1=>'cibalipay', //兴业支付宝
         2=>'cibweixin',  //兴业微信支付
-
     ];
+    public  $pay_uri = 'https://vip.iyibank.com/cashier/Home';
 
     public $event_result = 'SUCCESS';
 
     public function submit(){
+
+        $this->request_type = 'get';
         $result =  [
             'mch_id'=>$this->Merchant->merchant_id,
-            'out_trade_no'=>$this->request_data['order_id'],
-            'body'=>'recharge',
-            'callback_url' =>'',
-            'notify_url'=>'',
-            'total_fee'=>$this->request_data['order_amount'],
-            'service'=>$this->service_map[$this->Merchant->Recharge_type],
-            'type'=>0
+            'out_trade_no' =>$this->request_data['order_id'],
+            'body'         =>'recharge',
+            'callback_url' =>'https://test.callu.online/home/tts/infobip-event',
+            'notify_url'   =>'https://test.callu.online/home/tts/infobip-event',
+            'total_fee'    =>$this->request_data['order_amount'],
+            'service'      =>self::$service_map[$this->request_data['order_type']],
+            'type'=>1
         ];
         $str = implode('',$result);
         $str.=$this->Merchant->certificate;
         $result['sign'] = md5($str);
-        return $result;
+        $this->pay_uri .='?'.http_build_query($result);
+
+        $client = new \GuzzleHttp\Client();
+        $request  = new \GuzzleHttp\Psr7\Request('get' , $this->pay_uri  );
+        $response = $client->send($request,['timeout' => 30]);
+
+        if($response->getStatusCode() !== 200){
+            return false;
+        }
+        $data =  $response->getBody()->getContents();
+        $data = json_decode($data ,true);
+        $this->pay_uri = $data['token_id'];
+        return [];
     }
 
+    public static function checkType($type){
+
+        foreach (Self::$service_map as $key=>$item) {
+                if($key & $type){
+                    return true;
+                }
+        }
+        return false;
+    }
 
     public function getOrderid(Array $data){
         return $data['out_trade_no'];
@@ -45,9 +68,12 @@ class aiyi extends  AbstractThird{
 
     public function event(Array $data){
 
+        if($data['mch_id'] !== $this->Merchant->merchant_id){
+            return false;
+        }
         $str = $data['mch_id'].$data['out_trade_no'].$data['orderid'].$data['total_fee'].$data['service'].$data['result_code'];
         $str .=$this->Merchant->certificate;
-        if(md5($str) != $data['sign']){
+        if(strtoupper(md5($str)) != $data['sign']){
             return false;
         }
         $this->event_data['order_id']     = $data['out_trade_no'];

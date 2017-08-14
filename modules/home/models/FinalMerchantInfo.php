@@ -23,6 +23,9 @@ use \app\models\CActiveRecord;
 class FinalMerchantInfo extends  CActiveRecord{
 
 
+    const MERCHANT_STATUS_OPEN  = 1;
+    const MERCHANT_STATUS_CLOSE = 2;
+
     /**
      * @inheritdoc
      */
@@ -57,7 +60,7 @@ class FinalMerchantInfo extends  CActiveRecord{
         return [
             [['id', 'sign_type', 'time','status','recharge_type'], 'integer'],
             [['certificate' ,'merchant_id'], 'string','max'=>255],
-            [['amount'],'decimal'],
+            [['amount'],'double'],
         ];
     }
 
