@@ -11,6 +11,7 @@ namespace app\modules\home\controllers;
 
 use app\modules\home\models\CallRecord;
 use app\modules\home\models\Telegram;
+use app\modules\home\servers\FinalService\FinalService;
 use app\modules\home\servers\TTSservice\Infobip;
 use app\modules\home\servers\TTSservice\Nexmo;
 use app\modules\home\servers\TTSservice\TTSservice;
@@ -99,7 +100,6 @@ class TtsController extends GController{
 
 
         $postData = @file_get_contents('php://input');
-        file_put_contents('/tmp/test_infobip.log' , var_export($postData , true) , 8);
         $callback_data = json_decode($postData ,true);
         $service = TTSservice::init(Infobip::class);
         $rest = $service->event($callback_data);

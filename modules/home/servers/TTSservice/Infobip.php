@@ -75,7 +75,7 @@ class Infobip extends TTSAbstarct {
         $this->send_data['messages'][0]['from'] = $this->from;
         $this->send_data['messages'][0]['destinations']['to'] = $this->to;
         $this->send_data['messages'][0]['destinations']['messageId'] = $this->uuid_v4();
-        $this->send_data['messages'][0]['text'] = $this->translateText();
+        $this->send_data['messages'][0]['text'] = $this->messageText;
         $this->send_data['messages'][0]['language'] = isset($this->Language_map[$this->Language])?$this->Language_map[$this->Language]:'zh-cn';
         $this->send_data['messages'][0]['sendAt'] = date("c");
         $body = json_encode( $this->send_data , true);
@@ -98,8 +98,8 @@ class Infobip extends TTSAbstarct {
 
 
     public function event($event_data){
-        $this->messageId = $event_data['bulkId'];
-        $result = isset($event_data['error']['id'])?$event_data['error']['id']:0;
+        $this->messageId = $event_data['results'][0]['bulkId'];
+        $result = isset($event_data['results'][0]['error']['id'])?$event_data['results'][0]['error']['id']:0;
 
         switch ($result){
             case 5000:
