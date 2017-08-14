@@ -12,7 +12,10 @@ $module = $this->context->module->id;
 
 <?php $srcDataPrefix = 'data:image/jpg;base64,'; ?>
 <?php $imgUrl = Url::home(true) .'img/'; ?>
+
     <div id="wrapper" data-url="<?= $_SERVER['REQUEST_URI'] ?>">
+
+
         <!--左侧导航开始-->
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="nav-close"><i class="fa fa-times-circle"></i>
@@ -38,33 +41,38 @@ $module = $this->context->module->id;
                         </div>
                     </li>
 
-                    <li class="<?php if( Yii::$app->controller->id == 'default'){ echo 'active';}?>">
+                    <li class="admin-menu <?php if( Yii::$app->controller->id == 'default'){ echo 'active';}?>">
                         <a class="J_menuItem" href="<?= Url::to(['/admin/default/index']) ?>"><i class="fa fa-home"></i> <span class="nav-label">首页</span></a>
                     </li>
 
-                    <li class="<?php if(Yii::$app->controller->id == 'user'){ echo 'active';}?>">
+                    <li  class="admin-menu <?= Yii::$app->controller->id == 'user'? 'active':'';?>">
                         <a href="#"><span class="nav-label">用户管理</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li class="<?php if(Yii::$app->controller->id == 'user' && Yii::$app->controller->action->id != 'login-logs'){ echo 'active';}?>"><a class="J_menuItem" href="<?= Url::to(['/admin/user/index']) ?>">用户列表</a>
-                            <li class="<?php if(Yii::$app->controller->id == 'user' && Yii::$app->controller->action->id == 'login-logs' ){ echo 'active';}?>"><a class="J_menuItem" href="<?= Url::to(['/admin/user/login-logs']) ?>">用户登陆日志</a>
+                        <ul class="nav nav-second-level <?= Yii::$app->controller->id == 'user'? ' collapse in':'collapse ';?>" ">
+                            <li ><a class="J_menuItem" href="<?= Url::to(['/admin/user/index']) ?>">用户列表</a>
+                            <li ><a class="J_menuItem" href="<?= Url::to(['/admin/user/login-logs']) ?>">用户登陆日志</a>
                         </ul>
                     </li>
 
-                    <li class="<?php if(Yii::$app->controller->id == 'role' || Yii::$app->controller->id =='manager' || Yii::$app->controller->id == 'login-logs' ){ echo 'active';}?>">
+                    <li  class="admin-menu <?php if(Yii::$app->controller->id == 'role' || Yii::$app->controller->id =='manager' || Yii::$app->controller->id == 'login-logs' ){ echo 'active';}?>">
                         <a href="#"><span class="nav-label">后台用户管理</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li class="<?php if(Yii::$app->controller->id == 'role'){ echo 'active';}?>"><a class="J_menuItem" href="<?= Url::to(['/admin/role/index']) ?>">管理员角色</a>
-                            <li class="<?php if(Yii::$app->controller->id == 'manager'){ echo 'active';}?>"><a class="J_menuItem" href="<?= Url::to(['/admin/manager/index']) ?>">管理员列表</a>
-                            <li class="<?php if(Yii::$app->controller->id == 'login-logs'){ echo 'active';}?>"><a class="J_menuItem" href="<?= Url::to(['/admin/login-logs/index']) ?>">登录日志</a>
+                        <ul class="nav nav-second-level <?= Yii::$app->controller->id == 'role' || Yii::$app->controller->id =='manager' || Yii::$app->controller->id == 'login-logs'? ' collapse in':'collapse ';?>" ">
+                            <li ><a class="J_menuItem" href="<?= Url::to(['/admin/role/index']) ?>">管理员角色</a>
+                            <li ><a class="J_menuItem" href="<?= Url::to(['/admin/manager/index']) ?>">管理员列表</a>
+                            <li ><a class="J_menuItem" href="<?= Url::to(['/admin/login-logs/index']) ?>">登录日志</a>
                         </ul>
                     </li>
-                    <li class="<?php if(Yii::$app->controller->id == 'call-record'){ echo 'active';}?>">
+                
+                    <li class="admin-menu <?php if(Yii::$app->controller->id == 'call-record'){ echo 'active';}?>">
                         <a class="J_menuItem" href="<?= Url::to(['/admin/call-record/index']) ?>"><span class="nav-label">呼叫记录</span></a>
                     </li>
 
                 </ul>
             </div>
         </nav>
+
+
+
+
         <!--左侧导航结束-->
         <!--右侧部分开始-->
         <div id="page-wrapper" class="gray-bg">
@@ -104,5 +112,17 @@ $module = $this->context->module->id;
             </div>-->
         </div>
     </div>
+
+
+<?= $this->registerJs("$('.admin-menu').click(function (e) {
+
+        $('.admin-menu').removeClass('active');
+        $('.admin-menu').find('ul').removeClass('in');
+        $(this).find('admin-menu').addClass('active');
+        $(this).children('ul').addClass('in');
+
+    });
+")?>
+
 <?php $this->endContent(); ?>
 
