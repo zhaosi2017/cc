@@ -10,23 +10,113 @@
 namespace app\modules\home\servers\FinalService;
 
 use app\modules\home\models\FinalChangeLog;
+use app\modules\home\models\FinalMerchantInfo;
+use app\modules\home\models\FinalOrder;
 use app\modules\home\models\User;
 use Yii;
+use yii\db\Transaction;
+
 class FinalService{
+
+    /**
+     *  创建一个订单 并请求数据
+     */
+    public function CreateOrder($order_type , $amount = 0){
+
+        if(!aiyi::checkType($order_type)){
+            return false;
+        }
+        $Merchant = FinalMerchantInfo::find(['status'=>FinalMerchantInfo::MERCHANT_STATUS_OPEN])
+                                        ->where('recharge_type &'.$order_type)
+                                        ->one();
+        if(empty($Merchant)){
+            return false;
+        }
+        $order = new FinalOrder();
+        $order->amount  = $amount;
+        $order->order_id = FinalOrder::uuid();
+        $order->user_id = 1 ;//Yii::$app->user->id;
+        $order->status  = FinalOrder::ORDER_STATUS_START;
+        $order->merchant_id = $Merchant->id;
+        $order->time = time();
+        if(!$order->save()){
+            return false;
+        }
+        $service = new aiyi();
+        $service->Merchant = $Merchant;
+        $service->request_data['order_id']     = $order->order_id;
+        $service->request_data['order_amount'] = $order->amount;
+        $service->request_data['order_type']   = $order_type;
+        $result['data'] = $service->submit();
+        $result['Uri'] = $service->pay_uri;
+        $result['request_type'] = $service->request_type;
+        return $result;
+    }
+
+    /**
+     * @param array $data
+     * @return string
+     * 处理回调
+     */
+    public function Event(Array $data){
+
+            $service = new aiyi();
+            $order_id = $service->getOrderid($data);
+            $order = FinalOrder::findOne(['order_id'=>$order_id]);
+            if(empty($order) ){                  //订单不存在
+                return $service->event_result;
+            }
+            $Merchant = FinalMerchantInfo::findOne(['id'=>$order->merchant_id]);
+            if(empty($Merchant)){          //商户不存在
+                return $service->event_result;
+            }
+            $service->Merchant = $Merchant;
+
+            if(!$service->event($data) ){ //数据解析失败（签名错误 ，商户错误 ,状态错误）
+                return $service->event_result;
+            }
+            if($order->amount != $service->event_data['order_amount']
+               || $order->status > $service->event_data['order_status']
+               || $order->status !== FinalOrder::ORDER_STATUS_SUBMIT){   //订单检测
+                return $service->event_result;
+            }
+
+            $order->status = $service->event_data['order_status'];
+            Yii::$app->db->beginTransaction(Transaction::READ_COMMITTED);
+            $transaction  = Yii::$app->db->getTransaction();
+            if($order->save()){
+                $transaction->rollBack();
+                return $service->event_result;
+            }
+            if($service->event_data['order_status'] == FinalOrder::ORDER_STATUS_SUCCESS){
+
+                if(!$this->Recharge($order->user_id ,$service->event_data['order_amount'],'充值帐变' , $Merchant )){
+                    $transaction->rollBack();
+                }
+            }
+            $transaction->commit();
+            return $service->event_result;
+    }
+
+
 
     /**
      *充值
      */
-    public function Recharge($user_id , $amount , $commit ='' ){
+    public function Recharge($user_id , $amount , $commit ='' ,FinalMerchantInfo $merchantInfo ){
 
-        Yii::$app->db->transaction->begin('READ COMMITTED');
+        Yii::$app->db->beginTransaction(Transaction::READ_COMMITTED);
+        $transaction = Yii::$app->db->getTransaction();
+
+        $merchantInfo->amount += $amount;
         $user_model = User::findOne($user_id);
-        if(empty($user_model)){
-            Yii::$app->db->transaction->rollBack();
+        /********用户空 ，充值账号保存失败 *****/
+        if(empty($user_model) || !$merchantInfo->save() ){
+            $transaction->rollBack();
             return false;
         }
         if($amount <= 0){
-            Yii::$app->db->transaction->rollBack();
+            $transaction->rollBack();
             return true;
         }
         $change = new FinalChangeLog();
@@ -34,7 +124,7 @@ class FinalService{
 
         $user_model->amount = $user_model->amount + $amount;
         if(!$user_model->save()){
-            Yii::$app->db->transaction->rollBack();
+            $transaction->rollBack();
             return false;
         }
         $change->after = $user_model->amount;
@@ -43,10 +133,10 @@ class FinalService{
         $change->comment = $commit;
         $change->change_type = FinalChangeLog::FINAL_CHANGE_TYPE_RECHARGE;
         if(!$change->save()){
-            Yii::$app->db->transaction->rollBack();
+            $transaction->rollBack();
             return false;
         }
-        Yii::$app->db->transaction->commit();
+        $transaction->commit();
         return true;
 
     }
