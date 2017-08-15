@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 <div class="call-record-search">
 
     <?php $form = ActiveForm::begin([
-        'action' => ['order'],
+        'action' => ['change'],
         'method' => 'get',
         'options' => ['class'=>'form-inline'],
     ]); ?>
@@ -21,13 +21,13 @@ use yii\widgets\ActiveForm;
             至
             <?= $form->field($model,'end_time')->input('date',['prompt'=>'结束时间'])->label(false) ?>
             <a class="btn btn-xs btn-danger" onclick="
-                $('#finalorder-start_time').val('');
-                $('#finalorder-end_time').val('');
+                $('#start_time').val('');
+                $('#end_time').val('');
             ">清除时间</a>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <?= $form->field($model,'status')->dropDownList($model::$order_status_map,['prompt'=>'全部','onchange'=>'
+            <?= $form->field($model,'change_type')->dropDownList($model::$final_change_type,['prompt'=>'全部','onchange'=>'
                 $("#search_hide").click();
-            '])->label('订单状态：') ?>
+            '])->label('帐变类型：') ?>
         </div>
         <div class="col-lg-2">
             <div class="text-right no-padding">
@@ -46,8 +46,8 @@ use yii\widgets\ActiveForm;
 <script type="text/javascript">
 
     function searchClick(){
-        var start = $('#finalorder-start_time').val();
-        var end =  $('#finalorder-end_time').val();
+        var start = $('#start_time').val();
+        var end =  $('#end_time').val();
         if (start == "" && end != ""){
             alert('请同时选择开始时间和结束时间进行查询！');
             return false;
@@ -61,8 +61,8 @@ use yii\widgets\ActiveForm;
 
     function timeChange(){
 
-        var start = $('#finalorder-start_time').val();
-        var end =  $('#finalorder-end_time').val();
+        var start = $('#start_time').val();
+        var end =  $('#end_time').val();
         if(start == '' || end ==''){
             alert('请同时选择开始时间和结束时间进行查询！');
             return true;
@@ -71,7 +71,7 @@ use yii\widgets\ActiveForm;
     }
 
     function clearDate(){
-        $('#finalorder-start_time').val('');
-        $('#finalorder-end_time').val('');
+        $('#start_time').val('');
+        $('#end_time').val('');
     }
 </script>

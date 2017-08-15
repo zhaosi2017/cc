@@ -26,6 +26,11 @@ class FinalMerchantInfo extends  CActiveRecord{
     const MERCHANT_STATUS_OPEN  = 1;
     const MERCHANT_STATUS_CLOSE = 2;
 
+    public static $merchant_status_map = [
+        self::MERCHANT_STATUS_OPEN =>'开启',
+        self::MERCHANT_STATUS_CLOSE=>'关闭'
+    ];
+
     /**
      * @inheritdoc
      */
@@ -43,7 +48,7 @@ class FinalMerchantInfo extends  CActiveRecord{
         return [
             'id' => 'ID',  //id
             'merchant_id' => '账号',//账号,
-            'recharge_type'=>'', //支持支付的类型   这里具体的数字定义交给具体的支付平台接口处理
+            'recharge_type'=>'支付类型', //支持支付的类型   这里具体的数字定义交给具体的支付平台接口处理
             'sign_type' => '签名的类型' ,//签名的类型,
             'certificate' => '签名的凭证',//签名的凭证,
             'time' => '创建时间',//创建时间',

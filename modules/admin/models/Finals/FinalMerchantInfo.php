@@ -8,21 +8,26 @@
 
 namespace app\modules\admin\models\Finals;
 
-use app\models\CActiveRecord;
+use yii\data\ActiveDataProvider;
 use Yii;
 
 
-class FinalMerchantInfo extends CActiveRecord{
-
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return 'final_merchant_info';
-    }
+class FinalMerchantInfo extends \app\modules\home\models\FinalMerchantInfo {
 
 
+
+        public function search(){
+
+            $query = self::find();
+
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+                'pagination'=>[
+                    'pagesize'=> 10,
+                ],
+            ]);
+            return $dataProvider;
+        }
 
 
 

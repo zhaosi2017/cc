@@ -7,6 +7,8 @@
  */
 namespace app\modules\admin\controllers;
 
+use app\modules\admin\models\Finals\FinalChangeLog;
+use app\modules\admin\models\Finals\FinalMerchantInfo;
 use app\modules\admin\models\Finals\FinalOrder;
 use Yii;
 use app\controllers\PController;
@@ -45,4 +47,31 @@ class FinalController extends PController
         ]);
     }
 
+    /**
+     * 帐变列表
+     */
+    public function actionChange(){
+
+        $searchModel = new FinalChangeLog();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('change', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+
+    }
+
+
+
+    public function actionRecharge(){
+
+        $searchModel = new FinalMerchantInfo();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('recharge', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
 }
