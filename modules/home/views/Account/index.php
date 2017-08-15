@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\Url;
+use yii\widgets\LinkPager;
+use app\modules\home\models\FinalChangeSearch;
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\home\models\CallRecordSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -12,6 +14,7 @@ $this->title =   Yii::t('app/call-record/index','Account center  Personal call r
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app/nav','User center'), 'url' => ['user/index']];
 $this->params['breadcrumbs'][] = $this->title;
 $actionId = Yii::$app->requestedAction->id;
+
 ?>
 <style>
     #content-main{
@@ -23,48 +26,18 @@ $actionId = Yii::$app->requestedAction->id;
 </style>
 <div class="call-record-index">
     <div class="help-block m-t"></div>
-    <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php  echo $this->render('_search', ['model' => $searchModel,'param'=>$param]); ?>
     <div class="help-block m-t"></div>
-<?php Pjax::begin(); ?>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'layout' => "{items}\n  <div>
-                                    <ul class='pagination'>
-                                            <li style='display:inline;'>
-                                                <span> ".Yii::t('app/call-record/index','Total').' '
-                                                        .$dataProvider->getTotalCount()
-                                                        .Yii::t('app/call-record/index','Data')." 
-                                                <span>
-                                            </li>
-                                    </ul>{pager} 
-                                </div>",
-        'rowOptions' => function($model) {
-            return ['id' => 'tr_'.$model->id, 'class' => '_tr'];
-        },
-        'headerRowOptions'=>['class'=>'text-center'],
-        'tableOptions'=>['class' => 'table table-striped table-bordered','style'=>'text-align:center;'],
-        'pager'=>[
-            'firstPageLabel'=>Yii::t('app/call-record/index','Frist'),
-            'prevPageLabel'=>Yii::t('app/call-record/index','Previous'),
-            'nextPageLabel'=>Yii::t('app/call-record/index','Next'),
-            'lastPageLabel'=>Yii::t('app/call-record/index','Last page'),
-            'maxButtonCount' => 9,
-        ],
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn', 'header' => Yii::t('app/call-record/index','Serial number'), 'headerOptions'=>['class'=>'text-center']],
-            ['attribute' =>'active_account' , 'headerOptions'=>['class'=>'text-center']],
-            ['attribute' =>'active_nickname' , 'headerOptions'=>['class'=>'text-center']],
-            ['attribute' =>'unactive_account' , 'headerOptions'=>['class'=>'text-center']],
-            ['attribute' =>'unactive_nickname' , 'headerOptions'=>['class'=>'text-center']],
-            ['attribute' =>'typeData' , 'headerOptions'=>['class'=>'text-center']],
-            ['attribute' =>'statusData' , 'headerOptions'=>['class'=>'text-center']],
-            [
-                'attribute' => 'call_time',
-                'format'=>['date', 'php:Y-m-d H:i:s'],
-                'headerOptions'=>['class'=>'text-center']
-            ],
-        ],
-    ]);
-    ?>
-<?php Pjax::end(); ?>
+    <table class="table table-striped table-bordered">
+    <thead>
+    <tr><th>编号</th><th>用户</th><th>类型</th> <th>金额</th><th>交易之前</th><th>交易之后</th></tr>
+    </thead>
+    <tbody>
+    <?php foreach ($model as $key => $val) {?>
+        <tr><td><?php echo $val->id; ?> </td><td><?php echo $val->user_id;?></td> <td><?php echo FinalChangeSearch::$final_change_type[$val->change_type];?></td> <td><?php echo $val->amount;?></td><td><?php echo $val->before;?></td><td><?php echo $val->after;?></td></tr>
+    <?php }?>
+    </tbody>
+
+    </table>
+    <?= LinkPager::widget(['pagination' => $pagination]); ?>
 </div>

@@ -27,7 +27,7 @@ $actionId = Yii::$app->requestedAction->id;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'layout' => "{items}\n  <div><ul class='pagination'><li style='display:inline;'><span>".Yii::t('app/harassment','Total')."&nbsp;&nbsp;".$dataProvider->getTotalCount(). "&nbsp;".Yii::t('app/harassment','Data')." <span></li></ul>{pager}  </div>",
-        // 'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
         'rowOptions' => function($model) {
             return ['id' => 'tr_'.$model->id, 'class' => '_tr'];
         },

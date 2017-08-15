@@ -12,8 +12,8 @@ use app\modules\home\models\CallRecord;
  */
 class FinalChangeSearch extends FinalChangeLog
 {
-    public $call_time_start;
-    public $call_time_end;
+    public $start_time;
+    public $end_time;
 
 
 
@@ -21,8 +21,8 @@ class FinalChangeSearch extends FinalChangeLog
     {
         $parent = parent::attributeLabels();
         $self = [
-            'call_time_start'=>'呼叫起止时间',
-            'call_time_end'=>'呼叫截止时间',
+            'start_time'=>'呼叫起止时间',
+            'end_time'=>'呼叫截止时间',
         ];
         return array_merge($parent,$self);
     }
@@ -55,7 +55,7 @@ class FinalChangeSearch extends FinalChangeLog
     {
         $query = self::find()->where(['user_id' =>  Yii::$app->user->id,
                                        'change_type'=>$this->change_type
-        ])->orderBy('call_time desc');
+        ])->orderBy('time desc');
 
         // add conditions that should always apply here
         $dataProvider = new ActiveDataProvider([
@@ -82,15 +82,34 @@ class FinalChangeSearch extends FinalChangeLog
             'before' => $this->before,
             'after' =>$this->after
         ]);
-        if(empty($this->call_time_start)){
-            $this->call_time_start = date('Y-m-d' , time());
+        if(empty($this->start_time)){
+            $this->start_time = date('Y-m-d' , time());
         }
-        if(empty($this->call_time_end)){
-            $this->call_time_end = date('Y-m-d' , time() + 24*60*60);
+        if(empty($this->end_time)){
+            $this->end_time = date('Y-m-d' , time() + 24*60*60);
         }
-        $query->andFilterWhere(['between', 'time', strtotime($this->call_time_start), strtotime($this->call_time_end)]);
+        $query->andFilterWhere(['between', 'time', strtotime($this->start_time), strtotime($this->end_time)]);
 
 
         return $dataProvider;
+    }
+
+
+    public function ApiSearch($params)
+    {
+        $condition = [];
+        if(Yii::$app->user->id)
+        {
+            $condition = ['user_id' =>  Yii::$app->user->id];
+        }
+        if(isset($params['change_type']) && array_key_exists($params['change_type'],self::$final_change_type))
+        {
+            $condition['change_type'] = $params['change_type'];
+        }
+
+        $model = self::find()->where($condition);
+
+
+        return $model;
     }
 }

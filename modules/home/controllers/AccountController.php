@@ -9,11 +9,13 @@
 namespace app\modules\home\controllers;
 
 use app\modules\home\models\FinalChangeLog;
+use app\modules\home\models\FinalChangeSearch;
 use Yii;
 use app\modules\home\models\BlackListForm;
 use app\modules\home\models\BlackList;
 use app\modules\home\models\BlackListSearch;
 use app\controllers\GController;
+use yii\data\Pagination;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -49,14 +51,37 @@ class AccountController extends GController{
      * 充值记录
      */
     public function actionRecharge(){
-        $searchModel = new FinalChangeSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+        $param =   [
+                    'start_time' =>'',
+                    'end_time' => '',
+                    'change_type'=>0
+                   ];
+
+        $get = Yii::$app->request->get();
+        if(isset($get['FinalChangeSearch'])){
+            $param = $get['FinalChangeSearch'];
+        }
+        $searchModel = new FinalChangeSearch();
+        $data = $searchModel->ApiSearch($param);
+        $pagination = new Pagination([
+            'totalCount'=>$data->count(),
+           // 'pageSize'=>1,
         ]);
 
+        $model = $data->orderBy('id ASC')
+            ->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+
+        return $this->render('index',
+            [
+                'model'=>$model,
+                'pagination'=>$pagination,
+                'searchModel'=>$searchModel,
+                'param'=>$param
+            ]
+        );
     }
 
     /**

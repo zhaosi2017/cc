@@ -247,14 +247,14 @@ if(!Yii::$app->user->isGuest){
 
                                     </ul>
                                 </li>
-<!--                                <li class="dropdown">-->
-<!--                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">--><?//= Yii::t('app/nav','Account center')?><!--</a>-->
-<!--                                    <ul class="dropdown-menu animated">-->
-<!--                                        <li><a href="#">--><?//= Yii::t('app/nav','Recharge record')?><!--</a></li>-->
-<!--                                        <li><a href="#">--><?//= Yii::t('app/nav','Charge information')?><!--</a></li>-->
-<!--                                        <li><a href="#">--><?//= Yii::t('app/nav','Balance display')?><!--</a></li>-->
-<!--                                    </ul>-->
-<!--                                </li>-->
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= Yii::t('app/nav','Account center')?></a>
+                                    <ul class="dropdown-menu animated">
+                                        <li><a href="/home/account/recharge"><?= Yii::t('app/nav','Recharge record')?></a></li>
+                                        <li><a href="/home/account/consume"><?= Yii::t('app/nav','Charge information')?></a></li>
+                                        <li><a href="/home/account/balance"><?= Yii::t('app/nav','Balance display')?></a></li>
+                                    </ul>
+                                </li>
 <!--                                <li class="dropdown">-->
 <!--                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">--><?//= Yii::t('app/nav','Number store')?><!--</a>-->
 <!--                                    <ul class="dropdown-menu animated">-->

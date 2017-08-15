@@ -366,7 +366,7 @@ CREATE TABLE `final_merchant_info` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-／** 充值接口日志表 *／
+／** 充值接口日志表 **／
 CREATE TABLE `final_mutual_log` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `interface_name` char(16) DEFAULT '' COMMENT '接口名',

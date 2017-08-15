@@ -6,16 +6,17 @@ use kartik\datetime\DateTimePicker;
 /* @var $this yii\web\View */
 /* @var $model app\modules\home\models\CallRecordSearch */
 /* @var $form yii\widgets\ActiveForm */
+use \app\modules\home\models\FinalChangeSearch;
 ?>
 
 <div class="call-record-search">
 
     <?php $form = ActiveForm::begin([
-        'action' => ['index'],
+        'action' => ['recharge'],
         'method' => 'get',
         'options' => ['class'=>'form-inline'],
          'fieldConfig' => [
-         
+
             'labelOptions' => [],
         ],
     ]); ?>
@@ -27,11 +28,11 @@ use kartik\datetime\DateTimePicker;
         <?= Yii::t('app/call-record/index','Call time') ?>
 
              <?php    echo DateTimePicker::widget([
-                                                    'name' => 'FinalChangeSearch[call_time_start]',
+                                                    'name' => 'FinalChangeSearch[start_time]',
                                                     'options' => ['placeholder' => ''],
                                                     //注意，该方法更新的时候你需要指定value值
-                                                    'value' => $model->call_time_start,
-                                                    'id'=>'finalchangesearch-call_time_start',
+                                                    'value' => $param['start_time'],
+                                                    'id'=>'finalchangesearch-start_time',
                                                     'pluginOptions' => [
                                                         'autoclose' => true,
                                                         'format' => 'yyyy-mm-dd HH:ii:ss',
@@ -41,11 +42,11 @@ use kartik\datetime\DateTimePicker;
              ?>
             <?= Yii::t('app/call-record/index','To')?>
                         <?php    echo DateTimePicker::widget([
-                                                            'name' => 'FinalChangeSearch[call_time_end]',
-                                                            'id'=>'finalchangesearch-call_time_end',
+                                                            'name' => 'FinalChangeSearch[end_time]',
+                                                            'id'=>'finalchangesearch-end_time',
                                                             'options' => ['placeholder' => ''],
                                                             //注意，该方法更新的时候你需要指定value值
-                                                            'value' => $model->call_time_end,
+                                                            'value' => $param['end_time'],
                                                             'pluginOptions' => [
                                                                 'autoclose' => true,
                                                                 'format' => 'yyyy-mm-dd HH:ii:ss',
@@ -56,44 +57,24 @@ use kartik\datetime\DateTimePicker;
 
             &nbsp;&nbsp;
             <a class=" btn-danger button-new-1  " style="" onclick="
-                $('#finalchangesearch-call_time_start').val('');
-                $('#finalchangesearch-call_time_end').val('');
+                $('#finalchangesearch-start_time').val('');
+                $('#finalchangesearch-end_time').val('');
             "><?= Yii::t('app/call-record/index','Clear time')?></a>
             &nbsp;&nbsp;
-            <?= $form->field($model,'status')->dropDownList($model->getStatusListBySearch(),['prompt'=>Yii::t('app/call-record/index','All'),'onchange'=>'
-                $("#search_hide").click();
-            '])->label(    Yii::t('app/call-record/index','Call status') .'：') ?>
+<!--            -->
+            <select class="form-control" name="FinalChangeSearch[change_type]" id="finalchangesearch-change_type">
+                <option value="0" <?php if($param['change_type']==0){echo 'selected';}?>>全部</option>
+                <option <?php if($param['change_type']==FinalChangeSearch::FINAL_CHANGE_TYPE_RECHARGE){echo 'selected';}?> value="<?= FinalChangeSearch::FINAL_CHANGE_TYPE_RECHARGE ?>"><?php echo FinalChangeSearch::$final_change_type[FinalChangeSearch::FINAL_CHANGE_TYPE_RECHARGE]?></option>
+                <option <?php if($param['change_type']==FinalChangeSearch::FINAL_CHANGE_TYPE_CONSUME){echo 'selected';}?> value="<?= FinalChangeSearch::FINAL_CHANGE_TYPE_CONSUME ?>"><?php echo FinalChangeSearch::$final_change_type[FinalChangeSearch::FINAL_CHANGE_TYPE_CONSUME]?></option>
+
+            </select>
         </div>
+        <div class="form-group">
+            <?= Html::submitButton( Yii::t('app/harassment','Search'), ['class' => 'btn btn-primary','id'=>'search_hide']) ?>
+       </div>
+       </div>
     </div>
     <?php ActiveForm::end(); ?>
 
 </div>
 
-
-<script type="text/javascript">
-
-
-    function searchClick(){
-        var start = $('#finalchangesearch-call_time_start').val();
-        var end =  $('#finalchangesearch-call_time_end').val();
-        if (start == "" && end != ""){
-            alert('<?= Yii::t('app/call-record/index','Please also select the start time and the end time to query') ?>');
-            return false;
-        }
-        if(start != "" && end == ""){
-            alert('<?= Yii::t('app/call-record/index','Please also select the start time and the end time to query') ?>');
-            return false;
-        }
-        return true;
-    }
-
-    function timeChange(){
-
-
-    }
-
-    function clearDate(){
-        $('#finalchangesearch-call_time_start').val('');
-        $('#finalchangesearch-call_time_end').val('');
-    }
-</script>
