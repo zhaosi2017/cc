@@ -25,8 +25,8 @@ class UserSearch extends User
     public function rules()
     {
         return [
-            [['id', 'un_call_number', 'un_call_by_same_number', 'long_time', 'country_code', 'urgent_contact_one_country_code', 'urgent_contact_number_two', 'urgent_contact_two_country_code', 'telegram_country_code', 'potato_country_code', 'reg_time', 'role_id'], 'integer'],
-            [['auth_key', 'password', 'account', 'nickname', 'phone_number', 'urgent_contact_number_one', 'urgent_contact_person_one', 'urgent_contact_person_two', 'telegram_number', 'potato_number', 'search_type', 'search_keywords','start_date','end_date'], 'safe'],
+            [['id', 'un_call_number', 'un_call_by_same_number', 'long_time', 'country_code', 'telegram_country_code', 'potato_country_code', 'reg_time', 'role_id'], 'integer'],
+            [['auth_key', 'password', 'account', 'nickname', 'phone_number', 'urgent_contact_person_two', 'telegram_number', 'potato_number', 'search_type', 'search_keywords','start_date','end_date'], 'safe'],
         ];
     }
 
@@ -72,9 +72,6 @@ class UserSearch extends User
             'un_call_by_same_number' => $this->un_call_by_same_number,
             'long_time' => $this->long_time,
             'country_code' => $this->country_code,
-            'urgent_contact_one_country_code' => $this->urgent_contact_one_country_code,
-            'urgent_contact_number_two' => $this->urgent_contact_number_two,
-            'urgent_contact_two_country_code' => $this->urgent_contact_two_country_code,
             'telegram_country_code' => $this->telegram_country_code,
             'potato_country_code' => $this->potato_country_code,
             'reg_time' => $this->reg_time,
@@ -106,8 +103,6 @@ class UserSearch extends User
         $this->search_type == 3 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['in', 'user.id', $this->searchIds($this->search_keywords)]);
         $this->search_type == 4 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['in', 'user.id', $this->searchIds($this->search_keywords, 'nickname')]);
         $this->search_type == 5 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like','user.phone_number', $this->search_keywords]);
-        $this->search_type == 6 && strlen($this->search_keywords)>0  && $query->andFilterWhere(['or',['in','user.id', $this->searchIds($this->search_keywords, 'urgent_contact_person_one')],['in','user.id',$this->searchIds($this->search_keywords, 'urgent_contact_person_two')]]);
-        $this->search_type == 7 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['OR',['like','user.urgent_contact_number_one', $this->search_keywords],[ 'like','user.urgent_contact_number_two',$this->search_keywords]]);
 
 
         return $dataProvider;

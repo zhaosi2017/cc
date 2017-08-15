@@ -27,6 +27,16 @@ class FinalOrder extends  CActiveRecord{
     const ORDER_STATUS_EVENT    = 2;    //回调
     const ORDER_STATUS_SUCCESS  = 4;    //成功
     const ORDER_STATUS_FAIL     = 8;    //失败
+
+    public static $order_status_map = [
+        self::ORDER_STATUS_START=>'下单中',
+        self::ORDER_STATUS_SUBMIT=>'提交',
+        self::ORDER_STATUS_EVENT=>'回调',
+        self::ORDER_STATUS_SUCCESS=>'成功',
+        self::ORDER_STATUS_FAIL=>'失败',
+    ];
+
+
     /**
      * @inheritdoc
      */
@@ -46,7 +56,7 @@ class FinalOrder extends  CActiveRecord{
             'merchant_id'=>'使用的充值账号', //
             'comment' => '描述',//签名的凭证,
             'time' => '创建时间',//创建时间',
-            'status' => '账号的状态' ,//账号的状态,
+            'status' => '订单状态' ,//账号的状态,
             'amount' => '金额',//余额,
         ];
     }
