@@ -66,6 +66,22 @@ $module = $this->context->module->id;
                         <a class="J_menuItem" href="<?= Url::to(['/admin/call-record/index']) ?>"><span class="nav-label">呼叫记录</span></a>
                     </li>
 
+                    <li class="admin-menu <?php if(Yii::$app->controller->id == 'final'){ echo 'active';}?>">
+                        <a  href="#"><span class="nav-label">账务管理</span></a>
+                        <ul class="nav nav-second-level <?= Yii::$app->controller->id == 'final'? ' collapse in':'collapse ';?>" ">
+                            <li ><a class="J_menuItem" href="<?= Url::to(['/admin/final/order']) ?>">充值订单</a>
+                            <li ><a class="J_menuItem" href="<?= Url::to(['/admin/final/change']) ?>">帐变列表</a>
+                            <li ><a class="J_menuItem" href="<?= Url::to(['/admin/final/recharge']) ?>">充值账务</a>
+                        </ul>
+                    </li>
+                    <li class="admin-menu <?php if(Yii::$app->controller->id == 'numbers'){ echo 'active';}?>">
+                        <a href="#"><span class="nav-label">号码中心</span></a>
+                        <ul class="nav nav-second-level <?= Yii::$app->controller->id == 'numbers' ? ' collapse in':'collapse ';?>" ">
+                            <li ><a class="J_menuItem" href="<?= Url::to(['/admin/numbers/platform']) ?>">平台号码</a>
+                            <li ><a class="J_menuItem" href="<?= Url::to(['/admin/numbers/user']) ?>">用户号码</a>
+                        </ul>
+                    </li>
+
                 </ul>
             </div>
         </nav>

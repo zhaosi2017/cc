@@ -49,7 +49,7 @@ class User extends CActiveRecord
     public function rules()
     {
         return [
-            [['account', 'nickname', 'urgent_contact_person_one', 'urgent_contact_person_two', 'reg_ip'], 'string'],
+            [['account', 'nickname', 'reg_ip'], 'string'],
 
             [[
                 'un_call_number',
@@ -61,14 +61,12 @@ class User extends CActiveRecord
                 'country_code',
                 'telegram_country_code',
                 'potato_country_code',
-                'urgent_contact_one_country_code',
-                'urgent_contact_two_country_code',
                 'un_call_number',
                 'un_call_by_same_number',
                 'long_time',
             ], 'integer'],
 
-            [['phone_number','urgent_contact_number_one','urgent_contact_number_two', 'telegram_number', 'potato_number'], 'number', 'max' => 999999999999],
+            [['phone_number', 'telegram_number', 'potato_number'], 'number', 'max' => 999999999999],
             [['auth_key','password'], 'string', 'max' => 64],
              [['un_call_number','un_call_by_same_number','long_time'],'required','on'=>'harassment'],
         ];
@@ -98,12 +96,6 @@ class User extends CActiveRecord
             'long_time' => '时间设置',
             'country_code' => 'Country Code',
             'phone_number' => '联系电话',
-            'urgent_contact_number_one' => 'Urgent Contact Number One',
-            'urgent_contact_one_country_code' => 'Urgent Contact One Country Code',
-            'urgent_contact_number_two' => 'Urgent Contact Number Two',
-            'urgent_contact_two_country_code' => 'Urgent Contact Two Country Code',
-            'urgent_contact_person_one' => 'Urgent Contact Person One',
-            'urgent_contact_person_two' => 'Urgent Contact Person Two',
             'telegram_number' => 'Telegram',
             'telegram_country_code' => 'Telegram Country Code',
             'potato_number' => 'Potato',
@@ -131,9 +123,7 @@ class User extends CActiveRecord
                 }
                 $this->account = base64_encode(Yii::$app->security->encryptByKey($this->account, Yii::$app->params['inputKey']));
                 $this->nickname = base64_encode(Yii::$app->security->encryptByKey($this->nickname, Yii::$app->params['inputKey']));
-                $this->urgent_contact_person_one = base64_encode(Yii::$app->security->encryptByKey($this->urgent_contact_person_one, Yii::$app->params['inputKey']));
-                $this->urgent_contact_person_two = base64_encode(Yii::$app->security->encryptByKey($this->urgent_contact_person_two, Yii::$app->params['inputKey']));
-            }
+                }
             return true;
         }
         return true;
@@ -153,8 +143,6 @@ class User extends CActiveRecord
         parent::afterFind();
         $this->account = Yii::$app->security->decryptByKey(base64_decode($this->account), Yii::$app->params['inputKey']);
         $this->nickname && $this->nickname = Yii::$app->security->decryptByKey(base64_decode($this->nickname), Yii::$app->params['inputKey']);
-        $this->urgent_contact_person_one && $this->urgent_contact_person_one = Yii::$app->security->decryptByKey(base64_decode($this->urgent_contact_person_one), Yii::$app->params['inputKey']);
-        $this->urgent_contact_person_two && $this->urgent_contact_person_two = Yii::$app->security->decryptByKey(base64_decode($this->urgent_contact_person_two), Yii::$app->params['inputKey']);
-    }
+        }
 
 }
