@@ -293,6 +293,7 @@ if(!Yii::$app->user->isGuest) {
                                         <li><a href="/home/account/recharge"><?= Yii::t('app/nav','Recharge record')?></a></li>
                                         <li><a href="/home/account/consume"><?= Yii::t('app/nav','Charge information')?></a></li>
                                         <li><a href="/home/account/balance"><?= Yii::t('app/nav','Balance display')?></a></li>
+                                        <li><a href="/home/account/pay"><?= Yii::t('app/nav','Quick payment')?></a></li>
                                     </ul>
                                 </li>
 <!--                                <li class="dropdown">-->

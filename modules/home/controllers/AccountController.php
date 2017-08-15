@@ -10,6 +10,8 @@ namespace app\modules\home\controllers;
 
 use app\modules\home\models\FinalChangeLog;
 use app\modules\home\models\FinalChangeSearch;
+use app\modules\home\servers\FinalService\aiyi;
+use app\modules\home\servers\FinalService\FinalService;
 use Yii;
 use app\modules\home\models\BlackListForm;
 use app\modules\home\models\BlackList;
@@ -19,6 +21,7 @@ use yii\data\Pagination;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+
 
 class AccountController extends GController{
 
@@ -31,7 +34,7 @@ class AccountController extends GController{
                 'class' => AccessControl::className(),
                 'rules' => [
                     [	'allow' => true,
-                        'actions' => ['recharge','index','consume'],
+                        'actions' => ['recharge','index','consume','pay'],
                         'roles' => ['@'],
                     ],
 
@@ -41,7 +44,8 @@ class AccountController extends GController{
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'recharge' => ['get','post'],
-                    'consume' =>['get' , 'post']
+                    'consume' =>['get' , 'post'],
+                    'pay' =>['get','post'],
                 ],
             ],
         ];
@@ -91,6 +95,34 @@ class AccountController extends GController{
 
 
 
+    }
+
+    public function actionPay()
+    {
+        $type = aiyi::$service_map;
+        if(Yii::$app->request->isPost)
+        {
+
+
+            $order_type =isset($_POST['order_type']) ? $_POST['order_type']:0;
+            if(!array_key_exists($order_type,aiyi::$service_map))
+            {
+
+                return $this->render('pay',['type'=>$type]);
+            }
+            $amount = isset($_POST['amount']) ? $_POST['amount']: 0;
+            if( !is_numeric($amount) || $amount<=0)
+            {
+
+                return $this->render('pay',['type'=>$type]);
+            }
+
+            $server = new FinalService();
+            $res = $server->CreateOrder($order_type,$amount);
+            var_dump($res);die;
+        }
+
+        return $this->render('pay',['type'=>$type]);
     }
 
 

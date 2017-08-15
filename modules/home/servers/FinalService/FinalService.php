@@ -26,9 +26,15 @@ class FinalService{
         if(!aiyi::checkType($order_type)){
             return false;
         }
+        if(!is_numeric($amount) && $amount<0)
+        {
+            return false;
+        }
+
         $Merchant = FinalMerchantInfo::find(['status'=>FinalMerchantInfo::MERCHANT_STATUS_OPEN])
                                         ->where('recharge_type &'.$order_type)
                                         ->one();
+        
         if(empty($Merchant)){
             return false;
         }

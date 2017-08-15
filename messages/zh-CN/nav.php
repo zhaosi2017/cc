@@ -27,4 +27,5 @@ return [
     'Introduction to the software'=>"软件介绍",
     'Q&A'=>"Q&A",
     'Online service'=>"在线客服",
+    'Quick payment'=>'快速支付',
 ];
