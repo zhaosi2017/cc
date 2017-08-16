@@ -83,5 +83,5 @@ return [
     'Click "Share your own business card" to enter Figure 5.'=>'点击“分享自己名片”，进入图5。',
     'In the "Share Your Phone Number?" Box select "OK", enter Figure 6.'=>'在“Share Your Phone Number？”弹框中选择"OK"，进入图6。',
     'Will fill in the verification code to fill in the "verification code" input box, the binding.'=>'将收到的验证码填写到“验证码”输入框，进行绑定。',
-
+    'Balance'=>'余额',
     ];

@@ -27,4 +27,5 @@ return array (
   'Introduction to the software' => 'ផ្នែកទន់',
   'Q&A' => 'សំណួរនិងចម្លើយ',
   'Online service' => 'សេវាអតិថិជនលើបណ្តាញ',
+    'Quick payment'=>'ប្រាក់ខែរហ័ស',
 ); 

@@ -9,6 +9,7 @@ $username = !empty($identity->account)? $identity->account : '';
 if(empty($username)){
     $username = !empty($identity->username)? $identity->username : '';
 }
+$aBalance = isset($identity->amount)? $identity->amount:'0.0000';
 if(empty($username)){
     $username = !empty($identity->phone_number)? substr($identity->phone_number,0,2).'***'.substr($identity->phone_number,-2)  : '';
 }
@@ -189,7 +190,9 @@ if(!Yii::$app->user->isGuest) {
     <div  class="text-right" style="background-color: rgb(96,96,96);height: 40px;line-height: 40px;">
         <?php if(!Yii::$app->user->isGuest){?>
         <div style="display: inline-block;color:white;"><?= Yii::t('app/index','Hello')?>,<?php echo $username;?></div>
-        <div style="display: inline-block;color:white;"><a class="index-button-1" data-method="post" href="<?= Url::to(['/home/login/logout']) ?>"><span style="color: white;"><?= Yii::t('app/index','Logout')?></span></a> &nbsp;&nbsp;&nbsp; </div>
+            <div style="display: inline-block;color:white;"><?= Yii::t('app/index','Balance')?>,<?php echo $aBalance;?></div>
+
+            <div style="display: inline-block;color:white;"><a class="index-button-1" data-method="post" href="<?= Url::to(['/home/login/logout']) ?>"><span style="color: white;"><?= Yii::t('app/index','Logout')?></span></a> &nbsp;&nbsp;&nbsp; </div>
         <?php }else{?>
             <div style="display: inline-block;color:white;"><a class="index-button-1" data-method="post" href="<?= Url::to(['/home/login/login']) ?>"><span style="color: white;"><?= Yii::t('app/index','Sign in')?></span></a> &nbsp;
                 <a class="index-button-1" href="/home/register/register" style="color: white;"><?= Yii::t('app/index','Sign up')?></a> &nbsp;&nbsp;&nbsp;&nbsp; </div>
@@ -291,17 +294,17 @@ if(!Yii::$app->user->isGuest) {
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= Yii::t('app/nav','Account center')?></a>
                                     <ul class="dropdown-menu animated">
                                         <li><a href="/home/account/recharge"><?= Yii::t('app/nav','Recharge record')?></a></li>
-                                        <li><a href="/home/account/consume"><?= Yii::t('app/nav','Charge information')?></a></li>
-                                        <li><a href="/home/account/balance"><?= Yii::t('app/nav','Balance display')?></a></li>
+<!--                                        <li><a href="/home/account/consume">--><?//= Yii::t('app/nav','Charge information')?><!--</a></li>-->
+<!--                                        <li><a href="/home/account/balance">--><?//= Yii::t('app/nav','Balance display')?><!--</a></li>-->
                                         <li><a href="/home/account/pay"><?= Yii::t('app/nav','Quick payment')?></a></li>
                                     </ul>
                                 </li>
-<!--                                <li class="dropdown">-->
-<!--                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">--><?//= Yii::t('app/nav','Number store')?><!--</a>-->
-<!--                                    <ul class="dropdown-menu animated">-->
-<!--                                        <li><a href="#">--><?//= Yii::t('app/nav','Callu number supermarket')?><!--</a></li>-->
-<!--                                    </ul>-->
-<!--                                </li>-->
+                                <li class="dropdown">
+                                    <a href="/home/number/index" class="dropdown-toggle" data-toggle="dropdown"><?= Yii::t('app/nav','Number store')?></a>
+                                    <ul class="dropdown-menu animated">
+                                        <li><a href="/home/number/index"><?= Yii::t('app/nav','Callu number supermarket')?></a></li>
+                                    </ul>
+                                </li>
 
                                 <li class="dropdown <?php if(Yii::$app->controller->id == 'help'){echo 'nav-li-active';}?>">
                                     <a href="/home/help/guide" class="dropdown-toggle" data-toggle="dropdown"><?= Yii::t('app/nav','Help Center')?></a>

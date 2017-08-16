@@ -72,4 +72,5 @@
     'Click "Share your own business card" to enter Figure 5.' => '點擊“分享自己名片”，進入圖5。',
     'In the "Share Your Phone Number?" Box select "OK", enter Figure 6.' => '在“Share Your Phone Number？”彈框中選擇"OK"，進入圖6。',
     'Will fill in the verification code to fill in the "verification code" input box, the binding.' => '將收到的驗證碼填寫到“驗證碼”輸入框，進行綁定。',
-); 
+    'Balance'=>'餘額',
+    );

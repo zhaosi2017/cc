@@ -105,13 +105,14 @@ class AccountController extends GController{
             $order_type =isset($_POST['order_type']) ? $_POST['order_type']:0;
             if(!array_key_exists($order_type,aiyi::$service_map))
             {
-
+                Yii::$app->session->setFlash('pay_order_type','请选择支付类型');
                 return $this->render('pay',['type'=>$type]);
             }
             $amount = isset($_POST['amount']) ? $_POST['amount']: 0;
             if( !is_numeric($amount) || $amount<=0)
             {
 
+                Yii::$app->session->setFlash('pay_amount','请正确填写金额');
                 return $this->render('pay',['type'=>$type]);
             }
             $server = new FinalService();

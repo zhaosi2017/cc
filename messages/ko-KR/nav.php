@@ -27,4 +27,5 @@ return array (
   'Introduction to the software' => '소프트웨어',
   'Q&A' => 'Q & A',
   'Online service' => '온라인 고객 서비스',
+    'Quick payment'=>'빠른 급여',
 ); 

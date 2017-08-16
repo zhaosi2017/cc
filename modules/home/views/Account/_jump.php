@@ -1,7 +1,10 @@
 <?php
 
+$this->title =   Yii::t('app/nav','Quick payment');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app/nav','User center'), 'url' => ['user/index']];
+$this->params['breadcrumbs'][] = $this->title;
+$actionId = Yii::$app->requestedAction->id;
 ?>
-
 
 
  <div>

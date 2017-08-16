@@ -73,4 +73,5 @@
     'Click "Share your own business card" to enter Figure 5.' => '(5)를 입력 "자신의 명함 공유"를 클릭.',
     'In the "Share Your Phone Number?" Box select "OK", enter Figure 6.' => '"내 전화 번호를 공유?"폭탄 상자, "OK" 선택에서 6을 입력합니다.',
     'Will fill in the verification code to fill in the "verification code" input box, the binding.' => '당신은 바인딩에 대해 "코드"입력 상자를 완료하기 위해 인증 코드가 전송됩니다.',
-); 
+    'Balance'=>'균형',
+    );

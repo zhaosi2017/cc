@@ -27,4 +27,5 @@ return array (
   'Introduction to the software' => 'ソフトウェア',
   'Q&A' => 'Q＆A',
   'Online service' => 'オンラインカスタマーサービス',
+    'Quick payment'=>'クイックペイ',
 ); 
