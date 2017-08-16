@@ -8,6 +8,7 @@
 namespace app\modules\home\servers\FinalService;
 
 use app\modules\home\models\FinalOrder;
+use yii\db\Exception;
 
 class aiyi extends  AbstractThird{
 
@@ -42,10 +43,13 @@ class aiyi extends  AbstractThird{
         $str.=$this->Merchant->certificate;
         $result['sign'] = md5($str);
         $this->pay_uri .='?'.http_build_query($result);
-
-        $client = new \GuzzleHttp\Client();
-        $request  = new \GuzzleHttp\Psr7\Request('get' , $this->pay_uri  );
-        $response = $client->send($request,['timeout' => 30]);
+        try{
+            $client = new \GuzzleHttp\Client();
+            $request  = new \GuzzleHttp\Psr7\Request( $this->request_type , $this->pay_uri  );
+            $response = $client->send($request,['timeout' => 30]);
+        }catch (Exception $e){
+            return false;
+        }
 
         if($response->getStatusCode() !== 200){
             return false;

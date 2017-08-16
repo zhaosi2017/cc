@@ -41,8 +41,8 @@ class FinalService{
         $order = new FinalOrder();
         $order->amount  = $amount;
         $order->order_id = FinalOrder::uuid();
-        $order->user_id = Yii::$app->user->id ;//Yii::$app->user->id;
-        $order->status  = FinalOrder::ORDER_STATUS_START;
+        $order->user_id = Yii::$app->user->id ;
+        $order->status  = FinalOrder::ORDER_STATUS_SUBMIT;
         $order->merchant_id = $Merchant->id;
         $order->time = time();
         if(!$order->save()){
