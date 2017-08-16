@@ -2,8 +2,10 @@
 
 namespace app\modules\home\controllers;
 
+use app\modules\home\models\CallNumber;
 use app\modules\home\models\FinalChangeLog;
 use app\modules\home\models\FinalChangeSearch;
+use app\modules\home\models\UserNumberSearch;
 use app\modules\home\servers\FinalService\aiyi;
 use app\modules\home\servers\FinalService\FinalService;
 use Yii;
@@ -29,7 +31,7 @@ class NumberController extends GController
                 'class' => AccessControl::className(),
                 'rules' => [
                     ['allow' => true,
-                        'actions' => ['index', 'consume', 'pay'],
+                        'actions' => ['index', 'consume', 'pay','buy'],
                         'roles' => ['@'],
                     ],
 
@@ -39,7 +41,7 @@ class NumberController extends GController
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'index' => ['get', 'post'],
-                    'consume' => ['get', 'post'],
+                    'buy' => ['get', 'post'],
                     'pay' => ['get', 'post'],
                 ],
             ],
@@ -49,13 +51,21 @@ class NumberController extends GController
 
     public function actionIndex()
     {
-        $searchModel = new BlackListSearch();
+        $searchModel = new CallNumber();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+
+    }
+
+
+    public function actionBuy($id)
+    {
+        $userid =  Yii::$app->user->id;
+       
 
     }
 }

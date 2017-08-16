@@ -9,6 +9,7 @@ namespace app\modules\home\models;
 
 use Yii;
 use app\models\CActiveRecord;
+use  yii\data\ActiveDataProvider;
 use yii\web\IdentityInterface;
 use app\modules\home\models\User;
 /**
@@ -31,6 +32,15 @@ class CallNumber extends CActiveRecord{
     const NUMBER_RENT_STATUS_ON  = 1; //可外租
     const NUMBER_RENT_STATUS_OFF = 0; //不可可外租
 
+    public static $numStatusArr =[
+        self::NUMBER_STATUS_ON =>'可用',
+        self::NUMBER_STATUS_OFF =>'不可用',
+    ];
+
+    public static $numRentStatusArr = [
+        self::NUMBER_RENT_STATUS_ON  => '可外租',
+        self::NUMBER_RENT_STATUS_OFF => '不可外租'
+    ];
     /**
      * @inheritdoc
      */
@@ -61,12 +71,28 @@ class CallNumber extends CActiveRecord{
             'id' => 'ID',
             'number' => '电话号码',
             'status' => '可使用状态',
-            'time' => '租赁时间',
+            'time' => '录入时间',
             'end_time' => '租赁结束时间',
             'begin_time' => '租赁起始时间',
-            'rent_status'=>'可外租状态'
+            'rent_status'=>'可外租状态',
+            'price'=>'价格',
         ];
     }
+
+
+    public function search($params){
+
+        $query = self::find();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination'=>[
+                'pagesize'=> 10,
+            ],
+        ]);
+        return $dataProvider;
+    }
+
+
 
 
 
