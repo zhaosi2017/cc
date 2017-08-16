@@ -102,8 +102,6 @@ class AccountController extends GController{
         $type = aiyi::$service_map;
         if(Yii::$app->request->isPost)
         {
-
-
             $order_type =isset($_POST['order_type']) ? $_POST['order_type']:0;
             if(!array_key_exists($order_type,aiyi::$service_map))
             {
@@ -116,10 +114,9 @@ class AccountController extends GController{
 
                 return $this->render('pay',['type'=>$type]);
             }
-
             $server = new FinalService();
             $res = $server->CreateOrder($order_type,$amount);
-            var_dump($res);die;
+            return $this->render('_jump',['model'=>$res]);
         }
 
         return $this->render('pay',['type'=>$type]);

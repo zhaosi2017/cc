@@ -20,7 +20,7 @@ $actionId = Yii::$app->requestedAction->id;
            <div class="form-group ">
                <label class="col-sm-1 text-right" style="font-size: 17px;padding-top: 5px;padding-right:2px;" for="amount">金额</label>
                <div class="col-sm-3">
-                    <input  class="form-control" id="amount" type="number" name="amount" min="0" >
+                    <input  class="form-control" id="amount" type="number" name="amount" min="0" step="0.1" >
                </div>
                <div class="col-sm-8"></div>
            </div>

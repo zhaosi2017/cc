@@ -34,7 +34,7 @@ class FinalService{
         $Merchant = FinalMerchantInfo::find(['status'=>FinalMerchantInfo::MERCHANT_STATUS_OPEN])
                                         ->where('recharge_type &'.$order_type)
                                         ->one();
-        
+
         if(empty($Merchant)){
             return false;
         }
