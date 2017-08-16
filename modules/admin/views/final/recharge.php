@@ -40,7 +40,17 @@ $actionId = Yii::$app->requestedAction->id;
                 },
                 'headerOptions'=>['class'=>'text-center']
             ],
-            ['attribute'=>'recharge_type', 'headerOptions'=>['class'=>'text-center']],
+            ['attribute'=>'recharge_type',
+                'value'=>function($model){
+                    $result ='';
+                    foreach (\app\modules\home\servers\FinalService\aiyi::$service_name_map as $key=>$value){
+                            if($model->recharge_type & $key){
+                                $result .= ','.$value;
+                            }
+                    }
+                    return trim($result , ',');
+                },
+                'headerOptions'=>['class'=>'text-center']],
             ['attribute'=>'amount', 'headerOptions'=>['class'=>'text-center']],
             ['attribute'=>'status' ,
                 'value'=>function($model){

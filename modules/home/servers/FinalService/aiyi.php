@@ -16,6 +16,11 @@ class aiyi extends  AbstractThird{
         1=>'cibalipay', //兴业支付宝
         2=>'cibweixin',  //兴业微信支付
     ];
+    public static $service_name_map = [
+        1=>'支付宝支付',
+        2=>'微信支付'
+    ];
+
     public  $pay_uri = 'https://vip.iyibank.com/cashier/Home';
 
     public $event_result = 'SUCCESS';

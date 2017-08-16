@@ -14,9 +14,11 @@ $actionId = Yii::$app->requestedAction->id;
 ?>
 <div class="call-record-index">
     <p class="btn-group hidden-xs">
-        <?= Html::a('用户号码管理', ['recharge'], ['class' => $actionId=='recharge' ? 'btn btn-primary' : 'btn btn-outline btn-default']) ?>
+        <?= Html::a('用户号码管理', ['user'], ['class' => $actionId=='user' ? 'btn btn-primary' : 'btn btn-outline btn-default']) ?>
     </p>
-
+    <div class="help-block m-t"></div>
+    <?php  echo $this->render('_searchUser', ['model' => $searchModel]); ?>
+    <div class="help-block m-t"></div>
     <?php Pjax::begin(); ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -47,12 +49,13 @@ $actionId = Yii::$app->requestedAction->id;
             ['attribute'=>'time',
                 'format'=>['date', 'php:Y-m-d H:i:s'],
                 'headerOptions'=>['class'=>'text-center']],
-            ['attribute'=>'end_time' ,
-                'format'=>['date', 'php:Y-m-d H:i:s'],
-                'headerOptions'=>['class'=>'text-center']],
             ['attribute' => 'begin_time',
                 'format'=>['date', 'php:Y-m-d H:i:s'],
                 'headerOptions'=>['class'=>'text-center']],
+            ['attribute'=>'end_time' ,
+                'format'=>['date', 'php:Y-m-d H:i:s'],
+                'headerOptions'=>['class'=>'text-center']],
+
         ],
     ]);
     ?>
