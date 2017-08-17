@@ -84,6 +84,8 @@ class FinalMerchantInfo extends  CActiveRecord{
               $result .= ','.$value;
           }elseif($key == $type){
               return $value;
+          }elseif($type & $key ){
+              $result .= ','.$value;
           }
       }
       return trim($result,',');
