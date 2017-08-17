@@ -107,7 +107,15 @@ class FinalChangeSearch extends FinalChangeLog
             $condition['change_type'] = $params['change_type'];
         }
 
+
         $model = self::find()->where($condition);
+        if(isset($params['start_time']) && $params['start_time']>0){
+           $model->andWhere(['>=','time',strtotime($params['start_time'])]);
+        }
+        if(isset($params['end_time']) && $params['end_time']>0){
+            $model->andWhere(['<=','time',strtotime($params['end_time'])]);
+        }
+
 
 
         return $model;

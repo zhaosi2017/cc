@@ -24,7 +24,7 @@ use \app\modules\home\models\FinalChangeSearch;
 
     </div>
     <div class="row">
-        <div class="col-lg-7">
+        <div class="col-lg-8">
         <?= Yii::t('app/call-record/index','Call time') ?>
 
              <?php    echo DateTimePicker::widget([
@@ -69,7 +69,7 @@ use \app\modules\home\models\FinalChangeSearch;
 
             </select>
         </div>
-        <div class="form-group">
+        <div class=" col-lg-4 form-group">
             <?= Html::submitButton( Yii::t('app/harassment','Search'), ['class' => 'btn btn-primary','id'=>'search_hide']) ?>
        </div>
        </div>
