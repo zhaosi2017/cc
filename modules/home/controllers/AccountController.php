@@ -117,6 +117,8 @@ class AccountController extends GController{
             }
             $server = new FinalService();
             $res = $server->CreateOrder($order_type,$amount);
+            $res['amount'] = $amount;
+            $res['order_type'] = $order_type;
             return $this->render('_jump',['model'=>$res]);
         }
 
