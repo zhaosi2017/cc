@@ -2129,7 +2129,7 @@ table.dataTable thead .sorting:after {
 
 .form-control:focus,
 .single-line:focus {
-    border-color: #1ab394 !important;
+    border-color: rgb(56,181,231) !important;
 }
 
 .has-success .form-control {

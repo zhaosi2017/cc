@@ -36,26 +36,14 @@ $actionId = Yii::$app->requestedAction->id;
         ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn', 'header' => '序号' , 'headerOptions'=>['class'=>'text-center']],
-            ['attribute'=>'number',
+
+            ['attribute'=>'number_id',
                 'value'=>function($model){
-                    return $model->number;
+                    $number = CallNumber::findOne([$model->number_id]);
+                    return    $number->number;
                 },
                 'headerOptions'=>['class'=>'text-center']],
-            ['attribute'=>'status',
-                'value'=>function($model){
-                    return  CallNumber::$numStatusArr[$model->status];
-                },
-                'headerOptions'=>['class'=>'text-center']],
-            ['attribute'=>'rent_status',
-                'value'=>function($model){
-                    return  CallNumber::$numRentStatusArr [$model->rent_status];
-                },
-                'headerOptions'=>['class'=>'text-center']],
-            ['attribute'=>'price',
-                'value'=>function($model){
-                    return  $model->price;
-                },
-                'headerOptions'=>['class'=>'text-center']],
+
             ['attribute'=>'time',
                 'format'=>['date', 'php:Y-m-d H:i:s'],
                 'headerOptions'=>['class'=>'text-center']],
@@ -65,17 +53,17 @@ $actionId = Yii::$app->requestedAction->id;
             ['attribute' => 'begin_time',
                 'format'=>['date', 'php:Y-m-d H:i:s'],
                 'headerOptions'=>['class'=>'text-center']],
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'header' => '操作',
-                'template' => '{buy}',
-                'buttons' => [
-                    'buy' => function($url){
-                        return Html::a('去购买',$url);
-                    },
-
-                ],
-            ],
+//            [
+//                'class' => 'yii\grid\ActionColumn',
+//                'header' => '操作',
+//                'template' => '{buy}',
+//                'buttons' => [
+//                    'buy' => function($url){
+//                        return Html::a('去购买',$url);
+//                    },
+//
+//                ],
+//            ],
         ],
     ]);
     ?>

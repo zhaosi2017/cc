@@ -25,13 +25,16 @@ use \app\models\CActiveRecord;
 class FinalChangeLog extends CActiveRecord{
 
     const FINAL_CHANGE_TYPE_RECHARGE = 1; //充值
-    const FINAL_CHANGE_TYPE_CONSUME  = 2; //消费
-
+    const FINAL_CHANGE_TYPE_BUYNUMBER  = 2; //购买号码
+    const FINAL_CHANGE_TYPE_CALLNUMBER = 3; //呼叫扣费
     static public $final_change_type = [
         self::FINAL_CHANGE_TYPE_RECHARGE =>'充值',
-        self::FINAL_CHANGE_TYPE_CONSUME  =>'消费',
+        self::FINAL_CHANGE_TYPE_BUYNUMBER  =>'购买号码',
+        self::FINAL_CHANGE_TYPE_CALLNUMBER  =>'呼叫扣费',
 
     ];
+
+
     /**
      * @inheritdoc
      */

@@ -10,10 +10,11 @@ use app\modules\home\models\FinalChangeSearch;
 /* @var $searchModel app\modules\home\models\CallRecordSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title =   Yii::t('app/call-record/index','Account center  Personal call records');
+$this->title =   Yii::t('app/nav','Recharge record');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app/nav','User center'), 'url' => ['user/index']];
 $this->params['breadcrumbs'][] = $this->title;
 $actionId = Yii::$app->requestedAction->id;
+
 
 ?>
 <style>
@@ -30,11 +31,11 @@ $actionId = Yii::$app->requestedAction->id;
     <div class="help-block m-t"></div>
     <table class="table table-striped table-bordered">
     <thead>
-    <tr><th>编号</th><th>用户</th><th>类型</th> <th>金额</th><th>交易之前</th><th>交易之后</th></tr>
+    <tr><th>编号</th><th>类型</th> <th>金额</th><th>交易之前</th><th>交易之后</th></tr>
     </thead>
     <tbody>
     <?php foreach ($model as $key => $val) {?>
-        <tr><td><?php echo $val->id; ?> </td><td><?php echo $val->user_id;?></td> <td><?php echo FinalChangeSearch::$final_change_type[$val->change_type];?></td> <td><?php echo $val->amount;?></td><td><?php echo $val->before;?></td><td><?php echo $val->after;?></td></tr>
+        <tr><td><?php echo $val->id; ?> </td> <td><?php echo FinalChangeSearch::$final_change_type[$val->change_type];?></td> <td><?php echo $val->amount;?></td><td><?php echo $val->before;?></td><td><?php echo $val->after;?></td></tr>
     <?php }?>
     </tbody>
 

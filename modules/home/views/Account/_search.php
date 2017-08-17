@@ -65,12 +65,13 @@ use \app\modules\home\models\FinalChangeSearch;
             <select class="form-control" name="FinalChangeSearch[change_type]" id="finalchangesearch-change_type">
                 <option value="0" <?php if($param['change_type']==0){echo 'selected';}?>>全部</option>
                 <option <?php if($param['change_type']==FinalChangeSearch::FINAL_CHANGE_TYPE_RECHARGE){echo 'selected';}?> value="<?= FinalChangeSearch::FINAL_CHANGE_TYPE_RECHARGE ?>"><?php echo FinalChangeSearch::$final_change_type[FinalChangeSearch::FINAL_CHANGE_TYPE_RECHARGE]?></option>
-                <option <?php if($param['change_type']==FinalChangeSearch::FINAL_CHANGE_TYPE_CONSUME){echo 'selected';}?> value="<?= FinalChangeSearch::FINAL_CHANGE_TYPE_CONSUME ?>"><?php echo FinalChangeSearch::$final_change_type[FinalChangeSearch::FINAL_CHANGE_TYPE_CONSUME]?></option>
+                <option <?php if($param['change_type']==FinalChangeSearch::FINAL_CHANGE_TYPE_BUYNUMBER){echo 'selected';}?> value="<?= FinalChangeSearch::FINAL_CHANGE_TYPE_BUYNUMBER ?>"><?php echo FinalChangeSearch::$final_change_type[FinalChangeSearch::FINAL_CHANGE_TYPE_BUYNUMBER]?></option>
+                <option <?php if($param['change_type']==FinalChangeSearch::FINAL_CHANGE_TYPE_CALLNUMBER){echo 'selected';}?> value="<?= FinalChangeSearch::FINAL_CHANGE_TYPE_CALLNUMBER ?>"><?php echo FinalChangeSearch::$final_change_type[FinalChangeSearch::FINAL_CHANGE_TYPE_CALLNUMBER]?></option>
 
             </select>
         </div>
         <div class=" col-lg-4 form-group">
-            <?= Html::submitButton( Yii::t('app/harassment','Search'), ['class' => 'btn btn-primary','id'=>'search_hide']) ?>
+            <?= Html::submitButton( Yii::t('app/harassment','Search'), ['class' => 'btn btn-primary index-button-1','id'=>'search_hide']) ?>
        </div>
        </div>
     </div>

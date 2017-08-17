@@ -32,7 +32,7 @@ class NumberController extends GController
                 'class' => AccessControl::className(),
                 'rules' => [
                     ['allow' => true,
-                        'actions' => ['index', 'consume', 'pay','buy','sure-buy'],
+                        'actions' => ['index', 'consume', 'pay', 'buy', 'sure-buy','user-number'],
                         'roles' => ['@'],
                     ],
 
@@ -44,7 +44,8 @@ class NumberController extends GController
                     'index' => ['get', 'post'],
                     'buy' => ['get', 'post'],
                     'pay' => ['get', 'post'],
-                    'sure-buy'=>['post'],
+                    'sure-buy' => ['post'],
+                    'user-number'=>['get','post'],
                 ],
             ],
         ];
@@ -67,29 +68,81 @@ class NumberController extends GController
     public function actionBuy($id)
     {
 
-        $userid =  Yii::$app->user->id;
-        $model =  CallNumber::findOne($id);
+        $userid = Yii::$app->user->id;
+        $model = CallNumber::findOne($id);
 
-        return $this->render('buy',['model'=>$model]);
+        return $this->render('buy', ['model' => $model,'id'=>$id]);
     }
 
     public function actionSureBuy()
     {
-        if(Yii::$app->request->isPost)
-        {
-            $number =  intval($_POST['number']);
-            $callnumberid = intval($_POST['callnumberid']);
-            $res = CallNumber::findOne(['id'=>$callnumberid,'number'=>$number]);
+        if (Yii::$app->request->isPost) {
+            $id = $_POST['buyid'];
+            $res = $this->checkBuy();
             if(empty($res))
             {
-               return $this->redirect('index')->send();
+                return $this->redirect('buy?id='.$id)->send();
             }
-            $userid = Yii::$app->user->id ? Yii::$app->user->id:0;
             $userNumber = new UserNumber();
-            $userNumber->user_id = $userid;
-            $userNumber->time = time();
-            $userNumber->begin_time = time();
+            if($userNumber->BuyNumber($res))
+            {
+                return $this->redirect('user-number')->send();
+            }
 
+            return $this->redirect('buy?id='.$id)->send();
         }
+    }
+
+    public function checkBuy()
+    {
+
+        $number = intval($_POST['number']);
+        $number_id = intval($_POST['callnumberid']);
+        $res = CallNumber::findOne(['id' => $number_id, 'number' => $number]);
+
+        if (empty($res)) {
+            return [];
+        }
+
+        $todayTime = strtotime(date('Y-m-d'));
+       // var_dump($_POST['end_time']);die;
+        $begin_time = strtotime($_POST['begin_time']);
+        $end_time = strtotime($_POST['end_time']);
+        if ($begin_time < $res['begin_time'] || $begin_time > $res['end_time'] || $todayTime > $begin_time) {
+            Yii::$app->session->setFlash('buy_begin_time', '开始时间选择有误');
+            return [];
+        }
+        if ($end_time < $res['begin_time'] || $begin_time > $res['end_time']   || $todayTime > $end_time) {
+            Yii::$app->session->setFlash('buy_begin_time', '开始时间选择有误');
+            return [];
+        }
+
+        if ($begin_time > $end_time) {
+            $tmp = $end_time;
+            $end_time = $begin_time;
+            $begin_time = $tmp;
+        }
+
+        $days = ($begin_time - $end_time) / 86400;
+        $days = $days < 1 ? 1 : $days;
+        $amount = $days * $res->price;
+
+        return  [
+            'begin_time' => $begin_time,
+            'end_time' => $end_time,
+            'number_id' => $number_id,
+            'amount'=>$amount,
+        ];
+    }
+
+    public function actionUserNumber()
+    {
+        $searchModel  = new UserNumberSearch();
+        $dataProvider = $searchModel ->search((Yii::$app->request->queryParams));
+
+        return $this->render('user-number', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 }

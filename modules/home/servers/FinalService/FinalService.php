@@ -151,18 +151,26 @@ class FinalService{
      * @param $user_id
      * @param $amount
      * @param $commit
+     * @param $type   from FinalChangeLog::$final_change_type
      * 提供给外部调用 用户使用资金
      */
-    public function apply($user_id , $amount , $commit ='' ){
+    public function apply($user_id , $amount , $type, $commit ='' ){
+        if(!array_key_exists($type, FinalChangeLog::$final_change_type))
+        {
+            return false;
+        }
 
-        Yii::$app->db->transaction->begin('READ COMMITTED');
+        Yii::$app->db->beginTransaction(Transaction::READ_COMMITTED);
+        $transaction = Yii::$app->db->getTransaction();
+
+
         $user_model = User::findOne($user_id);
         if(empty($user_model)){
-            Yii::$app->db->transaction->rollBack();
+            $transaction->rollBack();
             return false;
         }
         if($amount <= 0){
-            Yii::$app->db->transaction->rollBack();
+            $transaction->rollBack();
             return true;
         }
 
@@ -171,7 +179,7 @@ class FinalService{
 
         $user_model->amount = $user_model->amount - $amount;
         if(!$user_model->save()){
-            Yii::$app->db->transaction->rollBack();
+            $transaction->rollBack();
             return false;
         }
 
@@ -179,12 +187,12 @@ class FinalService{
         $change->user_id = $user_id;
         $change->amount = $amount;
         $change->comment = $commit;
-        $change->change_type = FinalChangeLog::FINAL_CHANGE_TYPE_CONSUME;
+        $change->change_type = $type;
         if(!$change->save()){
-            Yii::$app->db->transaction->rollBack();
+            $transaction->rollBack();
             return false;
         }
-        Yii::$app->db->transaction->commit();
+        $transaction->commit();
         return true;
     }
 
