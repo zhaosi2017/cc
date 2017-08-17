@@ -42,7 +42,7 @@ $actionId = Yii::$app->requestedAction->id;
             ],
             ['attribute'=>'recharge_type',
                 'value'=>function($model){
-                    return $model->getChannelName();
+                    return $model->getChannelName($model->recharge_type);
                 },
                 'headerOptions'=>['class'=>'text-center']],
             ['attribute'=>'amount', 'headerOptions'=>['class'=>'text-center']],
