@@ -33,8 +33,8 @@ class aiyi extends  AbstractThird{
             'mch_id'=>$this->Merchant->merchant_id,
             'out_trade_no' =>$this->request_data['order_id'],
             'body'         =>'recharge',
-            'callback_url' =>'https://test.callu.online/home/tts/infobip-event',
-            'notify_url'   =>'https://test.callu.online/home/tts/infobip-event',
+            'callback_url' =>'https://test.callu.online/home/final/aiyi-event',
+            'notify_url'   =>'https://test.callu.online/home/final/aiyi-event',
             'total_fee'    =>$this->request_data['order_amount'],
             'service'      =>self::$service_map[$this->request_data['order_type']],
             'type'=>1
