@@ -14,9 +14,11 @@ $actionId = Yii::$app->requestedAction->id;
 ?>
 <div class="call-record-index">
     <p class="btn-group hidden-xs">
-        <?= Html::a('平台号码管理', ['recharge'], ['class' => $actionId=='recharge' ? 'btn btn-primary' : 'btn btn-outline btn-default']) ?>
+        <?= Html::a('平台号码管理', ['platform'], ['class' => $actionId=='platform' ? 'btn btn-primary' : 'btn btn-outline btn-default']) ?>
     </p>
-
+    <div class="help-block m-t"></div>
+    <?php  echo $this->render('_searchPlatform', ['model' => $searchModel]); ?>
+    <div class="help-block m-t"></div>
     <?php Pjax::begin(); ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -35,13 +37,21 @@ $actionId = Yii::$app->requestedAction->id;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn', 'header' => '序号' , 'headerOptions'=>['class'=>'text-center']],
             ['attribute'=>'number', 'headerOptions'=>['class'=>'text-center']],
-            ['attribute'=>'status', 'headerOptions'=>['class'=>'text-center']],
+            ['attribute'=>'status',
+                'value'=>function($model){
+                    return \app\modules\home\models\CallNumber::$numStatusArr[$model->status];
+                },
+
+                'headerOptions'=>['class'=>'text-center']],
             ['attribute'=>'time',
                 'format'=>['date', 'php:Y-m-d H:i:s'],
                 'headerOptions'=>['class'=>'text-center']],
             ['attribute'=>'comment' , 'headerOptions'=>['class'=>'text-center']],
             [
                 'attribute' => 'rent_status',
+                'value'=>function($model){
+                    return \app\modules\home\models\CallNumber::$numRentStatusArr[$model->rent_status];
+                },
                 'headerOptions'=>['class'=>'text-center']
             ],
             ['attribute'=>'begin_time' ,

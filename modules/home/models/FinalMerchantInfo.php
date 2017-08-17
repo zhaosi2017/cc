@@ -7,6 +7,7 @@
  */
 namespace app\modules\home\models;
 use \app\models\CActiveRecord;
+use app\modules\home\servers\FinalService\aiyi;
 
 /**
  * Class FinalMerchantInfo
@@ -69,6 +70,23 @@ class FinalMerchantInfo extends  CActiveRecord{
         ];
     }
 
+    /**
+     * 获取支付类型对应的名称
+     * 如果有其他支付渠道的话 读取数据库的配置
+     * @param $type  支付类型
+     * @return string
+     */
+    public function getChannelName($type = null){
 
+      $result='';
+      foreach(aiyi::$service_name_map as $key=>$value){
+          if($type == null ){
+              $result .= ','.$value;
+          }elseif($key == $type){
+              return $value;
+          }
+      }
+      return trim($result,',');
+    }
 
 }

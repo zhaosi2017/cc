@@ -52,8 +52,8 @@ class UserNumber extends CActiveRecord{
     {
         return [
             'id' => 'ID',
-            'user_id' => '用户id',
-            'number_id' => '号码id',
+            'user_id' => '用户',
+            'number_id' => '号码',
             'time' => '租赁时间',
             'end_time' => '租赁结束时间',
             'begin_time' => '租赁起始时间',

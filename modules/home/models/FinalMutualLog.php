@@ -10,6 +10,16 @@
 namespace app\modules\home\models;
 use \app\models\CActiveRecord;
 
+
+/**
+ * Class FinalMutualLog
+ * @package app\modules\home\models
+ * @property  $id
+ * @property  $interface_name
+ * @property  $data
+ * @property  $time
+ * @property  $type
+ */
 class FinalMutualLog extends CActiveRecord{
 
     const MUTUAL_TYPE_BEGIN                = 1;  //发起充值
@@ -21,7 +31,6 @@ class FinalMutualLog extends CActiveRecord{
         self::MUTUAL_TYPE_BEGIN_RETURN  =>'充值返回',
         self::MUTUAL_TYPE_CALLBACK =>'充值回调',
         self::MUTUAL_TYPE_CALLBACK_RETURN  =>'充值回调返回',
-
     ];
 
     /**

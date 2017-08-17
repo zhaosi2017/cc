@@ -72,10 +72,12 @@ class CallNumber extends CActiveRecord{
             'number' => '电话号码',
             'status' => '可使用状态',
             'time' => '录入时间',
-            'end_time' => '租赁结束时间',
-            'begin_time' => '租赁起始时间',
+            'end_time' => '结束时间',
+            'begin_time' => '起始时间',
             'rent_status'=>'可外租状态',
-            'price'=>'价格',
+            'comment'=>'介绍',
+            'price'=>'出租价／天',
+            'interface'=>'接口'
         ];
     }
 

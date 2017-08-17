@@ -11,6 +11,7 @@
 namespace app\modules\home\servers\FinalService;
 
 use app\modules\home\models\FinalMerchantInfo;
+use app\modules\home\models\FinalMutualLog;
 
 abstract  class AbstractThird{
     /**
@@ -81,4 +82,73 @@ abstract  class AbstractThird{
     public function getOrderid(Array $data){
 
     }
+
+
+    /**
+     * 请求充值三方日志
+     * @param array $post   请求的数据
+     * @param bool $type    需要交互？
+     * 这里主要方便做交互日志记录
+     * @return bool
+     */
+    public function RequestLog($data){
+
+        $log = ['uri'=>$this->pay_uri,
+                'method'=>$this->request_type,
+                'data'=>$data
+            ];
+        $obj = new FinalMutualLog();
+        $obj->interface_name =get_class($this);
+        $obj->data = json_encode($log , true);
+        $obj->time = time();
+        $obj->type = FinalMutualLog::MUTUAL_TYPE_BEGIN;
+    }
+
+    /**
+     * @param $data
+     * 请求充值三方返回日志
+     */
+    public function ResponseLog($data){
+        $log = [
+            'data'=>$data
+        ];
+        $obj = new FinalMutualLog();
+        $obj->interface_name = get_class($this);
+        $obj->data = json_encode($log , true);
+        $obj->time = time();
+        $obj->type = FinalMutualLog::MUTUAL_TYPE_BEGIN_RETURN;
+    }
+
+    /**
+     * @param $data
+     * 回调数据日志
+     */
+    public  function EventLog($data ){
+
+        $log = [
+            'ip'=>$_SERVER['REMOTE_ADDR'],
+            'data'=>$data,
+            'method'=>$_SERVER['REQUEST_METHOD']
+        ];
+        $obj = new FinalMutualLog();
+        $obj->interface_name = get_class($this);
+        $obj->data = json_encode($log , true);
+        $obj->time = time();
+        $obj->type = FinalMutualLog::MUTUAL_TYPE_CALLBACK;
+    }
+
+    /**
+     * 回调响应日志
+     */
+    public function ReplayLog($data){
+        $log = [
+          'data'=>$data
+        ];
+        $obj = new FinalMutualLog();
+        $obj->interface_name = get_class($this);
+        $obj->data = json_encode($log , true);
+        $obj->time = time();
+        $obj->type = FinalMutualLog::MUTUAL_TYPE_CALLBACK_RETURN;
+    }
+
 }
