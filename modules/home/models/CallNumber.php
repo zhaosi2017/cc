@@ -87,6 +87,7 @@ class CallNumber extends CActiveRecord{
 
     public function search($params){
 
+
         $query = self::find();
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -94,6 +95,8 @@ class CallNumber extends CActiveRecord{
                 'pagesize'=> 10,
             ],
         ]);
+        $this->load($params);
+        $this->number && $query->andFilterWhere(['like','number',$this->number]);
         return $dataProvider;
     }
 

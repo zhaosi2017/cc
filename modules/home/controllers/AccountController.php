@@ -70,10 +70,10 @@ class AccountController extends GController{
         $data = $searchModel->ApiSearch($param);
         $pagination = new Pagination([
             'totalCount'=>$data->count(),
-           // 'pageSize'=>1,
+            'pageSize'=>10,
         ]);
 
-        $model = $data->orderBy('id ASC')
+        $model = $data->orderBy('id desc')
             ->offset($pagination->offset)
             ->limit($pagination->limit)
             ->all();
