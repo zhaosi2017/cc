@@ -94,6 +94,25 @@ $data = [
         ],
 
     ],
+    [
+        'module' => '账务模块',
+        'items' => [
+            [
+                'page_name' => '充值订单',
+                'permission' => ['admin/final/order'],
+            ],
+            [
+                'page_name'=>'帐变列表',
+                'permission'=>['admin/final/change'],
+            ],
+            [
+                'page_name' => '充值账号',
+                'permission' => ['admin/final/recharge','admin/final/merchant', 'admin/final/show-merchant' , 'admin/final/delete-merchant'],
+            ],
+
+        ],
+
+    ],
 
 ];
 ?>

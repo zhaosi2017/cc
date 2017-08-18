@@ -59,7 +59,36 @@ $actionId = Yii::$app->requestedAction->id;
                 'attribute' => 'time',
                 'format'=>['date', 'php:Y-m-d H:i:s'],
                 'headerOptions'=>['class'=>'text-center']
-            ]
+            ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'header' => '操作',
+                'template' => '{show-merchant} {delete-merchant}',
+                'buttons' => [
+                    'show-merchant' => function($url){
+                        return Html::a('编辑',$url);
+                    },
+                    'delete-merchant' => function($url){
+
+                        if(Yii::$app->user->can('admin/final/delete-merchant')){
+
+                            return Html::a('删除',$url,[
+                                'style' => 'color:red',
+                                'data' => ['confirm' => '你确定要删除吗?']
+                            ]);
+                        }else{
+                            $url = 'index';
+                            return Html::a('删除',$url,[
+                                'style' => 'color:red',
+                                'data' => ['confirm' => '您没有该权限！']
+                            ]);
+
+                        }
+
+
+                    },
+                ],
+            ],
 
 
 

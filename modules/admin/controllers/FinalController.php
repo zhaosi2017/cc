@@ -112,7 +112,7 @@ class FinalController extends PController
      */
     public function actionShowMerchant(){
 
-        $id = Yii::$app->request->post('id');
+        $id = Yii::$app->request->get('id');
         $model = FinalMerchantInfo::findOne($id);
         if(empty($model)){
             $model =  new FinalMerchantInfo();
@@ -120,6 +120,18 @@ class FinalController extends PController
         return $this->render('merchant' ,[
             'model'=>$model
         ]);
+    }
+
+    public function actionDeleteMerchant(){
+
+        $id = Yii::$app->request->get('id');
+        $model = FinalMerchantInfo::findOne($id);
+        if(!empty($model)){
+            $model->delete();
+        }
+        Yii::$app->session->setFlash("success", '操作成功');
+        return $this->redirect('recharge');
+
     }
 
 }
