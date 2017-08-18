@@ -63,7 +63,7 @@ class FinalController extends GController
      */
     public function actionAiyiEvent(){
 
-        $data = $_GET;
+        $data = Yii::$app->request->get();
         $service = new  FinalService();
          return   $service->Event($data);
 
