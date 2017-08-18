@@ -16,6 +16,10 @@ $actionId = Yii::$app->requestedAction->id;
     <p class="btn-group hidden-xs">
         <?= Html::a('充值账号', ['recharge'], ['class' => $actionId=='recharge' ? 'btn btn-primary' : 'btn btn-outline btn-default']) ?>
     </p>
+    <p class="btn-group hidden-xs">
+        <?= Html::a('添加账号', ['show-merchant'], ['class' => $actionId=='merchant' ? 'btn btn-primary' : 'btn btn-outline btn-default']) ?>
+
+    </p>
 
     <?php Pjax::begin(); ?>
     <?= GridView::widget([
