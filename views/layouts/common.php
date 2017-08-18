@@ -39,9 +39,9 @@ if( Yii::$app->getSession()->hasFlash('error') ) {
             // 'class' => 'alert-warning no-margins',
         'style' => '
                 position: fixed;
-                color: #3c763d;
-                background-color: #dff0d8;
-                border-color: #d6e9c6;
+              color: #a94442;
+                background-color: #f2dede;
+                border-color: #ebccd1;
                  width: 100%;
                  left: 2px;
                  right:2px;
@@ -70,9 +70,9 @@ if( Yii::$app->getSession()->hasFlash('info') ) {
             // 'class' => 'alert-info no-margins',
             'style' => '
                  position: fixed;
-                color: #3c763d;
-                background-color: #dff0d8;
-                border-color: #d6e9c6;
+                color: #8a6d3b;
+                background-color: #fcf8e3;
+                border-color: #faebcc;
                  width: 100%;
                  left: 2px;
                  right:2px;

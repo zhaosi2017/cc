@@ -1,12 +1,28 @@
 <?php
 
 $this->title =   Yii::t('app/nav','Quick payment');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app/nav','User center'), 'url' => ['user/index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app/nav','Account center'), 'url' => ['recharge']];
 $this->params['breadcrumbs'][] = $this->title;
 $actionId = Yii::$app->requestedAction->id;
 
 ?>
 
+<style>
+    .loading{
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        line-height: 56px;
+        color: #fff;
+        font-size: 15px;
+        background:#000 url("/img/loading.gif") no-repeat center;
+        opacity: 0.3;
+        z-index: 99999999999;
+        filter:progid:DXImageTransform.Microsoft.Alpha(opacity=30);
+    }
+</style>
 <div>
 
     <div class="user-form">
@@ -49,7 +65,7 @@ $actionId = Yii::$app->requestedAction->id;
             <div class="form-group">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-3" >
-                    <span onclick="payClick()" style="width: 100%;" class='btn btn-primary button-new-color ' style="    width: 23%;margin-left: 128px;" >
+                    <span id = "rechage_buy"  onclick="payClick()" style="width: 100%;" data-loading-text="提交中..." class='btn btn-primary btn-check button-new-color ' style="    width: 23%;margin-left: 128px;" >
                         充值                        </span>
                 </div>
                 <div class="col-sm-3"></div>
@@ -60,7 +76,7 @@ $actionId = Yii::$app->requestedAction->id;
 
 
 </div>
-
+<div class="loading text-center " style="display: none;"> </div>
 <script>
     function payClick() {
         $("#amountmsg").html('');
@@ -77,8 +93,9 @@ $actionId = Yii::$app->requestedAction->id;
             $("#order_type_msg").html('请选择支付类型');
             return false
         }
-
+        $('.loading').toggle();
         $("#payform").submit();
+
         return false;
     }
 </script>

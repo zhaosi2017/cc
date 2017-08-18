@@ -86,6 +86,7 @@ class NumberController extends GController
             $userNumber = new UserNumber();
             if($userNumber->BuyNumber($res))
             {
+                Yii::$app->session->setFlash('success','购买成功');
                 return $this->redirect('user-number')->send();
             }
 
@@ -122,9 +123,10 @@ class NumberController extends GController
             $begin_time = $tmp;
         }
 
-        $days = ($begin_time - $end_time) / 86400;
+        $days = ( $end_time - $begin_time) / 86400;
         $days = $days < 1 ? 1 : $days;
         $amount = $days * $res->price;
+
         // $_amount == $amount
         return  [
             'begin_time' => $begin_time,

@@ -11,7 +11,7 @@ use app\modules\home\models\FinalChangeSearch;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title =   Yii::t('app/account/index','Account change');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app/nav','User center'), 'url' => ['user/index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app/nav','Account center'), 'url' => ['recharge']];
 $this->params['breadcrumbs'][] = $this->title;
 $actionId = Yii::$app->requestedAction->id;
 

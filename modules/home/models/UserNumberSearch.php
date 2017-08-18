@@ -48,6 +48,11 @@ class UserNumberSearch extends UserNumber
             'pagination'=>[
                 'pagesize'=> 10,
             ],
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC,
+                ]
+            ],
         ]);
         return $dataProvider;
     }

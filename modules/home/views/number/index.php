@@ -18,7 +18,9 @@ $actionId = Yii::$app->requestedAction->id;
 ?>
 <div class="call-record-index">
 
-
+    <div class="help-block m-t"></div>
+    <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
+    <div class="help-block m-t"></div>
     <?php Pjax::begin(); ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
