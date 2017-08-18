@@ -14,7 +14,7 @@ $actionId = Yii::$app->requestedAction->id;
 ?>
 <div class="call-record-index">
     <p class="btn-group hidden-xs">
-        <?= Html::a('平台号码管理', ['platform'], ['class' => $actionId=='platform' ? 'btn btn-primary' : 'btn btn-outline btn-default']) ?>
+        <?= Html::a('添加号码', ['show-number'], ['class' => $actionId=='platform' ? 'btn btn-primary' : 'btn btn-outline btn-default']) ?>
     </p>
     <div class="help-block m-t"></div>
     <?php  echo $this->render('_searchPlatform', ['model' => $searchModel]); ?>
@@ -57,11 +57,40 @@ $actionId = Yii::$app->requestedAction->id;
             ['attribute'=>'begin_time' ,
                 'format'=>['date', 'php:Y-m-d H:i:s'],
                 'headerOptions'=>['class'=>'text-center']],
-            ['attribute'=>'end_time' ,
+            ['attribute'=>'end_time',
                 'format'=>['date', 'php:Y-m-d H:i:s'],
                 'headerOptions'=>['class'=>'text-center']],
             ['attribute'=>'price' , 'headerOptions'=>['class'=>'text-center']],
             ['attribute'=>'interface' , 'headerOptions'=>['class'=>'text-center']],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'header' => '操作',
+                'template' => '{show-number} {delete-number}',
+                'buttons' => [
+                    'show-number' => function($url){
+                        return Html::a('编辑',$url);
+                    },
+                    'delete-number' => function($url){
+
+                        if(Yii::$app->user->can('admin/numbers/delete-number')){
+
+                            return Html::a('删除',$url,[
+                                'style' => 'color:red',
+                                'data' => ['confirm' => '你确定要删除吗?']
+                            ]);
+                        }else{
+                            $url = 'index';
+                            return Html::a('删除',$url,[
+                                'style' => 'color:red',
+                                'data' => ['confirm' => '您没有该权限！']
+                            ]);
+
+                        }
+
+
+                    },
+                ],
+            ],
 
 
 
