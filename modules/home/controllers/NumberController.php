@@ -93,19 +93,19 @@ class NumberController extends GController
         }
     }
 
-    public function checkBuy()
+    private function checkBuy()
     {
 
         $number = intval($_POST['number']);
         $number_id = intval($_POST['callnumberid']);
+        $_amount = $_POST['totalPrice'];
+
         $res = CallNumber::findOne(['id' => $number_id, 'number' => $number]);
 
         if (empty($res)) {
             return [];
         }
-
         $todayTime = strtotime(date('Y-m-d'));
-       // var_dump($_POST['end_time']);die;
         $begin_time = strtotime($_POST['begin_time']);
         $end_time = strtotime($_POST['end_time']);
         if ($begin_time < $res['begin_time'] || $begin_time > $res['end_time'] || $todayTime > $begin_time) {
@@ -113,10 +113,9 @@ class NumberController extends GController
             return [];
         }
         if ($end_time < $res['begin_time'] || $begin_time > $res['end_time']   || $todayTime > $end_time) {
-            Yii::$app->session->setFlash('buy_begin_time', '开始时间选择有误');
+            Yii::$app->session->setFlash('buy_begin_time', '结束时间选择有误');
             return [];
         }
-
         if ($begin_time > $end_time) {
             $tmp = $end_time;
             $end_time = $begin_time;
@@ -126,7 +125,7 @@ class NumberController extends GController
         $days = ($begin_time - $end_time) / 86400;
         $days = $days < 1 ? 1 : $days;
         $amount = $days * $res->price;
-
+        // $_amount == $amount
         return  [
             'begin_time' => $begin_time,
             'end_time' => $end_time,

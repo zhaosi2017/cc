@@ -15,7 +15,7 @@ $actionId = Yii::$app->requestedAction->id;
            <div class="form-group ">
                <label class="col-sm-1 text-right" style="font-size: 14px;padding-top: 5px;padding-right:2px;" for="amount">金额</label>
                <div class="col-sm-3">
-                    <input  class="form-control" id="amount" type="number" name="amount" min="0" step="0.1" >
+                    <input  class="form-control" id="amount" type="number" name="amount" min="1" step="0.1" value="1">
                     <p id="amountmsg" style="font-size: 14px !important;color: #a94442;;">
                         <?php echo Yii::$app->session->hasFlash('pay_amount')?Yii::$app->session->getFlash('pay_amount'):'';?>
                     </p>
@@ -26,11 +26,15 @@ $actionId = Yii::$app->requestedAction->id;
             <div class="form-group">
                 <label class="col-sm-1 text-right" style="font-size: 14px;padding-top: 5px;padding-right:2px;" >支付类型</label>
                 <div class="col-sm-3">
+                    <?php $tmps = 0;?>
                     <?php foreach ($type as $t=> $v){?>
+
+
                         <div>
                             <img style="width: 40px;" src="/img/pay/<?php echo $v.'.jpg';?>" alt="">
-                            <input type="radio" name="order_type" value="<?php echo $t;?>"><?php echo $v;?>
+                            <input type="radio" <?php if($tmps==0){echo 'checked';}?> name="order_type" value="<?php echo $t;?>"><?php echo $v;?>
                         </div>
+                        <?php $tmps +=1; ?>
                     <?php }?>
                     <p id="order_type_msg" style="font-size: 14px !important;color: #a94442;">
                         <?php echo Yii::$app->session->hasFlash('pay_order_type')?Yii::$app->session->getFlash('pay_order_type'):'';?>

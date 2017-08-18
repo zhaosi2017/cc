@@ -25,7 +25,7 @@ use \app\modules\home\models\FinalChangeSearch;
     </div>
     <div class="row">
         <div class="col-lg-8">
-        <?= Yii::t('app/call-record/index','Call time') ?>
+        <?= Yii::t('app/account/index','Rechage time') ?>
 
              <?php    echo DateTimePicker::widget([
                                                     'name' => 'FinalChangeSearch[start_time]',

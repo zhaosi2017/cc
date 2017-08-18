@@ -72,7 +72,7 @@ class UserNumber extends CActiveRecord{
         $amount = $arr['amount'];
         if((float)$user->amount < 0 || $amount > (float)$user->amount)
         {
-            Yii::$app->session->setFlash('error','金额小于0或者小于您的余额');
+            Yii::$app->session->setFlash('error','您的余额不足');
             return false;
         }
 

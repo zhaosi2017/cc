@@ -50,6 +50,7 @@ $config = [
                         'app/models/user-phone'=>'models/UserPhone.php',
                         'app/models/white-list-form'=>'models/WhiteListForm.php',
                         'app/nav'=>'nav.php',
+                        'app/account/index'=>'account/index.php',
 
                     ],
                     'on missingTranslation' => ['app\modules\home\controllers\TranslationEventHandler', 'handleMissingTranslation']

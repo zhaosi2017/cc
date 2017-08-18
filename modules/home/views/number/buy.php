@@ -16,7 +16,7 @@ $actionId = Yii::$app->requestedAction->id;
 
 </div>
 
-<div class="middle-box" style="    margin-top:20px !important;">
+<div class="middle-box" style="    margin-top:0px !important;">
     <div>
         <div class="form-group">
             <label class="col-sm-3" for="number">电话号码</label>
@@ -96,8 +96,7 @@ $actionId = Yii::$app->requestedAction->id;
                  var endTime = $('#callrecordsearch-end_time').val();
                  
                  var morenTime = $('#morenTime').html();
-                 console.log(tt);
-                 console.log(endTime);
+                
                  if(tt < morenTime){   
                       $('#callrecordsearch-begin_time').val('');alert('选择时间不能小于今天');return false;
                    }
@@ -116,7 +115,18 @@ $actionId = Yii::$app->requestedAction->id;
                    }
 
         
-
+                     if(tt && endTime){
+                        var _dates = new Date(endTime.replace(/-/g, '/'));
+                        var _endTimes = _dates.getTime()/1000;
+                        
+                        
+                     
+                         var _day = (_endTimes - tt)/86400;
+                        var price = $('#price').val();
+                        var totalPrice = _day * price;
+                        $('#totalPrice').val(parseFloat(totalPrice).toFixed(4));
+                       
+                   }
 
                    
                    }",
@@ -156,19 +166,23 @@ $actionId = Yii::$app->requestedAction->id;
                         var btt = parseInt($('#begin_time_1').html());
                         var ett = parseInt($('#end_time_1').html());
                         var beginTime = $('#callrecordsearch-begin_time').val();
+                       
+                        
+                      
                         var morenTime = $('#morenTime').html();
-                 if( ttt < btt || ttt > ett || (beginTime && ttt < beginTime) ){ $('#callrecordsearch-end_time').val('');alert('请输入正确时间');return false;}  
+                         if( ttt < btt || ttt > ett || (beginTime && ttt < beginTime) ){ 
+                            $('#callrecordsearch-end_time').val('');alert('请输入正确时间');return false;
+                         }  
                        
                        if(ttt < morenTime){    
                          $('#callrecordsearch-end_time').val('');alert('选择时间不能小于今天');return false;
-                         }
+                       }
                        
                        
                    if(ttt && beginTime  ){ 
                         var datess = new Date(beginTime.replace(/-/g, '/'));
                          time2 = datess.getTime()/1000; 
-                         console.log(ttt);
-                         console.log(time2);
+                       
                        if(ttt==time2){
                             $('#callrecordsearch-end_time').val('');alert('开始结束时间不能相等');return false;
                        }
@@ -177,7 +191,18 @@ $actionId = Yii::$app->requestedAction->id;
                         $('#callrecordsearch-end_time').val('');alert('结束时间不能小于于开始时间');return false;
                         }
                    }
+                   
+                   if(beginTime && ttt){
+                        var _datess = new Date(beginTime.replace(/-/g, '/'));
+                        var beginTime = _datess.getTime()/1000;
+                         var _day = (ttt - beginTime)/86400;
+                        var price = $('#price').val();
+                        var totalPrice = _day * price;
+                        $('#totalPrice').val(parseFloat(totalPrice).toFixed(4));
                        
+                   }
+                    
+                    
                        }",
 
                         ],
@@ -186,6 +211,16 @@ $actionId = Yii::$app->requestedAction->id;
             </div>
             <div class="col-sm-2"></div>
             <span style="height:34px; width: 100px" class="help-block m-b-none"><div class="help-block"></div></span>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3" for="totalPrice">总金额</label>
+            <div class="col-sm-7">
+                <input class="form-control" name="totalPrice" readonly="readonly" type="text" id="totalPrice" value="<?= $model->price?>">
+            </div>
+            <div class="col-sm-2"></div>
+            <span style="height:34px; width: 100px" class="help-block m-b-none"><div class="help-block"></div></span>
+
         </div>
 
         <div class="form-group">
@@ -252,6 +287,11 @@ $actionId = Yii::$app->requestedAction->id;
                 $('#callrecordsearch-end_time').val('')
                 return false;
             }
+            var _day = (_endTimes - _beginTimes)/86400;
+            var price = $('#price').val();
+            var totalPrice = _day * price;
+            $('#totalPrice').val(parseFloat(totalPrice).toFixed(4));
+
 
 
         }
