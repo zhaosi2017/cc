@@ -47,6 +47,8 @@ $config = [
                         'app/index' => 'index.php',
                         'app/login'=>'login.php',
                         'app/call-record/index'=>'call-record/index.php',
+                        'app/account/index'=>'account/index.php',
+                        'app/number/index'=>'number/index.php',
                     ],
                     'on missingTranslation' => ['app\modules\home\controllers\TranslationEventHandler', 'handleMissingTranslation']
                 ],
