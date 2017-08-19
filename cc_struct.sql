@@ -399,9 +399,8 @@ CREATE TABLE `call_number` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /**
-  用户号码池
+ *用户号码池
  */
-
 CREATE TABLE `user_number` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
