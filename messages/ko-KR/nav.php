@@ -28,5 +28,5 @@ return array (
   'Q&A' => 'Q & A',
   'Online service' => '온라인 고객 서비스',
     'Quick payment'=>'빠른 급여',
-    'My number'=>'我的号码'
+    'My number'=>'내 수'
 ); 

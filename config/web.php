@@ -51,6 +51,7 @@ $config = [
                         'app/models/white-list-form'=>'models/WhiteListForm.php',
                         'app/nav'=>'nav.php',
                         'app/account/index'=>'account/index.php',
+                        'app/number/index'=>'number/index.php',
 
                     ],
                     'on missingTranslation' => ['app\modules\home\controllers\TranslationEventHandler', 'handleMissingTranslation']

@@ -166,7 +166,7 @@ class NumberController extends GController
             {
                 $userNumber->sorting = $sorting;
                 if($userNumber->save()){
-                    return json_encode(['status'=>1,'msg'=>'排序成功']);
+                    return json_encode(['status'=>1,'msg'=>'排序成功','sorting'=>$sorting]);
                 }
             }
             return json_encode(['status'=>0,'msg'=>'参数错误']);

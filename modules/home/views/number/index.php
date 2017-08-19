@@ -30,10 +30,10 @@ $actionId = Yii::$app->requestedAction->id;
         'layout' => "{items}\n  <div><ul class='pagination'><li style='display:inline;'><span>共".$dataProvider->getTotalCount(). "条数据 <span></li></ul>{pager}  </div>",
         'tableOptions'=>['class' => 'table table-striped table-bordered','style'=>'text-align:center;'],
         'pager'=>[
-            'firstPageLabel'=>"首页",
-            'prevPageLabel'=>'上一页',
-            'nextPageLabel'=>'下一页',
-            'lastPageLabel'=>'末页',
+            'firstPageLabel'=>Yii::t('app/harassment','Frist'),
+            'prevPageLabel'=>Yii::t('app/harassment','Previous'),
+            'nextPageLabel'=>Yii::t('app/harassment','Next'),
+            'lastPageLabel'=>Yii::t('app/harassment','Last page'),
             'maxButtonCount' => 9,
         ],
         'columns' => [

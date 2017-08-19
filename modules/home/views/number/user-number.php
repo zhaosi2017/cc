@@ -30,15 +30,15 @@ $actionId = Yii::$app->requestedAction->id;
         'layout' => "{items}\n  <div><ul class='pagination'><li style='display:inline;'><span>共".$dataProvider->getTotalCount(). "条数据 <span></li></ul>{pager}  </div>",
         'tableOptions'=>['class' => 'table table-striped table-bordered','style'=>'text-align:center;'],
         'pager'=>[
-            'firstPageLabel'=>"首页",
-            'prevPageLabel'=>'上一页',
-            'nextPageLabel'=>'下一页',
-            'lastPageLabel'=>'末页',
+            'firstPageLabel'=>Yii::t('app/harassment','Frist'),
+            'prevPageLabel'=>Yii::t('app/harassment','Previous'),
+            'nextPageLabel'=>Yii::t('app/harassment','Next'),
+            'lastPageLabel'=>Yii::t('app/harassment','Last page'),
             'maxButtonCount' => 9,
         ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn', 'header' => '序号' , 'headerOptions'=>['class'=>'text-center']],
-            
+
             ['attribute'=>'number_id',
                 'value'=>function($model){
                     $number = CallNumber::findOne([$model->number_id]);
@@ -56,8 +56,11 @@ $actionId = Yii::$app->requestedAction->id;
                 'format'=>['date', 'php:Y-m-d H:i:s'],
                 'headerOptions'=>['class'=>'text-center']],
             ['attribute' => 'sorting',
+                'headerOptions'=>['class'=>'text-center'],
 
-                'headerOptions'=>['class'=>'text-center']
+                'content'=>function($model){
+                    return '<span id="sortContent'.$model->id.'">'.$model->sorting.'</span>';
+                },
             ],
 
             [
@@ -67,7 +70,7 @@ $actionId = Yii::$app->requestedAction->id;
                 'template' => '{buy}',
                 'buttons' => [
                     'buy' => function($url,$model){
-                        return  Html::activeInput('text',$model,'orderSort',['id'=>'ordersort'.$model->id,'style'=>'width:50px !important;padding: 3px 6px;']).'&nbsp&nbsp<span class="btn index-button-1" style="color:white;" onclick="sortlist('.$model->id.')">排序</span>';
+                        return  Html::activeInput('number',$model,'orderSort',['id'=>'ordersort'.$model->id,'min'=>0,'value'=>$model->sorting,'style'=>'width:50px !important;padding: 3px 6px;']).'&nbsp&nbsp<span class="btn index-button-1" style="color:white;" onclick="sortlist('.$model->id.')">排序</span>';
                     },
 
                 ],
@@ -88,13 +91,18 @@ $actionId = Yii::$app->requestedAction->id;
         var ids = '#ordersort'+id;
         var sorting =  $(ids).val();
         var data = {};
+        if( !(/^(\+|-)?\d+$/.test( sorting )) || sorting < 0){
+            $(ids).val("0");
+            sorting = 0;
+        }
         data.id = id;
         data.sorting = sorting;
         $.post('/home/number/sorting',data,function (d) {
             var tt = eval('('+d+')');
             if(tt.status==1)
             {
-                location.reload()
+                var sortContent = '#sortContent'+id;
+                $(sortContent).html(tt.sorting);
             }else {
                 alert('排序失败');
             }
