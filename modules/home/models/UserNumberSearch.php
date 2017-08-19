@@ -13,10 +13,8 @@ use app\modules\home\models\UserNumber;
  */
 class UserNumberSearch extends UserNumber
 {
-    public $search_type;
-    public $search_keywords;
-    public $call_time_start;
-    public $call_time_end;
+    public $number;
+    public $orderSort;
 
     /**
      * @inheritdoc
@@ -32,6 +30,15 @@ class UserNumberSearch extends UserNumber
         return Model::scenarios();
     }
 
+    public function attributeLabels()
+    {
+        $parent = parent::attributeLabels();
+        $self = [
+            'number'=>'电话号码',
+
+        ];
+        return array_merge($parent,$self);
+    }
     /**
      * Creates data provider instance with search query applied
      *
@@ -41,8 +48,8 @@ class UserNumberSearch extends UserNumber
      */
     public function search($params)
     {
-
-        $query = self::find();
+        $userId = (int)Yii::$app->user->id;
+        $query = self::find()->where(['user_id'=>$userId]);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination'=>[
@@ -54,7 +61,28 @@ class UserNumberSearch extends UserNumber
                 ]
             ],
         ]);
+        $this->load($params);
+
+        $this->number = isset($params['UserNumberSearch']['number']) ? $params['UserNumberSearch']['number'] :'';
+        $this->number && $query->andFilterWhere(['in','user_number.number_id',$this->searchIds($this->number)]);
         return $dataProvider;
+    }
+
+    public function searchIds($searchWords,$field = 'number')
+    {
+
+        $ids = [0];
+        $query = CallNumber::find()->select([$field,'id'])->all();
+        foreach ($query as $row)
+        {
+            $pos = strpos($row[$field],$searchWords);
+            if(is_int($pos)){
+                $ids[] = $row['id'];
+            }
+        }
+
+        return $ids;
+
     }
 
 

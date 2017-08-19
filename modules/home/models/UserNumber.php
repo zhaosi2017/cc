@@ -42,7 +42,7 @@ class UserNumber extends CActiveRecord{
     public function rules()
     {
         return [
-            [['id', 'user_id', 'number_id' , 'time' , 'end_time', 'begin_time'], 'integer'],
+            [['id', 'user_id', 'number_id' , 'time' , 'end_time', 'begin_time','sorting'], 'integer'],
         ];
     }
 
@@ -59,6 +59,7 @@ class UserNumber extends CActiveRecord{
             'time' => '购买时间',
             'end_time' => '租赁结束时间',
             'begin_time' => '租赁起始时间',
+            'sorting'=>'排序',
         ];
     }
 

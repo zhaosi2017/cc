@@ -28,4 +28,5 @@ return array (
   'Q&A' => 'Q＆A',
   'Online service' => 'オンラインカスタマーサービス',
     'Quick payment'=>'クイックペイ',
+    'My number'=>'我的号码'
 ); 

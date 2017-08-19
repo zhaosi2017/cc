@@ -303,6 +303,7 @@ if(!Yii::$app->user->isGuest) {
                                     <a href="/home/number/index" class="dropdown-toggle" data-toggle="dropdown"><?= Yii::t('app/nav','Number store')?></a>
                                     <ul class="dropdown-menu animated">
                                         <li><a href="/home/number/index"><?= Yii::t('app/nav','Callu number supermarket')?></a></li>
+                                        <li><a href="/home/number/user-number"><?= Yii::t('app/nav','My number')?></a></li>
                                     </ul>
                                 </li>
 

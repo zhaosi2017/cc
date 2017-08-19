@@ -28,4 +28,5 @@ return array (
   'Q&A' => 'សំណួរនិងចម្លើយ',
   'Online service' => 'សេវាអតិថិជនលើបណ្តាញ',
     'Quick payment'=>'ប្រាក់ខែរហ័ស',
+    'My number'=>'我的号码'
 ); 

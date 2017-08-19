@@ -407,6 +407,7 @@ CREATE TABLE `user_number` (
   `time` int(11) NOT NULL COMMENT '记录时间',
   `end_time` int(11) NOT NULL COMMENT '到期时间',
   `begin_time` int(11) NOT NULL COMMENT '起租时间',
+  `sorting` int(5) NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ／********************************************------end------******************************************／

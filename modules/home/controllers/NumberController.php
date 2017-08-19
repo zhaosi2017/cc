@@ -32,7 +32,7 @@ class NumberController extends GController
                 'class' => AccessControl::className(),
                 'rules' => [
                     ['allow' => true,
-                        'actions' => ['index', 'consume', 'pay', 'buy', 'sure-buy','user-number'],
+                        'actions' => ['index', 'consume', 'pay', 'buy', 'sure-buy','user-number','sorting'],
                         'roles' => ['@'],
                     ],
 
@@ -46,6 +46,7 @@ class NumberController extends GController
                     'pay' => ['get', 'post'],
                     'sure-buy' => ['post'],
                     'user-number'=>['get','post'],
+                    'sorting'=>['get','post'],
                 ],
             ],
         ];
@@ -145,5 +146,30 @@ class NumberController extends GController
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    public function actionSorting()
+    {
+        if(Yii::$app->request->isAjax)
+        {
+            $param = $_POST;
+            $id = isset($param['id']) ? (int)$param['id'] : 0;
+            $userId = (int)Yii::$app->user->id;
+            $sorting = isset($param['sorting']) ? (int)$param['sorting'] : 0;
+
+            if($id <= 0)
+            {
+                return json_encode(['status'=>0,'msg'=>'参数错误']);
+            }
+            $userNumber = UserNumber::find()->where(['id'=>$id,'user_id'=>$userId])->one();
+            if(!empty($userNumber))
+            {
+                $userNumber->sorting = $sorting;
+                if($userNumber->save()){
+                    return json_encode(['status'=>1,'msg'=>'排序成功']);
+                }
+            }
+            return json_encode(['status'=>0,'msg'=>'参数错误']);
+         }
     }
 }

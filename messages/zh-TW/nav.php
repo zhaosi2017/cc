@@ -28,4 +28,5 @@ return array (
   'Q&A' => 'Q&A',
   'Online service' => '在線客服',
     'Quick payment'=>'快速支付',
+    'My number'=>'我的号码'
 ); 
