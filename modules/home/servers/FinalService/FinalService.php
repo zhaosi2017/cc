@@ -38,8 +38,17 @@ class FinalService{
         if(empty($Merchant)){
             return false;
         }
+        $conversion  = new RateConversion();
+        $conversion->source = 'CNY';
+        $conversion->target = 'USD';
+        $rate = $conversion->conversion();
+        if($rate === false ){
+            $rate = 0.1500;
+        }
         $order = new FinalOrder();
         $order->amount  = $amount;
+        $order->real_amount = $amount * $rate;
+        $order->rate = $rate;
         $order->order_id = FinalOrder::uuid();
         $order->user_id = Yii::$app->user->id ;
         $order->status  = FinalOrder::ORDER_STATUS_SUBMIT;
@@ -95,8 +104,8 @@ class FinalService{
                 return $service->event_result;
             }
             if($service->event_data['order_status'] == FinalOrder::ORDER_STATUS_SUCCESS){
-
-                if(!$this->Recharge($order->user_id ,$service->event_data['order_amount'],'充值帐变' , $Merchant )){
+                $Merchant->amount +=  $service->event_data['order_amount'];
+                if(!$this->Recharge($order->user_id ,$order->real_amount,'充值帐变' , $Merchant )){
                     $transaction->rollBack();
                 }
             }
@@ -114,7 +123,6 @@ class FinalService{
         Yii::$app->db->beginTransaction(Transaction::READ_COMMITTED);
         $transaction = Yii::$app->db->getTransaction();
 
-        $merchantInfo->amount += $amount;
         $user_model = User::findOne($user_id);
         /********用户空 ，充值账号保存失败 *****/
         if(empty($user_model) || !$merchantInfo->save() ){
