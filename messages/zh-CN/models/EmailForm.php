@@ -9,7 +9,7 @@
 return [
 
     'Verification code error'=>'验证码错误',
-    'Account already exists'=>'账号已存在',
+    'account already exists'=>'账号已存在',
 
 
 ];

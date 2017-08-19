@@ -1,7 +1,7 @@
 <?php  
 return array (
   'User center' => 'មជ្ឈមណ្ឌលអ្នកប្រើ',
-  'Account security' => 'សន្តិសុខគណនី',
+  'account security' => 'សន្តិសុខគណនី',
   'Bind email' => 'ប្រអប់សំបុត្រការចង',
   'Bind phone' => 'ទូរស័ព្ទចង',
   'Bind username' => 'ឈ្មោះអ្នកប្រើចង',
@@ -16,7 +16,7 @@ return array (
   'Parameter settings' => 'ការកំណត់ប៉ារ៉ាម៉ែត្រ',
   'Whitelist' => 'បញ្ជីស',
   'Blacklist' => 'បញ្ជីខ្មៅ',
-  'Account center' => 'មជ្ឈមណ្ឌលគណនេយ្យ',
+  'account center' => 'មជ្ឈមណ្ឌលគណនេយ្យ',
   'Recharge record' => 'កំណត់ត្រាការបញ្ចូលទឹកប្រាក់',
   'Charge information' => 'ពឥណពន្ធ',
   'Balance display' => 'បង្ហាញតុល្យភាព',

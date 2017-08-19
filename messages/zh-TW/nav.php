@@ -1,7 +1,7 @@
 <?php  
 return array (
   'User center' => '用戶中心',
-  'Account security' => '賬戶安全',
+  'account security' => '賬戶安全',
   'Bind email' => '綁定郵箱',
   'Bind phone' => '綁定手機',
   'Bind username' => '綁定用戶名',
@@ -16,7 +16,7 @@ return array (
   'Parameter settings' => '參數設置',
   'Whitelist' => '白名單',
   'Blacklist' => '黑名單',
-  'Account center' => '賬務中心',
+  'account center' => '賬務中心',
   'Recharge record' => '充值記錄',
   'Charge information' => '扣款信息',
   'Balance display' => '餘額顯示',

@@ -38,7 +38,7 @@
   'Register a personal account' => '註冊個人賬號',
   'Register' => '註冊',
   'Phone' => '電話',
-  'Account only  email: eg xx@gmail.com' => '賬號(僅支持郵箱：如xxx@gmail.com)',
+  'account only  email: eg xx@gmail.com' => '賬號(僅支持郵箱：如xxx@gmail.com)',
   'Password  least 8  upper & lower char' => '密碼(至少8個字符,由大小寫字母數字組合)',
   'Repeat password' => '重複密碼',
   'Already have an account' => '已經有賬戶了',

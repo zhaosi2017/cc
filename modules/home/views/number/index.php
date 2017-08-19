@@ -27,7 +27,7 @@ $actionId = Yii::$app->requestedAction->id;
         'rowOptions' => function($model) {
             return ['id' => 'tr_'.$model->id, 'class' => '_tr'];
         },
-        'layout' => "{items}\n  <div><ul class='pagination'><li style='display:inline;'><span>共".$dataProvider->getTotalCount(). "条数据 <span></li></ul>{pager}  </div>",
+        'layout' => "{items}\n  <div><ul class='pagination'><li style='display:inline;'><span>&nbsp;".Yii::t('app/harassment','Total').'&nbsp;'.$dataProvider->getTotalCount(). '&nbsp;'.Yii::t('app/harassment','Data')." <span></li></ul>{pager}  </div>",
         'tableOptions'=>['class' => 'table table-striped table-bordered','style'=>'text-align:center;'],
         'pager'=>[
             'firstPageLabel'=>Yii::t('app/harassment','Frist'),
@@ -37,7 +37,7 @@ $actionId = Yii::$app->requestedAction->id;
             'maxButtonCount' => 9,
         ],
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn', 'header' => '序号' , 'headerOptions'=>['class'=>'text-center']],
+            ['class' => 'yii\grid\SerialColumn', 'header' =>  Yii::t('app/harassment','Serial number') , 'headerOptions'=>['class'=>'text-center']],
             ['attribute'=>'number',
                 'value'=>function($model){
                     return $model->number;
@@ -45,12 +45,12 @@ $actionId = Yii::$app->requestedAction->id;
                 'headerOptions'=>['class'=>'text-center']],
             ['attribute'=>'status',
                 'value'=>function($model){
-                    return  CallNumber::$numStatusArr[$model->status];
+                    $numStatus = CallNumber::getNumbStatus(); return $numStatus[$model->status];
                 },
                 'headerOptions'=>['class'=>'text-center']],
             ['attribute'=>'rent_status',
                 'value'=>function($model){
-                    return  CallNumber::$numRentStatusArr [$model->rent_status];
+                    $rentStatus = CallNumber::getRentStatus(); return  $rentStatus[$model->rent_status];
                 },
                 'headerOptions'=>['class'=>'text-center']],
             ['attribute'=>'price',
@@ -69,11 +69,11 @@ $actionId = Yii::$app->requestedAction->id;
                 'headerOptions'=>['class'=>'text-center']],
             [
                 'class' => 'yii\grid\ActionColumn',
-                'header' => '操作',
+                'header' => Yii::t('app/number/index','Operating'),
                 'template' => '{buy}',
                 'buttons' => [
                     'buy' => function($url){
-                        return Html::a('去购买',$url);
+                        return Html::a(Yii::t('app/number/index','Go to buy'),$url);
                     },
 
                 ],

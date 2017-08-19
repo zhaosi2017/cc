@@ -63,7 +63,7 @@ class FinalService{
         $service->request_data['order_amount'] = $order->amount;
         $service->request_data['order_type']   = $order_type;
         
-        $result['order_id']     = $order->order_id;
+        $result['order']        = $order;
         $result['data']         = $service->submit();
         $result['uri']          = $service->pay_uri;
         $result['request_type'] = $service->request_type;

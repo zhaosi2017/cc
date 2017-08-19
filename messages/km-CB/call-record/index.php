@@ -1,5 +1,5 @@
 <?php return array (
-  'Account center  Personal call records' => 'កណ្តាលគណនីកំណត់ត្រាហៅផ្ទាល់ខ្លួន',
+  'account center  Personal call records' => 'កណ្តាលគណនីកំណត់ត្រាហៅផ្ទាល់ខ្លួន',
   'Call time' => 'ពេលហៅ',
   'Clear time' => 'ជម្រះការពេល',
   'Call status' => 'ស្ថានភាពការហៅ',

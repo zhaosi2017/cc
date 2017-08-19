@@ -1,7 +1,7 @@
 <?php
 return [
 
-    'Account center  Personal call records'=>'个人通话记录',
+    'account center  Personal call records'=>'个人通话记录',
     'Call time'=>'呼叫时间',
     'Clear time'=>'清除时间',
     'Call status'=>'呼叫状态',

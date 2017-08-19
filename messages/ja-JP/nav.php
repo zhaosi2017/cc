@@ -1,7 +1,7 @@
 <?php  
 return array (
   'User center' => 'ユーザーセンター',
-  'Account security' => 'アカウントのセキュリティ',
+  'account security' => 'アカウントのセキュリティ',
   'Bind email' => 'バインディングポスト',
   'Bind phone' => 'バウンド電話',
   'Bind username' => 'バインドユーザー名',
@@ -16,7 +16,7 @@ return array (
   'Parameter settings' => 'パラメータ設定',
   'Whitelist' => 'ホワイトリスト',
   'Blacklist' => 'ブラックリスト',
-  'Account center' => '会計センター',
+  'account center' => '会計センター',
   'Recharge record' => 'リチャージレコード',
   'Charge information' => 'デビット情報',
   'Balance display' => '残高表示',

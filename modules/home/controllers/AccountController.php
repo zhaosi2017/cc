@@ -10,6 +10,7 @@ namespace app\modules\home\controllers;
 
 use app\modules\home\models\FinalChangeLog;
 use app\modules\home\models\FinalChangeSearch;
+use app\modules\home\models\FinalOrder;
 use app\modules\home\servers\FinalService\aiyi;
 use app\modules\home\servers\FinalService\FinalService;
 use Yii;
@@ -119,6 +120,8 @@ class AccountController extends GController{
             $res = $server->CreateOrder($order_type,$amount);
             $res['amount'] = $amount;
             $res['order_type'] = $order_type;
+            $res['rate']= $res['order']->rate;
+            $res['real_amount']= $res['order']->real_amount;
             return $this->render('_jump',['model'=>$res]);
         }
 

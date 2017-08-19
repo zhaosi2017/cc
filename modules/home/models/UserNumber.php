@@ -54,12 +54,12 @@ class UserNumber extends CActiveRecord{
     {
         return [
             'id' => 'ID',
-            'user_id' => '用户',
-            'number_id' => '号码',
-            'time' => '购买时间',
-            'end_time' => '租赁结束时间',
-            'begin_time' => '租赁起始时间',
-            'sorting'=>'排序',
+            'user_id' => Yii::t('app/number/index','User'),
+            'number_id' => Yii::t('app/number/index','Phone number'),
+            'time' => Yii::t('app/number/index','Purchase time'),
+            'end_time' => Yii::t('app/number/index','Rent end time'),
+            'begin_time' => Yii::t('app/number/index','Rent start time'),
+            'sorting'=>Yii::t('app/number/index','Sorting'),
         ];
     }
 
@@ -73,7 +73,7 @@ class UserNumber extends CActiveRecord{
         $amount = $arr['amount'];
         if((float)$user->amount < 0 || $amount > (float)$user->amount)
         {
-            Yii::$app->session->setFlash('error','您的余额不足');
+            Yii::$app->session->setFlash('error',Yii::t('app/number/index','Your balance is insufficient'));
             return false;
         }
 
@@ -89,7 +89,7 @@ class UserNumber extends CActiveRecord{
         if( !$userNumber->save())
         {
             $transaction->rollBack();
-            Yii::$app->session->setFlash('error','操作失败');
+            Yii::$app->session->setFlash('error',Yii::t('app/number/index','Operation failed'));
             return false;
         }
 
@@ -103,7 +103,7 @@ class UserNumber extends CActiveRecord{
             return true;
         }else{
             $transaction->rollBack();
-            Yii::$app->session->setFlash('error','操作失败');
+            Yii::$app->session->setFlash(Yii::t('app/number/index','Operation failed'));
             return false;
         }
 

@@ -27,7 +27,7 @@ $actionId = Yii::$app->requestedAction->id;
         'rowOptions' => function($model) {
             return ['id' => 'tr_'.$model->id, 'class' => '_tr'];
         },
-        'layout' => "{items}\n  <div><ul class='pagination'><li style='display:inline;'><span>共".$dataProvider->getTotalCount(). "条数据 <span></li></ul>{pager}  </div>",
+        'layout' => "{items}\n  <div><ul class='pagination'><li style='display:inline;'><span>".Yii::t('app/harassment','Total').'&nbsp;'.$dataProvider->getTotalCount()."&nbsp;".Yii::t('app/harassment','Data'). " <span></li></ul>{pager}  </div>",
         'tableOptions'=>['class' => 'table table-striped table-bordered','style'=>'text-align:center;'],
         'pager'=>[
             'firstPageLabel'=>Yii::t('app/harassment','Frist'),
@@ -37,7 +37,7 @@ $actionId = Yii::$app->requestedAction->id;
             'maxButtonCount' => 9,
         ],
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn', 'header' => '序号' , 'headerOptions'=>['class'=>'text-center']],
+            ['class' => 'yii\grid\SerialColumn', 'header' =>  Yii::t('app/harassment','Serial number') , 'headerOptions'=>['class'=>'text-center']],
 
             ['attribute'=>'number_id',
                 'value'=>function($model){
@@ -65,12 +65,13 @@ $actionId = Yii::$app->requestedAction->id;
 
             [
                 'class' => 'yii\grid\ActionColumn',
-                'header' => '操作',
+                'header' => Yii::t('app/number/index','Operating'),
                 'headerOptions'=>['class'=>'text-center','style'=>'width:15%;'],
                 'template' => '{buy}',
                 'buttons' => [
                     'buy' => function($url,$model){
-                        return  Html::activeInput('number',$model,'orderSort',['id'=>'ordersort'.$model->id,'min'=>0,'value'=>$model->sorting,'style'=>'width:50px !important;padding: 3px 6px;']).'&nbsp&nbsp<span class="btn index-button-1" style="color:white;" onclick="sortlist('.$model->id.')">排序</span>';
+                        return  Html::activeInput('number',$model,'orderSort',['id'=>'ordersort'.$model->id,'min'=>0,'value'=>$model->sorting,'style'=>'width:50px !important;padding: 3px 6px;']).'&nbsp&nbsp<span class="btn index-button-1" style="color:white;" onclick="sortlist('.$model->id.')">'.Yii::t('app/number/index','Sorting'
+                        ).'</span>';
                     },
 
                 ],

@@ -1,7 +1,7 @@
 <?php return array (
   'Call support center' => '전화 지원 센터',
   'Home' => '집',
-  'Account center' => '계정 센터',
+  'account center' => '계정 센터',
   'Personal call records' => '개인 통화 기록',
   'Anti harassment' => '반 (反) 폭력',
   'Hello' => '안녕하세요',

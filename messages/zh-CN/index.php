@@ -3,7 +3,7 @@
 return [
     'Call support center' => '呼叫支持中心',
     'Home'=>'首页',
-    'Account center'=>'账户中心',
+    'account center'=>'账户中心',
     'Personal call records'=>'个人通话记录',
     'Anti harassment'=>'防骚扰',
     'Hello'=>'您好',

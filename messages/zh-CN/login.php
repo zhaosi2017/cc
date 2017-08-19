@@ -39,7 +39,7 @@ return [
     'Register a personal account'=>'注册个人账号',
     'Register'=>'注册',
     'Phone'=>'电话',
-    'Account only  email: eg xx@gmail.com'=>'账号(仅支持邮箱：如xxx@gmail.com)',
+    'account only  email: eg xx@gmail.com'=>'账号(仅支持邮箱：如xxx@gmail.com)',
     'Password  least 8  upper & lower char'=>'密码(至少8个字符,由大小写字母数字组合)',
     'Repeat password'=>'重复密码',
     'Already have an account'=>'已经有账户了',

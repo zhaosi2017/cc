@@ -1,7 +1,7 @@
 <?php  
 return array (
   'User center' => '사용자 센터',
-  'Account security' => '계정 보안',
+  'account security' => '계정 보안',
   'Bind email' => '바인딩 사서함',
   'Bind phone' => '바운드 전화',
   'Bind username' => '바인드 사용자 이름',
@@ -16,7 +16,7 @@ return array (
   'Parameter settings' => '매개 변수 설정',
   'Whitelist' => '화이트리스트',
   'Blacklist' => '블랙리스트',
-  'Account center' => '회계 센터',
+  'account center' => '회계 센터',
   'Recharge record' => '충전 기록',
   'Charge information' => '직불 정보',
   'Balance display' => '잔액 표시',

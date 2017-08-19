@@ -1,7 +1,7 @@
 <?php
 return [
     'User center'=>"用户中心",
-    'Account security'=>"账户安全",
+    'account security'=>"账户安全",
     'Bind email'=>"绑定邮箱",
     'Bind phone'=>"绑定手机",
     'Bind username'=>"绑定用户名",
@@ -16,7 +16,7 @@ return [
     'Parameter settings'=>"参数设置",
     'Whitelist'=>"白名单",
     'Blacklist'=>"黑名单",
-    'Account center'=>"账务中心",
+    'account center'=>"账务中心",
     'Recharge record'=>"充值记录",
     'Charge information'=>"扣款信息",
     'Balance display'=>"余额显示",

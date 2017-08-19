@@ -38,7 +38,7 @@
   'Register a personal account' => '개인 계정 등록',
   'Register' => '레지스터',
   'Phone' => '전화',
-  'Account only  email: eg xx@gmail.com' => '계정 이메일 만 : 예 : xx@gmail.com',
+  'account only  email: eg xx@gmail.com' => '계정 이메일 만 : 예 : xx@gmail.com',
   'Password  least 8  upper & lower char' => '최소 8 자 이상의 비밀번호',
   'Repeat password' => '비밀번호 반복',
   'Already have an account' => '이미 계정이 있습니다.',

@@ -145,7 +145,7 @@ if(!Yii::$app->user->isGuest){
                 </div>
                 <div class="header-div-1" style="display: inline-block;">
                     <a class="header-a-1" href="<?= Url::to(['/home/user/index']) ?>">
-                        <span class="header-span-1" style="color: black;"><?= Yii::t('app/index','Account center')?></span>
+                        <span class="header-span-1" style="color: black;"><?= Yii::t('app/index','account center')?></span>
                     </a>
                 </div>
                 <div class="header-div-1" style="display: inline-block;">

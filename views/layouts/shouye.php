@@ -216,7 +216,7 @@ if(!Yii::$app->user->isGuest){
                                     <ul class="dropdown-menu animated">
 
                                         <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= Yii::t('app/nav','Account security')?></a>
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= Yii::t('app/nav','account security')?></a>
                                             <ul class="dropdown-menu animated">
                                                 <li><a href="/home/user/bind-email"><?= Yii::t('app/nav','Bind email')?></a></li>
                                                 <li><a href="/home/user/set-phone-number"><?= Yii::t('app/nav','Bind phone')?></a></li>
@@ -249,7 +249,7 @@ if(!Yii::$app->user->isGuest){
                                     </ul>
                                 </li>
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= Yii::t('app/nav','Account center')?></a>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= Yii::t('app/nav','account center')?></a>
                                     <ul class="dropdown-menu animated">
                                         <li><a href="/home/account/recharge"><?= Yii::t('app/nav','Recharge record')?></a></li>
 <!--                                        <li><a href="/home/account/consume">--><?//= Yii::t('app/nav','Charge information')?><!--</a></li>-->

@@ -44,7 +44,7 @@ $this->title = Yii::t('app/login','Register');
 
                     <?= $form->field($model, 'username')->textInput([
                         'autofocus' => true,
-                        'placeholder'=> Yii::t('app/login','Account only  email: eg xx@gmail.com'),
+                        'placeholder'=> Yii::t('app/login','account only  email: eg xx@gmail.com'),
                     ])->label(false) ?>
 
                     <?= $form->field($model, 'password')->passwordInput(['placeholder'=>Yii::t('app/login','Password  least 8  upper & lower char')])->label(false) ?>

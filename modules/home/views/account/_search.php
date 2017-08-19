@@ -7,6 +7,7 @@ use kartik\datetime\DateTimePicker;
 /* @var $model app\modules\home\models\CallRecordSearch */
 /* @var $form yii\widgets\ActiveForm */
 use \app\modules\home\models\FinalChangeSearch;
+use \app\modules\home\models\FinalChangeLog;
 ?>
 
 <div class="call-record-search">
@@ -63,10 +64,13 @@ use \app\modules\home\models\FinalChangeSearch;
             &nbsp;&nbsp;
 <!--            -->
             <select class="form-control" name="FinalChangeSearch[change_type]" id="finalchangesearch-change_type">
-                <option value="0" <?php if($param['change_type']==0){echo 'selected';}?>>全部</option>
-                <option <?php if($param['change_type']==FinalChangeSearch::FINAL_CHANGE_TYPE_RECHARGE){echo 'selected';}?> value="<?= FinalChangeSearch::FINAL_CHANGE_TYPE_RECHARGE ?>"><?php echo FinalChangeSearch::$final_change_type[FinalChangeSearch::FINAL_CHANGE_TYPE_RECHARGE]?></option>
-                <option <?php if($param['change_type']==FinalChangeSearch::FINAL_CHANGE_TYPE_BUYNUMBER){echo 'selected';}?> value="<?= FinalChangeSearch::FINAL_CHANGE_TYPE_BUYNUMBER ?>"><?php echo FinalChangeSearch::$final_change_type[FinalChangeSearch::FINAL_CHANGE_TYPE_BUYNUMBER]?></option>
-                <option <?php if($param['change_type']==FinalChangeSearch::FINAL_CHANGE_TYPE_CALLNUMBER){echo 'selected';}?> value="<?= FinalChangeSearch::FINAL_CHANGE_TYPE_CALLNUMBER ?>"><?php echo FinalChangeSearch::$final_change_type[FinalChangeSearch::FINAL_CHANGE_TYPE_CALLNUMBER]?></option>
+                <option value="0" <?php if($param['change_type']==0){echo 'selected';}?>><?= Yii::t('app/account/index','All')?></option>
+
+                <?php $changeType = FinalChangeLog::getFinalChangeType();if($changeType){?>
+                    <?php foreach ($changeType as $k => $v){?>
+                    <option <?php if($param['change_type']== $k){echo 'selected';}?> value="<?php echo $k;?>"><?php echo $v;?></option>
+                    <?php }?>
+                <?php }?>
 
             </select>
         </div>

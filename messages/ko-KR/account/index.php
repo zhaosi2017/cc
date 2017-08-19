@@ -1,5 +1,37 @@
-<?php
-return [
-
-    'Rechage time'=>'充值时间'
-];
+<?php  
+return array (
+  'Rechage time' => '충전 시간',
+  'account change' => '계정 변경 기록',
+  'Clear time' => '클리어 시간',
+  'Type' => '유형',
+  'Amount(¥)' => '금액 (¥)',
+  'Amount($)' => '금액 ($)',
+  'Amount' => '돈',
+  'Before trading' => '거래 전에',
+  'After trading' => '거래 후',
+  'Trading time' => '거래 시간',
+  'Id' => '수',
+  'Buy number' => '구매 번호',
+  'Recharge type' => '결제 유형',
+  'Recharge' => '충전',
+  'Recharge amount(¥)' => '충전 금액 (¥)',
+  'Rate' => '환율',
+  'Real Amount($)' => '실제 금액 ($)',
+  'Please enter the correct amount' => '정확한 금액을 입력하세요',
+  'Please choose the type of payment' => '선택 결제 유형',
+  'Alipay payment' => 'Alipay의',
+  'Wechat payment' => '마이크로 채널 유료',
+  'Can be used to rent the start time' => '시작 시간 대여',
+  'Can be used to rent the end time' => '종료 시간 대여',
+  'Rent start time' => '임대 시작 시간',
+  'Rent end time' => '임대 종료 시간',
+  'Total amount' => '총량',
+  'Submit' => '제출',
+  'Your balance is insufficient' => '귀하의 균형 미만',
+  'Rent start time can not empty' => '임대 시작 시간은 비워 둘 수 없습니다',
+  'Rent end time can not empty' => '임대 종료 시간은 비워 둘 수 없습니다',
+  'Confirm' => '확인',
+  'Purchase number' => '구매 번호',
+  'Call deductions' => '전화 공제',
+  'All' => '완전한',
+); 

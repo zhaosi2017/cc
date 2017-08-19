@@ -1,5 +1,5 @@
 <?php return array (
-  'Account center  Personal call records' => '個人通話記錄',
+  'account center  Personal call records' => '個人通話記錄',
   'Call time' => '呼叫時間',
   'Clear time' => '清除時間',
   'Call status' => '呼叫狀態',

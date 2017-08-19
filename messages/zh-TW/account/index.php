@@ -1,7 +1,37 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: pengzhang
- * Date: 2017/8/18
- * Time: 上午10:20
- */
+<?php  
+return array (
+  'Rechage time' => '充值時間',
+  'account change' => '賬變記錄',
+  'Clear time' => '清除時間',
+  'Type' => '類型',
+  'Amount(¥)' => '金額(¥)',
+  'Amount($)' => '金額($)',
+  'Amount' => '金額',
+  'Before trading' => '交易之前',
+  'After trading' => '交易之後',
+  'Trading time' => '交易時間',
+  'Id' => '編號',
+  'Buy number' => '購買號碼',
+  'Recharge type' => '支付類型',
+  'Recharge' => '充值',
+  'Recharge amount(¥)' => '充值金額(¥)',
+  'Rate' => '匯率',
+  'Real Amount($)' => '真實金額($)',
+  'Please enter the correct amount' => '請輸入正確的金額',
+  'Please choose the type of payment' => '請選擇支付類型',
+  'Alipay payment' => '支付寶支付',
+  'Wechat payment' => '微信支付',
+  'Can be used to rent the start time' => '可租用開始時間',
+  'Can be used to rent the end time' => '可租用結束時間',
+  'Rent start time' => '租用開始時間',
+  'Rent end time' => '租用結束時間',
+  'Total amount' => '總金額',
+  'Submit' => '提交',
+  'Your balance is insufficient' => '你的餘額不足',
+  'Rent start time can not empty' => '租用開始時間不能為空',
+  'Rent end time can not empty' => '租用結束時間不能為空',
+  'Confirm' => '確認',
+  'Purchase number' => '購買號碼',
+  'Call deductions' => '呼叫扣費',
+  'All' => '全部',
+); 

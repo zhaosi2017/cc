@@ -9,6 +9,7 @@ namespace app\modules\home\servers\FinalService;
 
 use app\modules\home\models\FinalOrder;
 use yii\db\Exception;
+use Yii;
 
 class aiyi extends  AbstractThird{
 
@@ -21,6 +22,14 @@ class aiyi extends  AbstractThird{
         1=>'支付宝支付',
         2=>'微信支付'
     ];
+
+    public static function getServiceName()
+    {
+        return [
+            1=>Yii::t('app/account/index','Alipay payment'),
+            2=>Yii::t('app/account/index','Wechat payment'),
+        ];
+    }
 
     public  $pay_uri = 'https://vip.iyibank.com/cashier/Home';
 

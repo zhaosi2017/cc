@@ -27,7 +27,7 @@ class WhiteListForm extends Model
     public function attributeLabels()
     {
         return [
-            'account' => Yii::t('app/models/white-list-form','Account'),
+            'account' => Yii::t('app/models/white-list-form','account'),
         ];
     }
 

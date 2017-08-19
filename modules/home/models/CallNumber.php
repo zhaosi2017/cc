@@ -35,8 +35,24 @@ class CallNumber extends CActiveRecord{
     const NUMBER_RENT_STATUS_ON  = 1; //可外租
     const NUMBER_RENT_STATUS_OFF = 0; //不可可外租
 
+
+
+
+
+    public static  function getNumbStatus(){
+        return [
+            self::NUMBER_STATUS_ON => Yii::t('app/number/index','Available') ,
+            self::NUMBER_STATUS_OFF =>Yii::t('app/number/index','Unavailable') ,
+            ];
+    }
+    public static  function getRentStatus(){
+        return [
+            self::NUMBER_RENT_STATUS_ON  => Yii::t('app/number/index','Can be rented') ,
+            self::NUMBER_RENT_STATUS_OFF =>Yii::t('app/number/index','Can not rent') ,
+        ];
+    }
     public static $numStatusArr =[
-        self::NUMBER_STATUS_ON =>'可用',
+        self::NUMBER_STATUS_ON => '可用' ,
         self::NUMBER_STATUS_OFF =>'不可用',
     ];
 
@@ -72,15 +88,15 @@ class CallNumber extends CActiveRecord{
     {
         return [
             'id' => 'ID',
-            'number' => '电话号码',
-            'status' => '可使用状态',
-            'time' => '录入时间',
-            'end_time' => '结束时间',
-            'begin_time' => '起始时间',
-            'rent_status'=>'可外租状态',
-            'comment'=>'介绍',
-            'price'=>'出租价／天',
-            'interface'=>'接口'
+            'number' => Yii::t('app/number/index','Phone number'),
+            'status' => Yii::t('app/number/index','Status'),
+            'time' => Yii::t('app/number/index','Create time'),
+            'end_time' => Yii::t('app/number/index','Can be used to rent the start time'),
+            'begin_time' => Yii::t('app/number/index','Can be used to rent the end time'),
+            'rent_status'=>Yii::t('app/number/index','Rent status'),
+            'comment'=>Yii::t('app/number/index','Introduction'),
+            'price'=>Yii::t('app/number/index','Rental price／day'),
+            'interface'=>Yii::t('app/number/index','Interface'),
         ];
     }
 

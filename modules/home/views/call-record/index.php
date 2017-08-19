@@ -8,7 +8,7 @@ use yii\helpers\Url;
 /* @var $searchModel app\modules\home\models\CallRecordSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title =   Yii::t('app/call-record/index','Account center  Personal call records');
+$this->title =   Yii::t('app/call-record/index','account center  Personal call records');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app/nav','User center'), 'url' => ['user/index']];
 $this->params['breadcrumbs'][] = $this->title;
 $actionId = Yii::$app->requestedAction->id;

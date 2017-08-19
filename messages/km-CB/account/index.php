@@ -1,5 +1,37 @@
-<?php
-return [
-
-    'Rechage time'=>'充值时间'
-];
+<?php  
+return array (
+  'Rechage time' => 'ពេលបញ្ចូលទឹកប្រាក់',
+  'account change' => 'ការថតការផ្លាស់ប្តូរគណនី',
+  'Clear time' => 'ជម្រះការពេល',
+  'Type' => 'ប្រភេទ',
+  'Amount(¥)' => 'ចំនួនទឹកប្រាក់ (¥)',
+  'Amount($)' => 'ចំនួនទឹកប្រាក់ ($)',
+  'Amount' => 'ប្រាក់',
+  'Before trading' => 'មុនពេលជួញដូរ',
+  'After trading' => 'បន្ទាប់ពីប្រតិបត្តិការ',
+  'Trading time' => 'ម៉ោងជួញដូរ',
+  'Id' => 'លេខ',
+  'Buy number' => 'ចំនួនការទិញ',
+  'Recharge type' => 'ប្រភេទការទូទាត់',
+  'Recharge' => 'ការបញ្ចូលទឹកប្រាក់',
+  'Recharge amount(¥)' => 'ចំនួនទឹកប្រាក់ដែលត្រូវបញ្ចូលក្នុងទូរស័ព្ទ (¥)',
+  'Rate' => 'អត្រាប្តូរប្រាក់',
+  'Real Amount($)' => 'ចំនួនទឹកប្រាក់ពិតប្រាកដ ($)',
+  'Please enter the correct amount' => 'សូមបញ្ចូលចំនួនទឹកប្រាក់ដែលត្រឹមត្រូវ',
+  'Please choose the type of payment' => 'ជ្រើសប្រភេទទូទាត់',
+  'Alipay payment' => 'Alipay',
+  'Wechat payment' => 'ប្រាក់ខែមីក្រូឆានែល',
+  'Can be used to rent the start time' => 'ជួលពេលចាប់ផ្ដើម',
+  'Can be used to rent the end time' => 'ជួលពេលបញ្ចប់',
+  'Rent start time' => 'ពេលចាប់ផ្តើមជួល',
+  'Rent end time' => 'ពេលបញ្ចប់ជួល',
+  'Total amount' => 'ចំនួនសរុប',
+  'Submit' => 'ដាក់ស្នើ',
+  'Your balance is insufficient' => 'តុល្យភាពរបស់អ្នកគឺតិចជាង',
+  'Rent start time can not empty' => 'ពេលចាប់ផ្តើមការជួលមិនអាចទទេ',
+  'Rent end time can not empty' => 'ពេលបញ្ចប់ការជួលមិនអាចទទេ',
+  'Confirm' => 'បញ្ជាក់',
+  'Purchase number' => 'ចំនួនការទិញ',
+  'Call deductions' => 'ការកាត់ការហៅ',
+  'All' => 'បានបញ្ចប់',
+); 

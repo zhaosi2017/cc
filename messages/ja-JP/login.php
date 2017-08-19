@@ -38,7 +38,7 @@
   'Register a personal account' => '個人アカウントを登録する',
   'Register' => '登録',
   'Phone' => '電話',
-  'Account only  email: eg xx@gmail.com' => 'アカウントのみのメール：例：xx@gmail.com',
+  'account only  email: eg xx@gmail.com' => 'アカウントのみのメール：例：xx@gmail.com',
   'Password  least 8  upper & lower char' => '最低8文字のパスワード',
   'Repeat password' => 'パスワードを再度入力してください。',
   'Already have an account' => 'すでにアカウントをお持ちですか',

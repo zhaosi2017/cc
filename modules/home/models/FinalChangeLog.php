@@ -8,6 +8,7 @@
  */
 namespace app\modules\home\models;
 use \app\models\CActiveRecord;
+use Yii;
 
 /**
  * Class FinalChangeLog
@@ -33,6 +34,15 @@ class FinalChangeLog extends CActiveRecord{
         self::FINAL_CHANGE_TYPE_CALLNUMBER  =>'呼叫扣费',
 
     ];
+
+    public static function getFinalChangeType()
+    {
+        return [
+            self::FINAL_CHANGE_TYPE_RECHARGE =>Yii::t('app/account/index','Recharge'),
+            self::FINAL_CHANGE_TYPE_BUYNUMBER  =>Yii::t('app/account/index','Purchase number'),
+            self::FINAL_CHANGE_TYPE_CALLNUMBER  =>Yii::t('app/account/index','Call deductions'),
+        ];
+    }
 
 
     /**

@@ -38,7 +38,7 @@
   'Register a personal account' => 'ចុះឈ្មោះគណនីផ្ទាល់ខ្លួនមួយ',
   'Register' => 'ចុះឈ្មោះ',
   'Phone' => 'ទូរស័ព្ទ',
-  'Account only  email: eg xx@gmail.com' => 'គណនីអ៊ីម៉ែលតែប៉ុណ្ណោះ: ឧ xx@gmail.com',
+  'account only  email: eg xx@gmail.com' => 'គណនីអ៊ីម៉ែលតែប៉ុណ្ណោះ: ឧ xx@gmail.com',
   'Password  least 8  upper & lower char' => 'ការពាក្យសម្ងាត់យ៉ាងហោចណាស់ 8 ផ្នែកខាងលើនិងតួអក្សរទាប',
   'Repeat password' => 'ពាក្យសម្ងាត់ដែលធ្វើម្ដងទៀត',
   'Already have an account' => 'មានគណនីរួចហើយ',

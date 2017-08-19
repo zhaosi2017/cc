@@ -19,7 +19,7 @@ $actionId = Yii::$app->requestedAction->id;
 <div class="middle-box" style="    margin-top:0px !important;">
     <div>
         <div class="form-group">
-            <label class="col-sm-4" for="number">电话号码</label>
+            <label class="col-sm-4" for="number"><?= Yii::t('app/number/index','Phone number')?></label>
             <div class="col-sm-7"><input readonly="readonly" class="form-control " type="text" id="number" value="<?= $model->number ?>"></div>
             <div class="col-sm-1"></div>
             <span style="height:34px; width: 100px" class="help-block m-b-none"><div class="help-block"></div></span>
@@ -27,7 +27,7 @@ $actionId = Yii::$app->requestedAction->id;
         <div class="col-sm-12"></div>
 
         <div class="form-group">
-            <label class="col-sm-4" for="price">价格</label>
+            <label class="col-sm-4" for="price"><?= Yii::t('app/number/index','Price')?></label>
             <div class="col-sm-7"><input readonly="readonly" class="form-control " type="text" id="price" value="<?= $model->price ?>"></div>
             <div class="col-sm-1"></div>
             <span style="height:34px; width: 100px" class="help-block m-b-none"><div class="help-block"></div></span>
@@ -35,7 +35,7 @@ $actionId = Yii::$app->requestedAction->id;
         <div class="col-sm-12"></div>
 
         <div class="form-group">
-            <label class="col-sm-4" for="comment">介绍</label>
+            <label class="col-sm-4" for="comment"><?= Yii::t('app/number/index','Introduction')?></label>
             <div class="col-sm-7"><input readonly="readonly" class="form-control " type="text" id="comment" value="<?= $model->comment ?>"></div>
             <div class="col-sm-1"></div>
             <span style="height:34px; width: 100px" class="help-block m-b-none"><div class="help-block"></div></span>
@@ -43,15 +43,17 @@ $actionId = Yii::$app->requestedAction->id;
         <div class="col-sm-12"></div>
 
         <div class="form-group">
-            <label class="col-sm-4" for="status">状态</label>
-            <div class="col-sm-7"><input readonly="readonly"  class="form-control " type="text" id="status" value="<?= $model->status ?>"></div>
+            <label class="col-sm-4" for="status"><?= Yii::t('app/number/index','Status')?></label>
+            <div class="col-sm-7">
+                <input readonly="readonly"  class="form-control " type="text" id="status" value="<?php $numStatus = \app\modules\home\models\CallNumber::getNumbStatus();echo $numStatus[$model->status]; ?>">
+            </div>
             <div class="col-sm-1"></div>
             <span style="height:34px; width: 100px" class="help-block m-b-none"><div class="help-block"></div></span>
         </div>
         <div class="col-sm-12"></div>
 
         <div class="form-group">
-            <label class="col-sm-4" for="status">可租用开始时间</label>
+            <label class="col-sm-4" for="status"><?= Yii::t('app/number/index','Can be used to rent the start time')?></label>
             <div class="col-sm-7">
                 <div><span style="display: none;" id="begin_time_1"><?= strtotime(date('Y-m-d',$model->begin_time)) ?></span><?= date('Y-m-d',$model->begin_time) ?></div>
 
@@ -61,7 +63,7 @@ $actionId = Yii::$app->requestedAction->id;
         </div>
         <div class="col-sm-12"></div>
         <div class="form-group">
-            <label class="col-sm-4" for="status">可租用结束时间</label>
+            <label class="col-sm-4" for="status"><?= Yii::t('app/number/index','Can be used to rent the end time')?></label>
             <div class="col-sm-7">
                     <div><span style="display: none;" id="end_time_1"><?= strtotime(date('Y-m-d',$model->end_time)) ?></span><?= date('Y-m-d',$model->end_time) ?></div>
 
@@ -83,7 +85,7 @@ $actionId = Yii::$app->requestedAction->id;
         <input type="hidden" name="buyid" value="<?= $id ?>">
 
         <div class="form-group">
-            <label class="col-sm-4" for="status">租用开始</label>
+            <label class="col-sm-4" for="status"><?= Yii::t('app/number/index','Rent start time')?></label>
             <div class="col-sm-7">
                 <?php    echo DateTimePicker::widget([
                     'name' => 'begin_time',
@@ -107,19 +109,19 @@ $actionId = Yii::$app->requestedAction->id;
                  var morenTime = $('#morenTime').html();
                 
                  if(tt < morenTime){   
-                      $('#callrecordsearch-begin_time').val('');alert('选择时间不能小于今天');return false;
+                      $('#callrecordsearch-begin_time').val('');alert('".Yii::t('app/number/index','The rental start time can not be less than today')."');return false;
                    }
                  if( tt < bt || tt > et || tt < morenTime){
-                    alert('请输入正确时间');$('#callrecordsearch-begin_time').val('');return false;
+                    alert('".Yii::t('app/number/index','Please enter the correct time')."');$('#callrecordsearch-begin_time').val('');return false;
                  }
                    
                    if(tt && endTime  ){ 
                    var dates = new Date(endTime.replace(/-/g, '/'));time1 = dates.getTime()/1000; 
                    if(tt == time1){
-                        $('#callrecordsearch-begin_time').val('');alert('开始结束时间不能相等');return false;
+                        $('#callrecordsearch-begin_time').val('');alert('".Yii::t('app/number/index','The rent start time can not be equal to the rent end time')."');return false;
                    }
                    if(tt > time1){
-                        $('#callrecordsearch-begin_time').val('');alert('开始时间不能大于结束时间');return false;
+                        $('#callrecordsearch-begin_time').val('');alert('".Yii::t('app/number/index','The rent start time can not be greater than the rent end time')."');return false;
                    }
                    }
 
@@ -152,7 +154,7 @@ $actionId = Yii::$app->requestedAction->id;
 
 
         <div class="form-group">
-            <label class="col-sm-4" for="status">租用结束</label>
+            <label class="col-sm-4" for="status"><?= Yii::t('app/number/index','Rent end time')?></label>
             <div class="col-sm-7">
                 <?php    echo DateTimePicker::widget([
                     'name' => 'end_time',
@@ -180,11 +182,14 @@ $actionId = Yii::$app->requestedAction->id;
                       
                         var morenTime = $('#morenTime').html();
                          if( ttt < btt || ttt > ett || (beginTime && ttt < beginTime) ){ 
-                            $('#callrecordsearch-end_time').val('');alert('请输入正确时间');return false;
+                            $('#callrecordsearch-end_time').val('');
+                            alert('" .Yii::t('app/number/index','Please enter the correct time')."');
+                           
+                            return false;
                          }  
                        
                        if(ttt < morenTime){    
-                         $('#callrecordsearch-end_time').val('');alert('选择时间不能小于今天');return false;
+                         $('#callrecordsearch-end_time').val('');alert('".Yii::t('app/number/index','The rental end time can not be less than today')."');return false;
                        }
                        
                        
@@ -193,11 +198,11 @@ $actionId = Yii::$app->requestedAction->id;
                          time2 = datess.getTime()/1000; 
                        
                        if(ttt==time2){
-                            $('#callrecordsearch-end_time').val('');alert('开始结束时间不能相等');return false;
+                            $('#callrecordsearch-end_time').val('');alert('".Yii::t('app/number/index','The rent end time can not be equal to the rent start time')."');return false;
                        }
                        
                         if(ttt < time2){
-                        $('#callrecordsearch-end_time').val('');alert('结束时间不能小于于开始时间');return false;
+                        $('#callrecordsearch-end_time').val('');alert('".Yii::t('app/number/index','The rent end time can not be less than the rent start time')."');return false;
                         }
                    }
                    
@@ -223,7 +228,7 @@ $actionId = Yii::$app->requestedAction->id;
         </div>
 
         <div class="form-group">
-            <label class="col-sm-4" for="totalPrice">总金额</label>
+            <label class="col-sm-4" for="totalPrice"><?= Yii::t('app/number/index','Total amount')?></label>
             <div class="col-sm-7">
                 <input class="form-control" name="totalPrice" readonly="readonly" type="text" id="totalPrice" value="<?= $model->price?>">
             </div>
@@ -235,7 +240,7 @@ $actionId = Yii::$app->requestedAction->id;
         <div class="form-group">
             <label class="col-sm-4" for="status"></label>
             <div class="col-sm-7">
-                <span onclick="return buyClick();return false" class="btn index-button-1" style="width: 100%;color: white" type="submit" >提交</span>
+                <span onclick="return buyClick();return false" class="btn index-button-1" style="width: 100%;color: white" type="submit" ><?= Yii::t('app/number/index','Submit')?></span>
             </div>
         </div>
     </form>
@@ -244,7 +249,7 @@ $actionId = Yii::$app->requestedAction->id;
 </div>
 
 <script>
-    function buyClick(e) {
+    function buyClick() {
         var moTime = $('#morenTime').html();
         var beginTimes = $('#callrecordsearch-begin_time').val();
         var endTimes = $('#callrecordsearch-end_time').val();
@@ -252,12 +257,12 @@ $actionId = Yii::$app->requestedAction->id;
         var _ett = parseInt($('#end_time_1').html());
         if(beginTimes == '' )
         {
-            alert('开始时间不能为空');
+            alert('<?=  Yii::t('app/number/index','Rent start time can not empty')?>');
             return false;
         }
         if(endTimes == '' )
         {
-            alert('结束时间不能为空');
+            alert('<?=  Yii::t('app/number/index','Rent end time can not empty')?>');
             return false;
         }
 
@@ -268,31 +273,31 @@ $actionId = Yii::$app->requestedAction->id;
             var _dates = new Date(endTimes.replace(/-/g, '/'));
             var _endTimes = _dates.getTime()/1000;
             if (_beginTimes < moTime ){
-                alert('开始时间不能小于今天');
+                alert('<?=  Yii::t('app/number/index','The rental start time can not be less than today')?>');
                 $('#callrecordsearch-begin_time').val('')
                 return false;
             }
             if(_beginTimes < _btt)
             {
-                alert('开始时间不能小于号码可用时间');
+                alert('<?=   Yii::t('app/number/index','The rental start time can not be less than the number to rent the start time')?>');
                 $('#callrecordsearch-begin_time').val('')
                 return false;
             }
             if(_beginTimes > _ett)
             {
-                alert('开始时间不能大于于号码结束时间');
+                alert('<?=   Yii::t('app/number/index','The rental start time can not be greater than the number to rent the end time')?>');
                 $('#callrecordsearch-begin_time').val('')
                 return false;
             }
             if (_endTimes < moTime ){
-                alert('结束时间不能小于今天');
+                alert('<?= Yii::t('app/number/index','The rental end time can not be less than today')?>');
                 $('#callrecordsearch-end_time').val('')
                 return false;
             }
 
             if( _endTimes > _ett)
             {
-                alert('结束时间不能大于于号码结束时间');
+                alert('<?= Yii::t('app/number/index','The rental end time can not be greater than the number to rent the end time')?>');
                 $('#callrecordsearch-end_time').val('')
                 return false;
             }

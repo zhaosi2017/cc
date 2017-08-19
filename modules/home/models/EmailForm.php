@@ -59,7 +59,7 @@ class EmailForm extends Model
         if (!$this->hasErrors()) {
             $identity = $this->getIdentity();
             if(isset($identity->id ) && $identity->id != Yii::$app->user->id){
-                $this->addError($attribute, Yii::t( 'app/models/EmailForm', 'Account already exists')/*'账号已存在'*/);
+                $this->addError($attribute, Yii::t( 'app/models/EmailForm', 'account already exists')/*'账号已存在'*/);
             }
         }
     }

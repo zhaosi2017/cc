@@ -5,7 +5,7 @@
   'Country code' => 'លេខ​កូដ​ប្រទេស',
   'Bind the phone' => 'ចងទូរស័ព្ទនេះ',
   'Please set the correct nickname' => 'សូមកំណត់ឈ្មោះហៅក្រៅត្រឹមត្រូវ',
-  'Account already exists' => 'គណនីមានរួចហើយ',
+  'account already exists' => 'គណនីមានរួចហើយ',
   'The email already exists' => 'អ៊ីម៉ែលដែលមានរួចហើយ',
   'Email can not be empty' => 'អ៊ីម៉ែលដែលមិនអាចទទេ',
   'Email format is incorrect' => 'ទ្រង់ទ្រាយអ៊ីមែលមិនត្រឹមត្រូវ',

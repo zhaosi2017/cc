@@ -1,7 +1,7 @@
 <?php return array (
   'Call support center' => 'កណ្តាលគាំទ្រការហៅ',
   'Home' => 'ទំព័រដើម',
-  'Account center' => 'កណ្តាលគណនី',
+  'account center' => 'កណ្តាលគណនី',
   'Personal call records' => 'កំណត់ត្រាការហៅផ្ទាល់ខ្លួន',
   'Anti harassment' => 'ការយាយីប្រឆាំង',
   'Hello' => 'ជំរាបសួរ',

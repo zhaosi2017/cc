@@ -179,7 +179,7 @@ class User extends CActiveRecord implements IdentityInterface
         }
 
         if(in_array($this->username, $accounts)){
-            $this->addError($attribute, Yii::t('app/models/user','Account already exists'));
+            $this->addError($attribute, Yii::t('app/models/user','account already exists'));
         }
     }
 

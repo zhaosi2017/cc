@@ -34,7 +34,7 @@ class UserNumberSearch extends UserNumber
     {
         $parent = parent::attributeLabels();
         $self = [
-            'number'=>'电话号码',
+            'number'=>Yii::t('app/number/index','Phone number'),
 
         ];
         return array_merge($parent,$self);

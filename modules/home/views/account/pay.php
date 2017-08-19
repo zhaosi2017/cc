@@ -1,7 +1,7 @@
 <?php
 
 $this->title =   Yii::t('app/nav','Quick payment');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app/nav','Account center'), 'url' => ['recharge']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app/nav','account center'), 'url' => ['recharge']];
 $this->params['breadcrumbs'][] = $this->title;
 $actionId = Yii::$app->requestedAction->id;
 
@@ -12,6 +12,7 @@ $actionId = Yii::$app->requestedAction->id;
         width: 100%;
         height: 100%;
         position: fixed;
+        display: none;
         top: 0;
         left: 0;
         line-height: 56px;
@@ -22,14 +23,17 @@ $actionId = Yii::$app->requestedAction->id;
         z-index: 99999999999;
         filter:progid:DXImageTransform.Microsoft.Alpha(opacity=30);
     }
+    .loadDivShow{
+        display: block !important;
+    }
 </style>
 <div>
 
     <div class="user-form">
-        <form id="payform" class="m-t text-left" action="/home/account/pay" method="post">
+        <form id="payForm" class="m-t text-left" action="/home/account/pay" method="post">
             <input name="_csrf" type="hidden" id="_csrf" value="<?= Yii::$app->request->csrfToken ?>">
            <div class="form-group ">
-               <label class="col-sm-1 text-right" style="font-size: 14px;padding-top: 5px;padding-right:2px;" for="amount">金额</label>
+               <label class="col-sm-1 text-right" style="font-size: 14px;padding-top: 5px;padding-right:2px;" for="amount"><?= Yii::t('app/account/index','Amount(¥)')?></label>
                <div class="col-sm-3">
                     <input  class="form-control" id="amount" type="number" name="amount" min="1" step="0.1" value="1">
                     <p id="amountmsg" style="font-size: 14px !important;color: #a94442;;">
@@ -40,7 +44,7 @@ $actionId = Yii::$app->requestedAction->id;
            </div>
             <div class="col-sm-12"></div>
             <div class="form-group">
-                <label class="col-sm-1 text-right" style="font-size: 14px;padding-top: 5px;padding-right:2px;" >支付类型</label>
+                <label class="col-sm-1 text-right" style="font-size: 14px;padding-top: 5px;padding-right:2px;" ><?= Yii::t('app/account/index','Recharge type')?></label>
                 <div class="col-sm-3">
                     <?php $tmps = 0;?>
                     <?php foreach ($type as $t=> $v){?>
@@ -65,8 +69,8 @@ $actionId = Yii::$app->requestedAction->id;
             <div class="form-group">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-3" >
-                    <span id = "rechage_buy"  onclick="payClick()" style="width: 100%;" data-loading-text="提交中..." class='btn btn-primary btn-check button-new-color ' style="    width: 23%;margin-left: 128px;" >
-                        充值                        </span>
+                    <span id = "rechage_buy"  onclick="payClick()" style="width: 100%;" data-loading-text="..." class='btn btn-primary btn-check button-new-color ' style="    width: 23%;margin-left: 128px;" >
+                        <?= Yii::t('app/account/index','Recharge')?>                      </span>
                 </div>
                 <div class="col-sm-3"></div>
             </div>
@@ -76,7 +80,7 @@ $actionId = Yii::$app->requestedAction->id;
 
 
 </div>
-<div class="loading text-center " style="display: none;"> </div>
+<div id="loadDiv"  class="loading text-center" > </div>
 <script>
     function payClick() {
         $("#amountmsg").html('');
@@ -85,17 +89,19 @@ $actionId = Yii::$app->requestedAction->id;
         var type =  $("input[name='order_type']:checked").val();
         if(amount == '' || amount <=0)
         {
-            $("#amountmsg").html('请输入正确的金额');
+            $("#amountmsg").html('<?= Yii::t('app/account/index','Please enter the correct amount')?>');
             return false;
         }
         if(type == undefined )
         {
-            $("#order_type_msg").html('请选择支付类型');
+            $("#order_type_msg").html('<?= Yii::t('app/account/index','Please choose the type of payment')?>');
             return false
         }
-        $('.loading').toggle();
-        $("#payform").submit();
 
+        $('#loadDiv').addClass('loadDivShow');
+        setTimeout(function() {
+            $('#payForm').submit();
+        }, 1);
         return false;
     }
 </script>

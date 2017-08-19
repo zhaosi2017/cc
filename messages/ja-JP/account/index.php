@@ -1,5 +1,37 @@
-<?php
-return [
-
-    'Rechage time'=>'充值时间'
-];
+<?php  
+return array (
+  'Rechage time' => 'リチャージ時間',
+  'account change' => 'アカウント変更記録',
+  'Clear time' => 'クリアタイム',
+  'Type' => 'タイプ',
+  'Amount(¥)' => '金額（¥）',
+  'Amount($)' => '金額（$）',
+  'Amount' => 'お金',
+  'Before trading' => '取引の前に',
+  'After trading' => '取引後',
+  'Trading time' => '取引時間',
+  'Id' => '番号',
+  'Buy number' => '購入数',
+  'Recharge type' => 'お支払い方法の種類',
+  'Recharge' => 'リチャージ',
+  'Recharge amount(¥)' => 'リチャージ金額（¥）',
+  'Rate' => '為替相場',
+  'Real Amount($)' => '実額（$）',
+  'Please enter the correct amount' => '正しい金額を入力してください',
+  'Please choose the type of payment' => 'お支払いタイプを選択',
+  'Alipay payment' => 'アリペイ',
+  'Wechat payment' => 'マイクロチャネルの有料',
+  'Can be used to rent the start time' => '開始時間を雇います',
+  'Can be used to rent the end time' => '終了時刻を雇います',
+  'Rent start time' => 'リース開始時間',
+  'Rent end time' => 'リース終了時間',
+  'Total amount' => '総量',
+  'Submit' => '提出します',
+  'Your balance is insufficient' => 'あなたのバランスがより少ないです',
+  'Rent start time can not empty' => 'リース開始時間は、空にすることはできません',
+  'Rent end time can not empty' => 'リース終了時間は、空にすることはできません',
+  'Confirm' => '確かめます',
+  'Purchase number' => '購入数',
+  'Call deductions' => 'コール控除',
+  'All' => '完成',
+); 

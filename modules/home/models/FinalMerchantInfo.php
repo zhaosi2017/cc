@@ -79,7 +79,8 @@ class FinalMerchantInfo extends  CActiveRecord{
     public function getChannelName($type = null){
 
       $result='';
-      foreach(aiyi::$service_name_map as $key=>$value){
+      $serverName = aiyi::getServiceName();
+      foreach($serverName as $key=>$value){
           if($type == null ){
               $result .= ','.$value;
           }elseif($key == $type){

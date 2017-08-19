@@ -1,7 +1,7 @@
 <?php return array (
   'Call support center' => '呼叫支持中心',
   'Home' => '首頁',
-  'Account center' => '賬戶中心',
+  'account center' => '賬戶中心',
   'Personal call records' => '個人通話記錄',
   'Anti harassment' => '防騷擾',
   'Hello' => '您好',

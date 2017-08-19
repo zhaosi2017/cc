@@ -153,7 +153,7 @@ $localLanguage = $identity->language;
                 </div>
                 <div class="header-div-1" style="display: inline-block;">
                     <a class="header-a-1 <?php if((Yii::$app->controller->id == 'user' && Yii::$app->controller->action->id != 'harassment')|| Yii::$app->controller->id == 'potato' || Yii::$app->controller->id == 'telegram' ){ echo 'active';}?>" href="<?= Url::to(['/home/user/index']) ?>">
-                        <span class="header-span-1" style="color: black;"><?= Yii::t('app/index','Account center')?></span>
+                        <span class="header-span-1" style="color: black;"><?= Yii::t('app/index','account center')?></span>
                     </a>
                 </div>
                 <div class="header-div-1" style="display: inline-block;">

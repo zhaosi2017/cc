@@ -53,7 +53,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $identity = $this->getUserInfo();
             if(!$identity){
-                $this->addError($attribute, Yii::t('app/models/LoginForm','Account does not exist, please verify')/*'账号不存在，请核实'*/);
+                $this->addError($attribute, Yii::t('app/models/LoginForm','account does not exist, please verify')/*'账号不存在，请核实'*/);
             }
         }
     }
@@ -181,7 +181,7 @@ class LoginForm extends Model
                     if($count==4){
                         $unlockAdTime = strtotime($v['login_time'])+1800;
                         if($_SERVER['REQUEST_TIME'] < $unlockAdTime){
-                            return ['lock_type' => Yii::t('app/models/LoginForm','Account number')/*'账号'*/,'unlock_time' => date('Y-m-d H:i:s',$unlockAdTime)];
+                            return ['lock_type' => Yii::t('app/models/LoginForm','account number')/*'账号'*/,'unlock_time' => date('Y-m-d H:i:s',$unlockAdTime)];
                         }
                     }
                     if($count==5){
@@ -193,7 +193,7 @@ class LoginForm extends Model
                     if($count==6){
                         $unlockAdTime = strtotime('+1 year');
                         if($_SERVER['REQUEST_TIME'] < $unlockAdTime){
-                            return ['lock_type' => Yii::t('app/models/LoginForm','Account number')/*'账号'*/,'unlock_time' => date('Y-m-d H:i:s',$unlockAdTime)];
+                            return ['lock_type' => Yii::t('app/models/LoginForm','account number')/*'账号'*/,'unlock_time' => date('Y-m-d H:i:s',$unlockAdTime)];
                         }
                     }
 
@@ -205,7 +205,7 @@ class LoginForm extends Model
                     if($countCode==3){
                         $unlockAdTime = strtotime('+1 year');
                         if($_SERVER['REQUEST_TIME'] < $unlockAdTime){
-                            return ['lock_type' => Yii::t('app/models/LoginForm','Account number')/*'账号'*/,'unlock_time' => date('Y-m-d H:i:s',$unlockAdTime)];
+                            return ['lock_type' => Yii::t('app/models/LoginForm','account number')/*'账号'*/,'unlock_time' => date('Y-m-d H:i:s',$unlockAdTime)];
                         }
                     }
 
