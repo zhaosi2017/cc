@@ -60,7 +60,11 @@ $actionId = Yii::$app->requestedAction->id;
             ['attribute'=>'end_time',
                 'format'=>['date', 'php:Y-m-d H:i:s'],
                 'headerOptions'=>['class'=>'text-center']],
-            ['attribute'=>'price' , 'headerOptions'=>['class'=>'text-center']],
+            ['attribute'=>'price' ,
+                'value'=>function($model){
+                    return $model->price.'$';
+                },
+                'headerOptions'=>['class'=>'text-center']],
             ['attribute'=>'interface' , 'headerOptions'=>['class'=>'text-center']],
             [
                 'class' => 'yii\grid\ActionColumn',

@@ -14,6 +14,7 @@ class TranslateGoogle extends  TranslateAbstract {
     private $Language = [
         'zh-CN' =>'zh',
         'en-US' =>'en',
+        'zh-TW'=>'zh-TW',
     ];
 
     /**
@@ -26,8 +27,11 @@ class TranslateGoogle extends  TranslateAbstract {
             "q" => $this->text,
             "format" => "text",
             "target" => $this->getLanguage($this->deration_Language),
-            'source'=>$this->getLanguage($this->Source_Language)
         ];
+        if(!empty($this->Source_Language)){
+
+            $textArr['source'] = $this->getLanguage($this->Source_Language);
+        }
         $res = $this->post($textArr);
         $res = json_decode($res, true);
 
@@ -42,6 +46,8 @@ class TranslateGoogle extends  TranslateAbstract {
         if(key_exists($Language , $this->Language)){
             return $this->Language[$Language];
         }
+        $temp =   explode('-' , $Language);
+        $Language = $temp[0];
         return $Language;
     }
 
