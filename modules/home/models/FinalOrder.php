@@ -19,6 +19,8 @@ use \app\models\CActiveRecord;
  * @property integer $time
  * @property float   $status
  * @property integer $amount
+ * @property  float  $rate
+ * @property float   $real_amount
  */
 class FinalOrder extends  CActiveRecord{
 

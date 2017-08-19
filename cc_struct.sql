@@ -348,6 +348,8 @@ CREATE TABLE `final_order` (
   `time` int(11) NOT NULL COMMENT '下单时间',
   `comment` char(32) DEFAULT NULL COMMENT '描述',
   `status` int(11) NOT NULL DEFAULT '0' COMMENT '订单状态',
+   `rate` decimal(14,4) NOT NULL DEFAULT '0.0000' COMMENT '汇率',
+  `real_amount` decimal(14,4) NOT NULL DEFAULT '0.0000' COMMENT '真实的美元金额',
   PRIMARY KEY (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
