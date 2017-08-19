@@ -19,45 +19,54 @@ $actionId = Yii::$app->requestedAction->id;
 <div class="middle-box" style="    margin-top:0px !important;">
     <div>
         <div class="form-group">
-            <label class="col-sm-3" for="number">电话号码</label>
+            <label class="col-sm-4" for="number">电话号码</label>
             <div class="col-sm-7"><input readonly="readonly" class="form-control " type="text" id="number" value="<?= $model->number ?>"></div>
-            <div class="col-sm-2"></div>
+            <div class="col-sm-1"></div>
             <span style="height:34px; width: 100px" class="help-block m-b-none"><div class="help-block"></div></span>
         </div>
         <div class="col-sm-12"></div>
 
         <div class="form-group">
-            <label class="col-sm-3" for="price">价格</label>
+            <label class="col-sm-4" for="price">价格</label>
             <div class="col-sm-7"><input readonly="readonly" class="form-control " type="text" id="price" value="<?= $model->price ?>"></div>
-            <div class="col-sm-2"></div>
+            <div class="col-sm-1"></div>
             <span style="height:34px; width: 100px" class="help-block m-b-none"><div class="help-block"></div></span>
         </div>
         <div class="col-sm-12"></div>
 
         <div class="form-group">
-            <label class="col-sm-3" for="comment">介绍</label>
+            <label class="col-sm-4" for="comment">介绍</label>
             <div class="col-sm-7"><input readonly="readonly" class="form-control " type="text" id="comment" value="<?= $model->comment ?>"></div>
-            <div class="col-sm-2"></div>
+            <div class="col-sm-1"></div>
             <span style="height:34px; width: 100px" class="help-block m-b-none"><div class="help-block"></div></span>
         </div>
         <div class="col-sm-12"></div>
 
         <div class="form-group">
-            <label class="col-sm-3" for="status">状态</label>
+            <label class="col-sm-4" for="status">状态</label>
             <div class="col-sm-7"><input readonly="readonly"  class="form-control " type="text" id="status" value="<?= $model->status ?>"></div>
-            <div class="col-sm-2"></div>
+            <div class="col-sm-1"></div>
             <span style="height:34px; width: 100px" class="help-block m-b-none"><div class="help-block"></div></span>
         </div>
         <div class="col-sm-12"></div>
 
         <div class="form-group">
-            <label class="col-sm-3" for="status">号码可用时间</label>
+            <label class="col-sm-4" for="status">可租用开始时间</label>
             <div class="col-sm-7">
-                <div>启用时间：<span style="display: none;" id="begin_time_1"><?= strtotime(date('Y-m-d',$model->begin_time)) ?></span><?= date('Y-m-d',$model->begin_time) ?></div>
-                <div>结束时间：<span style="display: none;" id="end_time_1"><?= strtotime(date('Y-m-d',$model->end_time)) ?></span><?= date('Y-m-d',$model->end_time) ?></div>
+                <div><span style="display: none;" id="begin_time_1"><?= strtotime(date('Y-m-d',$model->begin_time)) ?></span><?= date('Y-m-d',$model->begin_time) ?></div>
 
             </div>
-            <div class="col-sm-2"></div>
+            <div class="col-sm-1"></div>
+            <span style="height:34px; width: 100px" class="help-block m-b-none"><div class="help-block"></div></span>
+        </div>
+        <div class="col-sm-12"></div>
+        <div class="form-group">
+            <label class="col-sm-4" for="status">可租用结束时间</label>
+            <div class="col-sm-7">
+                    <div><span style="display: none;" id="end_time_1"><?= strtotime(date('Y-m-d',$model->end_time)) ?></span><?= date('Y-m-d',$model->end_time) ?></div>
+
+            </div>
+            <div class="col-sm-1"></div>
             <span style="height:34px; width: 100px" class="help-block m-b-none"><div class="help-block"></div></span>
         </div>
         <div class="col-sm-12"></div>
@@ -74,7 +83,7 @@ $actionId = Yii::$app->requestedAction->id;
         <input type="hidden" name="buyid" value="<?= $id ?>">
 
         <div class="form-group">
-            <label class="col-sm-3" for="status">租用开始</label>
+            <label class="col-sm-4" for="status">租用开始</label>
             <div class="col-sm-7">
                 <?php    echo DateTimePicker::widget([
                     'name' => 'begin_time',
@@ -135,7 +144,7 @@ $actionId = Yii::$app->requestedAction->id;
 
                 ]);?>
             </div>
-            <div class="col-sm-2"></div>
+            <div class="col-sm-1"></div>
             <span style="height:34px; width: 100px" class="help-block m-b-none"><div class="help-block"></div></span>
         </div>
 
@@ -143,7 +152,7 @@ $actionId = Yii::$app->requestedAction->id;
 
 
         <div class="form-group">
-            <label class="col-sm-3" for="status">租用结束</label>
+            <label class="col-sm-4" for="status">租用结束</label>
             <div class="col-sm-7">
                 <?php    echo DateTimePicker::widget([
                     'name' => 'end_time',
@@ -209,22 +218,22 @@ $actionId = Yii::$app->requestedAction->id;
 
                 ]);?>
             </div>
-            <div class="col-sm-2"></div>
+            <div class="col-sm-1"></div>
             <span style="height:34px; width: 100px" class="help-block m-b-none"><div class="help-block"></div></span>
         </div>
 
         <div class="form-group">
-            <label class="col-sm-3" for="totalPrice">总金额</label>
+            <label class="col-sm-4" for="totalPrice">总金额</label>
             <div class="col-sm-7">
                 <input class="form-control" name="totalPrice" readonly="readonly" type="text" id="totalPrice" value="<?= $model->price?>">
             </div>
-            <div class="col-sm-2"></div>
+            <div class="col-sm-1"></div>
             <span style="height:34px; width: 100px" class="help-block m-b-none"><div class="help-block"></div></span>
 
         </div>
 
         <div class="form-group">
-            <label class="col-sm-3" for="status"></label>
+            <label class="col-sm-4" for="status"></label>
             <div class="col-sm-7">
                 <span onclick="return buyClick();return false" class="btn index-button-1" style="width: 100%;color: white" type="submit" >提交</span>
             </div>
