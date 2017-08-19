@@ -49,12 +49,22 @@ class CallNumber extends  \app\modules\home\models\CallNumber{
             return $dataProvider;
         }
 
+        public function rules()
+        {
+
+            return [
+                [['comment','end_time', 'begin_time'] , 'string']
+            ];
+        }
 
 
-
-
-
-
+        public function beforeSave($insert)
+        {
+            if($this->isNewRecord){
+                $this->time = time();
+            }
+            return parent::beforeSave($insert);
+        }
 
 
 }

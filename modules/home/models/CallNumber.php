@@ -16,11 +16,14 @@ use app\modules\home\models\User;
  * This is the model class for table "user".
  *
  * @property integer $id
- * @property integer $user_id
- * @property integer $number_id
+ * @property integer $status
+ * @property integer $number
  * @property integer $time
  * @property integer $end_time
  * @property integer $begin_time
+ * @property  integer $rent_status
+ * @property  integer $price
+ * @property  integer $interface
  */
 
 class CallNumber extends CActiveRecord{

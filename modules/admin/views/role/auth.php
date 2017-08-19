@@ -111,7 +111,20 @@ $data = [
             ],
 
         ],
+    ],
+    [
+        'module' => '号码中心',
+        'items' => [
+            [
+                'page_name' => '平台号码',
+                'permission' => ['admin/numbers/platform', 'admin/numbers/show-number' , 'admin/numbers/modify-number' , 'admin/numbers/delete-number'],
+            ],
+            [
+                'page_name' => '用户号码',
+                'permission' => ['admin/numbers/user'],
+            ],
 
+        ],
     ],
 
 ];
