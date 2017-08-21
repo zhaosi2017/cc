@@ -117,9 +117,13 @@ class CallNumber extends CActiveRecord{
     }
 
 
-
-
-
+    public function beforeSave($insert)
+    {
+        if($this->isNewRecord){
+            $this->time = time();
+        }
+        return parent::beforeSave($insert);
+    }
 
 
 }
