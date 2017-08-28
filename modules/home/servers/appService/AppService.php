@@ -24,7 +24,7 @@ class AppService{
         if(empty(self::$_instance)){
             self::$_instance = new self();
         }
-        if(class_exists($className)&& get_parent_class($className) == AbstractApp::class){
+        if(class_exists($className) && is_subclass_of($className , AbstractApp::class)){
             self::$_instance->app = new $className();
         }else{
             self::$_instance= null;

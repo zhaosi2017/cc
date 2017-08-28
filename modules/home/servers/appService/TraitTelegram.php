@@ -10,6 +10,7 @@ namespace app\modules\home\servers\appService;
 
 use app\modules\home\models\CallRecord;
 use app\modules\home\servers\TTSservice\Infobip;
+use app\modules\home\servers\TTSservice\Nexmo;
 use app\modules\home\servers\TTSservice\Sinch;
 use Yii;
 use yii\db\Exception;
@@ -294,7 +295,7 @@ trait  TraitTelegram {
                 return $this->errorCode['success'];
             }
 
-            $service = TTSservice::init(Infobip::class);
+            $service = TTSservice::init(Nexmo::class);
             $service->from_user_id = $this->callPersonData->id;
             $service->to_user_id = $this->calledPersonData->id;
 

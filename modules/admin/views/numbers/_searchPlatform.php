@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
     ]); ?>
     <div class="row">
         <div class="col-lg-10">
-                <?= $form->field($model,'start_time')->input('date',['prompt'=>'开始时间'])->label('租赁时间：') ?>
+                <?= $form->field($model,'start_time')->input('date',['prompt'=>'开始时间'])->label('创建时间：') ?>
                 至
                 <?= $form->field($model,'close_time')->input('date',['prompt'=>'结束时间'])->label(false) ?>
                 <a class="btn btn-xs btn-danger" onclick="
