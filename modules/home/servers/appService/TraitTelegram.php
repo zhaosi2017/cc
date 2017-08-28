@@ -295,7 +295,7 @@ trait  TraitTelegram {
                 return $this->errorCode['success'];
             }
 
-            $service = TTSservice::init(Nexmo::class);
+            $service = TTSservice::init();
             $service->from_user_id = $this->callPersonData->id;
             $service->to_user_id = $this->calledPersonData->id;
 

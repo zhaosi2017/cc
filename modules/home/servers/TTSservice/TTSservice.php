@@ -40,7 +40,11 @@ class TTSservice{
     {
     }
 
-    public static function init($className){
+    public static function init($className = null){
+
+        if(empty($className)){
+            $className = __NAMESPACE__.'\\'.Yii::$app->params['TtsThird'];
+        }
 
         if(empty(self::$_instance)){
             self::$_instance = new self();

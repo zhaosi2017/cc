@@ -26,5 +26,6 @@ return [
         'ko-KR'=>'한국의',
         'ja-JP'=>'日本語',
         'km-CB'=>'កម្ពុជា',
-    ]
+    ],
+    'TtsThird'=>'Sinch'
 ];
