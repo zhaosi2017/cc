@@ -21,7 +21,8 @@ class Nexmo extends  TTSAbstarct{
 
     private $apiKey = '85704df7';
     private $apiScret = '755026fdd40f34c2';
-    private $applicationId = '570db7b5-09cb-45b3-a097-e0b8e0bcec65';
+   // private $applicationId = '570db7b5-09cb-45b3-a097-e0b8e0bcec65';
+    private $applicationId = '454eb4c4-1fdd-4b4b-9423-937c80f01bb8';
     /**
      * @var array
      * 记录呼叫的状态
@@ -61,6 +62,7 @@ class Nexmo extends  TTSAbstarct{
       $privatePath = Yii::getAlias('@app').'/config/'.'private.key';
       $keypair = new Keypair(file_get_contents($privatePath), $this->applicationId);
       $client = new Client(new Container($basic, $keypair));
+      $this->setAnwser();
       try{
           $call = $client->calls()->create([
               'to' => [[
@@ -69,7 +71,7 @@ class Nexmo extends  TTSAbstarct{
               ]],
               'from' => [
                   'type' => 'phone',
-                  'number' => $this->from
+                  'number' => '12345678'
               ],
               'answer_url' => [
                   $this->_answerUrl,
@@ -84,23 +86,6 @@ class Nexmo extends  TTSAbstarct{
       $call = json_encode($call, JSON_UNESCAPED_UNICODE);
       $call = json_decode($call, true);
       if(isset($call['uuid']) && !empty($call['uuid'])){
-          $cacheKey = $this->from.time();
-          $tmp = [
-              'action' => 'talk',
-              'loop' => $this->loop,
-               'lg' => $this->Language,
-              'voiceName' => $this->voice,
-              'text' => $this->messageText,
-          ];
-
-          $conference = [
-              $tmp,
-          ];
-          $conferenceCacheKey = $cacheKey.'_pre';
-          Yii::$app->redis->set($conferenceCacheKey, json_encode($conference, JSON_UNESCAPED_UNICODE));
-          Yii::$app->redis->expire($conferenceCacheKey, 5*60);
-
-
           $this->messageId = $call['uuid'];
           return true;
       }
@@ -135,7 +120,28 @@ class Nexmo extends  TTSAbstarct{
       return true;
   }
 
+    /**
+     * 存储电话内容等待nexmo来领取
+     */
+  private function setAnwser(){
 
+      $cacheKey = $this->from.time();
+      $tmp = [
+          'action' => 'talk',
+          'loop' => $this->loop,
+          'lg' => $this->Language,
+          'voiceName' => $this->voice,
+          'text' => $this->messageText,
+      ];
+
+      $conference = [
+          $tmp,
+      ];
+      $conferenceCacheKey = $cacheKey.'_pre';
+      Yii::$app->redis->set($conferenceCacheKey, json_encode($conference, JSON_UNESCAPED_UNICODE));
+      Yii::$app->redis->expire($conferenceCacheKey, 5*60);
+
+  }
 
 
 
