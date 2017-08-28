@@ -101,6 +101,7 @@ class Nexmo extends  TTSAbstarct{
 
   public function event($event_data)
   {
+      $this->messageId = $event_data['uuid'];
       if($event_data['status'] == 'busy' || $event_data['status'] == 'rejected'){
           $this->messageAnwser = $this->messageAnwser_arr['busy'];
           $this->messageStatus = $event_data['result'] = CallRecord::Record_Status_Fail;
