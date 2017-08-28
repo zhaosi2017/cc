@@ -32,12 +32,14 @@ class Nexmo extends  TTSAbstarct{
             'answered'=>'answered',
             'failed' =>'failed',
             'unanwsered'=>'unanwsered',
-            'busy'=>'busy'
+            'busy'=>'busy',
+            'rejected'=>'busy'
     ];
 
     public function __construct()
     {
         $base_uri = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'];
+        $base_uri = 'https://test.callu.online';
         $this->_eventUrl = $base_uri.$this->_eventUrl;
         $this->_answerUrl = $base_uri.$this->_answerUrl;
         $this->voice = 'Joey';
@@ -99,23 +101,23 @@ class Nexmo extends  TTSAbstarct{
 
   public function event($event_data)
   {
-      if($event_data['busy']){
+      if($event_data['status'] == 'busy' || $event_data['status'] == 'rejected'){
           $this->messageAnwser = $this->messageAnwser_arr['busy'];
           $this->messageStatus = $event_data['result'] = CallRecord::Record_Status_Fail;
-      }elseif($event_data['answered']){
+      }elseif($event_data['status'] == 'answered'){
           $this->messageAnwser = $this->messageAnwser_arr['answered'];
           $this->messageStatus = $event_data['result'] = CallRecord::Record_Status_Success;
-      }elseif($event_data['failed']){
+      }elseif($event_data['status'] == 'failed'){
           $this->messageAnwser = $this->messageAnwser_arr['failed'];
           $this->messageStatus = $event_data['result'] = CallRecord::Record_Status_Fail;
-      }elseif($event_data['unanwsered']){
+      }elseif($event_data['status'] == 'unanwsered'){
           $this->messageAnwser = $this->messageAnwser_arr['unanwsered'];
           $this->messageStatus = $event_data['result'] = CallRecord::Record_Status_Fail;
-      }elseif($event_data['timeout']){
+      }elseif($event_data['status'] == 'timeout'){
           $this->messageAnwser = $this->messageAnwser_arr['timeout'];
           $this->messageStatus = $event_data['result'] = CallRecord::Record_Status_Fail;
       }else{
-          return false;
+          $this->discardEvent();   //其他的回调直接丢弃不处理
       }
       return true;
   }

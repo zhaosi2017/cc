@@ -50,6 +50,13 @@ abstract  class TTSAbstarct{
             $this->error = $error;
     }
 
+    /**
+     *直接丢弃的回调事件
+     */
+    public function discardEvent(){
 
+        exit;
+
+    }
 
 }
