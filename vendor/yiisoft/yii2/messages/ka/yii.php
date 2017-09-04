@@ -63,7 +63,7 @@ return [
     'just now' => 'ახლავე',
     'the input value' => 'შეყვანილი მნიშვნელობა',
     '{attribute} "{value}" has already been taken.' => '{attribute} «{value}» უკვე დაკავებულია.',
-    '{attribute} cannot be blank.' => 'საჭიროა შევსება «{attribute}».',
+    '{attribute} can not be blank.' => 'საჭიროა შევსება «{attribute}».',
     '{attribute} is invalid.' => 'მნიშვნელობა «{attribute}» არასწორია.',
     '{attribute} is not a valid URL.' => 'მნიშვნელობა «{attribute}» არ წარმოადგენს სწორ URL-ს.',
     '{attribute} is not a valid email address.' => 'მნიშვნელობა «{attribute}» არ წარმოადგენს სწორ email მისამართს.',

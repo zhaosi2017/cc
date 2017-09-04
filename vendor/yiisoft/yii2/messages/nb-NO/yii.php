@@ -63,7 +63,7 @@ return [
     'just now' => 'akkurat nå',
     'the input value' => 'inndataverdien',
     '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" er allerede tatt i bruk.',
-    '{attribute} cannot be blank.' => '{attribute} kan ikke være tomt.',
+    '{attribute} can not be blank.' => '{attribute} kan ikke være tomt.',
     '{attribute} is invalid.' => '{attribute} er ugyldig.',
     '{attribute} is not a valid URL.' => '{attribute} er ikke en gyldig URL.',
     '{attribute} is not a valid email address.' => '{attribute} er ikke en gyldig e-postadresse.',

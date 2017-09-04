@@ -63,7 +63,7 @@ return [
     'just now' => 'henüz',
     'the input value' => 'veri giriş değeri',
     '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" daha önce alınmış.',
-    '{attribute} cannot be blank.' => '{attribute} boş bırakılamaz.',
+    '{attribute} can not be blank.' => '{attribute} boş bırakılamaz.',
     '{attribute} contains wrong subnet mask.' => '{attribute} yanlış alt ağ maskesi içeriyor.',
     '{attribute} is invalid.' => '{attribute} geçersiz.',
     '{attribute} is not a valid URL.' => '{attribute} geçerli bir URL değil.',

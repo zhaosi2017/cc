@@ -4,36 +4,64 @@
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
-$this->title = '设置新密码';
+$this->title = Yii::t('app/login','Setting password');
 ?>
-<div class="middle-box text-center loginscreen  animated fadeInDown">
+<div class=" text-center loginscreen  animated fadeInDown">
     <div>
         <div>
 
             <h1 class="logo-name">&nbsp;</h1>
 
         </div>
-        <h3>设置新密码</h3>
-
+        
+        <div class="form-group">
+            <div class="col-sm-3">
+                
+            </div>
+            <div class="col-sm-3">
+                <h3 ><?= Yii::t('app/login','Setting password')?></h3>
+            </div>
+            <div class="col-sm-5">
+            
+            </div>
+        </div>
+        <div class="col-sm-12"></div>
         <?php $form = ActiveForm::begin([
             'id' => 'verify-form',
             'action' => 'find-password-complete',
-            'options'=>['class'=>'m-t text-left'],
-            'fieldConfig' => [
-                'template' => "{label}\n<div class=\"col-sm-9\">{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
-                'labelOptions' => ['class' => 'col-sm-3 control-label'],
-            ],
+            'options'=>['class'=>'form-horizontal m-t'],
+        'fieldConfig' => [
+            'template' => "{label}\n<div class=\"col-sm-3\">{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
+            'labelOptions' => ['class'=>'text-right'],
+        ],
         ]); ?>
 
 
-        <?= $form->field($model, 'password')->passwordInput() ?>
 
-        <?= $form->field($model, 'rePassword')->passwordInput() ?>
+
+        <?= $form->field($model, 'password',[
+            'template' => "<div class=\"col-sm-3 text-right\"><span style='line-height: 34px;'>{label}</span></div>\n<div class=\"col-sm-3\">{input}\n</div> <div class='col-sm-5 text-left' style='line-height: 17px;'>".Yii::t('app/login','Password contains at least 8 characters, including at least the following two characters: capital letters, lowercase letters, numbers, symbols')."</div>\n<div class='col-sm-12'></div><div class='col-sm-3'></div><div class='col-sm-3 text-left'> <span class=\"help-block m-b-none\">{error}</span></div><div class='col-sm-6'></div>",
+        ])->passwordInput()->label(Yii::t('app/login','New password').':') ?>
+
+
+        <?= $form->field($model, 'rePassword',[
+            'template' => "<div class=\"col-sm-3 text-right\"><span style='line-height: 34px;'>{label}</span></div>\n<div class=\"col-sm-3\">{input}\n</div> <div class='col-sm-5 text-left' style='line-height: 17px;'>".Yii::t('app/login','Password contains at least 8 characters, including at least the following two characters: capital letters, lowercase letters, numbers, symbols')."</div>\n<div class='col-sm-12'></div><div class='col-sm-3'></div><div class='col-sm-3 text-left'> <span class=\"help-block m-b-none\">{error}</span></div><div class='col-sm-6'></div>",
+        ])->passwordInput()->label(Yii::t('app/login','Repeat input password').':') ?>
+
+
 
         <?= $form->field($model, 'username')->hiddenInput()->label(false) ?>
 
-        <?= Html::submitButton('完成', ['class' => 'btn btn-primary pull-right','style' =>'margin-right: 15px' ]) ?>
+        <div class="form-group">
+            <div class="col-sm-3">
 
+            </div>
+            <div class="col-sm-3">
+                <?= Html::submitButton(Yii::t('app/login','Ok'), ['class' => 'btn btn-primary pull-center button-new-color','style' =>'width:100%;' ]) ?>
+
+            </div>
+            <div class="col-sm-6"></div>
+         </div>
         <?php ActiveForm::end(); ?>
 
     </div>

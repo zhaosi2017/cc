@@ -25,7 +25,18 @@ class CallRecordSearch extends CallRecord
         return [
             [['id', 'active_call_uid', 'unactive_call_uid', 'call_by_same_times', 'type', 'status'], 'integer'],
             [['contact_number', 'search_type', 'search_keywords', 'active_account', 'call_time_start', 'call_time_end'], 'safe'],
+            // [['call_time_start','call_time_end'],'required'],
         ];
+    }
+
+    public function attributeLabels()
+    {
+        $parent = parent::attributeLabels();
+        $self = [
+        'call_time_start'=>'呼叫起止时间',
+        'call_time_end'=>'呼叫截止时间',
+        ];
+        return array_merge($parent,$self);
     }
 
     /**
@@ -48,7 +59,12 @@ class CallRecordSearch extends CallRecord
     {
         $recordStatus = '1';
         $uid = Yii::$app->user->id;
-        $query = CallRecord::find()->where(['record_status' => $recordStatus, 'active_call_uid' => $uid])->orWhere(['record_status' => $recordStatus, 'unactive_call_uid' => $uid]);
+        $query = CallRecord::find()->where(['record_status' => $recordStatus,
+                                            'active_call_uid' => $uid ,
+                                            ])
+                                   ->orWhere(['record_status' => $recordStatus,
+                                              'unactive_call_uid' => $uid])
+                                   ->orderBy('call_time desc');
 
         // add conditions that should always apply here
         $dataProvider = new ActiveDataProvider([
@@ -76,11 +92,27 @@ class CallRecordSearch extends CallRecord
             'status' => $this->status,
             'call_time' => $this->call_time,
         ]);
+        $query->andFilterWhere(['in', 'status', array_flip($this->getStatusListBySearch())]);   //限定只能查询页面上允许的状态
 
-        if((!empty($this->call_time_start) && !empty($this->call_time_end)) && ($this->call_time_start <= $this->call_time_end)){
-            $this->call_time_start = strtotime($this->call_time_start);
-            $this->call_time_end = strtotime($this->call_time_end);
-            $query->andFilterWhere(['between','call_time', $this->call_time_start, $this->call_time_end]);
+        if(empty($this->call_time_start) && !empty($this->call_time_end))
+        {
+            $query->andFilterWhere(['<=', 'call_time', strtotime($this->call_time_end)]);
+        }
+
+
+        if(!empty($this->call_time_start) && empty($this->call_time_end))
+        {
+            $query->andFilterWhere(['>=', 'call_time', strtotime($this->call_time_start)]);
+        }
+
+        if(!empty($this->call_time_start) &&  !empty($this->call_time_end)){
+            if( $this->call_time_start >= $this->call_time_end)
+            {   
+                $tmp = $this->call_time_end;
+                $this->call_time_end = $this->call_time_start;
+                $this->call_time_start = $tmp;
+            }
+            $query->andFilterWhere(['between', 'call_time', strtotime($this->call_time_start), strtotime($this->call_time_end)]);
         }
         $this->search_type ==1 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like', 'active_account', $this->search_keywords]);
         $this->search_type ==2 && strlen($this->search_keywords)>0 && $query->andFilterWhere(['like', 'active_nickname', $this->search_keywords]);

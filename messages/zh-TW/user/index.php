@@ -1,0 +1,15 @@
+<?php return array (
+  'Bind Phone Number' => '綁定手機',
+  'Bind Email' => '綁定郵箱',
+  'Build UserName' => '綁定用戶名',
+  'Password' => '登錄密碼',
+  'Base Info' => '基本資料',
+  'No Phone NUmber' => '未綁定手機',
+  'No Email' => '未綁定郵箱賬號',
+  'No UserName' => '未綁定用戶名',
+  'Edit' => '修改',
+  'Build Now' => '立即綁定',
+  'Create UserName' => '綁定用戶名',
+  'Language' => '語言',
+  'NickName' => '暱稱',
+); 

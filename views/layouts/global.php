@@ -17,8 +17,8 @@ GlobalAsset::register($this);
 
     <title><?= $this->title ?></title>
 
-    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
-    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+    <meta name="keywords" content="<?= Yii::t('app/index','Call support center')?>">
+    <meta name="description" content="<?= Yii::t('app/index','The most secure network voice call platform')?>">
 
     <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html" />
@@ -30,7 +30,7 @@ GlobalAsset::register($this);
     <?php $this->head() ?>
 </head>
 
-<body class="fixed-sidebar full-height-layout gray-bg pace-done" style="overflow:hidden">
+<body class="fixed-sidebar full-height-layout gray-bg pace-done" style="">
 <?php $this->beginBody() ?>
     <?= isset($content) ? $content : ''  ?>
 </body>

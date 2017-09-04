@@ -16,7 +16,7 @@
  *
  * NOTE: this file must be saved in UTF-8 encoding.
  */
-return array (
+return [
   '(not set)' => '(määramata)',
   'An internal server error occurred.' => 'Ilmnes serveri sisemine viga.',
   'Are you sure you want to delete this item?' => 'Kas olete kindel, et soovite selle üksuse kustutada?',
@@ -65,7 +65,7 @@ return array (
   'in {delta, plural, =1{an hour} other{# hours}}' => '{delta, plural, =1{ühe tunni} other{# tunni}} pärast',
   'the input value' => 'sisendväärtus',
   '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" on juba kasutuses.',
-  '{attribute} cannot be blank.' => '{attribute} ei tohi olla tühi.',
+  '{attribute} can not be blank.' => '{attribute} ei tohi olla tühi.',
   '{attribute} is invalid.' => '{attribute} on vigane.',
   '{attribute} is not a valid URL.' => '{attribute} ei ole korrektne URL.',
   '{attribute} is not a valid email address.' => '{attribute} ei ole korrektne e-posti aadress.',
@@ -103,4 +103,4 @@ return array (
   '{n} MB' => '{n} MB',
   '{n} PB' => '{n} PB',
   '{n} TB' => '{n} TB',
-);
+];

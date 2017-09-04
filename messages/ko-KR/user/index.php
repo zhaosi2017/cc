@@ -1,0 +1,15 @@
+<?php return array (
+  'Bind Phone Number' => '셀폰 번호 바인딩',
+  'Bind Email' => '이메일 바인드',
+  'Build UserName' => '사용자 이름 작성',
+  'Password' => '암호',
+  'Base Info' => '기본 정보',
+  'No Phone NUmber' => '전화 번호 없음',
+  'No Email' => '이메일 없음',
+  'No UserName' => '사용자 이름 없음',
+  'Edit' => '편집하다',
+  'Build Now' => '지금 빌드',
+  'Create UserName' => '사용자 이름 만들기',
+  'Language' => '언어',
+  'NickName' => '별명',
+); 

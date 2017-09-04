@@ -67,7 +67,7 @@ return [
     'in {delta, plural, =1{an hour} other{# hours}}' => 'dalam {delta, plural, =1{satu jam} other{# jam}}',
     'the input value' => 'nilai input',
     '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" telah dipergunakan.',
-    '{attribute} cannot be blank.' => '{attribute} tidak boleh kosong.',
+    '{attribute} can not be blank.' => '{attribute} tidak boleh kosong.',
     '{attribute} is invalid.' => '{attribute} tidak valid.',
     '{attribute} is not a valid URL.' => '{attribute} bukan URL yang valid.',
     '{attribute} is not a valid email address.' => '{attribute} bukan alamat email yang valid.',

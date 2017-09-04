@@ -120,6 +120,9 @@ class RoleController extends PController
                     $auth->addChild($role, $permissionData);
                 }
             }
+            $model->update_id =   Yii::$app->user->id ? Yii::$app->user->id : 0;
+            $model->update_at = $_SERVER['REQUEST_TIME'];
+            $model->save();
             $model->sendSuccess('权限设置成功');
             return $this->redirect(['auth', 'id' => $model->id]);
         } else {
@@ -158,9 +161,24 @@ class RoleController extends PController
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $model->status = 1;
-        $model->update() && $model->sendSuccess();
+
+        $auth = Yii::$app->authManager;
+        $role = $auth->checkAssignment($model->id);
+        switch ($role) {
+            case 0:
+                $model->status = 1;
+                $model->update() && $model->sendSuccess();
+                break;
+            case false:
+                $model->sendError('不存在该角色');
+                break;
+            default:
+                $model->sendError('角色'.$model->name.'已被'.$role.'位管理员使用，请解除使用后再进行删除操作！', 5);
+                break;
+        }
+        
         return $this->redirect(['index']);
+       
     }
 
     public function actionRecover($id)

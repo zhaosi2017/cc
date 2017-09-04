@@ -4,41 +4,27 @@ use yii\helpers\Html;
 use yii\bootstrap\Alert;
 
 ?>
-<?php $this->beginContent('@app/views/layouts/public.php'); ?>
-<?php
-if( Yii::$app->getSession()->hasFlash('success') ) {
-    echo Alert::widget([
-        'options' => [
-            'class' => 'alert-success no-margins', //这里是提示框的class
-            // 'style' => 'z-index:9999;position:fixed;width:100%',
-        ],
-        'body' => Yii::$app->getSession()->getFlash('success'), //消息体
-    ]);
-}
-if( Yii::$app->getSession()->hasFlash('error') ) {
-    echo Alert::widget([
-        'options' => [
-            'class' => 'alert-warning no-margins',
-        ],
-        'body' => Yii::$app->getSession()->getFlash('error'),
-    ]);
-}
-if( Yii::$app->getSession()->hasFlash('info') ) {
-    echo Alert::widget([
-        'options' => [
-            'class' => 'alert-info no-margins',
-        ],
-        'body' => Yii::$app->getSession()->getFlash('info'),
-    ]);
-}
-?>
+<?php $this->beginContent('@app/views/layouts/header.php'); ?>
+
+    <?= $this->render('common') ?>
+
     <div class="wrapper wrapper-content">
         <div class="row">
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>
-                            <?= Html::encode($this->title) ?>
+                            <?php
+                            echo \yii\widgets\Breadcrumbs::widget([
+
+                                'homeLink'=>false, // 若设置false 则 可以隐藏Home按钮
+                                //'homeLink'=>['label' => '主 页','url' => Yii::$app->homeUrl.'home/'], // 若设置false 则 可以隐藏Home按钮
+                                'itemTemplate'=>"<span>{link} > </span>",
+                                'activeItemTemplate'=>"<span>{link}</span>",
+                                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                            ])
+                            ?>
+
                         </h5>
                     </div>
 

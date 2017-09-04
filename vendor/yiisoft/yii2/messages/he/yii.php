@@ -56,7 +56,7 @@ return [
     'You can upload at most {limit, number} {limit, plural, one{file} other{files}}.' => 'אתה יכול להעלות לכל היותר {limit, number} {limit, plural, one{קובץ} other{קבצים}}.',
     'the input value' => 'הערך המוכנס',
     '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" כבר בשימוש',
-    '{attribute} cannot be blank.' => '{attribute} לא יכול להיות ריק.',
+    '{attribute} can not be blank.' => '{attribute} לא יכול להיות ריק.',
     '{attribute} is invalid.' => '{attribute} לא חוקי.',
     '{attribute} is not a valid URL.' => '{attribute} איננו כתובת אינטרנט חוקית.',
     '{attribute} is not a valid email address.' => '{attribute} לא כתובת מייל חוקית.',

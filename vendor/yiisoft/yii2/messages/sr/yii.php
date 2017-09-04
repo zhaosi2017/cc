@@ -84,7 +84,7 @@ return [
     'You can upload at most {limit, number} {limit, plural, one{file} other{files}}.' => 'Можете поставити највише {limit, number} {limit, plural, one{фајл} few{фајлa} other{фајлова}}.',
     'the input value' => 'улазна вредност',
     '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" је већ заузет.',
-    '{attribute} cannot be blank.' => '{attribute} не сме бити празан.',
+    '{attribute} can not be blank.' => '{attribute} не сме бити празан.',
     '{attribute} is invalid.' => '{attribute} је неисправан.',
     '{attribute} is not a valid URL.' => '{attribute} није исправан URL.',
     '{attribute} is not a valid email address.' => '{attribute} није исправна email адреса.',

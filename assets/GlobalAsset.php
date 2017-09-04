@@ -22,6 +22,7 @@ class GlobalAsset extends AssetBundle
         'css/global/font-awesome.min.css?v=4.4.0',
         'css/global/animate.css',
         'css/global/style.css?v=4.1.0',
+
     ];
     public $js = [
         'js/global/bootstrap.min.js?v=3.3.6',
@@ -32,7 +33,11 @@ class GlobalAsset extends AssetBundle
         'js/public/jquery.slimscroll.min.js',
         'js/public/pace.min.js',
         'js/home/hplus.js?v=4.1.0',
+
         'js/home/contabs.js',
+        'js/global/jquery.bootstrap.wizard.min.js',
+        'js/global/prettify.js'
+
     ];
     public $depends = [
         'yii\web\YiiAsset',

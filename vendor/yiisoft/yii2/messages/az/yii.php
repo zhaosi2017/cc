@@ -58,7 +58,7 @@ return [
     'You can upload at most {limit, number} {limit, plural, one{file} other{files}}.' => 'Ancaq {limit, number} {limit, plural, one{fayl} other{fayl}} yükləyə bilərsiniz.',
     'the input value' => 'daxil olunmuş qiymət',
     '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" artıq istifadə olunub.',
-    '{attribute} cannot be blank.' => '{attribute} boş qoyula bilməz.',
+    '{attribute} can not be blank.' => '{attribute} boş qoyula bilməz.',
     '{attribute} is invalid.' => '{attribute} düzgün deyil.',
     '{attribute} is not a valid URL.' => '{attribute} düzgün URL deyil.',
     '{attribute} is not a valid email address.' => '{attribute} düzgün e-mail deyil.',

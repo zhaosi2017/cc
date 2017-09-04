@@ -16,7 +16,7 @@
  *
  * NOTE: this file must be saved in UTF-8 encoding.
  */
-return array (
+return [
   '(not set)' => '(не е попълнено)',
   'An internal server error occurred.' => 'Възникна вътрешна грешка в сървъра.',
   'Are you sure you want to delete this item?' => 'Сигурни ли сте, че искате да изтриете записа?',
@@ -65,7 +65,7 @@ return array (
   'in {delta, plural, =1{an hour} other{# hours}}' => 'след {delta, plural, =1{час} other{# часа}}',
   'the input value' => 'стойността',
   '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" вече е зает.',
-  '{attribute} cannot be blank.' => 'Попълнете полето "{attribute}".',
+  '{attribute} can not be blank.' => 'Попълнете полето "{attribute}".',
   '{attribute} is invalid.' => 'Полето "{attribute}" е некоректно попълнено.',
   '{attribute} is not a valid URL.' => 'Полето "{attribute}" съдържа невалиден УЕБ адрес.',
   '{attribute} is not a valid email address.' => 'Полето "{attribute}" съдържа невалиден email адрес.',
@@ -103,4 +103,4 @@ return array (
   '{n} MB' => '{n} МБ',
   '{n} PB' => '{n} ПБ',
   '{n} TB' => '{n} ТБ',
-);
+];
