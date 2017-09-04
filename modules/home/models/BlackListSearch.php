@@ -78,7 +78,7 @@ class BlackListSearch extends BlackList
         ]);
 
 
-
+        $query->andFilterWhere(['in','black_uid',$this->selectUserIds()]);
         $this->search_type == 1 && !empty($this->search_keywords) && strlen($this->search_keywords)>0 && $query->andFilterWhere(['in', 'black_uid', $this->searchIds($this->search_keywords,'account')]);
         $this->search_type == 2 && !empty($this->search_keywords) && strlen($this->search_keywords)>0 && $query->andFilterWhere(['in', 'black_uid', $this->searchIds($this->search_keywords,'telegram_number')]);
         $this->search_type == 3 && !empty($this->search_keywords) && strlen($this->search_keywords)>0 && $query->andFilterWhere(['in', 'black_uid', $this->searchIds($this->search_keywords,'potato_number')]);
@@ -86,6 +86,23 @@ class BlackListSearch extends BlackList
         return $dataProvider;
     }
 
+    public function selectUserIds()
+    {
+        $query = [0];
+        $res = User::find()->select(['id','potato_name','telegram_name','potato_number','telegram_number'])->all();
+        if(!empty($res)){
+
+            foreach ($res as $key =>$val)
+            {
+                if ( (!empty($val->potato_name) && !empty($val->potato_number)) || (!empty($val->telegram_number) && !empty($val->telegram_name)))
+                {
+                    $query[$val->id] = $val->id;
+                }
+            }
+        }
+
+        return  $query;
+    }
 
     public function searchIds($searchWords, $field='account')
     {

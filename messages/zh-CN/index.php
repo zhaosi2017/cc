@@ -32,6 +32,7 @@ return [
     'Contact information'=>'联系方式',
     'Successful operation'=>'操作成功',
     'Operation failed'=>'操作失败',
+    'delete failed , Keep at least one contact number'=>'操作失败 ，请至少保留一个联系电话',
     'Password reset complete'=>'密码修改成功',
     'Verification code error'=>'验证码错误',
     'Verification code'=>'验证码',
@@ -74,6 +75,13 @@ return [
     'Jump over'=>'跳过',
     'Get code'=>'获取验证码',
     'Contact Phone'=>'联系电话',
-    'Phone or country code changes'=>'电话或国码存在变更'
+    'Phone or country code changes'=>'电话或国码存在变更',
+    'After logging in to Telegram, go to the "Chats" page.'=>'登录Telegram后，进入“Chats”页面。',
+    'After logging in to Potato, go to the "Chats" page.'=>'登录Potato后，进入“Chats”页面。',
+    'Enter "callu_bot" in the search bar on the "Chats" page and perform the search. Click "callu" to enter Figure 3.'=>'在“Chats”页面的搜索栏输入“callu_bot”，并执行搜索。点击“callu”，进入图3。',
+    'Click the "Start" button to enter Figure 4.'=>'点击“Start”按钮，进入图4。',
+    'Click "Share your own business card" to enter Figure 5.'=>'点击“分享自己名片”，进入图5。',
+    'In the "Share Your Phone Number?" Box select "OK", enter Figure 6.'=>'在“Share Your Phone Number？”弹框中选择"OK"，进入图6。',
+    'Will fill in the verification code to fill in the "verification code" input box, the binding.'=>'将收到的验证码填写到“验证码”输入框，进行绑定。',
 
     ];

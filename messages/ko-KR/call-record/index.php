@@ -29,7 +29,7 @@
   'Time out' => '시간 초과',
   'Refuse' => '폐물',
   'Busy' => '바쁜',
-  'No answer' => '대답 없음',
+  'No answer' => '대답 아무도',
   'Failure' => '실패',
   'Please also select the start time and the end time to query' => '쿼리 할 시작 시간과 종료 시간을 선택하십시오.',
   'Called emergency call' => '호출 된 긴급 통화',

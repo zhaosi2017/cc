@@ -8,4 +8,5 @@
   'Remove' => 'យក',
   'Contact ' => 'ទំនក់ទំនង',
   'Are you sure you want to delete it?' => 'តើអ្នកប្រាកដថាអ្នកចង់លុបវាទេ?',
+    'My contact information'=>'ទាក់ទង',
 ); 

@@ -29,6 +29,8 @@ class CallRecord extends \app\models\CActiveRecord
 
     CONST Record_Status_Success = 0;         //通话成功
     CONST Record_Status_Fail    = 1;         //通话失败
+    CONST Record_Status_Busy    = 3;        //用户忙
+    CONST Record_Status_NoAnwser= 5;        //无应答
     /**
      * @var int 正常呼叫
      */
@@ -104,18 +106,20 @@ class CallRecord extends \app\models\CActiveRecord
     {
         return [
             '0' => Yii::t('app/call-record/index','Success'),
-            '1' => Yii::t('app/call-record/index','Time out'),
+            '1' => Yii::t('app/call-record/index','Failure'),
             '2' => Yii::t('app/call-record/index','Refuse'),
             '3' => Yii::t('app/call-record/index','Busy'),
-            '4' => Yii::t('app/call-record/index','Failure'),
+            '4' => Yii::t('app/call-record/index','Time out'),
             '5' => Yii::t('app/call-record/index','No answer'),
         ];
     }
 
     public function getStatusListBySearch(){
         return [
-            '0' => Yii::t('app/call-record/index','Success'),
+            '0' =>  Yii::t('app/call-record/index','Success'),
             '1' =>  Yii::t('app/call-record/index','Failure'),
+            '3' => Yii::t('app/call-record/index','Busy'),
+            '5' => Yii::t('app/call-record/index','No answer'),
         ];
     }
 
@@ -130,6 +134,8 @@ class CallRecord extends \app\models\CActiveRecord
         return [
             '0' => Yii::t('app/call-record/index','Called phone'),
             '1' => Yii::t('app/call-record/index','Called emergency call'),
+            '3' => Yii::t('app/call-record/index','Busy'),
+            '5' => Yii::t('app/call-record/index','No answer'),
         ];
     }
 

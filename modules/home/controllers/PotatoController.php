@@ -2,6 +2,7 @@
 
 namespace app\modules\home\controllers;
 
+use app\modules\home\models\CallRecord;
 use app\modules\home\models\Potato;
 use app\modules\home\models\PotatoMap;
 use app\modules\home\models\PotatoMapServer;
@@ -86,41 +87,42 @@ class PotatoController extends GController
                 $result = $potato->sendMenulist();
                 return $result;
             } else if ($message['request_type'] == $potato->callBackRequestType) {
-                // 点击按钮会调.
-                $result = $potato->checkRate();
-                if ($result) {
-                    return $potato->errorCode['error'];
-                }
+
 
                 $callbackData = explode('-', $message['data']);
                 $time = time();
                 $callBackTime = array_pop($callbackData);
                 $diffTime = $time - $callBackTime;
-                if ($diffTime > 60) {
+                if ($diffTime > 120) {
                     $file = 'potato_'.date('Y-m-d', time()).'.txt';
                     file_put_contents('/tmp/'.$file, var_export($postData, true).PHP_EOL, 8);
-                    // 应答.
+                    // 应答..
                     if (!empty($inlineMessageId) && !empty($userId)) {
-                        return $potato->sendCallbackAnswer($userId, $inlineMessageId);
+                        $potato->sendCallbackAnswer($userId, $inlineMessageId);
                     }
-                    return $potato->errorCode['error'];
+                    // return $potato->errorCode['error'];
                 }
 
                 $potato->potatoContactUid = $callbackData[1];
                 $action = $callbackData[0];
+                // 点击按钮会调.
+
+                if (($action!=$potato->callCallbackDataPre && $action!=$potato->callUrgentCallbackDataPre) && $potato->checkRate()) {
+                    return $potato->errorCode['error'];
+                }
                 switch ($action) {
                         // 正常呼叫.
                     case $potato->callCallbackDataPre:
                         $potato->potatoSendFirstName = $callbackData[2];
                         $potato->potatoContactFirstName = $callbackData[3];
-                        $result = $potato->callPotatoPerson();
+                        $result = $potato->call(CallRecord::Record_Type_none , $message);
                         break;
                         // 呼叫紧急联系人.
                     case $potato->callUrgentCallbackDataPre:
                         $calledId = $callbackData[2];
                         $potato->potatoSendFirstName = $callbackData[3];
                         $potato->potatoContactFirstName = $callbackData[4];
-                        $result = $potato->callPotatoPerson($calledId);
+                        $result = $potato->call(CallRecord::Record_Type_emergency,$message);
                         break;
                         // 加白名单.
                     case $potato->whiteCallbackDataPre:
@@ -153,11 +155,16 @@ class PotatoController extends GController
 
                 // 应答.
                 if (!empty($inlineMessageId) && !empty($userId)) {
-                    return $potato->sendCallbackAnswer($userId, $inlineMessageId);
+                    $res =  $potato->sendCallbackAnswer($userId, $inlineMessageId);
+                    $file = 'answer_'.date('Y-m-d', time()).'.txt';
+                    file_put_contents('/tmp/'.$file, var_export($inlineMessageId, true).PHP_EOL, 8);
+                    file_put_contents('/tmp/'.$file, var_export($userId, true).PHP_EOL, 8);
+                    file_put_contents('/tmp/'.$file, var_export($res, true).PHP_EOL, 8);
+                    return $res;
                 }
 
                 return $result;
-            }else if($message['request_type'] == $potatoMapServer->requestTextType && preg_match('/^\/map/i',$message['text'])){
+            }else if($message['request_type'] == $potatoMapServer->requestTextType ){
                     $potatoMapServer->potatoUid = $potato->potatoUid;
                     $replyMessageId = isset($message['reply_to_message'])? $message['reply_to_message']: '';
                     $potatoMapServer->key = $potato->potatoUid.'-'.$replyMessageId.'-potatoMap';

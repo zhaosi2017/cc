@@ -13,6 +13,11 @@ $this->title = Yii::t('app/harassment','Blacklist');
 $this->params['breadcrumbs'][] = $this->title;
 $actionId = Yii::$app->requestedAction->id;
 ?>
+<style>
+    #content-main{
+        overflow-y: scroll !important;
+    }
+</style>
 <div class="call-record-index">
     <div class="help-block m-t"></div>
     <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -50,6 +55,9 @@ $actionId = Yii::$app->requestedAction->id;
             //  ['header' => '联系电话', 'value' => function($model){
             //     return $model['black']['phone_number'];
             // }],
+            ['header'=>Yii::t('app/models/user','Nickname') ,'value'=>function($model){
+                return $model['black']['nickname'];
+            },'headerOptions'=>['class'=>'text-center']],
             ['header' => 'telegram', 'value' => function($model){
                 return !empty($model['black']['telegram_number'])?'+'.$model['black']['telegram_country_code'].$model['black']['telegram_number']:'';
             }, 'headerOptions'=>['class'=>'text-center']],
@@ -59,7 +67,7 @@ $actionId = Yii::$app->requestedAction->id;
                 'headerOptions'=>['class'=>'text-center']],
 
             ['header' => 'potato', 'value' => function($model){
-                return !empty($model['black']['telegram_number'])?'+'.$model['black']['potato_country_code'].$model['black']['potato_number']:'';
+                return !empty($model['black']['potato_number'])?'+'.$model['black']['potato_country_code'].$model['black']['potato_number']:'';
             }, 'headerOptions'=>['class'=>'text-center']],
 
             [     'header'=>'potato'.Yii::t('app/harassment',' Name') ,

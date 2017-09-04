@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nengliu
- * Date: 2017/7/4
- * Time: 下午3:30.
- */
+
 
 return [
     'Start the operation, please wait later.' => '开始操作, 请稍候.',
@@ -49,4 +44,5 @@ return [
     'Not in blacklist.' => '不在黑名单.',
     'welcome!' => '欢迎!',
     'Operation too fast, please try again later!' => '操作过快，请稍后再试!',
+    'Your verification code is'=>'您的验证码为',
 ];

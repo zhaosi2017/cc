@@ -171,7 +171,7 @@ class UserController extends GController
         if($model->delete()){
             Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
         }else{
-            Yii::$app->getSession()->setFlash('error', Yii::t('app/index','Operation failed'));
+            Yii::$app->getSession()->setFlash('error', Yii::t('app/index','delete failed , Keep at least one contact number'));
         }
         $this->redirect(['index']);
     }

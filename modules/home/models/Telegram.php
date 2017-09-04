@@ -1,6 +1,8 @@
 <?php
 namespace app\modules\home\models;
 
+use app\modules\home\servers\appService\TraitTelegram;
+use app\modules\home\servers\TTSservice\TTSservice;
 use yii;
 use yii\base\Model;
 use app\modules\home\models\User;
@@ -12,7 +14,7 @@ use app\modules\home\models\Nexmo;
 
 class Telegram extends Model
 {
-
+    use TraitTelegram;
     const CODE_LENGTH = 5;
 
     private $telegramText = 'Operation menu.';
@@ -22,7 +24,7 @@ class Telegram extends Model
     private $callText = "call";
     private $firstText = '/start';
     private $webhook;
-    private $nexmoUrl = "https://api.nexmo.com/tts/json";
+    private $nexmoUrl = 'https://api.nexmo.com/v1/calls';
     private $translateUrl = "https://translation.googleapis.com/language/translate/v2?key=AIzaSyAV_rXQu5ObaA9_rI7iqL4EDB67oXaH3zk";
     private $apiKey = '85704df7';
     private $apiSecret = '755026fdd40f34c2';
@@ -73,7 +75,7 @@ class Telegram extends Model
     private $unlockBlackListSuccessText = "Unlock the blacklist successfully.";
     private $unlockBlackListFailureText = "Unlock the blacklist failed.";
     private $notInBlackList = "Not in blacklist.";
-    private $isNotMemberText = 'is not a member of our system, can not perform the operation.';
+    private $isNotMemberText = 'is not a member of our system, can not perform the operation';
     private $completeText = 'You have completed the binding operation.';
     private $exceedText = 'The number of times the call has exceeded the limit set by he.';
     private $codeEmptyText = 'The verification code is empty.';
@@ -1340,61 +1342,6 @@ class Telegram extends Model
     }
 
     /**
-     * 呼叫本人联系方式.
-     *
-     * @return mixed
-     */
-    public function callPersonPhone($nickname)
-    {
-        $result = false;
-        $this->language = $this->callPersonData->language;
-        $nexmoData = [
-            "api_key" => $this->apiKey,
-            'api_secret' => $this->apiSecret,
-            'lg' => $this->language,
-            'repeat' => $this->repeat,
-            'voice' => $this->voice,
-            'to'  => '',
-            'from' => $this->callPersonData->country_code.$this->callPersonData->phone_number,
-            'text' => $this->telegramLastName.$this->telegramFirstName.$this->translateLanguage('呼叫您上线telegram!'),
-        ];
-        $numberArr = UserPhone::find()->select(['id', 'phone_country_code', 'user_phone_number'])->where(['user_id' => $this->calledPersonData->id])->orderBy('id asc')->all();
-        foreach ($numberArr as $key => $number) {
-            if (empty($this->callPersonData->country_code) || empty($this->callPersonData->phone_number)) {
-                $this->callPersonData->country_code = $number->phone_country_code;
-                $this->callPersonData->phone_number = $number->user_phone_number;
-            }
-            // 呼叫本人设置的联系方式.
-            $nexmoData['to'] = $number->phone_country_code.$number->user_phone_number;
-            if (empty($number->phone_country_code) || empty($number->user_phone_number)) {
-                continue;
-            }
-
-            $res = $this->callPerson($nexmoData);
-            if ($res['status']) {
-                $this->sendData = [
-                    'chat_id' => $this->telegramUid,
-                    'text' => $this->getCallText().$nickname.$this->getSuccessText(),
-                ];
-                $result = true;
-                $this->sendTelegramData();
-                // 保存通话记录.
-                $this->saveCallRecordData($res['status'], $nexmoData['to']);
-                break;
-            }
-
-            $this->sendData = [
-                'chat_id' => $this->telegramUid,
-                // 'text' => '呼叫"'.$nickname.'"失败! '.$res['message'],
-                'text' => $this->getCallText().$nickname.$this->getFailureText().$this->translateLanguage($res['message']),
-            ];
-            $this->sendTelegramData();
-        }
-
-        return $result;
-    }
-
-    /**
      * 翻译语言.
      */
     public function translateLanguage($text, $source = null)
@@ -1419,50 +1366,6 @@ class Telegram extends Model
         }
 
         return $data;
-    }
-
-    /**
-     * 呼叫本人的紧急联系方式.
-     *
-     * @return mixed
-     */
-    public function callPersonUrgentPhone($nickname)
-    {
-        $result = false;
-        $this->language = $this->callPersonData->language;
-        $nexmoData = [
-            "api_key" => $this->apiKey,
-            'api_secret' => $this->apiSecret,
-            'lg' => $this->language,
-            'repeat' => $this->repeat,
-            'voice' => $this->voice,
-            'to'  => '',
-            'from' => $this->callPersonData->country_code.$this->callPersonData->phone_number,
-            // 'text' => $this->telegramLastName.$this->telegramFirstName.$this->translateLanguage('在telegram上找'.$nickname.', 请您及时转告!'),
-            'text' => $this->translateLanguage('请转告'.$nickname.', 上线telegram!'),
-        ];
-        $numberArr = UserGentContact::find()->select(['id', 'contact_country_code', 'contact_phone_number', 'contact_nickname'])->where(['user_id' => $this->calledPersonData->id])->orderBy('id asc')->all();
-        foreach ($numberArr as $key => $number) {
-            $nexmoData['to'] = $number->contact_country_code.$number->contact_phone_number;
-            if (empty($number->contact_country_code) || empty($number->contact_phone_number)) {
-                continue;
-            }
-
-            $res = $this->callPerson($nexmoData);
-            if ($res['status']) {
-                $this->sendData = [
-                    'chat_id' => $this->telegramUid,
-                    'text' => $this->translateLanguage('呼叫'.$nickname.'的紧急联系人'.$number->contact_nickname.', 成功!'),
-                ];
-                $this->sendTelegramData();
-                // 保存通话记录.
-                $this->saveCallRecordData($res['status'], '', $nexmoData['to'] );
-                $result = true;
-                break;
-            }
-        }
-
-        return $result;
     }
 
     /**
@@ -1534,7 +1437,6 @@ class Telegram extends Model
                 $this->sendTelegramData();
                 return $this->errorCode['success'];
             }
-
             // 呼叫.
             try {
                 if (!empty($calledId)) {
@@ -1549,40 +1451,19 @@ class Telegram extends Model
                         }
                     }
                     $nexmo = new Nexmo();
-                    $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->telegramContactFirstName, $this->telegramLastName . $this->telegramFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code . $this->callPersonData->phone_number, $this->language, $appName = 'telegram', $this->telegramUid, $this->telegramContactUid, 0, array(), $urgentArr, 1);
+                    $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->telegramContactFirstName, $this->telegramFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code . $this->callPersonData->phone_number, $this->language, $appName = 'potato', $this->potatoUid, $this->potatoContactUid, 0, array(), $urgentArr, 1);
                 } else {
                     $nexmo = new Nexmo();
-                    $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->telegramContactFirstName, $this->telegramLastName . $this->telegramFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code . $this->callPersonData->phone_number, $this->language, $appName = 'telegram', $this->telegramUid, $this->telegramContactUid,1);
+                    $nexmo->callPerson($this->calledPersonData->id, $this->callPersonData->id, $this->telegramContactFirstName, $this->telegramFirstName, $this->calledPersonData->nickname, $this->callPersonData->nickname, $this->callPersonData->country_code . $this->callPersonData->phone_number, $this->language, $appName = 'potato', $this->potatoUid, $this->potatoContactUid,1);
                 }
             } catch (\Exception $e) {
                 $this->sendData = [
+                    'chat_type' => 1,
                     'chat_id' => $this->telegramUid,
                     'text' => $this->translateLanguage('网络异常, 请稍后再试!'),
                 ];
-                $this->sendTelegramData();
+                $this->sendPotatoData();
             }
-            return $this->errorCode['success'];
-
-
-            $res = $this->callPersonPhone($nickname);
-            // 本人联系方式呼叫失败，尝试呼叫本人的紧急联系方式.
-            if (!$res) {
-                $this->sendData = [
-                    'chat_id' => $this->telegramUid,
-                    'text' => $this->translateLanguage('呼叫'.$nickname.'失败, 尝试呼叫"'.$nickname.'"的紧急联系人, 请稍后!'),
-                ];
-                $this->sendTelegramData();
-                $res = $this->callPersonUrgentPhone($nickname);
-            }
-
-            if (!$res) {
-                $this->sendData = [
-                    'chat_id' => $this->telegramUid,
-                    'text' => $this->translateLanguage('抱歉本次呼叫' . $nickname . '失败，请稍后再试, 或尝试其他方式联系' . $nickname . '!'),
-                ];
-                $this->sendTelegramData();
-            }
-
             return $this->errorCode['success'];
         } else {
             $this->sendData = [
@@ -1664,29 +1545,6 @@ class Telegram extends Model
         }
 
         return $result;
-    }
-
-    /**
-     * 保存通话记录.
-     */
-    public function saveCallRecordData($status, $personPhone = '', $urgentPhone = '')
-    {
-        $callRecord = new CallRecord();
-        $callRecord->active_call_uid = $this->callPersonData->id;
-        $callRecord->unactive_call_uid = $this->calledPersonData->id;
-        $callRecord->active_account = $this->telegramLastName.$this->telegramFirstName;
-        $callRecord->unactive_account = $this->telegramContactFirstName;
-        $callRecord->active_nickname = $this->callPersonData->nickname;
-        $callRecord->unactive_nickname = $this->calledPersonData->nickname;
-        $callRecord->contact_number = $this->callPersonData->country_code.$this->callPersonData->phone_number;
-
-        $callRecord->unactive_contact_number = !empty($personPhone) ? $personPhone : $urgentPhone;
-        $callRecord->status = $status ? 0 : 1;
-        $callRecord->call_time = time();
-        $callRecord->type = ($urgentPhone) ? 1 : 0;
-        $res = $callRecord->save();
-
-        return $res ? true : false;
     }
 
     /**

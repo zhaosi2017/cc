@@ -16,7 +16,11 @@ $actionId = Yii::$app->requestedAction->id;
 
 
 ?>
-
+<style>
+    #content-main{
+        overflow-y: scroll !important;
+    }
+</style>
 <div class="call-record-index">
     <div class="help-block m-t"></div>
     <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -56,6 +60,9 @@ $actionId = Yii::$app->requestedAction->id;
             //  ['header' => '联系电话', 'value' => function($model){
             //     return $model['white']['phone_number'];
             // }],
+             ['header'=>Yii::t('app/models/user','Nickname') ,'value'=>function($model){
+                   return $model['white']['nickname'];
+               },'headerOptions'=>['class'=>'text-center']],
             ['header' => 'telegram', 'value' => function($model){
                 return !empty($model['white']['telegram_number'])?'+'.$model['white']['telegram_country_code'].$model['white']['telegram_number']:'';
             }, 'headerOptions'=>['class'=>'text-center']],

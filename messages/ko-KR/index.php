@@ -30,6 +30,7 @@
   'Contact information' => '연락처 정보',
   'Successful operation' => '성공적인 운영',
   'Operation failed' => '작업 실패',
+    'delete failed , Keep at least one contact number'=>'작동은 적어도 하나의 연락처 전화를 남겨주세요 실패',
   'Password reset complete' => '비밀번호 재설정 완료',
   'Verification code error' => '인증 코드 오류',
   'Verification code' => '확인 코드',
@@ -64,5 +65,12 @@
     'Please edit : username'=>'편집 : 사용자 이름',
     'Get code'=>'인증 코드 받기',
     'Contact Phone'=>'전화',
-    'Phone or country code changes'=>'또는 전화 국가 코드는 변경 될 수 있습니다'
+    'Phone or country code changes'=>'또는 전화 국가 코드는 변경 될 수 있습니다',
+    'After logging in to Telegram, go to the "Chats" page.' => '전보를 로그인 한 후, "채팅"페이지를 입력합니다.',
+    'After logging in to Potato, go to the "Chats" page.' => '감자를 로그인 한 후, "채팅"페이지를 입력합니다.',
+    'Enter "callu_bot" in the search bar on the "Chats" page and perform the search. Click "callu" to enter Figure 3.' => '은 "채팅"검색 필드에서 페이지 "callu_bot"를 입력하고 검색을 수행합니다. "callu"을 클릭, 3을 입력.',
+    'Click the "Start" button to enter Figure 4.' => '"시작"버튼을 클릭, 4를 입력.',
+    'Click "Share your own business card" to enter Figure 5.' => '(5)를 입력 "자신의 명함 공유"를 클릭.',
+    'In the "Share Your Phone Number?" Box select "OK", enter Figure 6.' => '"내 전화 번호를 공유?"폭탄 상자, "OK" 선택에서 6을 입력합니다.',
+    'Will fill in the verification code to fill in the "verification code" input box, the binding.' => '당신은 바인딩에 대해 "코드"입력 상자를 완료하기 위해 인증 코드가 전송됩니다.',
 ); 
