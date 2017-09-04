@@ -64,7 +64,7 @@ return [
     'in {delta, plural, =1{an hour} other{# hours}}' => 'u {delta, plural, =1{sat} one{# sat} few{# sata} many{# sati} other{# sati}}',
     'the input value' => 'ulazna vrijednost',
     '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" već se koristi.',
-    '{attribute} cannot be blank.' => '{attribute} ne smije biti prazan.',
+    '{attribute} can not be blank.' => '{attribute} ne smije biti prazan.',
     '{attribute} is invalid.' => 'Atribut "{attribute}" je neispravan.',
     '{attribute} is not a valid URL.' => '{attribute} nije valjan URL.',
     '{attribute} is not a valid email address.' => '{attribute} nije valjana email adresa.',

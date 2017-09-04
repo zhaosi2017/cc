@@ -5,8 +5,8 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use yii\captcha\Captcha;
 
-$this->title = '修改绑定potato';
-
+$this->title = '修改potato';
+$this->params['breadcrumbs'][] = $this->title;
 /* @var $this yii\web\View */
 /* @var $model app\modules\home\models\ContactForm */
 /* @var $form yii\widgets\ActiveForm */
@@ -36,10 +36,13 @@ $this->title = '修改绑定potato';
                 <div class="help-block"></div>
             </div>-->
             <?php echo $form->field($model, 'potato_country_code', [
-                'template' => "{label}\n<div>&nbsp;+{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
+                'template' => "{label}\n<div style=\"width:130px;\" >&nbsp;+{input}\n<span style=\"height:28px;\"  class=\"help-block m-b-none\">{error}</span></div>",
             ])->textInput(['size' => 5,'placeholder'=>'国码'])->label(false) ?>
 
-            <?php echo $form->field($model, 'potato_number')->textInput(['placeholder' => '您的potato号码'])->label(false) ?>
+            <?php echo $form->field($model, 'potato_number',[
+                 'template' => "{label}\n<div  >&nbsp;+{input}\n<span style=\"height:28px;\"  class=\"help-block m-b-none\">{error}</span></div>",
+
+            ])->textInput(['placeholder' => '您的potato号码'])->label(false) ?>
 <!--            <div class="help-block">&nbsp;&nbsp;&nbsp;*请输入您的国码，然后输入您的手机号码</div>-->
         </div>
 
@@ -67,14 +70,28 @@ $this->title = '修改绑定potato';
 
             <div class="form-group">
                 <input type="button" id="count-down" class="form-control" onclick="
+                    if($('#contactform-potato_country_code').val() == ''){
+                        alert('国码不能为空');
+                        return false;
+                    }
+                    if($('#contactform-potato_number').val() == ''){
+                        alert('电话不能为空');
+                        return false;
+                    }
                     var duration = 59;
                     $('#count-down').attr('disabled','disabled');
-                    var url = '<?php echo Url::to(['/home/user/send-short-message']); ?>';
+                    var url = '<?php echo Url::to(['/home/user/send-short-message?type='.Yii::$app->controller->action->id]); ?>';
                     var data = {
                         };
 
                     data.number = '+' + $('#contactform-potato_country_code').val() + $('#contactform-potato_number').val();
+                    data.type   = '<?php echo Yii::$app->controller->action->id; ?>';
                     $.post(url, data).done(function(r) {
+                        r = eval('('+ r + ')');
+                        if(r.messages.status == 1){
+                            alert('你好！发送短信太频繁,请稍微休息哈');
+                            return false;
+                        }
                         console.log(r);
                     });
 
@@ -96,7 +113,7 @@ $this->title = '修改绑定potato';
 
     <div class="form-group m-b-lg">
         <div class="col-sm-6 col-sm-offset-2">
-            <?= Html::submitButton('绑定', ['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton('绑定', ['class' => 'btn btn-primary button-new-color']) ?>
         </div>
     </div>
 

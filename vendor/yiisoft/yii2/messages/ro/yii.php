@@ -56,7 +56,7 @@ return [
     'You can upload at most {limit, number} {limit, plural, one{file} other{files}}.' => 'Puteți încărca maxim {limit, number} {limit, plural, one{fișier} other{fișiere}}.',
     'the input value' => 'valoarea introdusă',
     '{attribute} "{value}" has already been taken.' => '{attribute} «{value}» este deja ocupat.',
-    '{attribute} cannot be blank.' => '«{attribute}» nu poate fi gol.',
+    '{attribute} can not be blank.' => '«{attribute}» nu poate fi gol.',
     '{attribute} is invalid.' => '«{attribute}» este incorect.',
     '{attribute} is not a valid URL.' => '«{attribute}» nu este un URL valid.',
     '{attribute} is not a valid email address.' => '«{attribute}» nu este o adresă de email validă.',

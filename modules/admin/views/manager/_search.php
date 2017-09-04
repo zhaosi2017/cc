@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 <div class="manager-search">
 
     <?php $form = ActiveForm::begin([
-        'action' => ['index'],
+        'action' =>  Yii::$app->requestedAction->id == 'index' ?['index']:['trash'],
         'method' => 'get',
         'options' => ['class'=>'form-inline'],
     ]); ?>
@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm;
                 $("#search_hide").click();
             '])->label('角色：') ?>
 
-            <?= $form->field($model,'status')->dropDownList($model['statuses'],['prompt'=>'全部','onchange'=>'
+            <?= $form->field($model,'status')->dropDownList( Yii::$app->requestedAction->id == 'index' ?$model['statuses']:['1'=>'作废'],['prompt'=>'全部','onchange'=>'
                 $("#search_hide").click();
             '])->label('&nbsp;&nbsp;账号状态：') ?>
         </div>
@@ -31,8 +31,8 @@ use yii\widgets\ActiveForm;
                 <?= $form->field($model, 'search_type')->dropDownList([
                     1 => '账号',
                     2 => '昵称',
-                    3 => '登录IP',
-                ])->label(false) ?>
+                    3 => '最后登录IP',
+                ],['prompt' => '全部'])->label(false) ?>
                 <?= $form->field($model, 'search_keywords')->textInput()->label(false) ?>
                 <div class="form-group">
                     <?= Html::submitButton('search', ['class' => 'hide','id'=>'search_hide']) ?>

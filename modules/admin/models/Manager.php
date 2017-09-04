@@ -26,6 +26,9 @@ use yii\web\IdentityInterface;
 class Manager extends CActiveRecord implements IdentityInterface
 {
 
+    const NORMAL_STATUS = 0; //正常状态
+    const INVALID_STATUS = 1; //作废状态
+    const FREEZE_STATUS =2 ;//冻结状态
     /**
      * @inheritdoc
      */
@@ -47,10 +50,28 @@ class Manager extends CActiveRecord implements IdentityInterface
             [['account', 'nickname', 'remark', 'auth_key','password'], 'string'],
             [['role_id', 'status', 'create_id', 'update_id', 'create_at', 'update_at'], 'integer'],
             [['login_ip'], 'string', 'max' => 64],
-            ['account','validateExist'],
+            ['account','validateExist','on'=>['addadmin']],
+            ['account', 'updateValidateExist', 'on'=>['updateadmin']],
+            ['remark','required','on'=>['updateadmin']],
         ];
     }
 
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $res = [
+            'passwordupdate' =>[ 'password' ] ,
+
+            'updateadmin' => [ 'account','password','nickname', 'role_id','password','status','remark'],
+
+            'addadmin' =>[  'account','nickname', 'role_id','password'],
+            
+        ];
+        return array_merge($scenarios,$res);
+    }
+
+   
     public function validateExist($attribute)
     {
         $rows = Manager::find()->select(['account'])->indexBy('id')->column();
@@ -66,6 +87,26 @@ class Manager extends CActiveRecord implements IdentityInterface
         }
     }
 
+    public function updateValidateExist($attribute)
+    {
+
+        $rows = Manager::find()->select(['account'])->indexBy('id')->column();
+        $accounts = [];
+        foreach ($rows as $i => $v)
+        {
+            
+            if($this->id == $i)
+            {
+                continue;
+            }            
+            $accounts[] = Yii::$app->security->decryptByKey(base64_decode($v), Yii::$app->params['inputKey']);
+            
+        }
+
+        if(in_array($this->account, $accounts)){
+            $this->addError($attribute, '管理员账号已存在');
+        }
+    }
     /**
      * @inheritdoc
      */
@@ -89,9 +130,9 @@ class Manager extends CActiveRecord implements IdentityInterface
 
     public function getStatuses(){
         return [
-            0 => '正常',
-            1 => '作废',
-            2 => '冻结',
+            self::NORMAL_STATUS => '正常',
+            self::INVALID_STATUS => '作废',
+            self::FREEZE_STATUS => '冻结',
         ];
     }
 
@@ -130,6 +171,7 @@ class Manager extends CActiveRecord implements IdentityInterface
                 $this->create_at = $_SERVER['REQUEST_TIME'];
                 $this->update_at = $_SERVER['REQUEST_TIME'];
                 $this->create_id = $uid;
+                $this->update_id = $uid;
                 $this->auth_key  = Yii::$app->security->generateRandomString();
                 $this->account  = base64_encode(Yii::$app->security->encryptByKey($this->account, Yii::$app->params['inputKey']));
                 $this->password && $this->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
@@ -207,6 +249,18 @@ class Manager extends CActiveRecord implements IdentityInterface
     public function validateAuthKey($authKey)
     {
         return $this->getAuthKey() === $authKey;
+    }
+    /**
+     * 用户修改密码后，删除该用户登录时错误密码的记录数
+     */
+     public function deleteLoginNum()
+    {
+        $redis = Yii::$app->redis;
+        $key = $this->account.'-adminnum' ; 
+        if($redis->exists($key))
+        {
+            $redis->del($key);
+        }
     }
 
 }

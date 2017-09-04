@@ -22,6 +22,7 @@ $actionId = Yii::$app->requestedAction->id;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
 //        'filterModel' => $searchModel,
+        'layout' => "{items}\n  <div><ul class='pagination'><li style='display:inline;'><span>共".$dataProvider->getTotalCount(). "条数据 <span></li></ul>{pager}  </div>",
         'columns' => [
             ['class' => 'yii\grid\SerialColumn','header' => '序号'],
             'name:ntext',
@@ -57,11 +58,21 @@ $actionId = Yii::$app->requestedAction->id;
                         return Html::a('权限配置',$url);
                     },
                     'delete' => function($url){
-                        return Html::a('删除',$url,[
+                         if(Yii::$app->user->can('admin/role/delete')){
+                             return Html::a('删除',$url,[
                             'style' => 'color:red',
                             'data-method' => 'post',
                             'data' => ['confirm' => '你确定要删除吗?']
-                        ]);
+                            ]);
+                         }else{
+                            $url = 'index';
+                             return Html::a('删除',$url,[
+                            'style' => 'color:red',
+                            'data-method' => 'get',
+                            'data' => ['confirm' => '您没有该权限!']
+                            ]);
+                         }
+                       
                     },
                 ],
             ],

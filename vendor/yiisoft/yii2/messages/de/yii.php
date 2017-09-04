@@ -68,7 +68,7 @@ return [
     'just now' => 'gerade jetzt',
     'the input value' => 'der eingegebene Wert',
     '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" wird bereits verwendet.',
-    '{attribute} cannot be blank.' => '{attribute} darf nicht leer sein.',
+    '{attribute} can not be blank.' => '{attribute} darf nicht leer sein.',
     '{attribute} contains wrong subnet mask.' => '{attribute} enthält ungültige Subnetz-Maske.',
     '{attribute} is invalid.' => '{attribute} ist ungültig.',
     '{attribute} is not a valid URL.' => '{attribute} ist keine gültige URL.',

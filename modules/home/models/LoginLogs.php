@@ -3,6 +3,7 @@
 namespace app\modules\home\models;
 
 use app\models\CActiveRecord;
+use app\modules\home\models\User;
 
 /**
  * This is the model class for table "login_logs".
@@ -33,8 +34,9 @@ class LoginLogs extends CActiveRecord
         return [
             [['uid'], 'required'],
             [['uid', 'status', 'unlock_uid'], 'integer'],
-            [['login_time', 'unlock_time'], 'safe'],
+            [['login_time'], 'safe'],
             [['login_ip'], 'string', 'max' => 15],
+            [['address'],'string','max'=>'100'],
         ];
     }
 
@@ -44,24 +46,31 @@ class LoginLogs extends CActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'uid' => 'Uid',
-            'status' => 'Status',
-            'login_time' => 'Login Time',
-            'login_ip' => 'Login Ip',
-            'unlock_time' => 'Unlock Time',
-            'unlock_uid' => 'Unlock Uid',
+            'id' => '编号',
+            'uid' => '用户id',
+            'status' => '登陆状态',
+            'login_time' => '登陆时间',
+            'login_ip' => '登陆Ip',
+            'address' => '登陆地址'
         ];
+    }
+
+    /**
+     * @inheritdoc
+     * @return LoginLogsQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new LoginLogsQuery(get_called_class());
     }
 
     public function getStatuses()
     {
         return [
-            0 => '登录成功',
-            1 => '已解锁',
+            1 => '登录成功',
             2 => '密码错误',
             3 => '验证错误',
-            4 => 'IP锁定中',
+            4 => '帐号错误',
         ];
     }
 
@@ -69,4 +78,9 @@ class LoginLogs extends CActiveRecord
     {
         return $this->hasOne(User::className(),['id'=>'uid']);
     }
+
+    /*public function getOperator()
+    {
+        return $this->hasOne(User::className(),['id'=>'unlock_uid']);
+    }*/
 }

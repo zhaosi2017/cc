@@ -13,6 +13,23 @@ use Yii;
 class LoginController extends PController
 {
     /**
+     * @inheritdoc
+     */
+    public function actions()
+    {
+        return [
+           
+            'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testMe' : null,
+                'height' => 35,
+                'width' => 80,
+                'minLength' => 4,
+                'maxLength' => 4
+            ],
+        ];
+    }
+    /**
      * Renders the index view for the module
      * @return string
      */
@@ -24,17 +41,28 @@ class LoginController extends PController
             return $this->goHome();
         }
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            // 登陆成功.
-            $this->redirect(['/admin/default/index']);
-        } else {
-            return $this->render('index',['model' => $model]);
-        }
+        if ($model->load(Yii::$app->request->post()) ) {
+            
+
+            if($model->checkLock()){
+                return $this->render('index',['model'=>$model]);
+            }
+           
+            if($model->login())
+            {   // 登陆成功.
+                return $this->redirect(['/admin/default/index']);
+            }
+
+            $model->afterCheckLock();
+
+        } 
+        return $this->render('index',['model' => $model]);
+        
     }
 
     public function actionLogout()
     {
-        Yii::$app->user->logout();
+        Yii::$app->user->logout(false);
 
         return $this->redirect(Url::to(['/admin/login/index']));
     }

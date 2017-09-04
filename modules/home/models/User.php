@@ -13,18 +13,13 @@ use yii\web\IdentityInterface;
  * @property string $auth_key
  * @property string $password
  * @property string $account
+ * @property string $username
  * @property string $nickname
  * @property integer $un_call_number
  * @property integer $un_call_by_same_number
  * @property integer $long_time
  * @property integer $country_code
  * @property string $phone_number
- * @property string $urgent_contact_number_one
- * @property integer $urgent_contact_one_country_code
- * @property integer $urgent_contact_two_country_code
- * @property integer $urgent_contact_number_two
- * @property string $urgent_contact_person_one
- * @property string $urgent_contact_person_two
  * @property string $telegram_number
  * @property string $potato_number
  * @property integer $telegram_country_code
@@ -33,8 +28,12 @@ use yii\web\IdentityInterface;
  * @property integer $potato_country_code
  * @property integer $reg_time
  * @property string $reg_ip
+ * @property integer $login_time
+ * @property string $login_ip
  * @property integer $role_id
  * @property integer $status
+ * @property string $language
+ * @property string $step
  */
 class User extends CActiveRecord implements IdentityInterface
 {
@@ -84,7 +83,7 @@ class User extends CActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['account', 'nickname', 'urgent_contact_person_one', 'urgent_contact_person_two', 'reg_ip'], 'string'],
+            [['account', 'nickname','username', 'reg_ip'], 'string'],
 
             [[
                 'un_call_number',
@@ -98,12 +97,20 @@ class User extends CActiveRecord implements IdentityInterface
                 'telegram_user_id',
                 'potato_country_code',
                 'potato_user_id',
-                'urgent_contact_one_country_code',
-                'urgent_contact_two_country_code',
             ], 'integer'],
 
-            [['phone_number','urgent_contact_number_one','urgent_contact_number_two', 'telegram_number', 'potato_number'], 'number', 'max' => 99999999999],
+            [['phone_number', 'telegram_number', 'potato_number'], 'number','max'=> 9999999999999],
             [['auth_key','password'], 'string', 'max' => 64],
+            [['login_ip','login_time'],'safe'],
+            ['nickname' ,'checkName','on'=>'bind-nickname'],
+            [['un_call_number','un_call_by_same_number','long_time'],'required','on'=>'harassment'],
+            ['username','required','on'=>'bind-username'],
+            ['username','checkUsername','on'=>'bind-username'],
+            [['username'],'string','min'=>2,'max'=>20,'on'=>'bind-username'],
+            ['account','checkAccount','on'=>'bind-email'],
+            ['account','required','message'=>Yii::t('app/models/user','Email can not be empty'),'on'=>'bind-email'],
+            ['account','email','message'=>Yii::t('app/models/user','Email format is incorrect'),'on'=>'bind-email'],
+
         ];
     }
 
@@ -115,17 +122,14 @@ class User extends CActiveRecord implements IdentityInterface
         return [
             'id' => 'ID',
             'auth_key' => 'Auth Key',
-            'account' => 'Account',
-            'nickname' => '昵称',
-            'un_call_number' => '被叫总次数',
-            'un_call_by_same_number' => '被同一人呼叫次数',
-            'long_time' => '时间设置',
-            'country_code' => '国码',
-            'phone_number' => '绑定电话',
-            'urgent_contact_number_one' => '紧急联系电话一',
-            'urgent_contact_number_two' => '紧急联系电话二',
-            'urgent_contact_person_one' => '紧急联系人一',
-            'urgent_contact_person_two' => '紧急联系人二',
+            'account' => Yii::t('app/models/user','Email'),
+            'username'=>Yii::t('app/models/user','Username'),
+            'nickname' => Yii::t('app/models/user','Nickname'),
+            'un_call_number' => Yii::t('app/harassment','Total number of times to be called'),
+            'un_call_by_same_number' => Yii::t('app/harassment','The number of calls by the same person'),
+            'long_time' => Yii::t('app/harassment','Time setting'),
+            'country_code' => Yii::t('app/models/user','Country code'),
+            'phone_number' => Yii::t('app/models/user','Bind the phone'),
             'telegram_number' => 'Telegram Number',
             'potato_number' => 'Potato Number',
             'telegram_country_code' => 'telegram country code',
@@ -133,8 +137,74 @@ class User extends CActiveRecord implements IdentityInterface
             'reg_time' => 'Reg Time',
             'reg_ip' => 'Reg IP',
             'role_id' => 'Role ID',
+            'urgent_contact_one_country_code'=>Yii::t('app/models/user','Country code'),
+            'urgent_contact_two_country_code'=>Yii::t('app/models/user','Country code'),
         ];
     }
+
+     public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $res = [
+            'harassment'=>['un_call_number','un_call_by_same_number','long_time'],
+            'bind-username'=>['username'],
+            'bind-email'=>['account'],
+            'change-language'=>['language'],
+            'bind-nickname'=>['nickname'],
+        ];
+        return array_merge($scenarios,$res);
+    }
+
+    public function checkName($attribute, $params)
+    {
+        $len =mb_strlen($this->nickname,'UTF8');
+        if($len < 2 || $len > 20 ){
+            $this->addError($attribute,Yii::t('app/models/user','Please set the correct nickname'));
+        }   
+    }
+
+    public function checkUsername($attribute)
+    {
+        $rows = User::find()->select(['username'])->indexBy('id')->column();
+        $accounts = [];
+        foreach ($rows as $i => $v)
+        {
+
+            if($this->id == $i)
+            {
+                continue;
+            }
+            $accounts[] = Yii::$app->security->decryptByKey(base64_decode($v), Yii::$app->params['inputKey']);
+
+        }
+
+        if(in_array($this->username, $accounts)){
+            $this->addError($attribute, Yii::t('app/models/user','Account already exists'));
+        }
+    }
+
+
+    public function checkAccount ($attribute)
+    {
+        $rows = User::find()->select(['account'])->indexBy('id')->column();
+        $accounts = [];
+        foreach ($rows as $i => $v)
+        {
+
+            if($this->id == $i)
+            {
+                continue;
+            }
+            $accounts[] = Yii::$app->security->decryptByKey(base64_decode($v), Yii::$app->params['inputKey']);
+
+        }
+
+        if(in_array($this->account, $accounts)){
+            $this->addError($attribute, Yii::t('app/models/user','The email already exists'));
+        }
+    }
+
+
 
     /**
      * @inheritdoc
@@ -153,16 +223,16 @@ class User extends CActiveRecord implements IdentityInterface
                 $this->reg_time = $_SERVER['REQUEST_TIME'];
                 $this->auth_key = Yii::$app->security->generateRandomString();
                 $this->account  = base64_encode(Yii::$app->security->encryptByKey($this->account, Yii::$app->params['inputKey']));
+                $this->username  = base64_encode(Yii::$app->security->encryptByKey($this->username, Yii::$app->params['inputKey']));
                 $this->password && $this->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
                 $this->nickname && $this->nickname = base64_encode(Yii::$app->security->encryptByKey($this->nickname, Yii::$app->params['inputKey']));
             }else{
-                if(!empty(array_column(Yii::$app->request->post(),'password'))){
-                    $this->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
+                if(!empty(array_column(Yii::$app->request->post(),'password'))){    //必须是post中的password 否则出现二次加密
+                    $this->password = Yii::$app->getSecurity()->generatePasswordHash(array_column(Yii::$app->request->post(),'password')[0]);
                 }
+                $this->username = base64_encode(Yii::$app->security->encryptByKey($this->username, Yii::$app->params['inputKey']));
                 $this->account = base64_encode(Yii::$app->security->encryptByKey($this->account, Yii::$app->params['inputKey']));
                 $this->nickname = base64_encode(Yii::$app->security->encryptByKey($this->nickname, Yii::$app->params['inputKey']));
-                $this->urgent_contact_person_one = base64_encode(Yii::$app->security->encryptByKey($this->urgent_contact_person_one, Yii::$app->params['inputKey']));
-                $this->urgent_contact_person_two = base64_encode(Yii::$app->security->encryptByKey($this->urgent_contact_person_two, Yii::$app->params['inputKey']));
             }
             return true;
         }
@@ -174,8 +244,8 @@ class User extends CActiveRecord implements IdentityInterface
         parent::afterFind();
         $this->account = Yii::$app->security->decryptByKey(base64_decode($this->account), Yii::$app->params['inputKey']);
         $this->nickname && $this->nickname = Yii::$app->security->decryptByKey(base64_decode($this->nickname), Yii::$app->params['inputKey']);
-        $this->urgent_contact_person_one && $this->urgent_contact_person_one = Yii::$app->security->decryptByKey(base64_decode($this->urgent_contact_person_one), Yii::$app->params['inputKey']);
-        $this->urgent_contact_person_two && $this->urgent_contact_person_two = Yii::$app->security->decryptByKey(base64_decode($this->urgent_contact_person_two), Yii::$app->params['inputKey']);
+        $this->username && $this->username = Yii::$app->security->decryptByKey(base64_decode($this->username), Yii::$app->params['inputKey']);
+
     }
 
     /**

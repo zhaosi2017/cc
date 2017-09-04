@@ -17,10 +17,11 @@ $actionId = Yii::$app->requestedAction->id;
         <?= Html::a('管理员列表', ['index'], ['class' => $actionId=='trash' ? 'btn btn-outline btn-default' : 'btn btn-primary']) ?>
         <?= Html::a('垃圾筒', ['trash'], ['class' => $actionId=='index' ? 'btn btn-outline btn-default' : 'btn btn-primary']) ?>
     </p>
-
+<?php  echo $this->render('_search', ['model' => $searchModel]); ?>
 <?php Pjax::begin(); ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'layout' => "{items}\n  <div><ul class='pagination'><li style='display:inline;'><span>共".$dataProvider->getTotalCount(). "条数据 <span></li></ul>{pager}  </div>",
         'columns' => [
             ['class' => 'yii\grid\SerialColumn','header' => '序号'],
 
@@ -32,11 +33,29 @@ $actionId = Yii::$app->requestedAction->id;
                     return $data['role']['name'];
                 },
             ],
+            [
+                'header' =>'角色备注',
+                'value' => function($data){
+                    return $data['role']['remark'];
+                },
+            ],
 
             [
-                'header' =>'状态',
+                'header' =>'账号状态',
                 'value' => function($data){
                     return $data['statuses'][$data->status];
+                },
+            ],
+             [
+                'header' =>'冻结／解冻备注',
+                'value' => function($data){
+                    return strip_tags($data['remark'])?strip_tags($data['remark']):'*';
+                },
+            ],
+            [
+                'header' =>'最后登陆IP',
+                'value' => function($data){
+                    return $data['login_ip'];
                 },
             ],
 
@@ -65,10 +84,18 @@ $actionId = Yii::$app->requestedAction->id;
                 'template' => '{recover}',
                 'buttons' => [
                     'recover' => function($url){
-                        return Html::a('恢复',$url,[
-                            'data-method' => 'post',
-                            'data' => ['confirm' => '你确定要恢复吗?']
-                        ]);
+                        if(Yii::$app->user->can('admin/manager/recover')){
+                            return Html::a('恢复',$url,[
+                                'data-method' => 'post',
+                                'data' => ['confirm' => '你确定要恢复吗?']
+                            ]); 
+                        }else{
+                            $url = 'trash';
+                             return Html::a('恢复',$url,[
+                                'data-method' => 'get',
+                                'data' => ['confirm' => '您没有该权限！']
+                            ]); 
+                        }
                     },
                 ],
             ],

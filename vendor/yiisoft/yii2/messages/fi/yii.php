@@ -71,7 +71,7 @@ return [
     'just now' => 'juuri nyt',
     'the input value' => 'syötetty arvo',
     '{attribute} "{value}" has already been taken.' => '{attribute} "{value}" on jo käytössä.',
-    '{attribute} cannot be blank.' => '{attribute} ei voi olla tyhjä.',
+    '{attribute} can not be blank.' => '{attribute} ei voi olla tyhjä.',
     '{attribute} contains wrong subnet mask.' => '{attribute} sisältää väärän aliverkkopeitteen.',
     '{attribute} is invalid.' => '{attribute} on virheellinen.',
     '{attribute} is not a valid URL.' => '{attribute} on virheellinen URL.',

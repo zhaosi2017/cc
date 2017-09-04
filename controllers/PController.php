@@ -6,52 +6,52 @@ use Yii;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\helpers\Url;
+use app\modules\admin\models\Manager;
 
 class PController extends Controller
 {
-    public $layout = '@app/views/layouts/global';
+    public $layout = '@app/views/layouts/right_admin';
 
     /**
      * @inheritdoc
      */
-
-    public function behaviors()
+    public function beforeAction($event)
     {
 
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['delete'],
-                        'allow' => false,
-                    ],
-                    [
-                        'allow' => true,
-                        'actions' => ['index','captcha','code'],
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
+        if( Yii::$app->requestedRoute == 'admin/login/index' || Yii::$app->requestedRoute == 'admin/login/captcha' ){
+            return true;
+        }
+        if (Yii::$app->user->isGuest)
+        {
+           return  $this->redirect(['/admin/login/index'])->send();
+        }
+        /**
+         * 登陆后不需要检查的权限数组
+         */
+        $arr = [
+            'admin/default/deny',
+            'admin/login/logout',
         ];
+
+        $identity = (Object) Yii::$app->user->identity;
+       
+        if ( in_array(Yii::$app->requestedRoute, $arr)){
+            return true;
+        }
+        if( !Yii::$app->user->can(Yii::$app->requestedRoute)  ) {
+            return  $this->redirect(Url::to(['/admin/default/deny']))->send();
+            return false;
+        }
+        return parent::beforeAction($event);
     }
+
 
     /**
      * @param \yii\base\Action $action
      * @return bool
      */
-    public function beforeAction($action)
+    /*public function beforeAction($action)
     {
         $this->layout = '@app/views/layouts/right_admin';
 
@@ -61,7 +61,7 @@ class PController extends Controller
 
         return parent::beforeAction($action);
 
-    }
+    }*/
 
     /**
      * @param array $response

@@ -93,7 +93,7 @@ return [
     'in {delta, plural, =1{an hour} other{# hours}}' => 'pēc {delta, plural, =1{stundas} one{# stundas} other{# stundām}}',
     'the input value' => 'ievadītā vērtība',
     '{attribute} "{value}" has already been taken.' => '{attribute} „{value}” jau ir aizņemts.',
-    '{attribute} cannot be blank.' => 'Ir jāaizpilda „{attribute}”.',
+    '{attribute} can not be blank.' => 'Ir jāaizpilda „{attribute}”.',
     '{attribute} is invalid.' => '„{attribute}” vērtība ir nepareiza.',
     '{attribute} is not a valid URL.' => '„{attribute}” vērtība nav pareiza URL formātā.',
     '{attribute} is not a valid email address.' => '„{attribute}” vērtība nav pareizas e-pasta adreses formātā.',
