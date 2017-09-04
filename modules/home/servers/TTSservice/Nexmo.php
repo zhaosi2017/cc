@@ -39,7 +39,7 @@ class Nexmo extends  TTSAbstarct{
     public function __construct()
     {
         $base_uri = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'];
-        $base_uri = 'https://test.callu.online';
+        //$base_uri = 'https://test.callu.online';
         $this->_eventUrl = $base_uri.$this->_eventUrl;
         $this->_answerUrl = $base_uri.$this->_answerUrl;
         $this->voice = 'Joey';
