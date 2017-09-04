@@ -301,7 +301,7 @@ trait  TraitTelegram {
             $this->setLanguage($this->calledPersonData->language);
 
             // 自定义语音内容.
-            $voiceCacheKey = 'cc_voice_'.Yii::$app->user->id;
+            $voiceCacheKey = 'cc_voice_'.$this->callPersonData->id;
             $voiceContent = '';
             if (Yii::$app->redis->exists($voiceCacheKey)) {
                 $voiceContent = Yii::$app->redis->get($voiceCacheKey);
