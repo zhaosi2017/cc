@@ -14,7 +14,17 @@ use yii\bootstrap\Alert;
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>
-                            <?= Html::encode($this->title) ?>
+                            <?php
+                            echo \yii\widgets\Breadcrumbs::widget([
+
+                                'homeLink'=>false, // 若设置false 则 可以隐藏Home按钮
+                                //'homeLink'=>['label' => '主 页','url' => Yii::$app->homeUrl.'home/'], // 若设置false 则 可以隐藏Home按钮
+                                'itemTemplate'=>"<span>{link} > </span>",
+                                'activeItemTemplate'=>"<span>{link}</span>",
+                                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                            ])
+                            ?>
+
                         </h5>
                     </div>
 

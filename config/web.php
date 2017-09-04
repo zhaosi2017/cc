@@ -49,6 +49,7 @@ $config = [
                         'app/models/user-gent-contact'=>'models/UserGentContact.php',
                         'app/models/user-phone'=>'models/UserPhone.php',
                         'app/models/white-list-form'=>'models/WhiteListForm.php',
+                        'app/nav'=>'nav.php',
 
                     ],
                     'on missingTranslation' => ['app\modules\home\controllers\TranslationEventHandler', 'handleMissingTranslation']

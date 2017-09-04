@@ -27,7 +27,8 @@ if(!Yii::$app->user->isGuest){
 <?= $this->render('common') ?>
 <?php $srcDataPrefix = 'data:image/jpg;base64,'; ?>
 <?php $imgUrl = Url::home(true) .'img/'; ?>
-
+<link rel="stylesheet" type="text/css" href="/css/global/htmleaf-demo.css">
+<link rel="stylesheet" type="text/css" href="/css/global/bootsnav.css">
 <style>
     .header-div-1{
         height: 100px;
@@ -64,12 +65,93 @@ if(!Yii::$app->user->isGuest){
         padding: 9px 20px 13px 25px;
         border-radius: 4px;
     }
+
+
+    .navbar-brand{
+        padding: 29px 15px;
+        height: auto;
+    }
+    nav.navbar.bootsnav{
+        border: none;
+        margin-bottom: 0px;
+    }
+    .navbar-nav{
+        float: right;
+    }
+    nav.navbar.bootsnav ul.nav > li > a{
+        color: #474747;
+        text-transform: uppercase;
+        padding: 30px;
+        font-size: 18px;
+    }
+    nav.navbar.bootsnav ul.nav > li:hover{
+        background: #f4f4f4;
+    }
+    .nav > li:after{
+        content: "";
+        width: 0;
+        height: 5px;
+        /*background: #34c9dd;*/
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        transition: all 0.5s ease 0s;
+    }
+    .nav > li:hover:after{
+        width: 100%;
+    }
+    nav.navbar.bootsnav ul.nav > li.dropdown > a.dropdown-toggle:after{
+        content: "+";
+        font-family: 'FontAwesome';
+        font-size: 16px;
+        font-weight: 500;
+        position: absolute;
+        top: 35%;
+        right: 10%;
+        transition: all 0.4s ease 0s;
+    }
+    nav.navbar.bootsnav ul.nav > li.dropdown.on > a.dropdown-toggle:after{
+        content: "\f105";
+        transform: rotate(90deg);
+    }
+    .dropdown-menu.multi-dropdown{
+        position: absolute;
+        left: -100% !important;
+    }
+    nav.navbar.bootsnav li.dropdown ul.dropdown-menu{
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        border: none;
+    }
+    @media only screen and (max-width:993px){
+        nav.navbar.bootsnav ul.nav > li.dropdown > a.dropdown-toggle:after,
+        nav.navbar.bootsnav ul.nav > li.dropdown.on > a.dropdown-toggle:after{ content: " "; }
+        .dropdown-menu.multi-dropdown{ left: 0 !important; }
+        nav.navbar.bootsnav ul.nav > li:hover{ background: transparent; }
+        nav.navbar.bootsnav ul.nav > li > a{ margin: 0; }
+        .header-div-9{display: none !important;}
+    }
+    .header-div-9{
+
+    }
+    #language-select{
+        font: inherit;
+        color: #5d4d4d;
+    }
+
+    .carousel-inner img{
+        height: auto;
+    }
+    .fa.fa-bars{
+        background-color: gainsboro;
+    }
+
 </style>
 
 
 
 <div>
-    <div  class="text-right" style="background-color: rgb(96,96,96);height: 40px;line-height: 40px;">
+    <div  class="text-right" style="position: relative;
+    z-index: 1;background-color: rgb(96,96,96);height: 40px;line-height: 40px;">
         <?php if (!Yii::$app->user->isGuest){?>
             <div style="display: inline-block;color:white;"><?= Yii::t('app/index','Hello')?>,<?php echo $username;?></div>
         <div style="display: inline-block;color:white;"><a class="index-button-1" data-method="post" href="<?= Url::to(['/home/login/logout']) ?>"><span style="color: white;"><?= Yii::t('app/index','Logout')?></span></a> &nbsp;&nbsp;&nbsp;
@@ -103,75 +185,103 @@ if(!Yii::$app->user->isGuest){
             </div>
         <?php }?>
 
-        <div style="display: inline-block;width: 60px;"></div>
+        <div style="display: inline-block;width: 20px;"></div>
     </div>
 </div>
 <!-------------------------------------------     导航栏   ------------------------------>
 
 
-<div
-        style="
-        position: relative;
-       z-index: 99999999;
-        min-width: 1220px !important;
-         height: 100px;line-height: 100px;
-            background-color: rgb(221,231,241);
-         opacity: 0.7;
-    filter: alpha(opacity=70);
-        "
->
-    <div class="row" style="margin: auto;">
 
+<div class="htmleaf-container">
 
+    <div class="demo" style="">
+        <div class="">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav class="navbar navbar-default navbar-mobile bootsnav on">
+                        <div class="navbar-header" style="width: 30%;">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <a style="color: #474747;" href="/"><div  style="display:inline-block;padding-left:10px;width: 52px;" class="header-div-9"><img src="/img/logo1.png" style="width: 52px;" alt=""></div></a>
+                            <a style="color: #474747;" href="/"><div  style="color:#474747;display:inline-block;padding-left:10px;line-height: 78px;font-size: 18px !important;" class="header-div-9"><?= Yii::t('app/index','Call support center')?></div></a>
+                        </div>
+                        <div class="collapse navbar-collapse" id="navbar-menu">
 
-        <div style="height: 105px;    ">
-            <div style="display: inline-block;    position: relative;top: -8px;">
-                <div style="display: inline-block;margin-left: 67px;"><img src="/img/logo1.png" width="52" alt=""></div>
+                            <ul class="nav navbar-nav" data-in="fadeInDown" data-out="fadeOutUp">
+                                <li class="dropdown <?php if(Yii::$app->controller->id == 'user' || in_array(Yii::$app->controller->id ,['telegram','potato','call-record','white-list','black-list'])){echo 'nav-li-active';}?>
+">
+                                    <a href="/home/user/index" class="dropdown-toggle" data-toggle="dropdown"><?= Yii::t('app/nav','User center')?></a>
+                                    <ul class="dropdown-menu animated">
+
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= Yii::t('app/nav','Account security')?></a>
+                                            <ul class="dropdown-menu animated">
+                                                <li><a href="/home/user/bind-email"><?= Yii::t('app/nav','Bind email')?></a></li>
+                                                <li><a href="/home/user/set-phone-number"><?= Yii::t('app/nav','Bind phone')?></a></li>
+                                                <li><a href="/home/user/bind-username"><?= Yii::t('app/nav','Bind username')?></a></li>
+                                                <li><a href="/home/user/password"><?= Yii::t('app/nav','Updte password')?></a></li>
+                                                <li><a href="/home/user/set-nickname"><?= Yii::t('app/nav','Bind nickname')?></a></li>
+
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= Yii::t('app/nav','Manage center')?></a>
+                                            <ul class="dropdown-menu animated">
+                                                <li><a href="/home/call-record/index"><?= Yii::t('app/nav','Call record')?></a></li>
+                                                <li><a href="/home/user/app-bind"><?= Yii::t('app/nav','Communication tool bind')?></a></li>
+<!--                                                <li><a href="#">--><?//= Yii::t('app/nav','Personal call mode setting')?><!--</a></li>-->
+                                                <li><a href="/home/user/links"><?= Yii::t('app/nav','My contact information')?></a></li>
+                                                <li class="dropdown">
+                                                    <a href="/home/user/harassment" class="dropdown-toggle" data-toggle="dropdown"><?= Yii::t('app/nav','Anti harassment')?></a>
+                                                    <ul class="dropdown-menu animated">
+                                                        <li><a href="/home/user/harassment"><?= Yii::t('app/nav','Parameter settings')?></a></li>
+                                                        <li><a href="/home/white-list/index"><?= Yii::t('app/nav','Whitelist')?></a></li>
+
+                                                        <li><a href="/home/black-list/index"><?= Yii::t('app/nav','Blacklist')?></a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                    </ul>
+                                </li>
+<!--                                <li class="dropdown">-->
+<!--                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">--><?//= Yii::t('app/nav','Account center')?><!--</a>-->
+<!--                                    <ul class="dropdown-menu animated">-->
+<!--                                        <li><a href="#">--><?//= Yii::t('app/nav','Recharge record')?><!--</a></li>-->
+<!--                                        <li><a href="#">--><?//= Yii::t('app/nav','Charge information')?><!--</a></li>-->
+<!--                                        <li><a href="#">--><?//= Yii::t('app/nav','Balance display')?><!--</a></li>-->
+<!--                                    </ul>-->
+<!--                                </li>-->
+<!--                                <li class="dropdown">-->
+<!--                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">--><?//= Yii::t('app/nav','Number store')?><!--</a>-->
+<!--                                    <ul class="dropdown-menu animated">-->
+<!--                                        <li><a href="#">--><?//= Yii::t('app/nav','Callu number supermarket')?><!--</a></li>-->
+<!--                                    </ul>-->
+<!--                                </li>-->
+
+                                <li class="dropdown <?php if(Yii::$app->controller->id == 'help'){echo 'nav-li-active';}?>">
+                                    <a href="/home/help/guide" class="dropdown-toggle" data-toggle="dropdown"><?= Yii::t('app/nav','Help Center')?></a>
+                                    <ul class="dropdown-menu animated">
+                                        <li><a href="/home/help/guide"><?= Yii::t('app/nav','Use boot')?></a></li>
+                                        <li><a href="/home/help/software"><?= Yii::t('app/nav','Introduction to the software')?></a></li>
+<!--                                        <li><a href="/home/help/qustion-answer">--><?//= Yii::t('app/nav','Q&A')?><!--</a></li>-->
+<!--                                        <li><a href="/home/help/online-service">--><?//= Yii::t('app/nav','Online service')?><!--</a></li>-->
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
             </div>
-
-
-
-            <div style="display: inline-block;margin-left: 20px;">
-                <div style="color:black;height: 5px;font-size: 32px;font-weight: bolder;"><?= Yii::t('app/index','Call support center')?></div>
-            </div>
-
-            <div style="display: inline-block;float: right;">
-
-                <div class="header-div-1" style="display: inline-block;">
-                    <a class="header-a-1 header-a-0" href="<?= Url::to(['/home/default/welcome']) ?>">
-                        <i class="fa fa-home"></i>&nbsp;&nbsp;
-                        <span class="" style="color: black;"><?= Yii::t('app/index','Home')?></span>
-                    </a>
-                </div>
-                <div class="header-div-1" style="display: inline-block;">
-                    <a class="header-a-1" href="<?= Url::to(['/home/user/index']) ?>">
-                        <span class="header-span-1" style="color: black;"><?= Yii::t('app/index','Account center')?></span>
-                    </a>
-                </div>
-                <div class="header-div-1" style="display: inline-block;">
-                    <a class="header-a-1" href="<?= Url::to(['/home/call-record/index']) ?>">
-                        <span class="header-span-1" style="color: black;"><?= Yii::t('app/index','Personal call records')?></span>
-                    </a>
-                </div>
-                <div class="header-div-1" style="display: inline-block;">
-                    <a class="header-a-1" href="<?= Url::to(['/home/user/harassment']) ?>">
-                        <span  class="header-span-1" style="color: black;"><?= Yii::t('app/index','Anti harassment')?></span>
-                    </a>
-                </div>
-                <div style="display: inline-block;width: 50px;"></div>
-
-            </div>
-
         </div>
-
     </div>
-
 </div>
 
-
-
 <!-----------------------------------------轮播---------------------------------------------->
-<div style="margin-top: -150px;min-width: 900px !important;">
+<div style="margin-top: 0px;min-width: 900px !important;height: auto;">
 
     <div id="myCarousel" class="carousel slide" style="">
         <ol class="carousel-indicators">
@@ -229,7 +339,7 @@ if(!Yii::$app->user->isGuest){
 
 <style>
     #myCarousel{
-        margin:50px 0 0 0;
+        margin:0 0 0 0;
     }
 
     .nav .navbar-nav li:hover{
@@ -328,3 +438,6 @@ if(!Yii::$app->user->isGuest){
         })
     }
 </script>
+<script type="text/javascript" src="/js/global/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="/js/global/bootsnav.js"></script>

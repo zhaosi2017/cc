@@ -233,7 +233,8 @@ CREATE TABLE `user` (
   `reg_ip` varchar(64) NOT NULL DEFAULT '',
   `whitelist_switch` tinyint(1) NOT NULL DEFAULT '0',
   `language` VARCHAR(40) NOT NULL DEFAULT 'zh-CN',
-  `step` TINYINT(1) NOT NULL DEFAULT '0'
+  `step` TINYINT(1) NOT NULL DEFAULT '0',
+   `amount` decimal(14,4) NOT NULL DEFAULT '0.0000' COMMENT '账户余额',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -321,3 +322,56 @@ CREATE TABLE `potato_map` (
   `chat_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+/**   用户资金变动明细表*/
+CREATE TABLE `final_change_log` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `change_type` int(11) NOT NULL COMMENT '帐变类型',
+  `amount` decimal(14,4) NOT NULL DEFAULT '0.0000' COMMENT '帐变金额',
+  `time` int(11) NOT NULL COMMENT '帐变时间',
+  `user_id` int(11) NOT NULL COMMENT '帐变发生人',
+  `comment` char(255) DEFAULT '' COMMENT '说明',
+  `before` decimal(14,4) NOT NULL DEFAULT '0.0000' COMMENT '帐变之前金额',
+  `after` decimal(14,4) NOT NULL DEFAULT '0.0000' COMMENT '帐变之后金额',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+／** 充值接口日志表 *／
+CREATE TABLE `final_mutual_log` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `interface_name` char(16) DEFAULT '' COMMENT '接口名',
+  `data` text COMMENT '交互数据',
+  `time` int(11) NOT NULL COMMENT '发生时间',
+  `type` int(11) NOT NULL DEFAULT '1' COMMENT '交互类型',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**
+  号码池
+ */
+CREATE TABLE `call_number` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `number` int(11) NOT NULL COMMENT '电话号码',
+  `status` int(11) NOT NULL COMMENT '可使用状态',
+  `time` int(11) NOT NULL COMMENT '录入时间',
+  `comment` char(255) DEFAULT NULL COMMENT '说明',
+  `rent_status` int(11) NOT NULL DEFAULT '0' COMMENT '可租状态',
+  `begin_time` int(11) NOT NULL COMMENT '启用时间',
+  `end_time` int(11) DEFAULT NULL COMMENT '结束时间',
+  `price` decimal(14,4) NOT NULL DEFAULT '0.0000' COMMENT '租金／每天',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**
+  用户号码池
+ */
+
+CREATE TABLE `user_number` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `number_id` int(11) NOT NULL COMMENT '电话号码',
+  `time` int(11) NOT NULL COMMENT '记录时间',
+  `end_time` int(11) NOT NULL COMMENT '到期时间',
+  `begin_time` int(11) NOT NULL COMMENT '起租时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -7,6 +7,7 @@ use yii\widgets\ActiveForm;
 /* @var $model app\modules\admin\models\User */
 /* @var $form yii\widgets\ActiveForm */
 $this->title = Yii::t('app/harassment','Param settings');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app/nav','User center'), 'url' => ['user/index']];
 $this->params['breadcrumbs'][] = $this->title ;
 ?>
 <div class="user-harassment">

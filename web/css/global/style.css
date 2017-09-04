@@ -3536,11 +3536,12 @@ video {
 }
 
 .wrapper {
-    padding: 0 20px;
+    /*padding: 0 20px;*/
+    padding:0;
 }
 
 .wrapper-content {
-    padding: 20px;
+    padding: 0px 6px;
 }
 
 #page-wrapper {

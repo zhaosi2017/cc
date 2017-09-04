@@ -11,6 +11,7 @@ use yii\helpers\Url;
 $userModels = \app\modules\home\models\User::findOne(Yii::$app->user->id);
 
 $this->title =  Yii::t('app/harassment','Whitelist');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app/nav','User center'), 'url' => ['user/index']];
 $this->params['breadcrumbs'][] = $this->title;
 $actionId = Yii::$app->requestedAction->id;
 

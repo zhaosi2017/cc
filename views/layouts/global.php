@@ -30,7 +30,7 @@ GlobalAsset::register($this);
     <?php $this->head() ?>
 </head>
 
-<body class="fixed-sidebar full-height-layout gray-bg pace-done" style="overflow:hidden">
+<body class="fixed-sidebar full-height-layout gray-bg pace-done" style="">
 <?php $this->beginBody() ?>
     <?= isset($content) ? $content : ''  ?>
 </body>
