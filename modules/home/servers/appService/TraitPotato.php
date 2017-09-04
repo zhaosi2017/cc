@@ -328,6 +328,7 @@ trait  TraitPotato {
             $voiceContent = '';
             if (Yii::$app->redis->exists($voiceCacheKey)) {
                 $voiceContent = Yii::$app->redis->get($voiceCacheKey);
+                Yii::$app->redis->del($voiceCacheKey);
             }
             if (!empty($voiceContent)) {
                 $service->messageText = $this->translateLanguage($voiceContent);
