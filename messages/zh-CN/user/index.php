@@ -22,5 +22,5 @@ return [
     'Create UserName'=>'绑定用户名',
     'Language'=>'语言',
     'NickName'=>'昵称',
-
+    'Voice Content' => '语音内容',
 ];

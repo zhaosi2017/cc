@@ -37,6 +37,7 @@ use yii\web\IdentityInterface;
  */
 class User extends CActiveRecord implements IdentityInterface
 {
+    public $voice;
     /**
      * @inheritdoc
      */

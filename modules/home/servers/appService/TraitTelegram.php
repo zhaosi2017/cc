@@ -299,10 +299,21 @@ trait  TraitTelegram {
             $tmp_tlanguage = $this->tlanguage;
             $tmp_llanguage = $this->llanguage;
             $this->setLanguage($this->calledPersonData->language);
-            if($call_type == CallRecord::Record_Type_none){
-                $service->messageText = $this->translateLanguage($this->telegramFirstName.' 呼叫您上线').' telegram';
-            }else{
-                $service->messageText = $this->translateLanguage('请转告 '.$this->telegramContactFirstName.' 上线').' telegram';
+
+            // 自定义语音内容.
+            $voiceCacheKey = 'cc_voice_'.Yii::$app->user->id;
+            $voiceContent = '';
+            if (Yii::$app->redis->exists($voiceCacheKey)) {
+                $voiceContent = Yii::$app->redis->get($voiceCacheKey);
+            }
+            if (!empty($voiceContent)) {
+                $service->messageText = $this->translateLanguage($voiceContent);
+            } else {
+                if ($call_type == CallRecord::Record_Type_none) {
+                    $service->messageText = $this->translateLanguage($this->telegramFirstName . ' 呼叫您上线') . ' telegram';
+                } else {
+                    $service->messageText = $this->translateLanguage('请转告 ' . $this->telegramContactFirstName . ' 上线') . ' telegram';
+                }
             }
             $this->tlanguage = $tmp_tlanguage;
             $this->llanguage = $tmp_llanguage;

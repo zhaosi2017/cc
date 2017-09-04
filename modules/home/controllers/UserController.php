@@ -50,6 +50,14 @@ class UserController extends GController
         $model = $this->findModel(Yii::$app->user->id);
         $user_phone_numbers = UserPhone::findAll(array('user_id'=>Yii::$app->user->id));  //取用户的全部绑定电话
         $user_gent_contacts  =  UserGentContact::findAll(array('user_id'=>Yii::$app->user->id));   //取全部的紧急联系人
+
+        $cacheKey = 'cc_voice_'.Yii::$app->user->id;
+        $voiceContent = '';
+        if (Yii::$app->redis->exists($cacheKey)) {
+            $voiceContent = Yii::$app->redis->get($cacheKey);
+        }
+        $model->voice = $voiceContent;
+
         return $this->render('index',['model'=>$model , 'user_phone_numbers'=>$user_phone_numbers , 'user_gent_contents'=>$user_gent_contacts]);
     }
 
@@ -66,6 +74,30 @@ class UserController extends GController
             
         }
         return $this->render('set-nickname',['model'=>$model]);
+    }
+
+    /**
+     * 设置语言内容.
+     */
+    public function actionSetVoiceContent()
+    {
+        $cacheKey = 'cc_voice_'.Yii::$app->user->id;
+        $data = Yii::$app->request->post('User');
+        if(!empty($data['voice'])){
+            $res = Yii::$app->redis->set($cacheKey, $data['voice']);
+            if ($res) {
+                Yii::$app->getSession()->setFlash('success', Yii::t('app/index', 'Successful operation'));
+                return $this->redirect(['index']);
+            }
+        }
+
+        $model = $this->findModel(Yii::$app->user->id);
+        $voiceContent = '';
+        if (Yii::$app->redis->exists($cacheKey)) {
+            $voiceContent = Yii::$app->redis->get($cacheKey);
+        }
+        $model->voice = $voiceContent;
+        return $this->render('set-voice-content', ['model'=> $model]);
     }
 
     public function actionSetPhoneNumber()
