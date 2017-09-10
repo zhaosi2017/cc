@@ -24,7 +24,8 @@
         "yiisoft/yii2-redis": "^2.0",
         "xiaogouxo/yii2-ip2region": "dev-master",
         "kartik-v/yii2-widget-datetimepicker": "*",
-        "nexmo/client": "@beta"
+        "nexmo/client": "@beta",
+        "twilio/sdk": "5.14"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
