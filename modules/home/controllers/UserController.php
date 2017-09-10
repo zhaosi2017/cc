@@ -9,6 +9,7 @@ use app\modules\home\models\PasswordForm;
 use app\modules\home\models\PhoneRegisterForm;
 use app\modules\home\models\UserGentContact;
 use app\modules\home\models\UserPhone;
+use app\modules\home\servers\SmsService;
 use Yii;
 use app\modules\home\models\User;
 use app\controllers\GController;
@@ -379,23 +380,31 @@ class UserController extends GController
                 $session = Yii::$app->session;
                 $verifyCode = $session[$type] = ContactForm::makeVerifyCode();
                 $session['phone_number'] = $number;
-                $url = 'https://rest.nexmo.com/sms/json?' . http_build_query(
-                    [
-                        'api_key' =>  Yii::$app->params['nexmo_api_key'],
-                        'api_secret' => Yii::$app->params['nexmo_api_secret'],
-                        'to' => $number,
-                        'from' => Yii::$app->params['nexmo_account_number'],
-                        'text' => 'Your Verification Code : '.$verifyCode
-                    ]
-                );
-
-                $ch = curl_init($url);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                $response = curl_exec($ch);
-                $response = json_decode($response, true);
-                $response['code'] = $verifyCode;
-                $response = json_encode($response);
-                echo $response;
+//                $url = 'https://rest.nexmo.com/sms/json?' . http_build_query(
+//                    [
+//                        'api_key' =>  Yii::$app->params['nexmo_api_key'],
+//                        'api_secret' => Yii::$app->params['nexmo_api_secret'],
+//                        'to' => $number,
+//                        'from' => Yii::$app->params['nexmo_account_number'],
+//                        'text' => 'Your Verification Code : '.$verifyCode
+//                    ]
+//                );
+//
+//                $ch = curl_init($url);
+//                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//                $response = curl_exec($ch);
+//                $response = json_decode($response, true);
+//                $response['code'] = $verifyCode;
+//                $response = json_encode($response);
+                $smsService = new SmsService();
+                $msg = 'Your Verification Code '.$verifyCode;
+                $response = $smsService->sendSms($number,$msg);
+                $responses = [];
+                if($response == true){
+                    $responses['code'] = $verifyCode;
+                    $responses['messages']['status'] = 0;
+                }
+                echo json_encode($responses);
             }
         }
         return false;

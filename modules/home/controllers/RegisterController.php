@@ -166,10 +166,12 @@ class RegisterController extends GController
                 $smsService = new SmsService();
                 $msg = 'Your Verification Code '.$verifyCode;
                 $response = $smsService->sendSms($number,$msg);
+                $responses = [];
                 if($response == true){
                     $responses['code'] = $verifyCode;
+                    $responses['messages']['status'] = 0;
                 }
-                 echo json_encode($responses);
+                echo json_encode($responses);
             }
         }
         return false;
