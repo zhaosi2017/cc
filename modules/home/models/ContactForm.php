@@ -137,7 +137,7 @@ class ContactForm extends Model
         $verifyCode = $session[$type];
         if(!empty($session['phone_number']) && $phone_number != $session['phone_number'])
         {
-            return -1;
+            return 1;
         }
         if(empty($code) ||  empty($verifyCode) || $verifyCode != strtolower($code))
         {
