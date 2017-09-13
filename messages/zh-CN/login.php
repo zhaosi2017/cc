@@ -52,7 +52,9 @@ return [
     'Set phone number'=>'请添加联系电话',
     'Bind potato'=>'绑定potato',
     'Bind telegram'=>'绑定telegram',
-    'Please do the following'=>'请做如下操作'
+    'Please do the following'=>'请做如下操作',
+    'Phone number must be number'=>'电话号码必须是整数',
+    'Country code number must be number'=>'国码必须是整数',
 
 
 ];

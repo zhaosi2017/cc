@@ -25,7 +25,7 @@ class SmsForm extends Model
         return [
             // username and password are both required
             [['number', 'type'], 'required'],
-            ['number','match', 'pattern' => '/(^[0-9])+/', 'message' => '国码/手机必须是整数'],
+            ['number','match', 'pattern' => '/(^[0-9])+/', 'message' => Yii::t("app/login","Country code number must be number")],
         ];
     }
 }

@@ -101,7 +101,7 @@ $this->title = Yii::t('app/login','Register');
                             $('#register-phone').find('.form-group.field-phoneregisterform-country_code').removeClass('has-success');
                             $('#register-phone').find('.form-group.field-phoneregisterform-country_code').addClass('has-error');
                             $('#phoneregisterform-country_code').attr('aria-invalid','false');
-                            $('#register-phone').find('.form-group.field-phoneregisterform-country_code').find('.help-block.help-block-error').text('国码必须为整数');
+                            $('#register-phone').find('.form-group.field-phoneregisterform-country_code').find('.help-block.help-block-error').text('<?=Yii::t("app/login","Country code number must be number")?>');
 
                         }
 
@@ -124,7 +124,7 @@ $this->title = Yii::t('app/login','Register');
                         $('#register-phone').find('.form-group.field-phoneregisterform-phone').removeClass('has-success');
                         $('#register-phone').find('.form-group.field-phoneregisterform-phone').addClass('has-error');
                         $('#phoneregisterform-phone').attr('aria-invalid','false');
-                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').find('.help-block.help-block-error').text('电话号码必须为整数');
+                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').find('.help-block.help-block-error').text('<?= Yii::t("app/login","Phone number must be number")?>');
 
                         }
                         return false;

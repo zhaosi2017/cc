@@ -50,5 +50,7 @@
     'Set phone number'=>'បន្ថែមទូរស័ព្ទទំនាក់ទំនង',
     'Bind potato'=>'ការចង potato',
     'Bind telegram'=>'ការចង telegram',
-    'Please do the following'=>'សូមធ្វើដូចខាងក្រោម'
+    'Please do the following'=>'សូមធ្វើដូចខាងក្រោម',
+    'Phone number must be number'=>'លេខទូរស័ព្ទត្រូវតែជាចំនួនគត់  ',
+    'Country code number must be number'=>'លេខកូដប្រទេសត្រូវតែជា',
     );

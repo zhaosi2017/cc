@@ -50,6 +50,8 @@
     'Set phone number'=>'請添加聯繫電話',
     'Bind potato'=>'綁定potato',
     'Bind telegram'=>'綁定telegram',
-    'Please do the following'=>'請做如下操作'
+    'Please do the following'=>'請做如下操作',
+    'Phone number must be number'=>'電話號碼必須是整數',
+'Country code number must be number'=>'國碼必須是整數',
 
 ); 
