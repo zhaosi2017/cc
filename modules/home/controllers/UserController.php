@@ -7,6 +7,7 @@ use app\modules\home\models\EmailForm;
 use app\modules\home\models\LoginForm;
 use app\modules\home\models\PasswordForm;
 use app\modules\home\models\PhoneRegisterForm;
+use app\modules\home\models\SmsForms\SmsForm;
 use app\modules\home\models\UserGentContact;
 use app\modules\home\models\UserPhone;
 use app\modules\home\servers\SmsService;
@@ -373,9 +374,18 @@ class UserController extends GController
         if(Yii::$app->request->isAjax){
             $number = Yii::$app->request->post('number');
             $type = Yii::$app->request->post('type');
+            $smsForm = new SmsForm();
+            $smsForm->number = $number;
+            $smsForm->type = $type;
+            if(!$smsForm->validate())
+            {
+                $responses['messages']['status'] = 2;
+                $responses['messages']['message'] = $smsForm->getErrors('number')? $smsForm->getErrors('number'): $smsForm->getErrors('type');
+                exit( json_encode($responses));
+            }
             if($number && $type ){
                 if( $response = ContactForm::smsRateLimit($type)){
-                    exit(json_encode($response));
+                   exit(json_encode($response));
                 }
                 $session = Yii::$app->session;
                 $verifyCode = $session[$type] = ContactForm::makeVerifyCode();
@@ -396,15 +406,22 @@ class UserController extends GController
 //                $response = json_decode($response, true);
 //                $response['code'] = $verifyCode;
 //                $response = json_encode($response);
-                $smsService = new SmsService();
-                $msg = 'Your Verification Code '.$verifyCode;
-                $response = $smsService->sendSms($number,$msg);
-                $responses = [];
-                if($response == true){
-                    $responses['code'] = $verifyCode;
-                    $responses['messages']['status'] = 0;
+                try {
+                    $smsService = new SmsService();
+                    $msg = 'Your Verification Code ' . $verifyCode;
+                    $response = $smsService->sendSms($number, $msg);
+                    $responses = [];
+                    if ($response == true) {
+                        //$responses['code'] = $verifyCode;
+                        $responses['messages']['status'] = 0;
+                    }
+                    echo json_encode($responses);
+                }catch (\Exception $e)
+                {
+                    $responses['messages']['status'] = 2;
+                    $responses['messages']['message'] = $e->getMessage();
+                    echo  json_encode($responses);die;
                 }
-                echo json_encode($responses);
             }
         }
         return false;

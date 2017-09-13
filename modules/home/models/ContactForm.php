@@ -73,6 +73,7 @@ class ContactForm extends Model
             ['code','required','on'=>['phone','telegram','potato']],
             ['nickname','string','length'=>[2, 6], 'message'=>Yii::t('app/models/ContactForm' , 'Please set 2 to 6 Chinese characters for nickname')/*'昵称请设置2～6个汉字'*/],
             ['phone_number','checkPhone','on'=>['phone']],
+            ['country_code','match', 'pattern' => '/(^[0-9])+/', 'message' => '国码必须为整数','on'=>['phone']],
 
         ];
 

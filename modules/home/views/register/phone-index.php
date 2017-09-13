@@ -80,27 +80,97 @@ $this->title = Yii::t('app/login','Register');
             <div class="col-sm-6 " style="margin-left: -12px;">
                 <div class="form-group" style="    ">
                 <input type="button" id="count-down" class="form-control"  style="background-color: #39b5e7;color: white;" onclick="
+                        $('#register-phone').find('.form-group.field-phoneregisterform-country_code').removeClass('has-error');
+                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').removeClass('has-error');
+                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').find('.help-block.help-block-error').text('');
+                        $('#register-phone').find('.form-group.field-phoneregisterform-country_code').find('.help-block.help-block-error').text('');
                     if($('#phoneregisterform-country_code').val() == ''){
-                        alert('<?=Yii::t("app/login","Country code can not be empty")?>');
+                        $('#register-phone').find('.form-group.field-phoneregisterform-country_code').removeClass('has-success');
+                        $('#register-phone').find('.form-group.field-phoneregisterform-country_code').addClass('has-error');
+                        $('#phoneregisterform-country_code').attr('aria-invalid','false');
+                        $('#phoneregisterform-country_code').find('.help-block.help-block-error').text('<?=Yii::t("app/login","Country code can not be empty")?>');
+
                         return false;
                     }
+                        if( isNaN($('#phoneregisterform-country_code').val()) || $('#phoneregisterform-country_code').val().indexOf('+')==0)
+                        {
+
+                        var _contry_code =  $('#register-phone').find('.form-group.field-phoneregisterform-country_code');
+                        if( _contry_code.hasClass('has-success') || _contry_code.hasClass('has-error') ||(!_contry_code.hasClass('has-success') &&  !_contry_code.hasClass('has-error')) )
+                        {
+                            $('#register-phone').find('.form-group.field-phoneregisterform-country_code').removeClass('has-success');
+                            $('#register-phone').find('.form-group.field-phoneregisterform-country_code').addClass('has-error');
+                            $('#phoneregisterform-country_code').attr('aria-invalid','false');
+                            $('#register-phone').find('.form-group.field-phoneregisterform-country_code').find('.help-block.help-block-error').text('国码必须为整数');
+
+                        }
+
+                        return false;
+                        }
+
                     if($('#phoneregisterform-phone').val() == ''){
-                        alert('<?=Yii::t("app/login","The phone can not be empty")?>');
+                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').removeClass('has-success');
+                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').addClass('has-error');
+                        $('#phoneregisterform-phone').attr('aria-invalid','false');
+                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').find('.help-block.help-block-error').text('<?=Yii::t("app/login","The phone can not be empty")?>');
+
                         return false;
                     }
+                        if( isNaN($('#phoneregisterform-phone').val()) ||   $('#phoneregisterform-phone').val().indexOf('+')==0)
+                        {
+                        var _phone =  $('#register-phone').find('.form-group.field-phoneregisterform-country_code');
+                        if( _phone.hasClass('has-success') || _phone.hasClass('has-error') ||(!_phone.hasClass('has-success') &&  !_phone.hasClass('has-error')) )
+                        {
+                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').removeClass('has-success');
+                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').addClass('has-error');
+                        $('#phoneregisterform-phone').attr('aria-invalid','false');
+                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').find('.help-block.help-block-error').text('电话号码必须为整数');
+
+                        }
+                        return false;
+                        }
 
                     var duration = 59;
                     $('#count-down').attr('disabled','disabled');
                     var url = '<?php echo Url::to(['/home/register/mobile-code']); ?>';
                     var data = {};
 
-                    data.number = '+' + $('#phoneregisterform-country_code').val() + $('#phoneregisterform-phone').val();
+                    data.number =  $('#phoneregisterform-country_code').val() + $('#phoneregisterform-phone').val();
                     data.type   = '<?php echo Yii::$app->controller->action->id; ?>';
                     $.post(url, data).done(function(r) {
                         r = eval('('+ r + ')');
                         if(r.messages.status == 1){
-                            alert('<?=Yii::t("app/login","Hello there! Send text messages too often, please take a break")?>');
+                        duration = 0;
+                        $('#count-down').attr('disabled','');
+                        var _phone =  $('#register-phone').find('.form-group.field-phoneregisterform-phone');
+//                        if( _phone.hasClass('has-success') || _phone.hasClass('has-error') ||(!_phone.hasClass('has-success') &&  !_phone.hasClass('has-error')) )
+//                        {
+                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').removeClass('has-success');
+                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').addClass('has-error');
+                        $('#phoneregisterform-phone').attr('aria-invalid','false');
+                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').find('.help-block.help-block-error').text('<?=Yii::t("app/login","Hello there! Send text messages too often, please take a break")?>');
+//                        }
+                        return false;
                         }
+                        if(r.messages.status == 2){
+                            duration = 0;
+                            $('#count-down').attr('disabled','');
+                            var _phone =  $('#register-phone').find('.form-group.field-phoneregisterform-phone');
+                            if( _phone.hasClass('has-success') || _phone.hasClass('has-error') ||(!_phone.hasClass('has-success') &&  !_phone.hasClass('has-error')) )
+                            {
+                                $('#register-phone').find('.form-group.field-phoneregisterform-phone').removeClass('has-success');
+                                $('#register-phone').find('.form-group.field-phoneregisterform-phone').addClass('has-error');
+                                $('#phoneregisterform-phone').attr('aria-invalid','false');
+                                $('#register-phone').find('.form-group.field-phoneregisterform-phone').find('.help-block.help-block-error').text(r.messages.message);
+                            }
+                            return false;
+                        }
+                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').removeClass('has-error');
+                        $('#phoneregisterform-phone').attr('aria-invalid','true');
+                        $('#register-phone').find('.form-group.field-phoneregisterform-country_code').removeClass('has-error');
+                        $('#phoneregisterform-country_code').attr('aria-invalid','true');
+                        $('#register-phone').find('.form-group.field-phoneregisterform-country_code').find('.help-block.help-block-error').text('');
+                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').find('.help-block.help-block-error').text('');
                     });
 
                     var countDown = function() {
@@ -181,3 +251,6 @@ $this->title = Yii::t('app/login','Register');
         margin-left: 8px !important;
     }
 </style>
+<script>
+    function myfn(e){window.event? window.event.cancelBubble = true : e.stopPropagation();}
+</script>

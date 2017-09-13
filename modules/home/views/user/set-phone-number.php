@@ -86,28 +86,90 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="form-group col-sm-10" style="margin-left: -50px">
                 <div class="col-sm-2" style=" margin-left: -3px">
                     <input type="button" id="count-down" class="form-control"  onclick="
-                        if($('#contactform-country_code').val() == ''){
-                            alert('<?= Yii::t("app/user/update-phone-number", "Country Code is empty")?>');
+                            $('#set-phone-number-form').find('.form-group.field-contactform-country_code').removeClass('has-error');
+                            $('#set-phone-number-form').find('.form-group.field-contactform-phone_number').removeClass('has-error');
+                           $('#set-phone-number-form').find('.form-group.field-contactform-country_code').find('.help-block.m-b-none').text('');
+                            $('#set-phone-number-form').find('.form-group.field-contactform-phone_number').find('.help-block.m-b-none').text('');
+                            if($('#contactform-country_code').val() == ''){
+                            $('#set-phone-number-form').find('.form-group.field-contactform-country_code').removeClass('has-success');
+                            $('#set-phone-number-form').find('.form-group.field-contactform-country_code').addClass('has-error');
+                            $('#contactform-country_code').attr('aria-invalid','false');
+                            $('.form-group.field-contactform-country_code').find('.help-block.m-b-none').text('<?=Yii::t("app/login","Country code can not be empty")?>');
+
+                            //alert('<?= Yii::t("app/user/update-phone-number", "Country Code is empty")?>');
                             return false;
                         }
                         if($('#contactform-phone_number').val() == ''){
-                            alert('<?= Yii::t("app/user/update-phone-number", "Phone Number is empty")?>');
+                            $('#set-phone-number-form').find('.form-group.field-contactform-phone_number').removeClass('has-success');
+                            $('#set-phone-number-form').find('.form-group.field-contactform-phone_number').addClass('has-error');
+                            $('#contactform-phone_number').attr('aria-invalid','false');
+                            $('.form-group.field-contactform-phone_number').find('.help-block.m-b-none').text('<?=Yii::t("app/login","The phone can not be empty")?>');
+
+                            //alert('<?= Yii::t("app/user/update-phone-number", "Phone Number is empty")?>');
                             return false;
                         }
 
-                        var duration = 59;
+
+                            if( isNaN($('#contactform-country_code').val()) ||  $('#contactform-country_code').val().indexOf('+')==0)
+                            {
+                            $('#set-phone-number-form').find('.form-group.field-contactform-country_code').removeClass('has-success');
+                            $('#set-phone-number-form').find('.form-group.field-contactform-country_code').addClass('has-error');
+                            $('#contactform-country_code').attr('aria-invalid','false');
+                            $('.form-group.field-contactform-country_code').find('.help-block.m-b-none').text('国码必须是数字');
+
+                            //alert('国码必须是数字');
+                            return false;
+                            }
+                            if( isNaN($('#contactform-phone_number').val()) || $('#contactform-phone_number').val().indexOf('+')==0)
+                            {
+                            $('#set-phone-number-form').find('.form-group.field-contactform-phone_number').removeClass('has-success');
+                            $('#set-phone-number-form').find('.form-group.field-contactform-phone_number').addClass('has-error');
+                            $('#contactform-phone_number').attr('aria-invalid','false');
+                            $('.form-group.field-contactform-phone_number').find('.help-block.m-b-none').text('绑定电话必须是一个数字');
+
+
+
+                            return false;
+                            }
+
+
+                            var duration = 59;
                         $('#count-down').attr('disabled','disabled');
                         var url = '<?php echo Url::to(['/home/user/send-short-message']); ?>';
                         var data = {};
 
-                        data.number = '+' + $('#contactform-country_code').val() + $('#contactform-phone_number').val();
+                        data.number =   $('#contactform-country_code').val() + $('#contactform-phone_number').val();
                         data.type   = '<?php echo Yii::$app->controller->action->id; ?>';
                         $.post(url, data).done(function(r) {
                             r = eval('('+ r + ')');
                             if(r.messages.status == 1){
-                                alert('<?= Yii::t("app/user/update-phone-number","Send SMS too often, please take a break")?>');
+                            $('#count-down').attr('disabled','');
+                            duration = 0;
+                            $('#set-phone-number-form').find('.form-group.field-contactform-country_code').removeClass('has-success');
+                            $('#set-phone-number-form').find('.form-group.field-contactform-country_code').addClass('has-error');
+                            $('#contactform-country_code').attr('aria-invalid','false');
+                            $('.form-group.field-contactform-country_code').find('.help-block.m-b-none').text('<?= Yii::t("app/user/update-phone-number","Send SMS too often, please take a break")?>');
+
+                                return false;
                             }
-                        });
+                            if(r.messages.status == 2){
+                            duration = 0;
+                            $('#count-down').attr('disabled','');
+                            $('#set-phone-number-form').find('.form-group.field-contactform-phone_number').removeClass('has-success');
+                            $('#set-phone-number-form').find('.form-group.field-contactform-phone_number').addClass('has-error');
+                            $('#contactform-phone_number').attr('aria-invalid','false');
+                            $('.form-group.field-contactform-phone_number').find('.help-block.m-b-none').text(r.messages.message);
+
+                            return false;
+                            }
+
+                            $('#set-phone-number-form').find('.form-group.field-contactform-phone_number').removeClass('has-error');
+                            $('#contactform-phone_number').attr('aria-invalid','true');
+                            $('#register-phone').find('.form-group.field-contactform-country_code').removeClass('has-error');
+                            $('#contactform-country_code').attr('aria-invalid','true');
+                            $('#set-phone-number-form').find('.form-group.field-contactform-country_code').find('.help-block.m-b-none').text('');
+                            $('#set-phone-number-form').find('.form-group.field-contactform-phone_number').find('.help-block.m-b-none').text('');
+                            });
 
                         var countDown = function() {
                             if(duration>0){

@@ -38,6 +38,7 @@ class PhoneRegisterForm extends Model
             ['rePassword', 'compare', 'compareAttribute'=>'password','operator'=>'===','message'=>'两次密码不一致'],
             ['country_code','required'],
             ['country_code','match', 'pattern' => '/(^[0-9])+/', 'message' => '国码必须为整数'],
+            ['phone','match', 'pattern' => '/(^[0-9])+/', 'message' => '电话必须为整数'],
             [['rePassword', 'password'],'required','on'=>'register'],
 
             ['phone','validatePhone','on'=>'find-password,update-password'],
