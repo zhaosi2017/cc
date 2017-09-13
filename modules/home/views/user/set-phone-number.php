@@ -94,7 +94,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             $('#set-phone-number-form').find('.form-group.field-contactform-country_code').removeClass('has-success');
                             $('#set-phone-number-form').find('.form-group.field-contactform-country_code').addClass('has-error');
                             $('#contactform-country_code').attr('aria-invalid','false');
-                            $('.form-group.field-contactform-country_code').find('.help-block.m-b-none').text('<?=Yii::t("app/login","Country code can not be empty")?>');
+                            $('#set-phone-number-form').find('.form-group.field-contactform-country_code').find('.help-block.m-b-none').text('<?=Yii::t("app/login","Country code can not be empty")?>');
 
                             //alert('<?= Yii::t("app/user/update-phone-number", "Country Code is empty")?>');
                             return false;
@@ -103,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             $('#set-phone-number-form').find('.form-group.field-contactform-phone_number').removeClass('has-success');
                             $('#set-phone-number-form').find('.form-group.field-contactform-phone_number').addClass('has-error');
                             $('#contactform-phone_number').attr('aria-invalid','false');
-                            $('.form-group.field-contactform-phone_number').find('.help-block.m-b-none').text('<?=Yii::t("app/login","The phone can not be empty")?>');
+                            $('#set-phone-number-form').find('.form-group.field-contactform-phone_number').find('.help-block.m-b-none').text('<?=Yii::t("app/login","The phone can not be empty")?>');
 
                             //alert('<?= Yii::t("app/user/update-phone-number", "Phone Number is empty")?>');
                             return false;
@@ -115,7 +115,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             $('#set-phone-number-form').find('.form-group.field-contactform-country_code').removeClass('has-success');
                             $('#set-phone-number-form').find('.form-group.field-contactform-country_code').addClass('has-error');
                             $('#contactform-country_code').attr('aria-invalid','false');
-                            $('.form-group.field-contactform-country_code').find('.help-block.m-b-none').text('国码必须是数字');
+                            $('#set-phone-number-form').find('.form-group.field-contactform-country_code').find('.help-block.m-b-none').text('<?=Yii::t("app/login","Country code number must be number")?>');
 
                             //alert('国码必须是数字');
                             return false;
@@ -125,7 +125,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             $('#set-phone-number-form').find('.form-group.field-contactform-phone_number').removeClass('has-success');
                             $('#set-phone-number-form').find('.form-group.field-contactform-phone_number').addClass('has-error');
                             $('#contactform-phone_number').attr('aria-invalid','false');
-                            $('.form-group.field-contactform-phone_number').find('.help-block.m-b-none').text('绑定电话必须是一个数字');
+                            $('#set-phone-number-form').find('.form-group.field-contactform-phone_number').find('.help-block.m-b-none').text('<?= Yii::t("app/login","Phone number must be number")?>');
 
 
 
@@ -148,7 +148,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             $('#set-phone-number-form').find('.form-group.field-contactform-country_code').removeClass('has-success');
                             $('#set-phone-number-form').find('.form-group.field-contactform-country_code').addClass('has-error');
                             $('#contactform-country_code').attr('aria-invalid','false');
-                            $('.form-group.field-contactform-country_code').find('.help-block.m-b-none').text('<?= Yii::t("app/user/update-phone-number","Send SMS too often, please take a break")?>');
+                            $('#set-phone-number-form').find('.form-group.field-contactform-country_code').find('.help-block.m-b-none').text('<?= Yii::t("app/user/update-phone-number","Send SMS too often, please take a break")?>');
 
                                 return false;
                             }
