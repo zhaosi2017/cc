@@ -90,6 +90,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             $('#set-phone-number-form').find('.form-group.field-contactform-phone_number').removeClass('has-error');
                            $('#set-phone-number-form').find('.form-group.field-contactform-country_code').find('.help-block.m-b-none').text('');
                             $('#set-phone-number-form').find('.form-group.field-contactform-phone_number').find('.help-block.m-b-none').text('');
+                            $('#error_mes_p').text('');
                             if($('#contactform-country_code').val() == ''){
                             $('#set-phone-number-form').find('.form-group.field-contactform-country_code').removeClass('has-success');
                             $('#set-phone-number-form').find('.form-group.field-contactform-country_code').addClass('has-error');
@@ -145,21 +146,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             if(r.messages.status == 1){
                             $('#count-down').attr('disabled','');
                             duration = 0;
-                            $('#set-phone-number-form').find('.form-group.field-contactform-country_code').removeClass('has-success');
-                            $('#set-phone-number-form').find('.form-group.field-contactform-country_code').addClass('has-error');
-                            $('#contactform-country_code').attr('aria-invalid','false');
-                            $('#set-phone-number-form').find('.form-group.field-contactform-country_code').find('.help-block.m-b-none').text('<?= Yii::t("app/user/update-phone-number","Send SMS too often, please take a break")?>');
-
+                            $('#error_mes_p').text(r.messages.message);
                                 return false;
                             }
                             if(r.messages.status == 2){
                             duration = 0;
                             $('#count-down').attr('disabled','');
-                            $('#set-phone-number-form').find('.form-group.field-contactform-phone_number').removeClass('has-success');
-                            $('#set-phone-number-form').find('.form-group.field-contactform-phone_number').addClass('has-error');
-                            $('#contactform-phone_number').attr('aria-invalid','false');
-                            $('.form-group.field-contactform-phone_number').find('.help-block.m-b-none').text(r.messages.message);
-
+                            $('#error_mes_p').text(r.messages.message);
                             return false;
                             }
 
@@ -192,7 +185,9 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
 
         </div>
-        </div>
+        <div class="col-sm-12" style="margin-top: -12px;"><div class="col-sm-2"></div> <div class="col-sm-10"> <p  style="color: #a94442;padding: 12px;" id="error_mes_p"></p></div></div>
+
+    </div>
     </div>
 
     <div class="form-group m-b-lg">

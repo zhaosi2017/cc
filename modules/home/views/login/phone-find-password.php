@@ -96,7 +96,7 @@ $this->title = Yii::t('app/login','Forget password');
                                         $('#register-phone').find('.form-group.field-phoneregisterform-phone').removeClass('has-error');
                                         $('#register-phone').find('.form-group.field-phoneregisterform-phone').find('.help-block.help-block-error').text('');
                                         $('#register-phone').find('.form-group.field-phoneregisterform-country_code').find('.help-block.help-block-error').text('');
-
+                                        $('#error_mes_p').text('');
                                         if($('#phoneregisterform-country_code').val() == ''){
                                         $('#register-phone').find('.form-group.field-phoneregisterform-country_code').removeClass('has-success');
                                         $('#register-phone').find('.form-group.field-phoneregisterform-country_code').addClass('has-error');
@@ -123,7 +123,7 @@ $this->title = Yii::t('app/login','Forget password');
                                         }
 
                                         if($('#phoneregisterform-phone').val() == ''){
-                                            console.log($('#phoneregisterform-phone').val());
+
                                         $('#register-phone').find('.form-group.field-phoneregisterform-phone').removeClass('has-success');
                                         $('#register-phone').find('.form-group.field-phoneregisterform-phone').addClass('has-error');
                                         $('#phoneregisterform-phone').attr('aria-invalid','false');
@@ -159,26 +159,16 @@ $this->title = Yii::t('app/login','Forget password');
                                         if(r.messages.status == 1){
                                             $('#count-down').attr('disabled','');
                                         duration = 0;
-                                            var _phone =  $('#register-phone').find('.form-group.field-phoneregisterform-phone');
-                                            $('#register-phone').find('.form-group.field-phoneregisterform-phone').removeClass('has-success');
-                                            $('#register-phone').find('.form-group.field-phoneregisterform-phone').addClass('has-error');
-                                            $('#phoneregisterform-phone').attr('aria-invalid','false');
-
-                                            $('#register-phone').find('.form-group.field-phoneregisterform-phone').find('.help-block.help-block-error').text('<?=Yii::t("app/login","Hello there! Send text messages too often, please take a break")?>');
+                                            $('#error_mes_p').text('<?=Yii::t("app/login","Hello there! Send text messages too often, please take a break")?>');
                                             return false;
                                         }
                                         if(r.messages.status == 2){
                                             duration = 0;
 
                                             $('#count-down').attr('disabled','');
-                                            var _phone =  $('#register-phone').find('.form-group.field-phoneregisterform-phone');
-                                            if( _phone.hasClass('has-success') || _phone.hasClass('has-error') ||(!_phone.hasClass('has-success') &&  !_phone.hasClass('has-error')) )
-                                            {
-                                                $('#register-phone').find('.form-group.field-phoneregisterform-phone').removeClass('has-success');
-                                                $('#register-phone').find('.form-group.field-phoneregisterform-phone').addClass('has-error');
-                                                $('#phoneregisterform-phone').attr('aria-invalid','false');
-                                                $('#register-phone').find('.form-group.field-phoneregisterform-phone').find('.help-block.help-block-error').text(r.messages.message);
-                                            }
+
+                                                $('#error_mes_p').text(r.messages.message);
+
                                              return false;
                                         }
                                         $('#register-phone').find('.form-group.field-phoneregisterform-phone').removeClass('has-error');
@@ -204,6 +194,7 @@ $this->title = Yii::t('app/login','Forget password');
                                 </div>
                                 <div class=" col-sm-8 help-block"></div>
                             </div>
+                        <div class="col-sm-12" style="margin-top: -12px;"><div class="col-sm-4"></div><div class="col-sm-3"><p style="color: #a94442;padding-left: 16px;" id="error_mes_p"></p></div></div>
 
                     </div>
 
