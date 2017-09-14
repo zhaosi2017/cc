@@ -11,7 +11,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
 /**
- * CallRecordController implements the CRUD actions for CallRecord model.
+ * CallRecordController implements the CRUD actions for CallRecord model...
  */
 class CallRecordController extends GController
 {
