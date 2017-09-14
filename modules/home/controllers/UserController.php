@@ -16,6 +16,7 @@ use app\modules\home\models\User;
 use app\controllers\GController;
 use yii\web\NotFoundHttpException;
 use app\modules\home\servers\MailClient;
+use app\modules\home\servers\Translates\TranslateService;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -418,8 +419,18 @@ class UserController extends GController
                     echo json_encode($responses);
                 }catch (\Exception $e)
                 {
+                    $sessoin = Yii::$app->session;
+                    $target = $session['language'];
+                    $tranlateService = new TranslateService($e->getMessage(),$target);
+                    $res = $tranlateService->translate();
+                    if($res === false)
+                    {
+                        $msg = $e->getMessage();
+                    }else{
+                        $msg = $res;
+                    }
                     $responses['messages']['status'] = 2;
-                    $responses['messages']['message'] = $e->getMessage();
+                    $responses['messages']['message'] = $msg;
                     echo  json_encode($responses);die;
                 }
             }

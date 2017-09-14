@@ -5,6 +5,7 @@ use app\controllers\GController;
 use app\modules\home\models\PhoneRegisterForm;
 use app\modules\home\models\RegisterForm;
 use app\modules\home\models\SmsForms\SmsForm;
+use app\modules\home\servers\Translates\TranslateService;
 use Yii;
 use app\modules\home\servers\MailClient;
 use app\modules\home\models\ContactForm;
@@ -186,8 +187,18 @@ class RegisterController extends GController
                     echo json_encode($responses);
                 }catch (\Exception $e)
                 {
+                    $sessoin = Yii::$app->session;
+                    $target = $session['language'];
+                    $tranlateService = new TranslateService($e->getMessage(),$target);
+                    $res = $tranlateService->translate();
+                    if($res === false)
+                    {
+                        $msg = $e->getMessage();
+                    }else{
+                        $msg = $res;
+                    }
                     $responses['messages']['status'] = 2;
-                    $responses['messages']['message'] = $e->getMessage();
+                    $responses['messages']['message'] = $msg;
                     echo json_encode($responses);
                 }
 

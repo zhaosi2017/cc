@@ -84,7 +84,9 @@ $this->title = Yii::t('app/login','Register');
                         $('#register-phone').find('.form-group.field-phoneregisterform-phone').removeClass('has-error');
                         $('#register-phone').find('.form-group.field-phoneregisterform-phone').find('.help-block.help-block-error').text('');
                         $('#register-phone').find('.form-group.field-phoneregisterform-country_code').find('.help-block.help-block-error').text('');
-                  if($('#phoneregisterform-country_code').val() == ''){
+                        $('#error_mes_p').text('');
+
+                   if($('#phoneregisterform-country_code').val() == ''){
 
                         $('#register-phone').find('.form-group.field-phoneregisterform-country_code').removeClass('has-success');
                         $('#register-phone').find('.form-group.field-phoneregisterform-country_code').addClass('has-error');
@@ -145,11 +147,8 @@ $this->title = Yii::t('app/login','Register');
                         $('#count-down').attr('disabled','');
                         var _phone =  $('#register-phone').find('.form-group.field-phoneregisterform-phone');
 //                        if( _phone.hasClass('has-success') || _phone.hasClass('has-error') ||(!_phone.hasClass('has-success') &&  !_phone.hasClass('has-error')) )
-//                        {
-                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').removeClass('has-success');
-                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').addClass('has-error');
-                        $('#phoneregisterform-phone').attr('aria-invalid','false');
-                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').find('.help-block.help-block-error').text('<?=Yii::t("app/login","Hello there! Send text messages too often, please take a break")?>');
+//
+                        $('#error_mes_p').text('<?=Yii::t("app/login","Hello there! Send text messages too often, please take a break")?>');
 //                        }
                         return false;
                         }
@@ -159,10 +158,7 @@ $this->title = Yii::t('app/login','Register');
                             var _phone =  $('#register-phone').find('.form-group.field-phoneregisterform-phone');
                             if( _phone.hasClass('has-success') || _phone.hasClass('has-error') ||(!_phone.hasClass('has-success') &&  !_phone.hasClass('has-error')) )
                             {
-                                $('#register-phone').find('.form-group.field-phoneregisterform-phone').removeClass('has-success');
-                                $('#register-phone').find('.form-group.field-phoneregisterform-phone').addClass('has-error');
-                                $('#phoneregisterform-phone').attr('aria-invalid','false');
-                                $('#register-phone').find('.form-group.field-phoneregisterform-phone').find('.help-block.help-block-error').text(r.messages.message);
+                                $('#error_mes_p').text(r.messages.message);
                             }
                             return false;
                         }
@@ -187,7 +183,9 @@ $this->title = Yii::t('app/login','Register');
                 " value='<?=Yii::t("app/index","Get code")?>'>
                 <div class="help-block"></div>
             </div>
+
             </div>
+                        <div class="col-sm-12" style="margin-top: -12px;"><p style="color: #a94442" id="error_mes_p"></p></div>
             </div>
 
 
