@@ -38,7 +38,7 @@ $this->title =  Yii::t('app/user/update-phone-number','Edit Phone number');
                             <?= $forms->field($model, 'country_code',[
                                 'template' => "<div class=\"col-sm-6 text-right\">{label}</div>\n<div class=\"col-sm-6\" style=\"padding: 0px;\">{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
                                 ])->textInput([
-                                'autofocus' => true,
+
                                 'placeholder'=>Yii::t('app/user/update-phone-number','Country code'),
                                 'size'=>5,
 
@@ -50,7 +50,6 @@ $this->title =  Yii::t('app/user/update-phone-number','Edit Phone number');
                                     'template' => "{label}\n<div class=\"col-sm-12\" style=\"padding: 0px;\">{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
 
                                 ])->textInput([
-                                'autofocus' => true,
                                 'placeholder'=>Yii::t('app/user/update-phone-number','Phone'),
                             ])->label(false) ?>
                         </div>
@@ -77,14 +76,50 @@ $this->title =  Yii::t('app/user/update-phone-number','Edit Phone number');
                         <div class="col-sm-6 " style="">
 <!--                            <div class="form-group" style="    ">-->
                                 <input type="button" id="count-down" class="form-control"  onclick="
+                                        $('#register-phone').find('.form-group.field-phoneregisterform-country_code').find('.help-block.m-b-none').text('');
+                                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').find('.help-block.m-b-none').text('');
+                                        $('#register-phone').find('.form-group.field-phoneregisterform-country_code').removeClass('has-error');
+                                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').removeClass('has-error');
+                                        $('#register-phone').find('.form-group.field-phoneregisterform-country_code').removeClass('has-success');
+                                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').removeClass('has-success');
+                                        $('#error_mes_p').text('');
                                     if($('#phoneregisterform-country_code').val() == ''){
-                                    alert('<?= Yii::t("app/user/update-phone-number", "Country Code is empty")?>');
-                                    return false;
+                                        $('#register-phone').find('.form-group.field-phoneregisterform-country_code').removeClass('has-success');
+                                        $('#register-phone').find('.form-group.field-phoneregisterform-country_code').addClass('has-error');
+                                        $('#phoneregisterform-country_code').attr('aria-invalid','false');
+                                        $('#register-phone').find('.form-group.field-phoneregisterform-country_code').find('.help-block.m-b-none').text('<?=Yii::t("app/login","Country code can not be empty")?>');
+
+                                        return false;
                                     }
+
+                                        if( isNaN($('#phoneregisterform-country_code').val()) ||  $('#phoneregisterform-country_code').val().indexOf('+')==0)
+                                        {
+                                        $('#register-phone').find('.form-group.field-phoneregisterform-country_code').removeClass('has-success');
+                                        $('#register-phone').find('.form-group.field-phoneregisterform-country_code').addClass('has-error');
+                                        $('#phoneregisterform-country_code').attr('aria-invalid','false');
+                                        $('#register-phone').find('.form-group.field-phoneregisterform-country_code').find('.help-block.m-b-none').text('<?=Yii::t("app/login","Country code number must be number")?>');
+
+                                        //alert('国码必须是数字');
+                                        return false;
+                                        }
+
                                     if($('#phoneregisterform-phone').val() == ''){
-                                    alert('<?= Yii::t("app/user/update-phone-number", "Phone Number is empty")?>');
-                                    return false;
+                                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').removeClass('has-success');
+                                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').addClass('has-error');
+                                        $('#phoneregisterform-phone').attr('aria-invalid','false');
+                                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').find('.help-block.m-b-none').text('<?=Yii::t("app/login","The phone can not be empty")?>');
+                                        return false;
                                     }
+
+                                        if( isNaN($('#phoneregisterform-phone').val()) || $('#phoneregisterform-phone').val().indexOf('+')==0)
+                                        {
+                                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').removeClass('has-success');
+                                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').addClass('has-error');
+                                        $('#phoneregisterform-phone').attr('aria-invalid','false');
+                                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').find('.help-block.m-b-none').text('<?= Yii::t("app/login","Phone number must be number")?>');
+
+                                        return false;
+                                        }
 
                                     var duration = 59;
                                     $('#count-down').attr('disabled','disabled');
@@ -97,11 +132,18 @@ $this->title =  Yii::t('app/user/update-phone-number','Edit Phone number');
                                     $.post(url, data).done(function(r) {
                                     r = eval('('+ r + ')');
                                     if(r.messages.status == 1){
-                                    alert('<?= Yii::t("app/user/update-phone-number","Send SMS too often, please take a break")?>');
+
+                                        $('#count-down').attr('disabled','');
+                                        duration = 0;
+                                        $('#error_mes_p').text('<?= Yii::t("app/user/update-phone-number","Send SMS too often, please take a break")?>');
+                                        return false;
                                     }
 
                                     if(r.messages.status == 2){
-                                    alert(r.messages.message);
+                                        duration = 0;
+                                        $('#count-down').attr('disabled','');
+                                        $('#error_mes_p').text(r.messages.message);
+                                        return false;
                                     }
 
                                     });
@@ -121,7 +163,12 @@ $this->title =  Yii::t('app/user/update-phone-number','Edit Phone number');
 <!--                            </div>-->
                         </div>
                     </div>
-
+                <div class="row">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-9" style="    padding-left: 0px;">
+                       <p id ="error_mes_p" style="color: #a94442;"></p>
+                    <div class="col-sm-6"></div>
+                </div>
 
                     <div class="row">
                         <div class="col-sm-3"></div>
