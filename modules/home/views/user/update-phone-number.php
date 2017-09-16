@@ -91,13 +91,19 @@ $this->title =  Yii::t('app/user/update-phone-number','Edit Phone number');
                                     var url = '<?php echo Url::to(['/home/user/send-short-message']); ?>';
                                     var data = {};
 
-                                    data.number = '+' + $('#phoneregisterform-country_code').val() + $('#phoneregisterform-phone').val();
+                                    data.number =   $('#phoneregisterform-country_code').val() + $('#phoneregisterform-phone').val();
                                     data.type   = '<?php echo Yii::$app->controller->action->id; ?>';
+
                                     $.post(url, data).done(function(r) {
                                     r = eval('('+ r + ')');
                                     if(r.messages.status == 1){
                                     alert('<?= Yii::t("app/user/update-phone-number","Send SMS too often, please take a break")?>');
                                     }
+
+                                    if(r.messages.status == 2){
+                                    alert(r.messages.message);
+                                    }
+
                                     });
 
                                     var countDown = function() {
