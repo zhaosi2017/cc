@@ -178,7 +178,7 @@ class Sinch extends TTSAbstarct {
                     "prompts" =>'#tts['.$text.'];myprerecordedfile',
                     'enabledice' => true,
                 ],
-            ]);
+            ], JSON_UNESCAPED_UNICODE);
             $this->signature();
             $response = $this->_curl();
             $response  =json_decode($response);
