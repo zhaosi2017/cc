@@ -101,21 +101,13 @@ $this->title = Yii::t('app/login','Forget password');
                                         $('#register-phone').find('.form-group.field-phoneregisterform-country_code').removeClass('has-success');
                                         $('#register-phone').find('.form-group.field-phoneregisterform-country_code').addClass('has-error');
                                         $('#phoneregisterform-country_code').attr('aria-invalid','false');
-                                        $('#phoneregisterform-country_code').find('.help-block.help-block-error').text('<?=Yii::t("app/login","Country code can not be empty")?>');
+                                        $('#register-phone').find('.form-group.field-phoneregisterform-country_code').find('.help-block.help-block-error').text('<?=Yii::t("app/login","Country code can not be empty")?>');
 
                                         //alert('<?php echo Yii::t("app/login","Country code can not be empty")?>');
                                         return false;
                                         }
-                                        if($('#phoneregisterform-phone').val() == ''){
-                                            console.log($('#phoneregisterform-phone').val());
-                                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').removeClass('has-success');
-                                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').addClass('has-error');
-                                        $('#phoneregisterform-phone').attr('aria-invalid','false');
-                                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').find('.help-block.help-block-error').text('<?=Yii::t("app/login","The phone can not be empty")?>');
 
-                                        //alert('<?php echo Yii::t("app/login","The phone can not be empty")?>');
-                                        return false;
-                                        }
+
                                         if( isNaN($('#phoneregisterform-country_code').val()) || $('#phoneregisterform-country_code').val().indexOf('+')==0)
                                         {
                                         var _contry_code =  $('#register-phone').find('.form-group.field-phoneregisterform-country_code');
@@ -129,6 +121,18 @@ $this->title = Yii::t('app/login','Forget password');
                                         }
                                         return false;
                                         }
+
+                                        if($('#phoneregisterform-phone').val() == ''){
+                                            console.log($('#phoneregisterform-phone').val());
+                                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').removeClass('has-success');
+                                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').addClass('has-error');
+                                        $('#phoneregisterform-phone').attr('aria-invalid','false');
+                                        $('#register-phone').find('.form-group.field-phoneregisterform-phone').find('.help-block.help-block-error').text('<?=Yii::t("app/login","The phone can not be empty")?>');
+
+                                        //alert('<?php echo Yii::t("app/login","The phone can not be empty")?>');
+                                        return false;
+                                        }
+
                                         if( isNaN($('#phoneregisterform-phone').val()) || $('#phoneregisterform-phone').val().indexOf('+')==0)
                                         {
                                         var _phone =  $('#register-phone').find('.form-group.field-phoneregisterform-country_code');

@@ -84,11 +84,12 @@ $this->title = Yii::t('app/login','Register');
                         $('#register-phone').find('.form-group.field-phoneregisterform-phone').removeClass('has-error');
                         $('#register-phone').find('.form-group.field-phoneregisterform-phone').find('.help-block.help-block-error').text('');
                         $('#register-phone').find('.form-group.field-phoneregisterform-country_code').find('.help-block.help-block-error').text('');
-                    if($('#phoneregisterform-country_code').val() == ''){
+                  if($('#phoneregisterform-country_code').val() == ''){
+
                         $('#register-phone').find('.form-group.field-phoneregisterform-country_code').removeClass('has-success');
                         $('#register-phone').find('.form-group.field-phoneregisterform-country_code').addClass('has-error');
                         $('#phoneregisterform-country_code').attr('aria-invalid','false');
-                        $('#phoneregisterform-country_code').find('.help-block.help-block-error').text('<?=Yii::t("app/login","Country code can not be empty")?>');
+                        $('#register-phone').find('.form-group.field-phoneregisterform-country_code').find('.help-block.help-block-error').text('<?=Yii::t("app/login","Country code can not be empty")?>');
 
                         return false;
                     }
