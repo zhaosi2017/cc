@@ -75,7 +75,7 @@ class Infobip extends TTSAbstarct {
         $this->send_data['messages'][0]['from'] = $this->from;
         $this->send_data['messages'][0]['destinations']['to'] = $this->to;
         $this->send_data['messages'][0]['destinations']['messageId'] = $this->uuid_v4();
-        $this->send_data['messages'][0]['text'] = $this->messageText;
+        $this->send_data['messages'][0]['text'] = $this->messageText. ' ' .$this->messageText;
         $this->send_data['messages'][0]['language'] = isset($this->Language_map[$this->Language])?$this->Language_map[$this->Language]:'zh-cn';
         $this->send_data['messages'][0]['sendAt'] = date("c");
         $body = json_encode( $this->send_data , true);
