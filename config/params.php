@@ -29,5 +29,5 @@ return [
         'ja-JP'=>'日本語',
         'km-CB'=>'កម្ពុជា',
     ],
-    'TtsThird'=>'Sinch'
+    'TtsThird'=>'Infobip'
 ];
