@@ -319,7 +319,7 @@ trait  TraitPotato {
             $tmp_tlanguage = $this->tlanguage;
             $tmp_llanguage = $this->llanguage;
             $this->setLanguage($this->calledPersonData->language);
-            $service = TTSservice::init(\app\modules\home\servers\TTSservice\Sinch::class);
+            $service = TTSservice::init();
             $service->from_user_id = $this->callPersonData->id;
             $service->to_user_id = $this->calledPersonData->id;
 
