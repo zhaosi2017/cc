@@ -232,6 +232,10 @@ class Sinch extends TTSAbstarct {
         }
         curl_close($curl);
 
+
+        $fileName = 'sinch_'.date('Y-m-d', time()).'.txt';
+        file_put_contents('/tmp/'.$fileName, var_export($this->body, true).PHP_EOL, 8);
+        file_put_contents('/tmp/'.$fileName, var_export($curl_response, true).PHP_EOL, 8);
         return $curl_response;
     }
 

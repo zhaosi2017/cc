@@ -322,10 +322,22 @@ trait  TraitPotato {
             $service = TTSservice::init(\app\modules\home\servers\TTSservice\Sinch::class);
             $service->from_user_id = $this->callPersonData->id;
             $service->to_user_id = $this->calledPersonData->id;
-            if($call_type == CallRecord::Record_Type_none){
-                $service->messageText = $this->translateLanguage($this->potatoSendFirstName.' 呼叫您上线').' potato';
-            }else{
-                $service->messageText = $this->translateLanguage('请转告 '.$this->potatoContactFirstName.' 上线').' potato';
+
+            // 自定义语音内容.
+            $voiceCacheKey = 'cc_voice_'.$this->callPersonData->id;
+            $voiceContent = '';
+            if (Yii::$app->redis->exists($voiceCacheKey)) {
+                $voiceContent = Yii::$app->redis->get($voiceCacheKey);
+                Yii::$app->redis->del($voiceCacheKey);
+            }
+            if (!empty($voiceContent)) {
+                $service->messageText = $this->translateLanguage($voiceContent);
+            } else {
+                if ($call_type == CallRecord::Record_Type_none) {
+                    $service->messageText = $this->translateLanguage($this->potatoSendFirstName . ' 呼叫您上线') . ' potato';
+                } else {
+                    $service->messageText = $this->translateLanguage('请转告 ' . $this->potatoContactFirstName . ' 上线') . ' potato';
+                }
             }
             $this->tlanguage = $tmp_tlanguage;
             $this->llanguage = $tmp_llanguage;

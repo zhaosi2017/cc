@@ -73,6 +73,7 @@ class ContactForm extends Model
             ['code','required','on'=>['phone','telegram','potato']],
             ['nickname','string','length'=>[2, 6], 'message'=>Yii::t('app/models/ContactForm' , 'Please set 2 to 6 Chinese characters for nickname')/*'昵称请设置2～6个汉字'*/],
             ['phone_number','checkPhone','on'=>['phone']],
+            ['country_code','match', 'pattern' => '/(^[0-9])+/', 'message' => '国码必须为整数','on'=>['phone']],
 
         ];
 
@@ -137,7 +138,7 @@ class ContactForm extends Model
         $verifyCode = $session[$type];
         if(!empty($session['phone_number']) && $phone_number != $session['phone_number'])
         {
-            return -1;
+            return 1;
         }
         if(empty($code) ||  empty($verifyCode) || $verifyCode != strtolower($code))
         {

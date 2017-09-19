@@ -104,6 +104,21 @@ color: white;
         </div>
     </div>
 
+    <div>
+        <div class="row app-bind-div">
+            <div class="col-xs-4 app-bind-1"><?= Yii::t('app/user/index', 'Voice Content') ?></div>
+            <div class="col-xs-4">
+                <?php echo  ($model->voice);?>
+
+            </div>
+            <div class="col-xs-4">
+                <a  class="index-button-1" href="/home/user/set-voice-content" style="padding: 4px 18px;color: white;">
+                    <?php echo ($model->voice)? Yii::t('app/user/index', 'Edit'): Yii::t('app/user/index' , 'Build Now');?></a>
+            </div>
+
+        </div>
+    </div>
+
 
 
 

@@ -37,7 +37,8 @@ class PhoneRegisterForm extends Model
             [['rePassword', 'password'], 'string', 'length' => [8,15]],
             ['rePassword', 'compare', 'compareAttribute'=>'password','operator'=>'===','message'=>'两次密码不一致'],
             ['country_code','required'],
-            [['country_code'],'number'],
+            ['country_code','match', 'pattern' => '/(^[0-9])+/', 'message' => Yii::t("app/login","Country code number must be number")],
+            ['phone','match', 'pattern' => '/(^[0-9])+/', 'message' => Yii::t("app/login","Phone number must be number")],
             [['rePassword', 'password'],'required','on'=>'register'],
 
             ['phone','validatePhone','on'=>'find-password,update-password'],

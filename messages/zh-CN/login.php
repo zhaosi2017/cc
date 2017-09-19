@@ -26,8 +26,8 @@ return [
     'Country Code'=>'国码',
     'Phone number'=>'电话号码',
     'Please input verification code'=>'请输入验证码',
-    'Country code can not be empty'=>'国码不能为空',
-    'The phone can not be empty'=>'电话不能为空',
+    'Country code can not be empty'=>'国码不能为空。',
+    'The phone can not be empty'=>'电话号码不能为空。',
     'Hello there! Send text messages too often, please take a break'=>'你好！发送短信太频繁,请稍微休息哈',
     'Get verification code'=>'获取验证码',
     'Verify the registration email'=>'验证注册邮箱',
@@ -52,7 +52,9 @@ return [
     'Set phone number'=>'请添加联系电话',
     'Bind potato'=>'绑定potato',
     'Bind telegram'=>'绑定telegram',
-    'Please do the following'=>'请做如下操作'
+    'Please do the following'=>'请做如下操作',
+    'Phone number must be number'=>'电话号码必须是整数',
+    'Country code number must be number'=>'国码必须是整数',
 
 
 ];

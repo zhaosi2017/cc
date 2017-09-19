@@ -50,5 +50,7 @@
     'Set phone number'=>'連絡先の電話を追加',
     'Bind potato'=>'バインディング potato',
     'Bind telegram'=>'バインディング telegram',
-    'Please do the following'=>'次の手順を実行してください'
+    'Please do the following'=>'次の手順を実行してください',
+    'Phone number must be number'=>'電話番号は整数でなければなりません',
+    'Country code number must be number'=>'国コードは整数でなければなりません',
     );

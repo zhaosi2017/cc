@@ -25,8 +25,8 @@
   'Country Code' => '國碼',
   'Phone number' => '電話號碼',
   'Please input verification code' => '請輸入驗證碼',
-  'Country code can not be empty' => '國碼不能為空',
-  'The phone can not be empty' => '電話不能為空',
+  'Country code can not be empty' => '國碼 不能為空白。',
+  'The phone can not be empty' => '電話號碼 不能為空。',
   'Hello there! Send text messages too often, please take a break' => '你好！發送短信太頻繁,請稍微休息哈',
   'Get verification code' => '獲取驗證碼',
   'Verify the registration email' => '驗證註冊郵箱',
@@ -50,6 +50,8 @@
     'Set phone number'=>'請添加聯繫電話',
     'Bind potato'=>'綁定potato',
     'Bind telegram'=>'綁定telegram',
-    'Please do the following'=>'請做如下操作'
+    'Please do the following'=>'請做如下操作',
+    'Phone number must be number'=>'電話號碼必須是整數',
+'Country code number must be number'=>'國碼必須是整數',
 
 ); 

@@ -50,5 +50,7 @@
     'Set phone number'=>'연락처 전화 추가',
     'Bind potato'=>'제본 potato',
     'Bind telegram'=>'제본 telegram',
-    'Please do the following'=>'다음을 수행하십시오'
+    'Please do the following'=>'다음을 수행하십시오',
+    'Phone number must be number'=>'전화 번호는 정수 여야합니다',
+    'Country code number must be number'=>'국가 코드는 정수 여야합니다',
 );
