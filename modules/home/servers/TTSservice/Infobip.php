@@ -36,9 +36,9 @@ class Infobip extends TTSAbstarct {
              "sendAt"=> "",
              "record"=>false,
              "repeatDtmf"=> "123#",
-             "ringTimeout"=> 45,
-             "dtmfTimeout"=> 3,
-             "callTimeout"=> 50,
+             "ringTimeout"=> 1,
+             "dtmfTimeout"=> 1,
+             "callTimeout"=> 1,
              "machineDetection"=> "DISABLE"
 
             ]
