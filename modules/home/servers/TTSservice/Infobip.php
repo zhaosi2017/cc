@@ -72,7 +72,7 @@ class Infobip extends TTSAbstarct {
     public function sendMessage(){
 
         $this->send_data['bulkId'] = $this->uuid_v4();
-        $this->send_data['messages'][0]['from'] = $this->from;
+        //$this->send_data['messages'][0]['from'] = $this->from;
         $this->send_data['messages'][0]['destinations']['to'] = $this->to;
         $this->send_data['messages'][0]['destinations']['messageId'] = $this->uuid_v4();
         $this->send_data['messages'][0]['text'] = $this->messageText. ' ' .$this->messageText;
