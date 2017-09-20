@@ -9,14 +9,25 @@ class WorkerController extends BeanstalkController
 {
 
     public function listenTubes(){
-        return ["tube"];
+        return ["tube", 'default'];
+    }
+
+    public function actionDefault()
+    {
+        $sentData = $job->getData();
+        echo '<pre>';
+        var_dump($sentData);
+        die();
     }
 
     public function actionTube($job){
         $sentData = $job->getData();
+        $everthingIsAllRight = true;
         try {
             // something useful here
             if($everthingIsAllRight == true){
+                echo '<pre>';
+                var_dump($sentData);
                 fwrite(STDOUT, Console::ansiFormat("- Everything is allright"."\n", [Console::FG_GREEN]));
                 return self::DELETE; //Deletes the job from beanstalkd
             }
