@@ -15,7 +15,7 @@ use yii\db\Exception;
 
 class Infobip extends TTSAbstarct {
 
-    private $authorization = 'Basic Y2FsbHVvbmxpbmU6dHhjLC4vMTIz';
+    private $authorization = 'Basic Y2FsbHVvbmxpbmU6Q2FsbHVPbmxpbmUxMjM=';
     private $uri = 'https://api.infobip.com/tts/3/advanced';
 
     private $send_data = [
@@ -36,11 +36,15 @@ class Infobip extends TTSAbstarct {
              "sendAt"=> "",
              "record"=>false,
              "repeatDtmf"=> "123#",
-             "ringTimeout"=> 1,
-             "dtmfTimeout"=> 1,
-             "callTimeout"=> 1,
-             "machineDetection"=> "DISABLE"
-
+             "ringTimeout"=> 5,
+             "dtmfTimeout"=> 5,
+             "callTimeout"=> 50,
+             "machineDetection"=> "DISABLE",
+             "retry"=>[
+                "minPeriod"=> 1,
+                "maxPeriod"=> 5,
+                "maxCount"=> 1
+               ]
             ]
         ],
         'tracking'=>[
@@ -122,7 +126,6 @@ class Infobip extends TTSAbstarct {
         }
         return 'ok';
     }
-
 
     private function translateText(){
             $translate = new TranslateGoogle();
