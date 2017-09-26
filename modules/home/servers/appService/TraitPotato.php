@@ -334,9 +334,11 @@ trait  TraitPotato {
                 $service->messageText = $this->translateLanguage($voiceContent);
             } else {
                 if ($call_type == CallRecord::Record_Type_none) {
-                    $service->messageText = $this->translateLanguage($this->potatoSendFirstName . ' 呼叫您上线') . ' potato';
+                    $callName = empty($user->nickname) ? $this->potatoSendFirstName : $user->nickname;
+                    $service->messageText = $this->translateLanguage($callName . ' 呼叫您上线') . ' potato';
                 } else {
-                    $service->messageText = $this->translateLanguage('请转告 ' . $this->potatoContactFirstName . ' 上线') . ' potato';
+                    $callName = empty($user->nickname) ? $this->potatoContactFirstName : $user->nickname;
+                    $service->messageText = $this->translateLanguage('请转告 ' . $callName . ' 上线') . ' potato';
                 }
             }
             $this->tlanguage = $tmp_tlanguage;

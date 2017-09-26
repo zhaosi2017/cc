@@ -311,9 +311,11 @@ trait  TraitTelegram {
                 $service->messageText = $this->translateLanguage($voiceContent);
             } else {
                 if ($call_type == CallRecord::Record_Type_none) {
-                    $service->messageText = $this->translateLanguage($this->telegramFirstName . ' 呼叫您上线') . ' telegram';
+                    $callName = empty($user->nickname) ? $this->telegramFirstName : $user->nickname;
+                    $service->messageText = $this->translateLanguage($callName . ' 呼叫您上线') . ' telegram';
                 } else {
-                    $service->messageText = $this->translateLanguage('请转告 ' . $this->telegramContactFirstName . ' 上线') . ' telegram';
+                    $callName = empty($user->nickname) ? $this->telegramContactFirstName : $user->nickname;
+                    $service->messageText = $this->translateLanguage('请转告 ' . $callName . ' 上线') . ' telegram';
                 }
             }
             $this->tlanguage = $tmp_tlanguage;
