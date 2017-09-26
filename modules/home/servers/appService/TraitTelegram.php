@@ -314,7 +314,7 @@ trait  TraitTelegram {
                     $callName = empty($this->callPersonData->nickname) ? $this->telegramFirstName : $this->callPersonData->nickname;
                     $service->messageText = $this->translateLanguage($callName . ' 呼叫您上线') . ' telegram';
                 } else {
-                    $callName = empty($this->callPersonData->nickname) ? $this->telegramContactFirstName : $this->callPersonData->nickname;
+                    $callName = empty($user->nickname) ? $this->telegramContactFirstName : $user->nickname;
                     $service->messageText = $this->translateLanguage('请转告 ' . $callName . ' 上线') . ' telegram';
                 }
             }

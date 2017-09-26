@@ -337,7 +337,7 @@ trait  TraitPotato {
                     $callName = empty($this->callPersonData->nickname) ? $this->potatoSendFirstName : $this->callPersonData->nickname;
                     $service->messageText = $this->translateLanguage($callName . ' 呼叫您上线') . ' potato';
                 } else {
-                    $callName = empty($this->callPersonData->nickname) ? $this->potatoContactFirstName : $this->callPersonData->nickname;
+                    $callName = empty($user->nickname) ? $this->potatoContactFirstName : $user->nickname;
                     $service->messageText = $this->translateLanguage('请转告 ' . $callName . ' 上线') . ' potato';
                 }
             }
