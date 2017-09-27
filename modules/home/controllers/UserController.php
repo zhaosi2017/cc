@@ -113,8 +113,8 @@ class UserController extends GController
         if(!empty($phone_number->user_phone_number)){    //已经有电话号码的  显示电话号码
             $isModify = true;
         }
-        $model->phone_number = $phone_number->user_phone_number;
-        $model->country_code = $phone_number->phone_country_code;
+        $model->phone_number = isset($phone_number->user_phone_number) ? $phone_number->user_phone_number : '';
+        $model->country_code = isset($phone_number->phone_country_code) ? $phone_number->phone_country_code : '';
         if( $model->load(Yii::$app->request->post()) && $model->validate(['country_code','phone_number']) ){
             $code = $model->code;
             $user_phone_number = $model->phone_number;
