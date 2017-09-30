@@ -389,6 +389,13 @@ class LoginForm extends Model
                 Yii::$app->getSession()->setFlash('step-telegram',json_encode($tmp));
                 $arr[] = $tmp;
             }
+            $_userGentContact = UserGentContact::findOne(['user_id'=>$user->id]);
+            if(empty($_userGentContact))
+            {
+                $tmp = ['type'=>'step-gent-contact', 'url' => '/home/user/add-urgent-contact-person','message'=>Yii::t('app/index','Please add an emergency contact')];
+                Yii::$app->getSession()->setFlash('step-gent-contact',json_encode($tmp));
+                $arr[] = $tmp;
+            }
             $user->step = 1;
             $user->save();
         }
@@ -403,6 +410,7 @@ class LoginForm extends Model
         Yii::$app->getSession()->hasFlash('step-email') && Yii::$app->getSession()->removeFlash('step-email');
         Yii::$app->getSession()->hasFlash('step-username') && Yii::$app->getSession()->removeFlash('step-username');
         Yii::$app->getSession()->hasFlash('step-phone') && Yii::$app->getSession()->removeFlash('step-phone');
+        Yii::$app->getSession()->hasFlash('step-gent-contact') && Yii::$app->getSession()->removeFlash('step-gent-contact');
 
     }
 
@@ -429,6 +437,10 @@ class LoginForm extends Model
         }
 
         $res = Yii::$app->getSession()->getFlash('step-telegram');
+        if(!empty($res)){
+            return json_decode($res,true);
+        }
+        $res = Yii::$app->getSession()->getFlash('step-gent-contact');
         if(!empty($res)){
             return json_decode($res,true);
         }

@@ -30,7 +30,7 @@ class GController extends Controller
                     [
                         'allow' => true,
 //                       'controllers' => ['/home/login'],
-                        'actions' => ['home','welcome','login','register','change-language','captcha','code','complete','find-password-one','find-password-two','find-password-three','find-password-complete',
+                        'actions' => ['sinch-event','home','welcome','login','register','change-language','captcha','code','complete','find-password-one','find-password-two','find-password-three','find-password-complete',
                             'phone-index','mobile-code','forget-password','phone-find-password','phone-password-complete' ],
                         'roles' => ['?'],
                     ],
@@ -83,7 +83,7 @@ class GController extends Controller
     {
 
         $url = '/'.Yii::$app->request->getPathInfo();
-        $arr = ['/home/user/set-phone-number', '/home/potato/bind-potato', '/home/telegram/bind-telegram','/home/user/bind-username','/home/user/bind-email'];
+        $arr = ['/home/user/set-phone-number', '/home/potato/bind-potato', '/home/telegram/bind-telegram','/home/user/bind-username','/home/user/bind-email','/home/user/add-urgent-contact-person'];
         if( !in_array($url,$arr) && Yii::$app->request->isGet )
         {
             $res = LoginForm::checkFlash();

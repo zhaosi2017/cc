@@ -12,7 +12,7 @@ $identity = Yii::$app->user->identity;
 ?>
 <script src="/js/home/jquery.js"></script>
 
- <link href="/css/bootstrap-toggle.min.css" rel="stylesheet">
+ <link href="/css/bootstrap-toggle.min.css?v=1" rel="stylesheet">
 <script src="/js/home/bootstrap-toggle.min.js"></script>
 
 

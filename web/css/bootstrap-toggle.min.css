@@ -31,11 +31,13 @@
     border-color: #38b5e7 !important; 
 }
 .toggle-on{
-    background-color: #38b5e7 !important; 
+    background-color: #4dc74f !important;
+    /*background-color: #38b5e7 !important;*/
     border-color: #38b5e7 !important; 
 }
 .toggle-off{
-     background-color: white !important;
+     background-color: #eee !important;
+     color: #eee !important;
       border-color: #38b5e7 !important; 
 }
 .toggle-group{

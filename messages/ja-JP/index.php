@@ -72,4 +72,5 @@
     'Click "Share your own business card" to enter Figure 5.' => '5を入力して、「自分の名刺を共有する」をクリックします。',
     'In the "Share Your Phone Number?" Box select "OK", enter Figure 6.' => '「あなたの電話番号を共有する？」爆弾ボックスで、「OK」を選択し、6を入力します。',
     'Will fill in the verification code to fill in the "verification code" input box, the binding.' => 'あなたは結合のために、「コード」の入力ボックスを完了するために確認コードを受け取ることになります。',
-); 
+    'Please add an emergency contact'=>'緊急連絡先を追加してください',
+    );
