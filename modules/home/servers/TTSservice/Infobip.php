@@ -100,7 +100,6 @@ class Infobip extends TTSAbstarct {
 
 
 
-
     public function event($event_data){
         $this->messageId = $event_data['results'][0]['bulkId'];
         $result = isset($event_data['results'][0]['error']['id'])?$event_data['results'][0]['error']['id']:0;

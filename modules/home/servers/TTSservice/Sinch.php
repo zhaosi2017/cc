@@ -148,7 +148,7 @@ class Sinch extends TTSAbstarct {
             $curl_response = curl_exec($curl);
 
         }catch (Exception $e){
-            $this->error('Curl error: '. curl_error($curl));
+            $this->error = 'Curl error: '. curl_error($curl);
         }
         curl_close($curl);
 

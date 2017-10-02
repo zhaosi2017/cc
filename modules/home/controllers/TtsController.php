@@ -110,4 +110,12 @@ class TtsController extends GController{
 
     }
 
+
+
+    public function actionTestSinch(){
+
+        $abc = new Infobip();
+        //$abc->getResult();
+
+    }
 }
