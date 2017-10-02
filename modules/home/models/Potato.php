@@ -1652,7 +1652,7 @@ class Potato extends Model
         if (empty($url)) {
             $url = $this->getWebhook();
         }
-
+        file_put_contents('/tmp/cc_potato'.date('Y-m-d').'.log' , var_export($this->sendData , true) , 8);
         $curl = curl_init();
         curl_setopt_array(
             $curl,
