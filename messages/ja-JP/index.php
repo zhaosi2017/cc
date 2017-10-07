@@ -73,4 +73,6 @@
     'In the "Share Your Phone Number?" Box select "OK", enter Figure 6.' => '「あなたの電話番号を共有する？」爆弾ボックスで、「OK」を選択し、6を入力します。',
     'Will fill in the verification code to fill in the "verification code" input box, the binding.' => 'あなたは結合のために、「コード」の入力ボックスを完了するために確認コードを受け取ることになります。',
     'Please add an emergency contact'=>'緊急連絡先を追加してください',
+    'Emergency contacts add up to 5'=>'5つの緊急連絡先まで追加',
+    'Contact numbers add up to 10'=>'電話番号は10まで追加します',
     );

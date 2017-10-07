@@ -74,4 +74,6 @@
     'In the "Share Your Phone Number?" Box select "OK", enter Figure 6.' => '"내 전화 번호를 공유?"폭탄 상자, "OK" 선택에서 6을 입력합니다.',
     'Will fill in the verification code to fill in the "verification code" input box, the binding.' => '당신은 바인딩에 대해 "코드"입력 상자를 완료하기 위해 인증 코드가 전송됩니다.',
     'Please add an emergency contact'=>'비상 연락처를 추가하십시오.',
+    'Emergency contacts add up to 5'=>'오 비상 연락처까지 추가',
+    'Contact numbers add up to 10'=>'전화 번호는 최대 10 개까지 추가',
     );

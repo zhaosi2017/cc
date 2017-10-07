@@ -116,6 +116,11 @@ class UserController extends GController
         $model->phone_number = isset($phone_number->user_phone_number) ? $phone_number->user_phone_number : '';
         $model->country_code = isset($phone_number->phone_country_code) ? $phone_number->phone_country_code : '';
         if( $model->load(Yii::$app->request->post()) && $model->validate(['country_code','phone_number']) ){
+            $_count = UserPhone::find()->where(['user_id'=>Yii::$app->user->id])->count();
+            if($_count >=  UserPhone::LIMIT_ADD_NUM){
+                Yii::$app->getSession()->setFlash('error', Yii::t('app/index','Contact numbers add up to 10'));
+                return $this->redirect('set-phone-number');
+            }
             $code = $model->code;
             $user_phone_number = $model->phone_number;
             $phone_country_code = $model->country_code;
@@ -437,6 +442,13 @@ class UserController extends GController
         $model = $this->findModel(Yii::$app->user->id);
         $request = Yii::$app->request->get();
         if (!empty(Yii::$app->request->post('UserGentContact'))) {
+
+            $_count = UserGentContact::find()->where(['user_id'=> Yii::$app->user->id])->count();
+            if($_count >=5)
+            {
+                Yii::$app->getSession()->setFlash('error',  Yii::t('app/index','Emergency contacts add up to 5'));
+                return $this->redirect(['/home/user/links']);
+            }
 
             $contact_id = isset($request['id'])?$request['id'] :'';
 

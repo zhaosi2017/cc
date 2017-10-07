@@ -73,4 +73,6 @@
     'In the "Share Your Phone Number?" Box select "OK", enter Figure 6.' => 'នៅក្នុង "ការចែករំលែកលេខទូរស័ព្ទរបស់អ្នក?" ប្រអប់គ្រាប់បែកជ្រើសយល់ព្រម "បញ្ចូល" 6 ។.',
     'Will fill in the verification code to fill in the "verification code" input box, the binding.' => 'អ្នកនឹងទទួលបានកូដផ្ទៀងផ្ទាត់ដើម្បីបញ្ចប់ "ក្រម" ប្រអប់បញ្ចូលសម្រាប់ចង។.',
     'Please add an emergency contact'=>'សូមបន្ថែមទំនាក់ទំនងសង្',
+    'Emergency contacts add up to 5'=>'បន្ថែមរហូតដល់ទៅប្រាំទំនាក់ទំន',
+    'Contact numbers add up to 10'=>'ទូរស័ព្ទរហូតដល់ 10',
     );

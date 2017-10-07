@@ -83,5 +83,7 @@ return [
     'Click "Share your own business card" to enter Figure 5.'=>'点击“分享自己名片”，进入图5。',
     'In the "Share Your Phone Number?" Box select "OK", enter Figure 6.'=>'在“Share Your Phone Number？”弹框中选择"OK"，进入图6。',
     'Will fill in the verification code to fill in the "verification code" input box, the binding.'=>'将收到的验证码填写到“验证码”输入框，进行绑定。',
-    'Please add an emergency contact'=>'请添加紧急联系人'
+    'Please add an emergency contact'=>'请添加紧急联系人',
+    'Emergency contacts add up to 5'=>'紧急联系人最多添加5个',
+    'Contact numbers add up to 10'=>'联系电话最多添加10个',
     ];

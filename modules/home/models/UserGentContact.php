@@ -27,6 +27,7 @@ use yii\web\IdentityInterface;
 
 class UserGentContact extends  CActiveRecord{
 
+    const LIMIT_ADD_NUM = 5; //紧急联系人 最多添加5个
     /**
      * This is the model class for table "user".
      *

@@ -73,4 +73,6 @@
     'In the "Share Your Phone Number?" Box select "OK", enter Figure 6.' => '在“Share Your Phone Number？”彈框中選擇"OK"，進入圖6。',
     'Will fill in the verification code to fill in the "verification code" input box, the binding.' => '將收到的驗證碼填寫到“驗證碼”輸入框，進行綁定。',
     'Please add an emergency contact'=>'請添加緊急聯繫人',
+    'Emergency contacts add up to 5'=>'緊急聯繫人最多添加5個',
+    'Contact numbers add up to 10'=>'最多添加10個聯繫電話',
     );

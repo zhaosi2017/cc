@@ -20,6 +20,7 @@ use app\modules\home\models\User;
  */
 class UserPhone extends CActiveRecord
 {
+    const LIMIT_ADD_NUM = 10;
     /**
      * @inheritdoc
      */
