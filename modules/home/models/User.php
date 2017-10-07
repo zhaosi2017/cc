@@ -84,7 +84,7 @@ class User extends CActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['account', 'nickname','username', 'reg_ip'], 'string'],
+            [['account', 'nickname','username', 'reg_ip','email'], 'string'],
 
             [[
                 'un_call_number',
@@ -108,9 +108,9 @@ class User extends CActiveRecord implements IdentityInterface
             ['username','required','on'=>'bind-username'],
             ['username','checkUsername','on'=>'bind-username'],
             [['username'],'string','min'=>2,'max'=>20,'on'=>'bind-username'],
-            ['account','checkAccount','on'=>'bind-email'],
-            ['account','required','message'=>Yii::t('app/models/user','Email can not be empty'),'on'=>'bind-email'],
-            ['account','email','message'=>Yii::t('app/models/user','Email format is incorrect'),'on'=>'bind-email'],
+            ['email','checkAccount','on'=>'bind-email'],
+            ['email','required','message'=>Yii::t('app/models/user','Email can not be empty'),'on'=>'bind-email'],
+            ['email','email','message'=>Yii::t('app/models/user','Email format is incorrect'),'on'=>'bind-email'],
 
         ];
     }
@@ -123,7 +123,7 @@ class User extends CActiveRecord implements IdentityInterface
         return [
             'id' => 'ID',
             'auth_key' => 'Auth Key',
-            'account' => Yii::t('app/models/user','Email'),
+            'email' => Yii::t('app/models/user','Email'),
             'username'=>Yii::t('app/models/user','Username'),
             'nickname' => Yii::t('app/models/user','Nickname'),
             'un_call_number' => Yii::t('app/harassment','Total number of times to be called'),
@@ -149,7 +149,7 @@ class User extends CActiveRecord implements IdentityInterface
         $res = [
             'harassment'=>['un_call_number','un_call_by_same_number','long_time'],
             'bind-username'=>['username'],
-            'bind-email'=>['account'],
+            'bind-email'=>['email'],
             'change-language'=>['language'],
             'bind-nickname'=>['nickname'],
         ];
@@ -187,7 +187,8 @@ class User extends CActiveRecord implements IdentityInterface
 
     public function checkAccount ($attribute)
     {
-        $rows = User::find()->select(['account'])->indexBy('id')->column();
+        $rows = User::find()->select(['email'])->indexBy('id')->column();
+
         $accounts = [];
         foreach ($rows as $i => $v)
         {
@@ -200,7 +201,7 @@ class User extends CActiveRecord implements IdentityInterface
 
         }
 
-        if(in_array($this->account, $accounts)){
+        if(in_array($this->email, $accounts)){
             $this->addError($attribute, Yii::t('app/models/user','The email already exists'));
         }
     }
@@ -223,17 +224,19 @@ class User extends CActiveRecord implements IdentityInterface
                 $this->reg_ip = Yii::$app->request->userIP;
                 $this->reg_time = $_SERVER['REQUEST_TIME'];
                 $this->auth_key = Yii::$app->security->generateRandomString();
-                $this->account  = base64_encode(Yii::$app->security->encryptByKey($this->account, Yii::$app->params['inputKey']));
-                $this->username  = base64_encode(Yii::$app->security->encryptByKey($this->username, Yii::$app->params['inputKey']));
+//                $this->account  = base64_encode(Yii::$app->security->encryptByKey($this->account, Yii::$app->params['inputKey']));
+                $this->email &&  $this->email  = base64_encode(Yii::$app->security->encryptByKey($this->email, Yii::$app->params['inputKey']));
+                $this->username && $this->username  = base64_encode(Yii::$app->security->encryptByKey($this->username, Yii::$app->params['inputKey']));
                 $this->password && $this->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
                 $this->nickname && $this->nickname = base64_encode(Yii::$app->security->encryptByKey($this->nickname, Yii::$app->params['inputKey']));
             }else{
                 if(!empty(array_column(Yii::$app->request->post(),'password'))){    //必须是post中的password 否则出现二次加密
                     $this->password = Yii::$app->getSecurity()->generatePasswordHash(array_column(Yii::$app->request->post(),'password')[0]);
                 }
-                $this->username = base64_encode(Yii::$app->security->encryptByKey($this->username, Yii::$app->params['inputKey']));
-                $this->account = base64_encode(Yii::$app->security->encryptByKey($this->account, Yii::$app->params['inputKey']));
-                $this->nickname = base64_encode(Yii::$app->security->encryptByKey($this->nickname, Yii::$app->params['inputKey']));
+                $this->username &&  $this->username = base64_encode(Yii::$app->security->encryptByKey($this->username, Yii::$app->params['inputKey']));
+//                $this->account = base64_encode(Yii::$app->security->encryptByKey($this->account, Yii::$app->params['inputKey']));
+                $this->email && $this->email = base64_encode(Yii::$app->security->encryptByKey($this->email, Yii::$app->params['inputKey']));
+                $this->nickname && $this->nickname = base64_encode(Yii::$app->security->encryptByKey($this->nickname, Yii::$app->params['inputKey']));
             }
             return true;
         }
@@ -243,10 +246,10 @@ class User extends CActiveRecord implements IdentityInterface
     public function afterFind()
     {
         parent::afterFind();
-        $this->account = Yii::$app->security->decryptByKey(base64_decode($this->account), Yii::$app->params['inputKey']);
+//        $this->account = Yii::$app->security->decryptByKey(base64_decode($this->account), Yii::$app->params['inputKey']);
         $this->nickname && $this->nickname = Yii::$app->security->decryptByKey(base64_decode($this->nickname), Yii::$app->params['inputKey']);
         $this->username && $this->username = Yii::$app->security->decryptByKey(base64_decode($this->username), Yii::$app->params['inputKey']);
-
+        $this->email &&  $this->email = Yii::$app->security->decryptByKey(base64_decode($this->email), Yii::$app->params['inputKey']);
     }
 
     /**

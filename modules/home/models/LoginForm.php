@@ -304,7 +304,7 @@ class LoginForm extends Model
     public function getIdentity()
     {
         if($this->identity === false){
-            $accounts = User::find()->select(['id','account'])->indexBy('account')->column();
+            $accounts = User::find()->select(['id','email'])->indexBy('email')->column();
             foreach ($accounts as $account => $id){
                 $this->username == Yii::$app->security->decryptByKey(base64_decode($account),Yii::$app->params['inputKey'])
                 && $this->identity = User::findOne($id);
@@ -317,7 +317,7 @@ class LoginForm extends Model
     {
         if($this->identity === false)
         {
-            $accounts = User::find()->select(['id','account'])->indexBy('account')->column();
+            $accounts = User::find()->select(['id','email'])->indexBy('email')->column();
             foreach ($accounts as $account => $id){
                 $this->username == Yii::$app->security->decryptByKey(base64_decode($account),Yii::$app->params['inputKey'])
                 && $this->identity = User::findOne($id);

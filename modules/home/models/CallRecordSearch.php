@@ -23,7 +23,7 @@ class CallRecordSearch extends CallRecord
     public function rules()
     {
         return [
-            [['id', 'active_call_uid', 'unactive_call_uid', 'call_by_same_times', 'type', 'status'], 'integer'],
+            [['id', 'active_call_uid', 'unactive_call_uid', 'type', 'status'], 'integer'],
             [['contact_number', 'search_type', 'search_keywords', 'active_account', 'call_time_start', 'call_time_end'], 'safe'],
             // [['call_time_start','call_time_end'],'required'],
         ];
@@ -87,7 +87,7 @@ class CallRecordSearch extends CallRecord
             'id' => $this->id,
             'active_call_uid' => $this->active_call_uid,
             'unactive_call_uid' => $this->unactive_call_uid,
-            'call_by_same_times' => $this->call_by_same_times,
+//            'call_by_same_times' => $this->call_by_same_times,
             'type' => $this->type,
             'status' => $this->status,
             'call_time' => $this->call_time,

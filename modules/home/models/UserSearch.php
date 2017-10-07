@@ -70,7 +70,7 @@ class UserSearch extends User
 
         $query->andFilterWhere(['like', 'auth_key', $this->auth_key])
             ->andFilterWhere(['like', 'password', $this->password])
-            ->andFilterWhere(['like', 'account', $this->account])
+            ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'nickname', $this->nickname])
             ->andFilterWhere(['like', 'phone_number', $this->phone_number])
             ->andFilterWhere(['like', 'urgent_contact_number_one', $this->urgent_contact_number_one])

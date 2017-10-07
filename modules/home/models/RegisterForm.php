@@ -64,7 +64,8 @@ class RegisterForm extends Model
     {
         $session = Yii::$app->session ;
         $user = new User();
-        $user->account = $this->username;
+//        $user->account = $this->username;
+        $user->email = $this->username;
         $user->password = $this->password;
         $user->login_time = time();
         $user->login_ip = Yii::$app->request->getUserIP();
@@ -74,7 +75,7 @@ class RegisterForm extends Model
 
     public function validateExist($attribute)
     {
-        $rows = User::find()->select(['account'])->indexBy('id')->column();
+        $rows = User::find()->select(['email'])->indexBy('id')->column();
 
         $accounts = [];
         foreach ($rows as $i => $v)

@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-$this->title = empty($model->account)?Yii::t('app/user/bind-email','Bind Eamil'):Yii::t('app/user/bind-email','Edit Eamil');
+$this->title = empty($model->email)?Yii::t('app/user/bind-email','Bind Eamil'):Yii::t('app/user/bind-email','Edit Eamil');
 $this->params['breadcrumbs'][] = $this->title;
 /* @var $this yii\web\View */
 /* @var $model app\modules\home\models\User */
@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'account',[
+    <?= $form->field($model, 'email',[
         'template' => "{label}\n<div class=\"col-sm-3\"> {input}  </div> 
                                 <span class=\"col-sm-8 \" style='padding-top: 9px'>*".
                                         Yii::t('app/user/bind-email' , 'Please Entry your Eamil address')

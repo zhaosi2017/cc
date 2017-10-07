@@ -5,7 +5,7 @@ $languages = Yii::$app->params['languages'];
 if(!Yii::$app->user->isGuest){
     $identity = Yii::$app->user->identity;
     $identity = (Object) $identity;
-    $username = !empty($identity->account)? $identity->account : '';
+    $username = !empty($identity->email)? $identity->email : '';
     if(empty($username)){
         $username = !empty($identity->username)? $identity->username : '';
     }

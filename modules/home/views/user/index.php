@@ -46,7 +46,7 @@ color: white;
         <div class="row app-bind-div">
             <div class="col-xs-4 app-bind-1"><?= Yii::t('app/user/index', 'Bind Email') ?></div>
             <div class="col-xs-4">
-                <?php echo  ($model->account) ? $model->account: '<span style="color:rgb(255,102,0);">'.
+                <?php echo  ($model->email) ? $model->email: '<span style="color:rgb(255,102,0);">'.
                     Yii::t('app/user/index','No Email')
 
                     .'</span>';?>

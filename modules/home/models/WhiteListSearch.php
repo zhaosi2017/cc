@@ -80,7 +80,7 @@ class WhiteListSearch extends WhiteList
 
 
         $query = $query->andFilterWhere(['in', 'white_uid',$this->selectUserIds()]);
-        $this->search_type == 1 && !empty($this->search_keywords) && strlen($this->search_keywords)>0 && $query->andFilterWhere(['in', 'white_uid', $this->searchIds($this->search_keywords,'account')]);
+        $this->search_type == 1 && !empty($this->search_keywords) && strlen($this->search_keywords)>0 && $query->andFilterWhere(['in', 'white_uid', $this->searchIds($this->search_keywords,'email')]);
         $this->search_type == 2 && !empty($this->search_keywords) && strlen($this->search_keywords)>0 && $query->andFilterWhere(['in', 'white_uid', $this->searchIds($this->search_keywords,'telegram_number')]);
         $this->search_type == 3 && !empty($this->search_keywords) && strlen($this->search_keywords)>0 && $query->andFilterWhere(['in', 'white_uid', $this->searchIds($this->search_keywords,'potato_number')]);
 
@@ -104,7 +104,7 @@ class WhiteListSearch extends WhiteList
 
         return  $query;
     }
-    public function searchIds($searchWords, $field='account')
+    public function searchIds($searchWords, $field='email')
     {
         $ids = [0];
         $query = User::find()->select([$field,'id'])->all();

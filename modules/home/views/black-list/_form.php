@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'account')->textInput(['placeholder'=>'请输入邮箱'])->label('用户名：') ?>
+    <?= $form->field($model, 'email')->textInput(['placeholder'=>'请输入邮箱'])->label('用户名：') ?>
 
     <div class="form-group">
         <?= Html::submitButton('添加', ['class' => 'btn btn-primary']) ?>

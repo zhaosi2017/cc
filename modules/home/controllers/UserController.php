@@ -552,12 +552,14 @@ class UserController extends GController
         $id = Yii::$app->user->id;
         $model = $this->findModel($id);
         $model->scenario = 'bind-email';//邮箱
-        if($model->load(Yii::$app->request->post()) && $model->validate('account')){
+
+        if($model->load(Yii::$app->request->post()) && $model->validate('email')){
+
             $emailModel = new EmailForm();
-            $key = $model->account.'bindemail';
+            $key = $model->email.'bindemail';
             $session = Yii::$app->session;
             $session[$key]   =  $verifyCode = ContactForm::makeCode();
-            $email = $emailModel->username =$model->account;
+            $email = $emailModel->username =$model->email;
             $data = ['email' => $email, 'verifyCode' => $verifyCode];
             $client = new MailClient();
             $client->connect();
@@ -577,7 +579,7 @@ class UserController extends GController
             if($model->validate(['username','code'])){
                 $id = Yii::$app->user->id;
                 $userModel = $this->findModel($id);
-                $userModel->account = $model->username;
+                $userModel->email = $model->username;
                 $userModel->save();
                 Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Mailbox binding is successful'));
                 return $this->redirect('/home/user/index')->send();
