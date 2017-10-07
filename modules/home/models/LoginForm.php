@@ -360,7 +360,7 @@ class LoginForm extends Model
         $user = User::findOne(Yii::$app->user->id);
         $arr= [];
         if($user->step == 0) {
-            if(empty($user->account)){
+            if(empty($user->email)){
                 $tmp = [ 'type'=>'step-email','url' => '/home/user/bind-email', 'message' => Yii::t('app/index', 'Please edit : email')];
                 Yii::$app->getSession()->setFlash('step-email',json_encode($tmp));
                 $arr[] = $tmp;
