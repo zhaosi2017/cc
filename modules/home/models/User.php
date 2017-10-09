@@ -200,7 +200,6 @@ class User extends CActiveRecord implements IdentityInterface
             $accounts[] = Yii::$app->security->decryptByKey(base64_decode($v), Yii::$app->params['inputKey']);
 
         }
-
         if(in_array($this->email, $accounts)){
             $this->addError($attribute, Yii::t('app/models/user','The email already exists'));
         }
