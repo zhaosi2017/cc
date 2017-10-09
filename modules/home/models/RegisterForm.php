@@ -2,11 +2,13 @@
 
 namespace app\modules\home\models;
 
+use app\modules\home\servers\UcodeService;
 use Yii;
 use yii\base\Model;
 use yii\captcha\CaptchaValidator;
 use app\modules\home\models\ContactForm;
 use app\modules\home\models\User;
+
 
 /**
  * LoginForm is the model behind the login form.
@@ -64,7 +66,7 @@ class RegisterForm extends Model
     {
         $session = Yii::$app->session ;
         $user = new User();
-//        $user->account = $this->username;
+        $user->account = UcodeService::makeCode();
         $user->email = $this->username;
         $user->password = $this->password;
         $user->login_time = time();

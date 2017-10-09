@@ -2,6 +2,7 @@
 
 namespace app\modules\home\models;
 
+use app\modules\home\servers\UcodeService;
 use Yii;
 use yii\base\Model;
 use yii\captcha\CaptchaValidator;
@@ -118,6 +119,7 @@ class PhoneRegisterForm extends Model
         $user->login_time = time();
         $user->login_ip = Yii::$app->request->getUserIP();
         $user->language = $session['language'] ? $session['language'] :'zh-CN';
+        $user->account = UcodeService::makeCode();
         $transaction = Yii::$app->db->beginTransaction();
         if($user->insert()){
             $userPhone = new UserPhone();
