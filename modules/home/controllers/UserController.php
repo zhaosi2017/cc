@@ -570,7 +570,7 @@ class UserController extends GController
             $emailModel = new EmailForm();
             $key = $model->email.'bindemail';
             $session = Yii::$app->session;
-            $session[$key]   =  $verifyCode = ContactForm::makeCode();
+            $session[$key]   =  $verifyCode = ContactForm::makeVerifyCode();
             $email = $emailModel->username =$model->email;
             $data = ['email' => $email, 'verifyCode' => $verifyCode];
             $client = new MailClient();
