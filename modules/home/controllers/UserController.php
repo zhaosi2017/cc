@@ -6,6 +6,7 @@ use app\modules\home\models\ContactForm;
 use app\modules\home\models\EmailForm;
 use app\modules\home\models\LoginForm;
 use app\modules\home\models\PasswordForm;
+use app\modules\home\models\PhoneForms\NewPhoneForm;
 use app\modules\home\models\PhoneRegisterForm;
 use app\modules\home\models\SmsForms\SmsForm;
 use app\modules\home\models\UserGentContact;
@@ -149,6 +150,42 @@ class UserController extends GController
             }
         }
         return $this->render('set-phone-number',['model'=>$model, 'isModify' => $isModify]);
+    }
+
+    public function actionNewPhoneNumber()
+    {
+        $id = Yii::$app->user->id;
+        $model = new NewPhoneForm();
+        $model->scenario='phone';
+        if( $model->load(Yii::$app->request->post()) && $model->validate(['country_code','phone_number']) ) {
+
+
+            $code = $model->code;
+            $user_phone_number = $model->phone_number;
+            $phone_country_code = $model->country_code;
+            $type = Yii::$app->controller->action->id;
+            $phone_numbers = $model->country_code . $model->phone_number;
+            $res = ContactForm::validateSms($type, $code, $phone_numbers);
+
+            if ($res === -1) {
+                $model->addError('phone_number', Yii::t('app/index', 'Phone or country code changes'));
+                return $this->render('new-phone-number', ['model' => $model]);
+            }
+
+            if ($res === 1) {
+                $model->addError('code', Yii::t('app/index', 'Verification code error'));
+                return $this->render('new-phone-number', ['model' => $model]);
+            }
+
+
+            if($model->addPhoneNumber())
+            {
+                Yii::$app->getSession()->setFlash('success', Yii::t('app/index', 'Successful operation'));
+                return $this->redirect(['/home/user/index']);
+            }
+
+        }
+        return $this->render('new-phone-number',['model'=>$model]);
     }
 
     /**

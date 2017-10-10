@@ -33,11 +33,9 @@ color: white;
 
 "><?= Yii::t('app/user/index', 'Edit')?></a>
                 <?php }else{?>
-                    <a  class="index-button-1" href="/home/user/set-phone-number" style="    padding: 4px 18px;
-    
-color: white;
+<!--                    <a  class="index-button-1" href="/home/user/set-phone-number" style="    padding: 4px 18px;color: white;"> --><?//= Yii::t('app/user/index' , 'Build Now')?><!--</a>-->
+                    <a  class="index-button-1" href="/home/user/new-phone-number" style="    padding: 4px 18px;color: white;"> <?= Yii::t('app/user/index' , 'Build Now')?></a>
 
-"> <?= Yii::t('app/user/index' , 'Build Now')?></a>
                 <?php }?>
             </div>
         </div>
