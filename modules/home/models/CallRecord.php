@@ -60,7 +60,7 @@ class CallRecord extends \app\models\CActiveRecord
             [['active_nickname', 'unactive_nickname'], 'string', 'max' => 50],
             [['contact_number'], 'string', 'max' => 64],
             [['unactive_contact_number'], 'string', 'max' => 15],
-            [['long_time','total_nums'],'safe'],
+            [['long_time','total_nums','active_code'],'safe'],
         ];
     }
 

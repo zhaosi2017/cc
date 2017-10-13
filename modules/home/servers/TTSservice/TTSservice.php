@@ -339,6 +339,8 @@ class TTSservice{
         $callRecord->status = $this->third->messageStatus;        //呼叫状态
         $callRecord->call_time = time();                          //呼叫发起时间
         $callRecord->type = $data['call_type'];                        //呼叫的类型 紧急联系人呼叫 ？ 正常呼叫？
+        $_user = User::find()->select('country_code')->where(['id'=>$data['from_id']])->one();
+        $callRecord->active_code = isset($_user['country_code'])  && $_user['country_code']? $_user['country_code'] :'';
         $callRecord->save();
     }
 
