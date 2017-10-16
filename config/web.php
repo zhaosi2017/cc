@@ -7,7 +7,6 @@ $config = [
     'timeZone' => 'Asia/Phnom_Penh',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
-    'catchAll' => ['site/my-index'],
     'components' => [
         'i18n' => [
             //'class' => yii\i18n\I18N::className(), 默认的就不需要修改--------------------
