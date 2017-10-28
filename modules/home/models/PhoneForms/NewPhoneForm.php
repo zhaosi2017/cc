@@ -84,8 +84,9 @@ class NewPhoneForm extends Model
     public function checkPhone($attribute)
     {
         $res = User::findOne(['phone_number'=>$this->phone_number]);
+        $_userPhone = UserPhone::find()->where(['user_phone_number'=>$this->phone_number])->one();
 
-        if(!empty($res))
+        if(!empty($res) || !empty($_userPhone));
         {
             $this->addError('phone_number',Yii::t('app/models/ContactForm' , 'The phone already exists'));
         }
