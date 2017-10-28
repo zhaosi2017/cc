@@ -717,9 +717,5 @@ class UserController extends GController
     }
 
 
-    public function actionTest()
-    {
-        echo 1;die;
-    }
 
 }
