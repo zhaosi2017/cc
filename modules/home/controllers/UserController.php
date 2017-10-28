@@ -716,4 +716,10 @@ class UserController extends GController
         return json_encode(['status'=>1]);
     }
 
+
+    public function actionTest()
+    {
+        echo 1;die;
+    }
+
 }
