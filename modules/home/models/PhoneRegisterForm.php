@@ -9,6 +9,7 @@ use yii\captcha\CaptchaValidator;
 use app\modules\home\models\ContactForm;
 use app\modules\home\models\User;
 use app\modules\home\models\UserPhone;
+use yii\db\Transaction;
 
 /**
  * LoginForm is the model behind the login form.
@@ -84,8 +85,10 @@ class PhoneRegisterForm extends Model
 
     public function checkPhone($attribute)
     {
-        $res =  User::findOne(['phone_number'=>$this->phone]);
-        if( !empty($res) && $res->id != Yii::$app->user->id){
+        $res = User::findOne(['country_code'=>$this->country_code,'phone_number'=>$this->phone]);
+        $_userPhone = UserPhone::find()->where(['phone_country_code'=>$this->country_code,'user_phone_number'=>$this->phone])->one();
+
+        if( !empty($res) || !empty($_userPhone)){
             $this->addError('phone',Yii::t('app/models/phone-register-form','The phone number already exists'));
         }
     }
@@ -93,13 +96,13 @@ class PhoneRegisterForm extends Model
 
     public function validateExist($attribute)
     {
-        $user = User::findOne(['phone_number'=>$this->phone]);
+        $user = User::findOne(['country_code'=>$this->country_code,'phone_number'=>$this->phone]);
         if(!empty($user))
         {
             $this->addError($attribute, Yii::t('app/models/phone-register-form','This phone number is already occupied'));
             return ;
         }
-        $userPhone = UserPhone::findOne(['user_phone_number'=>$this->phone]);
+        $userPhone = UserPhone::findOne(['phone_country_code'=>$this->country_code,'user_phone_number'=>$this->phone]);
 
 
         if(!empty($userPhone)){
@@ -113,6 +116,7 @@ class PhoneRegisterForm extends Model
 
     public function register()
     {
+
         $session = Yii::$app->session;
         $user = new User();
         $user->password = $this->password;
@@ -120,19 +124,24 @@ class PhoneRegisterForm extends Model
         $user->login_ip = Yii::$app->request->getUserIP();
         $user->language = $session['language'] ? $session['language'] :'zh-CN';
         $user->account = UcodeService::makeCode();
-        $transaction = Yii::$app->db->beginTransaction();
+        $user->country_code = $this->country_code;
+        $user->phone_number = $this->phone;
+        Yii::$app->db->beginTransaction(Transaction::READ_COMMITTED);
+        $transaction = Yii::$app->db->getTransaction();
         if($user->insert()){
-            $userPhone = new UserPhone();
+            $userPhone = new  UserPhone();
             $userPhone->user_id = $user->id;
-            $userPhone->phone_country_code = $this->country_code;
             $userPhone->user_phone_number = $this->phone;
-            $status = $userPhone->save();
-            if($status){
+            $userPhone->phone_country_code = $this->country_code;
+            if($userPhone->save())
+            {
                 $transaction->commit();
+                return true;
+
             }else{
                 $transaction->rollBack();
+                return false;
             }
-            return $status;
         }else{
             $transaction->rollBack();
             return false;

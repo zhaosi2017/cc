@@ -668,31 +668,30 @@ class UserController extends GController
         $model->setScenario('update-phone');
         if(Yii::$app->request->isPost){
 
-            if($model->load(Yii::$app->request->post()) )
-            {
+            $model->setScenario('update-phone');
 
-                if( $model->load(Yii::$app->request->post()) && $model->validate('country_code','phone','code')){
+            if( $model->load(Yii::$app->request->post()) && $model->validate('country_code','phone','code')){
 
-                    $code =$_POST['PhoneRegisterForm']['code'];
-                    $type = Yii::$app->controller->action->id;
-                    $phone_number = $model->country_code.$model->phone;
-                    $res = ContactForm::validateSms($type, $code,$phone_number);
-                    if($res === -1){
-                        $model->addError('phone', Yii::t('app/index','Phone or country code changes'));
-                        return $this->render('update-phone-number',['model'=>$model]);
-                    }
-                    if($res === 1){
-                        $model->addError('code', Yii::t('app/index','Verification code error'));
-                        return $this->render('update-phone-number',['model'=>$model]);
-                    }
-                    $userModel->phone_number = $model->phone;
-                    $userModel->country_code = $model->country_code;
-                    $userModel->save();
-                    Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
-                    return $this->redirect('/home/user/index')->send();
+                $code =$_POST['PhoneRegisterForm']['code'];
+                $type = Yii::$app->controller->action->id;
+                $phone_number = $model->country_code.$model->phone;
+                $res = ContactForm::validateSms($type, $code,$phone_number);
+                if($res === -1){
+                    $model->addError('phone', Yii::t('app/index','Phone or country code changes'));
+                    return $this->render('update-phone-number',['model'=>$model]);
                 }
+                if($res === 1){
+                    $model->addError('code', Yii::t('app/index','Verification code error'));
+                    return $this->render('update-phone-number',['model'=>$model]);
+                }
+                $userModel->phone_number = $model->phone;
+                $userModel->country_code = $model->country_code;
+                $userModel->save();
+                Yii::$app->getSession()->setFlash('success', Yii::t('app/index','Successful operation'));
+                return $this->redirect('/home/user/index')->send();
             }
         }
+
 
         return $this->render('update-phone-number',['model'=>$model]);
     }

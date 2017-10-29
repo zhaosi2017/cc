@@ -6,6 +6,7 @@ use app\modules\home\models\User;
 use app\modules\home\models\UserPhone;
 use yii\base\Model;
 use Yii;
+use yii\db\Transaction;
 
 /**
  *
@@ -83,8 +84,8 @@ class NewPhoneForm extends Model
 
     public function checkPhone($attribute)
     {
-        $res = User::findOne(['phone_number'=>$this->phone_number]);
-        $_userPhone = UserPhone::find()->where(['user_phone_number'=>$this->phone_number])->one();
+        $res = User::findOne(['country_code'=>$this->country_code,'phone_number'=>$this->phone_number]);
+        $_userPhone = UserPhone::find()->where(['phone_country_code'=>$this->country_code,'user_phone_number'=>$this->phone_number])->one();
 
         if(!empty($res) || !empty($_userPhone));
         {
@@ -127,24 +128,30 @@ class NewPhoneForm extends Model
         $user = User::findOne($userId);
         $user->phone_number = $this->phone_number;
         $user->country_code = $this->country_code;
+        Yii::$app->db->beginTransaction(Transaction::READ_COMMITTED);
+        $transaction = Yii::$app->db->getTransaction();
         if($user->save()) {
             $count = UserPhone::find()->where(['user_id' => $userId])->count();
             if ($count >= UserPhone::LIMIT_ADD_NUM) {
+                $transaction->commit();
                 return true;
             }
-            $_userPhone = UserPhone::findOne(['user_id' => $userId, 'user_phone_number' => $this->phone_number]);
-            if (!empty($_userPhone)) {
+
+            $userPhone = new  UserPhone();
+            $userPhone->user_id = $userId;
+            $userPhone->user_phone_number = $this->phone_number;
+            $userPhone->phone_country_code = $this->country_code;
+            if($userPhone->save())
+            {
+                $transaction->commit();
                 return true;
-            } else {
-                $userPhone = new  UserPhone();
-                $userPhone->user_id = $userId;
-                $userPhone->user_phone_number = $this->phone_number;
-                $userPhone->phone_country_code = $this->country_code;
-                $userPhone->save();
-                return true;
+            }else{
+                $transaction->rollBack();
+                return false;
             }
-            return true;
+
         }else{
+            $transaction->rollBack();
             return false;
         }
 

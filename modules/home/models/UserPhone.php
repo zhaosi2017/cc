@@ -90,23 +90,13 @@ class UserPhone extends CActiveRecord
             if($this->isNewRecord) {       //insert
                 if (empty($numbers)) {
                     $this->user_phone_sort = 1;
-                    if(!$this->updateUserPhoneNumber()) return false;
                 } else {
-                    foreach ($numbers as $number){
-                        if($number->user_phone_number == $this->user_phone_number){ //相同号码不能插入
-                            return false;
-                        }
-                    }
+
                     $this->user_phone_sort = ++$numbers[0]->user_phone_sort;
                 }
                 $this->reg_time = $_SERVER['REQUEST_TIME'];
                 $this->update_time = $_SERVER['REQUEST_TIME'];
             }else{
-                foreach ($numbers as $number){
-                    if($number->user_phone_number == $this->user_phone_number){    //相同号码不能插入
-                        return false;
-                    }
-                }
                 $this->update_time = $_SERVER['REQUEST_TIME'];
             }
             return true;
@@ -115,7 +105,7 @@ class UserPhone extends CActiveRecord
 
     private function updateUserPhoneNumber(){
         $row = User::findOne(array($this->user_id));
-        $res = User::findOne(['phone_number'=>$this->user_phone_number]);
+        $res = User::findOne(['country_code'=>$this->phone_country_code,'phone_number'=>$this->user_phone_number]);
 
         if(!empty($res)){
             return true;
