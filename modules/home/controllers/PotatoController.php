@@ -124,6 +124,11 @@ class PotatoController extends GController
                         $calledId = $callbackData[2];
                         $potato->potatoSendFirstName = $callbackData[3];
                         $potato->potatoContactFirstName = $callbackData[4];
+                        if(isset($callbackData[6]) && !empty($callbackData[6])) {
+                            $message['link'] = true;
+                        }else{
+                            $message['link'] = false;
+                        }
                         $result = $potato->call(CallRecord::Record_Type_emergency,$message);
                         break;
                         // 加白名单.

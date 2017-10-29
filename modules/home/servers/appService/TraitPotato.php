@@ -89,7 +89,16 @@ trait  TraitPotato {
      *呼叫流程开始提示
      */
     public function startCall($type , Array $data = []){
-        //$this->tlanguage = $this->language;
+        if(!empty($data['link_user'])){
+            $this->sendData = [
+                'chat_type'=>1,
+                'chat_id' =>(int)$this->potatoUid,
+                'text' => $this->translateLanguage('开始呼叫对方的其他客优账号！')
+            ];
+            $this->setWebhook($this->webhookUrl);
+            $this->sendPotatoData();
+            return true;
+        }
         if(empty($data['to_account'])){
             $data['to_account'] = $this->potatoContactFirstName;
         }
@@ -167,19 +176,21 @@ trait  TraitPotato {
      * @param $calledUserId   被叫 user_id
      * @param $callAppName    被叫第一个名
      * @param $calledAppName  被叫姓
+     * @param  $link_user     关联用户标志
      * @return bool
      */
-    public function sendCallButton($type, $appCalledUid, $calledUserId,$callAppName,$calledAppName ,$appCallUid){
+    public function sendCallButton($type, $appCalledUid, $calledUserId,$callAppName,$calledAppName ,$appCallUid , $link_user){
 
-       // $this->_Del_Rate_Call();
-        if($type == CallRecord::Record_Type_none){              //联系电话呼叫完  发送拨打紧急联系人按钮
+
+        if($type == CallRecord::Record_Type_none ){              //联系电话呼叫完  发送拨打紧急联系人按钮
             $callback = [
                 $this->callUrgentCallbackDataPre,
                 $appCalledUid,
                 $calledUserId,
                 $calledAppName,
                 $callAppName,
-                time()
+                time(),
+                $link_user
             ];
             $text = Yii::t('app/model/nexmo', 'Whether to call an emergency contact ?', array(), $this->language);
             $keyBoard = [
@@ -187,6 +198,11 @@ trait  TraitPotato {
                     [
                         'type' => 0,
                         'text' => Yii::t('app/model/nexmo', 'Yes', array(), $this->language),
+                        'data' => implode('-', $callback),
+                    ],
+                    [
+                        'type' => 0,
+                        'text' => Yii::t('app/model/nexmo', 'No', array(), $this->language),
                         'data' => implode('-', $callback),
                     ]
                 ]
@@ -236,6 +252,8 @@ trait  TraitPotato {
      */
     public function call($call_type , Array $data = [])
     {
+        $link = $data['link']?true:false;  //关联用户标志
+
         if(!$this->_Rate_call_Message($data)){
 
             return $this->errorCode['success'];
@@ -347,7 +365,8 @@ trait  TraitPotato {
             $service->messageType = 'TTS';
             $service->app_type ='potato';
             $service->Language = $this->llanguage;
-            $service->sendMessage($call_type , $this);
+
+            $service->sendMessage($call_type , $this  , $link);
             return $this->errorCode['success'];
         } else {
             $this->sendData = [

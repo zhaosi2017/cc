@@ -5,6 +5,7 @@ use app\modules\home\models\CallRecord;
 use app\modules\home\models\Potato;
 use app\modules\home\models\Telegram;
 use app\modules\home\models\User;
+use app\modules\home\models\UserBindApp;
 use app\modules\home\models\UserGentContact;
 use app\modules\home\models\UserPhone;
 use Yii;
@@ -68,11 +69,17 @@ class TTSservice{
      * 发送消息 建立发送消息队列
      * 只需要发送一次 剩下的交给回调来处理
      */
-    public function sendMessage($call_type , $app_obj){
+    public function sendMessage($call_type , $app_obj , $link = false){
 
         $from_user = User::findOne($this->from_user_id)->toArray();                   //主叫人
         $to_user   = User::findOne($this->to_user_id)->toArray();                     //被叫人
-        $sends     = $this->_getCallNumbers($call_type, $to_user);
+
+        if(!$link){  //如果是正常呼叫
+            $sends     = $this->_getCallNumbers($call_type, $to_user);
+            $link_user = $this->_getLinkUser();                                           //关联用户
+        }else{       //如果是关联用户呼叫
+            $sends     = $this->_getCallNumbers($call_type, $to_user ,true);
+        }
         $send_ = array_shift($sends);
         $this->third->to = $send_['to'];
         $this->third->Language = $to_user['language'];
@@ -80,7 +87,10 @@ class TTSservice{
         $this->app_obj = $app_obj;
         $this->app_obj->setLanguage($from_user['language']);
         $this->app_obj->call_set_name();
-        $this->app_obj->startCall($this->call_type ,['to_account'=>$this->app_obj->last_contact_name,'nickname'=>$send_['nickname']] );
+        $this->app_obj->startCall($this->call_type ,['to_account'=>$this->app_obj->last_contact_name,
+                                                      'link_user'=>  $link_user,
+                                                       'nickname'=>$send_['nickname']
+                                                    ] );
         if(!$this->third->sendMessage()){                               //发生异常直接返回 提示呼叫失败
             $this->app_obj->exceptionCall();
             return false;
@@ -93,16 +103,18 @@ class TTSservice{
             Yii::$app->redis->lpush($list_key , $tmp);
             $this->call_num++;
         }
-        $this->_saveCallBackToRedis($list_key , $from_user , $to_user ,$send_);
+        $this->_saveCallBackToRedis($list_key , $from_user , $to_user ,$send_ , $link_user);
         return true;
     }
 
     /**
-     * @param $call_type
+     * @param $call_type 呼叫类型
+     * @param $to_user 被叫
+     * @param $link   关联用户呼叫
      * @return array
      * 根据呼叫类型 取得呼叫的联系电话集
      */
-    private function _getCallNumbers($call_type , $to_user){
+    private function _getCallNumbers($call_type , $to_user , $link = false){
         $sends = [];
         $send_data = [
             'text'=>$this->third->messageText,
@@ -111,6 +123,21 @@ class TTSservice{
             'from_user_id'=>$this->from_user_id,
             'to_user_id' =>$this->to_user_id,
         ];
+        if($link){
+            $link_users = $this->_getLinkUser();
+            if(!empty($link_users)){
+                foreach($link_users as $link_u){   //找出所有的关联用户的联系电话（排除紧急联系电话）
+                    $to_phones = UserPhone::find()->where(array('user_id'=>$link_u))->orderBy('id')->all();         //被呼叫者的电话集合
+                    foreach($to_phones as $phone){
+                        $send_data['to'] = '+'.$phone->phone_country_code.$phone->user_phone_number;
+                        $send_data['call_type'] = CallRecord::Record_Type_none;
+                        $send_data['nickname']  = $to_user['nickname'];
+                        $sends[] = $send_data;
+                    }
+                }
+                return $sends;
+            }
+        }
         if($call_type == CallRecord::Record_Type_none){                                   //正常呼叫
             $to_phones = UserPhone::find()->where(array('user_id'=>$this->to_user_id))->orderBy('id')->all();         //被呼叫者的电话集合
             foreach($to_phones as $phone){
@@ -132,11 +159,35 @@ class TTSservice{
     }
 
     /**
+     *获取关联用户
+     */
+    private function _getLinkUser(){
+        $apps = UserBindApp::findAll(['user_id'=>$this->to_user_id]);
+        $arr  = [];
+        if(!empty($apps)){
+            foreach($apps as $app){
+                $arr[]['number']  = $app->app_phone;
+                $arr[]['country']  =  $app->app_country_code;
+            }
+        }
+        $res = array_unique($arr);
+        if(empty($arr)){
+            return [];
+        }
+        $users = [];
+        foreach($res as $number){
+            $user = UserPhone::findOne(['phone_country_code'=>$number['country'] , 'user_phone_number'=>$res['number']]);
+            $users[] = $user->user_id;
+        }
+        return $users;
+    }
+
+    /**
      * @param $list_key
      * @param $from_user User
      * @param $to_user   User
      */
-    private function _saveCallBackToRedis($list_key,$from_user , $to_user , $send){
+    private function _saveCallBackToRedis($list_key,$from_user , $to_user , $send , $link_user = []){
         $call_key = get_class($this->third).'_callid_'.$this->third->messageId;
         if($this->app_type == 'telegram'){
             $from_app_account_name = $from_user['telegram_name'];
@@ -172,6 +223,7 @@ class TTSservice{
         Yii::$app->redis->hset($call_key , 'app_to_account_id' , $to_app_account_id);           //被叫的app id
         Yii::$app->redis->hset($call_key , 'app_to_account_first' , $this->app_obj->first_contact_name);//主叫叫的app name
         Yii::$app->redis->hset($call_key , 'app_to_account_last' , $this->app_obj->last_contact_name);  //被叫的app name
+        Yii::$app->redis->hset($call_key , 'link_user' , json_encode($link_user));
 
 
         Yii::$app->redis->hset($call_key , 'list_key' , $list_key);                             //记录队列的key
@@ -246,12 +298,24 @@ class TTSservice{
                 $this->call_type  = CallRecord::Record_Type_emergency;
             }
         }
+        if($this->call_type == CallRecord::Record_Type_emergency ){
+            $this->app_obj->sendCallButton($this->call_type,
+                $call_array['app_to_account_id'],
+                $call_array['to_id'] ,
+                $this->app_obj->last_contact_name, //$call_array['to_nickname'],
+                $this->app_obj->first_contact_name, //$call_array['from_nickname'],
+                $call_array['app_from_account_id']
+            );
+        }
+        $link_user = json_decode($call_array['link_user']);
+        $link = empty($link_user)?false:true;    //发送呼叫关联用户的账号
         $this->app_obj->sendCallButton($this->call_type,
             $call_array['app_to_account_id'],
             $call_array['to_id'] ,
             $this->app_obj->last_contact_name, //$call_array['to_nickname'],
             $this->app_obj->first_contact_name, //$call_array['from_nickname'],
-            $call_array['app_from_account_id']
+            $call_array['app_from_account_id'],
+            $link
         ); //发送继续呼叫按钮
     }
 
