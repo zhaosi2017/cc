@@ -64,6 +64,8 @@ class PotatoController extends GController
             // $postData = Yii::$app->request->bodyParams;
             $postData = @file_get_contents('php://input');
             $postData = json_decode($postData, true);
+            $file = 'potato_'.date('Y-m-d', time()).'.txt'; 
+            file_put_contents('/tmp/'.$file, var_export($postData, true).PHP_EOL, 8);
             $potato = new Potato();
             $message = isset($postData['result']) ? $postData['result'] : array();
             $potato->potatoUid = isset($message['sender_id']) ? $message['sender_id'] : $message['user_id'];

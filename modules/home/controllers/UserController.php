@@ -716,4 +716,6 @@ class UserController extends GController
         return json_encode(['status'=>1]);
     }
 
+
+
 }
