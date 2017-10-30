@@ -190,27 +190,39 @@ trait  TraitPotato {
                 $calledAppName,
                 $callAppName,
                 time(),
-                $link_user
             ];
-            $text = Yii::t('app/model/nexmo', 'Whether to call an emergency contact ?', array(), $this->language);
+
+             //$text = Yii::t('app/model/nexmo', 'Whether to call an emergency contact ?', array(), $this->language);
             $keyBoard = [
                 [
                     [
                         'type' => 0,
-                        'text' => Yii::t('app/model/nexmo', 'Yes', array(), $this->language),
-                        'data' => implode('-', $callback),
-                    ],
-                    [
-                        'type' => 0,
-                        'text' => Yii::t('app/model/nexmo', 'No', array(), $this->language),
+                        'text' => "呼叫紧急联系人",
                         'data' => implode('-', $callback),
                     ]
                 ]
             ];
+            if($link_user){  //存在关联用的时候
+                $callback1 = [
+                    $this->callUrgentCallbackDataPre,
+                    $appCalledUid,
+                    $calledUserId,
+                    $calledAppName,
+                    $callAppName,
+                    time(),
+                    $link_user
+                ];
+                $keyBoard[0][0][] = [
+                    'type' => 0,
+                    'text' =>"呼叫关联用户", //Yii::t('app/model/nexmo', 'No', array(), $this->language),
+                    'data' => implode('-', $callback1),
+                ];
+            }
+
             $this->sendData = [
                 'chat_type' => 1,
                 'chat_id' => (int)$appCallUid,
-                'text' => $text,
+                'text' => "使用其他联系方式",
                 'inline_markup' => $keyBoard,
             ];
 
