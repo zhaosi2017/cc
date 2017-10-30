@@ -67,7 +67,7 @@ trait  TraitPotato {
      */
     public function continueCall($type , Array $data = []){
         //$this->tlanguage = $this->language;
-        if(isset($data['link'])){
+        if(isset($data['link']) && !empty($data['link'])){
             $this->sendData = [
                 'chat_type'=>1,
                 'chat_id' =>(int)$this->potatoUid,
