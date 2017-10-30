@@ -366,6 +366,7 @@ class TTSservice{
 
         $call_array['nickname'] =  $send['nickname'];
         $call_array['link']     =  $send['link'];
+        file_put_contents('/tmp/test_error.log' , var_export($call_array , true).PHP_EOL , 8);
         $this->app_obj->continueCall($this->call_type ,$call_array );
         $result = $this->third->sendMessage();                                  //发送一个新的消息
 
