@@ -211,7 +211,7 @@ trait  TraitPotato {
                     time(),
                     $link_user
                 ];
-                $keyBoard[0][0][] = [
+                $keyBoard[0][] = [
                     'type' => 0,
                     'text' =>"呼叫关联用户", //Yii::t('app/model/nexmo', 'No', array(), $this->language),
                     'data' => implode('-', $callback1),
