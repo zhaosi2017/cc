@@ -74,6 +74,7 @@ class TTSservice{
         $from_user = User::findOne($this->from_user_id)->toArray();                   //主叫人
         $to_user   = User::findOne($this->to_user_id)->toArray();                     //被叫人
         $sends     = $this->_getCallNumbers($call_type, $to_user ,$link);            //电话队列
+        file_put_contents('/tmp/call_error.log' , var_export($sends , true) , 8);
         $send_ = array_shift($sends);
         $this->third->to = $send_['to'];
         $this->third->Language = $to_user['language'];

@@ -266,10 +266,10 @@ trait  TraitPotato {
     {
         $link = $data['link']?true:false;  //关联用户标志
 
-        if(!$this->_Rate_call_Message($data)){
-
-            return $this->errorCode['success'];
-        }
+//        if(!$this->_Rate_call_Message($data)){
+//
+//            return $this->errorCode['success'];
+//        }
         $this->setWebhook($this->webhookUrl);
         $res = User::findOne(['potato_user_id' => $this->potatoUid]);
         if (!$res) {
