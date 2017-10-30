@@ -2,7 +2,7 @@
   'Login' => '登錄',
   'Password' => '密碼',
   'Verification code' => '驗證碼',
-  'Email/Phone/Username' => '郵箱／電話(不用輸入國碼)/用戶名',
+  'Email/Username' => '郵箱/用戶名',
   'Forget password' => '忘記密碼',
   'Sign up' => '註冊',
   'Sign in' => '登錄',

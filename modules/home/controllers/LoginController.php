@@ -10,7 +10,7 @@ use Yii;
 use app\controllers\GController;
 use app\modules\home\models\LoginForm;
 use yii\helpers\Url;
-
+use app\modules\home\models\LoginPhoneForm;
 class LoginController extends GController
 {
 
@@ -71,6 +71,45 @@ class LoginController extends GController
         }
 
         return $this->render('index',['model' => $model]);
+    }
+
+    public function actionLoginPhone()
+    {
+        // 已经登陆的就跳到首页.
+        if (!Yii::$app->user->isGuest) {
+            $this->redirect(['/home/default/welcome']);
+        }
+
+        $this->layout = '@app/views/layouts/global';
+        $model = new LoginPhoneForm();
+        if ($model->load(Yii::$app->request->post())) {
+
+            if($model->checkLock()){
+                return $this->render('index',['model'=>$model]);
+            }
+            if($model->login()) {
+                $model->recordIp();
+                $user = Yii::$app->user->identity;
+                $res = LoginForm::checkLearn();
+                if($user->step == 0 && !empty($res)){
+                    $url =  array_shift($res);
+                    $type = isset($url['type']) ? $url['type'] : '';
+                    $type && Yii::$app->getSession()->hasFlash($type) && Yii::$app->getSession()->removeFlash($type);
+                    isset($url['message']) && Yii::$app->getSession()->setFlash('step-message',$url['message']);
+                    return $this->redirect($url['url'])->send();
+                }
+                if(Yii::$app->getUser()->getReturnUrl() == '/')
+                {
+                    return $this->redirect('/home/user/index')->send();
+                }
+                return $this->goBack()->send();
+            }
+
+            $model->afterCheckLock();
+            return $this->render('login-phone',['model' => $model]);
+        }
+
+        return $this->render('login-phone',['model' => $model]);
     }
 
     public function actionLogout()

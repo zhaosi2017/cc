@@ -2,7 +2,7 @@
   'Login' => 'ログイン',
   'Password' => 'パスワード',
   'Verification code' => '検証コード',
-  'Email/Phone/Username' => 'メール/電話/ユーザー名',
+  'Email/Username' => 'メール/ユーザー名',
   'Forget password' => 'パスワードを忘れる',
   'Sign up' => 'サインアップ',
   'Sign in' => 'サインイン',

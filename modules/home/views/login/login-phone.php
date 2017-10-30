@@ -21,13 +21,13 @@ $this->title = Yii::t('app/login','Login');
 
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#" ><?= Yii::t('app/login','Email')?></a></li>
-                <li role="presentation"><a href="/home/login/login-phone" ><?= Yii::t('app/login','Phone')?></a></li>
+                <li role="presentation" class="active"><a href="#" ><?= Yii::t('app/login','Phone')?></a></li>
+                <li role="presentation"><a href="/home/login/index" ><?= Yii::t('app/login','Email')?></a></li>
 
             </ul>
 
 
-<!--      --------------------------------------------------------邮箱--------------------------------------------------      -->
+            <!--      --------------------------------------------------------邮箱--------------------------------------------------      -->
 
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="home">
@@ -39,11 +39,21 @@ $this->title = Yii::t('app/login','Login');
                             'template' => "{label}\n<div>{input}\n<span class=\"help-block m-b-none\">{error}</span></div>",
                         ],
                     ]); ?>
-
-                    <?= $form->field($model, 'username')->textInput([
-                        'autofocus' => true,
-                        'placeholder'=> Yii::t('app/login','Email/Username'),
-                    ])->label(false) ?>
+                    <div class="row">
+                        <div class="col-sm-6 " style="">
+                            <?= $form->field($model, 'country_code')->textInput([
+                                'autofocus' => true,
+                                'placeholder'=>Yii::t('app/login','Country Code'),
+                                'size'=>5,
+                            ])->label(false) ?>
+                        </div>
+                        <div  class="col-sm-6" style="display: inline-block;">
+                            <?= $form->field($model, 'username')->textInput([
+                                'autofocus' => true,
+                                'placeholder'=>Yii::t('app/login','Phone number'),
+                            ])->label(false) ?>
+                        </div>
+                    </div>
 
                     <?= $form->field($model, 'pwd')->passwordInput(['placeholder'=>Yii::t('app/login','Password')])->label(false) ?>
 
@@ -64,7 +74,7 @@ $this->title = Yii::t('app/login','Login');
                     <?php
                     //调整验证码输入框的框度和内容的左边距
                     echo ' <style type="text/css">
-            #loginform-code{
+            #loginphoneform-code{
                 width: 200px;
                 padding-left: 10px;
             }
@@ -86,15 +96,15 @@ $this->title = Yii::t('app/login','Login');
 
 
 
-                </div>
-
-
-
             </div>
+
+
+
         </div>
-
-
-        <p class="text-muted text-center">
-            <a href="<?php echo \yii\helpers\Url::to(['/home/login/forget-password']) ?>"><small><?= Yii::t('app/login','Forget password')?>&nbsp; ？</small></a> | <a href="<?php echo \yii\helpers\Url::to(['/home/register/register']) ?>"><?= Yii::t('app/login','Sign up')?></a> | <a href="<?php echo \yii\helpers\Url::to(['/home/default/welcome']) ?>"><?= Yii::t('app/index','Home')?></a>
-        </p>
     </div>
+
+
+    <p class="text-muted text-center">
+        <a href="<?php echo \yii\helpers\Url::to(['/home/login/forget-password']) ?>"><small><?= Yii::t('app/login','Forget password')?>&nbsp; ？</small></a> | <a href="<?php echo \yii\helpers\Url::to(['/home/register/register']) ?>"><?= Yii::t('app/login','Sign up')?></a> | <a href="<?php echo \yii\helpers\Url::to(['/home/default/welcome']) ?>"><?= Yii::t('app/index','Home')?></a>
+    </p>
+</div>

@@ -2,7 +2,7 @@
   'Login' => 'ចូល',
   'Password' => 'ការពាក្យសម្ងាត់',
   'Verification code' => 'កូដ​ផ្ទៀង​ផ្ទាត់',
-  'Email/Phone/Username' => 'អ៊ីម៉ែល / ទូរស័ព្ទ / ឈ្មោះអ្នកប្រើ',
+  'Email/Username' => 'អ៊ីម៉ែល / ឈ្មោះអ្នកប្រើ',
   'Forget password' => 'ភ្លេចពាក្យសម្ងាត់',
   'Sign up' => 'ចុះ​ឈ្មោះ',
   'Sign in' => 'ចុះឈ្មោះចូល',

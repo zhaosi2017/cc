@@ -51,7 +51,7 @@ class UserController extends GController
     public function actionIndex()
     {
         $model = $this->findModel(Yii::$app->user->id);
-        $user_phone_numbers = UserPhone::findAll(array('user_id'=>Yii::$app->user->id));  //取用户的全部绑定电话
+        $user_phone_numbers = User::findOne(array('id'=>Yii::$app->user->id));  //取用户的全部绑定电话
         $user_gent_contacts  =  UserGentContact::findAll(array('user_id'=>Yii::$app->user->id));   //取全部的紧急联系人
 
         $cacheKey = 'cc_voice_'.Yii::$app->user->id;

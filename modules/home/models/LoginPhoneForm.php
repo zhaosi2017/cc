@@ -11,13 +11,14 @@ use yii\base\Model;
  * @property User|null $user This property is read-only.
  *
  */
-class LoginForm extends Model
+class LoginPhoneForm extends Model
 {
 
     public $username;
     public $pwd;
     public $code;
     private $identity = false;
+    public $country_code;
 
     /**
      * @return array the validation rules.
@@ -26,6 +27,8 @@ class LoginForm extends Model
     {
         return [
             // username and password are both required
+            ['country_code','required'],
+            ['country_code','match', 'pattern' => '/(^[0-9])+/', 'message' => Yii::t("app/login","Country code number must be number")],
             [['username', 'pwd','code'], 'required'],
 
             ['username', 'validateAccount'],
@@ -41,9 +44,10 @@ class LoginForm extends Model
     public function attributeLabels()
     {
         return [
-            'username' => Yii::t('app/login','Email/Username'),//'邮箱／用户名',
+            'username' => Yii::t('app/login','Phone'),//'电话',
             'pwd' => Yii::t('app/models/LoginForm','Password'),//'密码',
             'code'     => Yii::t('app/models/LoginForm','Verification code'),//'验证码',
+            'country_code' => Yii::t('app/models/phone-register-form','Country code'),
         ];
     }
 
@@ -82,8 +86,9 @@ class LoginForm extends Model
      */
     public function login()
     {
-         if($this->validate(['username','pwd','code'])){
+        if($this->validate(['country_code','username','pwd','code'])){
             $identity = $this->getUserInfo();
+
             if(isset($identity->user))
             {
                 $identity = $identity->user;
@@ -91,7 +96,7 @@ class LoginForm extends Model
             return Yii::$app->user->login($identity);
         }
         return false;
-        
+
     }
 
     /**
@@ -113,14 +118,14 @@ class LoginForm extends Model
         $key = $this->username.'-'.'homenum';
         $num =  $redis->HGET($key,'num') ;
         $flag = $redis->HGET($key,'flag');
-        $exprietime = $redis->hget($key,'exprietime'); 
+        $exprietime = $redis->hget($key,'exprietime');
         if( $num > 1 ){
             if(( $flag && $exprietime > time()) ){
                 $flag == 1 &&  $message =Yii::t('app/models/LoginForm','The user has been frozen for 30 minutes');//'该用户已被冻结30分钟';
                 $flag == 2 &&  $message =Yii::t('app/models/LoginForm','The user has been frozen for 24 hours');//'该用户已被冻结24小时';
                 $this->addError('username',  $message);
                 return true;
-            }   
+            }
         }
         return false;
 
@@ -219,7 +224,7 @@ class LoginForm extends Model
 
     public function preLogin()
     {
-        
+
         if($this->validate(['username','pwd','code'])){
             return true;
         }
@@ -254,7 +259,7 @@ class LoginForm extends Model
             $this->writeLoginLog(1);
         }
 
-        
+
 
         parent::afterValidate();
     }
@@ -268,25 +273,25 @@ class LoginForm extends Model
             $time = time();
             $redis->hincrby($key, 'num', 1);
             $num = $redis->hget($key,'num');
-           
+
             switch ($num) {
                 case 1:
-                        $redis->expire($key,60*60);
-                        break;
+                    $redis->expire($key,60*60);
+                    break;
                 case 3:
-                        $redis->hset($key,'exprietime',$time + Yii::$app->params['login_flag_time1']); //30分钟
-                        $redis->hset($key,'flag',1);
-                        $redis->expire($key,Yii::$app->params['login_flag_time1']+Yii::$app->params['login_flag_time2']);
-                        break;
+                    $redis->hset($key,'exprietime',$time + Yii::$app->params['login_flag_time1']); //30分钟
+                    $redis->hset($key,'flag',1);
+                    $redis->expire($key,Yii::$app->params['login_flag_time1']+Yii::$app->params['login_flag_time2']);
+                    break;
 
                 case 4:
-                        $redis->hset($key,'exprietime', $time + Yii::$app->params['login_flag_time3']); //24小时
-                        $redis->hset($key,'flag',2);
-                        $redis->expire($key,Yii::$app->params['login_flag_time3']);
-                        break;
+                    $redis->hset($key,'exprietime', $time + Yii::$app->params['login_flag_time3']); //24小时
+                    $redis->hset($key,'flag',2);
+                    $redis->expire($key,Yii::$app->params['login_flag_time3']);
+                    break;
             }
         }
-        
+
     }
 
     public function writeLoginLog($status)
@@ -315,24 +320,21 @@ class LoginForm extends Model
 
     private function getUserInfo()
     {
-        if($this->identity === false)
+
+
+
+        if( empty($this->identity))
         {
-            $accounts = User::find()->select(['id','email'])->indexBy('email')->column();
-            foreach ($accounts as $account => $id){
-                $this->username == Yii::$app->security->decryptByKey(base64_decode($account),Yii::$app->params['inputKey'])
-                && $this->identity = User::findOne($id);
+            $this->identity =  User::findOne(['country_code'=>$this->country_code,'phone_number'=>$this->username]);
+        }
+        if( empty($this->identity))
+        {
+            $tmp= UserPhone::findOne(['phone_country_code'=>$this->country_code,'user_phone_number'=>$this->username]);
+            if(!empty($tmp))
+            {
+                $this->identity =    User::findOne(['id'=>$tmp['user_id']]);
             }
         }
-
-        if($this->identity === false)
-        {
-            $usernames = User::find()->select(['id','username'])->indexBy('username')->column();
-            foreach ($usernames as $username => $id){
-                $this->username == Yii::$app->security->decryptByKey(base64_decode($username),Yii::$app->params['inputKey'])
-                && $this->identity = User::findOne($id);
-            }
-        }
-
 
         return $this->identity;
     }
@@ -343,7 +345,7 @@ class LoginForm extends Model
     public function deleteLoginNum()
     {
         $redis = Yii::$app->redis;
-        $key = $this->username.'-homenum' ; 
+        $key = $this->username.'-homenum' ;
         if($redis->exists($key))
         {
             $redis->del($key);

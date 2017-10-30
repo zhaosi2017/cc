@@ -2,7 +2,7 @@
   'Login' => '로그인',
   'Password' => '암호',
   'Verification code' => '확인 코드',
-  'Email/Phone/Username' => '이메일 / 전화 / 사용자 이름',
+  'Email/Username' => '이메일 / 사용자 이름',
   'Forget password' => '암호 잊어 버림',
   'Sign up' => '가입',
   'Sign in' => '로그인',

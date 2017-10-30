@@ -3,7 +3,7 @@ return [
     'Login'=>'登录',
     'Password'=>'密码',
     'Verification code'=>'验证码',
-    'Email/Phone/Username'=>'邮箱／电话(不用输入国码)/用户名',
+    'Email/Username'=>'邮箱/用户名',
     'Forget password'=>'忘记密码',
     'Sign up'=>'注册',
     'Sign in'=>'登录',
