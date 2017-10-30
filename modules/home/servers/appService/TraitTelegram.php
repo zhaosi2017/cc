@@ -66,6 +66,17 @@ trait  TraitTelegram {
     public function continueCall($type , Array $data = []){
 //        $data['to_account'] = $this->telegramContactLastName.$this->telegramContactFirstName;
         //$this->tlanguage = $this->language;
+
+        if(isset($data['link']) && !empty($data['link'])){
+            $this->sendData = [
+                'chat_type'=>1,
+                'chat_id' =>(int)$this->telegramUid,
+                'text' => $this->translateLanguage('正在尝试呼叫'.$data['to_account'].'的其他客优账号:'.$data['nickname'].'，请稍候！'),
+            ];
+            $this->sendTelegramData();
+            return true;
+        }
+
         if($type == CallRecord::Record_Type_none){
             $this->sendData = [
                 'chat_id' =>$this->telegramUid,
@@ -86,6 +97,16 @@ trait  TraitTelegram {
      */
     public function startCall($type , Array $data = []){
         //$this->tlanguage = $this->language;
+        if(!empty($data['link_user'])){
+            $this->sendData = [
+                'chat_type'=>1,
+                'chat_id' =>(int)$this->telegramUid,
+                'text' => $this->translateLanguage('开始呼叫对方的其他客优账号！(共'.$data['count'].'部)')
+            ];
+            $this->sendTelegramData();
+            return true;
+        }
+
         if(empty($data['to_account'])){
             $data['to_account'] = $this->telegramContactLastName.$this->telegramContactFirstName;
         }
@@ -156,7 +177,7 @@ trait  TraitTelegram {
      * @param $calledAppName  被叫姓
      * @return bool
      */
-    public function sendCallButton($type, $appCalledUid, $calledUserId,$callAppName,$calledAppName ,$appCallUid){
+    public function sendCallButton($type, $appCalledUid, $calledUserId,$callAppName,$calledAppName ,$appCallUid , $link_user = false ){
         $this->setWebhook();
 
         if($type == CallRecord::Record_Type_none){              //联系电话呼叫完  发送拨打紧急联系人按钮
@@ -176,6 +197,23 @@ trait  TraitTelegram {
                     ]
                 ]
             ];
+
+            if($link_user){  //存在关联用的时候
+                $callback1 = [
+                    $this->callUrgentCallbackDataPre,
+                    $appCalledUid,
+                    $calledUserId,
+                    $calledAppName,
+                    $callAppName,
+                    $link_user
+                ];
+                $keyBoard[0][] = [
+                    'type' => 0,
+                    'text' =>"呼叫关联用户", //Yii::t('app/model/nexmo', 'No', array(), $this->language),
+                    'data' => implode('-', $callback1),
+                ];
+            }
+
             $this->sendData = [
                 'chat_id' => $appCallUid,
                 'text' => $text,
@@ -222,6 +260,8 @@ trait  TraitTelegram {
      */
     public function call($call_type, Array $data = [])
     {
+        $link = $data['link']?true:false;  //关联用户标志
+
         $res = User::findOne(['telegram_user_id' => $this->telegramUid]);
         if (!$res) {
             // 发送验证码，完成绑定.
@@ -323,7 +363,7 @@ trait  TraitTelegram {
 
             $service->messageType = 'TTS';
             $service->app_type ='telegram';
-            $service->sendMessage($call_type , $this);
+            $service->sendMessage($call_type , $this , $link);
             return $this->errorCode['success'];
         } else {
             $this->sendData = [

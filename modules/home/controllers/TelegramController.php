@@ -112,14 +112,20 @@ class TelegramController extends GController
                     case $telegram->callCallbackDataPre:
                         $telegram->telegramFirstName = $callbackData[2];
                         $telegram->telegramContactFirstName = $callbackData[3];
-                        $result = $telegram->call(CallRecord::Record_Type_none);
+                        $message['link'] = false;
+                        $result = $telegram->call(CallRecord::Record_Type_none , $message);
                         return $result;
                         break;
                     case $telegram->callUrgentCallbackDataPre:
                         $calledId = $callbackData[2];
                         $telegram->telegramFirstName = $callbackData[3];
                         $telegram->telegramContactFirstName = $callbackData[4];
-                        $result = $telegram->call(CallRecord::Record_Type_emergency);
+                        if(isset($callbackData[5]) && !empty($callbackData[5])) {
+                            $message['link'] = true;
+                        }else{
+                            $message['link'] = false;
+                        }
+                        $result = $telegram->call(CallRecord::Record_Type_emergency,$message);
                         return $result;
                         break;
                     case $telegram->whiteCallbackDataPre:
