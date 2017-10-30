@@ -93,6 +93,12 @@ class PotatoController extends GController
 
                 $callbackData = explode('-', $message['data']);
                 $time = time();
+                if(isset($callbackData[6]) && !empty($callbackData[6])) {
+                    $message['link'] = true;
+                    array_pop($callbackData);
+                }else{
+                    $message['link'] = false;
+                }
                 $callBackTime = array_pop($callbackData);
                 $diffTime = $time - $callBackTime;
                 if ($diffTime > 120) {
@@ -125,12 +131,6 @@ class PotatoController extends GController
                         $calledId = $callbackData[2];
                         $potato->potatoSendFirstName = $callbackData[3];
                         $potato->potatoContactFirstName = $callbackData[4];
-                        file_put_contents('/tmp/call_error.log' , var_export($callbackData , true).PHP_EOL , 8);
-                        if(isset($callbackData[6]) && !empty($callbackData[6])) {
-                            $message['link'] = true;
-                        }else{
-                            $message['link'] = false;
-                        }
                         $result = $potato->call(CallRecord::Record_Type_emergency,$message);
                         break;
                         // 加白名单.
