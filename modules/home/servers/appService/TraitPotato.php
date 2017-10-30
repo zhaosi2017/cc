@@ -67,6 +67,16 @@ trait  TraitPotato {
      */
     public function continueCall($type , Array $data = []){
         //$this->tlanguage = $this->language;
+        if(isset($data['link'])){
+            $this->sendData = [
+                'chat_type'=>1,
+                'chat_id' =>(int)$this->potatoUid,
+                'text' => $this->translateLanguage('正在尝试呼叫'.$data['to_account'].'的其他客优账号:'.$data['nickname'].'，请稍候！'),
+            ];
+            $this->setWebhook($this->webhookUrl);
+            $this->sendPotatoData();
+            return true;
+        }
         if($type == CallRecord::Record_Type_none){
             $this->sendData = [
                 'chat_type'=>1,

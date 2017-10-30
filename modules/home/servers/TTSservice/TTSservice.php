@@ -128,6 +128,7 @@ class TTSservice{
                         $send_data['to'] = '+'.$phone->phone_country_code.$phone->user_phone_number;
                         $send_data['call_type'] = CallRecord::Record_Type_emergency;
                         $send_data['nickname']  = empty($tmp)?'':$tmp->nickname;
+                        $send_data['link']      = true;
                         $sends[] = $send_data;
                     }
                 }
@@ -364,6 +365,7 @@ class TTSservice{
         $this->call_type            = $send['call_type'];
 
         $call_array['nickname'] =  $send['nickname'];
+        $call_array['link']     =  $send['link'];
         $this->app_obj->continueCall($this->call_type ,$call_array );
         $result = $this->third->sendMessage();                                  //发送一个新的消息
 
