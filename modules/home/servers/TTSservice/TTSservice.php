@@ -73,13 +73,7 @@ class TTSservice{
 
         $from_user = User::findOne($this->from_user_id)->toArray();                   //主叫人
         $to_user   = User::findOne($this->to_user_id)->toArray();                     //被叫人
-
-        if(!$link){  //如果是正常呼叫
-            $sends     = $this->_getCallNumbers($call_type, $to_user);
-            $link_user = $this->_getLinkUser();                                           //关联用户
-        }else{       //如果是关联用户呼叫
-            $sends     = $this->_getCallNumbers($call_type, $to_user ,true);
-        }
+        $sends     = $this->_getCallNumbers($call_type, $to_user ,$link);            //电话队列
         $send_ = array_shift($sends);
         $this->third->to = $send_['to'];
         $this->third->Language = $to_user['language'];
@@ -88,7 +82,7 @@ class TTSservice{
         $this->app_obj->setLanguage($from_user['language']);
         $this->app_obj->call_set_name();
         $this->app_obj->startCall($this->call_type ,['to_account'=>$this->app_obj->last_contact_name,
-                                                      'link_user'=>  $link_user,
+                                                      'link_user'=>  $link,
                                                        'nickname'=>$send_['nickname']
                                                     ] );
         if(!$this->third->sendMessage()){                               //发生异常直接返回 提示呼叫失败
@@ -103,7 +97,7 @@ class TTSservice{
             Yii::$app->redis->lpush($list_key , $tmp);
             $this->call_num++;
         }
-        $this->_saveCallBackToRedis($list_key , $from_user , $to_user ,$send_ , $link_user);
+        $this->_saveCallBackToRedis($list_key , $from_user , $to_user ,$send_);
         return true;
     }
 
@@ -187,7 +181,7 @@ class TTSservice{
      * @param $from_user User
      * @param $to_user   User
      */
-    private function _saveCallBackToRedis($list_key,$from_user , $to_user , $send , $link_user = []){
+    private function _saveCallBackToRedis($list_key,$from_user , $to_user , $send ){
         $call_key = get_class($this->third).'_callid_'.$this->third->messageId;
         if($this->app_type == 'telegram'){
             $from_app_account_name = $from_user['telegram_name'];
@@ -223,8 +217,6 @@ class TTSservice{
         Yii::$app->redis->hset($call_key , 'app_to_account_id' , $to_app_account_id);           //被叫的app id
         Yii::$app->redis->hset($call_key , 'app_to_account_first' , $this->app_obj->first_contact_name);//主叫叫的app name
         Yii::$app->redis->hset($call_key , 'app_to_account_last' , $this->app_obj->last_contact_name);  //被叫的app name
-        Yii::$app->redis->hset($call_key , 'link_user' , json_encode($link_user));
-
 
         Yii::$app->redis->hset($call_key , 'list_key' , $list_key);                             //记录队列的key
         Yii::$app->redis->expire($call_key, 30*60);
@@ -293,15 +285,14 @@ class TTSservice{
      */
     private function _sendAppMune($call_array){
         $this->to_user_id = $call_array['to_id'];
-        $link_user = json_decode($call_array['link_user']);
-        file_put_contents('/tmp/call_error.log' , var_export($link_user , true).'!!!!'.PHP_EOL , 8);
+        $link_user = $this->_getLinkUser();
+
         if($this->call_type == CallRecord::Record_Type_none){    //联系电话呼叫完
             $phone = $this->_getCallNumbers(CallRecord::Record_Type_emergency ,[]);
             if(empty($phone) && empty($link_user)){
                 $this->call_type  = CallRecord::Record_Type_emergency;
             }
         }
-        file_put_contents('/tmp/call_error.log' , var_export($this->call_type , true).'@@@@@'.PHP_EOL , 8);
         if($this->call_type == CallRecord::Record_Type_emergency ){  //重新呼叫
             $this->app_obj->sendCallButton($this->call_type,
                 $call_array['app_to_account_id'],
@@ -313,7 +304,6 @@ class TTSservice{
             return true;
         }
         $link = empty($link_user)?false:true;    //发送呼叫关联用户的账号 呼叫紧急联系人或者关联用户
-        file_put_contents('/tmp/call_error.log' , var_export($link , true).'#####'.PHP_EOL , 8);
         $this->app_obj->sendCallButton($this->call_type,
             $call_array['app_to_account_id'],
             $call_array['to_id'] ,
