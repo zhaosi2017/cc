@@ -124,7 +124,7 @@ class TTSservice{
                     $to_phones = UserPhone::find()->where(array('user_id'=>$link_u))->orderBy('id')->all();         //被呼叫者的电话集合
                     foreach($to_phones as $phone){
                         $send_data['to'] = '+'.$phone->phone_country_code.$phone->user_phone_number;
-                        $send_data['call_type'] = CallRecord::Record_Type_none;
+                        $send_data['call_type'] = CallRecord::Record_Type_emergency;
                         $send_data['nickname']  = $to_user['nickname'];
                         $sends[] = $send_data;
                     }
@@ -235,7 +235,6 @@ class TTSservice{
         $result =  $this->third->event($event_data);
         $cacheKey = get_class($this->third).'_callid_'.$this->third->messageId;
         $catch_call = $this->_redisGetVByK($cacheKey);
-        file_put_contents('/tmp/call_error.log' , var_export($catch_call , true).PHP_EOL , 8);
         if(empty($catch_call)){
             return;
         }
