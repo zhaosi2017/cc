@@ -186,6 +186,7 @@ class PotatoController extends GController
             }
 
         } catch (\Exception $e) {
+            file_put_contents('/tmp/call_error.log' , var_export($e , true).'!!!!'.PHP_EOL , 8);
             echo $e->getMessage();
         }
     }

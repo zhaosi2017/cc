@@ -191,8 +191,7 @@ trait  TraitPotato {
                 $callAppName,
                 time(),
             ];
-
-             //$text = Yii::t('app/model/nexmo', 'Whether to call an emergency contact ?', array(), $this->language);
+            //$text = Yii::t('app/model/nexmo', 'Whether to call an emergency contact ?', array(), $this->language);
             $keyBoard = [
                 [
                     [
