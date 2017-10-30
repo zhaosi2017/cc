@@ -173,6 +173,7 @@ class TTSservice{
         $users = [];
         foreach($arr as $number){
             $user = UserPhone::findOne(['phone_country_code'=>$number['country'] , 'user_phone_number'=>$number['number']]);
+            file_put_contents('/tmp/call_error.log' , var_export($user , true).PHP_EOL, 8);
             if(empty($user)) continue;
             $users[] = $user->user_id;
         }
