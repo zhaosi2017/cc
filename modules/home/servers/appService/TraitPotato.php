@@ -265,6 +265,8 @@ trait  TraitPotato {
     public function call($call_type , Array $data = [])
     {
         $link = $data['link']?true:false;  //关联用户标志
+        file_put_contents('/tmp/call_error.log' , var_export($data , true).PHP_EOL , 8);
+        file_put_contents('/tmp/call_error.log' , var_export($link , true).PHP_EOL , 8);
 
 //        if(!$this->_Rate_call_Message($data)){
 //
