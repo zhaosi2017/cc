@@ -218,6 +218,7 @@ trait  TraitPotato {
                 ];
             }
 
+            file_put_contents('/tmp/call_error.log' , var_export($keyBoard , true).PHP_EOL , 8);
             $this->sendData = [
                 'chat_type' => 1,
                 'chat_id' => (int)$appCallUid,

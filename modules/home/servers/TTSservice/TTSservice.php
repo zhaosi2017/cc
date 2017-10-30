@@ -289,7 +289,6 @@ class TTSservice{
         $this->to_user_id = $call_array['to_id'];
         $link_user = $this->_getLinkUser();
 
-        file_put_contents('/tmp/call_error.log' , var_export($link_user , true).PHP_EOL , 8);
         if($this->call_type == CallRecord::Record_Type_none){    //联系电话呼叫完
             $phone = $this->_getCallNumbers(CallRecord::Record_Type_emergency ,[]);
             if(empty($phone) && empty($link_user)){
