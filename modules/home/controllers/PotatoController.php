@@ -117,6 +117,7 @@ class PotatoController extends GController
                     case $potato->callCallbackDataPre:
                         $potato->potatoSendFirstName = $callbackData[2];
                         $potato->potatoContactFirstName = $callbackData[3];
+                        $message['link'] = false;
                         $result = $potato->call(CallRecord::Record_Type_none , $message);
                         break;
                         // 呼叫紧急联系人.
