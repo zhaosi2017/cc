@@ -157,7 +157,6 @@ class TTSservice{
      */
     private function _getLinkUser(){
         $apps = UserBindApp::findAll(['user_id'=>$this->to_user_id]);
-        file_put_contents('/tmp/call_error.log' , "@@@@@@@@@@@@".PHP_EOL, 8);
         $arr  = [];
         if(!empty($apps)){
             $i = 0;
@@ -167,19 +166,15 @@ class TTSservice{
                 $i++;
             }
         }
-        file_put_contents('/tmp/call_error.log' , "#####".PHP_EOL, 8);
         if(empty($arr)){
             return [];
         }
-        file_put_contents('/tmp/call_error.log' , "1111111".PHP_EOL, 8);
         $users = [];
         foreach($arr as $number){
             $user = UserPhone::findOne(['phone_country_code'=>$number['country'] , 'user_phone_number'=>$number['number']]);
-            file_put_contents('/tmp/call_error.log' , var_export($user , true).PHP_EOL, 8);
             if(empty($user)) continue;
             $users[] = $user->user_id;
         }
-        file_put_contents('/tmp/call_error.log' , "222222".PHP_EOL, 8);
         return array_unique($users);
     }
 
@@ -294,6 +289,7 @@ class TTSservice{
         $this->to_user_id = $call_array['to_id'];
         $link_user = $this->_getLinkUser();
 
+        file_put_contents('/tmp/call_error.log' , var_export($link_user , true).PHP_EOL , 8);
         if($this->call_type == CallRecord::Record_Type_none){    //联系电话呼叫完
             $phone = $this->_getCallNumbers(CallRecord::Record_Type_emergency ,[]);
             if(empty($phone) && empty($link_user)){
