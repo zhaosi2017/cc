@@ -93,7 +93,7 @@ trait  TraitPotato {
             $this->sendData = [
                 'chat_type'=>1,
                 'chat_id' =>(int)$this->potatoUid,
-                'text' => $this->translateLanguage('开始呼叫对方的其他客优账号！')
+                'text' => $this->translateLanguage('开始呼叫对方的其他客优账号！(共'.$data['count'].'部)')
             ];
             $this->setWebhook($this->webhookUrl);
             $this->sendPotatoData();
@@ -106,13 +106,13 @@ trait  TraitPotato {
             $this->sendData = [
                 'chat_type'=>1,
                 'chat_id' =>(int)$this->potatoUid,
-                'text' => $this->translateLanguage('正在尝试呼叫'.$data['to_account'].'，请稍候！'),
+                'text' => $this->translateLanguage('正在尝试呼叫'.$data['to_account'].'，请稍候！(共'.$data['count'].'部)'),
             ];
         }elseif($type == CallRecord::Record_Type_emergency){
             $this->sendData = [
                 'chat_type'=>1,
                 'chat_id' =>(int)$this->potatoUid,
-                'text' => $this->translateLanguage('正在尝试呼叫'.$data['to_account'].'的紧急联系人:'.$data['nickname'].'，请稍候！')
+                'text' => $this->translateLanguage('正在尝试呼叫'.$data['to_account'].'的紧急联系人:'.$data['nickname'].'，请稍候！(共'.$data['count'].'位)')
             ];
         }
         $this->setWebhook($this->webhookUrl);

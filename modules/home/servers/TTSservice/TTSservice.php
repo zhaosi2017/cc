@@ -83,7 +83,8 @@ class TTSservice{
         $this->app_obj->call_set_name();
         $this->app_obj->startCall($this->call_type ,['to_account'=>$this->app_obj->last_contact_name,
                                                       'link_user'=>  $link,
-                                                       'nickname'=>$send_['nickname']
+                                                       'nickname'=>$send_['nickname'],
+                                                        'count'=>count($sends)+1
                                                     ] );
         if(!$this->third->sendMessage()){                               //发生异常直接返回 提示呼叫失败
             $this->app_obj->exceptionCall();
