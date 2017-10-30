@@ -120,6 +120,7 @@ class TTSservice{
         ];
         if($link){
             $link_users = $this->_getLinkUser();
+            file_put_contents('/tmp/call_error.log' , var_export($link_users , true) , 8);
             if(!empty($link_users)){
                 foreach($link_users as $link_u){   //找出所有的关联用户的联系电话（排除紧急联系电话）
                     $to_phones = UserPhone::find()->where(array('user_id'=>$link_u))->orderBy('id')->all();         //被呼叫者的电话集合
