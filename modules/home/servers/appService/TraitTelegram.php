@@ -113,12 +113,12 @@ trait  TraitTelegram {
         if($type == CallRecord::Record_Type_none){
             $this->sendData = [
                 'chat_id' =>$this->telegramUid,
-                'text' => $this->translateLanguage('正在尝试呼叫'.$data['to_account'].'，请稍候！'),
+                'text' => $this->translateLanguage('正在尝试呼叫'.$data['to_account'].'，请稍候！(共'.$data['count'].'部)'),
             ];
         }elseif($type == CallRecord::Record_Type_emergency){
             $this->sendData = [
                 'chat_id' =>$this->telegramUid,
-                'text' => $this->translateLanguage('正在尝试呼叫'.$data['to_account'].'的紧急联系人:'.$data['nickname'].'，请稍候！')
+                'text' => $this->translateLanguage('正在尝试呼叫'.$data['to_account'].'的紧急联系人:'.$data['nickname'].'，请稍候！(共'.$data['count'].'位)')
             ];
         }
         $this->sendTelegramData();
@@ -208,9 +208,8 @@ trait  TraitTelegram {
                     $link_user
                 ];
                 $keyBoard[0][] = [
-                    'type' => 0,
                     'text' =>"呼叫关联用户", //Yii::t('app/model/nexmo', 'No', array(), $this->language),
-                    'data' => implode('-', $callback1),
+                    'callback_data' => implode('-', $callback1),
                 ];
             }
 
