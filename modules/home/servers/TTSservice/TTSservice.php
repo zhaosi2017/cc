@@ -293,12 +293,14 @@ class TTSservice{
      */
     private function _sendAppMune($call_array){
         $this->to_user_id = $call_array['to_id'];
+        $link_user = json_decode($call_array['link_user']);
         if($this->call_type == CallRecord::Record_Type_none){    //联系电话呼叫完
-            if(empty($this->_getCallNumbers(CallRecord::Record_Type_emergency ,[]))){
+            $phone = $this->_getCallNumbers(CallRecord::Record_Type_emergency ,[]);
+            if(empty($phone) && empty($link_user)){
                 $this->call_type  = CallRecord::Record_Type_emergency;
             }
         }
-        if($this->call_type == CallRecord::Record_Type_emergency ){
+        if($this->call_type == CallRecord::Record_Type_emergency ){  //重新呼叫
             $this->app_obj->sendCallButton($this->call_type,
                 $call_array['app_to_account_id'],
                 $call_array['to_id'] ,
@@ -307,8 +309,7 @@ class TTSservice{
                 $call_array['app_from_account_id']
             );
         }
-        $link_user = json_decode($call_array['link_user']);
-        $link = empty($link_user)?false:true;    //发送呼叫关联用户的账号
+        $link = empty($link_user)?false:true;    //发送呼叫关联用户的账号 呼叫紧急联系人或者关联用户
         $this->app_obj->sendCallButton($this->call_type,
             $call_array['app_to_account_id'],
             $call_array['to_id'] ,
