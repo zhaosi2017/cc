@@ -179,7 +179,7 @@ trait  TraitPotato {
      * @param  $link_user     关联用户标志
      * @return bool
      */
-    public function sendCallButton($type, $appCalledUid, $calledUserId,$callAppName,$calledAppName ,$appCallUid , $link_user){
+    public function sendCallButton($type, $appCalledUid, $calledUserId,$callAppName,$calledAppName ,$appCallUid , $link_user=false){
 
 
         if($type == CallRecord::Record_Type_none ){              //联系电话呼叫完  发送拨打紧急联系人按钮

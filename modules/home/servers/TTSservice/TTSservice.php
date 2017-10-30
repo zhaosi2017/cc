@@ -310,6 +310,7 @@ class TTSservice{
                 $this->app_obj->first_contact_name, //$call_array['from_nickname'],
                 $call_array['app_from_account_id']
             );
+            return true;
         }
         $link = empty($link_user)?false:true;    //发送呼叫关联用户的账号 呼叫紧急联系人或者关联用户
         file_put_contents('/tmp/call_error.log' , var_export($link , true).'#####'.PHP_EOL , 8);
