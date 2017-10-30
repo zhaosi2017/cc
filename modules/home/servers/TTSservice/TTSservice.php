@@ -123,9 +123,10 @@ class TTSservice{
                 foreach($link_users as $link_u){   //找出所有的关联用户的联系电话（排除紧急联系电话）
                     $to_phones = UserPhone::find()->where(array('user_id'=>$link_u))->orderBy('id')->all();         //被呼叫者的电话集合
                     foreach($to_phones as $phone){
+                        $tmp = User::findOne(['id'=>$phone->user_id]);
                         $send_data['to'] = '+'.$phone->phone_country_code.$phone->user_phone_number;
                         $send_data['call_type'] = CallRecord::Record_Type_emergency;
-                        $send_data['nickname']  = $to_user['nickname'];
+                        $send_data['nickname']  = empty($tmp)?'':$tmp->nickname;
                         $sends[] = $send_data;
                     }
                 }
