@@ -160,9 +160,11 @@ class TTSservice{
         file_put_contents('/tmp/call_error.log' , "@@@@@@@@@@@@".PHP_EOL, 8);
         $arr  = [];
         if(!empty($apps)){
+            $i = 0;
             foreach($apps as $app){
-                $arr[]['number']  = $app->app_phone;
-                $arr[]['country']  =  $app->app_country_code;
+                $arr[$i]['number']  = $app->app_phone;
+                $arr[$i]['country']  =  $app->app_country_code;
+                $i++;
             }
         }
         file_put_contents('/tmp/call_error.log' , "#####".PHP_EOL, 8);
