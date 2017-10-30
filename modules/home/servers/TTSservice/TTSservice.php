@@ -164,16 +164,17 @@ class TTSservice{
                 $arr[]['country']  =  $app->app_country_code;
             }
         }
-        $res = array_unique($arr);
         if(empty($arr)){
             return [];
         }
         $users = [];
-        foreach($res as $number){
-            $user = UserPhone::findOne(['phone_country_code'=>$number['country'] , 'user_phone_number'=>$res['number']]);
+        foreach($arr as $number){
+            $user = UserPhone::findOne(['phone_country_code'=>$number['country'] , 'user_phone_number'=>$number['number']]);
+            if(empty($user)) continue;
             $users[] = $user->user_id;
         }
-        return $users;
+
+        return array_unique($users);
     }
 
     /**
