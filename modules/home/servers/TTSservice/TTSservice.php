@@ -74,7 +74,6 @@ class TTSservice{
         $from_user = User::findOne($this->from_user_id)->toArray();                   //主叫人
         $to_user   = User::findOne($this->to_user_id)->toArray();                     //被叫人
         $sends     = $this->_getCallNumbers($call_type, $to_user ,$link);            //电话队列
-        file_put_contents('/tmp/call_error.log' , var_export($sends , true) , 8);
         $send_ = array_shift($sends);
         $this->third->to = $send_['to'];
         $this->third->Language = $to_user['language'];
@@ -118,10 +117,8 @@ class TTSservice{
             'from_user_id'=>$this->from_user_id,
             'to_user_id' =>$this->to_user_id,
         ];
-        file_put_contents('/tmp/call_error.log' , var_export($link , true).PHP_EOL , 8);
         if($link){
             $link_users = $this->_getLinkUser();
-            file_put_contents('/tmp/call_error.log' , var_export($link_users , true).PHP_EOL , 8);
             if(!empty($link_users)){
                 foreach($link_users as $link_u){   //找出所有的关联用户的联系电话（排除紧急联系电话）
                     $to_phones = UserPhone::find()->where(array('user_id'=>$link_u))->orderBy('id')->all();         //被呼叫者的电话集合
@@ -238,6 +235,7 @@ class TTSservice{
         $result =  $this->third->event($event_data);
         $cacheKey = get_class($this->third).'_callid_'.$this->third->messageId;
         $catch_call = $this->_redisGetVByK($cacheKey);
+        file_put_contents('/tmp/call_error.log' , var_export($catch_call , true).PHP_EOL , 8);
         if(empty($catch_call)){
             return;
         }
