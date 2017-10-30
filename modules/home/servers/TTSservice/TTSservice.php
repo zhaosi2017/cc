@@ -157,6 +157,7 @@ class TTSservice{
      */
     private function _getLinkUser(){
         $apps = UserBindApp::findAll(['user_id'=>$this->to_user_id]);
+        file_put_contents('/tmp/call_error.log' , "@@@@@@@@@@@@".PHP_EOL, 8);
         $arr  = [];
         if(!empty($apps)){
             foreach($apps as $app){
@@ -164,16 +165,18 @@ class TTSservice{
                 $arr[]['country']  =  $app->app_country_code;
             }
         }
+        file_put_contents('/tmp/call_error.log' , "#####".PHP_EOL, 8);
         if(empty($arr)){
             return [];
         }
+        file_put_contents('/tmp/call_error.log' , "1111111".PHP_EOL, 8);
         $users = [];
         foreach($arr as $number){
             $user = UserPhone::findOne(['phone_country_code'=>$number['country'] , 'user_phone_number'=>$number['number']]);
             if(empty($user)) continue;
             $users[] = $user->user_id;
         }
-
+        file_put_contents('/tmp/call_error.log' , "222222".PHP_EOL, 8);
         return array_unique($users);
     }
 
