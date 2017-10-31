@@ -9,6 +9,7 @@ namespace app\modules\home\servers\appService;
 
 
 use app\modules\home\models\CallRecord;
+use app\modules\home\models\UserBindApp;
 use app\modules\home\models\UserGentContact;
 use app\modules\home\models\UserPhone;
 use Yii;
@@ -279,7 +280,8 @@ trait  TraitPotato {
             return $this->errorCode['success'];
         }
         $this->setWebhook($this->webhookUrl);
-        $res = User::findOne(['potato_user_id' => $this->potatoUid]);
+        //$res = User::findOne(['potato_user_id' => $this->potatoUid]);
+        $res = AppService::getUserByApp($this->potatoUid , UserBindApp::APP_TYPE_POTATO);
         if (!$res) {
             // 发送验证码，完成绑定.
             return $this->sendBindCode();
@@ -298,7 +300,8 @@ trait  TraitPotato {
         $this->language = $this->callPersonData->language;
 
 
-        $user = User::findOne(['potato_user_id' => $this->potatoContactUid]);
+        //$user = User::findOne(['potato_user_id' => $this->potatoContactUid]);
+        $user = AppService::getUserByApp($this->potatoContactUid , UserBindApp::APP_TYPE_POTATO);
         if ($user) {
             $this->calledPersonData = $user;
             if(!$this->_check_Phone($call_type)){

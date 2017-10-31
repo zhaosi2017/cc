@@ -33,17 +33,16 @@ class UserBindApp extends CActiveRecord{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+    public function beforeSave($insert)
+    {
+         if(parent::beforeSave($insert)){
+            $tmp = self::findOne(['app_userid'=>$this->app_userid , 'type'=>$this->type]);
+            if(empty($tmp)){
+                return true;
+            }
+         }
+        return false;
+    }
 
 
 }

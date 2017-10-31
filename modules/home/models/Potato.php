@@ -1,6 +1,7 @@
 <?php
 namespace app\modules\home\models;
 
+use app\modules\home\servers\appService\AppService;
 use app\modules\home\servers\appService\TraitPotato;
 use yii;
 use yii\base\Model;
@@ -1001,7 +1002,8 @@ class Potato extends Model
         ];
 
         $time = time();
-        $this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
+        //$this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
+        $this->callPersonData = AppService::getUserByApp( $this->potatoUid , UserBindApp::APP_TYPE_POTATO);
         if (empty($this->callPersonData)) {
             $sendData['text'] = $this->getEnableNoMemberText();
             $this->sendData = $sendData;
@@ -1017,7 +1019,8 @@ class Potato extends Model
         ];
         $this->sendPotatoData();
 
-        $this->calledPersonData = User::findOne(['potato_user_id' => $this->potatoContactUid]);
+       // $this->calledPersonData = User::findOne(['potato_user_id' => $this->potatoContactUid]);
+        $this->calledPersonData = AppService::getUserByApp( $this->potatoContactUid , UserBindApp::APP_TYPE_POTATO);
         if (empty($this->calledPersonData)) {
             $sendData['text'] = $this->getMenuNoMemberText();
             $this->sendData = $sendData;
@@ -1082,7 +1085,8 @@ class Potato extends Model
             'text' => '',
         ];
 
-        $this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
+        //$this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
+        $this->callPersonData = AppService::getUserByApp($this->potatoUid , UserBindApp::APP_TYPE_POTATO);
         if (empty($this->callPersonData)) {
             $sendData['text'] = $this->getEnableNoMemberText();
             $this->sendData = $sendData;
@@ -1097,7 +1101,8 @@ class Potato extends Model
             'text' => $this->getStartText(),
         ];
         $this->sendPotatoData();
-        $this->calledPersonData = User::findOne(['potato_user_id' => $this->potatoContactUid]);
+        //$this->calledPersonData = User::findOne(['potato_user_id' => $this->potatoContactUid]);
+        $this->calledPersonData = AppService::getUserByApp($this->potatoContactUid , UserBindApp::APP_TYPE_POTATO);
         if (empty($this->calledPersonData)) {
             $sendData['text'] = $this->getMenuNoMemberText();
             $this->sendData = $sendData;
@@ -1128,7 +1133,8 @@ class Potato extends Model
             'text' => '',
         ];
 
-        $this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
+        //$this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
+        $this->callPersonData = AppService::getUserByApp($this->potatoUid , UserBindApp::APP_TYPE_POTATO);
         if (empty($this->callPersonData)) {
             $sendData['text'] = $this->getEnableNoMemberText();
             $this->sendData = $sendData;
@@ -1167,7 +1173,8 @@ class Potato extends Model
             'text' => '',
         ];
 
-        $this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
+       // $this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
+        $this->callPersonData = AppService::getUserByApp($this->potatoUid , UserBindApp::APP_TYPE_POTATO);
         if (empty($this->callPersonData)) {
             $sendData['text'] = $this->getEnableNoMemberText();
             $this->sendData = $sendData;
@@ -1206,7 +1213,8 @@ class Potato extends Model
             'text' => '',
         ];
 
-        $this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
+        //$this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
+        $this->callPersonData = AppService::getUserByApp($this->potatoUid , UserBindApp::APP_TYPE_POTATO);
         if (empty($this->callPersonData)) {
             $sendData['text'] = $this->getEnableNoMemberText();
             $this->sendData = $sendData;
@@ -1221,7 +1229,8 @@ class Potato extends Model
             'text' => $this->getStartText(),
         ];
         $this->sendPotatoData();
-        $this->calledPersonData = User::findOne(['potato_user_id' => $this->potatoContactUid]);
+        //$this->calledPersonData = User::findOne(['potato_user_id' => $this->potatoContactUid]);
+        $this->calledPersonData   = AppService::getUserByApp($this->potatoContactUid , UserBindApp::APP_TYPE_POTATO);
         if (empty($this->calledPersonData)) {
             $sendData['text'] = $this->getMenuNoMemberText();
             $this->sendData = $sendData;
@@ -1255,7 +1264,8 @@ class Potato extends Model
             'text' => '',
         ];
 
-        $this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
+        //$this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
+        $this->callPersonData = AppService::getUserByApp($this->potatoUid , UserBindApp::APP_TYPE_POTATO);
         if (empty($this->callPersonData)) {
             $sendData['text'] = $this->getEnableNoMemberText();
             $this->sendData = $sendData;
@@ -1270,7 +1280,8 @@ class Potato extends Model
             'text' => $this->getStartText(),
         ];
         $this->sendPotatoData();
-        $this->calledPersonData = User::findOne(['potato_user_id' => $this->potatoContactUid]);
+        //$this->calledPersonData = User::findOne(['potato_user_id' => $this->potatoContactUid]);
+        $this->calledPersonData = AppService::getUserByApp($this->potatoContactUid , UserBindApp::APP_TYPE_POTATO);
         if (empty($this->calledPersonData)) {
             $sendData['text'] = $this->getMenuNoMemberText();
             $this->sendData = $sendData;
@@ -1295,8 +1306,10 @@ class Potato extends Model
      */
     public function sendMenulist()
     {
-        $this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
-        $this->calledPersonData = User::findOne(['potato_user_id' => $this->potatoContactUid]);
+       // $this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
+       // $this->calledPersonData = User::findOne(['potato_user_id' => $this->potatoContactUid]);
+        $this->callPersonData  = AppService::getUserByApp($this->potatoUid , UserBindApp::APP_TYPE_POTATO);
+        $this->calledPersonData= AppService::getUserByApp($this->potatoContactUid , UserBindApp::APP_TYPE_POTATO);
         $time = time();
         // 先检查自己是否完成绑定操作.
         if (empty($this->callPersonData) && ($this->potatoUid == $this->potatoContactUid)) {
@@ -1571,7 +1584,7 @@ class Potato extends Model
     /**
      * 绑定操作.
      */
-    public function bindPotatoData()
+    public function bindPotatoData($app_id = 0)
     {
         $user = User::findOne(Yii::$app->user->id);
         $this->language = $user->language;
@@ -1591,10 +1604,23 @@ class Potato extends Model
         $data = Yii::$app->security->decryptByKey(base64_decode($potatoData), Yii::$app->params['potato']);
         $dataArr = explode('-', $data);
         if ($dataArr[0] == Yii::$app->params['potato_pre']) {
-            $user->potato_user_id = $dataArr['1'];
-            $user->potato_number = $dataArr['2'];
-            $user->potato_name = $dataArr['3'];
-            $res = $user->save();
+            if(!$app_id){
+                $app = new UserBindApp();
+            }else{
+                $app = UserBindApp::findOne($app_id);
+                if(empty($app)){
+                    return false;
+                }
+            }
+            $app->type       =  UserBindApp::APP_TYPE_POTATO;
+            $app->app_userid = $dataArr['1'];
+            $app->app_number = $dataArr['2'];
+            $app->app_name   = $dataArr['3'];
+
+//            $user->potato_user_id = $dataArr['1'];
+//            $user->potato_number = $dataArr['2'];
+//            $user->potato_name = $dataArr['3'];
+            $res = $app->save();
             if ($res) {
                 Yii::$app->redis->del($this->bindCode);
             }
@@ -1608,12 +1634,20 @@ class Potato extends Model
     /**
      * 解除绑定操作.
      */
-    public function unbundlePotatoData()
+    public function unbundlePotatoData($app_id = 0)
     {
-        $user = User::findOne(Yii::$app->user->id);
-        $user->potato_user_id = 0;
-        $user->potato_number = 0;
-        return $user->save();
+        //$user = User::findOne(Yii::$app->user->id);
+        if($app_id){
+            $app = UserBindApp::findOne(['id'=>$app_id , 'user_id'=>Yii::$app->user->id]);
+            if(!empty($app)){
+                return  $app->delete();
+            }
+        }
+        return false;
+
+//        $user->potato_user_id = 0;
+//        $user->potato_number = 0;
+//        return $user->save();
     }
 
     /**
