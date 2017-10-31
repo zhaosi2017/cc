@@ -3,7 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
-
 $this->title = Yii::t('app/user/app-build' ,'Bind App for Communication');
 $this->params['breadcrumbs'][] = $this->title;
 /* @var $this yii\web\View */
@@ -11,57 +10,90 @@ $this->params['breadcrumbs'][] = $this->title;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="user-form">
-    <div class="text-center" style="margin-bottom: 100px; ">
-       <span style="margin: auto;font-size: 12px;font-weight: 600;"><?= Yii::t('app/user/app-build' , 'Bind a telegram or Potato account ,Enable offline call alerts . So that others can call you, but also allows you to call someone else')?></span>
-    </div>
-    <div>
-        <div class="row app-bind-div" style="margin-top: 20px;border-bottom: 1px solid rgb(217,217,217); ">
-            <div class="col-xs-4 app-bind-1"><?= Yii::t('app/user/app-build', 'Bind Potato')?></div>
-            <div class="col-xs-4">
-                <?php echo  ($model->potato_number) ? $model->potato_number: '<span style="color:rgb(255,102,0);">'.
-                    Yii::t('app/user/app-build','No Potato account')
-                    .'</span>';?>
-            </div>
-            <div class="col-xs-4">
-                <a class="index-button-1" href="/home/potato/bind-potato" style="padding: 4px 18px;color: white;"> <?php echo ($model->potato_number)?
-                        Yii::t('app/user/app-build','Edit')
-                        : Yii::t('app/user/app-build','Build');?></a>&nbsp;&nbsp;
-                <?php if ($model->potato_number){?>
-                <a  class="index-button-1" style="padding: 4px 18px;color: white;" href="<?php echo Url::to(['/home/potato/unbundle-potato']) ?>" data-method="post" data-confirm="<?= Yii::t('app/user/app-build' , 'Are you sure you want to lift the binding?')?>" >
 
-                    <?= Yii::t('app/user/app-build','lift the binding') ?>
-                </a>
-                <?php }?>
+<div class="second-nav-div-3">
+    <ul class="nav nav-tabs" >
+        <li  class="active"><a  data-toggle="pill" href="#tab1" ><?= Yii::t('app/user/app-build', 'Bind Potato')?></a></li>
+        <li  ><a  data-toggle="pill" href="#tab2"><?= Yii::t('app/user/app-build', 'Bind Telegram')?></a></li>
+    </ul>
+</div>
+
+<div class="tab-content">
+    <div id="tab1" class="tab-pane fade in active">
+        <div style="margin-top: 50px;">
+            <div >
+                <div class="">
+                    <span style=" font-size: 17px;font-weight: 500; padding: 4px 0px"><?= Yii::t('app/user/app-build', 'Bind Potato')?></span>
+                    <a class="index-button-1" style=" padding: 4px 18px;color: white;position: relative;left: 31px" href="/home/potato/bind-potato"><?= Yii::t('app/user/links', 'Build') ?></a>
+                </div>
             </div>
         </div>
+        <div>
+            <?php if (!empty($potato)){
+                foreach($potato as $k => $phone){?>
+
+                    <div class="row app-bind-div" style="margin-top: 20px;border-bottom: 1px solid rgb(217,217,217); ">
+                        <div class="col-xs-4 "><?php echo 'potato '.($k+1);?> </div>
+
+                        <div class="col-xs-4">
+                            <?php $t = $phone->app_name ; if (isset($t[0])){ $t[0]=='+'? $t :$t = '+'.$t;}  echo  $t.'-'.$phone->app_number;?>
+                        </div>
+                        <div class="col-xs-4">
+                            <a class="index-button-1"  href="<?php echo Url::to(['/home/potato/bind-potato' ,'id'=>$phone->id]) ?>"
+                               style="padding: 4px 18px;color: white;"
+                            ><?= Yii::t('app/user/links', 'Edit') ?></a>
+                            <a class="index-button-1"   href="<?php echo Url::to(['/home/potato/unbundle-potato', 'id'=>$phone->id ]) ?>" data-method="post"
+
+                               data-confirm="<?= Yii::t('app/user/links', 'Are you sure you want to delete it?')?>"
+                               style="padding: 4px 18px;color: white;"
+                            ><?= Yii::t('app/user/links', 'Remove') ?></a>
+                        </div>
+                    </div>
+                <?php   }
+            }?>
+        </div>
     </div>
-    <div>
-        <div class="row app-bind-div">
-            <div class="col-xs-4 app-bind-1"><?= Yii::t('app/user/app-build', 'Bind Telegram')?></div>
-            <div class="col-xs-4">
-                <?php echo  ($model->telegram_number) ? $model->telegram_number: '<span style="color:rgb(255,102,0);">'.
-
-                    Yii::t('app/user/app-build','No Telegram account')
-                    .'</span>';?>
-
+    <div id="tab2" class="tab-pane fade">
+        <div>
+            <div style="margin-top: 50px;">
+                <div class="">
+                    <span style="    font-size: 17px;font-weight: 500;"><?= Yii::t('app/user/app-build', 'Bind Telegram')?></span>
+                    <a  class="index-button-1" style="    padding: 4px 18px;color: white;position: relative;left: 31px" href="/home/telegram/bind-telegram"><?= Yii::t('app/user/links', 'Build') ?></a>
+                </div>
             </div>
-            <div class="col-xs-4">
-                <a class="index-button-1" href="/home/telegram/bind-telegram" style="padding: 4px 18px;color: white;"> <?php echo ($model->telegram_number)?
-                        Yii::t('app/user/app-build','Edit')
-                        : Yii::t('app/user/app-build','Build'); ?>
-                </a>
-                &nbsp;&nbsp;
-               <?php  if($model->telegram_number) {?>
-                <a class="index-button-1" href="<?php echo Url::to(['/home/telegram/unbundle-telegram']) ?>" data-method="post" data-confirm="<?= Yii::t('app/user/app-build' , 'Are you sure you want to lift the binding?')?>"  style="padding: 4px 18px;color: white;">
-                    <?= Yii::t('app/user/app-build','lift the binding') ?>
-                </a>
-                <?php }?>
-            </div>
+        </div>
+        <div>
+
+            <?php if (!empty($telegram)){
+                foreach($telegram as $i => $contact){?>
+
+                    <div class="row app-bind-div">
+                        <div class="col-xs-4 "><?php echo 'telegram ' .($i+1);?> </div>
+<!--                        <div class="col-xs-3">--><?php // echo $contact->app_name; ?><!--</div>-->
+
+                        <div class="col-xs-4">
+                            <?php $p = $contact->app_name ; if (isset($p[0])){ $p[0]=='+'? $p :$p = '+'.$p;} echo  $p.'-'.$contact->app_number;?>
+
+                        </div>
+                        <div class="col-xs-4">
+                            <a class="index-button-1"  href="<?php echo Url::to(['/home/telegram/bind-telegram' , 'id'=>$contact->id]) ?>"
+                               style="padding: 4px 18px;color: white;"
+                            ><?= Yii::t('app/user/links', 'Edit') ?></a>
+                            <a class="index-button-1"  href="<?php echo Url::to(['/home/telegram/unbundle-telegram' , 'id'=>$contact->id]) ?>" data-method="post"
+                               data-confirm="<?= Yii::t('app/user/links', 'Are you sure you want to delete it?')?>"
+                               style="padding: 4px 18px;color: white;"
+                            ><?= Yii::t('app/user/links', 'Remove') ?></a>
+
+                        </div>
+                    </div>
+                <?php }}?>
         </div>
     </div>
 
 </div>
+
+
+
 
 
 <style>
@@ -78,3 +110,12 @@ $this->params['breadcrumbs'][] = $this->title;
         text-align: center;
     }
 </style>
+
+
+
+
+
+
+
+
+

@@ -9,6 +9,7 @@ use app\modules\home\models\PasswordForm;
 use app\modules\home\models\PhoneForms\NewPhoneForm;
 use app\modules\home\models\PhoneRegisterForm;
 use app\modules\home\models\SmsForms\SmsForm;
+use app\modules\home\models\UserBindApp;
 use app\modules\home\models\UserGentContact;
 use app\modules\home\models\UserPhone;
 use app\modules\home\servers\SmsService;
@@ -645,8 +646,9 @@ class UserController extends GController
     public function actionAppBind()
     {
         $id = Yii::$app->user->id;
-        $model = User::findOne($id);
-        return $this->render('app-bind', ['model' => $model]);
+        $potato   =  UserBindApp::find()->where(['user_id'=>$id,'type'=>UserBindApp::APP_TYPE_POTATO])->all();
+        $telegram =  UserBindApp::find()->where(['user_id'=>$id,'type'=>UserBindApp::APP_TYPE_TELEGRAM])->all();
+        return $this->render('app-bind', ['potato' =>$potato,'telegram'=>$telegram]);
     }
 
     public function actionLinks()
