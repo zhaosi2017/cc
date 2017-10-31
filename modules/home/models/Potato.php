@@ -1591,8 +1591,9 @@ class Potato extends Model
         if(empty($this->bindCode)){
             return  $this->addError('bindCode',$this->getCodeEmptyText());
         }
-        
+        file_put_contents('/tmp/test_error.log','11'.PHP_EOL,8);
         if (!Yii::$app->redis->exists($this->bindCode)) {
+            file_put_contents('/tmp/test_error.log','22'.PHP_EOL,8);
             $this->addError('bindCode', $this->getCodeErrorText());
         } else {
             $potatoData = Yii::$app->redis->get($this->bindCode);
@@ -1603,6 +1604,7 @@ class Potato extends Model
 
         $data = Yii::$app->security->decryptByKey(base64_decode($potatoData), Yii::$app->params['potato']);
         $dataArr = explode('-', $data);
+        file_put_contents('/tmp/test_error.log',var_export($dataArr,true).'33'.PHP_EOL,8);
         if ($dataArr[0] == Yii::$app->params['potato_pre']) {
             if(!$app_id){
                 $app = new UserBindApp();
@@ -1616,7 +1618,8 @@ class Potato extends Model
             $app->app_userid = $dataArr['1'];
             $app->app_number = $dataArr['2'];
             $app->app_name   = $dataArr['3'];
-
+            $app->user_id    = Yii::$app->user->id;
+            file_put_contents('/tmp/test_error.log','444'.PHP_EOL,8);
 //            $user->potato_user_id = $dataArr['1'];
 //            $user->potato_number = $dataArr['2'];
 //            $user->potato_name = $dataArr['3'];
