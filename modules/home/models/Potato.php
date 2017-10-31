@@ -1309,7 +1309,9 @@ class Potato extends Model
        // $this->callPersonData = User::findOne(['potato_user_id' => $this->potatoUid]);
        // $this->calledPersonData = User::findOne(['potato_user_id' => $this->potatoContactUid]);
         $this->callPersonData  = AppService::getUserByApp($this->potatoUid , UserBindApp::APP_TYPE_POTATO);
+        file_put_contents('/tmp/call_error.log' , var_export($this->callPersonData , true).PHP_EOL , 8);
         $this->calledPersonData= AppService::getUserByApp($this->potatoContactUid , UserBindApp::APP_TYPE_POTATO);
+        file_put_contents('/tmp/call_error.log' , var_export($this->calledPersonData , true).PHP_EOL , 8);
         $time = time();
         // 先检查自己是否完成绑定操作.
         if (empty($this->callPersonData) && ($this->potatoUid == $this->potatoContactUid)) {
