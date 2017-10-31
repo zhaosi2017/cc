@@ -194,7 +194,7 @@ class PotatoController extends GController
     /**
      * 绑定telegram账号到系统.
      */
-    public function actionBindPotato()
+    public function actionBindPotato($id=0)
     {
         $isModify = false;
         $user = User::findOne(Yii::$app->user->id);
@@ -204,7 +204,8 @@ class PotatoController extends GController
         $model = new Potato();
         // 提交绑定数据.
         if ($model->load(Yii::$app->request->post())) {
-            $updateRes = $model->bindPotatoData();
+            $id = isset($_POST['id']) && (int)$_POST['id'] ? (int)$_POST['id']:0;
+            $updateRes = $model->bindPotatoData($id);
             if (!$updateRes) {
                 return $this->render('bind-potato', ['model' => $model, 'isModify' => $isModify]);
             }
@@ -217,10 +218,10 @@ class PotatoController extends GController
         }
     }
 
-    public function actionUnbundlePotato()
+    public function actionUnbundlePotato($id)
     {
         $model = new Potato();
-        $updateRes = $model->unbundlePotatoData();
+        $updateRes = $model->unbundlePotatoData($id);
         if (!$updateRes) {
             Yii::$app->getSession()->setFlash('error', Yii::t('app/index','Operation failed'));
         } else {

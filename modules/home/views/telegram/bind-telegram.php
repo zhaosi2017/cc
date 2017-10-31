@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <p>3、<?= Yii::t('app/telegram/bind-telegram' , 'Share your business card to the robot')?></p>
         <p>4、<?= Yii::t('app/telegram/bind-telegram','Will get the verification code fill in the bottom of the input box for binding operation')?></p>
     </div>
-
+    <input type="hidden" name="id" value="<?php if(isset($_GET['id']) && (int)$_GET['id']){echo (int)$_GET['id'];}else{echo 0;} ?>">
     <?php echo $form->field($model, 'bindCode',[
          'template' => "{label}\n<div class=\"col-sm-3\">{input}</div><span class='col-sm-5' style='margin-top:7px;'>
 

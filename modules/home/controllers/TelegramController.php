@@ -6,6 +6,7 @@ use app\modules\home\models\CallRecord;
 use app\modules\home\models\Telegram;
 use app\modules\home\models\TelegramMaps;
 use app\modules\home\models\User;
+use app\modules\home\models\UserBindApp;
 use Yii;
 use app\controllers\GController;
 use yii\filters\AccessControl;
@@ -169,17 +170,18 @@ class TelegramController extends GController
     /**
      * 绑定telegram账号到系统.
      */
-    public function actionBindTelegram()
+    public function actionBindTelegram($id = 0)
     {
         $isModify = false;
-        $user = User::findOne(Yii::$app->user->id);
+        $user = UserBindApp::findOne(['user_id'=>Yii::$app->user->id,'id'=>$id);
         if (!empty($user->telegram_user_id) && !empty($user->telegram_number)) {
             $isModify = true;
         }
         $model = new Telegram();
         // 提交绑定数据.
         if ($model->load(Yii::$app->request->post())) {
-            $updateRes = $model->bindTelegramData();
+            $id = isset($_POST['id']) && (int)$_POST['id'] ? (int)$_POST['id']:0;
+            $updateRes = $model->bindTelegramData($id);
             if (!$updateRes) {
                 return $this->render('bind-telegram', ['model' => $model, 'isModify' => $isModify]);
             }
