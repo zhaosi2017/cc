@@ -19,14 +19,14 @@ class Potato extends Model
     private $keyboardText = 'Share your contact card';
     private $firstText = '/start';
     //正式 callu
-    private $webhookUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendTextMessage';
-    private $callbackAnswerUrl = 'https://bot.potato.im:5423/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendCallbackAnswer';
-    private $menuWebHookUrl = 'https://bot.potato.im:5423/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendInlineMarkupMessage';
+//    private $webhookUrl = 'http://bot.potato.im:4235/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendTextMessage';
+//    private $callbackAnswerUrl = 'https://bot.potato.im:5423/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendCallbackAnswer';
+//    private $menuWebHookUrl = 'https://bot.potato.im:5423/8008682:WwtBFFeUsMMBNfVU83sPUt4y/sendInlineMarkupMessage';
 
     //测试 callme
-//    private $webhookUrl = 'http://bot.potato.im:4235/8013511:mCpb1avXHD74NLb7K6YT9AJd/sendTextMessage';
-//    private $callbackAnswerUrl = 'https://bot.potato.im:5423/8013511:mCpb1avXHD74NLb7K6YT9AJd/sendCallbackAnswer';
-//    private $menuWebHookUrl = 'https://bot.potato.im:5423/8013511:mCpb1avXHD74NLb7K6YT9AJd/sendInlineMarkupMessage';
+    private $webhookUrl = 'http://bot.potato.im:4235/8013511:mCpb1avXHD74NLb7K6YT9AJd/sendTextMessage';
+    private $callbackAnswerUrl = 'https://bot.potato.im:5423/8013511:mCpb1avXHD74NLb7K6YT9AJd/sendCallbackAnswer';
+    private $menuWebHookUrl = 'https://bot.potato.im:5423/8013511:mCpb1avXHD74NLb7K6YT9AJd/sendInlineMarkupMessage';
 
     private $translateUrl = "https://translation.googleapis.com/language/translate/v2?key=AIzaSyAV_rXQu5ObaA9_rI7iqL4EDB67oXaH3zk";
     private $tlanguage = 'zh-CN';
