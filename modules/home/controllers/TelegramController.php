@@ -173,8 +173,8 @@ class TelegramController extends GController
     public function actionBindTelegram($id = 0)
     {
         $isModify = false;
-        $user = UserBindApp::findOne(['user_id'=>Yii::$app->user->id,'id'=>$id);
-        if (!empty($user->telegram_user_id) && !empty($user->telegram_number)) {
+        $user = UserBindApp::findOne(['user_id'=>Yii::$app->user->id,'id'=>$id]);
+        if (!empty($user)) {
             $isModify = true;
         }
         $model = new Telegram();
@@ -194,10 +194,10 @@ class TelegramController extends GController
         }
     }
 
-    public function actionUnbundleTelegram()
+    public function actionUnbundleTelegram($id=0)
     {
         $model = new Telegram();
-        $updateRes = $model->unbundleTelegramData();
+        $updateRes = $model->unbundleTelegramData($id);
         if (!$updateRes) {
             Yii::$app->getSession()->setFlash('error', Yii::t('app/index','Operation failed'));
         } else {
