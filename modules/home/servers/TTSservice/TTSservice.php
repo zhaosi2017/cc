@@ -194,10 +194,12 @@ class TTSservice{
             $to_app_account_id     = $this->app_obj->telegramContactUid;
             $to_app_account_name   = $to_user['telegram_name'];
         }elseif($this->app_type == 'potato'){
+            file_put_contents('/tmp/cc_potato'.date('Y-m-d').'.log' ,'------------'.PHP_EOL, 8);
             $from_app_account_name = $from_user['potato_name'];
             $from_app_account_id   = $this->app_obj->potatoUid;
             $to_app_account_id     = $this->app_obj->potatoContactUid;
             $to_app_account_name   = $to_user['potato_name'];
+            file_put_contents('/tmp/cc_potato'.date('Y-m-d').'.log' ,'************'.PHP_EOL, 8);
         }else{
             $from_app_account_name = '';
             $to_app_account_name ='';
