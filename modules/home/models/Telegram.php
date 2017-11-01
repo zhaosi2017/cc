@@ -1575,17 +1575,14 @@ class Telegram extends Model
         $user = User::findOne(Yii::$app->user->id);
         $this->language = $user->language;
 
-        file_put_contents('/tmp/mytest.log',$this->bindCode.PHP_EOL,8);
         if(empty($this->bindCode)){
             return  $this->addError('bindCode', $this->getCodeEmptyText());
         }
         if (!Yii::$app->redis->exists($this->bindCode)) {
-            file_put_contents('/tmp/mytest.log','111'.PHP_EOL,8);
             $this->addError('bindCode', $this->getCodeErrorText());
         } else {
 
             $telegramData = Yii::$app->redis->get($this->bindCode);
-            file_put_contents('/tmp/mytest.log',var_export($telegramData,true).'22'.PHP_EOL,8);
         }
         if (empty($telegramData)) {
             return $this->addError('bindCode', $this->getCodeErrorText());
@@ -1593,7 +1590,7 @@ class Telegram extends Model
 
         $data = Yii::$app->security->decryptByKey(base64_decode($telegramData), Yii::$app->params['telegram']);
         $dataArr = explode('-', $data);
-        file_put_contents('/tmp/mytest.log',var_export($dataArr,true).'333'.PHP_EOL,8);
+
         if ($dataArr[0] == Yii::$app->params['telegram_pre']) {
             if(!$app_id){
                 $app = new UserBindApp();
