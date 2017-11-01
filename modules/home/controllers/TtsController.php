@@ -36,7 +36,7 @@ class TtsController extends GController{
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index' , 'sinch-event' ,'nexmo-anwser' , 'nexmo-event' ,'test-sinch'],
+                            'actions' => ['index' , 'sinch-event' ,'nexmo-anwser' , 'nexmo-event' ,'test-sinch'],
                         'roles' => ['?'],
                     ],
                     [

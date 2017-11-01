@@ -93,10 +93,10 @@ class TelegramController extends GController
                 return $telegram->sendMenulist();
             } elseif (isset($postData['callback_query'])) {
                 // 点击菜单回调操作.
-                $result = $telegram->checkRate();
-                if ($result) {
-                    return $telegram->errorCode['error'];
-                }
+//                $result = $telegram->checkRate();
+//                if ($result) {
+//                    return $telegram->errorCode['error'];
+//                }
 
                 if (isset($postData['callback_query']['message']['chat']['first_name'])) {
                     $telegram->telegramFirstName = $postData['callback_query']['message']['chat']['first_name'];

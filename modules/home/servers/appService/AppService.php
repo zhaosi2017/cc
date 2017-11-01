@@ -20,7 +20,6 @@ class AppService{
     public static function getUserByApp($app_userid , $app_type){
         $app_name = UserBindApp::$APP_TYPE_MAPS[$app_type];
         if(empty($app_name)){
-            file_put_contents('/tmp/call_error.log' , "11111".PHP_EOL , 8);
             return false;
         }
         $c_user_id =  $app_name.'_user_id';
@@ -30,12 +29,10 @@ class AppService{
 
         $app = UserBindApp::findOne(['app_userid'=>$app_userid , 'type'=>$app_type]);
         if(empty($app)){
-            file_put_contents('/tmp/call_error.log' , "11111".PHP_EOL , 8);
             return false;
         }
         $user = User::findOne(['id'=>$app->user_id]);
         if(empty($user)){
-            file_put_contents('/tmp/call_error.log' , "22222".PHP_EOL , 8);
             return false;
         }
         $user->$c_user_id = $app->app_userid;

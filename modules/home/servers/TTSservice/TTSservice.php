@@ -347,9 +347,7 @@ class TTSservice{
         $this->call_type        = $call_array['call_type'];
         $this->app_type         = $call_array['app_type'];
         if( $this->call_num = Yii::$app->redis->llen($list_key) <= 0 ){         //队列空 发送重新呼叫按钮
-            file_put_contents('/tmp/call_error.log' , "继续呼叫菜单发送***".PHP_EOL , 8);
             $this->_sendAppMune($call_array);
-            file_put_contents('/tmp/call_error.log' , "继续呼叫菜单发送---".PHP_EOL , 8);
             return true;
         }
 
@@ -366,7 +364,6 @@ class TTSservice{
 
         $call_array['nickname'] =  $send['nickname'];
         $call_array['link']     =  isset($send['link'])?$send['link']:false;
-        file_put_contents('/tmp/test_error.log' , var_export($call_array , true).PHP_EOL , 8);
         $this->app_obj->continueCall($this->call_type ,$call_array );
         $result = $this->third->sendMessage();                                  //发送一个新的消息
 
