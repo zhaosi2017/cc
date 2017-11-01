@@ -39,11 +39,14 @@ trait  TraitPotato {
      */
     public function sendCallFailed($name,$anwser){
         //$this->tlanguage = $this->language;
+        file_put_contents('/tmp/cc_potato'.date('Y-m-d').'.log' ,$name. $anwser.PHP_EOL, 8);
+
         $this->sendData = [
             'chat_type'=>1,
             'chat_id' =>(int)$this->potatoUid,
             'text' => $this->_CallAnwserText($anwser , $name),
         ];
+        file_put_contents('/tmp/cc_potato'.date('Y-m-d').'.log' ,var_export($this->sendData , true).PHP_EOL, 8);
         $this->setWebhook($this->webhookUrl);
         $this->sendPotatoData();
         return true;
