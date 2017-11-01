@@ -1592,7 +1592,6 @@ class Potato extends Model
             return  $this->addError('bindCode',$this->getCodeEmptyText());
         }
         if (!Yii::$app->redis->exists($this->bindCode)) {
-            file_put_contents('/tmp/test_error.log','22'.PHP_EOL,8);
             $this->addError('bindCode', $this->getCodeErrorText());
         } else {
             $potatoData = Yii::$app->redis->get($this->bindCode);

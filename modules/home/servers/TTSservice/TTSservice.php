@@ -190,13 +190,13 @@ class TTSservice{
         $call_key = get_class($this->third).'_callid_'.$this->third->messageId;
         if($this->app_type == 'telegram'){
             $from_app_account_name = $from_user['telegram_name'];
-            $from_app_account_id   = $from_user['telegram_user_id'];
-            $to_app_account_id     = $to_user['telegram_user_id'];
+            $from_app_account_id   = $this->app_obj->telegramUid;
+            $to_app_account_id     = $this->app_obj->telegramContactUid;
             $to_app_account_name   = $to_user['telegram_name'];
         }elseif($this->app_type == 'potato'){
             $from_app_account_name = $from_user['potato_name'];
-            $from_app_account_id   = $from_user['potato_user_id'];
-            $to_app_account_id     = $to_user['potato_user_id'];
+            $from_app_account_id   = $this->app_obj->potatoUid;
+            $to_app_account_id     = $this->app_obj->potatoContactUid;
             $to_app_account_name   = $to_user['potato_name'];
         }else{
             $from_app_account_name = '';

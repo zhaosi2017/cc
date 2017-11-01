@@ -39,8 +39,6 @@ trait  TraitPotato {
      */
     public function sendCallFailed($name,$anwser){
         //$this->tlanguage = $this->language;
-        file_put_contents('/tmp/cc_potato'.date('Y-m-d').'.log' ,$name. $anwser.PHP_EOL, 8);
-
         $this->sendData = [
             'chat_type'=>1,
             'chat_id' =>(int)$this->potatoUid,
