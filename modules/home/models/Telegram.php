@@ -11,6 +11,8 @@ use app\modules\home\models\WhiteList;
 use app\modules\home\models\BlackList;
 use app\modules\home\models\UserPhone;
 use app\modules\home\models\Nexmo;
+use app\modules\home\models\UserBindApp;
+use app\modules\home\servers\appService\AppService;
 
 class Telegram extends Model
 {
@@ -932,8 +934,11 @@ class Telegram extends Model
      */
     public function sendMenulist()
     {
-        $this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
-        $this->calledPersonData = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
+//        $this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
+//        $this->calledPersonData = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
+        $this->callPersonData  = AppService::getUserByApp($this->telegramUid , UserBindApp::APP_TYPE_TELEGRAM);
+        file_put_contents('/tmp/call_error.log' , var_export($this->callPersonData , true).PHP_EOL , 8);
+        $this->calledPersonData= AppService::getUserByApp($this->telegramContactUid , UserBindApp::APP_TYPE_TELEGRAM);
         // 先检查自己是否完成绑定操作.
         if (empty($this->callPersonData) && ($this->telegramUid == $this->telegramContactUid)) {
             // 发送验证码完成绑定.
@@ -1553,7 +1558,7 @@ class Telegram extends Model
     /**
      * 绑定操作.
      */
-    public function bindTelegramData()
+    public function bindTelegramData($app_id = 0)
     {
         $user = User::findOne(Yii::$app->user->id);
         $this->language = $user->language;
@@ -1573,10 +1578,20 @@ class Telegram extends Model
         $data = Yii::$app->security->decryptByKey(base64_decode($telegramData), Yii::$app->params['telegram']);
         $dataArr = explode('-', $data);
         if ($dataArr[0] == Yii::$app->params['telegram_pre']) {
-            $user->telegram_user_id = $dataArr['1'];
-            $user->telegram_number = $dataArr['2'];
-            $user->telegram_name = $dataArr['3'];
-            $res = $user->save();
+            if(!$app_id){
+                $app = new UserBindApp();
+            }else{
+                $app = UserBindApp::findOne($app_id);
+                if(empty($app)){
+                    return false;
+                }
+            }
+            $app->type       =  UserBindApp::APP_TYPE_TELEGRAM;
+            $app->app_userid = $dataArr['1'];
+            $app->app_number = $dataArr['2'];
+            $app->app_name   = $dataArr['3'];
+            $app->user_id    = Yii::$app->user->id;
+            $res = $app->save();
             if ($res) {
                 Yii::$app->redis->del($this->bindCode);
             }
@@ -1590,12 +1605,15 @@ class Telegram extends Model
     /**
      * 解除绑定操作.
      */
-    public function unbundleTelegramData()
+    public function unbundleTelegramData($app_id = 0)
     {
-        $user = User::findOne(Yii::$app->user->id);
-        $user->telegram_user_id = 0;
-        $user->telegram_number = 0;
-        return $user->save();
+        if($app_id){
+            $app = UserBindApp::findOne(['id'=>$app_id , 'user_id'=>Yii::$app->user->id]);
+            if(!empty($app)){
+                return  $app->delete();
+            }
+        }
+        return false;
     }
 
     /**
