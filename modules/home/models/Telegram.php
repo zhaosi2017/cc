@@ -179,6 +179,9 @@ class Telegram extends Model
     {
         $this->telegramContactUid = $value;
     }
+    public function getTelegramContactUid(){
+        return $this->telegramContactUid ;
+    }
 
     /**
      * @param $value

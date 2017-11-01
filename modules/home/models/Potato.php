@@ -163,6 +163,11 @@ class Potato extends Model
         $this->potatoContactUid = $value;
     }
 
+    public function getPotatoContactUid(){
+
+        return  $this->potatoContactUid;
+    }
+
     /**
      * @param $value
      */
