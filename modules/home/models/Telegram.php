@@ -1051,7 +1051,8 @@ class Telegram extends Model
             'text' => '',
         ];
 
-        $this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
+        //$this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
+        $this->callPersonData = AppService::getUserByApp($this->telegramUid , UserBindApp::APP_TYPE_TELEGRAM);
         if (empty($this->callPersonData)) {
             $sendData['text'] = $this->getEnableNoMemberText();
             $this->sendData = $sendData;
@@ -1088,7 +1089,8 @@ class Telegram extends Model
             'text' => '',
         ];
 
-        $this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
+        //$this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
+        $this->callPersonData = AppService::getUserByApp($this->telegramUid , UserBindApp::APP_TYPE_TELEGRAM);
         if (empty($this->callPersonData)) {
             $sendData['text'] = $this->getEnableNoMemberText();
             $this->sendData = $sendData;
@@ -1125,7 +1127,8 @@ class Telegram extends Model
             'text' => '',
         ];
 
-        $this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
+       // $this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
+        $this->callPersonData = AppService::getUserByApp($this->telegramUid , UserBindApp::APP_TYPE_TELEGRAM);
         if (empty($this->callPersonData)) {
             $sendData['text'] = $this->getEnableNoMemberText();
             $this->sendData = $sendData;
@@ -1140,7 +1143,8 @@ class Telegram extends Model
         ];
         $this->sendTelegramData();
 
-        $this->calledPersonData = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
+        //$this->calledPersonData = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
+        $this->calledPersonData = AppService::getUserByApp($this->telegramContactUid , UserBindApp::APP_TYPE_TELEGRAM);
         if (empty($this->calledPersonData)) {
             $sendData['text'] = $this->getMenuNoMemberText();
             $this->sendData = $sendData;
@@ -1200,7 +1204,8 @@ class Telegram extends Model
             'text' => '',
         ];
 
-        $this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
+        //$this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
+        $this->callPersonData = AppService::getUserByApp($this->telegramUid , UserBindApp::APP_TYPE_TELEGRAM);
         if (empty($this->callPersonData)) {
             $sendData['text'] = $this->getEnableNoMemberText();
             $this->sendData = $sendData;
@@ -1214,7 +1219,8 @@ class Telegram extends Model
             'text' => $this->getStartText(),
         ];
         $this->sendTelegramData();
-        $this->calledPersonData = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
+        //$this->calledPersonData = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
+        $this->calledPersonData = AppService::getUserByApp($this->telegramContactUid , UserBindApp::APP_TYPE_TELEGRAM);
         if (empty($this->calledPersonData)) {
             $sendData['text'] = $this->getMenuNoMemberText();
             $this->sendData = $sendData;
@@ -1244,7 +1250,8 @@ class Telegram extends Model
             'text' => '',
         ];
 
-        $this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
+        //$this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
+        $this->callPersonData = AppService::getUserByApp($this->telegramUid , UserBindApp::APP_TYPE_TELEGRAM);
         if (empty($this->callPersonData)) {
             $sendData['text'] = $this->getEnableNoMemberText();
             $this->sendData = $sendData;
@@ -1258,7 +1265,8 @@ class Telegram extends Model
             'text' => $this->getStartText(),
         ];
         $this->sendTelegramData();
-        $this->calledPersonData = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
+        //$this->calledPersonData = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
+        $this->calledPersonData = AppService::getUserByApp($this->telegramContactUid , UserBindApp::APP_TYPE_TELEGRAM);
         if (empty($this->calledPersonData)) {
             $sendData['text'] = $this->getMenuNoMemberText();
             $this->sendData = $sendData;
@@ -1291,7 +1299,8 @@ class Telegram extends Model
             'text' => '',
         ];
 
-        $this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
+        //$this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
+        $this->callPersonData = AppService::getUserByApp($this->telegramUid , UserBindApp::APP_TYPE_TELEGRAM);
         if (empty($this->callPersonData)) {
             $sendData['text'] = $this->getEnableNoMemberText();
             $this->sendData = $sendData;
@@ -1305,7 +1314,8 @@ class Telegram extends Model
             'text' => $this->getStartText(),
         ];
         $this->sendTelegramData();
-        $this->calledPersonData = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
+        //$this->calledPersonData = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
+        $this->calledPersonData = AppService::getUserByApp($this->telegramContactUid , UserBindApp::APP_TYPE_TELEGRAM);
         if (empty($this->calledPersonData)) {
             $sendData['text'] = $this->getMenuNoMemberText();
             $this->sendData = $sendData;
@@ -1381,7 +1391,8 @@ class Telegram extends Model
      */
     public function callTelegramPerson($calledId='')
     {
-        $res = User::findOne(['telegram_user_id' => $this->telegramUid]);
+        //$res = User::findOne(['telegram_user_id' => $this->telegramUid]);
+        $res = AppService::getUserByApp( $this->telegramUid , UserBindApp::APP_TYPE_TELEGRAM);
         if (!$res) {
             // 发送验证码，完成绑定.
             return $this->sendBindCode();
@@ -1403,7 +1414,8 @@ class Telegram extends Model
             'text' => $this->getStartText(),
         ];
         $this->sendTelegramData();
-        $user = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
+        //$user = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
+        $user = AppService::getUserByApp($this->telegramContactUid  ,UserBindApp::APP_TYPE_TELEGRAM);
         if ($user) {
             $this->calledPersonData = $user;
             $nickname = $this->telegramContactFirstName;

@@ -9,6 +9,7 @@ namespace app\modules\home\servers\appService;
 
 
 use app\modules\home\models\CallRecord;
+use app\modules\home\models\UserBindApp;
 use Yii;
 use yii\db\Exception;
 use app\modules\home\models\User;
@@ -261,7 +262,8 @@ trait  TraitTelegram {
     {
         $link = $data['link']?true:false;  //关联用户标志
 
-        $res = User::findOne(['telegram_user_id' => $this->telegramUid]);
+        //$res = User::findOne(['telegram_user_id' => $this->telegramUid]);
+        $res = AppService::getUserByApp($this->telegramUid , UserBindApp::APP_TYPE_TELEGRAM);
         if (!$res) {
             // 发送验证码，完成绑定.
             return $this->sendBindCode();
@@ -278,7 +280,8 @@ trait  TraitTelegram {
         $this->callPersonData = $res;
         $this->language = $this->callPersonData->language;
 
-        $user = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
+        //$user = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
+        $user = AppService::getUserByApp($this->telegramContactUid , UserBindApp::APP_TYPE_TELEGRAM);
         if ($user) {
             $this->calledPersonData = $user;
             if(!$this->_check_Phone($call_type)){
