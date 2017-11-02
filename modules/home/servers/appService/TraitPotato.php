@@ -107,7 +107,7 @@ trait  TraitPotato {
             $this->sendData = [
                 'chat_type'=>1,
                 'chat_id' =>(int)$this->potatoUid,
-                'text' => $this->translateLanguage('开始呼叫对方的所有联系电话...(共'.$data['count'].'部)')
+                'text' => $this->translateLanguage('开始呼叫对方的其他客优账号:'.$data['nickname'].'...(共'.$data['count'].'部)')
             ];
             $this->setWebhook($this->webhookUrl);
             $this->sendPotatoData();
