@@ -184,7 +184,7 @@ trait  TraitTelegram {
      * @param $calledAppName  被叫姓
      * @return bool
      */
-    public function sendCallButton($type, $appCalledUid, $calledUserId,$callAppName,$calledAppName ,$appCallUid , $link_user = false ){
+    public function sendCallButton($type, $appCalledUid, $calledUserId,$callAppName,$calledAppName ,$appCallUid , $link_user = 0 ){
         $this->setWebhook();
 
         if($type == CallRecord::Record_Type_none){              //联系电话呼叫完  发送拨打紧急联系人按钮
@@ -197,14 +197,17 @@ trait  TraitTelegram {
             ];
             $keyBoard = [
                 [
-                    [
-                        'text' => "呼叫紧急联系人",
-                        'callback_data' => implode('-', $callback),
-                    ]
+
                 ]
             ];
+            if($link_user&1){
+                $keyBoard[0][] = [
+                    'text' =>"呼叫关联用户", //Yii::t('app/model/nexmo', 'No', array(), $this->language),
+                    'callback_data' => implode('-', $callback),
+                ];
+            }
 
-            if($link_user){  //存在关联用的时候
+            if($link_user&2){  //存在关联用的时候
                 $callback1 = [
                     $this->callUrgentCallbackDataPre,
                     $appCalledUid,

@@ -196,29 +196,32 @@ trait  TraitPotato {
      * @param  $link_user     关联用户标志
      * @return bool
      */
-    public function sendCallButton($type, $appCalledUid, $calledUserId,$callAppName,$calledAppName ,$appCallUid , $link_user=false){
+    public function sendCallButton($type, $appCalledUid, $calledUserId,$callAppName,$calledAppName ,$appCallUid , $link_user=1){
 
 
         if($type == CallRecord::Record_Type_none ){              //联系电话呼叫完  发送拨打紧急联系人按钮
-            $callback = [
-                $this->callUrgentCallbackDataPre,
-                $appCalledUid,
-                $calledUserId,
-                $calledAppName,
-                $callAppName,
-                time(),
-            ];
+
             //$text = Yii::t('app/model/nexmo', 'Whether to call an emergency contact ?', array(), $this->language);
             $keyBoard = [
                 [
-                    [
-                        'type' => 0,
-                        'text' => "呼叫紧急联系人",
-                        'data' => implode('-', $callback),
-                    ]
                 ]
             ];
-            if($link_user){  //存在关联用的时候
+            if($link_user&1){
+                $callback = [
+                    $this->callUrgentCallbackDataPre,
+                    $appCalledUid,
+                    $calledUserId,
+                    $calledAppName,
+                    $callAppName,
+                    time(),
+                ];
+                $keyBoard[0][] = [
+                    'type' => 0,
+                    'text' =>"呼叫关联用户", //Yii::t('app/model/nexmo', 'No', array(), $this->language),
+                    'data' => implode('-', $callback),
+                ];
+            }
+            if($link_user&2){  //存在关联用的时候
                 $callback1 = [
                     $this->callUrgentCallbackDataPre,
                     $appCalledUid,
@@ -226,7 +229,7 @@ trait  TraitPotato {
                     $calledAppName,
                     $callAppName,
                     time(),
-                    $link_user
+                    1
                 ];
                 $keyBoard[0][] = [
                     'type' => 0,
