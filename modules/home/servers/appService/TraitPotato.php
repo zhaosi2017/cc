@@ -217,7 +217,7 @@ trait  TraitPotato {
                 ];
                 $keyBoard[0][] = [
                     'type' => 0,
-                    'text' =>"呼叫关联用户", //Yii::t('app/model/nexmo', 'No', array(), $this->language),
+                    'text' =>"呼叫紧急联系人", //Yii::t('app/model/nexmo', 'No', array(), $this->language),
                     'data' => implode('-', $callback),
                 ];
             }
