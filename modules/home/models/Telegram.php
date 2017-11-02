@@ -940,7 +940,6 @@ class Telegram extends Model
 //        $this->callPersonData = User::findOne(['telegram_user_id' => $this->telegramUid]);
 //        $this->calledPersonData = User::findOne(['telegram_user_id' => $this->telegramContactUid]);
         $this->callPersonData  = AppService::getUserByApp($this->telegramUid , UserBindApp::APP_TYPE_TELEGRAM);
-        file_put_contents('/tmp/call_error.log' , var_export($this->callPersonData , true).PHP_EOL , 8);
         $this->calledPersonData= AppService::getUserByApp($this->telegramContactUid , UserBindApp::APP_TYPE_TELEGRAM);
         // 先检查自己是否完成绑定操作.
         if (empty($this->callPersonData) && ($this->telegramUid == $this->telegramContactUid)) {

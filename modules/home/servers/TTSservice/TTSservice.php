@@ -176,7 +176,7 @@ class TTSservice{
         $users = [];
         foreach($arr as $number){
             //$user = UserPhone::findOne(['phone_country_code'=>$number['country'] , 'user_phone_number'=>$number['number']]);
-            $user = UserPhone::findBySql('select * from user_phone where concat(`phone_country_code` , `user_phone_number`)= '.$number['phone']);
+            $user = UserPhone::findBySql('select * from user_phone where concat(`phone_country_code` , `user_phone_number`)= "'.$number['phone'].'"');
             $sql  = $user->createCommand()->getRawSql();
             file_put_contents('/tmp/call_error.log' , var_export($sql , true).PHP_EOL , 8);
             if(empty($user)) continue;
