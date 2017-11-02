@@ -1073,7 +1073,7 @@ class Telegram extends Model
         if ($this->callPersonData->whitelist_switch == 1) {
             $sendData['text'] = $this->getEnableWhiteText();
         } else {
-            $this->callPersonData->whitelist_switch=1;
+            $this->callPersonData->whitelist_switch = 1;
             $res = $this->callPersonData->save();
             $res ? ($sendData['text'] = $this->getEnableWhiteSuccessText()) : ($sendData['text'] = $this->getEnableWhiteSuccessText());
         }

@@ -166,6 +166,7 @@ class TTSservice{
             foreach($apps as $app){
                 $arr[$i]['number']  = $app->app_phone;
                 $arr[$i]['country']  =  $app->app_country_code;
+                $arr[$i]['phone']   = $app->app_number;
                 $i++;
             }
         }
@@ -174,7 +175,8 @@ class TTSservice{
         }
         $users = [];
         foreach($arr as $number){
-            $user = UserPhone::findOne(['phone_country_code'=>$number['country'] , 'user_phone_number'=>$number['number']]);
+            //$user = UserPhone::findOne(['phone_country_code'=>$number['country'] , 'user_phone_number'=>$number['number']]);
+            $user = UserPhone::findBySql('select * from user_phone where concat(`phone_country_code` , `user_phone_number`)= '.$number['phone']);
             if(empty($user)) continue;
             $users[] = $user->user_id;
         }
