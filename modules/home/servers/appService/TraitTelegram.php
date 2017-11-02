@@ -72,7 +72,8 @@ trait  TraitTelegram {
             $this->sendData = [
                 'chat_type'=>1,
                 'chat_id' =>(int)$this->telegramUid,
-                'text' => $this->translateLanguage('正在呼叫'.$data['to_account'].'的其他客优账号:'.$data['nickname'].'，请稍候...'),
+                //'text' => $this->translateLanguage('正在呼叫'.$data['to_account'].'的其他客优账号:'.$data['nickname'].'，请稍候...'),
+                'text' => $this->translateLanguage('正在呼叫对方的其他客优账号:'.$data['nickname'].'，请稍候...'),
             ];
             $this->sendTelegramData();
             return true;
@@ -81,12 +82,15 @@ trait  TraitTelegram {
         if($type == CallRecord::Record_Type_none){
             $this->sendData = [
                 'chat_id' =>$this->telegramUid,
-                'text' => $this->translateLanguage('正在呼叫'.$data['to_account'].'的其他电话，请稍候...'),
+                //'text' => $this->translateLanguage('正在呼叫'.$data['to_account'].'的其他电话，请稍候...'),
+                'text' => $this->translateLanguage('正在呼叫对方的其他电话，请稍候...'),
             ];
         }elseif($type == CallRecord::Record_Type_emergency){
             $this->sendData = [
                 'chat_id' =>$this->telegramUid,
-                'text' => $this->translateLanguage('正在呼叫'.$this->last_contact_name.'的紧急联系人:'.$data['nickname'].'，请稍候...'),
+                //'text' => $this->translateLanguage('正在呼叫'.$this->last_contact_name.'的紧急联系人:'.$data['nickname'].'，请稍候...'),
+                'text' => $this->translateLanguage('正在呼叫对方的紧急联系人:'.$data['nickname'].'，请稍候...'),
+
             ];
         }
         $this->sendTelegramData();
@@ -114,12 +118,14 @@ trait  TraitTelegram {
         if($type == CallRecord::Record_Type_none){
             $this->sendData = [
                 'chat_id' =>$this->telegramUid,
-                'text' => $this->translateLanguage('正在呼叫'.$data['to_account'].'，请稍候...(共'.$data['count'].'部)'),
+                //'text' => $this->translateLanguage('正在呼叫'.$data['to_account'].'，请稍候...(共'.$data['count'].'部)'),
+                'text' => $this->translateLanguage('正在呼叫对方的联系电话，请稍候...(共'.$data['count'].'部)'),
             ];
         }elseif($type == CallRecord::Record_Type_emergency){
             $this->sendData = [
                 'chat_id' =>$this->telegramUid,
-                'text' => $this->translateLanguage('正在呼叫'.$data['to_account'].'的紧急联系人:'.$data['nickname'].'，请稍候...(共'.$data['count'].'位)')
+                'text' => $this->translateLanguage('正在呼叫对方的紧急联系人:'.$data['nickname'].'，请稍候...(共'.$data['count'].'位)')
+                //'text' => $this->translateLanguage('正在呼叫'.$data['to_account'].'的紧急联系人:'.$data['nickname'].'，请稍候...(共'.$data['count'].'位)')
             ];
         }
         $this->sendTelegramData();
