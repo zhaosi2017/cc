@@ -59,7 +59,8 @@ class LoginController extends GController
                     isset($url['message']) && Yii::$app->getSession()->setFlash('step-message',$url['message']);
                     return $this->redirect($url['url'])->send();
                 }
-                if(Yii::$app->getUser()->getReturnUrl() == '/')
+
+                if(Yii::$app->getUser()->getReturnUrl() == '/' || Yii::$app->getUser()->getReturnUrl() =='/home/login/index')
                 {
                     return $this->redirect('/home/user/index')->send();
                 }
@@ -98,7 +99,7 @@ class LoginController extends GController
                     isset($url['message']) && Yii::$app->getSession()->setFlash('step-message',$url['message']);
                     return $this->redirect($url['url'])->send();
                 }
-                if(Yii::$app->getUser()->getReturnUrl() == '/')
+                if(Yii::$app->getUser()->getReturnUrl() == '/' || Yii::$app->getUser()->getReturnUrl() =='/home/login/index')
                 {
                     return $this->redirect('/home/user/index')->send();
                 }
