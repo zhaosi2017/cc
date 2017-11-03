@@ -11,11 +11,11 @@ use yii\db\Exception;
  */
 class Sinch extends TTSAbstarct {
 //正式
-//    private $auth_id = '0221f92e-7fbf-4df2-9eb1-c4a965b14fc4';
-//    private $auth_key = 'D64MIM3RJ0ijv1r5K7fcsQ==';
+    private $auth_id = '0221f92e-7fbf-4df2-9eb1-c4a965b14fc4';
+    private $auth_key = 'D64MIM3RJ0ijv1r5K7fcsQ==';
 //测试
-    private $auth_id = '8d79c1a9-ab0c-4319-a5d4-ae01a2d2f80d';
-    private $auth_key = 'k97ZeapOKEC7+l+TyoemDw==';
+//    private $auth_id = '8d79c1a9-ab0c-4319-a5d4-ae01a2d2f80d';
+//    private $auth_key = 'k97ZeapOKEC7+l+TyoemDw==';
 
 
     private $body;          //提交数据

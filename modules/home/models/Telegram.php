@@ -135,9 +135,9 @@ class Telegram extends Model
     public function setWebhook()
     {
         //正式 callu
-       // $this->webhook = 'https://api.telegram.org/bot366429273:AAE1lGFanLGpUbfV28zlDYSTibiAPLhhE3s/sendMessage';
+        $this->webhook = 'https://api.telegram.org/bot366429273:AAE1lGFanLGpUbfV28zlDYSTibiAPLhhE3s/sendMessage';
        //测试 callme
-       $this->webhook = 'https://api.telegram.org/bot445351636:AAG4wnw7jI048KBKlb0P0BwoU08Dm6811j8/sendMessage';
+       //$this->webhook = 'https://api.telegram.org/bot445351636:AAG4wnw7jI048KBKlb0P0BwoU08Dm6811j8/sendMessage';
     }
 
     /**
