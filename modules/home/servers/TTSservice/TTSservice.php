@@ -178,6 +178,7 @@ class TTSservice{
             //$user = UserPhone::findOne(['phone_country_code'=>$number['country'] , 'user_phone_number'=>$number['number']]);
             $user = UserPhone::findBySql('select * from user_phone where concat(`phone_country_code` , `user_phone_number`)= "'.$number['phone'].'"')->one();
             if(empty($user)) continue;
+            if($user->user_id == $this->to_user_id || $user->user_id == $this->from_user_id ) continue;
             $users[] = $user->user_id;
         }
         return array_unique($users);
