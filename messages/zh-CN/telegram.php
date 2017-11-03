@@ -36,7 +36,7 @@ return [
     'call' => '呼叫',
     'success' => '成功',
     'failure' => '失败',
-    'is not a member of our system, can not perform the operation' => '不是我们系统会员，不能执行该操作.',
+    'is not a member of our system, can not perform the operation' => '不是客优用户，不能执行该操作.',
     'You have completed the binding operation.' => '您已经完成了绑定操作.',
     'The number of times the call has exceeded the limit set by he.' => '呼叫超出本人设置的限制次数.',
     'The verification code is empty.' => '验证码为空.',
