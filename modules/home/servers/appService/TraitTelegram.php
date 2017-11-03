@@ -51,10 +51,10 @@ trait  TraitTelegram {
      */
     private function _CallAnwserText(  $anwser , $calledName){
 
-        if($anwser == 'timeout') return $this->translateLanguage('呼叫'.$calledName.'失败, 无人接听...');
+        if($anwser == 'timeout') return $this->translateLanguage($calledName.'无人接听...');
         if($anwser == 'answered') return $this->translateLanguage('呼叫'.$calledName.'成功...');
         if($anwser == 'failed') return $this->translateLanguage('呼叫'.$calledName.'失败...');
-        if($anwser == 'unanwsered') return $this->translateLanguage('呼叫'.$calledName.'失败,无人接听...');
+        if($anwser == 'unanwsered') return $this->translateLanguage($calledName.'无人接听...');
         if($anwser == 'busy') return $this->translateLanguage('呼叫的用户忙...');
     }
 
@@ -73,7 +73,7 @@ trait  TraitTelegram {
                 'chat_type'=>1,
                 'chat_id' =>(int)$this->telegramUid,
                 //'text' => $this->translateLanguage('正在呼叫'.$data['to_account'].'的其他客优账号:'.$data['nickname'].'，请稍候...'),
-                'text' => $this->translateLanguage('正在呼叫对方的其他客优账号:'.$data['nickname'].'，请稍候...'),
+                'text' => $this->translateLanguage('正在呼叫对方的其他客优账号:'.$data['nickname'].'，请稍候'),
             ];
             $this->sendTelegramData();
             return true;
@@ -83,13 +83,13 @@ trait  TraitTelegram {
             $this->sendData = [
                 'chat_id' =>$this->telegramUid,
                 //'text' => $this->translateLanguage('正在呼叫'.$data['to_account'].'的其他电话，请稍候...'),
-                'text' => $this->translateLanguage('正在呼叫对方的其他电话，请稍候...'),
+                'text' => $this->translateLanguage('正在呼叫对方的其他电话，请稍候'),
             ];
         }elseif($type == CallRecord::Record_Type_emergency){
             $this->sendData = [
                 'chat_id' =>$this->telegramUid,
                 //'text' => $this->translateLanguage('正在呼叫'.$this->last_contact_name.'的紧急联系人:'.$data['nickname'].'，请稍候...'),
-                'text' => $this->translateLanguage('正在呼叫对方的紧急联系人:'.$data['nickname'].'，请稍候...'),
+                'text' => $this->translateLanguage('正在呼叫对方的紧急联系人:'.$data['nickname'].'，请稍候'),
 
             ];
         }
@@ -106,7 +106,7 @@ trait  TraitTelegram {
             $this->sendData = [
                 'chat_type'=>1,
                 'chat_id' =>(int)$this->telegramUid,
-                'text' => $this->translateLanguage('开始呼叫对方的其他客优账号:'.$data['nickname'].',请稍候...(共'.$data['count'].'部)')
+                'text' => $this->translateLanguage('开始呼叫对方的其他客优账号:'.$data['nickname'].',请稍候.(共'.$data['count'].'部)')
             ];
             $this->sendTelegramData();
             return true;
@@ -119,12 +119,12 @@ trait  TraitTelegram {
             $this->sendData = [
                 'chat_id' =>$this->telegramUid,
                 //'text' => $this->translateLanguage('正在呼叫'.$data['to_account'].'，请稍候...(共'.$data['count'].'部)'),
-                'text' => $this->translateLanguage('正在呼叫对方的联系电话，请稍候...(共'.$data['count'].'部)'),
+                'text' => $this->translateLanguage('正在呼叫对方的联系电话，请稍候.(共'.$data['count'].'部)'),
             ];
         }elseif($type == CallRecord::Record_Type_emergency){
             $this->sendData = [
                 'chat_id' =>$this->telegramUid,
-                'text' => $this->translateLanguage('正在呼叫对方的紧急联系人:'.$data['nickname'].'，请稍候...(共'.$data['count'].'位)')
+                'text' => $this->translateLanguage('正在呼叫对方的紧急联系人:'.$data['nickname'].'，请稍候.(共'.$data['count'].'位)')
                 //'text' => $this->translateLanguage('正在呼叫'.$data['to_account'].'的紧急联系人:'.$data['nickname'].'，请稍候...(共'.$data['count'].'位)')
             ];
         }
