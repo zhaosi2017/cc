@@ -22,7 +22,7 @@ $this->title = Yii::t('app/login','Login');
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#" ><?= Yii::t('app/login','Phone')?></a></li>
-                <li role="presentation"><a href="/home/login/index" ><?= Yii::t('app/login','Email')?></a></li>
+                <li role="presentation"><a href="/home/login/login" ><?= Yii::t('app/login','Email')?></a></li>
 
             </ul>
 
