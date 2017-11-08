@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-if ($isModify) {
+if (isset($_GET['id']) && (int)$_GET['id'] >0) {
     $this->title = Yii::t('app/potato/bind-potato','Edit potato account');
 } else {
     $this->title = Yii::t('app/potato/bind-potato','Bind potato account');;
@@ -72,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="form-group ">
         <div class="col-sm-2"></div>
         <div class="col-sm-3 " style="padding-left: 2px;">
-            <?= Html::submitButton($isModify ? Yii::t('app/potato/bind-potato','Edit') :Yii::t('app/potato/bind-potato','Build'),
+            <?= Html::submitButton(isset($_GET['id']) && (int)$_GET['id'] >0 ? Yii::t('app/potato/bind-potato','Edit') :Yii::t('app/potato/bind-potato','Build'),
                 ['class' => 'btn btn-primary button-new-color','style'=>'width: 100%;']) ?>
         </div>
         <div class="col-sm-5"></div>
