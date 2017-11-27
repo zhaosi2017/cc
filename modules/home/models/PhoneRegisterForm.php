@@ -45,8 +45,11 @@ class PhoneRegisterForm extends Model
 
             ['phone','validatePhone','on'=>'find-password,update-password'],
             ['phone','validateExist','on'=>'register'],
-            ['password', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>'密码格式错误'],
-            ['rePassword', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>'密码格式错误'],
+            ['password', 'match', 'pattern' => '/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,}$/', 'message'=>Yii::t('app/models/register-form','Password format is incorrect')],
+            ['rePassword', 'match', 'pattern' => '/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,}$/', 'message'=>Yii::t('app/models/register-form','Password format is incorrect')],
+
+            //['password', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>'密码格式错误'],
+            //['rePassword', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>'密码格式错误'],
             ['password','required','on'=>'update-password'],
             ['rePassword','required','on'=>'update-password'],
             ['phone','checkPhone','on'=>'update-phone'],
