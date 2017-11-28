@@ -42,9 +42,12 @@ class RegisterForm extends Model
                 'targetAttribute' => ['username' => 'account'], // username字段 必须存在于targetClass的account列
                 'message' => '账号已占用'
             ],*/
+            ['password', 'match', 'pattern' => '/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,}$/', 'message'=>Yii::t('app/models/register-form','Password format is incorrect')],
+            ['rePassword', 'match', 'pattern' => '/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,}$/', 'message'=>Yii::t('app/models/register-form','Password format is incorrect')],
 
-            ['password', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>Yii::t('app/models/register-form','Password format is incorrect')],
-            ['rePassword', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>Yii::t('app/models/register-form','Password format is incorrect')],
+
+//            ['password', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>Yii::t('app/models/register-form','Password format is incorrect')],
+//            ['rePassword', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>Yii::t('app/models/register-form','Password format is incorrect')],
             ['code', 'captcha', 'message'=>Yii::t('app/models/register-form','Verification code entered incorrectly'), 'captchaAction'=>'/home/register/captcha'],
         ];
     }

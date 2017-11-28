@@ -29,6 +29,7 @@ class LoginForm extends Model
             [['username', 'pwd','code'], 'required'],
 
             ['username', 'validateAccount'],
+            ['pwd', 'match', 'pattern' => '/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,}$/', 'message'=>Yii::t('app/models/register-form','Password format is incorrect')],
             ['pwd', 'validatePassword'],
             ['code', 'captcha', 'message'=>Yii::t('app/models/LoginForm' , 'Verification code error')/*'验证码错误'*/, 'captchaAction'=>'/home/login/captcha'],
 //            ['code', 'captcha', 'message'=>'验证码输入不正确，请重新输入！3次输入错误，账号将被锁定1年！', 'captchaAction'=>'/login/default/captcha'],
