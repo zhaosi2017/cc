@@ -1612,7 +1612,7 @@ class Potato extends Model
                 $app = new UserBindApp();
             }else{
                 $app = UserBindApp::findOne($app_id);
-                if(empty($app)){
+                if(empty($app) && ($app->user_id != Yii::$app->user->id)){
                     return false;
                 }
             }
