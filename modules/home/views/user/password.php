@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
              'template' => "{label}\n<div class=\"col-sm-3\">{input}</div> 
                                     <div class=\"col-sm-8\">
                                     <span  style='line-height: 34px;'>*".
-                                        Yii::t('app/user/password' , 'The password contains at least 8 characters, including at least two characters:Uppercase letters, lowercase letters, numbers, symbols')
+                                        Yii::t('app/user/password' , 'The password contains at least 8 characters, including at least two characters:Uppercase letters, lowercase letters, numbers.')
                                     ."</span>\n</div>
                                     <div class=\"col-sm-12\"></div>
                                     <label class=\"col-sm-1\"></label>
@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
              'template' => "{label}\n<div class=\"col-sm-3\">{input}</div>
                                     <div class=\"col-sm-8\">
                                     <span  style='line-height: 34px;'> *".
-                                        Yii::t('app/user/password' ,'The password contains at least 8 characters, including at least two characters:Uppercase letters, lowercase letters, numbers, symbols')
+                                        Yii::t('app/user/password' ,'The password contains at least 8 characters, including at least two characters:Uppercase letters, lowercase letters, numbers.')
                                     ."</span>\n</div>
                                     <div class=\"col-sm-12\"></div>
                                     <label class=\"col-sm-1\"></label>

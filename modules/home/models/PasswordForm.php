@@ -28,8 +28,10 @@ class PasswordForm extends Model
             [['rePassword', 'password', 'newPassword'], 'required'],
             [['rePassword', 'password', 'newPassword'], 'string'],
             ['rePassword', 'compare', 'compareAttribute'=>'newPassword','message'=>Yii::t('app/models/PasswordForm' , 'Two passwords are inconsistent')/*'两次密码不一致'*/],
-            ['newPassword', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>Yii::t('app/models/PasswordForm' , 'Password format is incorrect')/*'密码格式错误'*/],
-            ['rePassword', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>Yii::t('app/models/PasswordForm' , 'Password format is incorrect')/*'密码格式错误'*/],
+            ['newPassword', 'match', 'pattern' => '/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,}$/', 'message'=>Yii::t('app/models/PasswordForm' , 'Password format is incorrect')/*'密码格式错误'*/],
+            ['rePassword', 'match', 'pattern' => '/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,}$/', 'message'=>Yii::t('app/models/PasswordForm' , 'Password format is incorrect')/*'密码格式错误'*/],
+//            ['newPassword', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>Yii::t('app/models/PasswordForm' , 'Password format is incorrect')/*'密码格式错误'*/],
+//            ['rePassword', 'match', 'pattern' => '/(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,}$/', 'message'=>Yii::t('app/models/PasswordForm' , 'Password format is incorrect')/*'密码格式错误'*/],
             ['password', 'validatePassword'],
         ];
     }
